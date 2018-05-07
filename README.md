@@ -11,7 +11,7 @@ The remaining services require authenticating directly with Blizzard, meaning yo
 
 ## Running the tests
 
-By adding your clientID, clientSecret, clientAccessToken, and userAccessToken in BattleNetAPITests.swift, you can then run all the test functions. The tests are set up to run a web service and attempt to decode the result to the appropraite class.
+By adding your clientID, clientSecret, clientAccessToken, and userAccessToken in BattleNetAPITests.swift, you can then run all the test functions. The tests are set up to run a web service and attempt to decode the result to the appropriate class.
 
 ## Integration
 
