@@ -87,6 +87,8 @@
 		59E425DA2078A3930046EB84 /* AuthenticationModelController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 59E425D92078A3930046EB84 /* AuthenticationModelController.swift */; };
 		59E425DD2078AA4B0046EB84 /* ClientToken.swift in Sources */ = {isa = PBXBuildFile; fileRef = 59E425DC2078AA4B0046EB84 /* ClientToken.swift */; };
 		59E425DF2078B0480046EB84 /* Debug.swift in Sources */ = {isa = PBXBuildFile; fileRef = 59E425DE2078B0480046EB84 /* Debug.swift */; };
+		833278A12180FD5F00BE02E1 /* AuthToken.swift in Sources */ = {isa = PBXBuildFile; fileRef = 833278A02180FD5F00BE02E1 /* AuthToken.swift */; };
+		833278A22180FD5F00BE02E1 /* AuthToken.swift in Sources */ = {isa = PBXBuildFile; fileRef = 833278A02180FD5F00BE02E1 /* AuthToken.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -184,6 +186,7 @@
 		59E425D92078A3930046EB84 /* AuthenticationModelController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthenticationModelController.swift; sourceTree = "<group>"; };
 		59E425DC2078AA4B0046EB84 /* ClientToken.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ClientToken.swift; sourceTree = "<group>"; };
 		59E425DE2078B0480046EB84 /* Debug.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Debug.swift; sourceTree = "<group>"; };
+		833278A02180FD5F00BE02E1 /* AuthToken.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthToken.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -346,6 +349,7 @@
 				59E425D820789ACA0046EB84 /* Object */,
 				59E425D520789A5C0046EB84 /* WebService */,
 				593B3476207ACEFD002C8BFB /* AuthenticationManager.swift */,
+				833278A02180FD5F00BE02E1 /* AuthToken.swift */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -552,6 +556,7 @@
 				5967ACC9208975CE009BFBAF /* Media.swift in Sources */,
 				59A21DFA208EF5D4005C7EF6 /* Battlegroups.swift in Sources */,
 				5967ACBA2087926B009BFBAF /* D3Leaderboard.swift in Sources */,
+				833278A12180FD5F00BE02E1 /* AuthToken.swift in Sources */,
 				59397CEB207D5CB50077018E /* Follower.swift in Sources */,
 				593A3AE920806A3C0047B4C0 /* Ladder.swift in Sources */,
 				5967ACC720893371009BFBAF /* Specialization.swift in Sources */,
@@ -593,6 +598,7 @@
 				591981FC209AF17600ADE60F /* WorldOfWarcraftTests.swift in Sources */,
 				591981F5209AD41200ADE60F /* AuthenticationTests.swift in Sources */,
 				591981FA209AF14C00ADE60F /* StarCraft2Tests.swift in Sources */,
+				833278A22180FD5F00BE02E1 /* AuthToken.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

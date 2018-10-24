@@ -10,11 +10,11 @@ import XCTest
 @testable import BattleNetAPI
 
 
-let clientID = "x68y75qh6dpzpsthczrdjv9ck57xapms"
-let clientSecret = "pTXHmmqac5346E6SDWGamsPrp5RjEmXE"
+let clientID = AuthToken.clientID
+let clientSecret = AuthToken.clientSecret
 
-let clientAccessToken: String = "rqq9f8hrnsbk4kdqq5cec5gj"
-let userAccessToken: String = "rck2xwtvnu5umxrtxv99ujg3"
+let clientAccessToken: String = AuthToken.clientAccessToken
+let userAccessToken: String = AuthToken.userAccessToken
 
 
 class BattleNetAPITests: XCTestCase {

@@ -20,8 +20,8 @@ class AuthenticationManager {
     
     var delegate: UserAuthDelegate? = nil
     
-    let clientID = "CLIENT_ID"
-    let clientSecret = "CLIENT_SECRET"
+    let clientID = AuthToken.clientID
+    let clientSecret = AuthToken.clientSecret
     
     var clientAccessToken: String? = nil
     var userAccessToken: String? = nil
