@@ -451,14 +451,16 @@
 			isa = PBXProject;
 			attributes = {
 				LastSwiftUpdateCheck = 0930;
-				LastUpgradeCheck = 0930;
+				LastUpgradeCheck = 1000;
 				ORGANIZATIONNAME = "Prismatic Games";
 				TargetAttributes = {
 					59E4259F207871C20046EB84 = {
 						CreatedOnToolsVersion = 9.3;
+						LastSwiftMigration = 1000;
 					};
 					59E425B3207871C50046EB84 = {
 						CreatedOnToolsVersion = 9.3;
+						LastSwiftMigration = 1000;
 						TestTargetID = 59E4259F207871C20046EB84;
 					};
 				};
@@ -680,7 +682,6 @@
 				ONLY_ACTIVE_ARCH = YES;
 				SDKROOT = iphoneos;
 				SWIFT_ACTIVE_COMPILATION_CONDITIONS = DEBUG;
-				SWIFT_COMPILATION_MODE = wholemodule;
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 			};
 			name = Debug;
@@ -752,7 +753,7 @@
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = "com.Prismatic-Games.BattleNetAPI";
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				SWIFT_VERSION = 4.0;
+				SWIFT_VERSION = 4.2;
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
 			name = Debug;
@@ -770,7 +771,7 @@
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = "com.Prismatic-Games.BattleNetAPI";
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				SWIFT_VERSION = 4.0;
+				SWIFT_VERSION = 4.2;
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
 			name = Release;
@@ -790,7 +791,7 @@
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = "com.Prismatic-Games.BattleNetAPITests";
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				SWIFT_VERSION = 4.0;
+				SWIFT_VERSION = 4.2;
 				TARGETED_DEVICE_FAMILY = "1,2";
 				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/BattleNetAPI.app/BattleNetAPI";
 			};
@@ -811,7 +812,7 @@
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = "com.Prismatic-Games.BattleNetAPITests";
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				SWIFT_VERSION = 4.0;
+				SWIFT_VERSION = 4.2;
 				TARGETED_DEVICE_FAMILY = "1,2";
 				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/BattleNetAPI.app/BattleNetAPI";
 			};

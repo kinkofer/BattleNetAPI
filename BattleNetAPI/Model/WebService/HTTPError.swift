@@ -129,8 +129,8 @@ public class HTTPError: Error {
         message.append("\n\n\(type.debugDescription)")
         #endif
         
-        let alert = UIAlertController(title: "Error", message: message, preferredStyle: UIAlertControllerStyle.alert)
-        alert.addAction(UIAlertAction(title: "OK", style: UIAlertActionStyle.default, handler:nil))
+        let alert = UIAlertController(title: "Error", message: message, preferredStyle: UIAlertController.Style.alert)
+        alert.addAction(UIAlertAction(title: "OK", style: .default, handler:nil))
         return alert
     }
 }
