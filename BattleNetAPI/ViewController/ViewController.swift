@@ -26,7 +26,6 @@ class ViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        // Do any additional setup after loading the view, typically from a nib.
         
         authManager.delegate = self
         
@@ -37,6 +36,7 @@ class ViewController: UIViewController {
             case .success(let token):
                 Debug.print("clientAccessToken: \(token)")
                 // TODO: Save to keychain if new
+                
                 Debug.print("Ready for game data web services")
                 self.startGameDataCalls()
             case .failure(let error):
@@ -1284,13 +1284,13 @@ extension ViewController: UserAuthDelegate {
         case .success(let token):
             Debug.print("userAccessToken: \(token)")
             // TODO: Save to keychain if new
+            
             Debug.print("Ready for profile web services")
             self.startProfileCalls()
             self.setSignIn(false)
         case .failure(let error):
             handleError(error)
             self.setSignIn(true)
-//            self.presentOkayAlert(title: "Sign In Again", message: "Your session has expired, please sign in again")
         }
     }
 }

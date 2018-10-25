@@ -42,11 +42,11 @@ class WS_Authentication: WebService {
                         completion(result)
                     }
                     else {
-                        completion(Result(value: nil, error: HTTPError(type: .unexpectedResponse)))
+                        completion(.failure(HTTPError(type: .unexpectedResponse)))
                     }
                 }
                 catch {
-                    completion(Result(value: nil, error: HTTPError(type: .jsonParsingError)))
+                    completion(.failure(HTTPError(type: .jsonParsingError)))
                 }
             case .failure(_):
                 completion(result)
@@ -81,11 +81,11 @@ class WS_Authentication: WebService {
                         completion(result)
                     }
                     else {
-                        completion(Result(value: nil, error: HTTPError(type: .unexpectedResponse)))
+                        completion(.failure(HTTPError(type: .unexpectedResponse)))
                     }
                 }
                 catch {
-                    completion(Result(value: nil, error: HTTPError(type: .jsonParsingError)))
+                    completion(.failure(HTTPError(type: .jsonParsingError)))
                 }
             case .failure(_):
                 completion(result)

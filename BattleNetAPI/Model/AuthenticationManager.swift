@@ -10,6 +10,12 @@ import Foundation
 
 
 protocol UserAuthDelegate {
+    /**
+     A delegate function that is called after the user has returned from authorization, or when validating a saved userAccessToken.
+     - parameter result: The Result enum containing some value if `.success` or an HTTPError if `.failure`
+     
+        `value`: String representing the userAccessToken
+     */
     func didReceiveUserAccessResult(_ result: Result<String>)
 }
 
@@ -18,13 +24,17 @@ protocol UserAuthDelegate {
 class AuthenticationManager {
     let authMC = AuthenticationModelController.shared
     
-    var delegate: UserAuthDelegate? = nil
+    var delegate: UserAuthDelegate?
     
+    /// The clientID is a unique token provided by the Blizzard Battle.net Developer Portal
     let clientID = AuthToken.clientID
+    /// The clientSecret is a unique token provided by the Blizzard Battle.net Developer Portal
     let clientSecret = AuthToken.clientSecret
     
-    var clientAccessToken: String? = nil
-    var userAccessToken: String? = nil
+    /// The clientAccessToken is required for your app to make API calls. It is retrieved from a service that only requires your clientToken and clientSecret.
+    var clientAccessToken: String?
+    /// The userAccessToken is used to make API calls that require the user's permission. It is retrieved from a redirect after the user enters their credentials.
+    var userAccessToken: String?
     
     
     
@@ -46,9 +56,9 @@ class AuthenticationManager {
                 DispatchQueue.main.async {
                     switch result {
                     case .success(_):
-                        completion(Result(value: accessToken, error: nil))
+                        completion(.success(accessToken))
                     case .failure(let error):
-                        completion(Result(value: nil, error: error))
+                        completion(.failure(error))
                         self.clientAccessToken = nil
                     }
                 }
@@ -59,10 +69,10 @@ class AuthenticationManager {
                 DispatchQueue.main.async {
                     switch result {
                     case .success(let access):
-                        completion(Result(value: access.token, error: nil))
+                        completion(.success(access.token))
                         self.clientAccessToken = access.token
                     case .failure(let error):
-                        completion(Result(value: nil, error: error))
+                        completion(.failure(error))
                     }
                 }
             }
@@ -82,16 +92,16 @@ class AuthenticationManager {
                 DispatchQueue.main.async {
                     switch result {
                     case .success(_):
-                        self.delegate?.didReceiveUserAccessResult(Result(value: userAccessToken, error: nil))
+                        self.delegate?.didReceiveUserAccessResult(.success(userAccessToken))
                     case .failure(let error):
                         self.userAccessToken = nil
-                        self.delegate?.didReceiveUserAccessResult(Result(value: nil, error: error))
+                        self.delegate?.didReceiveUserAccessResult(.failure(error))
                     }
                 }
             }
         }
         else {
-            self.delegate?.didReceiveUserAccessResult(Result(value: nil, error: HTTPError(type: .unauthorized)))
+            self.delegate?.didReceiveUserAccessResult(.failure(HTTPError(type: .unauthorized)))
         }
     }
     
@@ -102,16 +112,16 @@ class AuthenticationManager {
                 DispatchQueue.main.async {
                     switch result {
                     case .success(let access):
-                        self.delegate?.didReceiveUserAccessResult(Result(value: access.token, error: nil))
+                        self.delegate?.didReceiveUserAccessResult(.success(access.token))
                         self.userAccessToken = access.token
                     case .failure(let error):
-                        self.delegate?.didReceiveUserAccessResult(Result(value: nil, error: error))
+                        self.delegate?.didReceiveUserAccessResult(.failure(error))
                     }
                 }
             }
         }
         else {
-            self.delegate?.didReceiveUserAccessResult(Result(value: nil, error: HTTPError(type: .unexpectedResponse)))
+            self.delegate?.didReceiveUserAccessResult(.failure(HTTPError(type: .unexpectedResponse)))
         }
     }
     

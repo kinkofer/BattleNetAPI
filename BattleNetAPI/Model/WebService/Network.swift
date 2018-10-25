@@ -17,10 +17,21 @@ enum HTTPMethod: String {
 enum Result<T> {
     case success(T)
     case failure(HTTPError)
-}
-
-
-extension Result {
+    
+    /// Returns `true` if the result is a success, `false` otherwise.
+    public var isSuccess: Bool {
+        switch self {
+        case .success:
+            return true
+        case .failure:
+            return false
+        }
+    }
+    
+    
+    
+    // MARK: - Init
+    
     init(value: T?, error: HTTPError?) {
         switch (value, error) {
         case (let v?, _):
@@ -35,6 +46,7 @@ extension Result {
 }
 
 
+
 extension Result where T == Data {
     /**
      Decode a successful Result to a class specified in your completion. Will return an HTTPError.jsonParsingError if decoding fails, or the original error is the Result is a failure.
@@ -47,13 +59,13 @@ extension Result where T == Data {
         case .success(let data):
             do {
                 let decoded = try customDecode?(data) ?? U.decode(from: data)
-                completion(Result<U>(value: decoded, error: nil))
+                completion(.success(decoded))
             }
             catch {
-                completion(Result<U>(value: nil, error: HTTPError(type: .jsonParsingError)))
+                completion(.failure(HTTPError(type: .jsonParsingError)))
             }
         case .failure(let error):
-            completion(Result<U>(value: nil, error: error))
+            completion(.failure(error))
         }
     }
 }
@@ -141,23 +153,23 @@ class Network {
                 let statusCode = response.statusCode
                 
                 if (statusCode >= 200 && statusCode < 300) {
-                    completion(Result(value: data, error: nil))
+                    completion(.success(data))
                 }
                 else if statusCode == 401 {
-                    completion(Result(value: nil, error: HTTPError(type: .unauthorized)))
+                    completion(.failure(HTTPError(type: .unauthorized)))
                 }
                 else if statusCode == 403 {
-                    completion(Result(value: nil, error: HTTPError(type: .forbidden)))
+                    completion(.failure(HTTPError(type: .forbidden)))
                 }
                 else {
-                    completion(Result(value: nil, error: HTTPError(type: .httpError)))
+                    completion(.failure(HTTPError(type: .httpError)))
                 }
             }
             else if let error = error as NSError? {
-                completion(Result(value: nil, error: HTTPError(from: error)))
+                completion(.failure(HTTPError(from: error)))
             }
             else {
-                completion(Result(value: nil, error: HTTPError(type: .httpError)))
+                completion(.failure(HTTPError(type: .httpError)))
             }
         }.resume()
     }
