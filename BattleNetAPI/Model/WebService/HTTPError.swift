@@ -10,10 +10,15 @@ import UIKit
 
 public class HTTPError: Error {
     public enum ErrorType: LocalizedError {
-        /// The request could not be made
-        case unexpectedRequest
+        // Request Error cases
+        
+        /// The request could not be constructed
+        case invalidRequest
         /// The body of the request could not be created
         case unexpectedBody
+        
+        // Response Error cases
+        
         /// The web service returned a unknown error, like a 500
         case httpError
         /// The response data did not have the expected format, value, or type
@@ -26,13 +31,14 @@ public class HTTPError: Error {
         case unauthorized
         /// HTTP error 403
         case forbidden
+        
         /// A network connection could not be made
         case noNetwork
         
         /// Description from the custom ErrorType
         var description: String {
             switch self {
-            case .unexpectedRequest:
+            case .invalidRequest:
                 return NSLocalizedString("There was a problem making the request. Please change and try again.", comment: "Unexpected Request")
             case .unexpectedBody:
                 return NSLocalizedString("There was a problem with your input. Please change and try again.", comment: "Unexpected Input")
@@ -57,8 +63,8 @@ public class HTTPError: Error {
         /// A debug description that contains the error type
         var debugDescription: String {
             switch self {
-            case .unexpectedRequest:
-                return NSLocalizedString("DEBUG (unexpectedRequest): The request could not be made because of a malformed url or invalid header.", comment: "Unexpected Request")
+            case .invalidRequest:
+                return NSLocalizedString("DEBUG (invalidRequest): TThe request could not be formed. Check for any invalid data or url.", comment: "Unexpected Request")
             case .unexpectedBody:
                 return NSLocalizedString("DEBUG (unexpectedBody): The request body could not be formed. Check for any invalid input.", comment: "DEBUG Unexpected Input")
             case .httpError:

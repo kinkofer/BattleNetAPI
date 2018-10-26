@@ -92,7 +92,7 @@ enum APIRegion: String {
 
 /// The type of data being retrieved from the web services. Used to determine if client or user authorization is required.
 enum APIType: String {
-    case data
+    case gameData
     case profile
 }
 

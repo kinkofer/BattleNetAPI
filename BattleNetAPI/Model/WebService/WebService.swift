@@ -55,7 +55,7 @@ extension WebService {
      */
     func callWebService(urlStr: String, method: HTTPMethod, apiType: APIType? = nil, body: Data? = nil, headers: [HTTPHeader] = [], completion: @escaping (_ result: Result<Data>) -> Void) {
         guard let url = URL(string: urlStr) else {
-            completion(.failure(HTTPError(type: .unexpectedRequest)))
+            completion(.failure(HTTPError(type: .invalidRequest)))
             return
         }
         
@@ -130,7 +130,7 @@ extension WebServiceLegacy {
      */
     func callWebServiceLegacy(urlStr: String, method: HTTPMethod, body: Data? = nil, headers: [HTTPHeader] = [], completion: @escaping (_ result: Result<Data>) -> Void) {
         guard let url = URL(string: urlStr) else {
-            completion(.failure(HTTPError(type: .unexpectedRequest)))
+            completion(.failure(HTTPError(type: .invalidRequest)))
             return
         }
         

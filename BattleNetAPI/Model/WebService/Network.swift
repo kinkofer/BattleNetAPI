@@ -106,7 +106,7 @@ class Network {
             let userAccessToken = userAccessToken {
             request.setValue(String.init(format: "Bearer %@", userAccessToken), forHTTPHeaderField: "Authorization")
         }
-        else if apiType == .data,
+        else if apiType == .gameData,
             let clientAccessToken = clientAccessToken {
             request.setValue(String.init(format: "Bearer %@", clientAccessToken), forHTTPHeaderField: "Authorization")
         }

@@ -154,7 +154,7 @@ class WS_StarCraft2Legacy: WebServiceLegacy {
      - parameter completion: Returns a Result with the Data if `success` or an HTTPError if `failure`
      */
     func getAchievements(region: APIRegion, locale: APILocale, completion: @escaping (_ result: Result<Data>) -> Void) {
-        let apiType: APIType = .data
+        let apiType: APIType = .gameData
         var urlStr = getBaseURLLegacy(region: region, apiType: apiType) + "/achievements"
         urlStr = appendSharedURLParametersLegacy(to: urlStr, locale: locale)
         
@@ -172,7 +172,7 @@ class WS_StarCraft2Legacy: WebServiceLegacy {
      - parameter completion: Returns a Result with the Data if `success` or an HTTPError if `failure`
      */
     func getRewards(region: APIRegion, locale: APILocale, completion: @escaping (_ result: Result<Data>) -> Void) {
-        let apiType: APIType = .data
+        let apiType: APIType = .gameData
         var urlStr = getBaseURLLegacy(region: region, apiType: apiType) + "/rewards"
         urlStr = appendSharedURLParametersLegacy(to: urlStr, locale: locale)
         
