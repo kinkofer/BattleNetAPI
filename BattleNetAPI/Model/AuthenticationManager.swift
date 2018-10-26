@@ -41,9 +41,9 @@ class AuthenticationManager {
     // MARK: - Init
     
     init() {
-        // TODO: retrieve data from keychain
-        clientAccessToken = "CLIENT_TOKEN"
-        userAccessToken = "USER_TOKEN"
+        // TODO: retrieve access tokens from keychain
+//        clientAccessToken = "CLIENT_TOKEN"
+//        userAccessToken = "USER_TOKEN"
     }
     
     
@@ -58,8 +58,8 @@ class AuthenticationManager {
                     case .success(_):
                         completion(.success(accessToken))
                     case .failure(let error):
-                        completion(.failure(error))
                         self.clientAccessToken = nil
+                        completion(.failure(error))
                     }
                 }
             }
@@ -69,8 +69,9 @@ class AuthenticationManager {
                 DispatchQueue.main.async {
                     switch result {
                     case .success(let access):
-                        completion(.success(access.token))
+                        // TODO: Save to keychain if new
                         self.clientAccessToken = access.token
+                        completion(.success(access.token))
                     case .failure(let error):
                         completion(.failure(error))
                     }
@@ -112,8 +113,9 @@ class AuthenticationManager {
                 DispatchQueue.main.async {
                     switch result {
                     case .success(let access):
-                        self.delegate?.didReceiveUserAccessResult(.success(access.token))
                         self.userAccessToken = access.token
+                        // TODO: Save to keychain if new
+                        self.delegate?.didReceiveUserAccessResult(.success(access.token))
                     case .failure(let error):
                         self.delegate?.didReceiveUserAccessResult(.failure(error))
                     }

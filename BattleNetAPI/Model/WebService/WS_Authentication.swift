@@ -29,13 +29,26 @@ class WS_Authentication: WebService {
      - note: This access token will not return specific user information. If that is needed, you must receive a user access token through OAuth
      */
     func getClientAccessToken(region: APIRegion, clientID: String, clientSecret: String, completion: @escaping (_ result: Result<Data>) -> Void) {
-        // TODO: validate clientID and clientSecret
+        // Validate clientID and clientSecret
+        guard !clientID.isEmpty,
+            !clientSecret.isEmpty else {
+                completion(.failure(HTTPError(type: .invalidRequest)))
+                return
+        }
         
-        let urlStr = String(format: "\(region.tokenURI)?grant_type=client_credentials&client_id=%@&client_secret=%@", clientID, clientSecret)
-        self.callWebService(urlStr: urlStr, method: .get, apiType: nil) { result in
-            // extract and save clientAccessToken to Network for future calls
+        // Set encryptedCredentials for Basic Authorization
+        let credentials = String(format: "%@:%@", clientID, clientSecret)
+        network.encryptedCredentials = credentials.data(using: .utf8)?.base64EncodedString()
+        
+        guard let body = "grant_type=client_credentials".data(using: .utf8) else {
+            completion(.failure(HTTPError(type: .unexpectedBody)))
+            return
+        }
+        
+        self.callWebService(urlStr: region.tokenURI, method: .post, apiType: nil, body: body, headers: [.contentType([.form])]) { result in
             switch result {
             case .success(let data):
+                // Extract and save clientAccessToken to Network for future calls
                 do {
                     if let json = try JSONSerialization.jsonObject(with: data, options: []) as? [AnyHashable: Any] {
                         Network.shared.clientAccessToken = json["access_token"] as? String

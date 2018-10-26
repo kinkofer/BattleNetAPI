@@ -77,9 +77,11 @@ class Network {
     private init() { }
     
     /// The access token for game data services
-    public var clientAccessToken: String? = nil
+    public var clientAccessToken: String?
     /// The access token for profile services
-    public var userAccessToken: String? = nil
+    public var userAccessToken: String?
+    /// The encrypted client credentials for a Basic request, used to retrieve the client access token
+    public var encryptedCredentials: String?
     
     /// Required for legacy services
     public var apikey: String? = nil
@@ -104,11 +106,14 @@ class Network {
         
         if apiType == .profile,
             let userAccessToken = userAccessToken {
-            request.setValue(String.init(format: "Bearer %@", userAccessToken), forHTTPHeaderField: "Authorization")
+            request.setValue(String(format: "Bearer %@", userAccessToken), forHTTPHeaderField: "Authorization")
         }
         else if apiType == .gameData,
             let clientAccessToken = clientAccessToken {
-            request.setValue(String.init(format: "Bearer %@", clientAccessToken), forHTTPHeaderField: "Authorization")
+            request.setValue(String(format: "Bearer %@", clientAccessToken), forHTTPHeaderField: "Authorization")
+        }
+        else if let encryptedCredentials = encryptedCredentials {
+            request.setValue(String(format: "Basic %@", encryptedCredentials), forHTTPHeaderField: "Authorization")
         }
         
         return request

@@ -35,8 +35,6 @@ class ViewController: UIViewController {
             switch result {
             case .success(let token):
                 Debug.print("clientAccessToken: \(token)")
-                // TODO: Save to keychain if new
-                
                 Debug.print("Ready for game data web services")
                 self.startGameDataCalls()
             case .failure(let error):
@@ -1263,7 +1261,7 @@ class ViewController: UIViewController {
     // MARK: - Error handling
     
     func handleError(_ error: HTTPError, function: String = #function) {
-        Debug.print(function + ": " + error.message)
+        Debug.print(error.message, function: function)
     }
     
     
@@ -1283,8 +1281,6 @@ extension ViewController: UserAuthDelegate {
         switch result {
         case .success(let token):
             Debug.print("userAccessToken: \(token)")
-            // TODO: Save to keychain if new
-            
             Debug.print("Ready for profile web services")
             self.startProfileCalls()
             self.setSignIn(false)
