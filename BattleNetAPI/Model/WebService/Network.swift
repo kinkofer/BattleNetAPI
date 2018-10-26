@@ -160,11 +160,8 @@ class Network {
                 if (statusCode >= 200 && statusCode < 300) {
                     completion(.success(data))
                 }
-                else if statusCode == 401 {
-                    completion(.failure(HTTPError(type: .unauthorized)))
-                }
-                else if statusCode == 403 {
-                    completion(.failure(HTTPError(type: .forbidden)))
+                else if let httpError = HTTPError(statusCode: statusCode) {
+                    completion(.failure(httpError))
                 }
                 else {
                     completion(.failure(HTTPError(type: .httpError)))

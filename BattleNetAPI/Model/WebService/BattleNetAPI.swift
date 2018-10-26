@@ -69,12 +69,7 @@ enum APIRegion: String {
     
     /// The base url of the API services
     var apiURI: String {
-        switch self {
-        case .cn:
-            return "https://www.battlenet.com.cn"
-        default:
-            return "https://\(self.rawValue).api.battle.net"
-        }
+        return "https://\(self.rawValue).api.blizzard.com"
     }
     
     /// The regional extension added to the "namespace" URL parameter

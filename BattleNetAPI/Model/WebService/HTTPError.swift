@@ -9,7 +9,7 @@
 import UIKit
 
 public class HTTPError: Error {
-    public enum ErrorType: LocalizedError {
+    public enum ErrorType: LocalizedError, CaseIterable {
         // Request Error cases
         
         /// The request could not be constructed
@@ -31,9 +31,22 @@ public class HTTPError: Error {
         case unauthorized
         /// HTTP error 403
         case forbidden
+        /// HTTP error 404
+        case notFound
         
         /// A network connection could not be made
         case noNetwork
+        
+        
+        
+        // MARK: - Init
+        
+        static func errorTypeFromStatusCode(_ statusCode: Int) -> ErrorType? {
+            return ErrorType.allCases.first(where: { $0.code == statusCode })
+        }
+        
+        
+        // MARK: -
         
         /// Description from the custom ErrorType
         var description: String {
@@ -54,6 +67,8 @@ public class HTTPError: Error {
                 return NSLocalizedString("Unauthorized, please login again.", comment: "Unauthorized")
             case .forbidden:
                 return NSLocalizedString("You have not granted this app permission to access this data.", comment: "Forbidden")
+            case .notFound:
+                return NSLocalizedString("The resource you requested could not be found.", comment: "Not Found")
             case .noNetwork:
                 return NSLocalizedString("A network connection could not be established. Please try again when you have a sufficient internet connection.", comment: "No Network")
             }
@@ -64,7 +79,7 @@ public class HTTPError: Error {
         var debugDescription: String {
             switch self {
             case .invalidRequest:
-                return NSLocalizedString("DEBUG (invalidRequest): TThe request could not be formed. Check for any invalid data or url.", comment: "Unexpected Request")
+                return NSLocalizedString("DEBUG (invalidRequest): The request could not be formed. Check for any invalid data or url.", comment: "Unexpected Request")
             case .unexpectedBody:
                 return NSLocalizedString("DEBUG (unexpectedBody): The request body could not be formed. Check for any invalid input.", comment: "DEBUG Unexpected Input")
             case .httpError:
@@ -79,6 +94,8 @@ public class HTTPError: Error {
                 return NSLocalizedString("DEBUG (unauthorized): Unauthorized, please login again.", comment: "DEBUG Unauthorized")
             case .forbidden:
                 return NSLocalizedString("DEBUG (forbidden): You have not granted this app permission to access this data.", comment: "DEBUG Forbidden")
+            case .notFound:
+                return NSLocalizedString("DEBUG (notFound): The resource you requested could not be found.", comment: "DEBUG Not Found")
             case .noNetwork:
                 return NSLocalizedString("DEBUG (noNetwork): A network connection could not be established.", comment: "DEBUG No Network")
             }
@@ -107,6 +124,22 @@ public class HTTPError: Error {
     /// The description returned from a web service, or the description from a custom ErrorType
     public let message: String
     
+    /// Returns a default alert controller with a user friendly message
+    public var alert: UIAlertController {
+        var message = self.message
+        
+        #if DEBUG
+        message.append("\n\n\(type.debugDescription)")
+        #endif
+        
+        let alert = UIAlertController(title: "Error", message: message, preferredStyle: UIAlertController.Style.alert)
+        alert.addAction(UIAlertAction(title: "OK", style: .default, handler:nil))
+        return alert
+    }
+    
+    
+    
+    /// MARK: - Init
     
     /// Creates a UHIError
     /// - important: This init is typically reserved for web service responses. For predefined UHIErrors, use init(type:).
@@ -127,16 +160,14 @@ public class HTTPError: Error {
     }
     
     
-    /// Returns a default alert controller with a user friendly message
-    public var alert: UIAlertController {
-        var message = self.message
-        
-        #if DEBUG
-        message.append("\n\n\(type.debugDescription)")
-        #endif
-        
-        let alert = UIAlertController(title: "Error", message: message, preferredStyle: UIAlertController.Style.alert)
-        alert.addAction(UIAlertAction(title: "OK", style: .default, handler:nil))
-        return alert
+    /// Creates a UHIError if the statusCode can be matched to an ErrorType
+    /// - parameter statusCode: A statusCode returned from a web service response
+    public convenience init?(statusCode: Int) {
+        if let type = ErrorType.errorTypeFromStatusCode(statusCode) {
+            self.init(type: type)
+        }
+        else {
+            return nil
+        }
     }
 }
