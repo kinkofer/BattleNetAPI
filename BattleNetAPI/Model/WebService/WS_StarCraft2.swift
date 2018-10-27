@@ -11,13 +11,11 @@ import Foundation
 
 class WS_StarCraft2: WebService {
     func getBaseURL(region: APIRegion, apiType: APIType?) -> String {
-        var url = "\(region.apiURI)"
+        var url = "\(region.apiURI)/sc2"
         
         if let apiType = apiType {
             url += "/\(apiType.rawValue)"
         }
-        
-        url += "/sc2"
         
         return url
     }
@@ -33,7 +31,7 @@ class WS_StarCraft2: WebService {
      - parameter completion: Returns a Result with the Data if `success` or an HTTPError if `failure`
      */
     func getCharacters(region: APIRegion, completion: @escaping (_ result: Result<Data>) -> Void) {
-        let urlStr = getBaseURL(region: region, apiType: nil) + "/profile/user"
+        let urlStr = getBaseURL(region: region, apiType: .profile) + "/user"
         self.callWebService(urlStr: urlStr, method: .get, apiType: .profile) { result in
             completion(result)
         }

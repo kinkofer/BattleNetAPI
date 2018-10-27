@@ -29,13 +29,13 @@ enum APIRegion: String {
     var authorizeURI: String {
         switch self {
         case .us, .eu:
-            return "https://\(self.rawValue).battle.net/oauth/authorize"
+            return "https://\(self.rawValue).battle.net/oauth"
         case .kr, .tw:
-            return "https://apac.battle.net/oauth/authorize"
+            return "https://apac.battle.net/oauth"
         case .sea:
-            return "https://us.battle.net/oauth/authorize"
+            return "https://us.battle.net/oauth"
         case .cn:
-            return "https://www.battlenet.com.cn/oauth/authorize"
+            return "https://www.battlenet.com.cn/oauth"
         }
     }
     
@@ -69,7 +69,12 @@ enum APIRegion: String {
     
     /// The base url of the API services
     var apiURI: String {
-        return "https://\(self.rawValue).api.blizzard.com"
+        switch self {
+        case .cn:
+            return "https://gateway.battlenet.com.cn"
+        default:
+            return "https://\(self.rawValue).api.blizzard.com"
+        }
     }
     
     /// The regional extension added to the "namespace" URL parameter

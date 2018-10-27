@@ -172,7 +172,7 @@ class WS_WorldOfWarcraft: WebService {
     func getPlayableClasses(region: APIRegion, locale: APILocale?, completion: @escaping (_ result: Result<Data>) -> Void) {
         let apiType: APIType = .gameData
         var urlStr = getBaseURL(region: region, apiType: apiType) + "/playable-class/"
-        urlStr = appendSharedURLParameters(to: urlStr, withNamespace: "static-7.3.5_25875", region: region, locale: locale)
+        urlStr = appendSharedURLParameters(to: urlStr, withNamespace: "static-us", region: region, locale: locale)
         
         self.callWebService(urlStr: urlStr, method: .get, apiType: apiType) { result in
             completion(result)

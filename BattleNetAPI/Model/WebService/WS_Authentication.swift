@@ -40,12 +40,14 @@ class WS_Authentication: WebService {
         let credentials = String(format: "%@:%@", clientID, clientSecret)
         network.encryptedCredentials = credentials.data(using: .utf8)?.base64EncodedString()
         
+        let urlStr = region.tokenURI
+        
         guard let body = "grant_type=client_credentials".data(using: .utf8) else {
             completion(.failure(HTTPError(type: .unexpectedBody)))
             return
         }
         
-        self.callWebService(urlStr: region.tokenURI, method: .post, apiType: nil, body: body, headers: [.contentType([.form])]) { result in
+        self.callWebService(urlStr: urlStr, method: .post, apiType: nil, body: body, headers: [.contentType([.form])]) { result in
             switch result {
             case .success(let data):
                 // Extract and save clientAccessToken to Network for future calls
@@ -79,9 +81,20 @@ class WS_Authentication: WebService {
      - parameter completion: Returns a Result with the Data if `success` or an HTTPError if `failure`
     */
     func getUserAccessToken(region: APIRegion, clientID: String, clientSecret: String, code: String, redirectURL: String, completion: @escaping (_ result: Result<Data>) -> Void) {
+        // Validate clientID and clientSecret
+        guard !clientID.isEmpty,
+            !clientSecret.isEmpty else {
+                completion(.failure(HTTPError(type: .invalidRequest)))
+                return
+        }
+        
+        // Set encryptedCredentials for Basic Authorization
+        let credentials = String(format: "%@:%@", clientID, clientSecret)
+        network.encryptedCredentials = credentials.data(using: .utf8)?.base64EncodedString()
+        
         let urlStr = region.tokenURI
         
-        let parameters = String(format: "grant_type=authorization_code&client_id=%@&client_secret=%@&code=%@&redirect_uri=%@", clientID, clientSecret, code, redirectURL)
+        let parameters = String(format: "grant_type=authorization_code&code=%@&redirect_uri=%@", code, redirectURL)
         let body = parameters.data(using: .utf8)
         
         self.callWebService(urlStr: urlStr, method: .post, apiType: nil, body: body, headers: [.contentType([.form])]) { result in
@@ -163,7 +176,8 @@ class WS_Authentication: WebService {
         let state = "BattleNetAPI\(Int(Date().timeIntervalSince1970))"
         UserDefaults.standard.set(state, forKey: "state")
         
-        let urlStr = String(format: "\(region.authorizeURI)?client_id=%@&scope=%@&state=%@&redirect_uri=%@&response_type=code", clientID, scope.scopeValue, state, redirectURL)
+        let baseURL = getBaseURL(region: region, apiType: nil) + "/authorize"
+        let urlStr = String(format: "\(baseURL)?client_id=%@&scope=%@&state=%@&redirect_uri=%@&response_type=code", clientID, scope.scopeValue, state, redirectURL)
         
         if let encodedURLStr = urlStr.addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed) {
             return encodedURLStr

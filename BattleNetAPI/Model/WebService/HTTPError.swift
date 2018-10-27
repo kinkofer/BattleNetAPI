@@ -109,8 +109,10 @@ public class HTTPError: Error {
                 return 401
             case .forbidden:
                 return 403
+            case .notFound:
+                return 404
             case .httpError:
-                return 599
+                return 500
             default:
                 return 499
             }
