@@ -61,7 +61,6 @@ extension WebService {
         
         // Construct the default request
         if var request = Network.shared.createRequest(with: url, method: method, apiType: apiType) {
-            
             // Add (or overwrite default) headers
             for header in headers {
                 switch header {

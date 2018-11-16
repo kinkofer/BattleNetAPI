@@ -9,6 +9,16 @@
 import Foundation
 
 
+/// The type of data being retrieved from the web services. Raw data used in web service urls, and used to determine if client or user authorization is required.
+enum APIType: String {
+    case gameData = "data"
+    case profile
+    
+    case community
+}
+
+
+
 /// The supported regions for the API services
 enum APIRegion: String {
     /// China
@@ -26,7 +36,7 @@ enum APIRegion: String {
     case us
     
     /// The base url of the authorization service
-    var authorizeURI: String {
+    var oauthURI: String {
         switch self {
         case .us, .eu:
             return "https://\(self.rawValue).battle.net/oauth"
@@ -88,13 +98,6 @@ enum APIRegion: String {
     }
 }
 
-
-
-/// The type of data being retrieved from the web services. Raw data used in web service urls, and used to determine if client or user authorization is required.
-enum APIType: String {
-    case gameData = "data"
-    case profile
-}
 
 
 /// The locale is used to retrieve values in the specified language

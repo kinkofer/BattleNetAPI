@@ -87,6 +87,7 @@
 		59E425DA2078A3930046EB84 /* AuthenticationModelController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 59E425D92078A3930046EB84 /* AuthenticationModelController.swift */; };
 		59E425DD2078AA4B0046EB84 /* ClientToken.swift in Sources */ = {isa = PBXBuildFile; fileRef = 59E425DC2078AA4B0046EB84 /* ClientToken.swift */; };
 		59E425DF2078B0480046EB84 /* Debug.swift in Sources */ = {isa = PBXBuildFile; fileRef = 59E425DE2078B0480046EB84 /* Debug.swift */; };
+		83292CDB219DB99200DED252 /* Result.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83292CDA219DB99200DED252 /* Result.swift */; };
 		833278A12180FD5F00BE02E1 /* AuthToken.swift in Sources */ = {isa = PBXBuildFile; fileRef = 833278A02180FD5F00BE02E1 /* AuthToken.swift */; };
 		833278A22180FD5F00BE02E1 /* AuthToken.swift in Sources */ = {isa = PBXBuildFile; fileRef = 833278A02180FD5F00BE02E1 /* AuthToken.swift */; };
 /* End PBXBuildFile section */
@@ -186,6 +187,7 @@
 		59E425D92078A3930046EB84 /* AuthenticationModelController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthenticationModelController.swift; sourceTree = "<group>"; };
 		59E425DC2078AA4B0046EB84 /* ClientToken.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ClientToken.swift; sourceTree = "<group>"; };
 		59E425DE2078B0480046EB84 /* Debug.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Debug.swift; sourceTree = "<group>"; };
+		83292CDA219DB99200DED252 /* Result.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Result.swift; sourceTree = "<group>"; };
 		833278A02180FD5F00BE02E1 /* AuthToken.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthToken.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -360,6 +362,7 @@
 				59E425C9207872EC0046EB84 /* Network.swift */,
 				59E425CB207874450046EB84 /* HTTPError.swift */,
 				59E425D120787FEF0046EB84 /* HTTPHeader.swift */,
+				83292CDA219DB99200DED252 /* Result.swift */,
 				59E425CF20787F990046EB84 /* WebService.swift */,
 				59E425CD20787F640046EB84 /* WS_Authentication.swift */,
 				59397CDF207C5FE20077018E /* WS_Diablo3.swift */,
@@ -559,6 +562,7 @@
 				833278A12180FD5F00BE02E1 /* AuthToken.swift in Sources */,
 				59397CEB207D5CB50077018E /* Follower.swift in Sources */,
 				593A3AE920806A3C0047B4C0 /* Ladder.swift in Sources */,
+				83292CDB219DB99200DED252 /* Result.swift in Sources */,
 				5967ACC720893371009BFBAF /* Specialization.swift in Sources */,
 				5967ACB820878E0F009BFBAF /* Era.swift in Sources */,
 				5939509B208ED0C600EABFA2 /* Zone.swift in Sources */,

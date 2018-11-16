@@ -15,7 +15,7 @@ class WS_Authentication: WebService {
     
     
     func getBaseURL(region: APIRegion, apiType: APIType?) -> String {
-        return region.authorizeURI
+        return region.oauthURI
     }
     
     
@@ -128,12 +128,16 @@ class WS_Authentication: WebService {
      - parameter completion: Returns a Result with the Data if `success` or an HTTPError if `failure`
      */
     func validateClientAccessToken(_ token: String, region: APIRegion, completion: @escaping (_ result: Result<Data>) -> Void) {
-        let urlStr = String(format: "\(region.checkTokenURI)?token=%@", token)
+        guard !token.isEmpty else {
+            completion(.failure(HTTPError(type: .unexpectedBody)))
+            return
+        }
+        
+        let urlStr = "\(region.oauthURI)/check_token?token=\(token)"
+        
         self.callWebService(urlStr: urlStr, method: .post, apiType: nil) { result in
             // extract and save clientAccessToken to Network for future calls
-            if case Result.success(_) = result {
-                Network.shared.clientAccessToken = token
-            }
+            Network.shared.clientAccessToken = result.isSuccess ? token : nil
             
             completion(result)
         }

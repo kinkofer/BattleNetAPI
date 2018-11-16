@@ -13,7 +13,7 @@ class WS_User: WebService {
     private let network = Network.shared
     
     func getBaseURL(region: APIRegion, apiType: APIType?) -> String {
-        return "\(region.authorizeURI)"
+        return "\(region.oauthURI)"
     }
     
     
@@ -27,7 +27,7 @@ class WS_User: WebService {
      - parameter completion: Returns a Result with the Data if `success` or an HTTPError if `failure`
      */
     func getUser(region: APIRegion, completion: @escaping (_ result: Result<Data>) -> Void) {
-        let apiType: APIType = .profile
+        let apiType: APIType = .community
         let urlStr = getBaseURL(region: region, apiType: apiType) + "/userinfo"
         self.callWebService(urlStr: urlStr, method: .get, apiType: .profile) { result in
             completion(result)
