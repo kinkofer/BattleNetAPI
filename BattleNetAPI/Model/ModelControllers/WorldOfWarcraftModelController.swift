@@ -347,10 +347,10 @@ class WorldOfWarcraftModelController {
     
     // MARK: - Realm Status API
     
-    func getRealmsStatus(region: APIRegion = .us, locale: APILocale = .en_US, completion: @escaping (_ result: Result<[RealmLegacy]>) -> Void) {
+    func getRealmsStatus(region: APIRegion = .us, locale: APILocale = .en_US, completion: @escaping (_ result: Result<[WOWRealm]>) -> Void) {
         BattleNetAPI.wow.getRealmsStatus(region: region, locale: locale) { result in
-            let customDecode: ((_ data: Data) throws -> [RealmLegacy]) = { data in
-                return try RealmIndexLegacy.decode(from: data).realms
+            let customDecode: ((_ data: Data) throws -> [WOWRealm]) = { data in
+                return try WOWRealmIndex.decode(from: data).realms
             }
             result.decode(customDecode: customDecode, completion: completion)
         }
@@ -420,10 +420,10 @@ class WorldOfWarcraftModelController {
     }
     
     
-    func getClasses(region: APIRegion = .us, locale: APILocale = .en_US, completion: @escaping (_ result: Result<[WOWClassLegacy]>) -> Void) {
+    func getClasses(region: APIRegion = .us, locale: APILocale = .en_US, completion: @escaping (_ result: Result<[WOWCharacterClass]>) -> Void) {
         BattleNetAPI.wow.getClasses(region: region, locale: locale) { result in
-            let customDecode: ((_ data: Data) throws -> [WOWClassLegacy]) = { data in
-                return try WOWClassIndexLegacy.decode(from: data).classes
+            let customDecode: ((_ data: Data) throws -> [WOWCharacterClass]) = { data in
+                return try WOWCharacterClassIndex.decode(from: data).classes
             }
             result.decode(customDecode: customDecode, completion: completion)
         }
@@ -480,7 +480,7 @@ class WorldOfWarcraftModelController {
     }
     
     
-    func getTalents(region: APIRegion = .us, locale: APILocale = .en_US, completion: @escaping (_ result: Result<TalentDictionary>) -> Void) {
+    func getTalents(region: APIRegion = .us, locale: APILocale = .en_US, completion: @escaping (_ result: Result<ClassTalentDictionary>) -> Void) {
         BattleNetAPI.wow.getTalents(region: region, locale: locale) { result in
             result.decode(completion: completion)
         }

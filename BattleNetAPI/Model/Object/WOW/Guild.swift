@@ -119,7 +119,7 @@ class WOWGuildProfile: Codable {
 
 class GuildMember: Codable {
     var character: GuildCharacter? = nil
-    var spec: SpecializationLegacy? = SpecializationLegacy()
+    var spec: CharacterSpecialization? = nil
 }
 
 
@@ -131,14 +131,14 @@ class GuildCharacter: Codable {
     var race: Int = 0
     var level: Int = 0
     
-    var realm: String = ""
-    var guild: String? = ""
-    var guildRealm: String? = ""
+    var realm: String? = nil
+    var guild: String? = nil
+    var guildRealm: String? = nil
     
-    var battlegroup: String = ""
+    var battlegroup: String? = nil
     var achievementPoints: Int = 0
     var lastModified: Int = 0
     var thumbnail: String = ""
     
-    var spec: SpecializationLegacy? = nil
+    var spec: CharacterSpecialization? = nil
 }

@@ -151,7 +151,7 @@ enum APILocale: String {
 }
 
 
-/// This class is an interface to all the web services, with separate properties for accessing authentication, user, and specific game web services. It further makes a distinction between legacy services that only require an app key, and are expected to be deprecated in the near future.
+/// This class is an interface to all the web services, with separate properties for accessing authentication, user, and specific game web services.
 class BattleNetAPI {
     /// Authenication web services
     public static let authentication = WS_Authentication()

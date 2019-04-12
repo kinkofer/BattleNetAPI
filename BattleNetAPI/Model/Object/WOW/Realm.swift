@@ -38,7 +38,7 @@ class Realm: Codable {
     
     var isTournament = false
     
-    var type = RealmType()
+    var type = RealmInfo()
     var category = ""
     var locale = ""
     var timezone = ""
@@ -60,23 +60,23 @@ class Realm: Codable {
 
 
 
-class RealmType: Codable {
+class RealmInfo: Codable {
     var name: String = ""
     var type: String = ""
 }
 
 
 
-// MARK: - Realm Legacy
+// MARK: - Realm Data Resource
 
-class RealmIndexLegacy: Codable {
-    var realms: [RealmLegacy] = [RealmLegacy]()
+class WOWRealmIndex: Codable {
+    var realms: [WOWRealm] = [WOWRealm]()
 }
 
 
 
-class RealmLegacy: Codable {
-    var type: RealmTypeLegacy = .normal
+class WOWRealm: Codable {
+    var type: RealmType = .normal
     var population: RealmPopulation = .notApplicable
     var queue: Bool = false
     var status: Bool = false
@@ -111,14 +111,14 @@ enum RealmPopulation: String, Codable {
 }
 
 
-enum RealmTypeLegacy: String, Codable {
+enum RealmType: String, Codable {
     case normal
     case roleplaying
 }
 
 
 
-class RealmSummaryLegacy: Codable {
+class RealmSummary: Codable {
     var name: String = ""
     var slug: String = ""
     var battlegroup: String = ""

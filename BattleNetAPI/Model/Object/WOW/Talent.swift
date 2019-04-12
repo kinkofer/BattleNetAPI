@@ -9,13 +9,13 @@
 import Foundation
 
 
-typealias TalentDictionary = [String: TalentLegacy]
+typealias ClassTalentDictionary = [String: ClassTalent]
 
-class TalentLegacy: Codable {
-    var specs: [SpecializationLegacy] = [SpecializationLegacy]()
+class ClassTalent: Codable {
+    var specs: [CharacterSpecialization] = [CharacterSpecialization]()
     var talents: [[[TalentElement]]] = [[[TalentElement]]]()
     var `class`: String = ""
-    var petSpecs: [SpecializationLegacy]? = nil
+    var petSpecs: [CharacterSpecialization]? = nil
 }
 
 
@@ -31,13 +31,13 @@ enum RoleType: String, Codable {
 class TalentElement: Codable {
     var tier: Int = 0
     var column: Int = 0
-    var spell: SpellLegacy = SpellLegacy()
-    var spec: SpecializationLegacy? = nil
+    var spell: CharacterSpell = CharacterSpell()
+    var spec: CharacterSpecialization? = nil
 }
 
 
 
-class SpellLegacy: Codable {
+class CharacterSpell: Codable {
     var id: Int = 0
     var name: String = ""
     var icon: String = ""
@@ -53,7 +53,7 @@ class SpellLegacy: Codable {
 
 class CharacterTalent: Codable {
     var talents: [TalentElement] = [TalentElement]()
-    var spec: SpecializationLegacy? = nil
+    var spec: CharacterSpecialization? = nil
     var selected: Bool? = nil
     var calcTalent: String = ""
     var calcSpec: String = ""

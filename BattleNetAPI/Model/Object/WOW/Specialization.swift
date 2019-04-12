@@ -132,9 +132,7 @@ enum Range: String, Codable {
 
 
 
-// MARK: - Legacy
-
-class SpecializationLegacy: Codable {
+class CharacterSpecialization: Codable {
     var name: String = ""
     var role: RoleType = .dps
     var backgroundImage: String = ""

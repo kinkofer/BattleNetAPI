@@ -83,7 +83,7 @@ class WOWCharacter: Codable {
     var guild: String? = nil
     var guildRealm: String? = nil
     
-    var spec: SpecializationLegacy? = nil
+    var spec: CharacterSpecialization? = nil
 }
 
 
@@ -101,7 +101,7 @@ class WOWCharacterProfile: Codable {
     var thumbnail: String = ""
     var lastModified: Int = 0
     
-    var spec: SpecializationLegacy? = nil
+    var spec: CharacterSpecialization? = nil
     
     var calcClass: String? = nil
     var faction: Int? = nil

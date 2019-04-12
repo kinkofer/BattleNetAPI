@@ -189,7 +189,7 @@ class HunterPet: Codable {
     var name: String = ""
     var creature = 0
     var slot: Int = 0
-    var spec: SpecializationLegacy = SpecializationLegacy()
+    var spec: CharacterSpecialization = CharacterSpecialization()
     var calcSpec: String = ""
     var familyID: Int = 0
     var familyName: String = ""

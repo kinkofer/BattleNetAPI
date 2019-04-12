@@ -20,7 +20,7 @@ class ChallengeIndex: Codable {
 
 
 class Challenge: Codable {
-    var realm: RealmSummaryLegacy? = nil
+    var realm: RealmSummary? = nil
     var map: ChallengeModeMap? = nil
     var groups: [ChallengeModeGroup] = [ChallengeModeGroup]()
 }
@@ -49,7 +49,7 @@ enum ChallengeFactionType: String, Codable {
 
 class ChallengeModeMember: Codable {
     var character: WOWCharacter? = nil
-    var spec: SpecializationLegacy = SpecializationLegacy()
+    var spec: CharacterSpecialization = CharacterSpecialization()
 }
 
 

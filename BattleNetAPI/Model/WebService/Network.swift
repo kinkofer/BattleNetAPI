@@ -25,9 +25,6 @@ class Network {
     /// The encrypted client credentials for a Basic request, used to retrieve the client access token
     public var encryptedCredentials: String?
     
-    /// Required for legacy services
-    public var apikey: String?
-    
     
     
     /**

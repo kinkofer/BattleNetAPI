@@ -68,13 +68,13 @@ class PowerType: Codable {
 
 
 
-// MARK: - Legacy
+// MARK: - Class Data Resource
 
-class WOWClassIndexLegacy: Codable {
-    var classes: [WOWClassLegacy] = [WOWClassLegacy]()
+class WOWCharacterClassIndex: Codable {
+    var classes: [WOWCharacterClass] = [WOWCharacterClass]()
 }
 
-class WOWClassLegacy: Codable {
+class WOWCharacterClass: Codable {
     var id: Int = 0
     var mask: Int = 0
     var powerType: String = ""

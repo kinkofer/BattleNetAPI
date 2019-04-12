@@ -561,7 +561,7 @@ class WorldOfWarcraftTests: XCTestCase {
         let wsResponseExpectation = expectation(description: "Web Service returned a response")
         
         BattleNetAPI.wow.getRealmsStatus(region: region, locale: locale) { result in
-            BattleNetAPITests.webServiceClosureTest(result: result, decodable: RealmIndexLegacy.self, expectation: wsResponseExpectation)
+            BattleNetAPITests.webServiceClosureTest(result: result, decodable: WOWRealmIndex.self, expectation: wsResponseExpectation)
         }
         
         waitForExpectations(timeout: 20) { error in
@@ -670,7 +670,7 @@ class WorldOfWarcraftTests: XCTestCase {
         let wsResponseExpectation = expectation(description: "Web Service returned a response")
         
         BattleNetAPI.wow.getClasses(region: region, locale: locale) { result in
-            BattleNetAPITests.webServiceClosureTest(result: result, decodable: WOWClassIndexLegacy.self, expectation: wsResponseExpectation)
+            BattleNetAPITests.webServiceClosureTest(result: result, decodable: WOWCharacterClassIndex.self, expectation: wsResponseExpectation)
         }
         
         waitForExpectations(timeout: 20) { error in
@@ -748,7 +748,7 @@ class WorldOfWarcraftTests: XCTestCase {
         let wsResponseExpectation = expectation(description: "Web Service returned a response")
         
         BattleNetAPI.wow.getTalents(region: region, locale: locale) { result in
-            BattleNetAPITests.webServiceClosureTest(result: result, decodable: TalentDictionary.self, expectation: wsResponseExpectation)
+            BattleNetAPITests.webServiceClosureTest(result: result, decodable: ClassTalentDictionary.self, expectation: wsResponseExpectation)
         }
         
         waitForExpectations(timeout: 20) { error in
