@@ -33,6 +33,8 @@ public class HTTPError: Error {
         case forbidden
         /// HTTP error 404
         case notFound
+        /// HTTP error -1001
+        case timeout
         
         /// A network connection could not be made
         case noNetwork
@@ -65,6 +67,8 @@ public class HTTPError: Error {
                 return NSLocalizedString("The web service response could not be parsed.", comment: "String Parsing Error")
             case .unauthorized:
                 return NSLocalizedString("Unauthorized, please login again.", comment: "Unauthorized")
+            case .timeout:
+                return NSLocalizedString("The request timed out.", comment: "Timeout")
             case .forbidden:
                 return NSLocalizedString("You have not granted this app permission to access this data.", comment: "Forbidden")
             case .notFound:
@@ -92,6 +96,8 @@ public class HTTPError: Error {
                 return NSLocalizedString("DEBUG (stringParsingError): The data could not be read.", comment: "DEBUG String Parsing Error")
             case .unauthorized:
                 return NSLocalizedString("DEBUG (unauthorized): Unauthorized, please login again.", comment: "DEBUG Unauthorized")
+            case .timeout:
+                return NSLocalizedString("DEBUG (timeout): The request timed out.", comment: "DEBUG Timeout")
             case .forbidden:
                 return NSLocalizedString("DEBUG (forbidden): You have not granted this app permission to access this data.", comment: "DEBUG Forbidden")
             case .notFound:
@@ -113,6 +119,8 @@ public class HTTPError: Error {
                 return 404
             case .httpError:
                 return 500
+            case .timeout:
+                return -1001
             default:
                 return 499
             }

@@ -191,13 +191,3 @@ class WS_Authentication: WebService {
         }
     }
 }
-
-
-
-class WS_AuthenticationLegacy {
-    private let network = Network.shared
-    
-    func setApikeyLegacy(_ clientID: String) {
-        network.apikey = clientID
-    }
-}

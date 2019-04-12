@@ -26,7 +26,7 @@ class Network {
     public var encryptedCredentials: String?
     
     /// Required for legacy services
-    public var apikey: String? = nil
+    public var apikey: String?
     
     
     
@@ -63,31 +63,6 @@ class Network {
     
     
     /**
-     Creates a URLRequest sending and receiving JSON by default.
-     
-     - parameter url: The RESTful URL
-     - parameter method: A RESTful HTTP request method
-     - returns: The URLRequest or nil if the user has not been authenticated.
-     - requires: An accessToken must be saved in the Network class in order to create the URLRequest.
-     */
-    func createRequestLegacy(with url: URL, method: HTTPMethod) -> URLRequest? {
-        guard let apikey = apikey else {
-            return nil
-        }
-        
-        var urlComponents = URLComponents(url: url, resolvingAgainstBaseURL: false)!
-        urlComponents.queryItems?.append(URLQueryItem(name: "apikey", value: apikey))
-        var request = URLRequest(url: urlComponents.url!)
-        
-        request.httpMethod = method.rawValue
-        request.setValue("application/json", forHTTPHeaderField: "Content-Type")
-        request.setValue("application/json", forHTTPHeaderField: "Accept")
-        
-        return request
-    }
-    
-    
-    /**
      Starts the URLRequest and returns the response from the server or an error.
      
      - parameter request: The URLRequest
@@ -102,6 +77,9 @@ class Network {
                 if (statusCode >= 200 && statusCode < 300) {
                     completion(.success(data))
                 }
+                else if self.hasInvalidCredentials(response: response, data: data) {
+                    completion(.failure(HTTPError(type: .unauthorized)))
+                }
                 else if let httpError = HTTPError(statusCode: statusCode) {
                     completion(.failure(httpError))
                 }
@@ -110,11 +88,28 @@ class Network {
                 }
             }
             else if let error = error as NSError? {
-                completion(.failure(HTTPError(from: error)))
+                if error.code == HTTPError.ErrorType.timeout.code {
+                    completion(.failure(HTTPError(type: .timeout)))
+                }
+                else {
+                    completion(.failure(HTTPError(from: error)))
+                }
             }
             else {
                 completion(.failure(HTTPError(type: .httpError)))
             }
         }.resume()
+    }
+    
+    
+    func hasInvalidCredentials(response: HTTPURLResponse, data: Data) -> Bool {
+        if response.statusCode == 400,
+            let json = try? JSONSerialization.jsonObject(with: data, options: []),
+            let jsonDict = json as? [String: String] {
+            return jsonDict.contains(where: { $0 == ("error", "invalid_token")})
+        }
+        else {
+            return false
+        }
     }
 }

@@ -17,8 +17,8 @@ class WOWAchievementIndex: Codable {
 
 class WOWAchievementCategory: Codable {
     var id: Int = 0
-    var achievements: [WOWAchievement] = [WOWAchievement]()
     var name: String = ""
+    var achievements: [WOWAchievement]? = nil
     var categories: [WOWAchievementCategory]? = nil
 }
 

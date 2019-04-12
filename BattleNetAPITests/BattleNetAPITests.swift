@@ -13,8 +13,8 @@ import XCTest
 let clientID = AuthToken.clientID
 let clientSecret = AuthToken.clientSecret
 
-let clientAccessToken: String = AuthToken.clientAccessToken
-let userAccessToken: String = AuthToken.userAccessToken
+let clientAccessToken: String = AuthToken.clientAccessToken!
+let userAccessToken: String = AuthToken.userAccessToken!
 
 
 class BattleNetAPITests: XCTestCase {

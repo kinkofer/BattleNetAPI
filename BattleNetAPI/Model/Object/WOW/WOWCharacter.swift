@@ -198,7 +198,7 @@ class Professions: Codable {
 
 class Profession: Codable {
     var id: Int = 0
-    var icon: String = ""
+    var icon: String? = nil
     var recipes: [Int] = [Int]()
     var name: String = ""
     var rank: Int = 0

@@ -16,23 +16,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
         // Override point for customization after application launch.
-        return true
-    }
-    
-    
-    func application(_ app: UIApplication, open url: URL, options: [UIApplication.OpenURLOptionsKey: Any] = [:]) -> Bool {
-        if let queryItems = URLComponents(url: url, resolvingAgainstBaseURL: false)?.queryItems,
-            let code = queryItems.first(where: {$0.name == "code"})?.value,
-            let state = queryItems.first(where: {$0.name == "state"})?.value,
-            state == UserDefaults.standard.string(forKey: "state") {
-            Debug.print("Code: \(code)")
-            let userInfoDict = ["code": code]
-            NotificationCenter.default.post(Notification(name: .didReturnUserCodeNotification, object: nil, userInfo: userInfoDict))
-            UserDefaults.standard.set(nil, forKey: "state")
-            return true
-        }
         
-        return false
+        return true
     }
     
 

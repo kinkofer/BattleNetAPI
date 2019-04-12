@@ -118,8 +118,8 @@ class WOWGuildProfile: Codable {
 
 
 class GuildMember: Codable {
-    var character: GuildCharacter = GuildCharacter()
-    var rank: Int = 0
+    var character: GuildCharacter? = nil
+    var spec: SpecializationLegacy? = SpecializationLegacy()
 }
 
 
@@ -132,8 +132,8 @@ class GuildCharacter: Codable {
     var level: Int = 0
     
     var realm: String = ""
-    var guild: String = ""
-    var guildRealm: String = ""
+    var guild: String? = ""
+    var guildRealm: String? = ""
     
     var battlegroup: String = ""
     var achievementPoints: Int = 0

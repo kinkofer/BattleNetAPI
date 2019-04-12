@@ -2,32 +2,42 @@
 //  SC2Achievement.swift
 //  BattleNetAPI
 //
-//  Created by Christopher Jennewein on 4/12/18.
+//  Created by Christopher Jennewein on 11/17/18.
 //  Copyright © 2018 Prismatic Games. All rights reserved.
 //
 
 import Foundation
 
 
-class SC2AchievementIndex: Codable {
-    var achievements = [SC2Achievement]()
-    var categories = [SC2AchievementCategory]()
-}
-
 class SC2Achievement: Codable {
-    var title = ""
-    var description = ""
-    var achievementId: Double = 0
-    var categoryId = 0
-    var points = 0
-    var icon = Image()
-}
-
-
-
-class SC2AchievementCategory: Codable {
-    var title = ""
-    var categoryId = 0
-    var featuredAchievementId: Double = 0
-    var children: [SC2AchievementCategory]? = nil
+    var id: String = ""
+    var title: String = ""
+    var description: String = ""
+    var imageUrl: String = ""
+    
+    var uiOrderHint: Int = 0
+    var isChained: Bool = false
+    var points: Int = 0
+    var chainRewardSize: Int = 0
+    var criteriaIDs: [String]? = nil
+    var chainAchievementIDs: [String] = [String]()
+    var flags: Int = 0
+    var categoryID: String = ""
+    
+    
+    enum CodingKeys: String, CodingKey {
+        case id
+        case title
+        case description
+        case imageUrl
+        
+        case uiOrderHint
+        case isChained
+        case points
+        case chainRewardSize
+        case criteriaIDs = "criteriaIds"
+        case chainAchievementIDs = "chainAchievementIds"
+        case flags
+        case categoryID = "categoryId"
+    }
 }

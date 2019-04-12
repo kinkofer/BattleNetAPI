@@ -13,14 +13,22 @@ import Foundation
 enum APIType: String {
     case gameData = "data"
     case profile
-    
     case community
+    
+    
+    var displayName: String {
+        switch self {
+        case .gameData: return "Game Data APIs"
+        case .profile: return "Profile APIs"
+        case .community: return "Community APIs"
+        }
+    }
 }
 
 
 
 /// The supported regions for the API services
-enum APIRegion: String {
+enum APIRegion: String, CaseIterable {
     /// China
     case cn
     /// Europe
@@ -96,6 +104,31 @@ enum APIRegion: String {
             return ""
         }
     }
+    
+    
+    /// The id associated with the region
+    /// - note: South East Asia (.sea) has been grouped with Korea (kr) and Taiwan (tw)
+    var id: Int {
+        switch self {
+        case .us: return 1
+        case .eu: return 2
+        case .kr, .tw, .sea: return 3
+        case .cn: return 5
+        }
+    }
+    
+    
+    /// The display name of the region
+    var displayName: String {
+        switch self {
+        case .us: return "United States"
+        case .eu: return "Europe"
+        case .kr: return "Korea"
+        case .tw: return "Taiwan"
+        case .sea: return "South East Asia"
+        case .cn: return "China"
+        }
+    }
 }
 
 
@@ -122,21 +155,13 @@ enum APILocale: String {
 class BattleNetAPI {
     /// Authenication web services
     public static let authentication = WS_Authentication()
-    /// Legacy authenication web services
-    public static let authenticationLegacy = WS_AuthenticationLegacy()
     /// User web services
     public static let user = WS_User()
     
     /// World of Warcraft web services
     public static let wow = WS_WorldOfWarcraft()
-    /// Legacy World of Warcraft web services
-    public static let wowLegacy = WS_WorldOfWarcraftLegacy()
     /// StarCraft 2 web services
     public static let sc2 = WS_StarCraft2()
-    /// Legacy StarCraft 2 web services
-    public static let sc2Legacy = WS_StarCraft2Legacy()
     /// Diablo 3 web services
     public static let d3 = WS_Diablo3()
-    /// Legacy Diablo 3 web services
-    public static let d3Legacy = WS_Diablo3Legacy()
 }

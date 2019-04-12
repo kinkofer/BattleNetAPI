@@ -15,71 +15,77 @@ class StarCraft2ModelController {
     
     
     
-    // MARK: - Profile API
+    // MARK: - Game Data API
     
-    func getCharacters(region: APIRegion, completion: @escaping (_ result: Result<[SC2Character]>) -> Void) {
-        BattleNetAPI.sc2.getCharacters(region: region) { result in
-            let customDecode: ((_ data: Data) throws -> [SC2Character]) = { data in
-                return try SC2CharacterIndex.decode(from: data).characters
-            }
-            result.decode(customDecode: customDecode, completion: completion)
-        }
-    }
+    // MARK: League API
     
-    
-    
-    // MARK: - Profile API
-    
-    func getCharacter(id: Int, profileName: String, sc2Region: Int, region: APIRegion, locale: APILocale, completion: @escaping (_ result: Result<SC2Character>) -> Void) {
-        BattleNetAPI.sc2Legacy.getProfile(id: id, name: profileName, sc2Region: sc2Region, region: region, locale: locale) { result in
-            result.decode(completion: completion)
-        }
-    }
-    
-    
-    func getLadders(id: Int, profileName: String, sc2Region: Int, region: APIRegion, locale: APILocale, completion: @escaping (_ result: Result<LadderOverview>) -> Void) {
-        BattleNetAPI.sc2Legacy.getLadders(id: id, name: profileName, sc2Region: sc2Region, region: region, locale: locale) { result in
-            result.decode(completion: completion)
-        }
-    }
-    
-    
-    func getMatches(id: Int, profileName: String, sc2Region: Int, region: APIRegion, locale: APILocale, completion: @escaping (_ result: Result<[Match]>) -> Void) {
-        BattleNetAPI.sc2Legacy.getMatches(id: id, name: profileName, sc2Region: sc2Region, region: region, locale: locale) { result in
-            let customDecode: ((_ data: Data) throws -> [Match]) = { data in
-                return try MatchIndex.decode(from: data).matches
-            }
-            result.decode(customDecode: customDecode, completion: completion)
-        }
-    }
-    
-    
-    
-    // MARK: - Ladder API
-    
-    func getLadder(id: Int, region: APIRegion, locale: APILocale, completion: @escaping (_ result: Result<Ladder>) -> Void) {
-        BattleNetAPI.sc2Legacy.getLadder(id: id, region: region, locale: locale) { result in
+    func getLeagueData(seasonID: Int, queue: LeagueQueue, team: LeagueTeam, league: LeagueType, region: APIRegion, locale: APILocale, completion: @escaping (_ result: Result<League>) -> Void) {
+        BattleNetAPI.sc2.getLeagueData(seasonID: seasonID, queue: queue, team: team, league: league, region: region, locale: locale) { result in
             result.decode(completion: completion)
         }
     }
     
     
     
-    // MARK: - Data Resources
+    // MARK: - Community API
     
-    func getAchievements(region: APIRegion, locale: APILocale, completion: @escaping (_ result: Result<SC2AchievementIndex>) -> Void) {
-        BattleNetAPI.sc2Legacy.getAchievements(region: region, locale: locale) { result in
+    // MARK: Profile API
+    
+    func getProfileData(sc2Region: APIRegion, region: APIRegion, locale: APILocale, completion: @escaping (_ result: Result<SC2ProfileData>) -> Void) {
+        BattleNetAPI.sc2.getProfileData(sc2Region: sc2Region, region: region, locale: locale) { result in
             result.decode(completion: completion)
         }
     }
     
     
-    func getRewards(region: APIRegion, locale: APILocale, completion: @escaping (_ result: Result<[SC2Reward]>) -> Void) {
-        BattleNetAPI.sc2Legacy.getRewards(region: region, locale: locale) { result in
-            let customDecode: ((_ data: Data) throws -> [SC2Reward]) = { data in
-                return try SC2RewardIndex.decode(from: data).portraits
-            }
-            result.decode(customDecode: customDecode, completion: completion)
+    func getProfileMetadata(id: Int, sc2Region: APIRegion, realmID: Int, region: APIRegion, locale: APILocale, completion: @escaping (_ result: Result<SC2ProfileMetadata>) -> Void) {
+        BattleNetAPI.sc2.getProfileMetadata(id: id, sc2Region: sc2Region, realmID: realmID, region: region, locale: locale) { result in
+            result.decode(completion: completion)
+        }
+    }
+    
+    
+    func getProfile(id: Int, sc2Region: APIRegion, realmID: Int, region: APIRegion, locale: APILocale, completion: @escaping (_ result: Result<SC2Profile>) -> Void) {
+        BattleNetAPI.sc2.getProfile(id: id, sc2Region: sc2Region, realmID: realmID, region: region, locale: locale) { result in
+            result.decode(completion: completion)
+        }
+    }
+    
+    
+    func getLadderSummary(profileID: Int, sc2Region: APIRegion, realmID: Int, region: APIRegion, locale: APILocale, completion: @escaping (_ result: Result<LadderSummary>) -> Void) {
+        BattleNetAPI.sc2.getLadderSummary(profileID: profileID, sc2Region: sc2Region, realmID: realmID, region: region, locale: locale) { result in
+            result.decode(completion: completion)
+        }
+    }
+    
+    
+    func getLadder(id: Int, profileID: Int, sc2Region: APIRegion, realmID: Int, region: APIRegion, locale: APILocale, completion: @escaping (_ result: Result<Ladder>) -> Void) {
+        BattleNetAPI.sc2.getLadder(id: id, profileID: profileID, sc2Region: sc2Region, realmID: realmID, region: region, locale: locale) { result in
+            result.decode(completion: completion)
+        }
+    }
+    
+    
+    // MARK: Ladder API
+    
+    func getGrandmasterLeaderboard(sc2Region: APIRegion, region: APIRegion, locale: APILocale, completion: @escaping (_ result: Result<GrandmasterLeaderboard>) -> Void) {
+        BattleNetAPI.sc2.getGrandmasterLeaderboard(sc2Region: sc2Region, region: region, locale: locale) { result in
+            result.decode(completion: completion)
+        }
+    }
+    
+    func getLadderSeason(sc2Region: APIRegion, region: APIRegion, locale: APILocale, completion: @escaping (_ result: Result<SC2Season>) -> Void) {
+        BattleNetAPI.sc2.getLadderSeason(sc2Region: sc2Region, region: region, locale: locale) { result in
+            result.decode(completion: completion)
+        }
+    }
+    
+    
+    // MARK: Account API
+    
+    func getPlayers(userID: Int, region: APIRegion, completion: @escaping (_ result: Result<[SC2ProfileMetadata]>) -> Void) {
+        BattleNetAPI.sc2.getPlayers(userID: userID, region: region) { result in
+            result.decode(completion: completion)
         }
     }
 }

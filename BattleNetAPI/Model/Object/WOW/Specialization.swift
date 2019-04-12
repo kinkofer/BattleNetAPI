@@ -40,7 +40,7 @@ class Specialization: Codable {
     var playableClass: WOWClassLink = WOWClassLink()
     var genderDescription: GenderName = GenderName()
     var role: Role = Role()
-    var pvpTalentTiers: [PvpTalentTier] = [PvpTalentTier]()
+    var pvpTalents: [Talent] = [Talent]()
     var talentTiers: [TalentTier] = [TalentTier]()
     
     var media: MediaLink = MediaLink()
@@ -53,7 +53,7 @@ class Specialization: Codable {
         case genderDescription = "gender_description"
         case media
         case role
-        case pvpTalentTiers = "pvp_talent_tiers"
+        case pvpTalents = "pvp_talents"
         case talentTiers = "talent_tiers"
     }
 }
@@ -66,19 +66,24 @@ class Role: Codable {
 }
 
 
-
-class PvpTalentTier: Codable {
-    var pvpTalents: [Talent] = [Talent]()
-    
-    enum CodingKeys: String, CodingKey {
-        case pvpTalents = "pvp_talents"
-    }
+class TalentTier: Codable {
+    var level: Int = 0
+    var talents: [Talent] = [Talent]()
 }
-
 
 
 class Talent: Codable {
     var talent: WOWClassLink = WOWClassLink()
+    var spellTooltip: SpellTooltip = SpellTooltip()
+    
+    enum CodingKeys: String, CodingKey {
+        case talent
+        case spellTooltip = "spell_tooltip"
+    }
+}
+
+
+class SpellTooltip: Codable {
     var description: String = ""
     var castTime: CastTime = .instant
     var cooldown: String? = nil
@@ -86,7 +91,6 @@ class Talent: Codable {
     var range: Range? = nil
     
     enum CodingKeys: String, CodingKey {
-        case talent
         case description
         case castTime = "cast_time"
         case cooldown
@@ -124,13 +128,6 @@ enum Range: String, Codable {
     case SixtyYdRange = "60 yd range"
     case eightToTwentyFiveYdRange = "8-25 yd range"
     case eightYdRange = "8 yd range"
-}
-
-
-
-class TalentTier: Codable {
-    var level: Int = 0
-    var talents: [Talent] = [Talent]()
 }
 
 

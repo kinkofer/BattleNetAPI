@@ -134,7 +134,7 @@ class WOWItemSource: Codable {
 
 class WOWItemSpell: Codable {
     var spellID: Int = 0
-    var spell: Spell = Spell()
+    var scaledDescription: String = ""
     var trigger: String = ""
     var consumable: Bool = false
     var categoryID: Int = 0
@@ -142,7 +142,7 @@ class WOWItemSpell: Codable {
     
     enum CodingKeys: String, CodingKey {
         case spellID = "spellId"
-        case spell
+        case scaledDescription
         case trigger
         case consumable
         case categoryID = "categoryId"
@@ -223,11 +223,12 @@ class WOWItemAppearance: Codable {
 
 class TooltipParams: Codable {
     var timewalkerLevel: Int = 0
-    
-    var transmogItem: Int? =  nil
-    var enchant: Int? = nil
-    
-    var upgrade: WOWItemUpgrade? = nil
+    var azeritePowerLevel: Int = 0
+    var azeritePower0: Int = 0
+    var azeritePower1: Int = 0
+    var azeritePower2: Int = 0
+    var azeritePower3: Int = 0
+    var azeritePower4: Int = 0
 }
 
 

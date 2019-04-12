@@ -13,11 +13,6 @@ class AuthenticationModelController {
     private init() { }
     
     
-    func setApikeyLegacy(_ clientID: String) {
-        BattleNetAPI.authenticationLegacy.setApikeyLegacy(clientID)
-    }
-    
-    
     func getClientAccessToken(region: APIRegion = .us, clientID: String, clientSecret: String, completion: @escaping (_ result: Result<Access>) -> Void) {
         BattleNetAPI.authentication.getClientAccessToken(region: .us, clientID: clientID, clientSecret: clientSecret) { result in
             result.decode(completion: completion)
@@ -57,5 +52,10 @@ class AuthenticationModelController {
             UIApplication.shared.canOpenURL(url) {
             UIApplication.shared.open(url, options: [:])
         }
+    }
+    
+    
+    func getOAuthURL(region: APIRegion, clientID: String, scope: Scope, redirectURL: String) -> URL? {
+        return URL(string: BattleNetAPI.authentication.getOAuthURL(region: region, clientID: clientID, scope: scope, redirectURL: redirectURL))
     }
 }

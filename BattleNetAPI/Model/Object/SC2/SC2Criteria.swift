@@ -1,5 +1,5 @@
 //
-//  SC2Reward.swift
+//  SC2Criteria.swift
 //  BattleNetAPI
 //
 //  Created by Christopher Jennewein on 11/17/18.
@@ -9,28 +9,22 @@
 import Foundation
 
 
-class SC2Reward: Codable {
+class SC2Criteria: Codable {
     var id: String = ""
-    var achievementID: String? = nil
-    var name: String = ""
-
-    var imageUrl: String = ""
-    var isSkin: Bool = false
+    var achievementID: String = ""
     var uiOrderHint: Int = 0
-    var unlockableType: String = ""
+    var evaluationClass: String
+    var necessaryQuantity: Int = 0
+    var description: String = ""
     var flags: Int = 0
-    var command: String? = nil
-    
     
     enum CodingKeys: String, CodingKey {
         case id
         case achievementID = "achievementId"
-        case name
-        case imageUrl
-        case isSkin
         case uiOrderHint
-        case unlockableType
+        case evaluationClass
+        case necessaryQuantity
+        case description
         case flags
-        case command
     }
 }

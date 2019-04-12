@@ -111,14 +111,14 @@ class LeadingGroup: Codable {
 
 
 class PartyMember: Codable {
-    var profile: Profile = Profile()
+    var profile: WOWProfile = WOWProfile()
     var faction: Faction = Faction()
     var specialization: SpecializationLink = SpecializationLink()
 }
 
 
 
-class Profile: Codable {
+class WOWProfile: Codable {
     var id: Int = 0
     var name: String = ""
     var realm: RealmLink = RealmLink()

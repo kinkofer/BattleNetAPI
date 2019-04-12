@@ -12,4 +12,5 @@ import Foundation
 class User: Codable {
     var id = 0
     var battletag = ""
+    var sub = ""
 }

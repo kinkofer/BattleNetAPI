@@ -76,7 +76,7 @@ class RealmIndexLegacy: Codable {
 
 
 class RealmLegacy: Codable {
-    var type: RealmTypeLegacy = .pve
+    var type: RealmTypeLegacy = .normal
     var population: RealmPopulation = .notApplicable
     var queue: Bool = false
     var status: Bool = false
@@ -112,10 +112,8 @@ enum RealmPopulation: String, Codable {
 
 
 enum RealmTypeLegacy: String, Codable {
-    case pve = "pve"
-    case pvp = "pvp"
-    case rp = "rp"
-    case rppvp = "rppvp"
+    case normal
+    case roleplaying
 }
 
 

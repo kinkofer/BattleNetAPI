@@ -29,7 +29,7 @@ class Mount: Codable {
     var creatureID: Int = 0
     var itemID: Int = 0
     var qualityID: Int = 0
-    var icon: String = ""
+    var icon: String? = nil
     var isGround: Bool = false
     var isFlying: Bool = false
     var isAquatic: Bool = false

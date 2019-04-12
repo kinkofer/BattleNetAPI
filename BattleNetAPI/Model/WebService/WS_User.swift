@@ -26,10 +26,11 @@ class WS_User: WebService {
      - parameter region: What region the request is being made
      - parameter completion: Returns a Result with the Data if `success` or an HTTPError if `failure`
      */
-    func getUser(region: APIRegion, completion: @escaping (_ result: Result<Data>) -> Void) {
-        let apiType: APIType = .community
+    func getUserInfo(region: APIRegion, completion: @escaping (_ result: Result<Data>) -> Void) {
+        let apiType: APIType = .profile
         let urlStr = getBaseURL(region: region, apiType: apiType) + "/userinfo"
-        self.callWebService(urlStr: urlStr, method: .get, apiType: .profile) { result in
+        
+        self.callWebService(urlStr: urlStr, method: .get, apiType: apiType) { result in
             completion(result)
         }
     }

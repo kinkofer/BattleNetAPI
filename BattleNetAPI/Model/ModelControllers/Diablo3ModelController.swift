@@ -26,7 +26,7 @@ class Diablo3ModelController {
     // MARK: - Act API
     
     func getActs(region: APIRegion = .us, locale: APILocale = .en_US, completion: @escaping (_ result: Result<[Act]>) -> Void) {
-        BattleNetAPI.d3Legacy.getActs(region: region, locale: locale) { result in
+        BattleNetAPI.d3.getActs(region: region, locale: locale) { result in
             let customDecode: ((_ data: Data) throws -> [Act]) = { data in
                 return try ActIndex.decode(from: data).acts
             }
@@ -36,7 +36,7 @@ class Diablo3ModelController {
     
     
     func getAct(_ id: Int, region: APIRegion = .us, locale: APILocale = .en_US, completion: @escaping (_ result: Result<Act>) -> Void) {
-        BattleNetAPI.d3Legacy.getAct(id: id, region: region, locale: locale) { result in
+        BattleNetAPI.d3.getAct(id: id, region: region, locale: locale) { result in
             result.decode(completion: completion)
         }
     }
@@ -46,14 +46,14 @@ class Diablo3ModelController {
     // MARK: - Arisan and Recipe API
     
     func getArtisan(_ slug: String, region: APIRegion = .us, locale: APILocale = .en_US, completion: @escaping (_ result: Result<Artisan>) -> Void) {
-        BattleNetAPI.d3Legacy.getArtisan(slug: slug, region: region, locale: locale) { result in
+        BattleNetAPI.d3.getArtisan(slug: slug, region: region, locale: locale) { result in
             result.decode(completion: completion)
         }
     }
     
     
     func getRecipe(_ recipeSlug: String, forArtisan artisanSlug: String, region: APIRegion, locale: APILocale, completion: @escaping (_ result: Result<D3Recipe>) -> Void) {
-        BattleNetAPI.d3Legacy.getRecipe(recipeSlug: recipeSlug, artisanSlug: artisanSlug, region: region, locale: locale) { result in
+        BattleNetAPI.d3.getRecipe(recipeSlug: recipeSlug, artisanSlug: artisanSlug, region: region, locale: locale) { result in
             result.decode(completion: completion)
         }
     }
@@ -63,7 +63,7 @@ class Diablo3ModelController {
     // MARK: - Follower API
     
     func getFollower(_ slug: String, region: APIRegion = .us, locale: APILocale = .en_US, completion: @escaping (_ result: Result<Follower>) -> Void) {
-        BattleNetAPI.d3Legacy.getFollower(slug: slug, region: region, locale: locale) { result in
+        BattleNetAPI.d3.getFollower(slug: slug, region: region, locale: locale) { result in
             result.decode(completion: completion)
         }
     }
@@ -73,14 +73,14 @@ class Diablo3ModelController {
     // MARK: - Character Class and Skill API
     
     func getClass(_ slug: String, region: APIRegion = .us, locale: APILocale = .en_US, completion: @escaping (_ result: Result<D3Class>) -> Void) {
-        BattleNetAPI.d3Legacy.getClass(slug: slug, region: region, locale: locale) { result in
+        BattleNetAPI.d3.getClass(slug: slug, region: region, locale: locale) { result in
             result.decode(completion: completion)
         }
     }
     
     
     func getSkill(_ skillSlug: String, forClass classSlug: String, region: APIRegion, locale: APILocale, completion: @escaping (_ result: Result<D3SkillConfiguration>) -> Void) {
-        BattleNetAPI.d3Legacy.getSkill(skillSlug: skillSlug, classSlug: classSlug, region: region, locale: locale) { result in
+        BattleNetAPI.d3.getSkill(skillSlug: skillSlug, classSlug: classSlug, region: region, locale: locale) { result in
             result.decode(completion: completion)
         }
     }
@@ -90,14 +90,14 @@ class Diablo3ModelController {
     // MARK: - Item Type API
     
     func getItemTypes(region: APIRegion, locale: APILocale, completion: @escaping (_ result: Result<[D3ItemType]>) -> Void) {
-        BattleNetAPI.d3Legacy.getItemTypes(region: region, locale: locale) { result in
+        BattleNetAPI.d3.getItemTypes(region: region, locale: locale) { result in
             result.decode(completion: completion)
         }
     }
     
     
     func getItemsByType(_ typeSlug: String, region: APIRegion, locale: APILocale, completion: @escaping (_ result: Result<[D3Item]>) -> Void) {
-        BattleNetAPI.d3Legacy.getItemsByType(typeSlug: typeSlug, region: region, locale: locale) { result in
+        BattleNetAPI.d3.getItemsByType(typeSlug: typeSlug, region: region, locale: locale) { result in
             result.decode(completion: completion)
         }
     }
@@ -107,7 +107,7 @@ class Diablo3ModelController {
     // MARK: - Item API
     
     func getItem(_ itemSlugAndID: String, region: APIRegion, locale: APILocale, completion: @escaping (_ result: Result<D3FullItem>) -> Void) {
-        BattleNetAPI.d3Legacy.getItem(itemSlugAndID: itemSlugAndID, region: region, locale: locale) { result in
+        BattleNetAPI.d3.getItem(itemSlugAndID: itemSlugAndID, region: region, locale: locale) { result in
             result.decode(completion: completion)
         }
     }
@@ -117,28 +117,28 @@ class Diablo3ModelController {
     // MARK: - Profile API
     
     func getProfile(battleTag: String, region: APIRegion, locale: APILocale, completion: @escaping (_ result: Result<D3Profile>) -> Void) {
-        BattleNetAPI.d3Legacy.getProfile(battleTag: battleTag, region: region, locale: locale) { result in
+        BattleNetAPI.d3.getProfile(battleTag: battleTag, region: region, locale: locale) { result in
             result.decode(completion: completion)
         }
     }
     
     
     func getHero(_ heroID: Int, for battleTag: String, region: APIRegion, locale: APILocale, completion: @escaping (_ result: Result<FullHero>) -> Void) {
-        BattleNetAPI.d3Legacy.getHero(heroID: heroID, battleTag: battleTag, region: region, locale: locale) { result in
+        BattleNetAPI.d3.getHero(heroID: heroID, battleTag: battleTag, region: region, locale: locale) { result in
             result.decode(completion: completion)
         }
     }
     
     
     func getItems(forHero heroID: Int, forBattleTag battleTag: String, region: APIRegion, locale: APILocale, completion: @escaping (_ result: Result<FullEquippedItems>) -> Void) {
-        BattleNetAPI.d3Legacy.getItemsForHero(heroID: heroID, battleTag: battleTag, region: region, locale: locale) { result in
+        BattleNetAPI.d3.getItemsForHero(heroID: heroID, battleTag: battleTag, region: region, locale: locale) { result in
             result.decode(completion: completion)
         }
     }
     
     
     func getFollowerItems(forHero heroID: Int, forBattleTag battleTag: String, region: APIRegion, locale: APILocale, completion: @escaping (_ result: Result<HeroFollowerItems>) -> Void) {
-        BattleNetAPI.d3Legacy.getFollowerItemsForHero(heroID: heroID, battleTag: battleTag, region: region, locale: locale) { result in
+        BattleNetAPI.d3.getFollowerItemsForHero(heroID: heroID, battleTag: battleTag, region: region, locale: locale) { result in
             result.decode(completion: completion)
         }
     }

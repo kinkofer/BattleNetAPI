@@ -16,10 +16,15 @@ class WS_WorldOfWarcraft: WebService {
         var url = region.apiURI
         
         if let apiType = apiType {
-            url += "/\(apiType.rawValue)"
+            switch apiType {
+            case .gameData:
+                url += "/data/wow"
+            case .community:
+                url += "/wow"
+            case .profile:
+                url += "/profile/wow"
+            }
         }
-        
-        url += "/wow"
         
         return url
     }
@@ -49,7 +54,7 @@ class WS_WorldOfWarcraft: WebService {
      - parameter completion: Returns a Result with the Data if `success` or an HTTPError if `failure`
     */
     func getCharacters(region: APIRegion, completion: @escaping (_ result: Result<Data>) -> Void) {
-        let urlStr = getBaseURL(region: region, apiType: nil) + "/user/characters"
+        let urlStr = getBaseURL(region: region, apiType: .community) + "/user/characters"
         self.callWebService(urlStr: urlStr, method: .get, apiType: .profile) { result in
             completion(result)
         }
@@ -57,7 +62,9 @@ class WS_WorldOfWarcraft: WebService {
     
     
     
-    // MARK: - Connected Realm API
+    // MARK: - Game Data API
+    
+    // MARK: Connected Realm API
     
     /**
      Get an index of connected-realms
@@ -97,7 +104,7 @@ class WS_WorldOfWarcraft: WebService {
     
     
     
-    // MARK: - Mythic Keystone Leaderboard API
+    // MARK: Mythic Keystone Leaderboard API
     
     /**
      Get an index of Mythic Keystone Leaderboard dungeon instances for a connected-realm
@@ -139,7 +146,7 @@ class WS_WorldOfWarcraft: WebService {
     
     
     
-    // MARK: - Mythic Challenge Mode API
+    // MARK: Mythic Challenge Mode API
     
     /**
      Get current period information about the Mythic Challenge Mode relevant to Mythic Keystone Leaderboards
@@ -160,7 +167,7 @@ class WS_WorldOfWarcraft: WebService {
     
     
     
-    // MARK: - Playable Class API
+    // MARK: Playable Class API
     
     /**
      Get an index of playable classes
@@ -171,8 +178,8 @@ class WS_WorldOfWarcraft: WebService {
      */
     func getPlayableClasses(region: APIRegion, locale: APILocale?, completion: @escaping (_ result: Result<Data>) -> Void) {
         let apiType: APIType = .gameData
-        var urlStr = getBaseURL(region: region, apiType: apiType) + "/playable-class/"
-        urlStr = appendSharedURLParameters(to: urlStr, withNamespace: "static-us", region: region, locale: locale)
+        var urlStr = getBaseURL(region: region, apiType: apiType) + "/playable-class/index"
+        urlStr = appendSharedURLParameters(to: urlStr, withNamespace: "static", region: region, locale: locale)
         
         self.callWebService(urlStr: urlStr, method: .get, apiType: apiType) { result in
             completion(result)
@@ -191,7 +198,7 @@ class WS_WorldOfWarcraft: WebService {
     func getPlayableClass(id: Int, region: APIRegion, locale: APILocale?, completion: @escaping (_ result: Result<Data>) -> Void) {
         let apiType: APIType = .gameData
         var urlStr = getBaseURL(region: region, apiType: apiType) + "/playable-class/\(id)"
-        urlStr = appendSharedURLParameters(to: urlStr, withNamespace: "static-7.3.5_25875", region: region, locale: locale)
+        urlStr = appendSharedURLParameters(to: urlStr, withNamespace: "static", region: region, locale: locale)
         
         self.callWebService(urlStr: urlStr, method: .get, apiType: apiType) { result in
             completion(result)
@@ -200,7 +207,7 @@ class WS_WorldOfWarcraft: WebService {
     
     
     
-    // MARK: - Playable Specialization API
+    // MARK: Playable Specialization API
     
     /**
      Get an index of playable specializations
@@ -211,8 +218,8 @@ class WS_WorldOfWarcraft: WebService {
      */
     func getPlayableSpecializations(region: APIRegion, locale: APILocale?, completion: @escaping (_ result: Result<Data>) -> Void) {
         let apiType: APIType = .gameData
-        var urlStr = getBaseURL(region: region, apiType: apiType) + "/playable-specialization/"
-        urlStr = appendSharedURLParameters(to: urlStr, withNamespace: "static-7.3.5_25875", region: region, locale: locale)
+        var urlStr = getBaseURL(region: region, apiType: apiType) + "/playable-specialization/index"
+        urlStr = appendSharedURLParameters(to: urlStr, withNamespace: "static", region: region, locale: locale)
         
         self.callWebService(urlStr: urlStr, method: .get, apiType: apiType) { result in
             completion(result)
@@ -231,7 +238,7 @@ class WS_WorldOfWarcraft: WebService {
     func getPlayableSpecialization(id: Int, region: APIRegion, locale: APILocale?, completion: @escaping (_ result: Result<Data>) -> Void) {
         let apiType: APIType = .gameData
         var urlStr = getBaseURL(region: region, apiType: apiType) + "/playable-specialization/\(id)"
-        urlStr = appendSharedURLParameters(to: urlStr, withNamespace: "static-7.3.5_25875", region: region, locale: locale)
+        urlStr = appendSharedURLParameters(to: urlStr, withNamespace: "static", region: region, locale: locale)
         
         self.callWebService(urlStr: urlStr, method: .get, apiType: apiType) { result in
             completion(result)
@@ -241,7 +248,7 @@ class WS_WorldOfWarcraft: WebService {
     
     
     
-    // MARK: - Realm API
+    // MARK: Realm API
     
     /**
      Get an index of realms
@@ -252,7 +259,7 @@ class WS_WorldOfWarcraft: WebService {
      */
     func getRealmIndex(region: APIRegion, locale: APILocale?, completion: @escaping (_ result: Result<Data>) -> Void) {
         let apiType: APIType = .gameData
-        var urlStr = getBaseURL(region: region, apiType: apiType) + "/realm/"
+        var urlStr = getBaseURL(region: region, apiType: apiType) + "/realm/index"
         urlStr = appendSharedURLParameters(to: urlStr, withNamespace: "dynamic", region: region, locale: locale)
         
         self.callWebService(urlStr: urlStr, method: .get, apiType: apiType) { result in
@@ -281,7 +288,7 @@ class WS_WorldOfWarcraft: WebService {
     
     
     
-    // MARK: - Region API
+    // MARK: Region API
     
     /**
      Get an index of regions
@@ -292,7 +299,7 @@ class WS_WorldOfWarcraft: WebService {
      */
     func getRegionIndex(region: APIRegion, locale: APILocale?, completion: @escaping (_ result: Result<Data>) -> Void) {
         let apiType: APIType = .gameData
-        var urlStr = getBaseURL(region: region, apiType: apiType) + "/region/"
+        var urlStr = getBaseURL(region: region, apiType: apiType) + "/region/index"
         urlStr = appendSharedURLParameters(to: urlStr, withNamespace: "dynamic", region: region, locale: locale)
         
         self.callWebService(urlStr: urlStr, method: .get, apiType: apiType) { result in
@@ -321,7 +328,7 @@ class WS_WorldOfWarcraft: WebService {
     
     
     
-    // MARK: - Token API
+    // MARK: Token API
     
     /**
      Get the WoW Token index
@@ -332,33 +339,19 @@ class WS_WorldOfWarcraft: WebService {
      */
     func getTokenIndex(region: APIRegion, locale: APILocale?, completion: @escaping (_ result: Result<Data>) -> Void) {
         let apiType: APIType = .gameData
-        var urlStr = getBaseURL(region: region, apiType: apiType) + "/token/"
+        var urlStr = getBaseURL(region: region, apiType: apiType) + "/token/index"
         urlStr = appendSharedURLParameters(to: urlStr, withNamespace: "dynamic", region: region, locale: locale)
         
         self.callWebService(urlStr: urlStr, method: .get, apiType: apiType) { result in
             completion(result)
         }
     }
-}
-
-
-
-class WS_WorldOfWarcraftLegacy: WebServiceLegacy {
-    func getBaseURLLegacy(region: APIRegion, apiType: APIType? = nil) -> String {
-        var url = "\(region.apiURI)"
-        
-        url += "/wow"
-        
-        if let apiType = apiType {
-            url += "/\(apiType.rawValue)"
-        }
-        
-        return url
-    }
     
     
     
-    // MARK: - Achievement API
+    // MARK: - Community API
+    
+    // MARK: Achievement API
     
     /**
      This provides data about an individual achievement.
@@ -369,17 +362,18 @@ class WS_WorldOfWarcraftLegacy: WebServiceLegacy {
      - parameter completion: Returns a Result with the Data if `success` or an HTTPError if `failure`
     */
     func getAchievement(id: Int, region: APIRegion, locale: APILocale, completion: @escaping (_ result: Result<Data>) -> Void) {
-        var urlStr = getBaseURLLegacy(region: region, apiType: nil) + "/achievement/\(id)"
-        urlStr = appendSharedURLParametersLegacy(to: urlStr, locale: locale)
+        let apiType: APIType = .community
+        var urlStr = getBaseURL(region: region, apiType: apiType) + "/achievement/\(id)"
+        urlStr = appendSharedURLParameters(to: urlStr, region: region, locale: locale)
         
-        self.callWebServiceLegacy(urlStr: urlStr, method: .get) { result in
+        self.callWebService(urlStr: urlStr, method: .get, apiType: apiType) { result in
             completion(result)
         }
     }
     
     
     
-    // MARK: - Auction API
+    // MARK: Auction API
     
     /**
      Auction APIs currently provide rolling batches of data about current auctions. Fetching auction dumps is a two step process that involves checking a per-realm index file to determine if a recent dump has been generated and then fetching the most recently generated dump file if necessary.
@@ -392,10 +386,11 @@ class WS_WorldOfWarcraftLegacy: WebServiceLegacy {
      - parameter completion: Returns a Result with the Data if `success` or an HTTPError if `failure`
      */
     func getAuctions(realm: String, region: APIRegion, locale: APILocale, completion: @escaping (_ result: Result<Data>) -> Void) {
-        var urlStr = getBaseURLLegacy(region: region, apiType: nil) + "/auction/data/\(realm)"
-        urlStr = appendSharedURLParametersLegacy(to: urlStr, locale: locale)
+        let apiType: APIType = .community
+        var urlStr = getBaseURL(region: region, apiType: apiType) + "/auction/data/\(realm)"
+        urlStr = appendSharedURLParameters(to: urlStr, region: region, locale: locale)
         
-        self.callWebServiceLegacy(urlStr: urlStr, method: .get) { result in
+        self.callWebService(urlStr: urlStr, method: .get, apiType: apiType) { result in
             completion(result)
         }
     }
@@ -412,10 +407,11 @@ class WS_WorldOfWarcraftLegacy: WebServiceLegacy {
      - parameter completion: Returns a Result with the Data if `success` or an HTTPError if `failure`
      */
     func getBosses(region: APIRegion, locale: APILocale, completion: @escaping (_ result: Result<Data>) -> Void) {
-        var urlStr = getBaseURLLegacy(region: region, apiType: nil) + "/boss/"
-        urlStr = appendSharedURLParametersLegacy(to: urlStr, locale: locale)
+        let apiType: APIType = .community
+        var urlStr = getBaseURL(region: region, apiType: apiType) + "/boss/"
+        urlStr = appendSharedURLParameters(to: urlStr, region: region, locale: locale)
         
-        self.callWebServiceLegacy(urlStr: urlStr, method: .get) { result in
+        self.callWebService(urlStr: urlStr, method: .get, apiType: apiType) { result in
             completion(result)
         }
     }
@@ -430,17 +426,18 @@ class WS_WorldOfWarcraftLegacy: WebServiceLegacy {
      - parameter completion: Returns a Result with the Data if `success` or an HTTPError if `failure`
      */
     func getBoss(id: Int, region: APIRegion, locale: APILocale, completion: @escaping (_ result: Result<Data>) -> Void) {
-        var urlStr = getBaseURLLegacy(region: region, apiType: nil) + "/boss/\(id)"
-        urlStr = appendSharedURLParametersLegacy(to: urlStr, locale: locale)
+        let apiType: APIType = .community
+        var urlStr = getBaseURL(region: region, apiType: apiType) + "/boss/\(id)"
+        urlStr = appendSharedURLParameters(to: urlStr, region: region, locale: locale)
         
-        self.callWebServiceLegacy(urlStr: urlStr, method: .get) { result in
+        self.callWebService(urlStr: urlStr, method: .get, apiType: apiType) { result in
             completion(result)
         }
     }
     
     
     
-    // MARK: - Challenge Mode API
+    // MARK: Challenge Mode API
     
     /**
      The data in this request has data for all 9 challenge mode maps (currently). The map field includes the current medal times for each dungeon. Inside each ladder we provide data about each character that was part of each run. The character data includes the current cached spec of the character while the member field includes the spec of the character during the challenge mode run.
@@ -451,10 +448,11 @@ class WS_WorldOfWarcraftLegacy: WebServiceLegacy {
      - parameter completion: Returns a Result with the Data if `success` or an HTTPError if `failure`
     */
     func getChallengeLeaderboards(realm: String, region: APIRegion, locale: APILocale, completion: @escaping (_ result: Result<Data>) -> Void) {
-        var urlStr = getBaseURLLegacy(region: region, apiType: nil) + "/challenge/\(realm)"
-        urlStr = appendSharedURLParametersLegacy(to: urlStr, locale: locale)
+        let apiType: APIType = .community
+        var urlStr = getBaseURL(region: region, apiType: apiType) + "/challenge/\(realm)"
+        urlStr = appendSharedURLParameters(to: urlStr, region: region, locale: locale)
         
-        self.callWebServiceLegacy(urlStr: urlStr, method: .get) { result in
+        self.callWebService(urlStr: urlStr, method: .get, apiType: apiType) { result in
             completion(result)
         }
     }
@@ -468,17 +466,18 @@ class WS_WorldOfWarcraftLegacy: WebServiceLegacy {
      - parameter completion: Returns a Result with the Data if `success` or an HTTPError if `failure`
      */
     func getTopChallengeLeaderboards(region: APIRegion, locale: APILocale, completion: @escaping (_ result: Result<Data>) -> Void) {
-        var urlStr = getBaseURLLegacy(region: region, apiType: nil) + "/challenge/region"
-        urlStr = appendSharedURLParametersLegacy(to: urlStr, locale: locale)
+        let apiType: APIType = .community
+        var urlStr = getBaseURL(region: region, apiType: apiType) + "/challenge/region"
+        urlStr = appendSharedURLParameters(to: urlStr, region: region, locale: locale)
         
-        self.callWebServiceLegacy(urlStr: urlStr, method: .get) { result in
+        self.callWebService(urlStr: urlStr, method: .get, apiType: apiType) { result in
             completion(result)
         }
     }
     
     
     
-    // MARK: - Character Profile API
+    // MARK: Character Profile API
     
     /**
      The Character Profile API is the primary way to access character information. By default, a basic dataset will be returned with each request and zero or more additional fields can be retrieved.
@@ -491,8 +490,9 @@ class WS_WorldOfWarcraftLegacy: WebServiceLegacy {
      - parameter completion: Returns a Result with the Data if `success` or an HTTPError if `failure`
     */
     func getCharacter(_ name: String, realm: String, fields: [String]?, region: APIRegion, locale: APILocale, completion: @escaping (_ result: Result<Data>) -> Void) {
-        var urlStr = getBaseURLLegacy(region: region, apiType: nil) + "/character/\(realm)/\(name)"
-        urlStr = appendSharedURLParametersLegacy(to: urlStr, locale: locale)
+        let apiType: APIType = .community
+        var urlStr = getBaseURL(region: region, apiType: apiType) + "/character/\(realm)/\(name)"
+        urlStr = appendSharedURLParameters(to: urlStr, region: region, locale: locale)
         
         if var url = URL(string: urlStr),
             let fields = fields {
@@ -500,13 +500,13 @@ class WS_WorldOfWarcraftLegacy: WebServiceLegacy {
             urlStr = url.absoluteString
         }
         
-        self.callWebServiceLegacy(urlStr: urlStr, method: .get) { result in
+        self.callWebService(urlStr: urlStr, method: .get, apiType: apiType) { result in
             completion(result)
         }
     }
     
     
-    // MARK: - Guild Profile API
+    // MARK: Guild Profile API
     
     /**
      The Character Profile API is the primary way to access character information. By default, a basic dataset will be returned with each request and zero or more additional fields can be retrieved.
@@ -519,8 +519,9 @@ class WS_WorldOfWarcraftLegacy: WebServiceLegacy {
      - parameter completion: Returns a Result with the Data if `success` or an HTTPError if `failure`
      */
     func getGuild(_ name: String, realm: String, fields: [String]?, region: APIRegion, locale: APILocale, completion: @escaping (_ result: Result<Data>) -> Void) {
-        var urlStr = getBaseURLLegacy(region: region, apiType: nil) + "/guild/\(realm)/\(name)"
-        urlStr = appendSharedURLParametersLegacy(to: urlStr, locale: locale)
+        let apiType: APIType = .community
+        var urlStr = getBaseURL(region: region, apiType: apiType) + "/guild/\(realm)/\(name)"
+        urlStr = appendSharedURLParameters(to: urlStr, region: region, locale: locale)
         
         if var url = URL(string: urlStr),
             let fields = fields {
@@ -528,7 +529,7 @@ class WS_WorldOfWarcraftLegacy: WebServiceLegacy {
             urlStr = url.absoluteString
         }
         
-        self.callWebServiceLegacy(urlStr: urlStr, method: .get) { result in
+        self.callWebService(urlStr: urlStr, method: .get, apiType: apiType) { result in
             completion(result)
         }
     }
@@ -546,10 +547,11 @@ class WS_WorldOfWarcraftLegacy: WebServiceLegacy {
      - parameter completion: Returns a Result with the Data if `success` or an HTTPError if `failure`
      */
     func getItem(id: Int, region: APIRegion, locale: APILocale, completion: @escaping (_ result: Result<Data>) -> Void) {
-        var urlStr = getBaseURLLegacy(region: region, apiType: nil) + "/item/\(id)"
-        urlStr = appendSharedURLParametersLegacy(to: urlStr, locale: locale)
+        let apiType: APIType = .community
+        var urlStr = getBaseURL(region: region, apiType: .community) + "/item/\(id)"
+        urlStr = appendSharedURLParameters(to: urlStr, region: region, locale: locale)
         
-        self.callWebServiceLegacy(urlStr: urlStr, method: .get) { result in
+        self.callWebService(urlStr: urlStr, method: .get, apiType: apiType) { result in
             completion(result)
         }
     }
@@ -564,17 +566,18 @@ class WS_WorldOfWarcraftLegacy: WebServiceLegacy {
      - parameter completion: Returns a Result with the Data if `success` or an HTTPError if `failure`
      */
     func getItemSet(setID: Int, region: APIRegion, locale: APILocale, completion: @escaping (_ result: Result<Data>) -> Void) {
-        var urlStr = getBaseURLLegacy(region: region, apiType: nil) + "/item/set/\(setID)"
-        urlStr = appendSharedURLParametersLegacy(to: urlStr, locale: locale)
+        let apiType: APIType = .community
+        var urlStr = getBaseURL(region: region, apiType: apiType) + "/item/set/\(setID)"
+        urlStr = appendSharedURLParameters(to: urlStr, region: region, locale: locale)
         
-        self.callWebServiceLegacy(urlStr: urlStr, method: .get) { result in
+        self.callWebService(urlStr: urlStr, method: .get, apiType: apiType) { result in
             completion(result)
         }
     }
     
     
     
-    // MARK: - Mount API
+    // MARK: Mount API
     
     /**
      A list of all supported mounts.
@@ -584,17 +587,18 @@ class WS_WorldOfWarcraftLegacy: WebServiceLegacy {
      - parameter completion: Returns a Result with the Data if `success` or an HTTPError if `failure`
      */
     func getMounts(region: APIRegion, locale: APILocale, completion: @escaping (_ result: Result<Data>) -> Void) {
-        var urlStr = getBaseURLLegacy(region: region, apiType: nil) + "/mount/"
-        urlStr = appendSharedURLParametersLegacy(to: urlStr, locale: locale)
+        let apiType: APIType = .community
+        var urlStr = getBaseURL(region: region, apiType: apiType) + "/mount/"
+        urlStr = appendSharedURLParameters(to: urlStr, region: region, locale: locale)
         
-        self.callWebServiceLegacy(urlStr: urlStr, method: .get) { result in
+        self.callWebService(urlStr: urlStr, method: .get, apiType: apiType) { result in
             completion(result)
         }
     }
     
     
     
-    // MARK: - Pet API
+    // MARK: Pet API
     
     /**
      A list of all supported battle and vanity pets.
@@ -604,10 +608,11 @@ class WS_WorldOfWarcraftLegacy: WebServiceLegacy {
      - parameter completion: Returns a Result with the Data if `success` or an HTTPError if `failure`
      */
     func getPets(region: APIRegion, locale: APILocale, completion: @escaping (_ result: Result<Data>) -> Void) {
-        var urlStr = getBaseURLLegacy(region: region, apiType: nil) + "/pet/"
-        urlStr = appendSharedURLParametersLegacy(to: urlStr, locale: locale)
+        let apiType: APIType = .community
+        var urlStr = getBaseURL(region: region, apiType: apiType) + "/pet/"
+        urlStr = appendSharedURLParameters(to: urlStr, region: region, locale: locale)
         
-        self.callWebServiceLegacy(urlStr: urlStr, method: .get) { result in
+        self.callWebService(urlStr: urlStr, method: .get, apiType: apiType) { result in
             completion(result)
         }
     }
@@ -622,10 +627,11 @@ class WS_WorldOfWarcraftLegacy: WebServiceLegacy {
      - parameter completion: Returns a Result with the Data if `success` or an HTTPError if `failure`
      */
     func getPetAbility(abilityID: Int, region: APIRegion, locale: APILocale, completion: @escaping (_ result: Result<Data>) -> Void) {
-        var urlStr = getBaseURLLegacy(region: region, apiType: nil) + "/pet/ability/\(abilityID)"
-        urlStr = appendSharedURLParametersLegacy(to: urlStr, locale: locale)
+        let apiType: APIType = .community
+        var urlStr = getBaseURL(region: region, apiType: apiType) + "/pet/ability/\(abilityID)"
+        urlStr = appendSharedURLParameters(to: urlStr, region: region, locale: locale)
         
-        self.callWebServiceLegacy(urlStr: urlStr, method: .get) { result in
+        self.callWebService(urlStr: urlStr, method: .get, apiType: apiType) { result in
             completion(result)
         }
     }
@@ -640,10 +646,11 @@ class WS_WorldOfWarcraftLegacy: WebServiceLegacy {
      - parameter completion: Returns a Result with the Data if `success` or an HTTPError if `failure`
      */
     func getPetSpecies(speciesID: Int, region: APIRegion, locale: APILocale, completion: @escaping (_ result: Result<Data>) -> Void) {
-        var urlStr = getBaseURLLegacy(region: region, apiType: nil) + "/pet/species/\(speciesID)"
-        urlStr = appendSharedURLParametersLegacy(to: urlStr, locale: locale)
+        let apiType: APIType = .community
+        var urlStr = getBaseURL(region: region, apiType: apiType) + "/pet/species/\(speciesID)"
+        urlStr = appendSharedURLParameters(to: urlStr, region: region, locale: locale)
         
-        self.callWebServiceLegacy(urlStr: urlStr, method: .get) { result in
+        self.callWebService(urlStr: urlStr, method: .get, apiType: apiType) { result in
             completion(result)
         }
     }
@@ -661,8 +668,9 @@ class WS_WorldOfWarcraftLegacy: WebServiceLegacy {
      - parameter completion: Returns a Result with the Data if `success` or an HTTPError if `failure`
     */
     func getPetStats(speciesID: Int, level: Int = 1, breedID: Int = 3, qualityID: Int = 1, region: APIRegion, locale: APILocale, completion: @escaping (_ result: Result<Data>) -> Void) {
-        var urlStr = getBaseURLLegacy(region: region, apiType: nil) + "/pet/stats/\(speciesID)"
-        urlStr = appendSharedURLParametersLegacy(to: urlStr, locale: locale)
+        let apiType: APIType = .community
+        var urlStr = getBaseURL(region: region, apiType: apiType) + "/pet/stats/\(speciesID)"
+        urlStr = appendSharedURLParameters(to: urlStr, region: region, locale: locale)
         
         if var url = URL(string: urlStr) {
             url.appendQuery(parameters: ["level": "\(level)",
@@ -672,14 +680,14 @@ class WS_WorldOfWarcraftLegacy: WebServiceLegacy {
         }
         
         
-        self.callWebServiceLegacy(urlStr: urlStr, method: .get) { result in
+        self.callWebService(urlStr: urlStr, method: .get, apiType: apiType) { result in
             completion(result)
         }
     }
     
     
     
-    // MARK: - PVP API
+    // MARK: PVP API
     
     /**
      The Leaderboard API endpoint provides leaderboard information for the 2v2, 3v3, 5v5 and Rated Battleground leaderboards.
@@ -698,17 +706,18 @@ class WS_WorldOfWarcraftLegacy: WebServiceLegacy {
             return
         }
         
-        var urlStr = getBaseURLLegacy(region: region, apiType: nil) + "/leaderboard/\(bracket)"
-        urlStr = appendSharedURLParametersLegacy(to: urlStr, locale: locale)
+        let apiType: APIType = .community
+        var urlStr = getBaseURL(region: region, apiType: apiType) + "/leaderboard/\(bracket)"
+        urlStr = appendSharedURLParameters(to: urlStr, region: region, locale: locale)
         
-        self.callWebServiceLegacy(urlStr: urlStr, method: .get) { result in
+        self.callWebService(urlStr: urlStr, method: .get, apiType: apiType) { result in
             completion(result)
         }
     }
     
     
     
-    // MARK: - Quest API
+    // MARK: Quest API
     
     /**
      Retrieve metadata for a given quest.
@@ -719,17 +728,18 @@ class WS_WorldOfWarcraftLegacy: WebServiceLegacy {
      - parameter completion: Returns a Result with the Data if `success` or an HTTPError if `failure`
     */
     func getQuest(id: Int, region: APIRegion, locale: APILocale, completion: @escaping (_ result: Result<Data>) -> Void) {
-        var urlStr = getBaseURLLegacy(region: region, apiType: nil) + "/quest/\(id)"
-        urlStr = appendSharedURLParametersLegacy(to: urlStr, locale: locale)
+        let apiType: APIType = .community
+        var urlStr = getBaseURL(region: region, apiType: apiType) + "/quest/\(id)"
+        urlStr = appendSharedURLParameters(to: urlStr, region: region, locale: locale)
         
-        self.callWebServiceLegacy(urlStr: urlStr, method: .get) { result in
+        self.callWebService(urlStr: urlStr, method: .get, apiType: apiType) { result in
             completion(result)
         }
     }
     
     
     
-    // MARK: - Realm Status API
+    // MARK: Realm Status API
     
     /**
      The realm status API allows developers to retrieve realm status information. This information is limited to whether or not the realm is up, the type and state of the realm, the current population, and the status of the two world PvP zones.
@@ -759,17 +769,18 @@ class WS_WorldOfWarcraftLegacy: WebServiceLegacy {
      - parameter completion: Returns a Result with the Data if `success` or an HTTPError if `failure`
     */
     func getRealmsStatus(region: APIRegion, locale: APILocale, completion: @escaping (_ result: Result<Data>) -> Void) {
-        var urlStr = getBaseURLLegacy(region: region, apiType: nil) + "/realm/status"
-        urlStr = appendSharedURLParametersLegacy(to: urlStr, locale: locale)
+        let apiType: APIType = .community
+        var urlStr = getBaseURL(region: region, apiType: apiType) + "/realm/status"
+        urlStr = appendSharedURLParameters(to: urlStr, region: region, locale: locale)
         
-        self.callWebServiceLegacy(urlStr: urlStr, method: .get) { result in
+        self.callWebService(urlStr: urlStr, method: .get, apiType: apiType) { result in
             completion(result)
         }
     }
     
     
     
-    // MARK: - Recipe API
+    // MARK: Recipe API
     
     /**
      The recipe API provides basic recipe information.
@@ -780,17 +791,18 @@ class WS_WorldOfWarcraftLegacy: WebServiceLegacy {
      - parameter completion: Returns a Result with the Data if `success` or an HTTPError if `failure`
      */
     func getRecipe(id: Int, region: APIRegion, locale: APILocale, completion: @escaping (_ result: Result<Data>) -> Void) {
-        var urlStr = getBaseURLLegacy(region: region, apiType: nil) + "/recipe/\(id)"
-        urlStr = appendSharedURLParametersLegacy(to: urlStr, locale: locale)
+        let apiType: APIType = .community
+        var urlStr = getBaseURL(region: region, apiType: apiType) + "/recipe/\(id)"
+        urlStr = appendSharedURLParameters(to: urlStr, region: region, locale: locale)
         
-        self.callWebServiceLegacy(urlStr: urlStr, method: .get) { result in
+        self.callWebService(urlStr: urlStr, method: .get, apiType: apiType) { result in
             completion(result)
         }
     }
     
     
     
-    // MARK: - Spell API
+    // MARK: Spell API
     
     /**
      The spell API provides some information about spells.
@@ -801,17 +813,18 @@ class WS_WorldOfWarcraftLegacy: WebServiceLegacy {
      - parameter completion: Returns a Result with the Data if `success` or an HTTPError if `failure`
      */
     func getSpell(id: Int, region: APIRegion, locale: APILocale, completion: @escaping (_ result: Result<Data>) -> Void) {
-        var urlStr = getBaseURLLegacy(region: region, apiType: nil) + "/spell/\(id)"
-        urlStr = appendSharedURLParametersLegacy(to: urlStr, locale: locale)
+        let apiType: APIType = .community
+        var urlStr = getBaseURL(region: region, apiType: apiType) + "/spell/\(id)"
+        urlStr = appendSharedURLParameters(to: urlStr, region: region, locale: locale)
         
-        self.callWebServiceLegacy(urlStr: urlStr, method: .get) { result in
+        self.callWebService(urlStr: urlStr, method: .get, apiType: apiType) { result in
             completion(result)
         }
     }
     
     
     
-    // MARK: - Zone API
+    // MARK: Zone API
     
     /**
      A list of all supported zones and their bosses. A 'zone' in this context should be considered a dungeon, or a raid, not a zone as in a world zone. A 'boss' in this context should be considered a boss encounter, which may include more than one NPC.
@@ -821,10 +834,11 @@ class WS_WorldOfWarcraftLegacy: WebServiceLegacy {
      - parameter completion: Returns a Result with the Data if `success` or an HTTPError if `failure`
     */
     func getZones(region: APIRegion, locale: APILocale, completion: @escaping (_ result: Result<Data>) -> Void) {
-        var urlStr = getBaseURLLegacy(region: region, apiType: nil) + "/zone/"
-        urlStr = appendSharedURLParametersLegacy(to: urlStr, locale: locale)
+        let apiType: APIType = .community
+        var urlStr = getBaseURL(region: region, apiType: apiType) + "/zone/"
+        urlStr = appendSharedURLParameters(to: urlStr, region: region, locale: locale)
         
-        self.callWebServiceLegacy(urlStr: urlStr, method: .get) { result in
+        self.callWebService(urlStr: urlStr, method: .get, apiType: apiType) { result in
             completion(result)
         }
     }
@@ -839,17 +853,18 @@ class WS_WorldOfWarcraftLegacy: WebServiceLegacy {
      - parameter completion: Returns a Result with the Data if `success` or an HTTPError if `failure`
      */
     func getZone(id: Int, region: APIRegion, locale: APILocale, completion: @escaping (_ result: Result<Data>) -> Void) {
-        var urlStr = getBaseURLLegacy(region: region, apiType: nil) + "/zone/\(id)"
-        urlStr = appendSharedURLParametersLegacy(to: urlStr, locale: locale)
+        let apiType: APIType = .community
+        var urlStr = getBaseURL(region: region, apiType: apiType) + "/zone/\(id)"
+        urlStr = appendSharedURLParameters(to: urlStr, region: region, locale: locale)
         
-        self.callWebServiceLegacy(urlStr: urlStr, method: .get) { result in
+        self.callWebService(urlStr: urlStr, method: .get, apiType: apiType) { result in
             completion(result)
         }
     }
     
     
     
-    // MARK: - Data Resources
+    // MARK: Data Resources
     
     /**
      The battlegroups data API provides the list of battlegroups for this region.
@@ -859,10 +874,11 @@ class WS_WorldOfWarcraftLegacy: WebServiceLegacy {
      - parameter completion: Returns a Result with the Data if `success` or an HTTPError if `failure`
     */
     func getBattlegroups(region: APIRegion, locale: APILocale, completion: @escaping (_ result: Result<Data>) -> Void) {
-        var urlStr = getBaseURLLegacy(region: region, apiType: .gameData) + "/battlegroups/"
-        urlStr = appendSharedURLParametersLegacy(to: urlStr, locale: locale)
+        let apiType: APIType = .community
+        var urlStr = getBaseURL(region: region, apiType: apiType) + "/data/battlegroups/"
+        urlStr = appendSharedURLParameters(to: urlStr, region: region, locale: locale)
         
-        self.callWebServiceLegacy(urlStr: urlStr, method: .get) { result in
+        self.callWebService(urlStr: urlStr, method: .get, apiType: apiType) { result in
             completion(result)
         }
     }
@@ -876,10 +892,11 @@ class WS_WorldOfWarcraftLegacy: WebServiceLegacy {
      - parameter completion: Returns a Result with the Data if `success` or an HTTPError if `failure`
     */
     func getRaces(region: APIRegion, locale: APILocale, completion: @escaping (_ result: Result<Data>) -> Void) {
-        var urlStr = getBaseURLLegacy(region: region, apiType: .gameData) + "/character/races"
-        urlStr = appendSharedURLParametersLegacy(to: urlStr, locale: locale)
+        let apiType: APIType = .community
+        var urlStr = getBaseURL(region: region, apiType: apiType) + "/data/character/races"
+        urlStr = appendSharedURLParameters(to: urlStr, region: region, locale: locale)
         
-        self.callWebServiceLegacy(urlStr: urlStr, method: .get) { result in
+        self.callWebService(urlStr: urlStr, method: .get, apiType: apiType) { result in
             completion(result)
         }
     }
@@ -893,10 +910,11 @@ class WS_WorldOfWarcraftLegacy: WebServiceLegacy {
      - parameter completion: Returns a Result with the Data if `success` or an HTTPError if `failure`
     */
     func getClasses(region: APIRegion, locale: APILocale, completion: @escaping (_ result: Result<Data>) -> Void) {
-        var urlStr = getBaseURLLegacy(region: region, apiType: .gameData) + "/character/classes"
-        urlStr = appendSharedURLParametersLegacy(to: urlStr, locale: locale)
+        let apiType: APIType = .community
+        var urlStr = getBaseURL(region: region, apiType: apiType) + "/data/character/classes"
+        urlStr = appendSharedURLParameters(to: urlStr, region: region, locale: locale)
         
-        self.callWebServiceLegacy(urlStr: urlStr, method: .get) { result in
+        self.callWebService(urlStr: urlStr, method: .get, apiType: apiType) { result in
             completion(result)
         }
     }
@@ -910,10 +928,11 @@ class WS_WorldOfWarcraftLegacy: WebServiceLegacy {
      - parameter completion: Returns a Result with the Data if `success` or an HTTPError if `failure`
      */
     func getAchievements(region: APIRegion, locale: APILocale, completion: @escaping (_ result: Result<Data>) -> Void) {
-        var urlStr = getBaseURLLegacy(region: region, apiType: .gameData) + "/character/achievements"
-        urlStr = appendSharedURLParametersLegacy(to: urlStr, locale: locale)
+        let apiType: APIType = .community
+        var urlStr = getBaseURL(region: region, apiType: apiType) + "/data/character/achievements"
+        urlStr = appendSharedURLParameters(to: urlStr, region: region, locale: locale)
         
-        self.callWebServiceLegacy(urlStr: urlStr, method: .get) { result in
+        self.callWebService(urlStr: urlStr, method: .get, apiType: apiType) { result in
             completion(result)
         }
     }
@@ -927,10 +946,11 @@ class WS_WorldOfWarcraftLegacy: WebServiceLegacy {
      - parameter completion: Returns a Result with the Data if `success` or an HTTPError if `failure`
      */
     func getGuildRewards(region: APIRegion, locale: APILocale, completion: @escaping (_ result: Result<Data>) -> Void) {
-        var urlStr = getBaseURLLegacy(region: region, apiType: .gameData) + "/guild/rewards"
-        urlStr = appendSharedURLParametersLegacy(to: urlStr, locale: locale)
+        let apiType: APIType = .community
+        var urlStr = getBaseURL(region: region, apiType: apiType) + "/data/guild/rewards"
+        urlStr = appendSharedURLParameters(to: urlStr, region: region, locale: locale)
         
-        self.callWebServiceLegacy(urlStr: urlStr, method: .get) { result in
+        self.callWebService(urlStr: urlStr, method: .get, apiType: apiType) { result in
             completion(result)
         }
     }
@@ -944,10 +964,11 @@ class WS_WorldOfWarcraftLegacy: WebServiceLegacy {
      - parameter completion: Returns a Result with the Data if `success` or an HTTPError if `failure`
      */
     func getGuildPerks(region: APIRegion, locale: APILocale, completion: @escaping (_ result: Result<Data>) -> Void) {
-        var urlStr = getBaseURLLegacy(region: region, apiType: .gameData) + "/guild/perks"
-        urlStr = appendSharedURLParametersLegacy(to: urlStr, locale: locale)
+        let apiType: APIType = .community
+        var urlStr = getBaseURL(region: region, apiType: apiType) + "/data/guild/perks"
+        urlStr = appendSharedURLParameters(to: urlStr, region: region, locale: locale)
         
-        self.callWebServiceLegacy(urlStr: urlStr, method: .get) { result in
+        self.callWebService(urlStr: urlStr, method: .get, apiType: apiType) { result in
             completion(result)
         }
     }
@@ -961,10 +982,11 @@ class WS_WorldOfWarcraftLegacy: WebServiceLegacy {
      - parameter completion: Returns a Result with the Data if `success` or an HTTPError if `failure`
      */
     func getGuildAchievements(region: APIRegion, locale: APILocale, completion: @escaping (_ result: Result<Data>) -> Void) {
-        var urlStr = getBaseURLLegacy(region: region, apiType: .gameData) + "/guild/achievements"
-        urlStr = appendSharedURLParametersLegacy(to: urlStr, locale: locale)
+        let apiType: APIType = .community
+        var urlStr = getBaseURL(region: region, apiType: apiType) + "/data/guild/achievements"
+        urlStr = appendSharedURLParameters(to: urlStr, region: region, locale: locale)
         
-        self.callWebServiceLegacy(urlStr: urlStr, method: .get) { result in
+        self.callWebService(urlStr: urlStr, method: .get, apiType: apiType) { result in
             completion(result)
         }
     }
@@ -978,10 +1000,11 @@ class WS_WorldOfWarcraftLegacy: WebServiceLegacy {
      - parameter completion: Returns a Result with the Data if `success` or an HTTPError if `failure`
      */
     func getItemClasses(region: APIRegion, locale: APILocale, completion: @escaping (_ result: Result<Data>) -> Void) {
-        var urlStr = getBaseURLLegacy(region: region, apiType: .gameData) + "/item/classes"
-        urlStr = appendSharedURLParametersLegacy(to: urlStr, locale: locale)
+        let apiType: APIType = .community
+        var urlStr = getBaseURL(region: region, apiType: apiType) + "/data/item/classes"
+        urlStr = appendSharedURLParameters(to: urlStr, region: region, locale: locale)
         
-        self.callWebServiceLegacy(urlStr: urlStr, method: .get) { result in
+        self.callWebService(urlStr: urlStr, method: .get, apiType: apiType) { result in
             completion(result)
         }
     }
@@ -995,10 +1018,11 @@ class WS_WorldOfWarcraftLegacy: WebServiceLegacy {
      - parameter completion: Returns a Result with the Data if `success` or an HTTPError if `failure`
      */
     func getTalents(region: APIRegion, locale: APILocale, completion: @escaping (_ result: Result<Data>) -> Void) {
-        var urlStr = getBaseURLLegacy(region: region, apiType: .gameData) + "/talents"
-        urlStr = appendSharedURLParametersLegacy(to: urlStr, locale: locale)
+        let apiType: APIType = .community
+        var urlStr = getBaseURL(region: region, apiType: apiType) + "/data/talents"
+        urlStr = appendSharedURLParameters(to: urlStr, region: region, locale: locale)
         
-        self.callWebServiceLegacy(urlStr: urlStr, method: .get) { result in
+        self.callWebService(urlStr: urlStr, method: .get, apiType: apiType) { result in
             completion(result)
         }
     }
@@ -1012,10 +1036,11 @@ class WS_WorldOfWarcraftLegacy: WebServiceLegacy {
      - parameter completion: Returns a Result with the Data if `success` or an HTTPError if `failure`
      */
     func getPetTypes(region: APIRegion, locale: APILocale, completion: @escaping (_ result: Result<Data>) -> Void) {
-        var urlStr = getBaseURLLegacy(region: region, apiType: .gameData) + "/pet/types"
-        urlStr = appendSharedURLParametersLegacy(to: urlStr, locale: locale)
+        let apiType: APIType = .community
+        var urlStr = getBaseURL(region: region, apiType: apiType) + "/data/pet/types"
+        urlStr = appendSharedURLParameters(to: urlStr, region: region, locale: locale)
         
-        self.callWebServiceLegacy(urlStr: urlStr, method: .get) { result in
+        self.callWebService(urlStr: urlStr, method: .get, apiType: apiType) { result in
             completion(result)
         }
     }
