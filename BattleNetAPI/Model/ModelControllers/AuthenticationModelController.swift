@@ -13,28 +13,28 @@ class AuthenticationModelController {
     private init() { }
     
     
-    func getClientAccessToken(region: APIRegion = .us, clientID: String, clientSecret: String, completion: @escaping (_ result: Result<Access>) -> Void) {
+    func getClientAccessToken(region: APIRegion = .us, clientID: String, clientSecret: String, completion: @escaping (_ result: Result<Access, HTTPError>) -> Void) {
         BattleNetAPI.authentication.getClientAccessToken(region: .us, clientID: clientID, clientSecret: clientSecret) { result in
             result.decode(completion: completion)
         }
     }
     
     
-    func getUserAccessToken(region: APIRegion = .us, clientID: String, clientSecret: String, code: String, redirectURL: String, completion: @escaping (_ result: Result<Access>) -> Void) {
+    func getUserAccessToken(region: APIRegion = .us, clientID: String, clientSecret: String, code: String, redirectURL: String, completion: @escaping (_ result: Result<Access, HTTPError>) -> Void) {
         BattleNetAPI.authentication.getUserAccessToken(region: .us, clientID: clientID, clientSecret: clientSecret, code: code, redirectURL: redirectURL) { result in
             result.decode(completion: completion)
         }
     }
     
     
-    func validateClientAccessToken(_ token: String, region: APIRegion = .us, completion: @escaping (_ result: Result<ClientToken>) -> Void) {
+    func validateClientAccessToken(_ token: String, region: APIRegion = .us, completion: @escaping (_ result: Result<ClientToken, HTTPError>) -> Void) {
         BattleNetAPI.authentication.validateClientAccessToken(token, region: region) { result in
             result.decode(completion: completion)
         }
     }
     
     
-    func validateUserAccessToken(_ token: String, region: APIRegion = .us, completion: @escaping (_ result: Result<UserToken>) -> Void) {
+    func validateUserAccessToken(_ token: String, region: APIRegion = .us, completion: @escaping (_ result: Result<UserToken, HTTPError>) -> Void) {
         BattleNetAPI.authentication.validateUserAccessToken(token, region: region) { result in
             result.decode(completion: completion)
         }

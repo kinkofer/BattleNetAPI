@@ -26,7 +26,7 @@ class WS_User: WebService {
      - parameter region: What region the request is being made
      - parameter completion: Returns a Result with the Data if `success` or an HTTPError if `failure`
      */
-    func getUserInfo(region: APIRegion, completion: @escaping (_ result: Result<Data>) -> Void) {
+    func getUserInfo(region: APIRegion, completion: @escaping (_ result: Result<Data, HTTPError>) -> Void) {
         let apiType: APIType = .profile
         let urlStr = getBaseURL(region: region, apiType: apiType) + "/userinfo"
         

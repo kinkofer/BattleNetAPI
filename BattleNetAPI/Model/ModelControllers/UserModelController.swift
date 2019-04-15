@@ -14,7 +14,7 @@ class UserModelController {
     private init() { }
     
     
-    func getUser(region: APIRegion = .us, completion: @escaping (_ result: Result<User>) -> Void) {
+    func getUser(region: APIRegion = .us, completion: @escaping (_ result: Result<User, HTTPError>) -> Void) {
         BattleNetAPI.user.getUserInfo(region: region) { result in
             result.decode(completion: completion)
         }

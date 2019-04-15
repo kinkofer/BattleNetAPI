@@ -34,7 +34,7 @@ struct WebServicePattern {
             case region
         }
         
-        let serviceCall: (APIRegion, @escaping (Result<U>) -> Void) -> Void
+        let serviceCall: (APIRegion, @escaping (Result<U, HTTPError>) -> Void) -> Void
         var region: APIRegion {
             didSet {
                 callService = {
@@ -42,12 +42,12 @@ struct WebServicePattern {
                 }
             }
         }
-        let completion: (Result<U>) -> Void
+        let completion: (Result<U, HTTPError>) -> Void
         
         private(set) var callService: () -> Void
         
         
-        init(serviceCall: @escaping (APIRegion, @escaping (Result<U>) -> Void) -> Void, region: APIRegion, completion: @escaping (Result<U>) -> Void) {
+        init(serviceCall: @escaping (APIRegion, @escaping (Result<U, HTTPError>) -> Void) -> Void, region: APIRegion, completion: @escaping (Result<U, HTTPError>) -> Void) {
             self.serviceCall = serviceCall
             self.region = region
             self.completion = completion
@@ -110,7 +110,7 @@ struct WebServicePattern {
             case region
         }
         
-        let serviceCall: (Int, APIRegion, @escaping (Result<U>) -> Void) -> Void
+        let serviceCall: (Int, APIRegion, @escaping (Result<U, HTTPError>) -> Void) -> Void
         var id: Int {
             didSet {
                 callService = {
@@ -126,12 +126,12 @@ struct WebServicePattern {
                 }
             }
         }
-        let completion: (Result<U>) -> Void
+        let completion: (Result<U, HTTPError>) -> Void
         
         private(set) var callService: () -> Void
         
         
-        init(serviceCall: @escaping (Int, APIRegion, @escaping (Result<U>) -> Void) -> Void, id: Int, region: APIRegion, completion: @escaping (Result<U>) -> Void) {
+        init(serviceCall: @escaping (Int, APIRegion, @escaping (Result<U, HTTPError>) -> Void) -> Void, id: Int, region: APIRegion, completion: @escaping (Result<U, HTTPError>) -> Void) {
             self.serviceCall = serviceCall
             self.id = id
             self.region = region

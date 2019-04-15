@@ -60,6 +60,7 @@
 		593F232322618AB700C5F1F5 /* MythicKeystoneAffix.swift in Sources */ = {isa = PBXBuildFile; fileRef = 593F232222618AB700C5F1F5 /* MythicKeystoneAffix.swift */; };
 		593F23252262515A00C5F1F5 /* MythicKeystoneDungeon.swift in Sources */ = {isa = PBXBuildFile; fileRef = 593F23242262515A00C5F1F5 /* MythicKeystoneDungeon.swift */; };
 		593F23272263236600C5F1F5 /* PowerType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 593F23262263236600C5F1F5 /* PowerType.swift */; };
+		593F23292265329F00C5F1F5 /* Result.swift in Sources */ = {isa = PBXBuildFile; fileRef = 593F23282265329F00C5F1F5 /* Result.swift */; };
 		59419F972259EEB200492BE7 /* TableSection.swift in Sources */ = {isa = PBXBuildFile; fileRef = 59419F962259EEB200492BE7 /* TableSection.swift */; };
 		59419F99225A56E600492BE7 /* Diablo3ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 59419F98225A56E600492BE7 /* Diablo3ViewController.swift */; };
 		59419F9B225A58DF00492BE7 /* World.swift in Sources */ = {isa = PBXBuildFile; fileRef = 59419F9A225A58DF00492BE7 /* World.swift */; };
@@ -104,7 +105,6 @@
 		59E425DA2078A3930046EB84 /* AuthenticationModelController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 59E425D92078A3930046EB84 /* AuthenticationModelController.swift */; };
 		59E425DD2078AA4B0046EB84 /* ClientToken.swift in Sources */ = {isa = PBXBuildFile; fileRef = 59E425DC2078AA4B0046EB84 /* ClientToken.swift */; };
 		59E425DF2078B0480046EB84 /* Debug.swift in Sources */ = {isa = PBXBuildFile; fileRef = 59E425DE2078B0480046EB84 /* Debug.swift */; };
-		83292CDB219DB99200DED252 /* Result.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83292CDA219DB99200DED252 /* Result.swift */; };
 		833278A12180FD5F00BE02E1 /* AuthToken.swift in Sources */ = {isa = PBXBuildFile; fileRef = 833278A02180FD5F00BE02E1 /* AuthToken.swift */; };
 		833278A22180FD5F00BE02E1 /* AuthToken.swift in Sources */ = {isa = PBXBuildFile; fileRef = 833278A02180FD5F00BE02E1 /* AuthToken.swift */; };
 /* End PBXBuildFile section */
@@ -173,6 +173,7 @@
 		593F232222618AB700C5F1F5 /* MythicKeystoneAffix.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MythicKeystoneAffix.swift; sourceTree = "<group>"; };
 		593F23242262515A00C5F1F5 /* MythicKeystoneDungeon.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MythicKeystoneDungeon.swift; sourceTree = "<group>"; };
 		593F23262263236600C5F1F5 /* PowerType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PowerType.swift; sourceTree = "<group>"; };
+		593F23282265329F00C5F1F5 /* Result.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Result.swift; sourceTree = "<group>"; };
 		59419F962259EEB200492BE7 /* TableSection.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TableSection.swift; sourceTree = "<group>"; };
 		59419F98225A56E600492BE7 /* Diablo3ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Diablo3ViewController.swift; sourceTree = "<group>"; };
 		59419F9A225A58DF00492BE7 /* World.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = World.swift; sourceTree = "<group>"; };
@@ -221,7 +222,6 @@
 		59E425D92078A3930046EB84 /* AuthenticationModelController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthenticationModelController.swift; sourceTree = "<group>"; };
 		59E425DC2078AA4B0046EB84 /* ClientToken.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ClientToken.swift; sourceTree = "<group>"; };
 		59E425DE2078B0480046EB84 /* Debug.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Debug.swift; sourceTree = "<group>"; };
-		83292CDA219DB99200DED252 /* Result.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Result.swift; sourceTree = "<group>"; };
 		833278A02180FD5F00BE02E1 /* AuthToken.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthToken.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -418,7 +418,6 @@
 				59E425C9207872EC0046EB84 /* Network.swift */,
 				59E425CB207874450046EB84 /* HTTPError.swift */,
 				59E425D120787FEF0046EB84 /* HTTPHeader.swift */,
-				83292CDA219DB99200DED252 /* Result.swift */,
 				59E425CF20787F990046EB84 /* WebService.swift */,
 				59E425CD20787F640046EB84 /* WS_Authentication.swift */,
 				59397CDF207C5FE20077018E /* WS_Diablo3.swift */,
@@ -464,6 +463,7 @@
 				593F231D225B9C7E00C5F1F5 /* Array+Subscript.swift */,
 				59E425DE2078B0480046EB84 /* Debug.swift */,
 				5954B1B7207A8B7900CC36D1 /* JSONHelper.swift */,
+				593F23282265329F00C5F1F5 /* Result.swift */,
 				59419F962259EEB200492BE7 /* TableSection.swift */,
 				5954B1B3207A831200CC36D1 /* UIViewController+Alert.swift */,
 				5967ACC22088DC85009BFBAF /* URL+Query.swift */,
@@ -629,7 +629,6 @@
 				833278A12180FD5F00BE02E1 /* AuthToken.swift in Sources */,
 				59397CEB207D5CB50077018E /* Follower.swift in Sources */,
 				593A3AE920806A3C0047B4C0 /* Ladder.swift in Sources */,
-				83292CDB219DB99200DED252 /* Result.swift in Sources */,
 				5967ACC720893371009BFBAF /* Specialization.swift in Sources */,
 				5967ACB820878E0F009BFBAF /* Era.swift in Sources */,
 				5939509B208ED0C600EABFA2 /* Zone.swift in Sources */,
@@ -653,6 +652,7 @@
 				59D09C4A208D75E4006BB4B7 /* Pet.swift in Sources */,
 				59BD312321A0707B00C6102E /* SC2Criteria.swift in Sources */,
 				59397CE5207C63E70077018E /* Diablo3ModelController.swift in Sources */,
+				593F23292265329F00C5F1F5 /* Result.swift in Sources */,
 				59E425D720789AC40046EB84 /* Access.swift in Sources */,
 				5967ACC32088DC85009BFBAF /* URL+Query.swift in Sources */,
 				593F232122605F0E00C5F1F5 /* SC2Season.swift in Sources */,

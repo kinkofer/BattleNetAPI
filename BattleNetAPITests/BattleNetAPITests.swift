@@ -35,7 +35,7 @@ class BattleNetAPITests: XCTestCase {
     
     // MARK: -
     
-    static func webServiceClosureTest<T: Decodable>(result: Result<Data>, decodable: T.Type, expectation: XCTestExpectation) {
+    static func webServiceClosureTest<T: Decodable>(result: Result<Data, HTTPError>, decodable: T.Type, expectation: XCTestExpectation) {
         switch result {
         case .success(let data):
             do {

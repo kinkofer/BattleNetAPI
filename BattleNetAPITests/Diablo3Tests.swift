@@ -245,7 +245,7 @@ class Diablo3Tests: XCTestCase {
     }
     
     
-    func testGetFollowerItems(forHero heroID: Int, forBattleTag battleTag: String, region: APIRegion, locale: APILocale, completion: @escaping (_ result: Result<HeroFollowerItems>) -> Void) {
+    func testGetFollowerItems(forHero heroID: Int, forBattleTag battleTag: String, region: APIRegion, locale: APILocale, completion: @escaping (_ result: Result<HeroFollowerItems, HTTPError>) -> Void) {
         let heroID = 88095369
         let battleTag = "hionpotuse-1872"
         

@@ -39,7 +39,7 @@ class AuthenticationManager {
     
     // MARK: -
     
-    func getClientAccessToken(completion: @escaping (_ result: Result<String>) -> Void) {
+    func getClientAccessToken(completion: @escaping (_ result: Result<String, HTTPError>) -> Void) {
         if let accessToken = clientAccessToken {
             authMC.validateClientAccessToken(accessToken) { result in
                 DispatchQueue.main.async {
@@ -70,7 +70,7 @@ class AuthenticationManager {
     }
     
     
-    func getUserAccessToken(scope: Scope, completion: @escaping (_ result: Result<String>) -> Void) {
+    func getUserAccessToken(scope: Scope, completion: @escaping (_ result: Result<String, HTTPError>) -> Void) {
         if let userAccessToken = userAccessToken {
             authMC.validateUserAccessToken(userAccessToken) { result in
                 DispatchQueue.main.async {
@@ -90,7 +90,7 @@ class AuthenticationManager {
     }
     
     
-    private func authenicateUser(scope: Scope, completion: @escaping (_ result: Result<String>) -> Void) {
+    private func authenicateUser(scope: Scope, completion: @escaping (_ result: Result<String, HTTPError>) -> Void) {
         let redirectUrlStr = "https://oauth.click/BattleNetAPI/"
         guard let url = authMC.getOAuthURL(region: Current.region, clientID: clientID, scope: scope, redirectURL: redirectUrlStr) else {
             return

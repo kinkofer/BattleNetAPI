@@ -28,7 +28,7 @@ class WS_Authentication: WebService {
      - parameter completion: Returns a Result with the Data if `success` or an HTTPError if `failure`
      - note: This access token will not return specific user information. If that is needed, you must receive a user access token through OAuth
      */
-    func getClientAccessToken(region: APIRegion, clientID: String, clientSecret: String, completion: @escaping (_ result: Result<Data>) -> Void) {
+    func getClientAccessToken(region: APIRegion, clientID: String, clientSecret: String, completion: @escaping (_ result: Result<Data, HTTPError>) -> Void) {
         // Validate clientID and clientSecret
         guard !clientID.isEmpty,
             !clientSecret.isEmpty else {
@@ -80,7 +80,7 @@ class WS_Authentication: WebService {
      - parameter redirectURL: The url provided to the OAuth
      - parameter completion: Returns a Result with the Data if `success` or an HTTPError if `failure`
     */
-    func getUserAccessToken(region: APIRegion, clientID: String, clientSecret: String, code: String, redirectURL: String, completion: @escaping (_ result: Result<Data>) -> Void) {
+    func getUserAccessToken(region: APIRegion, clientID: String, clientSecret: String, code: String, redirectURL: String, completion: @escaping (_ result: Result<Data, HTTPError>) -> Void) {
         // Validate clientID and clientSecret
         guard !clientID.isEmpty,
             !clientSecret.isEmpty else {
@@ -127,7 +127,7 @@ class WS_Authentication: WebService {
      - parameter region: What region the request is being made
      - parameter completion: Returns a Result with the Data if `success` or an HTTPError if `failure`
      */
-    func validateClientAccessToken(_ token: String, region: APIRegion, completion: @escaping (_ result: Result<Data>) -> Void) {
+    func validateClientAccessToken(_ token: String, region: APIRegion, completion: @escaping (_ result: Result<Data, HTTPError>) -> Void) {
         guard !token.isEmpty else {
             completion(.failure(HTTPError(type: .unexpectedBody)))
             return
@@ -151,7 +151,7 @@ class WS_Authentication: WebService {
      - parameter region: What region the request is being made
      - parameter completion: Returns a Result with the Data if `success` or an HTTPError if `failure`
      */
-    func validateUserAccessToken(_ token: String, region: APIRegion, completion: @escaping (_ result: Result<Data>) -> Void) {
+    func validateUserAccessToken(_ token: String, region: APIRegion, completion: @escaping (_ result: Result<Data, HTTPError>) -> Void) {
         let urlStr = String(format: "\(region.checkTokenURI)?token=%@", token)
         self.callWebService(urlStr: urlStr, method: .post, apiType: nil) { result in
             // extract and save clientAccessToken to Network for future calls
