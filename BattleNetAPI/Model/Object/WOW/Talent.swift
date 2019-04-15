@@ -12,10 +12,10 @@ import Foundation
 typealias ClassTalentDictionary = [String: ClassTalent]
 
 class ClassTalent: Codable {
-    var specs: [CharacterSpecialization] = [CharacterSpecialization]()
-    var talents: [[[TalentElement]]] = [[[TalentElement]]]()
-    var `class`: String = ""
-    var petSpecs: [CharacterSpecialization]? = nil
+    let specs: [CharacterSpecialization]
+    let talents: [[[TalentElement]]]
+    let `class`: String
+    let petSpecs: [CharacterSpecialization]?
 }
 
 
@@ -29,39 +29,39 @@ enum RoleType: String, Codable {
 
 
 class TalentElement: Codable {
-    var tier: Int = 0
-    var column: Int = 0
-    var spell: CharacterSpell = CharacterSpell()
-    var spec: CharacterSpecialization? = nil
+    let tier: Int
+    let column: Int
+    let spell: CharacterSpell
+    let spec: CharacterSpecialization?
 }
 
 
 
 class CharacterSpell: Codable {
-    var id: Int = 0
-    var name: String = ""
-    var icon: String = ""
-    var description: String = ""
-    var castTime: CastTime = .instant
-    var range: Range? = nil
-    var cooldown: String? = nil
-    var powerCost: String? = nil
-    var subtext: String? = nil
+    let id: Int
+    let name: String
+    let icon: String
+    let description: String
+    let castTime: CastTime
+    let range: Range?
+    let cooldown: String?
+    let powerCost: String?
+    let subtext: String?
 }
 
 
 
 class CharacterTalent: Codable {
-    var talents: [TalentElement] = [TalentElement]()
-    var spec: CharacterSpecialization? = nil
-    var selected: Bool? = nil
-    var calcTalent: String = ""
-    var calcSpec: String = ""
+    let talents: [TalentElement]
+    let spec: CharacterSpecialization?
+    let selected: Bool?
+    let calcTalent: String
+    let calcSpec: String
 }
 
 
 
-struct PVPTalentSlots: Codable {
+class PVPTalentSlots: Codable {
     let _links: SelfLink<PVPTalentSlots>
     let talentSlots: [TalentSlot]
     
@@ -72,7 +72,7 @@ struct PVPTalentSlots: Codable {
 }
 
 
-struct TalentSlot: Codable {
+class TalentSlot: Codable {
     let slotNumber: Int
     let unlockPlayerLevel: Int
     

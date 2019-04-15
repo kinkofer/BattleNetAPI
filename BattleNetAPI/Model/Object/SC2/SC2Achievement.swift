@@ -10,19 +10,19 @@ import Foundation
 
 
 class SC2Achievement: Codable {
-    var id: String = ""
-    var title: String = ""
-    var description: String = ""
-    var imageUrl: String = ""
+    let id: String
+    let title: String
+    let description: String
+    let imageUrl: String
     
-    var uiOrderHint: Int = 0
-    var isChained: Bool = false
-    var points: Int = 0
-    var chainRewardSize: Int = 0
-    var criteriaIDs: [String]? = nil
-    var chainAchievementIDs: [String] = [String]()
-    var flags: Int = 0
-    var categoryID: String = ""
+    let uiOrderHint: Int
+    let isChained: Bool
+    let points: Int
+    let chainRewardSize: Int
+    let criteriaIDs: [String]?
+    let chainAchievementIDs: [String]
+    let flags: Int
+    let categoryID: String
     
     
     enum CodingKeys: String, CodingKey {

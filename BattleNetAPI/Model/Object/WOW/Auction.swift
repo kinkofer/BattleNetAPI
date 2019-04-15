@@ -10,12 +10,12 @@ import Foundation
 
 
 class Auction: Codable {
-    var files: [AuctionFile] = [AuctionFile]()
+    let files: [AuctionFile]
 }
 
 
 
 class AuctionFile: Codable {
-    var url: String = ""
-    var lastModified: Double = 0
+    let url: String
+    let lastModified: Double
 }

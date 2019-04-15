@@ -10,7 +10,7 @@ import Foundation
 
 
 class WOWLeaderboard: Codable {
-    var rows: [WOWLeaderboardEntry] = [WOWLeaderboardEntry]()
+    let rows: [WOWLeaderboardEntry]
 }
 
 
@@ -24,21 +24,21 @@ enum WOWLeaderboardBracket: String {
 
 
 class WOWLeaderboardEntry: Codable {
-    var ranking: Int = 0
-    var rating: Int = 0
-    var name: String = ""
-    var realmID: Int = 0
-    var realmName: String = ""
-    var realmSlug: String = ""
-    var raceID: Int = 0
-    var classID: Int = 0
-    var specID: Int = 0
-    var factionID: Int = 0
-    var genderID: Int = 0
-    var seasonWins: Int = 0
-    var seasonLosses: Int = 0
-    var weeklyWins: Int = 0
-    var weeklyLosses: Int = 0
+    let ranking: Int
+    let rating: Int
+    let name: String
+    let realmID: Int
+    let realmName: String
+    let realmSlug: String
+    let raceID: Int
+    let classID: Int
+    let specID: Int
+    let factionID: Int
+    let genderID: Int
+    let seasonWins: Int
+    let seasonLosses: Int
+    let weeklyWins: Int
+    let weeklyLosses: Int
     
     enum CodingKeys: String, CodingKey {
         case ranking
@@ -62,17 +62,17 @@ class WOWLeaderboardEntry: Codable {
 
 
 class WOWPVP: Codable {
-    var brackets: WOWBrackets = WOWBrackets()
+    let brackets: WOWBrackets
 }
 
 
 
 class WOWBrackets: Codable {
-    var arenaBracket2V2: WOWArenaBracket = WOWArenaBracket()
-    var arenaBracket2V2Skirmish: WOWArenaBracket = WOWArenaBracket()
-    var arenaBracket3V3: WOWArenaBracket = WOWArenaBracket()
-    var arenaBracketRbg: WOWArenaBracket = WOWArenaBracket()
-    var unknown: WOWArenaBracket = WOWArenaBracket()
+    let arenaBracket2V2: WOWArenaBracket
+    let arenaBracket2V2Skirmish: WOWArenaBracket
+    let arenaBracket3V3: WOWArenaBracket
+    let arenaBracketRbg: WOWArenaBracket
+    let unknown: WOWArenaBracket
     
     enum CodingKeys: String, CodingKey {
         case arenaBracket3V3 = "ARENA_BRACKET_3v3"
@@ -86,14 +86,14 @@ class WOWBrackets: Codable {
 
 
 class WOWArenaBracket: Codable {
-    var slug: String = ""
-    var rating: Int = 0
+    let slug: String
+    let rating: Int
     
-    var weeklyWon: Int = 0
-    var weeklyLost: Int = 0
-    var weeklyPlayed: Int = 0
+    let weeklyWon: Int
+    let weeklyLost: Int
+    let weeklyPlayed: Int
     
-    var seasonWon: Int = 0
-    var seasonLost: Int = 0
-    var seasonPlayed: Int = 0
+    let seasonWon: Int
+    let seasonLost: Int
+    let seasonPlayed: Int
 }

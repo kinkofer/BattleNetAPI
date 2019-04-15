@@ -61,6 +61,7 @@ class WOWCharacterClassIndex: Codable {
     let classes: [WOWCharacterClass]
 }
 
+
 class WOWCharacterClass: Codable {
     let id: Int
     let mask: Int

@@ -10,8 +10,8 @@ import Foundation
 
 
 class TokenIndex: Codable {
-    var lastUpdatedTimestamp = 0
-    var price = 0
+    let lastUpdatedTimestamp: Int
+    let price: Int
     
     enum CodingKeys: String, CodingKey {
         case lastUpdatedTimestamp = "last_updated_timestamp"

@@ -10,13 +10,13 @@ import Foundation
 
 
 class SC2Criteria: Codable {
-    var id: String = ""
-    var achievementID: String = ""
-    var uiOrderHint: Int = 0
-    var evaluationClass: String
-    var necessaryQuantity: Int = 0
-    var description: String = ""
-    var flags: Int = 0
+    let id: String
+    let achievementID: String
+    let uiOrderHint: Int
+    let evaluationClass: String
+    let necessaryQuantity: Int
+    let description: String
+    let flags: Int
     
     enum CodingKeys: String, CodingKey {
         case id

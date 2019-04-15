@@ -10,14 +10,14 @@ import Foundation
 
 
 class Spell: Codable {
-    var id: Int = 0
-    var name: String = ""
-    var description: String = ""
-    var icon: String = ""
+    let id: Int
+    let name: String
+    let description: String
+    let icon: String
     
-    var castTime: String = ""
+    let castTime: String
     
-    var subtext: String? = nil
-    var powerCost: String? = nil
-    var cooldown: String? = nil
+    let subtext: String?
+    let powerCost: String?
+    let cooldown: String?
 }

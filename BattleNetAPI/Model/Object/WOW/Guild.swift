@@ -10,25 +10,25 @@ import Foundation
 
 
 class WOWGuild: Codable {
-    var name: String = ""
-    var realm: String = ""
-    var battlegroup: String = ""
-    var members: Int = 0
-    var achievementPoints: Int = 0
-    var emblem: Emblem = Emblem()
+    let name: String
+    let realm: String
+    let battlegroup: String
+    let members: Int
+    let achievementPoints: Int
+    let emblem: Emblem
 }
 
 
 
 class Emblem: Codable {
-    var icon: Int = 0
-    var iconColor: String = ""
-    var iconColorID: Int = 0
-    var border: Int = 0
-    var borderColor: String = ""
-    var borderColorID: Int = 0
-    var backgroundColor: String = ""
-    var backgroundColorID: Int = 0
+    let icon: Int
+    let iconColor: String
+    let iconColorID: Int
+    let border: Int
+    let borderColor: String
+    let borderColorID: Int
+    let backgroundColor: String
+    let backgroundColorID: Int
     
     enum CodingKeys: String, CodingKey {
         case icon
@@ -45,17 +45,17 @@ class Emblem: Codable {
 
 
 class WOWGuildRewardIndex: Codable {
-    var rewards: [WOWGuildReward] = [WOWGuildReward]()
+    let rewards: [WOWGuildReward]
 }
 
 
 
 class WOWGuildReward: Codable {
-    var minGuildLevel: Int = 0
-    var minGuildRepLevel: Int = 0
-    var races: [Int]? = nil
-    var achievement: WOWAchievement? = nil
-    var item: WOWItemSummary = WOWItemSummary()
+    let minGuildLevel: Int
+    let minGuildRepLevel: Int
+    let races: [Int]?
+    let achievement: WOWAchievement?
+    let item: WOWItemSummary
 }
 
 
@@ -85,19 +85,19 @@ struct WOWGuildField: OptionSet {
 
 // https://us.api.battle.net/wow/guild/illidan/limit?fields=achievements
 class WOWGuildProfile: Codable {
-    var lastModified: Int = 0
-    var name: String = ""
-    var realm: String = ""
-    var battlegroup: String = ""
-    var level: Int = 0
-    var side: Int = 0
-    var achievementPoints: Int = 0
-    var emblem: Emblem = Emblem()
+    let lastModified: Int
+    let name: String
+    let realm: String
+    let battlegroup: String
+    let level: Int
+    let side: Int
+    let achievementPoints: Int
+    let emblem: Emblem
     
-    var achievements: WOWAchievementStatus? = nil
-    var challenges: [Challenge]? = nil
-    var members: [GuildMember]? = nil
-    var news: [Feed]? = nil
+    let achievements: WOWAchievementStatus?
+    let challenges: [Challenge]?
+    let members: [GuildMember]?
+    let news: [Feed]?
     
     enum CodingKeys: String, CodingKey {
         case lastModified
@@ -118,27 +118,27 @@ class WOWGuildProfile: Codable {
 
 
 class GuildMember: Codable {
-    var character: GuildCharacter? = nil
-    var spec: CharacterSpecialization? = nil
+    let character: GuildCharacter?
+    let spec: CharacterSpecialization?
 }
 
 
 
 class GuildCharacter: Codable {
-    var name: String = ""
-    var `class`: Int = 0
-    var gender: Int = 0
-    var race: Int = 0
-    var level: Int = 0
+    let name: String
+    let `class`: Int
+    let gender: Int
+    let race: Int
+    let level: Int
     
-    var realm: String? = nil
-    var guild: String? = nil
-    var guildRealm: String? = nil
+    let realm: String?
+    let guild: String?
+    let guildRealm: String?
     
-    var battlegroup: String? = nil
-    var achievementPoints: Int = 0
-    var lastModified: Int = 0
-    var thumbnail: String = ""
+    let battlegroup: String?
+    let achievementPoints: Int
+    let lastModified: Int
+    let thumbnail: String
     
-    var spec: CharacterSpecialization? = nil
+    let spec: CharacterSpecialization?
 }

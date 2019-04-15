@@ -10,16 +10,16 @@ import Foundation
 
 
 class SC2Reward: Codable {
-    var id: String = ""
-    var achievementID: String? = nil
-    var name: String = ""
+    let id: String
+    let achievementID: String?
+    let name: String
 
-    var imageUrl: String = ""
-    var isSkin: Bool = false
-    var uiOrderHint: Int = 0
-    var unlockableType: String = ""
-    var flags: Int = 0
-    var command: String? = nil
+    let imageUrl: String
+    let isSkin: Bool
+    let uiOrderHint: Int
+    let unlockableType: String
+    let flags: Int
+    let command: String?
     
     
     enum CodingKeys: String, CodingKey {

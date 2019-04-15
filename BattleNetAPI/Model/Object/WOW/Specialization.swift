@@ -76,11 +76,11 @@ class Talent: Codable {
 
 
 class SpellTooltip: Codable {
-    var description: String
-    var castTime: CastTime
-    var cooldown: String?
-    var powerCost: String?
-    var range: Range?
+    let description: String
+    let castTime: CastTime
+    let cooldown: String?
+    let powerCost: String?
+    let range: Range?
     
     enum CodingKeys: String, CodingKey {
         case description

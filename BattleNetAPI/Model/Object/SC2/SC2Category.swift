@@ -10,14 +10,14 @@ import Foundation
 
 
 class SC2Category: Codable {
-    var points: Int = 0
-    var uiOrderHint: Int = 0
-    var featuredAchievementID: String = ""
-    var id: String = ""
-    var parentCategoryID: String? = nil
-    var childrenCategoryIDs: [String] = [String]()
-    var name: String = ""
-    var medalTiers: [Int]? = nil
+    let points: Int
+    let uiOrderHint: Int
+    let featuredAchievementID: String
+    let id: String
+    let parentCategoryID: String?
+    let childrenCategoryIDs: [String]
+    let name: String
+    let medalTiers: [Int]?
     
     enum CodingKeys: String, CodingKey {
         case points

@@ -11,9 +11,9 @@ import Foundation
 
 
 class ClientToken: Codable {
-    var clientID: String = ""
-    var expiresIn: Int = 0
-    var authorities = [Authority]()
+    let clientID: String
+    let expiresIn: Int
+    let authorities: [Authority]
     
     enum CodingKeys: String, CodingKey {
         case clientID = "client_id"
@@ -37,7 +37,7 @@ extension ClientToken: CustomDebugStringConvertible {
 
 
 class Authority: Codable {
-    var role = ""
+    let role: String
     
     enum CodingKeys: String, CodingKey {
         case role = "authority"

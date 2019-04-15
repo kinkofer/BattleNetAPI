@@ -10,60 +10,60 @@ import Foundation
 
 
 class WOWItem: Codable {
-    var id: Int = 0
-    var description: String = ""
-    var name: String = ""
-    var icon: String = ""
+    let id: Int
+    let description: String
+    let name: String
+    let icon: String
     
-    var artifactID: Int = 0
-    var quality: Int = 0
+    let artifactID: Int
+    let quality: Int
     
-    var equippable: Bool = false
-    var isAuctionable: Bool = false
-    var stackable: Int = 0
-    var maxCount: Int = 0
-    var containerSlots: Int = 0
-    var itemBind: Int = 0
+    let equippable: Bool
+    let isAuctionable: Bool
+    let stackable: Int
+    let maxCount: Int
+    let containerSlots: Int
+    let itemBind: Int
     
-    var bonusStats: [WOWItemStat] = [WOWItemStat]()
-    var itemSpells: [WOWItemSpell] = [WOWItemSpell]()
+    let bonusStats: [WOWItemStat]
+    let itemSpells: [WOWItemSpell]
     
-    var buyPrice: Int = 0
-    var sellPrice: Int = 0
-    var itemClass: Int = 0
-    var itemSubClass: Int = 0
+    let buyPrice: Int
+    let sellPrice: Int
+    let itemClass: Int
+    let itemSubClass: Int
     
-    var inventoryType: Int = 0
-    var itemLevel: Int = 0
-    var maxDurability: Int = 0
-    var minFactionID: Int = 0
-    var minReputation: Int = 0
+    let inventoryType: Int
+    let itemLevel: Int
+    let maxDurability: Int
+    let minFactionID: Int
+    let minReputation: Int
     
-    var requiredSkill: Int = 0
-    var requiredLevel: Int = 0
-    var requiredSkillRank: Int = 0
+    let requiredSkill: Int
+    let requiredLevel: Int
+    let requiredSkillRank: Int
     
-    var itemSource: WOWItemSource = WOWItemSource()
-    var hasSockets: Bool = false
+    let itemSource: WOWItemSource
+    let hasSockets: Bool
     
-    var weaponInfo: WeaponInfo? = nil
-    var armor: Int = 0
-    var baseArmor: Int = 0
+    let weaponInfo: WeaponInfo?
+    let armor: Int
+    let baseArmor: Int
     
-    var displayInfoID: Int = 0
-    var nameDescription: String = ""
-    var nameDescriptionColor: String = ""
+    let displayInfoID: Int
+    let nameDescription: String
+    let nameDescriptionColor: String
     
-    var heroicTooltip: Bool = false
+    let heroicTooltip: Bool
     
-    var upgradable: Bool = false
-    var context: String = ""
-    var availableContexts: [String] = [String]()
+    let upgradable: Bool
+    let context: String
+    let availableContexts: [String]
     
-    var bonusLists: [Int] = [Int]()
-    var bonusSummary: BonusSummary = BonusSummary()
+    let bonusLists: [Int]
+    let bonusSummary: BonusSummary
     
-    var disenchantingSkillRank: Int? = nil
+    let disenchantingSkillRank: Int?
 
 
     enum CodingKeys: String, CodingKey {
@@ -114,16 +114,16 @@ class WOWItem: Codable {
 
 
 class BonusSummary: Codable {
-//    var defaultBonusLists: []
-//    var chanceBonusLists: []
-//    var bonusChances: []
+//    let defaultBonusLists: []
+//    let chanceBonusLists: []
+//    let bonusChances: []
 }
 
 
 
 class WOWItemSource: Codable {
-    var sourceID: Int = 0
-    var sourceType: String = ""
+    let sourceID: Int
+    let sourceType: String
     
     enum CodingKeys: String, CodingKey {
         case sourceID = "sourceId"
@@ -133,12 +133,12 @@ class WOWItemSource: Codable {
 
 
 class WOWItemSpell: Codable {
-    var spellID: Int = 0
-    var scaledDescription: String = ""
-    var trigger: String = ""
-    var consumable: Bool = false
-    var categoryID: Int = 0
-    var nCharges: Int = 0
+    let spellID: Int
+    let scaledDescription: String
+    let trigger: String
+    let consumable: Bool
+    let categoryID: Int
+    let nCharges: Int
     
     enum CodingKeys: String, CodingKey {
         case spellID = "spellId"
@@ -152,41 +152,41 @@ class WOWItemSpell: Codable {
 
 
 class WeaponInfo: Codable {
-    var damage: Damage = Damage()
-    var weaponSpeed: Double = 0
-    var dps: Double = 0
+    let damage: Damage
+    let weaponSpeed: Double
+    let dps: Double
 }
 
 
 
 class Damage: Codable {
-    var min: Int = 0
-    var max: Int = 0
-    var exactMin: Int = 0
-    var exactMax: Int = 0
+    let min: Int
+    let max: Int
+    let exactMin: Int
+    let exactMax: Int
 }
 
 
 
 class WOWItemSummary: Codable {
-    var id: Int = 0
-    var name: String = ""
-    var icon: String = ""
-    var quality: Int = 0
-    var itemLevel: Int = 0
-    var tooltipParams: TooltipParams = TooltipParams()
-    var stats: [WOWItemStat] = [WOWItemStat]()
-    var armor: Int = 0
-    var context: String = ""
-    var bonusLists: [Int] = [Int]()
-    var displayInfoID: Int = 0
-    var artifactID: Int = 0
-    var artifactAppearanceID: Int = 0
-//    var artifactTraits: []
-//    var relics: []
-    var appearance: WOWItemAppearance = WOWItemAppearance()
+    let id: Int
+    let name: String
+    let icon: String
+    let quality: Int
+    let itemLevel: Int
+    let tooltipParams: TooltipParams
+    let stats: [WOWItemStat]
+    let armor: Int
+    let context: String
+    let bonusLists: [Int]
+    let displayInfoID: Int
+    let artifactID: Int
+    let artifactAppearanceID: Int
+//    let artifactTraits: []
+//    let relics: []
+    let appearance: WOWItemAppearance
     
-    var weaponInfo: WeaponInfo? = nil
+    let weaponInfo: WeaponInfo?
     
     
     enum CodingKeys: String, CodingKey {
@@ -213,61 +213,61 @@ class WOWItemSummary: Codable {
 
 
 class WOWItemAppearance: Codable {
-    var transmogItemAppearanceModID: Int? = nil
-    var itemAppearanceModID: Int? = nil
-    var itemID: Int? = nil
-    var enchantDisplayInfoID: Int? = nil
+    let transmogItemAppearanceModID: Int?
+    let itemAppearanceModID: Int?
+    let itemID: Int?
+    let enchantDisplayInfoID: Int?
 }
 
 
 
 class TooltipParams: Codable {
-    var timewalkerLevel: Int = 0
-    var azeritePowerLevel: Int = 0
-    var azeritePower0: Int = 0
-    var azeritePower1: Int = 0
-    var azeritePower2: Int = 0
-    var azeritePower3: Int = 0
-    var azeritePower4: Int = 0
+    let timewalkerLevel: Int
+    let azeritePowerLevel: Int
+    let azeritePower0: Int
+    let azeritePower1: Int
+    let azeritePower2: Int
+    let azeritePower3: Int
+    let azeritePower4: Int
 }
 
 
 
 class WOWItemUpgrade: Codable {
-    var current: Int = 0
-    var total: Int = 0
-    var itemLevelIncrement: Int = 0
+    let current: Int
+    let total: Int
+    let itemLevelIncrement: Int
 }
 
 
 
 class WOWItemStat: Codable {
-    var stat: Int = 0
-    var amount: Int = 0
+    let stat: Int
+    let amount: Int
 }
 
 
 
 class WOWEquippedItems: Codable {
-    var mainHand: WOWItemSummary? = nil
-    var head: WOWItemSummary? = nil
-    var neck: WOWItemSummary? = nil
-    var shoulder: WOWItemSummary? = nil
-    var back: WOWItemSummary? = nil
-    var chest: WOWItemSummary? = nil
-    var tabard: WOWItemSummary? = nil
-    var wrist: WOWItemSummary? = nil
-    var hands: WOWItemSummary? = nil
-    var finger1: WOWItemSummary? = nil
-    var finger2: WOWItemSummary? = nil
-    var waist: WOWItemSummary? = nil
-    var legs: WOWItemSummary? = nil
-    var feet: WOWItemSummary? = nil
-    var trinket1: WOWItemSummary? = nil
-    var trinket2: WOWItemSummary? = nil
+    let mainHand: WOWItemSummary?
+    let head: WOWItemSummary?
+    let neck: WOWItemSummary?
+    let shoulder: WOWItemSummary?
+    let back: WOWItemSummary?
+    let chest: WOWItemSummary?
+    let tabard: WOWItemSummary?
+    let wrist: WOWItemSummary?
+    let hands: WOWItemSummary?
+    let finger1: WOWItemSummary?
+    let finger2: WOWItemSummary?
+    let waist: WOWItemSummary?
+    let legs: WOWItemSummary?
+    let feet: WOWItemSummary?
+    let trinket1: WOWItemSummary?
+    let trinket2: WOWItemSummary?
     
-    var averageItemLevel: Int = 0
-    var averageItemLevelEquipped: Int = 0
+    let averageItemLevel: Int
+    let averageItemLevelEquipped: Int
 }
 
 
@@ -276,17 +276,17 @@ class WOWEquippedItems: Codable {
 // MARK: - Item Sets
 
 class WOWItemSet: Codable {
-    var id: Int = 0
-    var name: String = ""
-    var setBonuses: [SetBonus] = [SetBonus]()
-    var items: [Int] = [Int]()
+    let id: Int
+    let name: String
+    let setBonuses: [SetBonus]
+    let items: [Int]
 }
 
 
 
 class SetBonus: Codable {
-    var description: String = ""
-    var threshold: Int = 0
+    let description: String
+    let threshold: Int
 }
 
 
@@ -294,20 +294,20 @@ class SetBonus: Codable {
 // MARK: - Item Classes
 
 class ItemClassIndex: Codable {
-    var classes: [ItemClass] = [ItemClass]()
+    let classes: [ItemClass]
 }
 
 
 
 class ItemClass: Codable {
-    var `class`: Int = 0
-    var name: String = ""
-    var subclasses: [ItemSubclass] = [ItemSubclass]()
+    let `class`: Int
+    let name: String
+    let subclasses: [ItemSubclass]
 }
 
 
 
 class ItemSubclass: Codable {
-    var subclass: Int = 0
-    var name: String = ""
+    let subclass: Int
+    let name: String
 }

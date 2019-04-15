@@ -10,30 +10,30 @@ import Foundation
 
 
 class MountIndex: Codable {
-    var mounts: [Mount] = [Mount]()
+    let mounts: [Mount]
 }
 
 
 
 class CollectedMountIndex: Codable {
-    var collected: [Mount] = [Mount]()
-    var numCollected: Int = 0
-    var numNotCollected: Int = 0
+    let collected: [Mount]
+    let numCollected: Int
+    let numNotCollected: Int
 }
 
 
 
 class Mount: Codable {
-    var name: String = ""
-    var spellID: Int = 0
-    var creatureID: Int = 0
-    var itemID: Int = 0
-    var qualityID: Int = 0
-    var icon: String? = nil
-    var isGround: Bool = false
-    var isFlying: Bool = false
-    var isAquatic: Bool = false
-    var isJumping: Bool = false
+    let name: String
+    let spellID: Int
+    let creatureID: Int
+    let itemID: Int
+    let qualityID: Int
+    let icon: String?
+    let isGround: Bool
+    let isFlying: Bool
+    let isAquatic: Bool
+    let isJumping: Bool
     
     enum CodingKeys: String, CodingKey {
         case name

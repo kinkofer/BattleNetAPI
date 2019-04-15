@@ -10,15 +10,15 @@ import Foundation
 
 
 class MatchIndex: Codable {
-    var matches = [Match]()
+    let matches: [Match]
 }
 
 
 
 class Match: Codable {
-    var map = ""
-    var type = ""
-    var decision = ""
-    var speed = ""
-    var date: Double = 0
+    let map: String
+    let type: String
+    let decision: String
+    let speed: String
+    let date: Double
 }
