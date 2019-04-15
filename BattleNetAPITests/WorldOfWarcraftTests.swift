@@ -77,6 +77,156 @@ class WorldOfWarcraftTests: XCTestCase {
     
     
     
+    // MARK: - Mythic Keystone Affix API
+    
+    func testGetMythicKeystoneAffixes() {
+        let wsResponseExpectation = expectation(description: "Web Service returned a response")
+        
+        BattleNetAPI.wow.getMythicKeystoneAffixes(region: region, locale: locale) { result in
+            BattleNetAPITests.webServiceClosureTest(result: result, decodable: KeystoneAffixIndex.self, expectation: wsResponseExpectation)
+        }
+        
+        waitForExpectations(timeout: 20) { error in
+            XCTAssertNil(error, "Exceeded timeout")
+        }
+    }
+    
+    
+    func testGetMythicKeystone() {
+        let id = 1
+        
+        let wsResponseExpectation = expectation(description: "Web Service returned a response")
+        
+        BattleNetAPI.wow.getMythicKeystoneAffix(id: id, region: region, locale: locale) { result in
+            BattleNetAPITests.webServiceClosureTest(result: result, decodable: KeystoneAffix.self, expectation: wsResponseExpectation)
+        }
+        
+        waitForExpectations(timeout: 20) { error in
+            XCTAssertNil(error, "Exceeded timeout")
+        }
+    }
+    
+    
+    
+    // MARK: - Mythic Raid Leaderboard API
+    
+    func testGetMythicRaidLeaderboard() {
+        let raid = "uldir"
+        let faction: FactionType = .alliance
+        
+        let wsResponseExpectation = expectation(description: "Web Service returned a response")
+        
+        BattleNetAPI.wow.getMythicRaidLeaderboard(raid: raid, faction: faction, region: region, locale: locale) { result in
+            BattleNetAPITests.webServiceClosureTest(result: result, decodable: MythicRaidLeaderboard.self, expectation: wsResponseExpectation)
+        }
+        
+        waitForExpectations(timeout: 20) { error in
+            XCTAssertNil(error, "Exceeded timeout")
+        }
+    }
+    
+    
+    
+    // MARK: - Mythic Keystone Dungeon API
+    
+    func testGetMythicKeystoneDungeons() {
+        let wsResponseExpectation = expectation(description: "Web Service returned a response")
+        
+        BattleNetAPI.wow.getMythicKeystoneDungeons(region: region, locale: locale) { result in
+            BattleNetAPITests.webServiceClosureTest(result: result, decodable: MythicKeystoneDungeonIndex.self, expectation: wsResponseExpectation)
+        }
+        
+        waitForExpectations(timeout: 20) { error in
+            XCTAssertNil(error, "Exceeded timeout")
+        }
+    }
+    
+    
+    func testGetMythicKeystoneDungeon() {
+        let id = 353
+        
+        let wsResponseExpectation = expectation(description: "Web Service returned a response")
+        
+        BattleNetAPI.wow.getMythicKeystoneDungeon(id: id, region: region, locale: locale) { result in
+            BattleNetAPITests.webServiceClosureTest(result: result, decodable: MythicKeystoneDungeon.self, expectation: wsResponseExpectation)
+        }
+        
+        waitForExpectations(timeout: 20) { error in
+            XCTAssertNil(error, "Exceeded timeout")
+        }
+    }
+    
+    
+    func testGetMythicKeystones() {
+        let wsResponseExpectation = expectation(description: "Web Service returned a response")
+        
+        BattleNetAPI.wow.getMythicKeystones(region: region, locale: locale) { result in
+            BattleNetAPITests.webServiceClosureTest(result: result, decodable: MythicKeystoneIndex.self, expectation: wsResponseExpectation)
+        }
+        
+        waitForExpectations(timeout: 20) { error in
+            XCTAssertNil(error, "Exceeded timeout")
+        }
+    }
+    
+    
+    func testGetMythicPeriods() {
+        let wsResponseExpectation = expectation(description: "Web Service returned a response")
+        
+        BattleNetAPI.wow.getMythicKeystonePeriods(region: region, locale: locale) { result in
+            BattleNetAPITests.webServiceClosureTest(result: result, decodable: MythicKeystonePeriodIndex.self, expectation: wsResponseExpectation)
+        }
+        
+        waitForExpectations(timeout: 20) { error in
+            XCTAssertNil(error, "Exceeded timeout")
+        }
+    }
+    
+    
+    func testGetMythicKeystonePeriod() {
+        let id = 641
+        
+        let wsResponseExpectation = expectation(description: "Web Service returned a response")
+        
+        BattleNetAPI.wow.getMythicKeystonePeriod(id: id, region: region, locale: locale) { result in
+            BattleNetAPITests.webServiceClosureTest(result: result, decodable: MythicKeystonePeriod.self, expectation: wsResponseExpectation)
+        }
+        
+        waitForExpectations(timeout: 20) { error in
+            XCTAssertNil(error, "Exceeded timeout")
+        }
+    }
+    
+    
+    func testGetMythicSeasons() {
+        let wsResponseExpectation = expectation(description: "Web Service returned a response")
+        
+        BattleNetAPI.wow.getMythicKeystoneSeasons(region: region, locale: locale) { result in
+            BattleNetAPITests.webServiceClosureTest(result: result, decodable: MythicKeystoneSeasonIndex.self, expectation: wsResponseExpectation)
+        }
+        
+        waitForExpectations(timeout: 20) { error in
+            XCTAssertNil(error, "Exceeded timeout")
+        }
+    }
+    
+    
+    func testGetMythicKeystoneSeason() {
+        let id = 1
+        
+        let wsResponseExpectation = expectation(description: "Web Service returned a response")
+        
+        BattleNetAPI.wow.getMythicKeystoneSeason(id: id, region: region, locale: locale) { result in
+            BattleNetAPITests.webServiceClosureTest(result: result, decodable: MythicKeystoneSeason.self, expectation: wsResponseExpectation)
+        }
+        
+        waitForExpectations(timeout: 20) { error in
+            XCTAssertNil(error, "Exceeded timeout")
+        }
+    }
+    
+    
+    
     // MARK: - Mythic Keystone Leaderboard API
     
     func testGetMythicLeaderboards() {
@@ -158,6 +308,24 @@ class WorldOfWarcraftTests: XCTestCase {
     }
     
     
+    func testGetPlayableClassPvPTalenSlots() {
+        let id = 7
+        
+        let wsResponseExpectation = expectation(description: "Web Service returned a response")
+        
+        BattleNetAPI.wow.getPlayableClassPvPTalentSlots(id: id, region: region, locale: locale) { result in
+            BattleNetAPITests.webServiceClosureTest(result: result, decodable: PVPTalentSlots.self, expectation: wsResponseExpectation)
+        }
+        
+        waitForExpectations(timeout: 20) { error in
+            XCTAssertNil(error, "Exceeded timeout")
+        }
+    }
+    
+    
+    
+    // MARK: - Player Specialization API
+    
     func testGetPlayableSpecializations() {
         let wsResponseExpectation = expectation(description: "Web Service returned a response")
         
@@ -178,6 +346,66 @@ class WorldOfWarcraftTests: XCTestCase {
         
         BattleNetAPI.wow.getPlayableSpecialization(id: id, region: region, locale: locale) { result in
             BattleNetAPITests.webServiceClosureTest(result: result, decodable: Specialization.self, expectation: wsResponseExpectation)
+        }
+        
+        waitForExpectations(timeout: 20) { error in
+            XCTAssertNil(error, "Exceeded timeout")
+        }
+    }
+    
+    
+    // MARK: - Power Type API
+    
+    func testGetPowerTypes() {
+        let wsResponseExpectation = expectation(description: "Web Service returned a response")
+        
+        BattleNetAPI.wow.getPowerTypes(region: region, locale: locale) { result in
+            BattleNetAPITests.webServiceClosureTest(result: result, decodable: PowerTypeIndex.self, expectation: wsResponseExpectation)
+        }
+        
+        waitForExpectations(timeout: 20) { error in
+            XCTAssertNil(error, "Exceeded timeout")
+        }
+    }
+    
+    
+    func testGetPowerType() {
+        let id = 0
+        
+        let wsResponseExpectation = expectation(description: "Web Service returned a response")
+        
+        BattleNetAPI.wow.getPowerType(id: id, region: region, locale: locale) { result in
+            BattleNetAPITests.webServiceClosureTest(result: result, decodable: PowerType.self, expectation: wsResponseExpectation)
+        }
+        
+        waitForExpectations(timeout: 20) { error in
+            XCTAssertNil(error, "Exceeded timeout")
+        }
+    }
+    
+    
+    // MARK: - Playable Race API
+    
+    func testGetPlayableRaces() {
+        let wsResponseExpectation = expectation(description: "Web Service returned a response")
+        
+        BattleNetAPI.wow.getPlayableRaces(region: region, locale: locale) { result in
+            BattleNetAPITests.webServiceClosureTest(result: result, decodable: WOWRaceIndex.self, expectation: wsResponseExpectation)
+        }
+        
+        waitForExpectations(timeout: 20) { error in
+            XCTAssertNil(error, "Exceeded timeout")
+        }
+    }
+    
+    
+    func testGetPlayableRace() {
+        let id = 2
+        
+        let wsResponseExpectation = expectation(description: "Web Service returned a response")
+        
+        BattleNetAPI.wow.getPlayableRace(id: id, region: region, locale: locale) { result in
+            BattleNetAPITests.webServiceClosureTest(result: result, decodable: WOWRace.self, expectation: wsResponseExpectation)
         }
         
         waitForExpectations(timeout: 20) { error in

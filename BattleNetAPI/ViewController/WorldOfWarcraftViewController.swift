@@ -80,7 +80,7 @@ class WorldOfWarcraftViewController: UITableViewController, APIViewer {
         // Playable Class
         case getPlayableClassesIndex
         case getPlayableClass
-        case getPlayableClassPvpTalentSlots
+        case getPlayableClassPvPTalentSlots
         // Playable Specialization
         case getPlayableSpecializationIndex
         case getPlayableSpecialization
@@ -259,7 +259,7 @@ class WorldOfWarcraftViewController: UITableViewController, APIViewer {
                                                             .getMythicKeystonePeriod, .getMythicKeystoneSeasonIndex, .getMythicKeystoneSeason]
             let mythicKeystoneLeaderboardAPIs: [GameDataService] = [.getMythicLeaderboardIndex, .getMythicLeaderboard]
             let mythicChallengeModeAPIs: [GameDataService] = [.getMythicChallengeMode]
-            let playableClassAPIs: [GameDataService] = [.getPlayableClassesIndex, .getPlayableClass, .getPlayableClassPvpTalentSlots]
+            let playableClassAPIs: [GameDataService] = [.getPlayableClassesIndex, .getPlayableClass, .getPlayableClassPvPTalentSlots]
             let playableSpecializationAPIs: [GameDataService] = [.getPlayableSpecializationIndex, .getPlayableSpecialization]
             let powerTypeAPIs: [GameDataService] = [.getPowerTypesIndex, .getPowerType]
             let playableRaceAPIs: [GameDataService] = [.getRacesIndex, .getRace]
@@ -331,6 +331,8 @@ class WorldOfWarcraftViewController: UITableViewController, APIViewer {
     
     // MARK: - Game Data APIs
     
+    // MARK: Connected Realm API
+    
     func getConnectedRealmIndex(region: APIRegion = .us, locale: APILocale? = .en_US) {
         wowMC.getConnectedRealmIndex(region: region, locale: locale) { result in
             switch result {
@@ -355,6 +357,134 @@ class WorldOfWarcraftViewController: UITableViewController, APIViewer {
     }
     
     
+    // MARK: Mythic Keystone Affix API
+    
+    func getMythicKeystoneAffixes(region: APIRegion = .us, locale: APILocale? = .en_US) {
+        wowMC.getMythicKeystoneAffixes(region: region, locale: locale) { result in
+            switch result {
+            case .success(let mythicKeystoneAffixes):
+                Debug.print("Retrieved \(mythicKeystoneAffixes.affixes.count) mythic keystone affix(s)")
+            case .failure(let error):
+                self.handleError(error)
+            }
+        }
+    }
+    
+    
+    func getMythicKeystoneAffix(id: Int, region: APIRegion = .us, locale: APILocale? = .en_US) {
+        wowMC.getMythicKeystoneAffix(id: id, region: region, locale: locale) { result in
+            switch result {
+            case .success(let mythicKeystoneAffix):
+                Debug.print("Retrieved mythic keystone affix \(mythicKeystoneAffix.name)")
+            case .failure(let error):
+                self.handleError(error)
+            }
+        }
+    }
+    
+    
+    // MARK: Mythic Raid Leaderboard API
+    
+    func getMythicRaidLeaderboard(raid: String, faction: FactionType, region: APIRegion = .us, locale: APILocale? = .en_US) {
+        wowMC.getMythicRaidLeaderboard(raid: raid, faction: faction, region: region, locale: locale) { result in
+            switch result {
+            case .success(let mythicRaidLeaderboard):
+                Debug.print("Retrieved mythic raid leaderboard with \(mythicRaidLeaderboard.entries.count) entry(s)")
+            case .failure(let error):
+                self.handleError(error)
+            }
+        }
+    }
+    
+    
+    // MARK: - Mythic Keystone Dungeon API
+    
+    func getMythicKeystoneDungeons(region: APIRegion = .us, locale: APILocale? = .en_US) {
+        wowMC.getMythicKeystoneDungeons(region: region, locale: locale) { result in
+            switch result {
+            case .success(let mythicKeystoneDungeons):
+                Debug.print("Retrieved \(mythicKeystoneDungeons.dungeons.count) mythic keystone dungeon(s)")
+            case .failure(let error):
+                self.handleError(error)
+            }
+        }
+    }
+    
+    
+    func getMythicKeystoneDungeon(id: Int, region: APIRegion = .us, locale: APILocale? = .en_US) {
+        wowMC.getMythicKeystoneDungeon(id: id, region: region, locale: locale) { result in
+            switch result {
+            case .success(let mythicKeystoneDungeon):
+                Debug.print("Retrieved mythic keystone dungeon \(mythicKeystoneDungeon.name) with \(mythicKeystoneDungeon.keystoneUpgrades.count) keystone upgrade(s)")
+            case .failure(let error):
+                self.handleError(error)
+            }
+        }
+    }
+    
+    
+    func getMythicKeystones(region: APIRegion = .us, locale: APILocale? = .en_US) {
+        wowMC.getMythicKeystones(region: region, locale: locale) { result in
+            switch result {
+            case .success(_):
+                Debug.print("Retrieved mythic keystone index")
+            case .failure(let error):
+                self.handleError(error)
+            }
+        }
+    }
+    
+    
+    func getMythicKeystonePeriods(region: APIRegion = .us, locale: APILocale? = .en_US) {
+        wowMC.getMythicKeystonePeriods(region: region, locale: locale) { result in
+            switch result {
+            case .success(let mythicKeystonePeriods):
+                Debug.print("Retrieved \(mythicKeystonePeriods.periods.count) mythic keystone period(s)")
+            case .failure(let error):
+                self.handleError(error)
+            }
+        }
+    }
+    
+    
+    func getMythicKeystonePeriod(id: Int, region: APIRegion = .us, locale: APILocale? = .en_US) {
+        wowMC.getMythicKeystonePeriod(id: id, region: region, locale: locale) { result in
+            switch result {
+            case .success(let mythicKeystonePeriod):
+                Debug.print("Retrieved mythic keystone period \(mythicKeystonePeriod.id)")
+            case .failure(let error):
+                self.handleError(error)
+            }
+        }
+    }
+    
+    
+    func getMythicKeystoneSeasons(region: APIRegion = .us, locale: APILocale? = .en_US) {
+        wowMC.getMythicKeystoneSeasons(region: region, locale: locale) { result in
+            switch result {
+            case .success(let mythicKeystoneSeasons):
+                Debug.print("Retrieved \(mythicKeystoneSeasons.seasons.count) mythic keystone season(s)")
+            case .failure(let error):
+                self.handleError(error)
+            }
+        }
+    }
+    
+    
+    func getMythicKeystoneSeason(id: Int, region: APIRegion = .us, locale: APILocale? = .en_US) {
+        wowMC.getMythicKeystoneSeason(id: id, region: region, locale: locale) { result in
+            switch result {
+            case .success(let mythicKeystoneSeason):
+                Debug.print("Retrieved mythic keystone season \(mythicKeystoneSeason.id) with \(mythicKeystoneSeason.periods.count) keystone period(s)")
+            case .failure(let error):
+                self.handleError(error)
+            }
+        }
+    }
+    
+    
+    // MARK: Mythic Keystone Leaderboard API
+    
     func getMythicLeaderboards(connectedRealmID: Int, region: APIRegion = .us, locale: APILocale? = .en_US) {
         wowMC.getMythicLeaderboards(connectedRealmID: connectedRealmID, region: region, locale: locale) { result in
             switch result {
@@ -371,7 +501,7 @@ class WorldOfWarcraftViewController: UITableViewController, APIViewer {
         wowMC.getMythicLeaderboard(connectedRealmID: connectedRealmID, dungeonID: dungeonID, period: period, region: region, locale: locale) { result in
             switch result {
             case .success(let leaderboard):
-                let keystoneAffixes = leaderboard.keystoneAffixes.map { $0.keystoneAffix.name }
+                let keystoneAffixes = leaderboard.keystoneAffixes.compactMap { $0.keystoneAffix.name }
                 Debug.print("Retrieved Mythic Leaderboard \(leaderboard.name) with Keystone Affixes \(keystoneAffixes.joined(separator: ", "))")
             case .failure(let error):
                 self.handleError(error)
@@ -384,7 +514,7 @@ class WorldOfWarcraftViewController: UITableViewController, APIViewer {
         wowMC.getMythicChallengeMode(region: region, locale: locale) { result in
             switch result {
             case .success(let mythicChallengeMode):
-                let keystoneAffixes = mythicChallengeMode.currentKeystoneAffixes.map { $0.keystoneAffix.name }
+                let keystoneAffixes = mythicChallengeMode.currentKeystoneAffixes.compactMap { $0.keystoneAffix.name }
                 Debug.print("Retrieved Mythic Challenge Mode with Current Period \(mythicChallengeMode.currentPeriod) with Keystone Affixes \(keystoneAffixes.joined(separator: ", "))")
             case .failure(let error):
                 self.handleError(error)
@@ -392,6 +522,8 @@ class WorldOfWarcraftViewController: UITableViewController, APIViewer {
         }
     }
     
+    
+    // MARK: Playable Class API
     
     func getPlayableClasses(region: APIRegion = .us, locale: APILocale? = .en_US) {
         wowMC.getPlayableClasses(region: region, locale: locale) { result in
@@ -427,6 +559,20 @@ class WorldOfWarcraftViewController: UITableViewController, APIViewer {
     }
     
     
+    func getPlayableClassPvPTalentSlots(id: Int, region: APIRegion = .us, locale: APILocale? = .en_US) {
+        wowMC.getPlayableClassPvPTalentSlots(id: id, region: region, locale: locale) { result in
+            switch result {
+            case .success(let pvpTalentSlots):
+                Debug.print("Retrieved PvP Talent Slots with \(pvpTalentSlots.talentSlots.count) talent slot(s)")
+            case .failure(let error):
+                self.handleError(error)
+            }
+        }
+    }
+    
+    
+    // MARK: Playable Specialization API
+    
     func getPlayableSpecializations(region: APIRegion = .us, locale: APILocale? = .en_US) {
         wowMC.getPlayableSpecializations(region: region, locale: locale) { result in
             switch result {
@@ -443,13 +589,67 @@ class WorldOfWarcraftViewController: UITableViewController, APIViewer {
         wowMC.getPlayableSpecialization(id: id, region: region, locale: locale) { result in
             switch result {
             case .success(let specialization):
-                Debug.print("Retrieved Specialization \(specialization.name) for Playable Class \(specialization.playableClass.name)")
+                Debug.print("Retrieved Specialization \(specialization.name) for Playable Class \(specialization.playableClass.name ?? "Unknown")")
             case .failure(let error):
                 self.handleError(error)
             }
         }
     }
     
+    
+    // MARK: Power Type API
+    
+    func getPowerTypes(region: APIRegion = .us, locale: APILocale? = .en_US) {
+        wowMC.getPowerTypes(region: region, locale: locale) { result in
+            switch result {
+            case .success(let powerTypeIndex):
+                Debug.print("Retrieved \(powerTypeIndex.powerTypes.count) Power Type(s)")
+            case .failure(let error):
+                self.handleError(error)
+            }
+        }
+    }
+    
+    
+    func getPowerType(id: Int, region: APIRegion = .us, locale: APILocale? = .en_US) {
+        wowMC.getPowerType(id: id, region: region, locale: locale) { result in
+            switch result {
+            case .success(let powerType):
+                Debug.print("Retrieved Power Type \(powerType.name)")
+            case .failure(let error):
+                self.handleError(error)
+            }
+        }
+    }
+    
+    
+    // MARK: Playable Race API
+    
+    func getPlayableRaces(region: APIRegion = .us, locale: APILocale? = .en_US) {
+        wowMC.getPlayableRaces(region: region, locale: locale) { result in
+            switch result {
+            case .success(let racesIndex):
+                Debug.print("Retrieved \(racesIndex.races.count) Playable Character Race(s)")
+            case .failure(let error):
+                self.handleError(error)
+            }
+        }
+    }
+    
+    
+    func getPlayableRace(id: Int, region: APIRegion = .us, locale: APILocale? = .en_US) {
+        wowMC.getPlayableRace(id: id, region: region, locale: locale) { result in
+            switch result {
+            case .success(let race):
+                Debug.print("Retrieved Race \(race.genderName.femaleName)/\(race.genderName.maleName)")
+            case .failure(let error):
+                self.handleError(error)
+            }
+        }
+    }
+    
+    
+    // MARK: Realm API
     
     func getRealmIndex(region: APIRegion = .us, locale: APILocale? = .en_US) {
         wowMC.getRealmIndex(region: region, locale: locale) { result in
@@ -475,6 +675,8 @@ class WorldOfWarcraftViewController: UITableViewController, APIViewer {
     }
     
     
+    // MARK: Region API
+    
     func getRegionIndex(region: APIRegion = .us, locale: APILocale? = .en_US) {
         wowMC.getRegionIndex(region: region, locale: locale) { result in
             switch result {
@@ -498,6 +700,8 @@ class WorldOfWarcraftViewController: UITableViewController, APIViewer {
         }
     }
     
+    
+    // MARK: WOW Token API
     
     func getTokenIndex(region: APIRegion = .us, locale: APILocale? = .en_US) {
         wowMC.getTokenIndex(region: region, locale: locale) { result in
@@ -1093,25 +1297,25 @@ class WorldOfWarcraftViewController: UITableViewController, APIViewer {
             case .getConnectedRealm:
                 getConnectedRealm(id: 11)
             case .getKeystoneAffixIndex:
-                break
+                getMythicKeystoneAffixes()
             case .getKeystoneAffix:
-                break
+                getMythicKeystoneAffix(id: 1)
             case .getMythicRaidLeaderboard:
-                break
+                getMythicRaidLeaderboard(raid: "uldir", faction: .alliance)
             case .getMythicKeystoneDungeonIndex:
-                break
+                getMythicKeystoneDungeons()
             case .getMythicKeystoneDungeon:
-                break
+                getMythicKeystoneDungeon(id: 353)
             case .getMythicKeystoneIndex:
-                break
+                getMythicKeystones()
             case .getMythicKeystonePeriodIndex:
-                break
+                getMythicKeystonePeriods()
             case .getMythicKeystonePeriod:
-                break
+                getMythicKeystonePeriod(id: 641)
             case .getMythicKeystoneSeasonIndex:
-                break
+                getMythicKeystoneSeasons()
             case .getMythicKeystoneSeason:
-                break
+                getMythicKeystoneSeason(id: 1)
             case .getMythicLeaderboardIndex:
                 getMythicLeaderboards(connectedRealmID: 11)
             case .getMythicLeaderboard:
@@ -1122,20 +1326,20 @@ class WorldOfWarcraftViewController: UITableViewController, APIViewer {
                 getPlayableClasses()
             case .getPlayableClass:
                 getPlayableClass(id: 7)
-            case .getPlayableClassPvpTalentSlots:
-                break
+            case .getPlayableClassPvPTalentSlots:
+                getPlayableClassPvPTalentSlots(id: 7)
             case .getPlayableSpecializationIndex:
                 getPlayableSpecializations()
             case .getPlayableSpecialization:
                 getPlayableSpecialization(id: 262)
             case .getPowerTypesIndex:
-                break
+                getPowerTypes()
             case .getPowerType:
-                break
+                getPowerType(id: 0)
             case .getRacesIndex:
-                break
+                getPlayableRaces()
             case .getRace:
-                break
+                getPlayableRace(id: 2)
             case .getRealmIndex:
                 getRealmIndex()
             case .getRealm:

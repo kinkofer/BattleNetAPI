@@ -10,9 +10,9 @@ import Foundation
 
 
 class SpecializationIndex: Codable {
-    var _links: SelfLink<SpecializationIndex> = SelfLink<SpecializationIndex>()
-    var characterSpecializations: [SpecializationLink] = [SpecializationLink]()
-    var petSpecializations: [SpecializationLink] = [SpecializationLink]()
+    let _links: SelfLink<SpecializationIndex>
+    let characterSpecializations: [KeyLink<Specialization>]
+    let petSpecializations: [KeyLink<Specialization>]
     
     enum CodingKeys: String, CodingKey {
         case _links
@@ -23,27 +23,19 @@ class SpecializationIndex: Codable {
 
 
 
-class SpecializationLink: Codable {
-    var key: Link<Specialization> = Link<Specialization>()
-    var id: Int = 0
-    var name: String? = nil
-}
-
-
-
 // https://us.api.battle.net/data/wow/playable-specialization/65?namespace=static-7.3.5_25875-us
 class Specialization: Codable {
-    var _links: SelfLink<Specialization> = SelfLink<Specialization>()
-    var id: Int = 0
-    var name: String = ""
+    let _links: SelfLink<Specialization>
+    let id: Int
+    let name: String
 
-    var playableClass: WOWClassLink = WOWClassLink()
-    var genderDescription: GenderName = GenderName()
-    var role: Role = Role()
-    var pvpTalents: [Talent] = [Talent]()
-    var talentTiers: [TalentTier] = [TalentTier]()
+    let playableClass: KeyLink<WOWClass>
+    let genderDescription: GenderName
+    let role: Role
+    let pvpTalents: [Talent]
+    let talentTiers: [TalentTier]
     
-    var media: MediaLink = MediaLink()
+    let media: MediaLink
     
     enum CodingKeys: String, CodingKey {
         case _links
@@ -61,20 +53,20 @@ class Specialization: Codable {
 
 
 class Role: Codable {
-    var type: String = ""
-    var name: String = ""
+    let type: String
+    let name: String
 }
 
 
 class TalentTier: Codable {
-    var level: Int = 0
-    var talents: [Talent] = [Talent]()
+    let level: Int
+    let talents: [Talent]
 }
 
 
 class Talent: Codable {
-    var talent: WOWClassLink = WOWClassLink()
-    var spellTooltip: SpellTooltip = SpellTooltip()
+    let talent: KeyLink<WOWClass>
+    let spellTooltip: SpellTooltip
     
     enum CodingKeys: String, CodingKey {
         case talent
@@ -84,11 +76,11 @@ class Talent: Codable {
 
 
 class SpellTooltip: Codable {
-    var description: String = ""
-    var castTime: CastTime = .instant
-    var cooldown: String? = nil
-    var powerCost: String? = nil
-    var range: Range? = nil
+    var description: String
+    var castTime: CastTime
+    var cooldown: String?
+    var powerCost: String?
+    var range: Range?
     
     enum CodingKeys: String, CodingKey {
         case description
@@ -133,10 +125,10 @@ enum Range: String, Codable {
 
 
 class CharacterSpecialization: Codable {
-    var name: String = ""
-    var role: RoleType = .dps
-    var backgroundImage: String = ""
-    var icon: String = ""
-    var description: String = ""
-    var order: Int = 0
+    let name: String
+    let role: RoleType
+    let backgroundImage: String
+    let icon: String
+    let description: String
+    let order: Int
 }

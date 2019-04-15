@@ -10,20 +10,20 @@ import Foundation
 
 
 class LocaleString: Codable {
-    var de_DE: String? = nil
-    var en_US: String? = nil
-    var en_GB: String? = nil
-    var es_ES: String? = nil
-    var es_MX: String? = nil
-    var fr_FR: String? = nil
-    var it_IT: String? = nil
-    var ko_KR: String? = nil
-    var pl_PL: String? = nil
-    var pt_BR: String? = nil
-    var pt_PT: String? = nil
-    var ru_RU: String? = nil
-    var zh_CN: String? = nil
-    var zh_TW: String? = nil
+    let de_DE: String?
+    let en_US: String?
+    let en_GB: String?
+    let es_ES: String?
+    let es_MX: String?
+    let fr_FR: String?
+    let it_IT: String?
+    let ko_KR: String?
+    let pl_PL: String?
+    let pt_BR: String?
+    let pt_PT: String?
+    let ru_RU: String?
+    let zh_CN: String?
+    let zh_TW: String?
     
     
     enum CodingKeys: String, CodingKey {

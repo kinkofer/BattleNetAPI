@@ -11,11 +11,11 @@ import Foundation
 
 // https://us.api.battle.net/data/d3/era/?namespace=2-6-US
 class EraIndex: Codable {
-    var _links: SelfLink<EraIndex> = SelfLink<EraIndex>()
-    var era: [Link<EraLeaderboardIndex>] = [Link<EraLeaderboardIndex>]()
-    var currentEra: Int = 0
-    var lastUpdateTime: String = ""
-    var generatedBy: String = ""
+    let _links: SelfLink<EraIndex>
+    let era: [Link<EraLeaderboardIndex>]
+    let currentEra: Int
+    let lastUpdateTime: String
+    let generatedBy: String
     
     enum CodingKeys: String, CodingKey {
         case _links
@@ -30,12 +30,12 @@ class EraIndex: Codable {
 
 // https://us.api.battle.net/data/d3/era/1?namespace=2-6-US
 class EraLeaderboardIndex: Codable {
-    var _links: SelfLink<EraLeaderboardIndex> = SelfLink<EraLeaderboardIndex>()
-    var leaderboard: [EraLeaderboardLink] = [EraLeaderboardLink]()
-    var eraId: Int = 0
-    var eraStartDate: Double = 0
-    var lastUpdateTime: String = ""
-    var generatedBy: String = ""
+    let _links: SelfLink<EraLeaderboardIndex>
+    let leaderboard: [EraLeaderboardLink]
+    let eraId: Int
+    let eraStartDate: Double
+    let lastUpdateTime: String
+    let generatedBy: String
     
     enum CodingKeys: String, CodingKey {
         case _links
@@ -50,10 +50,10 @@ class EraLeaderboardIndex: Codable {
 
 
 class EraLeaderboardLink: Codable {
-    var ladder: Link<EraLeaderboard> = Link<EraLeaderboard>()
-    var heroClassString: String? = nil
-    var teamSize: Int? = nil
-    var hardcore: Bool? = nil
+    let ladder: Link<EraLeaderboard>
+    let heroClassString: String?
+    let teamSize: Int?
+    let hardcore: Bool?
     
     enum CodingKeys: String, CodingKey {
         case ladder
@@ -67,19 +67,19 @@ class EraLeaderboardLink: Codable {
 
 // https://us.api.battle.net/data/d3/era/1/leaderboard/rift-barbarian?namespace=2-6-US
 class EraLeaderboard: Codable {
-    var _links: SelfLink<EraLeaderboard> = SelfLink<EraLeaderboard>()
-    var key = ""
-    var title = LocaleString()
-    var era = 0
+    let _links: SelfLink<EraLeaderboard>
+    let key: String
+    let title: LocaleString
+    let era: Int
     
-    var lastUpdateTime = ""
-    var generatedBy = ""
+    let lastUpdateTime: String
+    let generatedBy: String
     
-    var row = [LeaderboardEntry]()
-    var column = [LeaderboardColumn]()
+    let row: [LeaderboardEntry]
+    let column: [LeaderboardColumn]
     
-    var greaterRiftSoloClass: String = ""
-    let greaterRift: Bool = false
+    let greaterRiftSoloClass: String
+    let greaterRift: Bool
     
     
     enum CodingKeys: String, CodingKey {

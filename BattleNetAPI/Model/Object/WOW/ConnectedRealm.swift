@@ -11,10 +11,11 @@ import Foundation
 
 // https://us.api.battle.net/data/wow/connected-realm/?namespace=dynamic-us
 class ConnectedRealmIndex: Codable {
-    var _links: SelfLink<ConnectedRealmIndex> = SelfLink<ConnectedRealmIndex>()
-    var connectedRealms: [Link<ConnectedRealm>] = [Link<ConnectedRealm>]()
+    let _links: SelfLink<ConnectedRealmIndex>
+    let connectedRealms: [Link<ConnectedRealm>]
     
     enum CodingKeys: String, CodingKey {
+        case _links
         case connectedRealms = "connected_realms"
     }
 }
@@ -23,18 +24,19 @@ class ConnectedRealmIndex: Codable {
 
 // https://us.api.battle.net/data/wow/connected-realm/11?namespace=dynamic-us
 class ConnectedRealm: Codable {
-    var _links: SelfLink<ConnectedRealm> = SelfLink<ConnectedRealm>()
-    var id: Int = 0
+    let _links: SelfLink<ConnectedRealm>
+    let id: Int
     
-    var realms: [Realm] = [Realm]()
+    let realms: [Realm]
     
-    var hasQueue: Bool = false
-    var status: ConnectedRealmStatus = ConnectedRealmStatus()
-    var population: ConnectedRealmPopulation = ConnectedRealmPopulation()
+    let hasQueue: Bool
+    let status: ConnectedRealmStatus
+    let population: ConnectedRealmPopulation
     
-    var mythicLeaderboards: Link<MythicLeaderboard> = Link<MythicLeaderboard>()
+    let mythicLeaderboards: Link<MythicLeaderboard>
     
     enum CodingKeys: String, CodingKey {
+        case _links
         case id
         case realms
         case hasQueue = "has_queue"
@@ -47,13 +49,13 @@ class ConnectedRealm: Codable {
 
 
 class ConnectedRealmStatus: Codable {
-    var type: String = ""
-    var name: String = ""
+    let type: String
+    let name: String
 }
 
 
 
 class ConnectedRealmPopulation: Codable {
-    var type: String = ""
-    var name: String = ""
+    let type: String
+    let name: String
 }

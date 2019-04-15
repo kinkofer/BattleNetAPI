@@ -10,12 +10,12 @@ import Foundation
 
 
 class D3Item: Codable {
-    var id = ""
-    var slug = ""
-    var name = ""
+    let id: String
+    let slug: String
+    let name: String
     
-    var icon = ""
-    var path = ""
+    let icon: String
+    let path: String
     
     var slugAndID: String {
         return "\(slug)-\(id)"
@@ -25,9 +25,9 @@ class D3Item: Codable {
 
 
 class D3ItemType: Codable {
-    var id = ""
-    var name = ""
-    var path = ""
+    let id: String
+    let name: String
+    let path: String
     
     var slug: String {
         return String(path.split(separator: "/").last ?? "")
@@ -37,100 +37,100 @@ class D3ItemType: Codable {
 
 
 class D3EquippedItem: Codable {
-    var id = ""
-    var name = ""
-    var icon = ""
-    var displayColor = ""
-    var tooltipParams = ""
-    var transmogItem: D3EquippedItem? = nil
+    let id: String
+    let name: String
+    let icon: String
+    let displayColor: String
+    let tooltipParams: String
+    let transmogItem: D3EquippedItem?
 }
 
 
 
 class D3FullItem: Codable {
-    var id = ""
-    var slug = ""
-    var name = ""
-    var icon = ""
+    let id: String
+    let slug: String
+    let name: String
+    let icon: String
     
-    var typeName = ""
-    var type = D3TwoHandedItemType()
+    let typeName: String
+    let type: D3TwoHandedItemType
     
-    var accountBound = false
+    let accountBound: Bool
     
-    var requiredLevel = 0
-    var stackSizeMax = 0
+    let requiredLevel: Int
+    let stackSizeMax: Int
     
-    var tooltipParams = ""
-    var flavorText = ""
-    var flavorTextHtml = ""
+    let tooltipParams: String
+    let flavorText: String
+    let flavorTextHtml: String
     
-    var damage = ""
-    var damageHtml = ""
-    var dps = ""
+    let damage: String
+    let damageHtml: String
+    let dps: String
     
-    var color = ""
+    let color: String
     
-    var isSeasonRequiredToDrop = false
-    var seasonRequiredToDrop = -1
+    let isSeasonRequiredToDrop: Bool
+    let seasonRequiredToDrop: Int
     
-    var slots = [String]()
-    var attributes = AttributeSet()
-    var randomAffixes = [RandomAffix]()
+    let slots: [String]
+    let attributes: AttributeSet
+    let randomAffixes: [RandomAffix]
     
     /// An array of item path slugs and IDs of the items in the set, not including the current item. Example: "item/firebirds-pinions-Unique_Shoulder_Set_06_x1"
-    var setItems = [String]() // TODO: Determine what object is in the array
+    let setItems: [String] // TODO: Determine what object is in the array
 }
 
 
 
 class D3FullEquippedItem: Codable {
-    var id = ""
-    var name = ""
-    var icon = ""
+    let id: String
+    let name: String
+    let icon: String
     
-    var displayColor = ""
-    var dye: Dye? = nil
-    var transmog: D3EquippedItem? = D3EquippedItem()
+    let displayColor: String
+    let dye: Dye?
+    let transmog: D3EquippedItem?
 
-    var typeName = ""
-    var type = D3TwoHandedItemType()
+    let typeName: String
+    let type: D3TwoHandedItemType
 
-    var accountBound = false
+    let accountBound: Bool
 
-    var requiredLevel = 0
-    var itemLevel = 0
-    var stackSizeMax = 0
+    let requiredLevel: Int
+    let itemLevel: Int
+    let stackSizeMax: Int
 
-    var tooltipParams = ""
-    var flavorText: String? = nil
+    let tooltipParams: String
+    let flavorText: String?
 
-    var damage: String? = nil
-    var dps: String? = nil
-    var armor = 0.0
-    var attacksPerSecond = 0.0
-    var minDamage = 0.0
-    var maxDamage = 0.0
-    var blockChance: String? = nil
+    let damage: String?
+    let dps: String?
+    let armor: Double
+    let attacksPerSecond: Double
+    let minDamage: Double
+    let maxDamage: Double
+    let blockChance: String?
 
-    var isSeasonRequiredToDrop = false
-    var seasonRequiredToDrop = -1
+    let isSeasonRequiredToDrop: Bool
+    let seasonRequiredToDrop: Int
 
-    var slots = ""
-    var attributes: EquippedAttributeSet? = nil
-    var attributesHtml: EquippedAttributeSet? = nil
+    let slots: String
+    let attributes: EquippedAttributeSet?
+    let attributesHtml: EquippedAttributeSet?
 
-    var openSockets = 0
-    var gems: [Gem]? = nil
+    let openSockets: Int
+    let gems: [Gem]?
 
-    var set: D3ItemSet? = nil
+    let set: D3ItemSet?
 }
 
 
 
 class D3TwoHandedItemType: Codable {
-    var id = ""
-    var twoHanded = false
+    let id: String
+    let twoHanded: Bool
 }
 
 
@@ -138,16 +138,16 @@ class D3TwoHandedItemType: Codable {
 // MARK: Attribute
 
 class AttributeSet: Codable {
-    var primary = [Attribute]()
-    var secondary: [Attribute]? = nil
-    var other: [Attribute]? = nil
+    let primary: [Attribute]
+    let secondary: [Attribute]?
+    let other: [Attribute]?
 }
 
 
 
 class Attribute: Codable {
-    var text = ""
-    var textHtml = ""
+    let text: String
+    let textHtml: String
 }
 
 
@@ -155,8 +155,8 @@ class Attribute: Codable {
 // MARK: Equipped Attribute
 
 class EquippedAttributeSet: Codable {
-    var primary = [String]()
-    var secondary: [String]? = nil
+    let primary: [String]
+    let secondary: [String]?
 }
 
 
@@ -164,71 +164,71 @@ class EquippedAttributeSet: Codable {
 // MARK:
 
 class RandomAffix: Codable {
-    var oneOf = [Attribute]()
+    let oneOf: [Attribute]
 }
 
 
 
 class EquippedItems: Codable {
-    var head: D3EquippedItem? = nil
-    var neck: D3EquippedItem? = nil
-    var torso: D3EquippedItem? = nil
-    var shoulders: D3EquippedItem? = nil
-    var legs: D3EquippedItem? = nil
-    var waist: D3EquippedItem? = nil
-    var hands: D3EquippedItem? = nil
-    var bracers: D3EquippedItem? = nil
-    var feet: D3EquippedItem? = nil
-    var leftFinger: D3EquippedItem? = nil
-    var rightFinger: D3EquippedItem? = nil
-    var mainHand: D3EquippedItem? = nil
-    var offHand: D3EquippedItem? = nil
+    let head: D3EquippedItem?
+    let neck: D3EquippedItem?
+    let torso: D3EquippedItem?
+    let shoulders: D3EquippedItem?
+    let legs: D3EquippedItem?
+    let waist: D3EquippedItem?
+    let hands: D3EquippedItem?
+    let bracers: D3EquippedItem?
+    let feet: D3EquippedItem?
+    let leftFinger: D3EquippedItem?
+    let rightFinger: D3EquippedItem?
+    let mainHand: D3EquippedItem?
+    let offHand: D3EquippedItem?
 }
 
 
 
 class FullEquippedItems: Codable {
-    var head: D3FullEquippedItem? = nil
-    var neck: D3FullEquippedItem? = nil
-    var torso: D3FullEquippedItem? = nil
-    var shoulders: D3FullEquippedItem? = nil
-    var legs: D3FullEquippedItem? = nil
-    var waist: D3FullEquippedItem? = nil
-    var hands: D3FullEquippedItem? = nil
-    var bracers: D3FullEquippedItem? = nil
-    var feet: D3FullEquippedItem? = nil
-    var leftFinger: D3FullEquippedItem? = nil
-    var rightFinger: D3FullEquippedItem? = nil
-    var mainHand: D3FullEquippedItem? = nil
-    var offHand: D3FullEquippedItem? = nil
+    let head: D3FullEquippedItem?
+    let neck: D3FullEquippedItem?
+    let torso: D3FullEquippedItem?
+    let shoulders: D3FullEquippedItem?
+    let legs: D3FullEquippedItem?
+    let waist: D3FullEquippedItem?
+    let hands: D3FullEquippedItem?
+    let bracers: D3FullEquippedItem?
+    let feet: D3FullEquippedItem?
+    let leftFinger: D3FullEquippedItem?
+    let rightFinger: D3FullEquippedItem?
+    let mainHand: D3FullEquippedItem?
+    let offHand: D3FullEquippedItem?
 }
 
 
 
 class Gem: Codable {
-    var item = D3Item()
-    var attributes = [String]()
-    var isGem = false
-    var isJewel = false
+    let item: D3Item
+    let attributes: [String]
+    let isGem: Bool
+    let isJewel: Bool
     
-    var jewelRank: Int? = nil
-    var jewelSecondaryUnlockRank: Int? = nil
+    let jewelRank: Int?
+    let jewelSecondaryUnlockRank: Int?
 }
 
 
 
 class D3ItemSet: Codable {
-    var name = ""
-    var slug = ""
-    var description = ""
-    var descriptionHtml = ""
+    let name: String
+    let slug: String
+    let description: String
+    let descriptionHtml: String
 }
 
 
 
 class Dye: Codable {
-    var id = ""
-    var name = ""
-    var icon = ""
-    var tooltipParams = ""
+    let id: String
+    let name: String
+    let icon: String
+    let tooltipParams: String
 }

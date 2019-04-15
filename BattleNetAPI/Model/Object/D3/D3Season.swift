@@ -10,27 +10,27 @@ import Foundation
 
 
 class D3Season: Codable {
-    var seasonId: Int = 0
-    var paragonLevel: Int = 0
-    var paragonLevelHardcore: Int = 0
-    var highestHardcoreLevel: Int = 0
+    let seasonId: Int
+    let paragonLevel: Int
+    let paragonLevelHardcore: Int
+    let highestHardcoreLevel: Int
     
-    var kills: Kills = Kills()
-    var timePlayed: TimePlayed = TimePlayed()
+    let kills: Kills
+    let timePlayed: TimePlayed
 }
 
 
 
 // https://us.api.battle.net/data/d3/season/?namespace=2-6-US
 class D3SeasonIndex: Codable {
-    var _links: SelfLink<D3SeasonIndex> = SelfLink<D3SeasonIndex>()
-    var season: [Link<D3Season>] = [Link<D3Season>]()
+    let _links: SelfLink<D3SeasonIndex>
+    let season: [Link<D3Season>]
     
-    var currentSeason: Int = 0
-    var serviceCurrentSeason: Int = 0
-    var serviceSeasonState: String = ""
-    var lastUpdateTime: String = ""
-    var generatedBy: String = ""
+    let currentSeason: Int
+    let serviceCurrentSeason: Int
+    let serviceSeasonState: String
+    let lastUpdateTime: String
+    let generatedBy: String
     
     enum CodingKeys: String, CodingKey {
         case _links
@@ -47,11 +47,11 @@ class D3SeasonIndex: Codable {
 
 // https://us.api.battle.net/data/d3/season/1?namespace=2-6-US
 class D3SeasonLeaderboardIndex: Codable {
-    var _links: SelfLink<D3SeasonLeaderboardIndex> = SelfLink<D3SeasonLeaderboardIndex>()
-    var leaderboard: [SeasonLeaderboardLink] = [SeasonLeaderboardLink]()
-    var seasonID: Int = 0
-    var lastUpdateTime: String = ""
-    var generatedBy: String = ""
+    let _links: SelfLink<D3SeasonLeaderboardIndex>
+    let leaderboard: [SeasonLeaderboardLink]
+    let seasonID: Int
+    let lastUpdateTime: String
+    let generatedBy: String
     
     enum CodingKeys: String, CodingKey {
         case _links
@@ -65,10 +65,10 @@ class D3SeasonLeaderboardIndex: Codable {
 
 
 class SeasonLeaderboardLink: Codable {
-    var ladder: Link<SeasonLeaderboard> = Link<SeasonLeaderboard>()
-    var heroClassString: String? = nil
-    var teamSize: Int? = nil
-    var hardcore: Bool? = nil
+    let ladder: Link<SeasonLeaderboard>
+    let heroClassString: String?
+    let teamSize: Int?
+    let hardcore: Bool?
     
     enum CodingKeys: String, CodingKey {
         case ladder
@@ -82,18 +82,18 @@ class SeasonLeaderboardLink: Codable {
 
 // https://us.api.battle.net/data/d3/season/1/leaderboard/achievement-points?namespace=2-6-US
 class SeasonLeaderboard: Codable {
-    var _links: SelfLink<SeasonLeaderboard> = SelfLink<SeasonLeaderboard>()
-    var key: String = ""
-    var title: LocaleString = LocaleString()
-    var season: Int = 0
+    let _links: SelfLink<SeasonLeaderboard>
+    let key: String
+    let title: LocaleString
+    let season: Int
     
-    var lastUpdateTime: String = ""
-    var generatedBy: String = ""
+    let lastUpdateTime: String
+    let generatedBy: String
     
-    var row: [LeaderboardEntry] = [LeaderboardEntry]()
-    var column: [LeaderboardColumn] = [LeaderboardColumn]()
+    let row: [LeaderboardEntry]
+    let column: [LeaderboardColumn]
     
-    var achievementPoints: Bool = false
+    let achievementPoints: Bool
     
     
     enum CodingKeys: String, CodingKey {

@@ -10,11 +10,19 @@ import Foundation
 
 
 class SelfLink<Resource>: Codable {
-    var `self`: Link<Resource> = Link<Resource>()
+    let `self`: Link<Resource>
+}
+
+
+
+class KeyLink<Resource>: Codable {
+    let key: Link<Resource>
+    let id: Int?
+    let name: String?
 }
 
 
 
 class Link<Resouce>: Codable {
-    var href: String = ""
+    let href: String
 }

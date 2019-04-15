@@ -103,12 +103,205 @@ class WS_WorldOfWarcraft: WebService {
     }
     
     
+    // MARK: Mythic Keystone Affix API
+    
+    /**
+     Returns an index of Keystone affixes.
+     
+     - parameter region: What region the request is being made
+     - parameter locale: The locale that should be reflected in localized data
+     - parameter completion: Returns a Result with the Data if `success` or an HTTPError if `failure`
+     */
+    func getMythicKeystoneAffixes(region: APIRegion, locale: APILocale?, completion: @escaping (_ result: Result<Data>) -> Void) {
+        let apiType: APIType = .gameData
+        var urlStr = getBaseURL(region: region, apiType: apiType) + "/keystone-affix/index"
+        urlStr = appendSharedURLParameters(to: urlStr, withNamespace: "static", region: region, locale: locale)
+        
+        self.callWebService(urlStr: urlStr, method: .get, apiType: apiType) { result in
+            completion(result)
+        }
+    }
+    
+    
+    /**
+     The ID of the Keystone affix.
+     
+     - parameter id: The ID of the Keystone affix
+     - parameter region: What region the request is being made
+     - parameter locale: The locale that should be reflected in localized data
+     - parameter completion: Returns a Result with the Data if `success` or an HTTPError if `failure`
+     */
+    func getMythicKeystoneAffix(id: Int, region: APIRegion, locale: APILocale?, completion: @escaping (_ result: Result<Data>) -> Void) {
+        let apiType: APIType = .gameData
+        var urlStr = getBaseURL(region: region, apiType: apiType) + "/keystone-affix/\(id)"
+        urlStr = appendSharedURLParameters(to: urlStr, withNamespace: "static", region: region, locale: locale)
+        
+        self.callWebService(urlStr: urlStr, method: .get, apiType: apiType) { result in
+            completion(result)
+        }
+    }
+    
+    
+    // MARK: Mythic Raid Leaderboard API
+    
+    /**
+     Returns the leaderboard for a given raid and faction.
+     
+     - parameter raid: The raid for a leaderboard
+     - parameter faction: Player faction ('alliance' or 'horde')
+     - parameter region: What region the request is being made
+     - parameter locale: The locale that should be reflected in localized data
+     - parameter completion: Returns a Result with the Data if `success` or an HTTPError if `failure`
+     */
+    func getMythicRaidLeaderboard(raid: String, faction: FactionType, region: APIRegion, locale: APILocale?, completion: @escaping (_ result: Result<Data>) -> Void) {
+        let apiType: APIType = .gameData
+        var urlStr = getBaseURL(region: region, apiType: apiType) + "/leaderboard/hall-of-fame/\(raid)/\(faction.rawValue.lowercased())"
+        urlStr = appendSharedURLParameters(to: urlStr, withNamespace: "dynamic", region: region, locale: locale)
+        
+        self.callWebService(urlStr: urlStr, method: .get, apiType: apiType) { result in
+            completion(result)
+        }
+    }
+    
+    
+    // MARK: Mythic Keystone Dungeon API
+    
+    /**
+     Returns an index of Mythic Keystone dungeons.
+     
+     - parameter region: What region the request is being made
+     - parameter locale: The locale that should be reflected in localized data
+     - parameter completion: Returns a Result with the Data if `success` or an HTTPError if `failure`
+     */
+    func getMythicKeystoneDungeons(region: APIRegion, locale: APILocale?, completion: @escaping (_ result: Result<Data>) -> Void) {
+        let apiType: APIType = .gameData
+        var urlStr = getBaseURL(region: region, apiType: apiType) + "/mythic-keystone/dungeon/index"
+        urlStr = appendSharedURLParameters(to: urlStr, withNamespace: "dynamic", region: region, locale: locale)
+        
+        self.callWebService(urlStr: urlStr, method: .get, apiType: apiType) { result in
+            completion(result)
+        }
+    }
+    
+    
+    /**
+     Returns an index of Mythic Keystone dungeons.
+     
+     - parameter id: The ID of the dungeon
+     - parameter region: What region the request is being made
+     - parameter locale: The locale that should be reflected in localized data
+     - parameter completion: Returns a Result with the Data if `success` or an HTTPError if `failure`
+     */
+    func getMythicKeystoneDungeon(id: Int, region: APIRegion, locale: APILocale?, completion: @escaping (_ result: Result<Data>) -> Void) {
+        let apiType: APIType = .gameData
+        var urlStr = getBaseURL(region: region, apiType: apiType) + "/mythic-keystone/dungeon/\(id)"
+        urlStr = appendSharedURLParameters(to: urlStr, withNamespace: "dynamic", region: region, locale: locale)
+        
+        self.callWebService(urlStr: urlStr, method: .get, apiType: apiType) { result in
+            completion(result)
+        }
+    }
+    
+    
+    /**
+     Returns an index of links to other documents related to Mythic Keystone dungeons.
+     
+     - parameter region: What region the request is being made
+     - parameter locale: The locale that should be reflected in localized data
+     - parameter completion: Returns a Result with the Data if `success` or an HTTPError if `failure`
+     */
+    func getMythicKeystones(region: APIRegion, locale: APILocale?, completion: @escaping (_ result: Result<Data>) -> Void) {
+        let apiType: APIType = .gameData
+        var urlStr = getBaseURL(region: region, apiType: apiType) + "/mythic-keystone/index"
+        urlStr = appendSharedURLParameters(to: urlStr, withNamespace: "dynamic", region: region, locale: locale)
+        
+        self.callWebService(urlStr: urlStr, method: .get, apiType: apiType) { result in
+            completion(result)
+        }
+    }
+    
+    
+    /**
+     Returns an index of Mythic Keystone periods.
+     
+     - parameter region: What region the request is being made
+     - parameter locale: The locale that should be reflected in localized data
+     - parameter completion: Returns a Result with the Data if `success` or an HTTPError if `failure`
+     */
+    func getMythicKeystonePeriods(region: APIRegion, locale: APILocale?, completion: @escaping (_ result: Result<Data>) -> Void) {
+        let apiType: APIType = .gameData
+        var urlStr = getBaseURL(region: region, apiType: apiType) + "/mythic-keystone/period/index"
+        urlStr = appendSharedURLParameters(to: urlStr, withNamespace: "dynamic", region: region, locale: locale)
+        
+        self.callWebService(urlStr: urlStr, method: .get, apiType: apiType) { result in
+            completion(result)
+        }
+    }
+    
+    
+    /**
+     Returns a Mythic Keystone period by ID.
+     
+     - parameter id: The ID of the Mythic Keystone season period
+     - parameter region: What region the request is being made
+     - parameter locale: The locale that should be reflected in localized data
+     - parameter completion: Returns a Result with the Data if `success` or an HTTPError if `failure`
+     */
+    func getMythicKeystonePeriod(id: Int, region: APIRegion, locale: APILocale?, completion: @escaping (_ result: Result<Data>) -> Void) {
+        let apiType: APIType = .gameData
+        var urlStr = getBaseURL(region: region, apiType: apiType) + "/mythic-keystone/period/\(id)"
+        urlStr = appendSharedURLParameters(to: urlStr, withNamespace: "dynamic", region: region, locale: locale)
+        
+        self.callWebService(urlStr: urlStr, method: .get, apiType: apiType) { result in
+            completion(result)
+        }
+    }
+    
+    
+    /**
+     Returns an index of Mythic Keystone seasons.
+     
+     - parameter region: What region the request is being made
+     - parameter locale: The locale that should be reflected in localized data
+     - parameter completion: Returns a Result with the Data if `success` or an HTTPError if `failure`
+     */
+    func getMythicKeystoneSeasons(region: APIRegion, locale: APILocale?, completion: @escaping (_ result: Result<Data>) -> Void) {
+        let apiType: APIType = .gameData
+        var urlStr = getBaseURL(region: region, apiType: apiType) + "/mythic-keystone/season/index"
+        urlStr = appendSharedURLParameters(to: urlStr, withNamespace: "dynamic", region: region, locale: locale)
+        
+        self.callWebService(urlStr: urlStr, method: .get, apiType: apiType) { result in
+            completion(result)
+        }
+    }
+    
+    
+    /**
+     Returns a Mythic Keystone season by ID.
+     
+     - parameter id: The ID of the Mythic Keystone season
+     - parameter region: What region the request is being made
+     - parameter locale: The locale that should be reflected in localized data
+     - parameter completion: Returns a Result with the Data if `success` or an HTTPError if `failure`
+     */
+    func getMythicKeystoneSeason(id: Int, region: APIRegion, locale: APILocale?, completion: @escaping (_ result: Result<Data>) -> Void) {
+        let apiType: APIType = .gameData
+        var urlStr = getBaseURL(region: region, apiType: apiType) + "/mythic-keystone/season/\(id)"
+        urlStr = appendSharedURLParameters(to: urlStr, withNamespace: "dynamic", region: region, locale: locale)
+        
+        self.callWebService(urlStr: urlStr, method: .get, apiType: apiType) { result in
+            completion(result)
+        }
+    }
+    
+    
     
     // MARK: Mythic Keystone Leaderboard API
     
     /**
      Get an index of Mythic Keystone Leaderboard dungeon instances for a connected-realm
      
+     - parameter connectedRealmID: The ID of the connected realm
      - parameter region: What region the request is being made
      - parameter locale: The locale that should be reflected in localized data
      - parameter completion: Returns a Result with the Data if `success` or an HTTPError if `failure`
@@ -206,6 +399,25 @@ class WS_WorldOfWarcraft: WebService {
     }
     
     
+    /**
+     Returns the PvP talent slots for a playable class by ID.et a playable class by id
+     
+     - parameter id: The id of a playable class
+     - parameter region: What region the request is being made
+     - parameter locale: The locale that should be reflected in localized data
+     - parameter completion: Returns a Result with the Data if `success` or an HTTPError if `failure`
+     */
+    func getPlayableClassPvPTalentSlots(id: Int, region: APIRegion, locale: APILocale?, completion: @escaping (_ result: Result<Data>) -> Void) {
+        let apiType: APIType = .gameData
+        var urlStr = getBaseURL(region: region, apiType: apiType) + "/playable-class/\(id)/pvp-talent-slots"
+        urlStr = appendSharedURLParameters(to: urlStr, withNamespace: "static", region: region, locale: locale)
+        
+        self.callWebService(urlStr: urlStr, method: .get, apiType: apiType) { result in
+            completion(result)
+        }
+    }
+    
+    
     
     // MARK: Playable Specialization API
     
@@ -245,6 +457,84 @@ class WS_WorldOfWarcraft: WebService {
         }
     }
     
+    
+    
+    // MARK: Power Type API
+    
+    /**
+     Returns an index of power types
+     
+     - parameter region: What region the request is being made
+     - parameter locale: The locale that should be reflected in localized data
+     - parameter completion: Returns a Result with the Data if `success` or an HTTPError if `failure`
+     */
+    func getPowerTypes(region: APIRegion, locale: APILocale?, completion: @escaping (_ result: Result<Data>) -> Void) {
+        let apiType: APIType = .gameData
+        var urlStr = getBaseURL(region: region, apiType: apiType) + "/power-type/index"
+        urlStr = appendSharedURLParameters(to: urlStr, withNamespace: "static", region: region, locale: locale)
+        
+        self.callWebService(urlStr: urlStr, method: .get, apiType: apiType) { result in
+            completion(result)
+        }
+    }
+    
+    
+    /**
+     Returns a power type by ID
+     
+     - parameter id: The ID of the power type
+     - parameter region: What region the request is being made
+     - parameter locale: The locale that should be reflected in localized data
+     - parameter completion: Returns a Result with the Data if `success` or an HTTPError if `failure`
+     */
+    func getPowerType(id: Int, region: APIRegion, locale: APILocale?, completion: @escaping (_ result: Result<Data>) -> Void) {
+        let apiType: APIType = .gameData
+        var urlStr = getBaseURL(region: region, apiType: apiType) + "/power-type/\(id)"
+        urlStr = appendSharedURLParameters(to: urlStr, withNamespace: "static", region: region, locale: locale)
+        
+        self.callWebService(urlStr: urlStr, method: .get, apiType: apiType) { result in
+            completion(result)
+        }
+    }
+    
+    
+    // MARK: Playable Race API
+    
+    /**
+     Returns an index of races
+     
+     - parameter region: What region the request is being made
+     - parameter locale: The locale that should be reflected in localized data
+     - parameter completion: Returns a Result with the Data if `success` or an HTTPError if `failure`
+     */
+    func getPlayableRaces(region: APIRegion, locale: APILocale?, completion: @escaping (_ result: Result<Data>) -> Void) {
+        let apiType: APIType = .gameData
+        var urlStr = getBaseURL(region: region, apiType: apiType) + "/race/index"
+        urlStr = appendSharedURLParameters(to: urlStr, withNamespace: "static", region: region, locale: locale)
+        
+        self.callWebService(urlStr: urlStr, method: .get, apiType: apiType) { result in
+            completion(result)
+        }
+    }
+    
+    
+    /**
+     Returns a race by ID
+     
+     - parameter id: The ID of the race
+     - parameter region: What region the request is being made
+     - parameter locale: The locale that should be reflected in localized data
+     - parameter completion: Returns a Result with the Data if `success` or an HTTPError if `failure`
+     */
+    func getPlayableRace(id: Int, region: APIRegion, locale: APILocale?, completion: @escaping (_ result: Result<Data>) -> Void) {
+        let apiType: APIType = .gameData
+        var urlStr = getBaseURL(region: region, apiType: apiType) + "/race/\(id)"
+        urlStr = appendSharedURLParameters(to: urlStr, withNamespace: "static", region: region, locale: locale)
+        
+        self.callWebService(urlStr: urlStr, method: .get, apiType: apiType) { result in
+            completion(result)
+        }
+    }
     
     
     

@@ -156,6 +156,28 @@ enum RaceFaction: String, Codable {
 }
 
 
+class WOWRaceIndex: Codable {
+    let _links: SelfLink<WOWRaceIndex>
+    let races: [KeyLink<WOWRace>]
+}
+
+
+class WOWRace: Codable {
+    let _links: SelfLink<WOWRace>
+    let id: Int
+    let name: String
+    let genderName: GenderName2
+    let faction: [WOWFaction]
+    
+    enum CodingKeys: String, CodingKey {
+        case _links
+        case id, name
+        case genderName = "gender_name"
+        case faction
+    }
+}
+
+
 
 class WOWCharacterAppearance: Codable {
     var faceVariation: Int = 0

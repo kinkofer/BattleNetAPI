@@ -38,7 +38,7 @@ class WorldOfWarcraftModelController {
     
     // MARK: - Connected Realm API
     
-    func getConnectedRealmIndex(region: APIRegion = .us, locale: APILocale? = .en_US, completion: @escaping (_ result: Result<[Link<ConnectedRealm>]>) -> Void) {
+    func getConnectedRealmIndex(region: APIRegion = Current.region, locale: APILocale? = Current.locale, completion: @escaping (_ result: Result<[Link<ConnectedRealm>]>) -> Void) {
         BattleNetAPI.wow.getConnectedRealmIndex(region: region, locale: locale) { result in
             let customDecode: ((_ data: Data) throws -> [Link<ConnectedRealm>]) = { data in
                 return try ConnectedRealmIndex.decode(from: data).connectedRealms
@@ -48,12 +48,88 @@ class WorldOfWarcraftModelController {
     }
     
     
-    func getConnectedRealm(id: Int, region: APIRegion = .us, locale: APILocale? = .en_US, completion: @escaping (_ result: Result<ConnectedRealm>) -> Void) {
+    func getConnectedRealm(id: Int, region: APIRegion = Current.region, locale: APILocale? = Current.locale, completion: @escaping (_ result: Result<ConnectedRealm>) -> Void) {
         BattleNetAPI.wow.getConnectedRealm(id: id, region: region, locale: locale) { result in
             result.decode(completion: completion)
         }
     }
     
+    
+    
+    // MARK: - Mythic Keystone Affix API
+    
+    func getMythicKeystoneAffixes(region: APIRegion = .us, locale: APILocale? = .en_US, completion: @escaping (_ result: Result<KeystoneAffixIndex>) -> Void) {
+        BattleNetAPI.wow.getMythicKeystoneAffixes(region: region, locale: locale) { result in
+            result.decode(completion: completion)
+        }
+    }
+    
+    
+    func getMythicKeystoneAffix(id: Int, region: APIRegion = .us, locale: APILocale? = .en_US, completion: @escaping (_ result: Result<KeystoneAffix>) -> Void) {
+        BattleNetAPI.wow.getMythicKeystoneAffix(id: id, region: region, locale: locale) { result in
+            result.decode(completion: completion)
+        }
+    }
+    
+    
+    // MARK: - Mythic Raid Leaderboard API
+    
+    func getMythicRaidLeaderboard(raid: String, faction: FactionType, region: APIRegion = .us, locale: APILocale? = .en_US, completion: @escaping (_ result: Result<MythicRaidLeaderboard>) -> Void) {
+        BattleNetAPI.wow.getMythicRaidLeaderboard(raid: raid, faction: faction, region: region, locale: locale) { result in
+            result.decode(completion: completion)
+        }
+    }
+    
+    
+    // MARK: - Mythic Keystone Dungeon API
+    
+    func getMythicKeystoneDungeons(region: APIRegion = .us, locale: APILocale? = .en_US, completion: @escaping (_ result: Result<MythicKeystoneDungeonIndex>) -> Void) {
+        BattleNetAPI.wow.getMythicKeystoneDungeons(region: region, locale: locale) { result in
+            result.decode(completion: completion)
+        }
+    }
+    
+    
+    func getMythicKeystoneDungeon(id: Int, region: APIRegion = .us, locale: APILocale? = .en_US, completion: @escaping (_ result: Result<MythicKeystoneDungeon>) -> Void) {
+        BattleNetAPI.wow.getMythicKeystoneDungeon(id: id, region: region, locale: locale) { result in
+            result.decode(completion: completion)
+        }
+    }
+    
+    
+    func getMythicKeystones(region: APIRegion = .us, locale: APILocale? = .en_US, completion: @escaping (_ result: Result<MythicKeystoneIndex>) -> Void) {
+        BattleNetAPI.wow.getMythicKeystones(region: region, locale: locale) { result in
+            result.decode(completion: completion)
+        }
+    }
+    
+    
+    func getMythicKeystonePeriods(region: APIRegion = .us, locale: APILocale? = .en_US, completion: @escaping (_ result: Result<MythicKeystonePeriodIndex>) -> Void) {
+        BattleNetAPI.wow.getMythicKeystonePeriods(region: region, locale: locale) { result in
+            result.decode(completion: completion)
+        }
+    }
+    
+    
+    func getMythicKeystonePeriod(id: Int, region: APIRegion = .us, locale: APILocale? = .en_US, completion: @escaping (_ result: Result<MythicKeystonePeriod>) -> Void) {
+        BattleNetAPI.wow.getMythicKeystonePeriod(id: id, region: region, locale: locale) { result in
+            result.decode(completion: completion)
+        }
+    }
+    
+    
+    func getMythicKeystoneSeasons(region: APIRegion = .us, locale: APILocale? = .en_US, completion: @escaping (_ result: Result<MythicKeystoneSeasonIndex>) -> Void) {
+        BattleNetAPI.wow.getMythicKeystoneSeasons(region: region, locale: locale) { result in
+            result.decode(completion: completion)
+        }
+    }
+    
+    
+    func getMythicKeystoneSeason(id: Int, region: APIRegion = .us, locale: APILocale? = .en_US, completion: @escaping (_ result: Result<MythicKeystoneSeason>) -> Void) {
+        BattleNetAPI.wow.getMythicKeystoneSeason(id: id, region: region, locale: locale) { result in
+            result.decode(completion: completion)
+        }
+    }
     
     
     // MARK: - Mythic Keystone Leaderboard API
@@ -99,6 +175,16 @@ class WorldOfWarcraftModelController {
     }
     
     
+    func getPlayableClassPvPTalentSlots(id: Int, region: APIRegion = .us, locale: APILocale? = .en_US, completion: @escaping (_ result: Result<PVPTalentSlots>) -> Void) {
+        BattleNetAPI.wow.getPlayableClassPvPTalentSlots(id: id, region: region, locale: locale) { result in
+            result.decode(completion: completion)
+        }
+    }
+    
+    
+    
+    // MARK: - Playable Specialization API
+    
     func getPlayableSpecializations(region: APIRegion = .us, locale: APILocale? = .en_US, completion: @escaping (_ result: Result<SpecializationIndex>) -> Void) {
         BattleNetAPI.wow.getPlayableSpecializations(region: region, locale: locale) { result in
             result.decode(completion: completion)
@@ -108,6 +194,39 @@ class WorldOfWarcraftModelController {
     
     func getPlayableSpecialization(id: Int, region: APIRegion = .us, locale: APILocale? = .en_US, completion: @escaping (_ result: Result<Specialization>) -> Void) {
         BattleNetAPI.wow.getPlayableSpecialization(id: id, region: region, locale: locale) { result in
+            result.decode(completion: completion)
+        }
+    }
+    
+    
+    
+    // MARK: - Power Type API
+    
+    func getPowerTypes(region: APIRegion = .us, locale: APILocale? = .en_US, completion: @escaping (_ result: Result<PowerTypeIndex>) -> Void) {
+        BattleNetAPI.wow.getPowerTypes(region: region, locale: locale) { result in
+            result.decode(completion: completion)
+        }
+    }
+    
+    
+    func getPowerType(id: Int, region: APIRegion = .us, locale: APILocale? = .en_US, completion: @escaping (_ result: Result<PowerType>) -> Void) {
+        BattleNetAPI.wow.getPowerType(id: id, region: region, locale: locale) { result in
+            result.decode(completion: completion)
+        }
+    }
+    
+    
+    // MARK: - Playable Race API
+    
+    func getPlayableRaces(region: APIRegion = .us, locale: APILocale? = .en_US, completion: @escaping (_ result: Result<WOWRaceIndex>) -> Void) {
+        BattleNetAPI.wow.getPlayableRaces(region: region, locale: locale) { result in
+            result.decode(completion: completion)
+        }
+    }
+    
+    
+    func getPlayableRace(id: Int, region: APIRegion = .us, locale: APILocale? = .en_US, completion: @escaping (_ result: Result<WOWRace>) -> Void) {
+        BattleNetAPI.wow.getPlayableRace(id: id, region: region, locale: locale) { result in
             result.decode(completion: completion)
         }
     }
@@ -150,9 +269,9 @@ class WorldOfWarcraftModelController {
     
     // MARK: - Region API
     
-    func getRegionIndex(region: APIRegion = .us, locale: APILocale? = .en_US, completion: @escaping (_ result: Result<[RegionIndex]>) -> Void) {
+    func getRegionIndex(region: APIRegion = .us, locale: APILocale? = .en_US, completion: @escaping (_ result: Result<[Link<Region>]>) -> Void) {
         BattleNetAPI.wow.getRegionIndex(region: region, locale: locale) { result in
-            let customDecode: ((_ data: Data) throws -> [RegionIndex]) = { data in
+            let customDecode: ((_ data: Data) throws -> [Link<Region>]) = { data in
                 return try RegionIndexResult.decode(from: data).regions
             }
             result.decode(customDecode: customDecode, completion: completion)

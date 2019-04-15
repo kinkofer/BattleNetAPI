@@ -10,11 +10,11 @@ import Foundation
 
 
 class LeaderboardColumn: Codable {
-    var id: String = ""
-    var hidden: Bool = false
-    var order: Int? = 0
-    var label: LocaleString = LocaleString()
-    var type: LeaderboardColumnType = .string
+    let id: String
+    let hidden: Bool
+    let order: Int?
+    let label: LocaleString
+    let type: LeaderboardColumnType
 }
 
 
@@ -29,26 +29,26 @@ enum LeaderboardColumnType: String, Codable {
 
 
 class LeaderboardEntry: Codable {
-    var player: [D3Player] = [D3Player]()
-    var order: Int = 0
-    var data: [Datum] = [Datum]()
+    let player: [D3Player]
+    let order: Int
+    let data: [Datum]
 }
 
 
 
 class Datum: Codable {
-    var id: String = ""
-    var number: Int? = nil
-    var timestamp: Double? = nil
-    var string: String? = nil
+    let id: String
+    let number: Int?
+    let timestamp: Double?
+    let string: String?
 }
 
 
 
 class D3Player: Codable {
-    var key: String = ""
-    var accountID: Double = 0
-    var data: [Datum] = [Datum]()
+    let key: String
+    let accountID: Double
+    let data: [Datum]
     
     enum CodingKeys: String, CodingKey {
         case key

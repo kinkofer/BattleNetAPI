@@ -28,7 +28,7 @@ enum APIType: String {
 
 
 /// The supported regions for the API services
-enum APIRegion: String, CaseIterable {
+enum APIRegion: String, CaseIterable, Codable {
     /// China
     case cn
     /// Europe

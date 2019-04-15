@@ -10,7 +10,7 @@ import Foundation
 
 
 class ChallengeIndex: Codable {
-    var challenges: [Challenge] = [Challenge]()
+    let challenges: [Challenge]
     
     enum CodingKeys: String, CodingKey {
         case challenges = "challenge"
@@ -20,21 +20,21 @@ class ChallengeIndex: Codable {
 
 
 class Challenge: Codable {
-    var realm: RealmSummary? = nil
-    var map: ChallengeModeMap? = nil
-    var groups: [ChallengeModeGroup] = [ChallengeModeGroup]()
+    let realm: RealmSummary?
+    let map: ChallengeModeMap?
+    let groups: [ChallengeModeGroup]
 }
 
 
 
 class ChallengeModeGroup: Codable {
-    var ranking: Int = 0
-    var time: ChallengeCriteria = ChallengeCriteria()
-    var date: String = ""
-    var medal: String? = nil
-    var faction: ChallengeFactionType = .none
-    var isRecurring: Bool = false
-    var members: [ChallengeModeMember] = [ChallengeModeMember]()
+    let ranking: Int
+    let time: ChallengeCriteria
+    let date: String
+    let medal: String?
+    let faction: ChallengeFactionType
+    let isRecurring: Bool
+    let members: [ChallengeModeMember]
 }
 
 
@@ -48,30 +48,30 @@ enum ChallengeFactionType: String, Codable {
 
 
 class ChallengeModeMember: Codable {
-    var character: WOWCharacter? = nil
-    var spec: CharacterSpecialization = CharacterSpecialization()
+    let character: WOWCharacter?
+    let spec: CharacterSpecialization
 }
 
 
 
 
 class ChallengeCriteria: Codable {
-    var time: Int = 0
-    var hours: Int = 0
-    var minutes: Int = 0
-    var seconds: Int = 0
-    var milliseconds: Int = 0
-    var isPositive: Bool = false
+    let time: Int
+    let hours: Int
+    let minutes: Int
+    let seconds: Int
+    let milliseconds: Int
+    let isPositive: Bool
 }
 
 
 
 class ChallengeModeMap: Codable {
-    var id: Int = 0
-    var name: String = ""
-    var slug: String = ""
-    var hasChallengeMode: Bool = false
-    var bronzeCriteria: ChallengeCriteria = ChallengeCriteria()
-    var silverCriteria: ChallengeCriteria = ChallengeCriteria()
-    var goldCriteria: ChallengeCriteria = ChallengeCriteria()
+    let id: Int
+    let name: String
+    let slug: String
+    let hasChallengeMode: Bool
+    let bronzeCriteria: ChallengeCriteria
+    let silverCriteria: ChallengeCriteria
+    let goldCriteria: ChallengeCriteria
 }

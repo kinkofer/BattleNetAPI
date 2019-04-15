@@ -10,19 +10,19 @@ import Foundation
 
 
 class Hero: Codable {
-    var id: Int = 0
-    var name: String = ""
-    var `class`: String = ""
-    var classSlug: String = ""
-    var gender: Int = 0
-    var level: Int = 0
-    var paragonLevel: Int = 0
+    let id: Int
+    let name: String
+    let `class`: String
+    let classSlug: String
+    let gender: Int
+    let level: Int
+    let paragonLevel: Int
     
-    var kills: Kills = Kills()
-    var hardcore: Bool = false
-    var seasonal: Bool = false
-    var dead: Bool = false
-    var lastUpdated: Double = 0
+    let kills: Kills
+    let hardcore: Bool
+    let seasonal: Bool
+    let dead: Bool
+    let lastUpdated: Double
     
     
     enum CodingKeys: String, CodingKey {
@@ -45,100 +45,100 @@ class Hero: Codable {
 
 
 class FullHero: Codable {
-    var id: Int = 0
-    var name: String = ""
-    var `class`: String = ""
-    var gender: Int = 0
-    var level: Int = 0
-    var paragonLevel: Int = 0
+    let id: Int
+    let name: String
+    let `class`: String
+    let gender: Int
+    let level: Int
+    let paragonLevel: Int
     
-    var kills: Kills = Kills()
-    var hardcore: Bool = false
-    var seasonal: Bool = false
-    var seasonCreated: Int = 0
+    let kills: Kills
+    let hardcore: Bool
+    let seasonal: Bool
+    let seasonCreated: Int
     
-    var alive: Bool = true
-    var lastUpdated: Double = 0
-    var highestSoloRiftCompleted: Int = 0
+    let alive: Bool
+    let lastUpdated: Double
+    let highestSoloRiftCompleted: Int
     
-    var stats: D3StatBlock = D3StatBlock()
-    var skills: HeroSkillSet = HeroSkillSet()
-    var items: EquippedItems = EquippedItems()
+    let stats: D3StatBlock
+    let skills: HeroSkillSet
+    let items: EquippedItems
 
-    var followers: HeroFollowers = HeroFollowers()
-    var legendaryPowers: [D3EquippedItem] = [D3EquippedItem]()
+    let followers: HeroFollowers
+    let legendaryPowers: [D3EquippedItem]
     
-    var progression: D3Progression = D3Progression()
+    let progression: D3Progression
 }
 
 
 
 class HeroFollowers: Codable {
-    var enchantress: FollowerHero = FollowerHero()
-    var scoundrel: FollowerHero = FollowerHero()
-    var templar: FollowerHero = FollowerHero()
+    let enchantress: FollowerHero
+    let scoundrel: FollowerHero
+    let templar: FollowerHero
 }
 
 
 
 class HeroFollowerItems: Codable {
-    var enchantress: FullEquippedItems = FullEquippedItems()
-    var scoundrel: FullEquippedItems = FullEquippedItems()
-    var templar: FullEquippedItems = FullEquippedItems()
+    let enchantress: FullEquippedItems
+    let scoundrel: FullEquippedItems
+    let templar: FullEquippedItems
 }
 
 
 
 class HeroSkillSet: Codable {
-    var active: [D3SkillConfiguration] = [D3SkillConfiguration]()
-    var passive: [D3SkillConfiguration] = [D3SkillConfiguration]()
+    let active: [D3SkillConfiguration]
+    let passive: [D3SkillConfiguration]
 }
 
 
 
 class D3Progression: Codable {
-    var act1: CompletedAct = CompletedAct()
-    var act2: CompletedAct = CompletedAct()
-    var act3: CompletedAct = CompletedAct()
-    var act4: CompletedAct = CompletedAct()
-    var act5: CompletedAct = CompletedAct()
+    let act1: CompletedAct
+    let act2: CompletedAct
+    let act3: CompletedAct
+    let act4: CompletedAct
+    let act5: CompletedAct
 }
 
 
 
 class CompletedAct: Codable {
-    var completed: Bool = false
-    var completedQuests: [D3Quest] = [D3Quest]()
+    let completed: Bool
+    let completedQuests: [D3Quest]
 }
 
 
 
 class D3StatBlock: Codable {
-    var life: Float = 0.0
-    var damage: Float = 0.0
-    var toughness: Float = 0.0
-    var healing: Float = 0.0
-    var attackSpeed: Float = 0.0
-    var armor: Float = 0.0
-    var strength: Float = 0.0
-    var dexterity: Float = 0.0
-    var vitality: Float = 0.0
-    var intelligence: Float = 0.0
-    var physicalResist: Float = 0.0
-    var fireResist: Float = 0.0
-    var coldResist: Float = 0.0
-    var lightningResist: Float = 0.0
-    var poisonResist: Float = 0.0
-    var arcaneResist: Float = 0.0
-    var blockChance: Float = 0.0
-    var blockAmountMin: Float = 0.0
-    var blockAmountMax: Float = 0.0
-    var goldFind: Float = 0.0
-    var critChance: Float = 0.0
-    var thorns: Float = 0.0
-    var lifeSteal: Float = 0.0
-    var lifePerKill: Float = 0.0
-    var lifeOnHit: Float = 0.0
-    var primaryResource: Float = 0.0
-    var secondaryResource: Float = 0.0
+    let life: Double
+    let damage: Double
+    let toughness: Double
+    let healing: Double
+    let attackSpeed: Double
+    let armor: Double
+    let strength: Double
+    let dexterity: Double
+    let vitality: Double
+    let intelligence: Double
+    let physicalResist: Double
+    let fireResist: Double
+    let coldResist: Double
+    let lightningResist: Double
+    let poisonResist: Double
+    let arcaneResist: Double
+    let blockChance: Double
+    let blockAmountMin: Double
+    let blockAmountMax: Double
+    let goldFind: Double
+    let critChance: Double
+    let thorns: Double
+    let lifeSteal: Double
+    let lifePerKill: Double
+    let lifeOnHit: Double
+    let primaryResource: Double
+    let secondaryResource: Double
 }

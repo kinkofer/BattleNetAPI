@@ -14,6 +14,11 @@ class ZoneIndex: Codable {
 }
 
 
+class ZoneInfo: Codable {
+    let key: Link<ZoneInfo>
+    let name: String
+}
+
 
 class Zone: Codable {
     var id: Int = 0
@@ -76,6 +81,10 @@ enum ZoneMode: String, Codable {
     case raidMythic = "RAID_MYTHIC"
 }
 
+
+struct ZoneSlug: Codable {
+    let slug: String
+}
 
 
 class Location: Codable {

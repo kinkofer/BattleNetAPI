@@ -9,60 +9,55 @@
 import Foundation
 
 
-
 class RealmIndexResult: Codable {
-    var realms: [RealmIndex] = [RealmIndex]()
+    let realms: [RealmIndex]
 }
-
 
 
 class RealmIndex: Codable {
-    var id: Int = 0
-    var name: String = ""
-    var slug: String = ""
-}
-
-
-class RealmLink: Codable {
-    var key: Link<Region> = Link<Region>()
-    var id: Int = 0
-    var slug: String = ""
+    let id: Int
+    let name: String
+    let slug: String
 }
 
 
 // https://us.api.battle.net/data/wow/realm/61?namespace=dynamic-us
 class Realm: Codable {
-    var id = 0
-    var name = ""
-    var slug = ""
+    let _links: SelfLink<Realm>?
+    let id: Int
+    let name: String
+    let slug: String
     
-    var isTournament = false
+    let isTournament: Bool
     
-    var type = RealmInfo()
-    var category = ""
-    var locale = ""
-    var timezone = ""
+    let type: RealmInfo
+    let category: String
+    let locale: String
+    let timezone: String
     
-    var region = RegionLink()
-    var connectedRealm: Link<ConnectedRealm> = Link<ConnectedRealm>()
+    let region: KeyLink<Region>
+    let connectedRealm: Link<ConnectedRealm>
     
     enum CodingKeys: String, CodingKey {
+        case _links
         case id
         case name
         case slug
         case isTournament = "is_tournament"
         case type
         case category
+        case locale
         case timezone
         case region
+        case connectedRealm = "connected_realm"
     }
 }
 
 
 
 class RealmInfo: Codable {
-    var name: String = ""
-    var type: String = ""
+    let name: String
+    let type: String
 }
 
 
@@ -70,22 +65,22 @@ class RealmInfo: Codable {
 // MARK: - Realm Data Resource
 
 class WOWRealmIndex: Codable {
-    var realms: [WOWRealm] = [WOWRealm]()
+    let realms: [WOWRealm]
 }
 
 
 
 class WOWRealm: Codable {
-    var type: RealmType = .normal
-    var population: RealmPopulation = .notApplicable
-    var queue: Bool = false
-    var status: Bool = false
-    var name: String = ""
-    var slug: String = ""
-    var battlegroup: String = ""
-    var locale: String = ""
-    var timezone: String = ""
-    var connectedRealms: [String] = [String]()
+    let type: RealmType
+    let population: RealmPopulation
+    let queue: Bool
+    let status: Bool
+    let name: String
+    let slug: String
+    let battlegroup: String
+    let locale: String
+    let timezone: String
+    let connectedRealms: [String]
     
     enum CodingKeys: String, CodingKey {
         case type
@@ -119,12 +114,12 @@ enum RealmType: String, Codable {
 
 
 class RealmSummary: Codable {
-    var name: String = ""
-    var slug: String = ""
-    var battlegroup: String = ""
-    var locale: String = ""
-    var timezone: String = ""
-    var connectedRealms: [String] = [String]()
+    let name: String
+    let slug: String
+    let battlegroup: String
+    let locale: String
+    let timezone: String
+    let connectedRealms: [String]
     
     enum CodingKeys: String, CodingKey {
         case name

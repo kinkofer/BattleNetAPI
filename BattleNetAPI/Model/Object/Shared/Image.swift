@@ -10,10 +10,10 @@ import Foundation
 
 
 class Image: Codable {
-    var x: Int = 0
-    var y: Int = 0
-    var w: Int = 0
-    var h: Int = 0
-    var offset: Int = 0
-    var url: String = ""
+    var x: Int
+    var y: Int
+    var w: Int
+    var h: Int
+    var offset: Int
+    var url: String
 }

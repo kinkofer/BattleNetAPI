@@ -61,3 +61,23 @@ class CharacterTalent: Codable {
 
 
 
+struct PVPTalentSlots: Codable {
+    let _links: SelfLink<PVPTalentSlots>
+    let talentSlots: [TalentSlot]
+    
+    enum CodingKeys: String, CodingKey {
+        case _links
+        case talentSlots = "talent_slots"
+    }
+}
+
+
+struct TalentSlot: Codable {
+    let slotNumber: Int
+    let unlockPlayerLevel: Int
+    
+    enum CodingKeys: String, CodingKey {
+        case slotNumber = "slot_number"
+        case unlockPlayerLevel = "unlock_player_level"
+    }
+}
