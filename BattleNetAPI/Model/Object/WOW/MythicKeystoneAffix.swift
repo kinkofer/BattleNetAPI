@@ -24,6 +24,7 @@ class KeystoneAffix: Codable {
 }
 
 
+/// - note: Property of class that contains camelCase and snake_case keys
 class KeystoneAffixSummary: Codable {
     let keystoneAffix: KeyLink<KeystoneAffix>
     let startingLevel: Int

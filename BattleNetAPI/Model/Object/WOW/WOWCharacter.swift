@@ -162,18 +162,17 @@ class WOWRaceIndex: Codable {
 }
 
 
-class WOWRace: Codable {
+class WOWRace: Codable, SelfDecodable {
     let _links: SelfLink<WOWRace>
     let id: Int
     let name: String
     let genderName: GenderName2
     let faction: [WOWFaction]
     
-    enum CodingKeys: String, CodingKey {
-        case _links
-        case id, name
-        case genderName = "gender_name"
-        case faction
+    static var decoder: JSONDecoder {
+        let decoder = JSONDecoder()
+        decoder.keyDecodingStrategy = .convertFromSnakeCase
+        return decoder
     }
 }
 

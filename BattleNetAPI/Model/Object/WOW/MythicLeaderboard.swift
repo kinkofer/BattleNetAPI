@@ -10,18 +10,20 @@ import Foundation
 
 
 // https://us.api.battle.net/data/wow/connected-realm/11/mythic-leaderboard/?namespace=dynamic-us
-class MythicLeaderboardIndex: Codable {
+class MythicLeaderboardIndex: Codable, SelfDecodable {
     let _links: SelfLink<MythicLeaderboardIndex>
     let currentLeaderboards: [KeyLink<MythicLeaderboard>]
     
-    enum CodingKeys: String, CodingKey {
-        case _links
-        case currentLeaderboards = "current_leaderboards"
+    static var decoder: JSONDecoder {
+        let decoder = JSONDecoder()
+        decoder.keyDecodingStrategy = .convertFromSnakeCase
+        return decoder
     }
 }
 
 
 // https://us.api.battle.net/data/wow/connected-realm/11/mythic-leaderboard/197/period/642?namespace=dynamic-us
+/// - note: Contains camelCase and snake_case keys (with id)
 class MythicLeaderboard: Codable {
     let _links: SelfLink<MythicLeaderboard>
     let name: String
@@ -112,19 +114,17 @@ class WOWMap: Codable {
 
 
 
-class MythicRaidLeaderboard: Codable {
+class MythicRaidLeaderboard: Codable, SelfDecodable {
     let _links: SelfLink<MythicRaidLeaderboard>
     let slug: String
     let criteriaType: String
     let zone: ZoneInfo
     let entries: [Entry]
     
-    enum CodingKeys: String, CodingKey {
-        case _links
-        case slug
-        case criteriaType = "criteria_type"
-        case zone
-        case entries
+    static var decoder: JSONDecoder {
+        let decoder = JSONDecoder()
+        decoder.keyDecodingStrategy = .convertFromSnakeCase
+        return decoder
     }
 }
 

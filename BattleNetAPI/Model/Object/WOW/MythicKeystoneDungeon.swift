@@ -22,7 +22,7 @@ class MythicKeystoneDungeonIndex: Codable {
 }
 
 
-class MythicKeystoneDungeon: Codable {
+class MythicKeystoneDungeon: Codable, SelfDecodable {
     let _links: SelfLink<MythicKeystoneDungeon>
     let id: Int
     let name: String
@@ -30,21 +30,22 @@ class MythicKeystoneDungeon: Codable {
     let zone: ZoneSlug
     let keystoneUpgrades: [KeystoneUpgrade]
     
-    enum CodingKeys: String, CodingKey {
-        case _links
-        case id, name, map, zone
-        case keystoneUpgrades = "keystone_upgrades"
+    static var decoder: JSONDecoder {
+        let decoder = JSONDecoder()
+        decoder.keyDecodingStrategy = .convertFromSnakeCase
+        return decoder
     }
 }
 
 
-class KeystoneUpgrade: Codable {
+class KeystoneUpgrade: Codable, SelfDecodable {
     let upgradeLevel: Int
     let qualifyingDuration: Int
     
-    enum CodingKeys: String, CodingKey {
-        case upgradeLevel = "upgrade_level"
-        case qualifyingDuration = "qualifying_duration"
+    static var decoder: JSONDecoder {
+        let decoder = JSONDecoder()
+        decoder.keyDecodingStrategy = .convertFromSnakeCase
+        return decoder
     }
 }
 
@@ -56,60 +57,57 @@ class Map: Codable {
 
 
 
-class MythicKeystonePeriodIndex: Codable {
+class MythicKeystonePeriodIndex: Codable, SelfDecodable {
     let _links: SelfLink<MythicKeystonePeriodIndex>
     let periods: [KeyLink<MythicKeystonePeriod>]
     let currentPeriod: KeyLink<MythicKeystonePeriod>
     
-    enum CodingKeys: String, CodingKey {
-        case _links
-        case periods
-        case currentPeriod = "current_period"
+    static var decoder: JSONDecoder {
+        let decoder = JSONDecoder()
+        decoder.keyDecodingStrategy = .convertFromSnakeCase
+        return decoder
     }
 }
 
 
-class MythicKeystonePeriod: Codable {
+class MythicKeystonePeriod: Codable, SelfDecodable {
     let _links: SelfLink<MythicKeystonePeriod>
     let id: Int
     let startTimestamp: Int
     let endTimestamp: Int
     
-    enum CodingKeys: String, CodingKey {
-        case _links
-        case id
-        case startTimestamp = "start_timestamp"
-        case endTimestamp = "end_timestamp"
+    static var decoder: JSONDecoder {
+        let decoder = JSONDecoder()
+        decoder.keyDecodingStrategy = .convertFromSnakeCase
+        return decoder
     }
 }
 
 
-class MythicKeystoneSeasonIndex: Codable {
+class MythicKeystoneSeasonIndex: Codable, SelfDecodable {
     let _links: SelfLink<MythicKeystoneSeasonIndex>
     let seasons: [KeyLink<MythicKeystoneSeason>]
     let currentSeason: KeyLink<MythicKeystoneSeason>
     
-    enum CodingKeys: String, CodingKey {
-        case _links
-        case seasons
-        case currentSeason = "current_season"
+    static var decoder: JSONDecoder {
+        let decoder = JSONDecoder()
+        decoder.keyDecodingStrategy = .convertFromSnakeCase
+        return decoder
     }
 }
 
 
 
-class MythicKeystoneSeason: Codable {
+class MythicKeystoneSeason: Codable, SelfDecodable {
     let _links: SelfLink<MythicKeystoneSeason>
     let id: Int
     let startTimestamp: Int
     let endTimestamp: Int
     let periods: [KeyLink<MythicKeystonePeriod>]
     
-    enum CodingKeys: String, CodingKey {
-        case _links
-        case id
-        case startTimestamp = "start_timestamp"
-        case endTimestamp = "end_timestamp"
-        case periods
+    static var decoder: JSONDecoder {
+        let decoder = JSONDecoder()
+        decoder.keyDecodingStrategy = .convertFromSnakeCase
+        return decoder
     }
 }

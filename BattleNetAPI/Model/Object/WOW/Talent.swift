@@ -61,23 +61,25 @@ class CharacterTalent: Codable {
 
 
 
-class PVPTalentSlots: Codable {
+class PVPTalentSlots: Codable, SelfDecodable {
     let _links: SelfLink<PVPTalentSlots>
     let talentSlots: [TalentSlot]
     
-    enum CodingKeys: String, CodingKey {
-        case _links
-        case talentSlots = "talent_slots"
+    static var decoder: JSONDecoder {
+        let decoder = JSONDecoder()
+        decoder.keyDecodingStrategy = .convertFromSnakeCase
+        return decoder
     }
 }
 
 
-class TalentSlot: Codable {
+class TalentSlot: Codable, SelfDecodable {
     let slotNumber: Int
     let unlockPlayerLevel: Int
     
-    enum CodingKeys: String, CodingKey {
-        case slotNumber = "slot_number"
-        case unlockPlayerLevel = "unlock_player_level"
+    static var decoder: JSONDecoder {
+        let decoder = JSONDecoder()
+        decoder.keyDecodingStrategy = .convertFromSnakeCase
+        return decoder
     }
 }

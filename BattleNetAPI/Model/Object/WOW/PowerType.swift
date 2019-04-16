@@ -9,13 +9,14 @@
 import Foundation
 
 
-class PowerTypeIndex: Codable {
+class PowerTypeIndex: Codable, SelfDecodable {
     let _links: SelfLink<PowerTypeIndex>
     let powerTypes: [KeyLink<PowerType>]
     
-    enum CodingKeys: String, CodingKey {
-        case _links
-        case powerTypes = "power_types"
+    static var decoder: JSONDecoder {
+        let decoder = JSONDecoder()
+        decoder.keyDecodingStrategy = .convertFromSnakeCase
+        return decoder
     }
 }
 

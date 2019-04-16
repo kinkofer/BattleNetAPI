@@ -9,12 +9,13 @@
 import Foundation
 
 
-class TokenIndex: Codable {
+class TokenIndex: Codable, SelfDecodable {
     let lastUpdatedTimestamp: Int
     let price: Int
     
-    enum CodingKeys: String, CodingKey {
-        case lastUpdatedTimestamp = "last_updated_timestamp"
-        case price
+    static var decoder: JSONDecoder {
+        let decoder = JSONDecoder()
+        decoder.keyDecodingStrategy = .convertFromSnakeCase
+        return decoder
     }
 }

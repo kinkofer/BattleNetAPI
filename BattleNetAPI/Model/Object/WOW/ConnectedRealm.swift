@@ -10,20 +10,21 @@ import Foundation
 
 
 // https://us.api.battle.net/data/wow/connected-realm/?namespace=dynamic-us
-class ConnectedRealmIndex: Codable {
+class ConnectedRealmIndex: Codable, SelfDecodable {
     let _links: SelfLink<ConnectedRealmIndex>
     let connectedRealms: [Link<ConnectedRealm>]
     
-    enum CodingKeys: String, CodingKey {
-        case _links
-        case connectedRealms = "connected_realms"
+    static var decoder: JSONDecoder {
+        let decoder = JSONDecoder()
+        decoder.keyDecodingStrategy = .convertFromSnakeCase
+        return decoder
     }
 }
 
 
 
 // https://us.api.battle.net/data/wow/connected-realm/11?namespace=dynamic-us
-class ConnectedRealm: Codable {
+class ConnectedRealm: Codable, SelfDecodable {
     let _links: SelfLink<ConnectedRealm>
     let id: Int
     
@@ -35,14 +36,10 @@ class ConnectedRealm: Codable {
     
     let mythicLeaderboards: Link<MythicLeaderboard>
     
-    enum CodingKeys: String, CodingKey {
-        case _links
-        case id
-        case realms
-        case hasQueue = "has_queue"
-        case status
-        case population
-        case mythicLeaderboards = "mythic_leaderboards"
+    static var decoder: JSONDecoder {
+        let decoder = JSONDecoder()
+        decoder.keyDecodingStrategy = .convertFromSnakeCase
+        return decoder
     }
 }
 

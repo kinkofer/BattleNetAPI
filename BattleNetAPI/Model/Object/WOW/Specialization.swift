@@ -9,22 +9,22 @@
 import Foundation
 
 
-class SpecializationIndex: Codable {
+class SpecializationIndex: Codable, SelfDecodable {
     let _links: SelfLink<SpecializationIndex>
     let characterSpecializations: [KeyLink<Specialization>]
     let petSpecializations: [KeyLink<Specialization>]
     
-    enum CodingKeys: String, CodingKey {
-        case _links
-        case characterSpecializations = "character_specializations"
-        case petSpecializations = "pet_specializations"
+    static var decoder: JSONDecoder {
+        let decoder = JSONDecoder()
+        decoder.keyDecodingStrategy = .convertFromSnakeCase
+        return decoder
     }
 }
 
 
 
 // https://us.api.battle.net/data/wow/playable-specialization/65?namespace=static-7.3.5_25875-us
-class Specialization: Codable {
+class Specialization: Codable, SelfDecodable {
     let _links: SelfLink<Specialization>
     let id: Int
     let name: String
@@ -37,16 +37,10 @@ class Specialization: Codable {
     
     let media: MediaLink
     
-    enum CodingKeys: String, CodingKey {
-        case _links
-        case id
-        case playableClass = "playable_class"
-        case name
-        case genderDescription = "gender_description"
-        case media
-        case role
-        case pvpTalents = "pvp_talents"
-        case talentTiers = "talent_tiers"
+    static var decoder: JSONDecoder {
+        let decoder = JSONDecoder()
+        decoder.keyDecodingStrategy = .convertFromSnakeCase
+        return decoder
     }
 }
 
@@ -64,30 +58,29 @@ class TalentTier: Codable {
 }
 
 
-class Talent: Codable {
+class Talent: Codable, SelfDecodable {
     let talent: KeyLink<WOWClass>
     let spellTooltip: SpellTooltip
     
-    enum CodingKeys: String, CodingKey {
-        case talent
-        case spellTooltip = "spell_tooltip"
+    static var decoder: JSONDecoder {
+        let decoder = JSONDecoder()
+        decoder.keyDecodingStrategy = .convertFromSnakeCase
+        return decoder
     }
 }
 
 
-class SpellTooltip: Codable {
+class SpellTooltip: Codable, SelfDecodable {
     let description: String
     let castTime: CastTime
     let cooldown: String?
     let powerCost: String?
     let range: Range?
     
-    enum CodingKeys: String, CodingKey {
-        case description
-        case castTime = "cast_time"
-        case cooldown
-        case powerCost = "power_cost"
-        case range
+    static var decoder: JSONDecoder {
+        let decoder = JSONDecoder()
+        decoder.keyDecodingStrategy = .convertFromSnakeCase
+        return decoder
     }
 }
 

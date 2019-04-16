@@ -10,14 +10,9 @@ import Foundation
 
 
 class League: Codable {
-    let links: SelfLink<League>
+    let _links: SelfLink<League>
     let key: LeagueKey
     let tier: [LeagueTier]
-    
-    enum CodingKeys: String, CodingKey {
-        case links = "_links"
-        case key, tier
-    }
 }
 
 

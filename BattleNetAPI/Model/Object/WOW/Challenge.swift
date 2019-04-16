@@ -19,6 +19,7 @@ class ChallengeIndex: Codable {
 
 
 
+/// - note: Contains camelCase and snake_case keys
 class Challenge: Codable {
     let realm: RealmSummary?
     let map: ChallengeModeMap?

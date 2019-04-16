@@ -9,6 +9,11 @@
 import Foundation
 
 
+public protocol SelfDecodable: Decodable {
+    static var decoder: JSONDecoder { get }
+}
+
+
 extension Data {
     func jsonPrettyPrinted() throws -> String? {
         let json = try JSONSerialization.jsonObject(with: self, options: [])
@@ -20,15 +25,25 @@ extension Data {
 
 
 extension Decodable {
-    static func decode(from data: Data) throws -> Self {
-        return try JSONDecoder().decode(Self.self, from: data)
+    public static func decode(from data: Data) throws -> Self {
+        if let selfDecoding = self as? SelfDecodable.Type {
+            return try selfDecoding.decoder.decode(self, from: data)
+        }
+        else {
+            return try JSONDecoder().decode(self, from: data)
+        }
     }
 }
 
 
 
 extension Array where Element: Decodable {
-    static func decode(from data: Data) throws -> [Element] {
-        return try JSONDecoder().decode([Element].self, from: data)
+    public static func decode(from data: Data) throws -> Array {
+        if let selfDecoding = Element.self as? SelfDecodable.Type {
+            return try selfDecoding.decoder.decode(self, from: data)
+        }
+        else {
+            return try JSONDecoder().decode(self, from: data)
+        }
     }
 }

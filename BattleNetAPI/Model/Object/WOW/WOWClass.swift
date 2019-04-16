@@ -15,7 +15,7 @@ class WOWClassIndex: Codable {
 }
 
 
-class WOWClass: Codable {
+class WOWClass: Codable, SelfDecodable {
     let _links: SelfLink<WOWClass>
     let id: Int
     let name: String
@@ -24,14 +24,10 @@ class WOWClass: Codable {
     let specializations: [KeyLink<Specialization>]
     let media: MediaLink
     
-    enum CodingKeys: String, CodingKey {
-        case _links
-        case id
-        case name
-        case genderName = "gender_name"
-        case powerType = "power_type"
-        case specializations
-        case media
+    static var decoder: JSONDecoder {
+        let decoder = JSONDecoder()
+        decoder.keyDecodingStrategy = .convertFromSnakeCase
+        return decoder
     }
 }
 
@@ -43,13 +39,14 @@ class GenderName: Codable {
 }
 
 
-class GenderName2: Codable {
+class GenderName2: Codable, SelfDecodable {
     let maleName: String
     let femaleName: String
     
-    enum CodingKeys: String, CodingKey {
-        case maleName = "male_name"
-        case femaleName = "female_name"
+    static var decoder: JSONDecoder {
+        let decoder = JSONDecoder()
+        decoder.keyDecodingStrategy = .convertFromSnakeCase
+        return decoder
     }
 }
 
