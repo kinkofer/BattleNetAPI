@@ -100,7 +100,7 @@ class StarCraft2ViewController: UITableViewController, APIViewer {
     
     // MARK: - Game Data APIs
     
-    func getLeagueData(seasonID: Int, queue: LeagueQueue, team: LeagueTeam, league: LeagueType, region: APIRegion = .us, locale: APILocale = .en_US) {
+    func getLeagueData(seasonID: Int, queue: LeagueQueue, team: LeagueTeam, league: LeagueType, region: APIRegion = Current.region, locale: APILocale = Current.locale) {
         sc2MC.getLeagueData(seasonID: seasonID, queue: queue, team: team, league: league, region: region, locale: locale) { result in
             switch result {
             case .success(let league):

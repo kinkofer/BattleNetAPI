@@ -333,7 +333,7 @@ class WorldOfWarcraftViewController: UITableViewController, APIViewer {
     
     // MARK: Connected Realm API
     
-    func getConnectedRealmIndex(region: APIRegion = .us, locale: APILocale? = .en_US) {
+    func getConnectedRealmIndex(region: APIRegion = Current.region, locale: APILocale? = Current.locale) {
         wowMC.getConnectedRealmIndex(region: region, locale: locale) { result in
             switch result {
             case .success(let connectedRealms):
@@ -345,7 +345,7 @@ class WorldOfWarcraftViewController: UITableViewController, APIViewer {
     }
     
     
-    func getConnectedRealm(id: Int, region: APIRegion = .us, locale: APILocale? = .en_US) {
+    func getConnectedRealm(id: Int, region: APIRegion = Current.region, locale: APILocale? = Current.locale) {
         wowMC.getConnectedRealm(id: id, region: region, locale: locale) { result in
             switch result {
             case .success(let connectedRealm):
@@ -359,7 +359,7 @@ class WorldOfWarcraftViewController: UITableViewController, APIViewer {
     
     // MARK: Mythic Keystone Affix API
     
-    func getMythicKeystoneAffixes(region: APIRegion = .us, locale: APILocale? = .en_US) {
+    func getMythicKeystoneAffixes(region: APIRegion = Current.region, locale: APILocale? = Current.locale) {
         wowMC.getMythicKeystoneAffixes(region: region, locale: locale) { result in
             switch result {
             case .success(let mythicKeystoneAffixes):
@@ -371,7 +371,7 @@ class WorldOfWarcraftViewController: UITableViewController, APIViewer {
     }
     
     
-    func getMythicKeystoneAffix(id: Int, region: APIRegion = .us, locale: APILocale? = .en_US) {
+    func getMythicKeystoneAffix(id: Int, region: APIRegion = Current.region, locale: APILocale? = Current.locale) {
         wowMC.getMythicKeystoneAffix(id: id, region: region, locale: locale) { result in
             switch result {
             case .success(let mythicKeystoneAffix):
@@ -385,7 +385,7 @@ class WorldOfWarcraftViewController: UITableViewController, APIViewer {
     
     // MARK: Mythic Raid Leaderboard API
     
-    func getMythicRaidLeaderboard(raid: String, faction: FactionType, region: APIRegion = .us, locale: APILocale? = .en_US) {
+    func getMythicRaidLeaderboard(raid: String, faction: FactionType, region: APIRegion = Current.region, locale: APILocale? = Current.locale) {
         wowMC.getMythicRaidLeaderboard(raid: raid, faction: faction, region: region, locale: locale) { result in
             switch result {
             case .success(let mythicRaidLeaderboard):
@@ -399,7 +399,7 @@ class WorldOfWarcraftViewController: UITableViewController, APIViewer {
     
     // MARK: - Mythic Keystone Dungeon API
     
-    func getMythicKeystoneDungeons(region: APIRegion = .us, locale: APILocale? = .en_US) {
+    func getMythicKeystoneDungeons(region: APIRegion = Current.region, locale: APILocale? = Current.locale) {
         wowMC.getMythicKeystoneDungeons(region: region, locale: locale) { result in
             switch result {
             case .success(let mythicKeystoneDungeons):
@@ -411,7 +411,7 @@ class WorldOfWarcraftViewController: UITableViewController, APIViewer {
     }
     
     
-    func getMythicKeystoneDungeon(id: Int, region: APIRegion = .us, locale: APILocale? = .en_US) {
+    func getMythicKeystoneDungeon(id: Int, region: APIRegion = Current.region, locale: APILocale? = Current.locale) {
         wowMC.getMythicKeystoneDungeon(id: id, region: region, locale: locale) { result in
             switch result {
             case .success(let mythicKeystoneDungeon):
@@ -423,7 +423,7 @@ class WorldOfWarcraftViewController: UITableViewController, APIViewer {
     }
     
     
-    func getMythicKeystones(region: APIRegion = .us, locale: APILocale? = .en_US) {
+    func getMythicKeystones(region: APIRegion = Current.region, locale: APILocale? = Current.locale) {
         wowMC.getMythicKeystones(region: region, locale: locale) { result in
             switch result {
             case .success(_):
@@ -435,7 +435,7 @@ class WorldOfWarcraftViewController: UITableViewController, APIViewer {
     }
     
     
-    func getMythicKeystonePeriods(region: APIRegion = .us, locale: APILocale? = .en_US) {
+    func getMythicKeystonePeriods(region: APIRegion = Current.region, locale: APILocale? = Current.locale) {
         wowMC.getMythicKeystonePeriods(region: region, locale: locale) { result in
             switch result {
             case .success(let mythicKeystonePeriods):
@@ -447,7 +447,7 @@ class WorldOfWarcraftViewController: UITableViewController, APIViewer {
     }
     
     
-    func getMythicKeystonePeriod(id: Int, region: APIRegion = .us, locale: APILocale? = .en_US) {
+    func getMythicKeystonePeriod(id: Int, region: APIRegion = Current.region, locale: APILocale? = Current.locale) {
         wowMC.getMythicKeystonePeriod(id: id, region: region, locale: locale) { result in
             switch result {
             case .success(let mythicKeystonePeriod):
@@ -459,7 +459,7 @@ class WorldOfWarcraftViewController: UITableViewController, APIViewer {
     }
     
     
-    func getMythicKeystoneSeasons(region: APIRegion = .us, locale: APILocale? = .en_US) {
+    func getMythicKeystoneSeasons(region: APIRegion = Current.region, locale: APILocale? = Current.locale) {
         wowMC.getMythicKeystoneSeasons(region: region, locale: locale) { result in
             switch result {
             case .success(let mythicKeystoneSeasons):
@@ -471,7 +471,7 @@ class WorldOfWarcraftViewController: UITableViewController, APIViewer {
     }
     
     
-    func getMythicKeystoneSeason(id: Int, region: APIRegion = .us, locale: APILocale? = .en_US) {
+    func getMythicKeystoneSeason(id: Int, region: APIRegion = Current.region, locale: APILocale? = Current.locale) {
         wowMC.getMythicKeystoneSeason(id: id, region: region, locale: locale) { result in
             switch result {
             case .success(let mythicKeystoneSeason):
@@ -485,7 +485,7 @@ class WorldOfWarcraftViewController: UITableViewController, APIViewer {
     
     // MARK: Mythic Keystone Leaderboard API
     
-    func getMythicLeaderboards(connectedRealmID: Int, region: APIRegion = .us, locale: APILocale? = .en_US) {
+    func getMythicLeaderboards(connectedRealmID: Int, region: APIRegion = Current.region, locale: APILocale? = Current.locale) {
         wowMC.getMythicLeaderboards(connectedRealmID: connectedRealmID, region: region, locale: locale) { result in
             switch result {
             case .success(let leaderboards):
@@ -497,7 +497,7 @@ class WorldOfWarcraftViewController: UITableViewController, APIViewer {
     }
     
     
-    func getMythicLeaderboard(connectedRealmID: Int, dungeonID: Int, period: Int, region: APIRegion = .us, locale: APILocale? = .en_US) {
+    func getMythicLeaderboard(connectedRealmID: Int, dungeonID: Int, period: Int, region: APIRegion = Current.region, locale: APILocale? = Current.locale) {
         wowMC.getMythicLeaderboard(connectedRealmID: connectedRealmID, dungeonID: dungeonID, period: period, region: region, locale: locale) { result in
             switch result {
             case .success(let leaderboard):
@@ -510,7 +510,7 @@ class WorldOfWarcraftViewController: UITableViewController, APIViewer {
     }
     
     
-    func getMythicChallengeMode(region: APIRegion = .us, locale: APILocale? = .en_US) {
+    func getMythicChallengeMode(region: APIRegion = Current.region, locale: APILocale? = Current.locale) {
         wowMC.getMythicChallengeMode(region: region, locale: locale) { result in
             switch result {
             case .success(let mythicChallengeMode):
@@ -525,7 +525,7 @@ class WorldOfWarcraftViewController: UITableViewController, APIViewer {
     
     // MARK: Playable Class API
     
-    func getPlayableClasses(region: APIRegion = .us, locale: APILocale? = .en_US) {
+    func getPlayableClasses(region: APIRegion = Current.region, locale: APILocale? = Current.locale) {
         wowMC.getPlayableClasses(region: region, locale: locale) { result in
             switch result {
             case .success(let classIndex):
@@ -537,7 +537,7 @@ class WorldOfWarcraftViewController: UITableViewController, APIViewer {
     }
     
     
-    func getPlayableClass(id: Int, region: APIRegion = .us, locale: APILocale? = .en_US) {
+    func getPlayableClass(id: Int, region: APIRegion = Current.region, locale: APILocale? = Current.locale) {
         wowMC.getPlayableClass(id: id, region: region, locale: locale) { result in
             switch result {
             case .success(let wowClass):
@@ -559,7 +559,7 @@ class WorldOfWarcraftViewController: UITableViewController, APIViewer {
     }
     
     
-    func getPlayableClassPvPTalentSlots(id: Int, region: APIRegion = .us, locale: APILocale? = .en_US) {
+    func getPlayableClassPvPTalentSlots(id: Int, region: APIRegion = Current.region, locale: APILocale? = Current.locale) {
         wowMC.getPlayableClassPvPTalentSlots(id: id, region: region, locale: locale) { result in
             switch result {
             case .success(let pvpTalentSlots):
@@ -573,7 +573,7 @@ class WorldOfWarcraftViewController: UITableViewController, APIViewer {
     
     // MARK: Playable Specialization API
     
-    func getPlayableSpecializations(region: APIRegion = .us, locale: APILocale? = .en_US) {
+    func getPlayableSpecializations(region: APIRegion = Current.region, locale: APILocale? = Current.locale) {
         wowMC.getPlayableSpecializations(region: region, locale: locale) { result in
             switch result {
             case .success(let specializations):
@@ -585,7 +585,7 @@ class WorldOfWarcraftViewController: UITableViewController, APIViewer {
     }
     
     
-    func getPlayableSpecialization(id: Int, region: APIRegion = .us, locale: APILocale? = .en_US) {
+    func getPlayableSpecialization(id: Int, region: APIRegion = Current.region, locale: APILocale? = Current.locale) {
         wowMC.getPlayableSpecialization(id: id, region: region, locale: locale) { result in
             switch result {
             case .success(let specialization):
@@ -599,7 +599,7 @@ class WorldOfWarcraftViewController: UITableViewController, APIViewer {
     
     // MARK: Power Type API
     
-    func getPowerTypes(region: APIRegion = .us, locale: APILocale? = .en_US) {
+    func getPowerTypes(region: APIRegion = Current.region, locale: APILocale? = Current.locale) {
         wowMC.getPowerTypes(region: region, locale: locale) { result in
             switch result {
             case .success(let powerTypeIndex):
@@ -611,7 +611,7 @@ class WorldOfWarcraftViewController: UITableViewController, APIViewer {
     }
     
     
-    func getPowerType(id: Int, region: APIRegion = .us, locale: APILocale? = .en_US) {
+    func getPowerType(id: Int, region: APIRegion = Current.region, locale: APILocale? = Current.locale) {
         wowMC.getPowerType(id: id, region: region, locale: locale) { result in
             switch result {
             case .success(let powerType):
@@ -625,7 +625,7 @@ class WorldOfWarcraftViewController: UITableViewController, APIViewer {
     
     // MARK: Playable Race API
     
-    func getPlayableRaces(region: APIRegion = .us, locale: APILocale? = .en_US) {
+    func getPlayableRaces(region: APIRegion = Current.region, locale: APILocale? = Current.locale) {
         wowMC.getPlayableRaces(region: region, locale: locale) { result in
             switch result {
             case .success(let racesIndex):
@@ -637,7 +637,7 @@ class WorldOfWarcraftViewController: UITableViewController, APIViewer {
     }
     
     
-    func getPlayableRace(id: Int, region: APIRegion = .us, locale: APILocale? = .en_US) {
+    func getPlayableRace(id: Int, region: APIRegion = Current.region, locale: APILocale? = Current.locale) {
         wowMC.getPlayableRace(id: id, region: region, locale: locale) { result in
             switch result {
             case .success(let race):
@@ -651,7 +651,7 @@ class WorldOfWarcraftViewController: UITableViewController, APIViewer {
     
     // MARK: Realm API
     
-    func getRealmIndex(region: APIRegion = .us, locale: APILocale? = .en_US) {
+    func getRealmIndex(region: APIRegion = Current.region, locale: APILocale? = Current.locale) {
         wowMC.getRealmIndex(region: region, locale: locale) { result in
             switch result {
             case .success(let realms):
@@ -663,7 +663,7 @@ class WorldOfWarcraftViewController: UITableViewController, APIViewer {
     }
     
     
-    func getRealm(id: Int? = nil, slug: String? = nil, region: APIRegion = .us, locale: APILocale? = .en_US) {
+    func getRealm(id: Int? = nil, slug: String? = nil, region: APIRegion = Current.region, locale: APILocale? = Current.locale) {
         wowMC.getRealm(id: id, slug: slug, region: region, locale: locale) { result in
             switch result {
             case .success(let realm):
@@ -677,7 +677,7 @@ class WorldOfWarcraftViewController: UITableViewController, APIViewer {
     
     // MARK: Region API
     
-    func getRegionIndex(region: APIRegion = .us, locale: APILocale? = .en_US) {
+    func getRegionIndex(region: APIRegion = Current.region, locale: APILocale? = Current.locale) {
         wowMC.getRegionIndex(region: region, locale: locale) { result in
             switch result {
             case .success(let regions):
@@ -689,7 +689,7 @@ class WorldOfWarcraftViewController: UITableViewController, APIViewer {
     }
     
     
-    func getRegion(id: Int, region: APIRegion = .us, locale: APILocale? = .en_US) {
+    func getRegion(id: Int, region: APIRegion = Current.region, locale: APILocale? = Current.locale) {
         wowMC.getRegion(id: id, region: region, locale: locale) { result in
             switch result {
             case .success(let region):
@@ -703,7 +703,7 @@ class WorldOfWarcraftViewController: UITableViewController, APIViewer {
     
     // MARK: WOW Token API
     
-    func getTokenIndex(region: APIRegion = .us, locale: APILocale? = .en_US) {
+    func getTokenIndex(region: APIRegion = Current.region, locale: APILocale? = Current.locale) {
         wowMC.getTokenIndex(region: region, locale: locale) { result in
             switch result {
             case .success(let tokenIndex):
@@ -720,7 +720,7 @@ class WorldOfWarcraftViewController: UITableViewController, APIViewer {
     
     // MARK: Achievement API
     
-    func getAchievement(id: Int, region: APIRegion = .us, locale: APILocale = .en_US) {
+    func getAchievement(id: Int, region: APIRegion = Current.region, locale: APILocale = Current.locale) {
         wowMC.getAchievement(id: id, region: region, locale: locale) { result in
             switch result {
             case .success(let achievement):
@@ -734,7 +734,7 @@ class WorldOfWarcraftViewController: UITableViewController, APIViewer {
     
     // MARK: Auction API
     
-    func getAuctions(realm: String, region: APIRegion = .us, locale: APILocale = .en_US) {
+    func getAuctions(realm: String, region: APIRegion = Current.region, locale: APILocale = Current.locale) {
         wowMC.getAuctions(realm: realm, region: region, locale: locale) { result in
             switch result {
             case .success(let auction):
@@ -748,7 +748,7 @@ class WorldOfWarcraftViewController: UITableViewController, APIViewer {
     
     // MARK: Boss API
     
-    func getBosses(region: APIRegion = .us, locale: APILocale = .en_US) {
+    func getBosses(region: APIRegion = Current.region, locale: APILocale = Current.locale) {
         wowMC.getBosses(region: region, locale: locale) { result in
             switch result {
             case .success(let bosses):
@@ -760,7 +760,7 @@ class WorldOfWarcraftViewController: UITableViewController, APIViewer {
     }
     
     
-    func getBoss(id: Int, region: APIRegion = .us, locale: APILocale = .en_US) {
+    func getBoss(id: Int, region: APIRegion = Current.region, locale: APILocale = Current.locale) {
         wowMC.getBoss(id: id, region: region, locale: locale) { result in
             switch result {
             case .success(let boss):
@@ -774,7 +774,7 @@ class WorldOfWarcraftViewController: UITableViewController, APIViewer {
     
     // MARK: Challenge Mode API
     
-    func getChallengeLeaderboards(realm: String, region: APIRegion = .us, locale: APILocale = .en_US) {
+    func getChallengeLeaderboards(realm: String, region: APIRegion = Current.region, locale: APILocale = Current.locale) {
         wowMC.getChallengeLeaderboards(realm: realm, region: region, locale: locale) { result in
             switch result {
             case .success(let challenges):
@@ -786,7 +786,7 @@ class WorldOfWarcraftViewController: UITableViewController, APIViewer {
     }
     
     
-    func getTopChallengeLeaderboards(region: APIRegion = .us, locale: APILocale = .en_US) {
+    func getTopChallengeLeaderboards(region: APIRegion = Current.region, locale: APILocale = Current.locale) {
         wowMC.getTopChallengeLeaderboards(region: region, locale: locale) { result in
             switch result {
             case .success(let challenges):
@@ -800,7 +800,7 @@ class WorldOfWarcraftViewController: UITableViewController, APIViewer {
     
     // MARK: Character Profile API
     
-    func getCharacter(_ name: String, realm: String, fields: WOWCharacterField? = nil, region: APIRegion = .us, locale: APILocale = .en_US) {
+    func getCharacter(_ name: String, realm: String, fields: WOWCharacterField? = nil, region: APIRegion = Current.region, locale: APILocale = Current.locale) {
         wowMC.getCharacter(name, realm: realm, fields: fields, region: region, locale: locale) { result in
             switch result {
             case .success(let character):
@@ -886,7 +886,7 @@ class WorldOfWarcraftViewController: UITableViewController, APIViewer {
     
     // MARK: Guild Profile API
     
-    func getGuild(_ name: String, realm: String, fields: WOWGuildField? = nil, region: APIRegion = .us, locale: APILocale = .en_US) {
+    func getGuild(_ name: String, realm: String, fields: WOWGuildField? = nil, region: APIRegion = Current.region, locale: APILocale = Current.locale) {
         wowMC.getGuild(name, realm: realm, fields: fields, region: region, locale: locale) { result in
             switch result {
             case .success(let guild):
@@ -916,7 +916,7 @@ class WorldOfWarcraftViewController: UITableViewController, APIViewer {
     
     // MARK: Item API
     
-    func getWOWItem(id: Int, region: APIRegion = .us, locale: APILocale = .en_US) {
+    func getWOWItem(id: Int, region: APIRegion = Current.region, locale: APILocale = Current.locale) {
         wowMC.getItem(id: id, region: region, locale: locale) { result in
             switch result {
             case .success(let item):
@@ -928,7 +928,7 @@ class WorldOfWarcraftViewController: UITableViewController, APIViewer {
     }
     
     
-    func getWOWItemSet(setID: Int, region: APIRegion = .us, locale: APILocale = .en_US) {
+    func getWOWItemSet(setID: Int, region: APIRegion = Current.region, locale: APILocale = Current.locale) {
         wowMC.getItemSet(setID: setID, region: region, locale: locale) { result in
             switch result {
             case .success(let itemSet):
@@ -942,7 +942,7 @@ class WorldOfWarcraftViewController: UITableViewController, APIViewer {
     
     // MARK: Mount API
     
-    func getMounts(region: APIRegion = .us, locale: APILocale = .en_US) {
+    func getMounts(region: APIRegion = Current.region, locale: APILocale = Current.locale) {
         wowMC.getMounts(region: region, locale: locale) { result in
             switch result {
             case .success(let mounts):
@@ -960,7 +960,7 @@ class WorldOfWarcraftViewController: UITableViewController, APIViewer {
     
     // MARK: Pet API
     
-    func getPets(region: APIRegion = .us, locale: APILocale = .en_US) {
+    func getPets(region: APIRegion = Current.region, locale: APILocale = Current.locale) {
         wowMC.getPets(region: region, locale: locale) { result in
             switch result {
             case .success(let pets):
@@ -972,7 +972,7 @@ class WorldOfWarcraftViewController: UITableViewController, APIViewer {
     }
     
     
-    func getPetAbility(abilityID: Int, region: APIRegion = .us, locale: APILocale = .en_US) {
+    func getPetAbility(abilityID: Int, region: APIRegion = Current.region, locale: APILocale = Current.locale) {
         wowMC.getPetAbility(abilityID: abilityID, region: region, locale: locale) { result in
             switch result {
             case .success(let petAbility):
@@ -984,7 +984,7 @@ class WorldOfWarcraftViewController: UITableViewController, APIViewer {
     }
     
     
-    func getPetSpecies(speciesID: Int, region: APIRegion = .us, locale: APILocale = .en_US) {
+    func getPetSpecies(speciesID: Int, region: APIRegion = Current.region, locale: APILocale = Current.locale) {
         wowMC.getPetSpecies(speciesID: speciesID, region: region, locale: locale) { result in
             switch result {
             case .success(let petSpecies):
@@ -996,7 +996,7 @@ class WorldOfWarcraftViewController: UITableViewController, APIViewer {
     }
     
     
-    func getPetStats(speciesID: Int, level: Int = 1, breedID: Int = 3, qualityID: Int = 1, region: APIRegion = .us, locale: APILocale = .en_US) {
+    func getPetStats(speciesID: Int, level: Int = 1, breedID: Int = 3, qualityID: Int = 1, region: APIRegion = Current.region, locale: APILocale = Current.locale) {
         wowMC.getPetStats(speciesID: speciesID, level: level, breedID: breedID, qualityID: qualityID, region: region, locale: locale) { result in
             switch result {
             case .success(let petStats):
@@ -1010,7 +1010,7 @@ class WorldOfWarcraftViewController: UITableViewController, APIViewer {
     
     // MARK: PVP API
     
-    func getWOWLeaderboard(bracket: WOWLeaderboardBracket, region: APIRegion = .us, locale: APILocale = .en_US) {
+    func getWOWLeaderboard(bracket: WOWLeaderboardBracket, region: APIRegion = Current.region, locale: APILocale = Current.locale) {
         wowMC.getLeaderboard(bracket: bracket, region: region, locale: locale) { result in
             switch result {
             case .success(let leaderboard):
@@ -1024,7 +1024,7 @@ class WorldOfWarcraftViewController: UITableViewController, APIViewer {
     
     // MARK: Quest API
     
-    func getWOWQuest(id: Int, region: APIRegion = .us, locale: APILocale = .en_US) {
+    func getWOWQuest(id: Int, region: APIRegion = Current.region, locale: APILocale = Current.locale) {
         wowMC.getQuest(id: id, region: region, locale: locale) { result in
             switch result {
             case .success(let quest):
@@ -1038,7 +1038,7 @@ class WorldOfWarcraftViewController: UITableViewController, APIViewer {
     
     // MARK: Realm Status API
     
-    func getWOWRealmsStatus(region: APIRegion = .us, locale: APILocale = .en_US) {
+    func getWOWRealmsStatus(region: APIRegion = Current.region, locale: APILocale = Current.locale) {
         wowMC.getRealmsStatus(region: region, locale: locale) { result in
             switch result {
             case .success(let realms):
@@ -1052,7 +1052,7 @@ class WorldOfWarcraftViewController: UITableViewController, APIViewer {
     
     // MARK: Recipe API
     
-    func getWOWRecipe(id: Int, region: APIRegion = .us, locale: APILocale = .en_US) {
+    func getWOWRecipe(id: Int, region: APIRegion = Current.region, locale: APILocale = Current.locale) {
         wowMC.getRecipe(id: id, region: region, locale: locale) { result in
             switch result {
             case .success(let recipe):
@@ -1066,7 +1066,7 @@ class WorldOfWarcraftViewController: UITableViewController, APIViewer {
     
     // MARK: Spell API
     
-    func getWOWSpell(id: Int, region: APIRegion = .us, locale: APILocale = .en_US) {
+    func getWOWSpell(id: Int, region: APIRegion = Current.region, locale: APILocale = Current.locale) {
         wowMC.getSpell(id: id, region: region, locale: locale) { result in
             switch result {
             case .success(let spell):
@@ -1080,7 +1080,7 @@ class WorldOfWarcraftViewController: UITableViewController, APIViewer {
     
     // MARK: User API
     
-    func getCharacters(region: APIRegion = .us) {
+    func getCharacters(region: APIRegion = Current.region) {
         wowMC.getCharacters(region: region) { result in
             switch result {
             case .success(let characters):
@@ -1094,7 +1094,7 @@ class WorldOfWarcraftViewController: UITableViewController, APIViewer {
     
     // MARK: Zone API
     
-    func getZones(region: APIRegion = .us, locale: APILocale = .en_US) {
+    func getZones(region: APIRegion = Current.region, locale: APILocale = Current.locale) {
         wowMC.getZones(region: region, locale: locale) { result in
             switch result {
             case .success(let zones):
@@ -1110,7 +1110,7 @@ class WorldOfWarcraftViewController: UITableViewController, APIViewer {
     
     // MARK: Data Resources
     
-    func getZone(id: Int, region: APIRegion = .us, locale: APILocale = .en_US) {
+    func getZone(id: Int, region: APIRegion = Current.region, locale: APILocale = Current.locale) {
         wowMC.getZone(id: id, region: region, locale: locale) { result in
             switch result {
             case .success(let zone):
@@ -1122,7 +1122,7 @@ class WorldOfWarcraftViewController: UITableViewController, APIViewer {
     }
     
     
-    func getBattlegroups(region: APIRegion = .us, locale: APILocale = .en_US) {
+    func getBattlegroups(region: APIRegion = Current.region, locale: APILocale = Current.locale) {
         wowMC.getBattlegroups(region: region, locale: locale) { result in
             switch result {
             case .success(let battlegroups):
@@ -1134,7 +1134,7 @@ class WorldOfWarcraftViewController: UITableViewController, APIViewer {
     }
     
     
-    func getRaces(region: APIRegion = .us, locale: APILocale = .en_US) {
+    func getRaces(region: APIRegion = Current.region, locale: APILocale = Current.locale) {
         wowMC.getRaces(region: region, locale: locale) { result in
             switch result {
             case .success(let races):
@@ -1146,7 +1146,7 @@ class WorldOfWarcraftViewController: UITableViewController, APIViewer {
     }
     
     
-    func getWOWClasses(region: APIRegion = .us, locale: APILocale = .en_US) {
+    func getWOWClasses(region: APIRegion = Current.region, locale: APILocale = Current.locale) {
         wowMC.getClasses(region: region, locale: locale) { result in
             switch result {
             case .success(let classes):
@@ -1158,7 +1158,7 @@ class WorldOfWarcraftViewController: UITableViewController, APIViewer {
     }
     
     
-    func getWOWAchievements(region: APIRegion = .us, locale: APILocale = .en_US) {
+    func getWOWAchievements(region: APIRegion = Current.region, locale: APILocale = Current.locale) {
         wowMC.getAchievements(region: region, locale: locale) { result in
             switch result {
             case .success(let achievementCategories):
@@ -1170,7 +1170,7 @@ class WorldOfWarcraftViewController: UITableViewController, APIViewer {
     }
     
     
-    func getWOWGuildRewards(region: APIRegion = .us, locale: APILocale = .en_US) {
+    func getWOWGuildRewards(region: APIRegion = Current.region, locale: APILocale = Current.locale) {
         wowMC.getGuildRewards(region: region, locale: locale) { result in
             switch result {
             case .success(let rewards):
@@ -1182,7 +1182,7 @@ class WorldOfWarcraftViewController: UITableViewController, APIViewer {
     }
     
     
-    func getWOWGuildPerks(region: APIRegion = .us, locale: APILocale = .en_US) {
+    func getWOWGuildPerks(region: APIRegion = Current.region, locale: APILocale = Current.locale) {
         wowMC.getGuildPerks(region: region, locale: locale) { result in
             switch result {
             case .success(let perks):
@@ -1194,7 +1194,7 @@ class WorldOfWarcraftViewController: UITableViewController, APIViewer {
     }
     
     
-    func getWOWGuildAchievements(region: APIRegion = .us, locale: APILocale = .en_US) {
+    func getWOWGuildAchievements(region: APIRegion = Current.region, locale: APILocale = Current.locale) {
         wowMC.getGuildAchievements(region: region, locale: locale) { result in
             switch result {
             case .success(let achievementCategories):
@@ -1206,7 +1206,7 @@ class WorldOfWarcraftViewController: UITableViewController, APIViewer {
     }
     
     
-    func getItemClasses(region: APIRegion = .us, locale: APILocale = .en_US) {
+    func getItemClasses(region: APIRegion = Current.region, locale: APILocale = Current.locale) {
         wowMC.getGuildAchievements(region: region, locale: locale) { result in
             switch result {
             case .success(let itemClasses):
@@ -1218,7 +1218,7 @@ class WorldOfWarcraftViewController: UITableViewController, APIViewer {
     }
     
     
-    func getTalents(region: APIRegion = .us, locale: APILocale = .en_US) {
+    func getTalents(region: APIRegion = Current.region, locale: APILocale = Current.locale) {
         wowMC.getTalents(region: region, locale: locale) { result in
             switch result {
             case .success(let talentDictionary):
@@ -1230,7 +1230,7 @@ class WorldOfWarcraftViewController: UITableViewController, APIViewer {
     }
     
     
-    func getPetTypes(region: APIRegion = .us, locale: APILocale = .en_US) {
+    func getPetTypes(region: APIRegion = Current.region, locale: APILocale = Current.locale) {
         wowMC.getPetTypes(region: region, locale: locale) { result in
             switch result {
             case .success(let petTypes):

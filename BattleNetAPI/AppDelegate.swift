@@ -45,10 +45,3 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
 
 }
-
-
-
-extension Notification.Name {
-    /// The notification name that can be observed when the user logs in
-    public static let didReturnUserCodeNotification = Notification.Name("didReturnUserCodeNotification")
-}

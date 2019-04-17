@@ -133,7 +133,7 @@ class Diablo3ViewController: UITableViewController, APIViewer {
     
     // MARK: - Game Data APIs
     
-    func getSeasons(region: APIRegion = .us) {
+    func getSeasons(region: APIRegion = Current.region) {
         d3MC.getSeasons(region: region) { result in
             switch result {
             case .success(let seasonIndex):
@@ -145,7 +145,7 @@ class Diablo3ViewController: UITableViewController, APIViewer {
     }
     
     
-    func getLeaderboards(forSeason seasonID: Int, region: APIRegion = .us) {
+    func getLeaderboards(forSeason seasonID: Int, region: APIRegion = Current.region) {
         d3MC.getLeaderboards(forSeason: seasonID, region: region) { result in
             switch result {
             case .success(let seasonLeaderboard):
@@ -157,11 +157,11 @@ class Diablo3ViewController: UITableViewController, APIViewer {
     }
     
     
-    func getLeaderboard(_ leaderboard: String, forSeason seasonID: Int, region: APIRegion = .us) {
+    func getLeaderboard(_ leaderboard: String, forSeason seasonID: Int, region: APIRegion = Current.region) {
         d3MC.getLeaderboard(leaderboard, forSeason: seasonID, region: region) { result in
             switch result {
             case .success(let leaderboard):
-                Debug.print("Retrieved Season Leaderboard \(leaderboard.title.en_US ?? "") which has \(leaderboard.column.count) Column(s) and \(leaderboard.row.count) Entry(s)")
+                Debug.print("Retrieved Season Leaderboard \(leaderboard.season) which has \(leaderboard.column.count) Column(s) and \(leaderboard.row.count) Entry(s)")
             case .failure(let error):
                 self.handleError(error)
             }
@@ -169,7 +169,7 @@ class Diablo3ViewController: UITableViewController, APIViewer {
     }
     
     
-    func getEras(region: APIRegion = .us) {
+    func getEras(region: APIRegion = Current.region) {
         d3MC.getEras(region: region) { result in
             switch result {
             case .success(let eraIndex):
@@ -181,7 +181,7 @@ class Diablo3ViewController: UITableViewController, APIViewer {
     }
     
     
-    func getLeaderboards(forEra eraID: Int, region: APIRegion = .us) {
+    func getLeaderboards(forEra eraID: Int, region: APIRegion = Current.region) {
         d3MC.getLeaderboards(forEra: eraID, region: region) { result in
             switch result {
             case .success(let eraLeaderboard):
@@ -193,11 +193,11 @@ class Diablo3ViewController: UITableViewController, APIViewer {
     }
     
     
-    func getLeaderboard(_ leaderboard: String, forEra eraID: Int, region: APIRegion = .us) {
+    func getLeaderboard(_ leaderboard: String, forEra eraID: Int, region: APIRegion = Current.region) {
         d3MC.getLeaderboard(leaderboard, forEra: eraID, region: region) { result in
             switch result {
             case .success(let leaderboard):
-                Debug.print("Retrieved Era Leaderboard \(leaderboard.title.en_US ?? "") which has \(leaderboard.column.count) Column(s) and \(leaderboard.row.count) Entry(s)")
+                Debug.print("Retrieved Era Leaderboard \(leaderboard.era) which has \(leaderboard.column.count) Column(s) and \(leaderboard.row.count) Entry(s)")
             case .failure(let error):
                 self.handleError(error)
             }
@@ -208,7 +208,7 @@ class Diablo3ViewController: UITableViewController, APIViewer {
     
     // MARK: Community APIs
     
-    func getActs(region: APIRegion = .us, locale: APILocale = .en_US) {
+    func getActs(region: APIRegion = Current.region, locale: APILocale = Current.locale) {
         d3MC.getActs(region: region, locale: locale) { result in
             switch result {
             case .success(let acts):
@@ -220,7 +220,7 @@ class Diablo3ViewController: UITableViewController, APIViewer {
     }
     
     
-    func getAct(_ id: Int, region: APIRegion = .us, locale: APILocale = .en_US) {
+    func getAct(_ id: Int, region: APIRegion = Current.region, locale: APILocale = Current.locale) {
         d3MC.getAct(id, region: region, locale: locale) { result in
             switch result {
             case .success(let act):
@@ -232,7 +232,7 @@ class Diablo3ViewController: UITableViewController, APIViewer {
     }
     
     
-    func getArtisan(_ slug: String, region: APIRegion = .us, locale: APILocale = .en_US) {
+    func getArtisan(_ slug: String, region: APIRegion = Current.region, locale: APILocale = Current.locale) {
         d3MC.getArtisan(slug, region: region, locale: locale) { result in
             switch result {
             case .success(let artisan):
@@ -244,7 +244,7 @@ class Diablo3ViewController: UITableViewController, APIViewer {
     }
     
     
-    func getRecipe(_ recipeSlug: String, forArtisan artisanSlug: String, region: APIRegion = .us, locale: APILocale = .en_US) {
+    func getRecipe(_ recipeSlug: String, forArtisan artisanSlug: String, region: APIRegion = Current.region, locale: APILocale = Current.locale) {
         d3MC.getRecipe(recipeSlug, forArtisan: artisanSlug, region: region, locale: locale) { result in
             switch result {
             case .success(let recipe):
@@ -256,7 +256,7 @@ class Diablo3ViewController: UITableViewController, APIViewer {
     }
     
     
-    func getFollower(_ slug: String, region: APIRegion = .us, locale: APILocale = .en_US) {
+    func getFollower(_ slug: String, region: APIRegion = Current.region, locale: APILocale = Current.locale) {
         d3MC.getFollower(slug, region: region, locale: locale) { result in
             switch result {
             case .success(let follower):
@@ -268,7 +268,7 @@ class Diablo3ViewController: UITableViewController, APIViewer {
     }
     
     
-    func getClass(_ slug: String, region: APIRegion = .us, locale: APILocale = .en_US) {
+    func getClass(_ slug: String, region: APIRegion = Current.region, locale: APILocale = Current.locale) {
         d3MC.getClass(slug, region: region, locale: locale) { result in
             switch result {
             case .success(let d3Class):
@@ -280,7 +280,7 @@ class Diablo3ViewController: UITableViewController, APIViewer {
     }
     
     
-    func getSkill(_ skillSlug: String, forClass classSlug: String, region: APIRegion = .us, locale: APILocale = .en_US) {
+    func getSkill(_ skillSlug: String, forClass classSlug: String, region: APIRegion = Current.region, locale: APILocale = Current.locale) {
         d3MC.getSkill(skillSlug, forClass: classSlug, region: region, locale: locale) { result in
             switch result {
             case .success(let skillConfig):
@@ -292,7 +292,7 @@ class Diablo3ViewController: UITableViewController, APIViewer {
     }
     
     
-    func getD3ItemTypes(region: APIRegion = .us, locale: APILocale = .en_US) {
+    func getD3ItemTypes(region: APIRegion = Current.region, locale: APILocale = Current.locale) {
         d3MC.getItemTypes(region: region, locale: locale) { result in
             switch result {
             case .success(let itemTypes):
@@ -304,7 +304,7 @@ class Diablo3ViewController: UITableViewController, APIViewer {
     }
     
     
-    func getD3ItemsByType(_ typeSlug: String, region: APIRegion = .us, locale: APILocale = .en_US) {
+    func getD3ItemsByType(_ typeSlug: String, region: APIRegion = Current.region, locale: APILocale = Current.locale) {
         d3MC.getItemsByType(typeSlug, region: region, locale: locale) { result in
             switch result {
             case .success(let items):
@@ -316,7 +316,7 @@ class Diablo3ViewController: UITableViewController, APIViewer {
     }
     
     
-    func getD3Item(_ slugAndID: String, region: APIRegion = .us, locale: APILocale = .en_US) {
+    func getD3Item(_ slugAndID: String, region: APIRegion = Current.region, locale: APILocale = Current.locale) {
         d3MC.getItem(slugAndID, region: region, locale: locale) { result in
             switch result {
             case .success(let item):
@@ -328,7 +328,7 @@ class Diablo3ViewController: UITableViewController, APIViewer {
     }
     
     
-    func getProfile(battleTag: String, region: APIRegion = .us, locale: APILocale = .en_US) {
+    func getProfile(battleTag: String, region: APIRegion = Current.region, locale: APILocale = Current.locale) {
         d3MC.getProfile(battleTag: battleTag, region: region, locale: locale) { result in
             switch result {
             case .success(let profile):
@@ -340,7 +340,7 @@ class Diablo3ViewController: UITableViewController, APIViewer {
     }
     
     
-    func getHero(_ heroID: Int, for battleTag: String, region: APIRegion = .us, locale: APILocale = .en_US) {
+    func getHero(_ heroID: Int, for battleTag: String, region: APIRegion = Current.region, locale: APILocale = Current.locale) {
         d3MC.getHero(heroID, for: battleTag, region: region, locale: locale) { result in
             switch result {
             case .success(let hero):
@@ -352,7 +352,7 @@ class Diablo3ViewController: UITableViewController, APIViewer {
     }
     
     
-    func getItems(forHero heroID: Int, forBattleTag battleTag: String, region: APIRegion = .us, locale: APILocale = .en_US) {
+    func getItems(forHero heroID: Int, forBattleTag battleTag: String, region: APIRegion = Current.region, locale: APILocale = Current.locale) {
         d3MC.getItems(forHero: heroID, forBattleTag: battleTag, region: region, locale: locale) { result in
             switch result {
             case .success(let equippedItems):
@@ -378,7 +378,7 @@ class Diablo3ViewController: UITableViewController, APIViewer {
     }
     
     
-    func getFollowerItems(forHero heroID: Int, forBattleTag battleTag: String, region: APIRegion = .us, locale: APILocale = .en_US) {
+    func getFollowerItems(forHero heroID: Int, forBattleTag battleTag: String, region: APIRegion = Current.region, locale: APILocale = Current.locale) {
         d3MC.getFollowerItems(forHero: heroID, forBattleTag: battleTag, region: region, locale: locale) { result in
             switch result {
             case .success(let heroFollower):
@@ -508,45 +508,6 @@ class Diablo3ViewController: UITableViewController, APIViewer {
         case .profile:
             break
         }
-            
-        
-//        let viewController = FormViewController()
-//
-//
-//        switch service {
-//        case .seasonIndex:
-//            let serviceCall = d3MC.getSeasons
-//            let region: APIRegion = Current.region
-//            let completion: (Result<D3SeasonIndex>) -> Void = { result in
-//                switch result {
-//                case .success(let seasonIndex):
-//                    Debug.print("Retrieved \(seasonIndex.season.count) Seasons")
-//                case .failure(let error):
-//                    Debug.print(error.message)
-//                }
-//            }
-//
-//            let pattern = WebServicePattern.IndexWithRegion(serviceCall: serviceCall, region: region, completion: completion)
-//            viewController.webServicePattern = pattern
-//        case .season:
-//            let serviceCall = d3MC.getLeaderboards(forSeason:region:completion:)
-//            let seasonID = 1
-//            let region: APIRegion = Current.region
-//            let completion: (Result<D3SeasonLeaderboardIndex>) -> Void = { result in
-//                switch result {
-//                case .success(let seasonLeaderboard):
-//                    Debug.print("Retrieved \(seasonLeaderboard.leaderboard.count) Leaderboards for Season \(seasonID)")
-//                case .failure(let error):
-//                    Debug.print(error.message)
-//                }
-//            }
-//
-//            let pattern = WebServicePattern.ResourceWithIDAndRegion(serviceCall: serviceCall, id: seasonID, region: region, completion: completion)
-//            viewController.webServicePattern = pattern
-//        }
-//
-//
-//        self.navigationController?.pushViewController(viewController, animated: true)
     }
 }
 

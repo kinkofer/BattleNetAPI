@@ -64,9 +64,6 @@
 		59419F972259EEB200492BE7 /* TableSection.swift in Sources */ = {isa = PBXBuildFile; fileRef = 59419F962259EEB200492BE7 /* TableSection.swift */; };
 		59419F99225A56E600492BE7 /* Diablo3ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 59419F98225A56E600492BE7 /* Diablo3ViewController.swift */; };
 		59419F9B225A58DF00492BE7 /* World.swift in Sources */ = {isa = PBXBuildFile; fileRef = 59419F9A225A58DF00492BE7 /* World.swift */; };
-		59419F9D225A7DF700492BE7 /* FormViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 59419F9C225A7DF700492BE7 /* FormViewController.swift */; };
-		59419F9F225ABEC100492BE7 /* SelectionTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 59419F9E225ABEC100492BE7 /* SelectionTableViewController.swift */; };
-		59419FA1225AF22E00492BE7 /* TextInputViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 59419FA0225AF22E00492BE7 /* TextInputViewController.swift */; };
 		5954B1AF2079273000CC36D1 /* Scope.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5954B1AE2079273000CC36D1 /* Scope.swift */; };
 		5954B1B4207A831200CC36D1 /* UIViewController+Alert.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5954B1B3207A831200CC36D1 /* UIViewController+Alert.swift */; };
 		5954B1B6207A882000CC36D1 /* UserToken.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5954B1B5207A882000CC36D1 /* UserToken.swift */; };
@@ -177,9 +174,6 @@
 		59419F962259EEB200492BE7 /* TableSection.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TableSection.swift; sourceTree = "<group>"; };
 		59419F98225A56E600492BE7 /* Diablo3ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Diablo3ViewController.swift; sourceTree = "<group>"; };
 		59419F9A225A58DF00492BE7 /* World.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = World.swift; sourceTree = "<group>"; };
-		59419F9C225A7DF700492BE7 /* FormViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FormViewController.swift; sourceTree = "<group>"; };
-		59419F9E225ABEC100492BE7 /* SelectionTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SelectionTableViewController.swift; sourceTree = "<group>"; };
-		59419FA0225AF22E00492BE7 /* TextInputViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = TextInputViewController.swift; path = ../TextInputViewController.swift; sourceTree = "<group>"; };
 		5954B1AE2079273000CC36D1 /* Scope.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Scope.swift; sourceTree = "<group>"; };
 		5954B1B3207A831200CC36D1 /* UIViewController+Alert.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIViewController+Alert.swift"; sourceTree = "<group>"; };
 		5954B1B5207A882000CC36D1 /* UserToken.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserToken.swift; sourceTree = "<group>"; };
@@ -324,16 +318,6 @@
 			path = Shared;
 			sourceTree = "<group>";
 		};
-		593F231F225F87C100C5F1F5 /* Templates */ = {
-			isa = PBXGroup;
-			children = (
-				59419F9C225A7DF700492BE7 /* FormViewController.swift */,
-				59419F9E225ABEC100492BE7 /* SelectionTableViewController.swift */,
-				59419FA0225AF22E00492BE7 /* TextInputViewController.swift */,
-			);
-			path = Templates;
-			sourceTree = "<group>";
-		};
 		59E42597207871C20046EB84 = {
 			isa = PBXGroup;
 			children = (
@@ -395,7 +379,6 @@
 				59419F98225A56E600492BE7 /* Diablo3ViewController.swift */,
 				593F2319225B8DB500C5F1F5 /* StarCraft2ViewController.swift */,
 				593F231B225B964600C5F1F5 /* WorldOfWarcraftViewController.swift */,
-				593F231F225F87C100C5F1F5 /* Templates */,
 			);
 			path = ViewController;
 			sourceTree = "<group>";
@@ -582,7 +565,6 @@
 				59BD312521A070A400C6102E /* SC2Category.swift in Sources */,
 				593B3475207ACBCA002C8BFB /* WorldOfWarcraftModelController.swift in Sources */,
 				59E425CC207874450046EB84 /* HTTPError.swift in Sources */,
-				59419F9D225A7DF700492BE7 /* FormViewController.swift in Sources */,
 				59E425D4207884DE0046EB84 /* BattleNetAPI.swift in Sources */,
 				593B3477207ACEFD002C8BFB /* AuthenticationManager.swift in Sources */,
 				59A21E0020914093005C7EF6 /* Guild.swift in Sources */,
@@ -606,7 +588,6 @@
 				593A3AEB208073300047B4C0 /* Matches.swift in Sources */,
 				59397CDC207C49070077018E /* StarCraft2ModelController.swift in Sources */,
 				59E425DA2078A3930046EB84 /* AuthenticationModelController.swift in Sources */,
-				59419FA1225AF22E00492BE7 /* TextInputViewController.swift in Sources */,
 				59397CED207D5DDB0077018E /* D3Class.swift in Sources */,
 				59395097208ECE5B00EABFA2 /* WOWRecipe.swift in Sources */,
 				59395099208ECFE000EABFA2 /* Spell.swift in Sources */,
@@ -617,7 +598,6 @@
 				59E425DF2078B0480046EB84 /* Debug.swift in Sources */,
 				5935FBB62094EDE40068AF8A /* Talent.swift in Sources */,
 				593E0D4B2091594D00164F3D /* Perk.swift in Sources */,
-				59419F9F225ABEC100492BE7 /* SelectionTableViewController.swift in Sources */,
 				59255BE4208CF71200CEF71A /* Auction.swift in Sources */,
 				593A3AED208099A80047B4C0 /* D3Season.swift in Sources */,
 				5935FBB820952AB30068AF8A /* Challenge.swift in Sources */,
