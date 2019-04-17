@@ -9,89 +9,78 @@
 import Foundation
 
 
-class SpecializationIndex: Codable {
-    var _links: SelfLink<SpecializationIndex> = SelfLink<SpecializationIndex>()
-    var characterSpecializations: [SpecializationLink] = [SpecializationLink]()
-    var petSpecializations: [SpecializationLink] = [SpecializationLink]()
+class SpecializationIndex: Codable, SelfDecodable {
+    let _links: SelfLink<SpecializationIndex>
+    let characterSpecializations: [KeyLink<Specialization>]
+    let petSpecializations: [KeyLink<Specialization>]
     
-    enum CodingKeys: String, CodingKey {
-        case _links
-        case characterSpecializations = "character_specializations"
-        case petSpecializations = "pet_specializations"
+    static var decoder: JSONDecoder {
+        let decoder = JSONDecoder()
+        decoder.keyDecodingStrategy = .convertFromSnakeCase
+        return decoder
     }
 }
 
 
 
-class SpecializationLink: Codable {
-    var key: Link<Specialization> = Link<Specialization>()
-    var id: Int = 0
-    var name: String? = nil
-}
-
-
-
 // https://us.api.battle.net/data/wow/playable-specialization/65?namespace=static-7.3.5_25875-us
-class Specialization: Codable {
-    var _links: SelfLink<Specialization> = SelfLink<Specialization>()
-    var id: Int = 0
-    var name: String = ""
+class Specialization: Codable, SelfDecodable {
+    let _links: SelfLink<Specialization>
+    let id: Int
+    let name: String
 
-    var playableClass: WOWClassLink = WOWClassLink()
-    var genderDescription: GenderName = GenderName()
-    var role: Role = Role()
-    var pvpTalentTiers: [PvpTalentTier] = [PvpTalentTier]()
-    var talentTiers: [TalentTier] = [TalentTier]()
+    let playableClass: KeyLink<WOWClass>
+    let genderDescription: GenderName
+    let role: Role
+    let pvpTalents: [Talent]
+    let talentTiers: [TalentTier]
     
-    var media: MediaLink = MediaLink()
+    let media: MediaLink
     
-    enum CodingKeys: String, CodingKey {
-        case _links
-        case id
-        case playableClass = "playable_class"
-        case name
-        case genderDescription = "gender_description"
-        case media
-        case role
-        case pvpTalentTiers = "pvp_talent_tiers"
-        case talentTiers = "talent_tiers"
+    static var decoder: JSONDecoder {
+        let decoder = JSONDecoder()
+        decoder.keyDecodingStrategy = .convertFromSnakeCase
+        return decoder
     }
 }
 
 
 
 class Role: Codable {
-    var type: String = ""
-    var name: String = ""
+    let type: String
+    let name: String
 }
 
 
+class TalentTier: Codable {
+    let level: Int
+    let talents: [Talent]
+}
 
-class PvpTalentTier: Codable {
-    var pvpTalents: [Talent] = [Talent]()
+
+class Talent: Codable, SelfDecodable {
+    let talent: KeyLink<WOWClass>
+    let spellTooltip: SpellTooltip
     
-    enum CodingKeys: String, CodingKey {
-        case pvpTalents = "pvp_talents"
+    static var decoder: JSONDecoder {
+        let decoder = JSONDecoder()
+        decoder.keyDecodingStrategy = .convertFromSnakeCase
+        return decoder
     }
 }
 
 
-
-class Talent: Codable {
-    var talent: WOWClassLink = WOWClassLink()
-    var description: String = ""
-    var castTime: CastTime = .instant
-    var cooldown: String? = nil
-    var powerCost: String? = nil
-    var range: Range? = nil
+class SpellTooltip: Codable, SelfDecodable {
+    let description: String
+    let castTime: CastTime
+    let cooldown: String?
+    let powerCost: String?
+    let range: Range?
     
-    enum CodingKeys: String, CodingKey {
-        case talent
-        case description
-        case castTime = "cast_time"
-        case cooldown
-        case powerCost = "power_cost"
-        case range
+    static var decoder: JSONDecoder {
+        let decoder = JSONDecoder()
+        decoder.keyDecodingStrategy = .convertFromSnakeCase
+        return decoder
     }
 }
 
@@ -128,20 +117,11 @@ enum Range: String, Codable {
 
 
 
-class TalentTier: Codable {
-    var level: Int = 0
-    var talents: [Talent] = [Talent]()
-}
-
-
-
-// MARK: - Legacy
-
-class SpecializationLegacy: Codable {
-    var name: String = ""
-    var role: RoleType = .dps
-    var backgroundImage: String = ""
-    var icon: String = ""
-    var description: String = ""
-    var order: Int = 0
+class CharacterSpecialization: Codable {
+    let name: String
+    let role: RoleType
+    let backgroundImage: String
+    let icon: String
+    let description: String
+    let order: Int
 }

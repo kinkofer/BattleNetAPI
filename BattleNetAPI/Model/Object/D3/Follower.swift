@@ -10,29 +10,29 @@ import Foundation
 
 
 class Follower: Codable {
-    var slug: String = ""
-    var name: String = ""
-    var realName: String = ""
-    var portrait: String = ""
+    let slug: String
+    let name: String
+    let realName: String
+    let portrait: String
     
-    var skills: [D3Skill] = [D3Skill]()
+    let skills: [D3Skill]
 }
 
 
 
 class FollowerHero: Codable {
-    var slug: String = ""
-    var level = 0
+    let slug: String
+    let level: Int
     
-    var items: EquippedItems = EquippedItems()
-    var stats: FollowerStats = FollowerStats()
-    var skills: [D3Skill] = [D3Skill]()
+    let items: EquippedItems
+    let stats: FollowerStats
+    let skills: [D3Skill]
 }
 
 
 
 class FollowerStats: Codable {
-    var goldFind: Float = 0.0
-    var magicFind: Float = 0.0
-    var experienceBonus: Float = 0.0
+    let goldFind: Double
+    let magicFind: Double
+    let experienceBonus: Double
 }

@@ -10,20 +10,20 @@ import Foundation
 
 
 class MediaLink: Codable {
-    var key: Link<Media> = Link<Media>()
-    var id: Int = 0
+    let key: Link<Media>
+    let id: Int
 }
 
 
 
 class Media: Codable {
-    var _links: SelfLink<Media> = SelfLink<Media>()
-    var assets: [MediaAsset] = [MediaAsset]()
+    let _links: SelfLink<Media>
+    let assets: [MediaAsset]
 }
 
 
 
 class MediaAsset: Codable {
-    var key: String = ""
-    var value: String = ""
+    let key: String
+    let value: String
 }

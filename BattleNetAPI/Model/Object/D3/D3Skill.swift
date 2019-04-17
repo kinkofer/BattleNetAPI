@@ -10,42 +10,42 @@ import Foundation
 
 
 class D3Skill: Codable {
-    var slug: String = ""
-    var name: String = ""
-    var icon: String = ""
-    var level: Int = 0
+    let slug: String
+    let name: String
+    let icon: String
+    let level: Int
     
-    var tooltipUrl: String = ""
-    var description: String = ""
-    var descriptionHtml: String = ""
+    let tooltipUrl: String
+    let description: String
+    let descriptionHtml: String
 }
 
 
 class D3SkillCategory: Codable {
-    var slug: String = ""
-    var name: String = ""
+    let slug: String
+    let name: String
 }
 
 
 class D3SkillSet: Codable {
-    var active: [D3Skill] = [D3Skill]()
-    var passive: [D3Skill] = [D3Skill]()
+    let active: [D3Skill]
+    let passive: [D3Skill]
 }
 
 
 class D3SkillConfiguration: Codable {
-    var skill: D3Skill = D3Skill()
-    var runes: [Rune]? = nil
-    var rune: Rune? = nil
+    let skill: D3Skill
+    let runes: [Rune]?
+    let rune: Rune?
 }
 
 
 class Rune: Codable {
-    var slug = ""
-    var name = ""
-    var type = ""
-    var level = 0
+    let slug: String
+    let name: String
+    let type: String
+    let level: Int
     
-    var description = ""
-    var descriptionHtml = ""
+    let description: String
+    let descriptionHtml: String
 }

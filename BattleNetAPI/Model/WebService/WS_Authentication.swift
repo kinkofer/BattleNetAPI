@@ -15,7 +15,7 @@ class WS_Authentication: WebService {
     
     
     func getBaseURL(region: APIRegion, apiType: APIType?) -> String {
-        return region.authorizeURI
+        return region.oauthURI
     }
     
     
@@ -28,25 +28,40 @@ class WS_Authentication: WebService {
      - parameter completion: Returns a Result with the Data if `success` or an HTTPError if `failure`
      - note: This access token will not return specific user information. If that is needed, you must receive a user access token through OAuth
      */
-    func getClientAccessToken(region: APIRegion, clientID: String, clientSecret: String, completion: @escaping (_ result: Result<Data>) -> Void) {
-        // TODO: validate clientID and clientSecret
+    func getClientAccessToken(region: APIRegion, clientID: String, clientSecret: String, completion: @escaping (_ result: Result<Data, HTTPError>) -> Void) {
+        // Validate clientID and clientSecret
+        guard !clientID.isEmpty,
+            !clientSecret.isEmpty else {
+                completion(.failure(HTTPError(type: .invalidRequest)))
+                return
+        }
         
-        let urlStr = String(format: "\(region.tokenURI)?grant_type=client_credentials&client_id=%@&client_secret=%@", clientID, clientSecret)
-        self.callWebService(urlStr: urlStr, method: .get, apiType: nil) { result in
-            // extract and save clientAccessToken to Network for future calls
+        // Set encryptedCredentials for Basic Authorization
+        let credentials = String(format: "%@:%@", clientID, clientSecret)
+        network.encryptedCredentials = credentials.data(using: .utf8)?.base64EncodedString()
+        
+        let urlStr = region.tokenURI
+        
+        guard let body = "grant_type=client_credentials".data(using: .utf8) else {
+            completion(.failure(HTTPError(type: .unexpectedBody)))
+            return
+        }
+        
+        self.callWebService(urlStr: urlStr, method: .post, apiType: nil, body: body, headers: [.contentType([.form])]) { result in
             switch result {
             case .success(let data):
+                // Extract and save clientAccessToken to Network for future calls
                 do {
                     if let json = try JSONSerialization.jsonObject(with: data, options: []) as? [AnyHashable: Any] {
                         Network.shared.clientAccessToken = json["access_token"] as? String
                         completion(result)
                     }
                     else {
-                        completion(Result(value: nil, error: HTTPError(type: .unexpectedResponse)))
+                        completion(.failure(HTTPError(type: .unexpectedResponse)))
                     }
                 }
                 catch {
-                    completion(Result(value: nil, error: HTTPError(type: .jsonParsingError)))
+                    completion(.failure(HTTPError(type: .jsonParsingError)))
                 }
             case .failure(_):
                 completion(result)
@@ -65,10 +80,21 @@ class WS_Authentication: WebService {
      - parameter redirectURL: The url provided to the OAuth
      - parameter completion: Returns a Result with the Data if `success` or an HTTPError if `failure`
     */
-    func getUserAccessToken(region: APIRegion, clientID: String, clientSecret: String, code: String, redirectURL: String, completion: @escaping (_ result: Result<Data>) -> Void) {
+    func getUserAccessToken(region: APIRegion, clientID: String, clientSecret: String, code: String, redirectURL: String, completion: @escaping (_ result: Result<Data, HTTPError>) -> Void) {
+        // Validate clientID and clientSecret
+        guard !clientID.isEmpty,
+            !clientSecret.isEmpty else {
+                completion(.failure(HTTPError(type: .invalidRequest)))
+                return
+        }
+        
+        // Set encryptedCredentials for Basic Authorization
+        let credentials = String(format: "%@:%@", clientID, clientSecret)
+        network.encryptedCredentials = credentials.data(using: .utf8)?.base64EncodedString()
+        
         let urlStr = region.tokenURI
         
-        let parameters = String(format: "grant_type=authorization_code&client_id=%@&client_secret=%@&code=%@&redirect_uri=%@", clientID, clientSecret, code, redirectURL)
+        let parameters = String(format: "grant_type=authorization_code&code=%@&redirect_uri=%@", code, redirectURL)
         let body = parameters.data(using: .utf8)
         
         self.callWebService(urlStr: urlStr, method: .post, apiType: nil, body: body, headers: [.contentType([.form])]) { result in
@@ -81,11 +107,11 @@ class WS_Authentication: WebService {
                         completion(result)
                     }
                     else {
-                        completion(Result(value: nil, error: HTTPError(type: .unexpectedResponse)))
+                        completion(.failure(HTTPError(type: .unexpectedResponse)))
                     }
                 }
                 catch {
-                    completion(Result(value: nil, error: HTTPError(type: .jsonParsingError)))
+                    completion(.failure(HTTPError(type: .jsonParsingError)))
                 }
             case .failure(_):
                 completion(result)
@@ -101,13 +127,17 @@ class WS_Authentication: WebService {
      - parameter region: What region the request is being made
      - parameter completion: Returns a Result with the Data if `success` or an HTTPError if `failure`
      */
-    func validateClientAccessToken(_ token: String, region: APIRegion, completion: @escaping (_ result: Result<Data>) -> Void) {
-        let urlStr = String(format: "\(region.checkTokenURI)?token=%@", token)
+    func validateClientAccessToken(_ token: String, region: APIRegion, completion: @escaping (_ result: Result<Data, HTTPError>) -> Void) {
+        guard !token.isEmpty else {
+            completion(.failure(HTTPError(type: .unexpectedBody)))
+            return
+        }
+        
+        let urlStr = "\(region.oauthURI)/check_token?token=\(token)"
+        
         self.callWebService(urlStr: urlStr, method: .post, apiType: nil) { result in
             // extract and save clientAccessToken to Network for future calls
-            if case Result.success(_) = result {
-                Network.shared.clientAccessToken = token
-            }
+            Network.shared.clientAccessToken = result.isSuccess ? token : nil
             
             completion(result)
         }
@@ -121,7 +151,7 @@ class WS_Authentication: WebService {
      - parameter region: What region the request is being made
      - parameter completion: Returns a Result with the Data if `success` or an HTTPError if `failure`
      */
-    func validateUserAccessToken(_ token: String, region: APIRegion, completion: @escaping (_ result: Result<Data>) -> Void) {
+    func validateUserAccessToken(_ token: String, region: APIRegion, completion: @escaping (_ result: Result<Data, HTTPError>) -> Void) {
         let urlStr = String(format: "\(region.checkTokenURI)?token=%@", token)
         self.callWebService(urlStr: urlStr, method: .post, apiType: nil) { result in
             // extract and save clientAccessToken to Network for future calls
@@ -150,7 +180,8 @@ class WS_Authentication: WebService {
         let state = "BattleNetAPI\(Int(Date().timeIntervalSince1970))"
         UserDefaults.standard.set(state, forKey: "state")
         
-        let urlStr = String(format: "\(region.authorizeURI)?client_id=%@&scope=%@&state=%@&redirect_uri=%@&response_type=code", clientID, scope.scopeValue, state, redirectURL)
+        let baseURL = getBaseURL(region: region, apiType: nil) + "/authorize"
+        let urlStr = String(format: "\(baseURL)?client_id=%@&scope=%@&state=%@&redirect_uri=%@&response_type=code", clientID, scope.scopeValue, state, redirectURL)
         
         if let encodedURLStr = urlStr.addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed) {
             return encodedURLStr
@@ -158,15 +189,5 @@ class WS_Authentication: WebService {
         else {
             return urlStr
         }
-    }
-}
-
-
-
-class WS_AuthenticationLegacy {
-    private let network = Network.shared
-    
-    func setApikeyLegacy(_ clientID: String) {
-        network.apikey = clientID
     }
 }

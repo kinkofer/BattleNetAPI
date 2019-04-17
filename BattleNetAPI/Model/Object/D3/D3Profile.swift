@@ -10,38 +10,38 @@ import Foundation
 
 
 class D3Profile: Codable {
-    var battleTag = ""
+    let battleTag: String
     
-    var paragonLevel = 0
-    var paragonLevelHardcore = 0
-    var paragonLevelSeason = 0
-    var paragonLevelSeasonHardcore = 0
+    let paragonLevel: Int
+    let paragonLevelHardcore: Int
+    let paragonLevelSeason: Int
+    let paragonLevelSeasonHardcore: Int
     
-    var guildName = ""
+    let guildName: String
     
-    var heroes = [Hero]()
-    var lastHeroPlayed = 0
-    var lastUpdated: Double = 0
-    var highestHardcoreLevel = 0
+    let heroes: [Hero]
+    let lastHeroPlayed: Int
+    let lastUpdated: Double
+    let highestHardcoreLevel: Int
     
-    var kills = Kills()
+    let kills: Kills
     
-    var timePlayed = TimePlayed()
-    var progression = D3ProgressionCompletion()
+    let timePlayed: TimePlayed
+    let progression: D3ProgressionCompletion
     
-    var seasonalProfiles = [String: D3Season]()
+    let seasonalProfiles: [String: D3Season]
     
-    var blacksmith = ArtisanLevel()
-    var jeweler = ArtisanLevel()
-    var mystic = ArtisanLevel()
+    let blacksmith: ArtisanLevel
+    let jeweler: ArtisanLevel
+    let mystic: ArtisanLevel
     
-    var blacksmithSeason = ArtisanLevel()
-    var jewelerSeason = ArtisanLevel()
-    var mysticSeason = ArtisanLevel()
+    let blacksmithSeason: ArtisanLevel
+    let jewelerSeason: ArtisanLevel
+    let mysticSeason: ArtisanLevel
     
-    var blacksmithHardcore = ArtisanLevel()
-    var jewelerHardcore = ArtisanLevel()
-    var mysticHardcore = ArtisanLevel()
+    let blacksmithHardcore: ArtisanLevel
+    let jewelerHardcore: ArtisanLevel
+    let mysticHardcore: ArtisanLevel
 }
 
 
@@ -50,21 +50,21 @@ class D3Profile: Codable {
 
 
 class Kills: Codable {
-    var elites: Int? = 0
-    var monsters: Int? = 0
-    var hardcoreMonsters: Int? = 0
+    let elites: Int?
+    let monsters: Int?
+    let hardcoreMonsters: Int?
 }
 
 
 
 class TimePlayed: Codable {
-    var demonHunter = 0.0
-    var barbarian = 0.0
-    var witchDoctor = 0.0
-    var necromancer = 0.0
-    var wizard = 0.0
-    var monk = 0.0
-    var crusader = 0.0
+    let demonHunter: Double
+    let barbarian: Double
+    let witchDoctor: Double
+    let necromancer: Double
+    let wizard: Double
+    let monk: Double
+    let crusader: Double
     
     enum CodingKeys: String, CodingKey {
         case demonHunter = "demon-hunter"
@@ -80,16 +80,16 @@ class TimePlayed: Codable {
 
 
 class D3ProgressionCompletion: Codable {
-    var act1 = false
-    var act2 = false
-    var act3 = false
-    var act4 = false
-    var act5 = false
+    let act1: Bool
+    let act2: Bool
+    let act3: Bool
+    let act4: Bool
+    let act5: Bool
 }
 
 
 
 class ArtisanLevel: Codable {
-    var slug = ""
-    var level = 0
+    let slug: String
+    let level: Int
 }

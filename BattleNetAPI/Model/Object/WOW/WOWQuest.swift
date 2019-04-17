@@ -10,10 +10,10 @@ import Foundation
 
 
 class WOWQuest: Codable {
-    var id: Int = 0
-    var title: String = ""
-    var reqLevel: Int = 0
-    var suggestedPartyMembers: Int = 0
-    var category: String = ""
-    var level: Int = 0
+    let id: Int
+    let title: String
+    let reqLevel: Int
+    let suggestedPartyMembers: Int
+    let category: String
+    let level: Int
 }

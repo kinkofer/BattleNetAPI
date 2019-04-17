@@ -1,5 +1,5 @@
 //
-//  WS_StarCraft2.swift
+//  WS_StarCraft2_Community.swift
 //  BattleNetAPI
 //
 //  Created by Christopher Jennewein on 4/9/18.
@@ -14,42 +14,12 @@ class WS_StarCraft2: WebService {
         var url = "\(region.apiURI)"
         
         if let apiType = apiType {
-            url += "/\(apiType.rawValue)"
-        }
-        
-        url += "/sc2"
-        
-        return url
-    }
-    
-    
-    
-    // MARK: - Profile API
-    
-    /**
-     This provides data about the current logged in OAuth user's Sc2 profile.
-     
-     - parameter region: What region the request is being made
-     - parameter completion: Returns a Result with the Data if `success` or an HTTPError if `failure`
-     */
-    func getCharacters(region: APIRegion, completion: @escaping (_ result: Result<Data>) -> Void) {
-        let urlStr = getBaseURL(region: region, apiType: nil) + "/profile/user"
-        self.callWebService(urlStr: urlStr, method: .get, apiType: .profile) { result in
-            completion(result)
-        }
-    }
-}
-
-
-
-class WS_StarCraft2Legacy: WebServiceLegacy {
-    func getBaseURLLegacy(region: APIRegion, apiType: APIType? = nil) -> String {
-        var url = "\(region.apiURI)"
-        
-        url += "/sc2"
-        
-        if let apiType = apiType {
-            url += "/\(apiType.rawValue)"
+            switch apiType {
+            case .gameData:
+                url += "/data/sc2"
+            case .community, .profile:
+                url += "/sc2"
+            }
         }
         
         return url
@@ -57,126 +27,175 @@ class WS_StarCraft2Legacy: WebServiceLegacy {
     
     
     
-    // MARK: - Profile API
+    // MARK: - Game Data APIs
+    
+    func getLeagueData(seasonID: Int, queue: LeagueQueue, team: LeagueTeam, league: LeagueType, region: APIRegion, locale: APILocale, completion: @escaping (_ result: Result<Data, HTTPError>) -> Void) {
+        let apiType: APIType = .gameData
+        let urlStr = getBaseURL(region: region, apiType: apiType) + "/league/\(seasonID)/\(queue.id)/\(team.id)/\(league.id)?locale=\(locale.rawValue)"
+        
+        self.callWebService(urlStr: urlStr, method: .get, apiType: apiType) { result in
+            completion(result)
+        }
+    }
+    
+    
+    
+    // MARK: - Community APIs
+    
+    // MARK: Profile API
     
     /**
-     This provides data about an individual SC2 profile.
+     Returns all static SC2 profile data (achievements, categories, criteria, and rewards).
+     
+     - parameter sc2Region: The region for the profile (1=US, 2=EU, 3=KO and TW, 5=CN)
+     - parameter region: What region the request is being made
+     - parameter locale: What locale to use in the response
+     - parameter completion: Returns a Result with the Data if `success` or an HTTPError if `failure`
+     */
+    func getProfileData(sc2Region: APIRegion, region: APIRegion, locale: APILocale, completion: @escaping (_ result: Result<Data, HTTPError>) -> Void) {
+        let apiType: APIType = .community
+        let urlStr = getBaseURL(region: region, apiType: apiType) + "/static/profile/\(sc2Region.id)"
+        
+        self.callWebService(urlStr: urlStr, method: .get, apiType: apiType) { result in
+            completion(result)
+        }
+    }
+    
+    
+    /**
+     Returns metadata for an individual's profile.
+     
+     - parameter id: The ID of the profile to retrieve
+     - parameter sc2Region: The region for the profile
+     - parameter realmID: The realm of the profile (1 or 2)
+     - parameter region: What region the request is being made
+     - parameter locale: What locale to use in the response
+     - parameter completion: Returns a Result with the Data if `success` or an HTTPError if `failure`
+     */
+    func getProfileMetadata(id: Int, sc2Region: APIRegion, realmID: Int, region: APIRegion, locale: APILocale, completion: @escaping (_ result: Result<Data, HTTPError>) -> Void) {
+        let apiType: APIType = .community
+        let urlStr = getBaseURL(region: region, apiType: apiType) + "/metadata/profile/\(sc2Region.id)/\(realmID)/\(id)"
+        
+        self.callWebService(urlStr: urlStr, method: .get, apiType: apiType) { result in
+            completion(result)
+        }
+    }
+    
+    
+    /**
+     Returns data about an individual SC2 profile.
      
      - parameter id: The ID of the profile to retrieve.
-     - parameter name: The name of the profile to retrieve.
+     - parameter sc2Region: The region of the profile to retrieve.
+     - parameter realmID: The realm of the profile (1 or 2).
+     - parameter region: What region the request is being made
+     - parameter locale: What locale to use in the response
+     - parameter completion: Returns a Result with the Data if `success` or an HTTPError if `failure`
+     */
+    func getProfile(id: Int, sc2Region: APIRegion, realmID: Int, region: APIRegion, locale: APILocale, completion: @escaping (_ result: Result<Data, HTTPError>) -> Void) {
+        let apiType: APIType = .community
+        let urlStr = getBaseURL(region: region, apiType: apiType) + "/profile/\(sc2Region.id)/\(realmID)/\(id)"
+        
+        self.callWebService(urlStr: urlStr, method: .get, apiType: apiType) { result in
+            completion(result)
+        }
+    }
+    
+    
+    /**
+     Returns a ladder summary for an individual SC2 profile.
+     
+     - parameter id: The ID of the profile to retrieve.
+     - parameter sc2Region: The region of the profile to retrieve.
+     - parameter realmID: The realm of the profile (1 or 2).
+     - parameter region: What region the request is being made
+     - parameter locale: What locale to use in the response
+     - parameter completion: Returns a Result with the Data if `success` or an HTTPError if `failure`
+     */
+    func getLadderSummary(profileID: Int, sc2Region: APIRegion, realmID: Int, region: APIRegion, locale: APILocale, completion: @escaping (_ result: Result<Data, HTTPError>) -> Void) {
+        let apiType: APIType = .community
+        let urlStr = getBaseURL(region: region, apiType: apiType) + "/profile/\(sc2Region.id)/\(realmID)/\(profileID)/ladder/summary"
+        
+        self.callWebService(urlStr: urlStr, method: .get, apiType: apiType) { result in
+            completion(result)
+        }
+    }
+    
+    
+    /**
+     Returns data about an individual profile's ladder.
+     
+     - parameter id: The ID of the ladder for which to retrieve data.
+     - parameter profileID: The ID of the profile to retrieve.
+     - parameter sc2Region: The region of the profile to retrieve.
+     - parameter realmID: The realm of the profile (1 or 2).
+     - parameter region: What region the request is being made
+     - parameter locale: What locale to use in the response
+     - parameter completion: Returns a Result with the Data if `success` or an HTTPError if `failure`
+     */
+    func getLadder(id: Int, profileID: Int, sc2Region: APIRegion, realmID: Int, region: APIRegion, locale: APILocale, completion: @escaping (_ result: Result<Data, HTTPError>) -> Void) {
+        let apiType: APIType = .community
+        let urlStr = getBaseURL(region: region, apiType: apiType) + "/profile/\(sc2Region.id)/\(realmID)/\(profileID)/ladder/\(id)"
+        
+        self.callWebService(urlStr: urlStr, method: .get, apiType: apiType) { result in
+            completion(result)
+        }
+    }
+    
+    
+    // MARK: Ladder API
+    
+    /**
+     Returns ladder data for the current season's grandmaster leaderboard.
+     
      - parameter sc2Region: The region of the profile to retrieve.
      - parameter region: What region the request is being made
      - parameter locale: What locale to use in the response
      - parameter completion: Returns a Result with the Data if `success` or an HTTPError if `failure`
      */
-    func getProfile(id: Int, name: String, sc2Region: Int, region: APIRegion, locale: APILocale, completion: @escaping (_ result: Result<Data>) -> Void) {
-        let apiType: APIType = .profile
-        var urlStr = getBaseURLLegacy(region: region, apiType: apiType) + "/\(id)/\(sc2Region)/\(name)/"
-        urlStr = appendSharedURLParametersLegacy(to: urlStr, locale: locale)
+    func getGrandmasterLeaderboard(sc2Region: APIRegion, region: APIRegion, locale: APILocale, completion: @escaping (_ result: Result<Data, HTTPError>) -> Void) {
+        let apiType: APIType = .community
+        let urlStr = getBaseURL(region: region, apiType: apiType) + "/ladder/grandmaster/\(sc2Region.id)"
         
-        self.callWebServiceLegacy(urlStr: urlStr, method: .get) { result in
+        self.callWebService(urlStr: urlStr, method: .get, apiType: apiType) { result in
             completion(result)
         }
     }
     
     
     /**
-     This provides data about an individual SC2 profile's ladders.
+     Returns data about the current season.
      
-     - parameter id: The ID of the profile to retrieve.
-     - parameter name: The name of the profile to retrieve.
      - parameter sc2Region: The region of the profile to retrieve.
      - parameter region: What region the request is being made
      - parameter locale: What locale to use in the response
      - parameter completion: Returns a Result with the Data if `success` or an HTTPError if `failure`
      */
-    func getLadders(id: Int, name: String, sc2Region: Int, region: APIRegion, locale: APILocale, completion: @escaping (_ result: Result<Data>) -> Void) {
-        let apiType: APIType = .profile
-        var urlStr = getBaseURLLegacy(region: region, apiType: apiType) + "/\(id)/\(sc2Region)/\(name)/ladders"
-        urlStr = appendSharedURLParametersLegacy(to: urlStr, locale: locale)
+    func getLadderSeason(sc2Region: APIRegion, region: APIRegion, locale: APILocale, completion: @escaping (_ result: Result<Data, HTTPError>) -> Void) {
+        let apiType: APIType = .community
+        let urlStr = getBaseURL(region: region, apiType: apiType) + "/ladder/season/\(sc2Region.id)"
         
-        self.callWebServiceLegacy(urlStr: urlStr, method: .get) { result in
-            completion(result)
-        }
-    }
-    
-    
-    /**
-     This provides data about an individual SC2 profile's match history.
-     
-     - parameter id: The ID of the profile to retrieve.
-     - parameter name: The name of the profile to retrieve.
-     - parameter sc2Region: The region of the profile to retrieve.
-     - parameter region: What region the request is being made
-     - parameter locale: What locale to use in the response
-     - parameter completion: Returns a Result with the Data if `success` or an HTTPError if `failure`
-     */
-    func getMatches(id: Int, name: String, sc2Region: Int, region: APIRegion, locale: APILocale, completion: @escaping (_ result: Result<Data>) -> Void) {
-        let apiType: APIType = .profile
-        var urlStr = getBaseURLLegacy(region: region, apiType: apiType) + "/\(id)/\(sc2Region)/\(name)/matches"
-        urlStr = appendSharedURLParametersLegacy(to: urlStr, locale: locale)
-        
-        self.callWebServiceLegacy(urlStr: urlStr, method: .get) { result in
+        self.callWebService(urlStr: urlStr, method: .get, apiType: apiType) { result in
             completion(result)
         }
     }
     
     
     
-    // MARK: - Ladder API
+    // MARK: Account API
     
     /**
-     This provides data about an SC2 ladder.
+     Returns metadata for an individual's account.
      
-     - parameter id: The ID of the ladder to retrieve.
+     - parameter userID: The userID retrieved from the getUserInfo service
      - parameter region: What region the request is being made
-     - parameter locale: What locale to use in the response
      - parameter completion: Returns a Result with the Data if `success` or an HTTPError if `failure`
      */
-    func getLadder(id: Int, region: APIRegion, locale: APILocale, completion: @escaping (_ result: Result<Data>) -> Void) {
-        var urlStr = getBaseURLLegacy(region: region, apiType: nil) + "/ladder/\(id)"
-        urlStr = appendSharedURLParametersLegacy(to: urlStr, locale: locale)
+    func getPlayers(userID id: Int, region: APIRegion, completion: @escaping (_ result: Result<Data, HTTPError>) -> Void) {
+        let apiType: APIType = .community
+        let urlStr = getBaseURL(region: region, apiType: apiType) + "/player/\(id)"
         
-        self.callWebServiceLegacy(urlStr: urlStr, method: .get) { result in
-            completion(result)
-        }
-    }
-    
-    
-    
-    // MARK: - Data Resources
-    
-    /**
-     This provides data about the achievements available in SC2.
-     
-     - parameter region: What region the request is being made
-     - parameter locale: What locale to use in the response
-     - parameter completion: Returns a Result with the Data if `success` or an HTTPError if `failure`
-     */
-    func getAchievements(region: APIRegion, locale: APILocale, completion: @escaping (_ result: Result<Data>) -> Void) {
-        let apiType: APIType = .data
-        var urlStr = getBaseURLLegacy(region: region, apiType: apiType) + "/achievements"
-        urlStr = appendSharedURLParametersLegacy(to: urlStr, locale: locale)
-        
-        self.callWebServiceLegacy(urlStr: urlStr, method: .get) { result in
-            completion(result)
-        }
-    }
-    
-    
-    /**
-     This provides data about the rewards available in SC2.
-     
-     - parameter region: What region the request is being made
-     - parameter locale: What locale to use in the response
-     - parameter completion: Returns a Result with the Data if `success` or an HTTPError if `failure`
-     */
-    func getRewards(region: APIRegion, locale: APILocale, completion: @escaping (_ result: Result<Data>) -> Void) {
-        let apiType: APIType = .data
-        var urlStr = getBaseURLLegacy(region: region, apiType: apiType) + "/rewards"
-        urlStr = appendSharedURLParametersLegacy(to: urlStr, locale: locale)
-        
-        self.callWebServiceLegacy(urlStr: urlStr, method: .get) { result in
+        self.callWebService(urlStr: urlStr, method: .get, apiType: apiType) { result in
             completion(result)
         }
     }

@@ -10,31 +10,36 @@ import Foundation
 
 
 class ZoneIndex: Codable {
-    var zones: [Zone] = [Zone]()
+    let zones: [Zone]
 }
 
 
+class ZoneInfo: Codable {
+    let key: Link<ZoneInfo>
+    let name: String
+}
+
 
 class Zone: Codable {
-    var id: Int = 0
-    var name: String = ""
-    var urlSlug: String = ""
-    var description: String = ""
-    var location: Location = Location()
-    var expansionID: Int = 0
-    var patch: String? = nil
-    var numPlayers: NumPlayers = .five
-    var isDungeon: Bool = false
-    var isRaid: Bool = false
-    var advisedMinLevel: Int = 0
-    var advisedMaxLevel: Int = 0
-    var advisedHeroicMinLevel: Int = 0
-    var advisedHeroicMaxLevel: Int = 0
-    var availableModes: [ZoneMode] = [ZoneMode]()
-    var lfgNormalMinGearLevel: Int = 0
-    var lfgHeroicMinGearLevel: Int = 0
-    var floors: Int = 0
-    var bosses: [Boss] = [Boss]()
+    let id: Int
+    let name: String
+    let urlSlug: String
+    let description: String
+    let location: Location
+    let expansionID: Int
+    let patch: String?
+    let numPlayers: NumPlayers = .five
+    let isDungeon: Bool
+    let isRaid: Bool
+    let advisedMinLevel: Int
+    let advisedMaxLevel: Int
+    let advisedHeroicMinLevel: Int
+    let advisedHeroicMaxLevel: Int
+    let availableModes: [ZoneMode]
+    let lfgNormalMinGearLevel: Int
+    let lfgHeroicMinGearLevel: Int
+    let floors: Int
+    let bosses: [Boss]
     
     enum CodingKeys: String, CodingKey {
         case id
@@ -77,10 +82,14 @@ enum ZoneMode: String, Codable {
 }
 
 
+class ZoneSlug: Codable {
+    let slug: String
+}
+
 
 class Location: Codable {
-    var id: Int = 0
-    var name: String = ""
+    let id: Int
+    let name: String
 }
 
 

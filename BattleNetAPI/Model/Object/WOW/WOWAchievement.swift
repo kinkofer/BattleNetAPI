@@ -10,31 +10,31 @@ import Foundation
 
 
 class WOWAchievementIndex: Codable {
-    var achievements: [WOWAchievementCategory] = [WOWAchievementCategory]()
+    let achievements: [WOWAchievementCategory]
 }
 
 
 
 class WOWAchievementCategory: Codable {
-    var id: Int = 0
-    var achievements: [WOWAchievement] = [WOWAchievement]()
-    var name: String = ""
-    var categories: [WOWAchievementCategory]? = nil
+    let id: Int
+    let name: String
+    let achievements: [WOWAchievement]?
+    let categories: [WOWAchievementCategory]?
 }
 
 
 
 class WOWAchievement: Codable {
-    var id: Int = 0
-    var title: String = ""
-    var points: Int = 0
-    var description: String = ""
-    var reward: String? = nil
-    var rewardItems: [WOWItemSummary] = [WOWItemSummary]()
-    var icon: String = ""
-    var criteria: [WOWAchievementCriterion] = [WOWAchievementCriterion]()
-    var accountWide: Bool = false
-    var factionID: Int = 0
+    let id: Int
+    let title: String
+    let points: Int
+    let description: String
+    let reward: String?
+    let rewardItems: [WOWItemSummary]
+    let icon: String
+    let criteria: [WOWAchievementCriterion]
+    let accountWide: Bool
+    let factionID: Int
     
     enum CodingKeys: String, CodingKey {
         case id
@@ -53,20 +53,20 @@ class WOWAchievement: Codable {
 
 
 class WOWAchievementCriterion: Codable {
-    var id: Int = 0
-    var description: String = ""
-    var orderIndex: Int = 0
-    var max: Int = 0
+    let id: Int
+    let description: String
+    let orderIndex: Int
+    let max: Int
 }
 
 
 
 class WOWAchievementStatus: Codable {
-    var achievementsCompleted: [Int] = [Int]()
-    var achievementsCompletedTimestamp: [Int] = [Int]()
-    var criteria: [Int] = [Int]()
-    var criteriaQuantity: [Int] = [Int]()
-    var criteriaTimestamp: [Int] = [Int]()
-    var criteriaCreated: [Int] = [Int]()
+    let achievementsCompleted: [Int]
+    let achievementsCompletedTimestamp: [Int]
+    let criteria: [Int]
+    let criteriaQuantity: [Int]
+    let criteriaTimestamp: [Int]
+    let criteriaCreated: [Int]
 }
 

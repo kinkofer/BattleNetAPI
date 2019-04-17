@@ -10,28 +10,13 @@ import Foundation
 
 
 class RegionIndexResult: Codable {
-    var regions = [RegionIndex]()
-}
-
-
-
-class RegionIndex: Codable {
-    var href = ""
-    
+    let regions: [Link<Region>]
 }
 
 
 // https://us.api.battle.net/data/wow/region/1
 class Region: Codable {
-    var id: Int = 0
-    var name: String = ""
-    var tag: String = ""
-}
-
-
-
-class RegionLink: Codable {
-    var key: Link<Region> = Link<Region>()
-    var id: Int = 0
-    var name: String = ""
+    let id: Int
+    let name: String
+    let tag: String
 }

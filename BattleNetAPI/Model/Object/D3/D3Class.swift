@@ -10,12 +10,12 @@ import Foundation
 
 
 class D3Class: Codable {
-    var slug = ""
-    var name = ""
-    var maleName = ""
-    var femaleName = ""
-    var icon = ""
+    let slug: String
+    let name: String
+    let maleName: String
+    let femaleName: String
+    let icon: String
     
-    var skillCategories = [D3SkillCategory]()
-    var skills = D3SkillSet()
+    let skillCategories: [D3SkillCategory]
+    let skills: D3SkillSet
 }

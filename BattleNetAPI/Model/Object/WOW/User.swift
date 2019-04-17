@@ -10,6 +10,7 @@ import Foundation
 
 
 class User: Codable {
-    var id = 0
-    var battletag = ""
+    let id: Int
+    let battletag: String
+    let sub: String
 }

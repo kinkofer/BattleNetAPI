@@ -10,11 +10,11 @@ import Foundation
 
 
 class BattlegroupIndex: Codable {
-    var battlegroups: [Battlegroup] = [Battlegroup]()
+    let battlegroups: [Battlegroup]
 }
 
 
 class Battlegroup: Codable {
-    var name: String = ""
-    var slug: String = ""
+    let name: String
+    let slug: String
 }

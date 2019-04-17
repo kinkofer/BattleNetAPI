@@ -17,6 +17,8 @@
 		59255BE6208D097800CEF71A /* Boss.swift in Sources */ = {isa = PBXBuildFile; fileRef = 59255BE5208D097800CEF71A /* Boss.swift */; };
 		5935FBB62094EDE40068AF8A /* Talent.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5935FBB52094EDE40068AF8A /* Talent.swift */; };
 		5935FBB820952AB30068AF8A /* Challenge.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5935FBB720952AB30068AF8A /* Challenge.swift */; };
+		5938675321FE830D0090DB98 /* LeagueEnums.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5938675221FE830D0090DB98 /* LeagueEnums.swift */; };
+		5938675521FE94C90090DB98 /* League.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5938675421FE94C90090DB98 /* League.swift */; };
 		59395095208EB32D00EABFA2 /* WOWQuest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 59395094208EB32D00EABFA2 /* WOWQuest.swift */; };
 		59395097208ECE5B00EABFA2 /* WOWRecipe.swift in Sources */ = {isa = PBXBuildFile; fileRef = 59395096208ECE5B00EABFA2 /* WOWRecipe.swift */; };
 		59395099208ECFE000EABFA2 /* Spell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 59395098208ECFE000EABFA2 /* Spell.swift */; };
@@ -30,7 +32,6 @@
 		59397CD8207B53800077018E /* User.swift in Sources */ = {isa = PBXBuildFile; fileRef = 59397CD7207B53800077018E /* User.swift */; };
 		59397CDA207C47EB0077018E /* WS_StarCraft2.swift in Sources */ = {isa = PBXBuildFile; fileRef = 59397CD9207C47EB0077018E /* WS_StarCraft2.swift */; };
 		59397CDC207C49070077018E /* StarCraft2ModelController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 59397CDB207C49070077018E /* StarCraft2ModelController.swift */; };
-		59397CDE207C4DC60077018E /* SC2Character.swift in Sources */ = {isa = PBXBuildFile; fileRef = 59397CDD207C4DC60077018E /* SC2Character.swift */; };
 		59397CE0207C5FE20077018E /* WS_Diablo3.swift in Sources */ = {isa = PBXBuildFile; fileRef = 59397CDF207C5FE20077018E /* WS_Diablo3.swift */; };
 		59397CE5207C63E70077018E /* Diablo3ModelController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 59397CE4207C63E70077018E /* Diablo3ModelController.swift */; };
 		59397CE7207C65EC0077018E /* Act.swift in Sources */ = {isa = PBXBuildFile; fileRef = 59397CE6207C65EC0077018E /* Act.swift */; };
@@ -41,9 +42,7 @@
 		59397CF1207D899D0077018E /* D3Item.swift in Sources */ = {isa = PBXBuildFile; fileRef = 59397CF0207D899D0077018E /* D3Item.swift */; };
 		59397CF3207DE0FE0077018E /* D3Profile.swift in Sources */ = {isa = PBXBuildFile; fileRef = 59397CF2207DE0FE0077018E /* D3Profile.swift */; };
 		59397CF5207ECA450077018E /* Hero.swift in Sources */ = {isa = PBXBuildFile; fileRef = 59397CF4207ECA450077018E /* Hero.swift */; };
-		593A3AE0208002350047B4C0 /* SC2Achievement.swift in Sources */ = {isa = PBXBuildFile; fileRef = 593A3ADF208002350047B4C0 /* SC2Achievement.swift */; };
 		593A3AE32080044F0047B4C0 /* Image.swift in Sources */ = {isa = PBXBuildFile; fileRef = 593A3AE22080044F0047B4C0 /* Image.swift */; };
-		593A3AE52080282F0047B4C0 /* SC2Reward.swift in Sources */ = {isa = PBXBuildFile; fileRef = 593A3AE42080282F0047B4C0 /* SC2Reward.swift */; };
 		593A3AE920806A3C0047B4C0 /* Ladder.swift in Sources */ = {isa = PBXBuildFile; fileRef = 593A3AE820806A3C0047B4C0 /* Ladder.swift */; };
 		593A3AEB208073300047B4C0 /* Matches.swift in Sources */ = {isa = PBXBuildFile; fileRef = 593A3AEA208073300047B4C0 /* Matches.swift */; };
 		593A3AED208099A80047B4C0 /* D3Season.swift in Sources */ = {isa = PBXBuildFile; fileRef = 593A3AEC208099A80047B4C0 /* D3Season.swift */; };
@@ -54,6 +53,17 @@
 		593B3479207AF548002C8BFB /* Realm.swift in Sources */ = {isa = PBXBuildFile; fileRef = 593B3478207AF548002C8BFB /* Realm.swift */; };
 		593B347B207B31DF002C8BFB /* Region.swift in Sources */ = {isa = PBXBuildFile; fileRef = 593B347A207B31DF002C8BFB /* Region.swift */; };
 		593E0D4B2091594D00164F3D /* Perk.swift in Sources */ = {isa = PBXBuildFile; fileRef = 593E0D4A2091594D00164F3D /* Perk.swift */; };
+		593F231A225B8DB500C5F1F5 /* StarCraft2ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 593F2319225B8DB500C5F1F5 /* StarCraft2ViewController.swift */; };
+		593F231C225B964600C5F1F5 /* WorldOfWarcraftViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 593F231B225B964600C5F1F5 /* WorldOfWarcraftViewController.swift */; };
+		593F231E225B9C7E00C5F1F5 /* Array+Subscript.swift in Sources */ = {isa = PBXBuildFile; fileRef = 593F231D225B9C7E00C5F1F5 /* Array+Subscript.swift */; };
+		593F232122605F0E00C5F1F5 /* SC2Season.swift in Sources */ = {isa = PBXBuildFile; fileRef = 593F232022605F0E00C5F1F5 /* SC2Season.swift */; };
+		593F232322618AB700C5F1F5 /* MythicKeystoneAffix.swift in Sources */ = {isa = PBXBuildFile; fileRef = 593F232222618AB700C5F1F5 /* MythicKeystoneAffix.swift */; };
+		593F23252262515A00C5F1F5 /* MythicKeystoneDungeon.swift in Sources */ = {isa = PBXBuildFile; fileRef = 593F23242262515A00C5F1F5 /* MythicKeystoneDungeon.swift */; };
+		593F23272263236600C5F1F5 /* PowerType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 593F23262263236600C5F1F5 /* PowerType.swift */; };
+		593F23292265329F00C5F1F5 /* Result.swift in Sources */ = {isa = PBXBuildFile; fileRef = 593F23282265329F00C5F1F5 /* Result.swift */; };
+		59419F972259EEB200492BE7 /* TableSection.swift in Sources */ = {isa = PBXBuildFile; fileRef = 59419F962259EEB200492BE7 /* TableSection.swift */; };
+		59419F99225A56E600492BE7 /* Diablo3ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 59419F98225A56E600492BE7 /* Diablo3ViewController.swift */; };
+		59419F9B225A58DF00492BE7 /* World.swift in Sources */ = {isa = PBXBuildFile; fileRef = 59419F9A225A58DF00492BE7 /* World.swift */; };
 		5954B1AF2079273000CC36D1 /* Scope.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5954B1AE2079273000CC36D1 /* Scope.swift */; };
 		5954B1B4207A831200CC36D1 /* UIViewController+Alert.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5954B1B3207A831200CC36D1 /* UIViewController+Alert.swift */; };
 		5954B1B6207A882000CC36D1 /* UserToken.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5954B1B5207A882000CC36D1 /* UserToken.swift */; };
@@ -66,8 +76,14 @@
 		5967ACC32088DC85009BFBAF /* URL+Query.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5967ACC22088DC85009BFBAF /* URL+Query.swift */; };
 		5967ACC720893371009BFBAF /* Specialization.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5967ACC620893371009BFBAF /* Specialization.swift */; };
 		5967ACC9208975CE009BFBAF /* Media.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5967ACC8208975CE009BFBAF /* Media.swift */; };
+		599A5AC62266F2F7005D189E /* MythicKeystoneProfile.swift in Sources */ = {isa = PBXBuildFile; fileRef = 599A5AC52266F2F7005D189E /* MythicKeystoneProfile.swift */; };
 		59A21DFA208EF5D4005C7EF6 /* Battlegroups.swift in Sources */ = {isa = PBXBuildFile; fileRef = 59A21DF9208EF5D4005C7EF6 /* Battlegroups.swift */; };
 		59A21E0020914093005C7EF6 /* Guild.swift in Sources */ = {isa = PBXBuildFile; fileRef = 59A21DFF20914093005C7EF6 /* Guild.swift */; };
+		59BD311D21A061B600C6102E /* SC2Profile.swift in Sources */ = {isa = PBXBuildFile; fileRef = 59BD311C21A061B600C6102E /* SC2Profile.swift */; };
+		59BD311F21A0702B00C6102E /* SC2Reward.swift in Sources */ = {isa = PBXBuildFile; fileRef = 59BD311E21A0702B00C6102E /* SC2Reward.swift */; };
+		59BD312121A0704600C6102E /* SC2Achievement.swift in Sources */ = {isa = PBXBuildFile; fileRef = 59BD312021A0704600C6102E /* SC2Achievement.swift */; };
+		59BD312321A0707B00C6102E /* SC2Criteria.swift in Sources */ = {isa = PBXBuildFile; fileRef = 59BD312221A0707B00C6102E /* SC2Criteria.swift */; };
+		59BD312521A070A400C6102E /* SC2Category.swift in Sources */ = {isa = PBXBuildFile; fileRef = 59BD312421A070A400C6102E /* SC2Category.swift */; };
 		59D09C48208D624A006BB4B7 /* Mount.swift in Sources */ = {isa = PBXBuildFile; fileRef = 59D09C47208D624A006BB4B7 /* Mount.swift */; };
 		59D09C4A208D75E4006BB4B7 /* Pet.swift in Sources */ = {isa = PBXBuildFile; fileRef = 59D09C49208D75E4006BB4B7 /* Pet.swift */; };
 		59D09C4C208DA486006BB4B7 /* WOWLeaderboard.swift in Sources */ = {isa = PBXBuildFile; fileRef = 59D09C4B208DA486006BB4B7 /* WOWLeaderboard.swift */; };
@@ -112,6 +128,8 @@
 		59255BE5208D097800CEF71A /* Boss.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Boss.swift; sourceTree = "<group>"; };
 		5935FBB52094EDE40068AF8A /* Talent.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Talent.swift; sourceTree = "<group>"; };
 		5935FBB720952AB30068AF8A /* Challenge.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Challenge.swift; sourceTree = "<group>"; };
+		5938675221FE830D0090DB98 /* LeagueEnums.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LeagueEnums.swift; sourceTree = "<group>"; };
+		5938675421FE94C90090DB98 /* League.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = League.swift; sourceTree = "<group>"; };
 		59395094208EB32D00EABFA2 /* WOWQuest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WOWQuest.swift; sourceTree = "<group>"; };
 		59395096208ECE5B00EABFA2 /* WOWRecipe.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WOWRecipe.swift; sourceTree = "<group>"; };
 		59395098208ECFE000EABFA2 /* Spell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Spell.swift; sourceTree = "<group>"; };
@@ -125,7 +143,6 @@
 		59397CD7207B53800077018E /* User.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = User.swift; sourceTree = "<group>"; };
 		59397CD9207C47EB0077018E /* WS_StarCraft2.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WS_StarCraft2.swift; sourceTree = "<group>"; };
 		59397CDB207C49070077018E /* StarCraft2ModelController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StarCraft2ModelController.swift; sourceTree = "<group>"; };
-		59397CDD207C4DC60077018E /* SC2Character.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SC2Character.swift; sourceTree = "<group>"; };
 		59397CDF207C5FE20077018E /* WS_Diablo3.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WS_Diablo3.swift; sourceTree = "<group>"; };
 		59397CE4207C63E70077018E /* Diablo3ModelController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Diablo3ModelController.swift; sourceTree = "<group>"; };
 		59397CE6207C65EC0077018E /* Act.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Act.swift; sourceTree = "<group>"; };
@@ -136,9 +153,7 @@
 		59397CF0207D899D0077018E /* D3Item.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = D3Item.swift; sourceTree = "<group>"; };
 		59397CF2207DE0FE0077018E /* D3Profile.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = D3Profile.swift; sourceTree = "<group>"; };
 		59397CF4207ECA450077018E /* Hero.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Hero.swift; sourceTree = "<group>"; };
-		593A3ADF208002350047B4C0 /* SC2Achievement.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SC2Achievement.swift; sourceTree = "<group>"; };
 		593A3AE22080044F0047B4C0 /* Image.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Image.swift; sourceTree = "<group>"; };
-		593A3AE42080282F0047B4C0 /* SC2Reward.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SC2Reward.swift; sourceTree = "<group>"; };
 		593A3AE820806A3C0047B4C0 /* Ladder.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Ladder.swift; sourceTree = "<group>"; };
 		593A3AEA208073300047B4C0 /* Matches.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Matches.swift; sourceTree = "<group>"; };
 		593A3AEC208099A80047B4C0 /* D3Season.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = D3Season.swift; sourceTree = "<group>"; };
@@ -149,6 +164,17 @@
 		593B3478207AF548002C8BFB /* Realm.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Realm.swift; sourceTree = "<group>"; };
 		593B347A207B31DF002C8BFB /* Region.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Region.swift; sourceTree = "<group>"; };
 		593E0D4A2091594D00164F3D /* Perk.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Perk.swift; sourceTree = "<group>"; };
+		593F2319225B8DB500C5F1F5 /* StarCraft2ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StarCraft2ViewController.swift; sourceTree = "<group>"; };
+		593F231B225B964600C5F1F5 /* WorldOfWarcraftViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WorldOfWarcraftViewController.swift; sourceTree = "<group>"; };
+		593F231D225B9C7E00C5F1F5 /* Array+Subscript.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Array+Subscript.swift"; sourceTree = "<group>"; };
+		593F232022605F0E00C5F1F5 /* SC2Season.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SC2Season.swift; sourceTree = "<group>"; };
+		593F232222618AB700C5F1F5 /* MythicKeystoneAffix.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MythicKeystoneAffix.swift; sourceTree = "<group>"; };
+		593F23242262515A00C5F1F5 /* MythicKeystoneDungeon.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MythicKeystoneDungeon.swift; sourceTree = "<group>"; };
+		593F23262263236600C5F1F5 /* PowerType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PowerType.swift; sourceTree = "<group>"; };
+		593F23282265329F00C5F1F5 /* Result.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Result.swift; sourceTree = "<group>"; };
+		59419F962259EEB200492BE7 /* TableSection.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TableSection.swift; sourceTree = "<group>"; };
+		59419F98225A56E600492BE7 /* Diablo3ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Diablo3ViewController.swift; sourceTree = "<group>"; };
+		59419F9A225A58DF00492BE7 /* World.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = World.swift; sourceTree = "<group>"; };
 		5954B1AE2079273000CC36D1 /* Scope.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Scope.swift; sourceTree = "<group>"; };
 		5954B1B3207A831200CC36D1 /* UIViewController+Alert.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIViewController+Alert.swift"; sourceTree = "<group>"; };
 		5954B1B5207A882000CC36D1 /* UserToken.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserToken.swift; sourceTree = "<group>"; };
@@ -161,8 +187,14 @@
 		5967ACC22088DC85009BFBAF /* URL+Query.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "URL+Query.swift"; sourceTree = "<group>"; };
 		5967ACC620893371009BFBAF /* Specialization.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Specialization.swift; sourceTree = "<group>"; };
 		5967ACC8208975CE009BFBAF /* Media.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Media.swift; sourceTree = "<group>"; };
+		599A5AC52266F2F7005D189E /* MythicKeystoneProfile.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MythicKeystoneProfile.swift; sourceTree = "<group>"; };
 		59A21DF9208EF5D4005C7EF6 /* Battlegroups.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Battlegroups.swift; sourceTree = "<group>"; };
 		59A21DFF20914093005C7EF6 /* Guild.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Guild.swift; sourceTree = "<group>"; };
+		59BD311C21A061B600C6102E /* SC2Profile.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SC2Profile.swift; sourceTree = "<group>"; };
+		59BD311E21A0702B00C6102E /* SC2Reward.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SC2Reward.swift; sourceTree = "<group>"; };
+		59BD312021A0704600C6102E /* SC2Achievement.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SC2Achievement.swift; sourceTree = "<group>"; };
+		59BD312221A0707B00C6102E /* SC2Criteria.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SC2Criteria.swift; sourceTree = "<group>"; };
+		59BD312421A070A400C6102E /* SC2Category.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SC2Category.swift; sourceTree = "<group>"; };
 		59D09C47208D624A006BB4B7 /* Mount.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Mount.swift; sourceTree = "<group>"; };
 		59D09C49208D75E4006BB4B7 /* Pet.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Pet.swift; sourceTree = "<group>"; };
 		59D09C4B208DA486006BB4B7 /* WOWLeaderboard.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WOWLeaderboard.swift; sourceTree = "<group>"; };
@@ -218,9 +250,13 @@
 				59A21DFF20914093005C7EF6 /* Guild.swift */,
 				59D09C47208D624A006BB4B7 /* Mount.swift */,
 				5967ACBB208871AF009BFBAF /* MythicChallengeMode.swift */,
+				593F232222618AB700C5F1F5 /* MythicKeystoneAffix.swift */,
+				593F23242262515A00C5F1F5 /* MythicKeystoneDungeon.swift */,
+				599A5AC52266F2F7005D189E /* MythicKeystoneProfile.swift */,
 				59397CCF207B49F60077018E /* MythicLeaderboard.swift */,
 				59D09C49208D75E4006BB4B7 /* Pet.swift */,
 				593E0D4A2091594D00164F3D /* Perk.swift */,
+				593F23262263236600C5F1F5 /* PowerType.swift */,
 				593B3478207AF548002C8BFB /* Realm.swift */,
 				593B347A207B31DF002C8BFB /* Region.swift */,
 				5967ACC620893371009BFBAF /* Specialization.swift */,
@@ -243,10 +279,15 @@
 			isa = PBXGroup;
 			children = (
 				593A3AE820806A3C0047B4C0 /* Ladder.swift */,
+				5938675421FE94C90090DB98 /* League.swift */,
+				5938675221FE830D0090DB98 /* LeagueEnums.swift */,
 				593A3AEA208073300047B4C0 /* Matches.swift */,
-				593A3ADF208002350047B4C0 /* SC2Achievement.swift */,
-				59397CDD207C4DC60077018E /* SC2Character.swift */,
-				593A3AE42080282F0047B4C0 /* SC2Reward.swift */,
+				59BD312021A0704600C6102E /* SC2Achievement.swift */,
+				59BD312421A070A400C6102E /* SC2Category.swift */,
+				59BD312221A0707B00C6102E /* SC2Criteria.swift */,
+				59BD311C21A061B600C6102E /* SC2Profile.swift */,
+				593F232022605F0E00C5F1F5 /* SC2Season.swift */,
+				59BD311E21A0702B00C6102E /* SC2Reward.swift */,
 			);
 			path = SC2;
 			sourceTree = "<group>";
@@ -338,6 +379,9 @@
 			isa = PBXGroup;
 			children = (
 				59E425A5207871C20046EB84 /* ViewController.swift */,
+				59419F98225A56E600492BE7 /* Diablo3ViewController.swift */,
+				593F2319225B8DB500C5F1F5 /* StarCraft2ViewController.swift */,
+				593F231B225B964600C5F1F5 /* WorldOfWarcraftViewController.swift */,
 			);
 			path = ViewController;
 			sourceTree = "<group>";
@@ -402,10 +446,14 @@
 		59E425E02078B0560046EB84 /* Utilities */ = {
 			isa = PBXGroup;
 			children = (
+				593F231D225B9C7E00C5F1F5 /* Array+Subscript.swift */,
 				59E425DE2078B0480046EB84 /* Debug.swift */,
 				5954B1B7207A8B7900CC36D1 /* JSONHelper.swift */,
+				593F23282265329F00C5F1F5 /* Result.swift */,
+				59419F962259EEB200492BE7 /* TableSection.swift */,
 				5954B1B3207A831200CC36D1 /* UIViewController+Alert.swift */,
 				5967ACC22088DC85009BFBAF /* URL+Query.swift */,
+				59419F9A225A58DF00492BE7 /* World.swift */,
 			);
 			path = Utilities;
 			sourceTree = "<group>";
@@ -460,11 +508,11 @@
 				TargetAttributes = {
 					59E4259F207871C20046EB84 = {
 						CreatedOnToolsVersion = 9.3;
-						LastSwiftMigration = 1000;
+						LastSwiftMigration = 1020;
 					};
 					59E425B3207871C50046EB84 = {
 						CreatedOnToolsVersion = 9.3;
-						LastSwiftMigration = 1000;
+						LastSwiftMigration = 1020;
 						TestTargetID = 59E4259F207871C20046EB84;
 					};
 				};
@@ -513,27 +561,32 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				59419F99225A56E600492BE7 /* Diablo3ViewController.swift in Sources */,
+				593F231E225B9C7E00C5F1F5 /* Array+Subscript.swift in Sources */,
+				59BD311F21A0702B00C6102E /* SC2Reward.swift in Sources */,
 				59E425D020787F990046EB84 /* WebService.swift in Sources */,
+				59BD312521A070A400C6102E /* SC2Category.swift in Sources */,
 				593B3475207ACBCA002C8BFB /* WorldOfWarcraftModelController.swift in Sources */,
 				59E425CC207874450046EB84 /* HTTPError.swift in Sources */,
 				59E425D4207884DE0046EB84 /* BattleNetAPI.swift in Sources */,
 				593B3477207ACEFD002C8BFB /* AuthenticationManager.swift in Sources */,
 				59A21E0020914093005C7EF6 /* Guild.swift in Sources */,
 				59397CD0207B49F60077018E /* MythicLeaderboard.swift in Sources */,
-				59397CDE207C4DC60077018E /* SC2Character.swift in Sources */,
+				593F231A225B8DB500C5F1F5 /* StarCraft2ViewController.swift in Sources */,
 				59255BE0208CE65F00CEF71A /* WOWAchievement.swift in Sources */,
 				59255BE6208D097800CEF71A /* Boss.swift in Sources */,
 				59397CE9207D11B30077018E /* Artisan.swift in Sources */,
 				59397CEF207D5F890077018E /* D3Skill.swift in Sources */,
+				59419F972259EEB200492BE7 /* TableSection.swift in Sources */,
 				5954B1AF2079273000CC36D1 /* Scope.swift in Sources */,
 				59D09C48208D624A006BB4B7 /* Mount.swift in Sources */,
 				59397CE7207C65EC0077018E /* Act.swift in Sources */,
-				593A3AE52080282F0047B4C0 /* SC2Reward.swift in Sources */,
+				59BD311D21A061B600C6102E /* SC2Profile.swift in Sources */,
 				59E425A6207871C20046EB84 /* ViewController.swift in Sources */,
 				5954B1B8207A8B7900CC36D1 /* JSONHelper.swift in Sources */,
 				59E425A4207871C20046EB84 /* AppDelegate.swift in Sources */,
+				5938675521FE94C90090DB98 /* League.swift in Sources */,
 				593A3AF12081A34C0047B4C0 /* Locale.swift in Sources */,
-				593A3AE0208002350047B4C0 /* SC2Achievement.swift in Sources */,
 				59397CCE207B488D0077018E /* ConnectedRealm.swift in Sources */,
 				593A3AEB208073300047B4C0 /* Matches.swift in Sources */,
 				59397CDC207C49070077018E /* StarCraft2ModelController.swift in Sources */,
@@ -560,29 +613,40 @@
 				59397CEB207D5CB50077018E /* Follower.swift in Sources */,
 				593A3AE920806A3C0047B4C0 /* Ladder.swift in Sources */,
 				5967ACC720893371009BFBAF /* Specialization.swift in Sources */,
+				599A5AC62266F2F7005D189E /* MythicKeystoneProfile.swift in Sources */,
 				5967ACB820878E0F009BFBAF /* Era.swift in Sources */,
 				5939509B208ED0C600EABFA2 /* Zone.swift in Sources */,
 				59E425CE20787F640046EB84 /* WS_Authentication.swift in Sources */,
 				59397CE0207C5FE20077018E /* WS_Diablo3.swift in Sources */,
 				59E425DD2078AA4B0046EB84 /* ClientToken.swift in Sources */,
+				59BD312121A0704600C6102E /* SC2Achievement.swift in Sources */,
+				593F23252262515A00C5F1F5 /* MythicKeystoneDungeon.swift in Sources */,
 				59E425D220787FEF0046EB84 /* HTTPHeader.swift in Sources */,
+				5938675321FE830D0090DB98 /* LeagueEnums.swift in Sources */,
 				59397CF5207ECA450077018E /* Hero.swift in Sources */,
 				593B3479207AF548002C8BFB /* Realm.swift in Sources */,
 				593A3AEF20809A750047B4C0 /* ResourceLink.swift in Sources */,
 				59255BE2208CE75C00CEF71A /* WOWItem.swift in Sources */,
+				59419F9B225A58DF00492BE7 /* World.swift in Sources */,
 				59397CCC207B464A0077018E /* TokenIndex.swift in Sources */,
+				593F23272263236600C5F1F5 /* PowerType.swift in Sources */,
 				59397CDA207C47EB0077018E /* WS_StarCraft2.swift in Sources */,
 				59397CD8207B53800077018E /* User.swift in Sources */,
+				593F231C225B964600C5F1F5 /* WorldOfWarcraftViewController.swift in Sources */,
 				59D09C4A208D75E4006BB4B7 /* Pet.swift in Sources */,
+				59BD312321A0707B00C6102E /* SC2Criteria.swift in Sources */,
 				59397CE5207C63E70077018E /* Diablo3ModelController.swift in Sources */,
+				593F23292265329F00C5F1F5 /* Result.swift in Sources */,
 				59E425D720789AC40046EB84 /* Access.swift in Sources */,
 				5967ACC32088DC85009BFBAF /* URL+Query.swift in Sources */,
+				593F232122605F0E00C5F1F5 /* SC2Season.swift in Sources */,
 				59D09C4C208DA486006BB4B7 /* WOWLeaderboard.swift in Sources */,
 				59395095208EB32D00EABFA2 /* WOWQuest.swift in Sources */,
 				59E425CA207872EC0046EB84 /* Network.swift in Sources */,
 				59397CF3207DE0FE0077018E /* D3Profile.swift in Sources */,
 				59397CD2207B50520077018E /* WS_User.swift in Sources */,
 				593B347B207B31DF002C8BFB /* Region.swift in Sources */,
+				593F232322618AB700C5F1F5 /* MythicKeystoneAffix.swift in Sources */,
 				5954B1B4207A831200CC36D1 /* UIViewController+Alert.swift in Sources */,
 				5954B1BA207A9D2900CC36D1 /* WS_WorldOfWarcraft.swift in Sources */,
 				59397CD6207B534F0077018E /* UserModelController.swift in Sources */,
@@ -683,7 +747,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 11.3;
+				IPHONEOS_DEPLOYMENT_TARGET = 12.0;
 				MTL_ENABLE_DEBUG_INFO = YES;
 				ONLY_ACTIVE_ARCH = YES;
 				SDKROOT = iphoneos;
@@ -737,7 +801,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 11.3;
+				IPHONEOS_DEPLOYMENT_TARGET = 12.0;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				SDKROOT = iphoneos;
 				SWIFT_COMPILATION_MODE = wholemodule;
@@ -753,13 +817,14 @@
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = W5SXX2FNDK;
 				INFOPLIST_FILE = BattleNetAPI/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 12.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = "com.Prismatic-Games.BattleNetAPI";
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				SWIFT_VERSION = 4.2;
+				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
 			name = Debug;
@@ -771,13 +836,14 @@
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = W5SXX2FNDK;
 				INFOPLIST_FILE = BattleNetAPI/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 12.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = "com.Prismatic-Games.BattleNetAPI";
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				SWIFT_VERSION = 4.2;
+				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
 			name = Release;
@@ -797,7 +863,7 @@
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = "com.Prismatic-Games.BattleNetAPITests";
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				SWIFT_VERSION = 4.2;
+				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
 				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/BattleNetAPI.app/BattleNetAPI";
 			};
@@ -818,7 +884,7 @@
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = "com.Prismatic-Games.BattleNetAPITests";
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				SWIFT_VERSION = 4.2;
+				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
 				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/BattleNetAPI.app/BattleNetAPI";
 			};

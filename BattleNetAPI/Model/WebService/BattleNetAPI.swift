@@ -9,8 +9,26 @@
 import Foundation
 
 
+/// The type of data being retrieved from the web services. Raw data used in web service urls, and used to determine if client or user authorization is required.
+enum APIType: String {
+    case gameData = "data"
+    case profile
+    case community
+    
+    
+    var displayName: String {
+        switch self {
+        case .gameData: return "Game Data APIs"
+        case .profile: return "Profile APIs"
+        case .community: return "Community APIs"
+        }
+    }
+}
+
+
+
 /// The supported regions for the API services
-enum APIRegion: String {
+enum APIRegion: String, CaseIterable, Codable {
     /// China
     case cn
     /// Europe
@@ -26,16 +44,16 @@ enum APIRegion: String {
     case us
     
     /// The base url of the authorization service
-    var authorizeURI: String {
+    var oauthURI: String {
         switch self {
         case .us, .eu:
-            return "https://\(self.rawValue).battle.net/oauth/authorize"
+            return "https://\(self.rawValue).battle.net/oauth"
         case .kr, .tw:
-            return "https://apac.battle.net/oauth/authorize"
+            return "https://apac.battle.net/oauth"
         case .sea:
-            return "https://us.battle.net/oauth/authorize"
+            return "https://us.battle.net/oauth"
         case .cn:
-            return "https://www.battlenet.com.cn/oauth/authorize"
+            return "https://www.battlenet.com.cn/oauth"
         }
     }
     
@@ -71,9 +89,9 @@ enum APIRegion: String {
     var apiURI: String {
         switch self {
         case .cn:
-            return "https://www.battlenet.com.cn"
+            return "https://gateway.battlenet.com.cn"
         default:
-            return "https://\(self.rawValue).api.battle.net"
+            return "https://\(self.rawValue).api.blizzard.com"
         }
     }
     
@@ -86,15 +104,33 @@ enum APIRegion: String {
             return ""
         }
     }
+    
+    
+    /// The id associated with the region
+    /// - note: South East Asia (.sea) has been grouped with Korea (kr) and Taiwan (tw)
+    var id: Int {
+        switch self {
+        case .us: return 1
+        case .eu: return 2
+        case .kr, .tw, .sea: return 3
+        case .cn: return 5
+        }
+    }
+    
+    
+    /// The display name of the region
+    var displayName: String {
+        switch self {
+        case .us: return "United States"
+        case .eu: return "Europe"
+        case .kr: return "Korea"
+        case .tw: return "Taiwan"
+        case .sea: return "South East Asia"
+        case .cn: return "China"
+        }
+    }
 }
 
-
-
-/// The type of data being retrieved from the web services. Used to determine if client or user authorization is required.
-enum APIType: String {
-    case data
-    case profile
-}
 
 
 /// The locale is used to retrieve values in the specified language
@@ -115,25 +151,17 @@ enum APILocale: String {
 }
 
 
-/// This class is an interface to all the web services, with separate properties for accessing authentication, user, and specific game web services. It further makes a distinction between legacy services that only require an app key, and are expected to be deprecated in the near future.
+/// This class is an interface to all the web services, with separate properties for accessing authentication, user, and specific game web services.
 class BattleNetAPI {
     /// Authenication web services
     public static let authentication = WS_Authentication()
-    /// Legacy authenication web services
-    public static let authenticationLegacy = WS_AuthenticationLegacy()
     /// User web services
     public static let user = WS_User()
     
     /// World of Warcraft web services
     public static let wow = WS_WorldOfWarcraft()
-    /// Legacy World of Warcraft web services
-    public static let wowLegacy = WS_WorldOfWarcraftLegacy()
     /// StarCraft 2 web services
     public static let sc2 = WS_StarCraft2()
-    /// Legacy StarCraft 2 web services
-    public static let sc2Legacy = WS_StarCraft2Legacy()
     /// Diablo 3 web services
     public static let d3 = WS_Diablo3()
-    /// Legacy Diablo 3 web services
-    public static let d3Legacy = WS_Diablo3Legacy()
 }

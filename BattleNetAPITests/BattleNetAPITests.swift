@@ -13,8 +13,8 @@ import XCTest
 let clientID = AuthToken.clientID
 let clientSecret = AuthToken.clientSecret
 
-let clientAccessToken: String = AuthToken.clientAccessToken
-let userAccessToken: String = AuthToken.userAccessToken
+let clientAccessToken: String = AuthToken.clientAccessToken!
+let userAccessToken: String = AuthToken.userAccessToken!
 
 
 class BattleNetAPITests: XCTestCase {
@@ -35,7 +35,7 @@ class BattleNetAPITests: XCTestCase {
     
     // MARK: -
     
-    static func webServiceClosureTest<T: Decodable>(result: Result<Data>, decodable: T.Type, expectation: XCTestExpectation) {
+    static func webServiceClosureTest<T: Decodable>(result: Result<Data, HTTPError>, decodable: T.Type, expectation: XCTestExpectation) {
         switch result {
         case .success(let data):
             do {

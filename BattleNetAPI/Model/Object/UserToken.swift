@@ -11,11 +11,11 @@ import Foundation
 
 
 class UserToken: Codable {
-    var clientID: String = ""
-    var expiresIn: Int = 0
-    var authorities = [String]()
-    var scope = [String]()
-    var userName = ""
+    let clientID: String
+    let expiresIn: Int
+    let authorities: [String]
+    let scope: [String]
+    let userName: String
     
     enum CodingKeys: String, CodingKey {
         case clientID = "client_id"

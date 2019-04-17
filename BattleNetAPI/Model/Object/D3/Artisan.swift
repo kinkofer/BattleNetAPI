@@ -10,37 +10,37 @@ import Foundation
 
 
 class Artisan: Codable {
-    var slug = ""
-    var name = ""
-    var portrait = ""
+    let slug: String
+    let name: String
+    let portrait: String
     
-    var training = Training()
+    let training: Training
 }
 
 
 class Training: Codable {
-    var tiers = [Tier]()
+    let tiers: [Tier]
 }
 
 
 class Tier: Codable {
-    var tier = 0
-    var trainedRecipes = [D3Recipe]()
+    let tier: Int
+    let trainedRecipes: [D3Recipe]
 }
 
 
 class D3Recipe: Codable {
-    var id = ""
-    var slug = ""
-    var name = ""
+    let id: String
+    let slug: String
+    let name: String
     
-    var cost = 0
-    var reagents = [Reagent]()
-    var itemProduced = D3Item()
+    let cost: Int
+    let reagents: [Reagent]
+    let itemProduced: D3Item
 }
 
 
 class Reagent: Codable {
-    var quantity = 0
-    var item = D3Item()
+    let quantity: Int
+    let item: D3Item
 }

@@ -10,26 +10,26 @@ import Foundation
 
 
 class BossIndex: Codable {
-    var bosses: [Boss] = [Boss]()
+    let bosses: [Boss]
 }
 
 
 
 class Boss: Codable {
-    var id: Int = 0
-    var name: String = ""
-    var urlSlug: String = ""
-    var description: String? = nil
-    var zoneID: Int = 0
-    var availableInNormalMode: Bool = false
-    var availableInHeroicMode: Bool = false
-    var health: Int = 0
-    var heroicHealth: Int = 0
-    var level: Int = 0
-    var heroicLevel: Int = 0
-    var journalID: Int? = nil
-    var npcs: [NPC] = [NPC]()
-    var location: Location? = nil
+    let id: Int
+    let name: String
+    let urlSlug: String
+    let description: String?
+    let zoneID: Int
+    let availableInNormalMode: Bool
+    let availableInHeroicMode: Bool
+    let health: Int
+    let heroicHealth: Int
+    let level: Int
+    let heroicLevel: Int
+    let journalID: Int?
+    let npcs: [NPC]
+    let location: Location?
     
     enum CodingKeys: String, CodingKey {
         case id
@@ -52,10 +52,10 @@ class Boss: Codable {
 
 
 class NPC: Codable {
-    var id: Int = 0
-    var name: String = ""
-    var urlSlug: String = ""
-    var creatureDisplayID: Int = 0
+    let id: Int
+    let name: String
+    let urlSlug: String
+    let creatureDisplayID: Int
     
     enum CodingKeys: String, CodingKey {
         case id
@@ -68,14 +68,14 @@ class NPC: Codable {
 
 
 class RaidBoss: Codable {
-    var id: Int = 0
-    var name: String = ""
-    var normalTimestamp: Int? = nil
-    var normalKills: Int? = nil
-    var heroicTimestamp: Int? = nil
-    var heroicKills: Int? = nil
-    var lfrKills: Int? = nil
-    var lfrTimestamp: Int? = nil
-    var mythicTimestamp: Int? = nil
-    var mythicKills: Int? = nil
+    let id: Int
+    let name: String
+    let normalTimestamp: Int?
+    let normalKills: Int?
+    let heroicTimestamp: Int?
+    let heroicKills: Int?
+    let lfrKills: Int?
+    let lfrTimestamp: Int?
+    let mythicTimestamp: Int?
+    let mythicKills: Int?
 }

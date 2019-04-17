@@ -11,7 +11,7 @@ import Foundation
 
 
 class WOWCharacterResult: Codable {
-    var characters: [WOWCharacter] = [WOWCharacter]()
+    let characters: [WOWCharacter]
 }
 
 
@@ -68,84 +68,84 @@ struct WOWCharacterField: OptionSet {
 
 
 class WOWCharacter: Codable {
-    var name: String = ""
-    var level: Int = 0
-    var `class`: Int = 0
-    var race: Int = 0
-    var gender: Int = 0
+    let name: String
+    let level: Int
+    let `class`: Int
+    let race: Int
+    let gender: Int
     
-    var realm: String = ""
-    var battlegroup: String = ""
-    var achievementPoints: Int = 0
-    var thumbnail: String = ""
-    var lastModified: Int = 0
+    let realm: String
+    let battlegroup: String
+    let achievementPoints: Int
+    let thumbnail: String
+    let lastModified: Int
     
-    var guild: String? = nil
-    var guildRealm: String? = nil
+    let guild: String?
+    let guildRealm: String?
     
-    var spec: SpecializationLegacy? = nil
+    let spec: CharacterSpecialization?
 }
 
 
 
 class WOWCharacterProfile: Codable {
-    var name: String = ""
-    var level: Int = 0
-    var `class`: Int = 0
-    var race: Int = 0
-    var gender: Int = 0
+    let name: String
+    let level: Int
+    let `class`: Int
+    let race: Int
+    let gender: Int
     
-    var realm: String = ""
-    var battlegroup: String = ""
-    var achievementPoints: Int = 0
-    var thumbnail: String = ""
-    var lastModified: Int = 0
+    let realm: String
+    let battlegroup: String
+    let achievementPoints: Int
+    let thumbnail: String
+    let lastModified: Int
     
-    var spec: SpecializationLegacy? = nil
+    let spec: CharacterSpecialization?
     
-    var calcClass: String? = nil
-    var faction: Int? = nil
-    var totalHonorableKills: Int? = nil
+    let calcClass: String?
+    let faction: Int?
+    let totalHonorableKills: Int?
     
-    var appearance: WOWCharacterAppearance? = nil
-    var titles: [WOWCharacterTitle]? = nil
+    let appearance: WOWCharacterAppearance?
+    let titles: [WOWCharacterTitle]?
     
-    var statistics: StatisticIndex? = nil
-    var stats: WOWCharacterStats? = nil
-    var achievements: WOWAchievementStatus? = nil
-    var feed: [Feed]? = nil
+    let statistics: StatisticIndex?
+    let stats: WOWCharacterStats?
+    let achievements: WOWAchievementStatus?
+    let feed: [Feed]?
     
-    var items: WOWEquippedItems? = nil
-    var professions: Professions? = nil
-    var talents: [CharacterTalent]? = nil
+    let items: WOWEquippedItems?
+    let professions: Professions?
+    let talents: [CharacterTalent]?
     
-    var reputation: [Reputation]? = nil
-    var progression: WOWProgression? = nil
-    var quests: [Int]? = nil
+    let reputation: [Reputation]?
+    let progression: WOWProgression?
+    let quests: [Int]?
     
-    var mounts: CollectedMountIndex? = nil
-    var pets: CollectedPetIndex? = nil
-    var petSlots: [PetSlot]? = nil
-    var hunterPets: [HunterPet]? = nil
+    let mounts: CollectedMountIndex?
+    let pets: CollectedPetIndex?
+    let petSlots: [PetSlot]?
+    let hunterPets: [HunterPet]?
     
-    var guild: WOWGuild? = nil
-    var pvp: WOWPVP? = nil
-    var audit: Audit? = nil
+    let guild: WOWGuild?
+    let pvp: WOWPVP?
+    let audit: Audit?
 }
 
 
 
 class RaceIndex: Codable {
-    var races: [Race] = [Race]()
+    let races: [Race]
 }
 
 
 
 class Race: Codable {
-    var id: Int = 0
-    var mask: Int = 0
-    var side: RaceFaction = .neutral
-    var name: String = ""
+    let id: Int
+    let mask: Int
+    let side: RaceFaction
+    let name: String
 }
 
 
@@ -156,91 +156,112 @@ enum RaceFaction: String, Codable {
 }
 
 
+class WOWRaceIndex: Codable {
+    let _links: SelfLink<WOWRaceIndex>
+    let races: [KeyLink<WOWRace>]
+}
+
+
+class WOWRace: Codable, SelfDecodable {
+    let _links: SelfLink<WOWRace>
+    let id: Int
+    let name: String
+    let genderName: GenderName2
+    let faction: [WOWFaction]
+    
+    static var decoder: JSONDecoder {
+        let decoder = JSONDecoder()
+        decoder.keyDecodingStrategy = .convertFromSnakeCase
+        return decoder
+    }
+}
+
+
 
 class WOWCharacterAppearance: Codable {
-    var faceVariation: Int = 0
-    var skinColor: Int = 0
-    var hairVariation: Int = 0
-    var hairColor: Int = 0
-    var featureVariation: Int = 0
-    var showHelm: Bool = false
-    var showCloak: Bool = false
-    var customDisplayOptions: [Int] = [Int]()
+    let faceVariation: Int
+    let skinColor: Int
+    let hairVariation: Int
+    let hairColor: Int
+    let featureVariation: Int
+    let showHelm: Bool
+    let showCloak: Bool
+    let customDisplayOptions: [Int]
 }
 
 
 
 class Feed: Codable {
-    var type: String = ""
-    var timestamp: Int = 0
+    let type: String
+    let timestamp: Int
     
-    var name: String? = nil
-    var character: String? = nil
-    var featOfStrength: Bool? = nil
-    var achievement: WOWAchievement? = nil
-    var criteria: WOWAchievementCriterion? = nil
+    let name: String?
+    let character: String?
+    let featOfStrength: Bool?
+    let achievement: WOWAchievement?
+    let criteria: WOWAchievementCriterion?
     
-    var itemID: Int? = nil
-    var quantity: Int? = nil
+    let itemID: Int?
+    let quantity: Int?
     
-    var context: String? = nil
-    var bonusLists: [Int]? = nil
+    let context: String?
+    let bonusLists: [Int]?
 }
 
 
 
 class Professions: Codable {
-    var primary: [Profession] = [Profession]()
-    var secondary: [Profession] = [Profession]()
+    let primary: [Profession]
+    let secondary: [Profession]
 }
 
 
 
 class Profession: Codable {
-    var id: Int = 0
-    var icon: String = ""
-    var recipes: [Int] = [Int]()
-    var name: String = ""
-    var rank: Int = 0
-    var max: Int = 0
+    let id: Int
+    let icon: String?
+    let recipes: [Int]
+    let name: String
+    let rank: Int
+    let max: Int
 }
 
 
 
 class WOWProgression: Codable {
-    var raids: [Raid] = [Raid]()
+    let raids: [Raid]
 }
 
 
 
 class Raid: Codable {
-    var id: Int = 0
-    var name: String = ""
+    let id: Int
+    let name: String
     
-    var normal: Int = 0
-    var heroic: Int = 0
-    var mythic: Int = 0
-    var lfr: Int = 0
+    let normal: Int
+    let heroic: Int
+    let mythic: Int
+    let lfr: Int
     
-    var bosses: [RaidBoss] = [RaidBoss]()
+    let bosses: [RaidBoss]
 }
 
 
 
 class Reputation: Codable {
-    var id: Int = 0
-    var value: Int = 0
-    var name: String = ""
-    var standing: Int = 0
-    var max: Int = 0
+    let id: Int
+    let value: Int
+    let name: String
+    let standing: Int
+    let max: Int
 }
 
 
 
 class StatisticIndex: Codable {
-    var id: Int = 0
-    var name: String = ""
-    var subcategories: [StatisticSubcategory] = [StatisticSubcategory]()
+    let id: Int
+    let name: String
+    let subcategories: [StatisticSubcategory]
     
     enum CodingKeys: String, CodingKey {
         case id
@@ -252,10 +273,10 @@ class StatisticIndex: Codable {
 
 
 class StatisticSubcategory: Codable {
-    var id: Int = 0
-    var statistics: [Statistic] = [Statistic]()
-    var subcategories: [StatisticSubcategory]? = nil
-    var name: String = ""
+    let id: Int
+    let statistics: [Statistic]
+    let subcategories: [StatisticSubcategory]?
+    let name: String
     
     enum CodingKeys: String, CodingKey {
         case id
@@ -268,100 +289,100 @@ class StatisticSubcategory: Codable {
 
 
 class Statistic: Codable {
-    var id: Int = 0
-    var quantity: Int = 0
-    var money: Bool = false
-    var name: String = ""
-    var lastUpdated: Int = 0
-    var highest: String? = nil
+    let id: Int
+    let quantity: Int
+    let money: Bool
+    let name: String
+    let lastUpdated: Int
+    let highest: String?
 }
 
 
 
 class WOWCharacterStats: Codable {
-    var mainHandDmgMin: Int = 0
-    var int: Int = 0
-    var hasteRating: Int = 0
-    var mastery: Double = 0
-    var versatilityHealingDoneBonus: Double = 0
-    var parryRating: Int = 0
-    var health: Int = 0
-    var dodge: Int = 0
-    var mana5Combat: Int = 0
-    var mainHandDmgMax: Int = 0
-    var offHandSpeed: Double = 0
-    var sta: Int = 0
-    var leechRatingBonus: Int = 0
-    var leech: Int = 0
-    var speedRatingBonus: Int = 0
-    var offHandDmgMin: Int = 0
-    var offHandDps: Double = 0
-    var str: Int = 0
-    var agi: Int = 0
-    var spellPen: Int = 0
-    var powerType: String = ""
-    var mainHandSpeed: Double = 0
-    var offHandDmgMax: Int = 0
-    var crit: Double = 0
-    var dodgeRating: Int = 0
-    var rangedDmgMin: Int = 0
-    var power: Int = 0
-    var spellCritRating: Int = 0
-    var leechRating: Int = 0
-    var armor: Int = 0
-    var parry: Double = 0
-    var hasteRatingPercent: Double = 0
-    var mana5: Int = 0
-    var rangedDmgMax: Int = 0
-    var avoidanceRating: Int = 0
-    var spellCrit: Double = 0
-    var versatilityDamageTakenBonus: Double = 0
-    var critRating: Int = 0
-    var haste: Double = 0
-    var versatility: Int = 0
-    var blockRating: Int = 0
-    var mainHandDps: Double = 0
-    var rangedSpeed: Int = 0
-    var rangedDps: Int = 0
-    var masteryRating: Int = 0
-    var speedRating: Double = 0
-    var versatilityDamageDoneBonus: Double = 0
-    var block: Int = 0
-    var avoidanceRatingBonus: Int = 0
+    let mainHandDmgMin: Int
+    let int: Int
+    let hasteRating: Int
+    let mastery: Double
+    let versatilityHealingDoneBonus: Double
+    let parryRating: Int
+    let health: Int
+    let dodge: Int
+    let mana5Combat: Int
+    let mainHandDmgMax: Int
+    let offHandSpeed: Double
+    let sta: Int
+    let leechRatingBonus: Int
+    let leech: Int
+    let speedRatingBonus: Int
+    let offHandDmgMin: Int
+    let offHandDps: Double
+    let str: Int
+    let agi: Int
+    let spellPen: Int
+    let powerType: String
+    let mainHandSpeed: Double
+    let offHandDmgMax: Int
+    let crit: Double
+    let dodgeRating: Int
+    let rangedDmgMin: Int
+    let power: Int
+    let spellCritRating: Int
+    let leechRating: Int
+    let armor: Int
+    let parry: Double
+    let hasteRatingPercent: Double
+    let mana5: Int
+    let rangedDmgMax: Int
+    let avoidanceRating: Int
+    let spellCrit: Double
+    let versatilityDamageTakenBonus: Double
+    let critRating: Int
+    let haste: Double
+    let versatility: Int
+    let blockRating: Int
+    let mainHandDps: Double
+    let rangedSpeed: Int
+    let rangedDps: Int
+    let masteryRating: Int
+    let speedRating: Double
+    let versatilityDamageDoneBonus: Double
+    let block: Int
+    let avoidanceRatingBonus: Int
 }
 
 
 
 class WOWCharacterTitle: Codable {
-    var id: Int = 0
-    var name: String = ""
-    var selected: Bool? = nil
+    let id: Int
+    let name: String
+    let selected: Bool?
 }
 
 
 
 class Audit: Codable {
-    var noSpec: Bool = false
-    var appropriateArmorType: Int = 0
-    var emptySockets: Int = 0
-    var emptyGlyphSlots: Int = 0
-    var unspentTalentPoints: Int = 0
-    var lowLevelThreshold: Int = 0
-    var nMissingJewelcrafterGems: Int = 0
-    var numberOfIssues: Int = 0
+    let noSpec: Bool
+    let appropriateArmorType: Int
+    let emptySockets: Int
+    let emptyGlyphSlots: Int
+    let unspentTalentPoints: Int
+    let lowLevelThreshold: Int
+    let nMissingJewelcrafterGems: Int
+    let numberOfIssues: Int
     
-    var lowLevelItems: [String: Int] = [String: Int]()
-    var inappropriateArmorType: [String: Int] = [String: Int]()
-    var itemsWithEmptySockets: [String: Int] = [String: Int]()
-    var unenchantedItems: [String: Int] = [String: Int]()
-    var slots: [String: Int] = [String: Int]()
+    let lowLevelItems: [String: Int]
+    let inappropriateArmorType: [String: Int]
+    let itemsWithEmptySockets: [String: Int]
+    let unenchantedItems: [String: Int]
+    let slots: [String: Int]
     
-    var missingEnchanterEnchants: [String: Int] = [String: Int]()
-    var missingScribeEnchants: [String: Int] = [String: Int]()
-    var missingExtraSockets: [String: Int] = [String: Int]()
-    var missingBlacksmithSockets: [String: Int] = [String: Int]()
-    var missingLeatherworkerEnchants: [String: Int] = [String: Int]()
-    var missingEngineerEnchants: [String: Int] = [String: Int]()
+    let missingEnchanterEnchants: [String: Int]
+    let missingScribeEnchants: [String: Int]
+    let missingExtraSockets: [String: Int]
+    let missingBlacksmithSockets: [String: Int]
+    let missingLeatherworkerEnchants: [String: Int]
+    let missingEngineerEnchants: [String: Int]
     
-    var recommendedBeltBuckle: WOWItem = WOWItem()
+    let recommendedBeltBuckle: WOWItem
 }

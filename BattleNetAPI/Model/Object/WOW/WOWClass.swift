@@ -10,73 +10,58 @@ import Foundation
 
 
 class WOWClassIndex: Codable {
-    var _links: SelfLink<WOWClassIndex> = SelfLink<WOWClassIndex>()
-    var classes: [WOWClassLink] = [WOWClassLink]()
+    let _links: SelfLink<WOWClassIndex>
+    let classes: [KeyLink<WOWClass>]
 }
 
 
-
-class WOWClassLink: Codable {
-    var key: Link<WOWClass> = Link<WOWClass>()
-    var id: Int = 0
-    var name: String = ""
-}
-
-
-
-class WOWClass: Codable {
-    var _links: SelfLink<WOWClass> = SelfLink<WOWClass>()
-    var id: Int = 0
-    var name: String = ""
-    var genderName: GenderName = GenderName()
-    var powerType: PowerTypeLink = PowerTypeLink()
-    var specializations: [SpecializationLink] = [SpecializationLink]()
-    var media: MediaLink = MediaLink()
+class WOWClass: Codable, SelfDecodable {
+    let _links: SelfLink<WOWClass>
+    let id: Int
+    let name: String
+    let genderName: GenderName
+    let powerType: KeyLink<PowerType>
+    let specializations: [KeyLink<Specialization>]
+    let media: MediaLink
     
-    enum CodingKeys: String, CodingKey {
-        case _links
-        case id
-        case name
-        case genderName = "gender_name"
-        case powerType = "power_type"
-        case specializations
-        case media
+    static var decoder: JSONDecoder {
+        let decoder = JSONDecoder()
+        decoder.keyDecodingStrategy = .convertFromSnakeCase
+        return decoder
     }
 }
 
 
 
 class GenderName: Codable {
-    var male: String = ""
-    var female: String = ""
+    let male: String
+    let female: String
 }
 
 
-
-class PowerTypeLink: Codable {
-    var key: Link<PowerType> = Link<PowerType>()
-    var id: Int = 0
-    var name: String = ""
-}
-
-
-
-// https://us.api.battle.net/data/wow/power-type/0?namespace=static-7.3.5_25875-us
-class PowerType: Codable {
+class GenderName2: Codable, SelfDecodable {
+    let maleName: String
+    let femaleName: String
     
+    static var decoder: JSONDecoder {
+        let decoder = JSONDecoder()
+        decoder.keyDecodingStrategy = .convertFromSnakeCase
+        return decoder
+    }
 }
 
 
 
-// MARK: - Legacy
+// MARK: - Class Data Resource
 
-class WOWClassIndexLegacy: Codable {
-    var classes: [WOWClassLegacy] = [WOWClassLegacy]()
+class WOWCharacterClassIndex: Codable {
+    let classes: [WOWCharacterClass]
 }
 
-class WOWClassLegacy: Codable {
-    var id: Int = 0
-    var mask: Int = 0
-    var powerType: String = ""
-    var name: String = ""
+
+class WOWCharacterClass: Codable {
+    let id: Int
+    let mask: Int
+    let powerType: String
+    let name: String
 }

@@ -19,8 +19,6 @@ class StarCraft2Tests: XCTestCase {
         super.setUp()
         // Put setup code here. This method is called before the invocation of each test method in the class.
         
-        BattleNetAPI.authenticationLegacy.setApikeyLegacy(clientID)
-        
         Network.shared.clientAccessToken = clientAccessToken
         Network.shared.userAccessToken = userAccessToken
     }
@@ -32,13 +30,18 @@ class StarCraft2Tests: XCTestCase {
     
     
     
-    // MARK: - Profile API
+    // MARK: - Game Data APIs
     
-    func testGetCharacters() {
+    func testGetLeague() {
+        let seasonID = 37
+        let queue: LeagueQueue = .lotV1v1
+        let team: LeagueTeam = .arranged
+        let league: LeagueType = .grandmaster
+        
         let wsResponseExpectation = expectation(description: "Web Service returned a response")
         
-        BattleNetAPI.sc2.getCharacters(region: region) { result in
-            BattleNetAPITests.webServiceClosureTest(result: result, decodable: SC2CharacterIndex.self, expectation: wsResponseExpectation)
+        BattleNetAPI.sc2.getLeagueData(seasonID: seasonID, queue: queue, team: team, league: league, region: Current.region, locale: Current.locale) { result in
+            BattleNetAPITests.webServiceClosureTest(result: result, decodable: League.self, expectation: wsResponseExpectation)
         }
         
         waitForExpectations(timeout: 20) { error in
@@ -48,17 +51,17 @@ class StarCraft2Tests: XCTestCase {
     
     
     
-    // MARK: - Profile API
+    // MARK: - Community APIs
     
-    func testGetCharacter() {
-        let id = 2541852
-        let profileName = "MaSa"
-        let sc2Region = 1
+    // MARK: Profile API
+    
+    func testGetProfileData() {
+        let sc2Region: APIRegion = .us
         
         let wsResponseExpectation = expectation(description: "Web Service returned a response")
         
-        BattleNetAPI.sc2Legacy.getProfile(id: id, name: profileName, sc2Region: sc2Region, region: region, locale: locale) { result in
-            BattleNetAPITests.webServiceClosureTest(result: result, decodable: SC2Character.self, expectation: wsResponseExpectation)
+        BattleNetAPI.sc2.getProfileData(sc2Region: sc2Region, region: Current.region, locale: Current.locale) { result in
+            BattleNetAPITests.webServiceClosureTest(result: result, decodable: SC2ProfileData.self, expectation: wsResponseExpectation)
         }
         
         waitForExpectations(timeout: 20) { error in
@@ -67,15 +70,15 @@ class StarCraft2Tests: XCTestCase {
     }
     
     
-    func testGetLadders() {
-        let id = 2541852
-        let profileName = "MaSa"
-        let sc2Region = 1
+    func testGetProfileMetadata() {
+        let profileID = 266515
+        let sc2Region: APIRegion = .us
+        let realmID = 1
         
         let wsResponseExpectation = expectation(description: "Web Service returned a response")
         
-        BattleNetAPI.sc2Legacy.getLadders(id: id, name: profileName, sc2Region: sc2Region, region: region, locale: locale) { result in
-            BattleNetAPITests.webServiceClosureTest(result: result, decodable: LadderOverview.self, expectation: wsResponseExpectation)
+        BattleNetAPI.sc2.getProfileMetadata(id: profileID, sc2Region: sc2Region, realmID: realmID, region: Current.region, locale: Current.locale) { result in
+            BattleNetAPITests.webServiceClosureTest(result: result, decodable: SC2ProfileMetadata.self, expectation: wsResponseExpectation)
         }
         
         waitForExpectations(timeout: 20) { error in
@@ -84,15 +87,15 @@ class StarCraft2Tests: XCTestCase {
     }
     
     
-    func testGetMatches() {
-        let id = 2541852
-        let profileName = "MaSa"
-        let sc2Region = 1
+    func testGetProfile() {
+        let profileID = 266515
+        let sc2Region: APIRegion = .us
+        let realmID = 1
         
         let wsResponseExpectation = expectation(description: "Web Service returned a response")
         
-        BattleNetAPI.sc2Legacy.getMatches(id: id, name: profileName, sc2Region: sc2Region, region: region, locale: locale) { result in
-            BattleNetAPITests.webServiceClosureTest(result: result, decodable: MatchIndex.self, expectation: wsResponseExpectation)
+        BattleNetAPI.sc2.getProfile(id: profileID, sc2Region: sc2Region, realmID: realmID, region: Current.region, locale: Current.locale) { result in
+            BattleNetAPITests.webServiceClosureTest(result: result, decodable: SC2Profile.self, expectation: wsResponseExpectation)
         }
         
         waitForExpectations(timeout: 20) { error in
@@ -101,15 +104,32 @@ class StarCraft2Tests: XCTestCase {
     }
     
     
+    func testGetLadderSummary() {
+        let profileID = 7895938
+        let sc2Region: APIRegion = .us
+        let realmID = 1
+        
+        let wsResponseExpectation = expectation(description: "Web Service returned a response")
+        
+        BattleNetAPI.sc2.getLadderSummary(profileID: profileID, sc2Region: sc2Region, realmID: realmID, region: Current.region, locale: Current.locale) { result in
+            BattleNetAPITests.webServiceClosureTest(result: result, decodable: LadderSummary.self, expectation: wsResponseExpectation)
+        }
+        
+        waitForExpectations(timeout: 20) { error in
+            XCTAssertNil(error, "Exceeded timeout")
+        }
+    }
     
-    // MARK: - Ladder API
     
     func testGetLadder() {
-        let id = 263156
+        let ladderID = 277454
+        let profileID = 2060165
+        let sc2Region: APIRegion = .us
+        let realmID = 1
         
         let wsResponseExpectation = expectation(description: "Web Service returned a response")
         
-        BattleNetAPI.sc2Legacy.getLadder(id: id, region: region, locale: locale) { result in
+        BattleNetAPI.sc2.getLadder(id: ladderID, profileID: profileID, sc2Region: sc2Region, realmID: realmID, region: Current.region, locale: Current.locale) { result in
             BattleNetAPITests.webServiceClosureTest(result: result, decodable: Ladder.self, expectation: wsResponseExpectation)
         }
         
@@ -119,14 +139,15 @@ class StarCraft2Tests: XCTestCase {
     }
     
     
+    // MARK: Ladder API
     
-    // MARK: - Data Resources
-    
-    func testGetAchievements() {
+    func testGetGrandmasterLeaderboard() {
+        let sc2Region: APIRegion = .us
+        
         let wsResponseExpectation = expectation(description: "Web Service returned a response")
         
-        BattleNetAPI.sc2Legacy.getAchievements(region: region, locale: locale) { result in
-            BattleNetAPITests.webServiceClosureTest(result: result, decodable: SC2AchievementIndex.self, expectation: wsResponseExpectation)
+        BattleNetAPI.sc2.getGrandmasterLeaderboard(sc2Region: sc2Region, region: Current.region, locale: Current.locale) { result in
+            BattleNetAPITests.webServiceClosureTest(result: result, decodable: GrandmasterLeaderboard.self, expectation: wsResponseExpectation)
         }
         
         waitForExpectations(timeout: 20) { error in
@@ -135,15 +156,36 @@ class StarCraft2Tests: XCTestCase {
     }
     
     
-    func testGetRewards() {
+    func testGetLadderSeason() {
+        let sc2Region: APIRegion = .us
+        
         let wsResponseExpectation = expectation(description: "Web Service returned a response")
         
-        BattleNetAPI.sc2Legacy.getRewards(region: region, locale: locale) { result in
-            BattleNetAPITests.webServiceClosureTest(result: result, decodable: SC2RewardIndex.self, expectation: wsResponseExpectation)
+        BattleNetAPI.sc2.getLadderSeason(sc2Region: sc2Region, region: Current.region, locale: Current.locale) { result in
+            BattleNetAPITests.webServiceClosureTest(result: result, decodable: SC2Season.self, expectation: wsResponseExpectation)
         }
         
         waitForExpectations(timeout: 20) { error in
             XCTAssertNil(error, "Exceeded timeout")
         }
     }
+    
+    
+    
+    // MARK: Account API
+    
+    func testGetPlayers() {
+        let userID = 8
+        
+        let wsResponseExpectation = expectation(description: "Web Service returned a response")
+        
+        BattleNetAPI.sc2.getPlayers(userID: userID, region: Current.region) { result in
+            BattleNetAPITests.webServiceClosureTest(result: result, decodable: [SC2ProfileMetadata].self, expectation: wsResponseExpectation)
+        }
+        
+        waitForExpectations(timeout: 20) { error in
+            XCTAssertNil(error, "Exceeded timeout")
+        }
+    }
+    
 }

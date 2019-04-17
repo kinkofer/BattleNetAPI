@@ -10,22 +10,22 @@ import Foundation
 
 
 class ActIndex: Codable {
-    var acts = [Act]()
+    let acts: [Act]
 }
 
 
 
 class Act: Codable {
-    var number = 0
-    var name = ""
-    var slug = ""
-    var quests = [D3Quest]()
+    let number: Int
+    let name: String
+    let slug: String
+    let quests: [D3Quest]
 }
 
 
 
 class D3Quest: Codable {
-    var id: Int? = 0
-    var name = ""
-    var slug = ""
+    let id: Int?
+    let name: String
+    let slug: String
 }

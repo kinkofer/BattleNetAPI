@@ -10,22 +10,21 @@ import Foundation
 
 
 class PetIndex: Codable {
-    var pets: [Pet] = [Pet]()
+    let pets: [Pet]
 }
 
 
-
 class Pet: Codable {
-    var canBattle: Bool = false
-    var creatureID: Int = 0
-    var name: String = ""
-    var family: PetFamily = .beast
-    var icon: String = ""
-    var qualityID: Int = 0
-    var stats: PetStats = PetStats()
-    var strongAgainst: [PetFamily] = [PetFamily]()
-    var typeID: Int = 0
-    var weakAgainst: [PetFamily] = [PetFamily]()
+    let canBattle: Bool
+    let creatureID: Int
+    let name: String
+    let family: PetFamily
+    let icon: String
+    let qualityID: Int
+    let stats: PetStats
+    let strongAgainst: [PetFamily]
+    let typeID: Int
+    let weakAgainst: [PetFamily]
     
     enum CodingKeys: String, CodingKey {
         case canBattle
@@ -58,13 +57,13 @@ enum PetFamily: String, Codable {
 
 
 class PetStats: Codable {
-    var speciesID: Int = 0
-    var breedID: Int = 0
-    var petQualityID: Int = 0
-    var level: Int = 0
-    var health: Int = 0
-    var power: Int = 0
-    var speed: Int = 0
+    let speciesID: Int
+    let breedID: Int
+    let petQualityID: Int
+    let level: Int
+    let health: Int
+    let power: Int
+    let speed: Int
     
     enum CodingKeys: String, CodingKey {
         case speciesID = "speciesId"
@@ -80,15 +79,15 @@ class PetStats: Codable {
 
 
 class PetSpecies: Codable {
-    var speciesID: Int = 0
-    var petTypeID: Int = 0
-    var creatureID: Int = 0
-    var name: String = ""
-    var canBattle: Bool = false
-    var icon: String = ""
-    var description: String = ""
-    var source: String = ""
-    var abilities: [PetSpeciesAbility] = [PetSpeciesAbility]()
+    let speciesID: Int
+    let petTypeID: Int
+    let creatureID: Int
+    let name: String
+    let canBattle: Bool
+    let icon: String
+    let description: String
+    let source: String
+    let abilities: [PetSpeciesAbility]
     
     enum CodingKeys: String, CodingKey {
         case speciesID = "speciesId"
@@ -106,17 +105,17 @@ class PetSpecies: Codable {
 
 
 class PetSpeciesAbility: Codable {
-    var slot: Int = 0
-    var order: Int = 0
-    var requiredLevel = 0
-    var id: Int = 0
-    var name: String = ""
-    var icon: String = ""
-    var cooldown: Int = 0
-    var rounds: Int = 0
-    var petTypeID: Int = 0
-    var isPassive: Bool = false
-    var hideHints: Bool = false
+    let slot: Int
+    let order: Int
+    let requiredLevel: Int
+    let id: Int
+    let name: String
+    let icon: String
+    let cooldown: Int
+    let rounds: Int
+    let petTypeID: Int
+    let isPassive: Bool
+    let hideHints: Bool
     
     enum CodingKeys: String, CodingKey {
         case slot
@@ -136,14 +135,14 @@ class PetSpeciesAbility: Codable {
 
 
 class PetAbility: Codable {
-    var id: Int = 0
-    var name: String = ""
-    var icon: String = ""
-    var cooldown: Int = 0
-    var rounds: Int = 0
-    var petTypeID: Int = 0
-    var isPassive: Bool = false
-    var hideHints: Bool = false
+    let id: Int
+    let name: String
+    let icon: String
+    let cooldown: Int
+    let rounds: Int
+    let petTypeID: Int
+    let isPassive: Bool
+    let hideHints: Bool
     
     enum CodingKeys: String, CodingKey {
         case id
@@ -160,18 +159,18 @@ class PetAbility: Codable {
 
 
 class PetTypeIndex: Codable {
-    var petTypes: [PetType] = [PetType]()
+    let petTypes: [PetType]
 }
 
 
 
 class PetType: Codable {
-    var id: Int = 0
-    var key: String = ""
-    var name: String = ""
-    var typeAbilityID: Int = 0
-    var strongAgainstID: Int = 0
-    var weakAgainstID: Int = 0
+    let id: Int
+    let key: String
+    let name: String
+    let typeAbilityID: Int
+    let strongAgainstID: Int
+    let weakAgainstID: Int
     
     enum CodingKeys: String, CodingKey {
         case id
@@ -186,13 +185,13 @@ class PetType: Codable {
 
 
 class HunterPet: Codable {
-    var name: String = ""
-    var creature = 0
-    var slot: Int = 0
-    var spec: SpecializationLegacy = SpecializationLegacy()
-    var calcSpec: String = ""
-    var familyID: Int = 0
-    var familyName: String = ""
+    let name: String
+    let creature: Int
+    let slot: Int
+    let spec: CharacterSpecialization
+    let calcSpec: String
+    let familyID: Int
+    let familyName: String
     
     enum CodingKeys: String, CodingKey {
         case name
@@ -208,28 +207,28 @@ class HunterPet: Codable {
 
 
 class CollectedPetIndex: Codable {
-    var collected: [CollectedPet] = [CollectedPet]()
-    var numCollected: Int = 0
-    var numNotCollected: Int = 0
+    let collected: [CollectedPet]
+    let numCollected: Int
+    let numNotCollected: Int
 }
 
 
 
 class CollectedPet: Codable {
-    var spellID: Int = 0
-    var qualityID: Int = 0
-    var stats: PetStats = PetStats()
-    var isThirdAbilitySlotSelected: Bool = false
-    var canBattle: Bool = false
-    var isFavorite: Bool = false
-    var isSecondAbilitySlotSelected: Bool = false
-    var battlePetGUID: String = ""
-    var icon: String = ""
-    var isFirstAbilitySlotSelected: Bool = false
-    var creatureID: Int = 0
-    var creatureName: String = ""
-    var name: String = ""
-    var itemID: Int = 0
+    let spellID: Int
+    let qualityID: Int
+    let stats: PetStats
+    let isThirdAbilitySlotSelected: Bool
+    let canBattle: Bool
+    let isFavorite: Bool
+    let isSecondAbilitySlotSelected: Bool
+    let battlePetGUID: String
+    let icon: String
+    let isFirstAbilitySlotSelected: Bool
+    let creatureID: Int
+    let creatureName: String
+    let name: String
+    let itemID: Int
     
     enum CodingKeys: String, CodingKey {
         case spellID = "spellId"
@@ -252,11 +251,11 @@ class CollectedPet: Codable {
 
 
 class PetSlot: Codable {
-    let slot: Int = 0
-    let isLocked: Bool = false
-    let abilities: [Int] = [Int]()
-    let battlePetGUID: String = ""
-    let isEmpty: Bool = false
+    let slot: Int
+    let isLocked: Bool
+    let abilities: [Int]
+    let battlePetGUID: String
+    let isEmpty: Bool
     
     enum CodingKeys: String, CodingKey {
         case slot

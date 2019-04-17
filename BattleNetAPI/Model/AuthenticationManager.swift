@@ -7,49 +7,48 @@
 //
 
 import Foundation
-
-
-protocol UserAuthDelegate {
-    func didReceiveUserAccessResult(_ result: Result<String>)
-}
-
+import AuthenticationServices
 
 
 class AuthenticationManager {
     let authMC = AuthenticationModelController.shared
     
-    var delegate: UserAuthDelegate? = nil
-    
+    /// The clientID is a unique token provided by the Blizzard Battle.net Developer Portal
     let clientID = AuthToken.clientID
+    /// The clientSecret is a unique token provided by the Blizzard Battle.net Developer Portal
     let clientSecret = AuthToken.clientSecret
     
-    var clientAccessToken: String? = nil
-    var userAccessToken: String? = nil
+    /// The clientAccessToken is required for your app to make API calls. It is retrieved from a service that only requires your clientToken and clientSecret.
+    var clientAccessToken: String?
+    /// The userAccessToken is used to make API calls that require the user's permission. It is retrieved from a redirect after the user enters their credentials.
+    var userAccessToken: String?
+    
+    private var webAuthSession: ASWebAuthenticationSession?
     
     
     
     // MARK: - Init
     
     init() {
-        // TODO: retrieve data from keychain
-        clientAccessToken = "CLIENT_TOKEN"
-        userAccessToken = "USER_TOKEN"
+        // TODO: retrieve access tokens from keychain
+        clientAccessToken = AuthToken.clientAccessToken
+        userAccessToken = AuthToken.userAccessToken
     }
     
     
     
     // MARK: -
     
-    func getClientAccessToken(completion: @escaping (_ result: Result<String>) -> Void) {
+    func getClientAccessToken(completion: @escaping (_ result: Result<String, HTTPError>) -> Void) {
         if let accessToken = clientAccessToken {
             authMC.validateClientAccessToken(accessToken) { result in
                 DispatchQueue.main.async {
                     switch result {
                     case .success(_):
-                        completion(Result(value: accessToken, error: nil))
+                        completion(.success(accessToken))
                     case .failure(let error):
-                        completion(Result(value: nil, error: error))
                         self.clientAccessToken = nil
+                        completion(.failure(error))
                     }
                 }
             }
@@ -59,10 +58,11 @@ class AuthenticationManager {
                 DispatchQueue.main.async {
                     switch result {
                     case .success(let access):
-                        completion(Result(value: access.token, error: nil))
+                        // TODO: Save to keychain if new
                         self.clientAccessToken = access.token
+                        completion(.success(access.token))
                     case .failure(let error):
-                        completion(Result(value: nil, error: error))
+                        completion(.failure(error))
                     }
                 }
             }
@@ -70,57 +70,59 @@ class AuthenticationManager {
     }
     
     
-    func getUserAccessToken(scope: Scope) {
-        authMC.sendToOAuth(clientID: clientID, scope: scope, redirectURL: "https://oauth.click/BattleNetAPI/")
-        NotificationCenter.default.addObserver(self, selector: #selector(didReceiveUserCode(_:)), name: .didReturnUserCodeNotification, object: nil)
-    }
-    
-    
-    func validateUserAccessToken() {
+    func getUserAccessToken(scope: Scope, completion: @escaping (_ result: Result<String, HTTPError>) -> Void) {
         if let userAccessToken = userAccessToken {
             authMC.validateUserAccessToken(userAccessToken) { result in
                 DispatchQueue.main.async {
                     switch result {
                     case .success(_):
-                        self.delegate?.didReceiveUserAccessResult(Result(value: userAccessToken, error: nil))
+                        completion(.success(userAccessToken))
                     case .failure(let error):
                         self.userAccessToken = nil
-                        self.delegate?.didReceiveUserAccessResult(Result(value: nil, error: error))
+                        completion(.failure(error))
                     }
                 }
             }
         }
         else {
-            self.delegate?.didReceiveUserAccessResult(Result(value: nil, error: HTTPError(type: .unauthorized)))
+            authenicateUser(scope: scope, completion: completion)
         }
     }
     
     
-    @objc func didReceiveUserCode(_ notification: Notification) {
-        if let code = notification.userInfo?["code"] as? String {
-            authMC.getUserAccessToken(region: .us, clientID: clientID, clientSecret: clientSecret, code: code, redirectURL: "https://oauth.click/BattleNetAPI/") { result in
+    private func authenicateUser(scope: Scope, completion: @escaping (_ result: Result<String, HTTPError>) -> Void) {
+        let redirectUrlStr = "https://oauth.click/BattleNetAPI/"
+        guard let url = authMC.getOAuthURL(region: Current.region, clientID: clientID, scope: scope, redirectURL: redirectUrlStr) else {
+            return
+        }
+        
+        webAuthSession = ASWebAuthenticationSession(url: url, callbackURLScheme: "BattleNetAPI://") { callback, error in
+            guard error == nil,
+                let callbackUrl = callback else {
+                    return
+            }
+            
+            guard let code = callbackUrl.queryParameters?.first(where: { $0.name == "code" })?.value,
+                let state = UserDefaults.standard.string(forKey: "state"),
+                let callbackState = callbackUrl.queryParameters?.first(where: { $0.name == "state" })?.value,
+                state == callbackState else {
+                    completion(.failure(HTTPError(type: .unexpectedResponse)))
+                    return
+            }
+            
+            self.authMC.getUserAccessToken(region: Current.region, clientID: self.clientID, clientSecret: self.clientSecret, code: code, redirectURL: redirectUrlStr) { result in
                 DispatchQueue.main.async {
                     switch result {
                     case .success(let access):
-                        self.delegate?.didReceiveUserAccessResult(Result(value: access.token, error: nil))
                         self.userAccessToken = access.token
+                        // TODO: Save to keychain if new
+                        completion(.success(access.token))
                     case .failure(let error):
-                        self.delegate?.didReceiveUserAccessResult(Result(value: nil, error: error))
+                        completion(.failure(error))
                     }
                 }
             }
         }
-        else {
-            self.delegate?.didReceiveUserAccessResult(Result(value: nil, error: HTTPError(type: .unexpectedResponse)))
-        }
-    }
-    
-    
-    
-    // MARK: - Legacy
-    
-    func setupLegacyWebServices() {
-        authMC.setApikeyLegacy(clientID)
-        Debug.print("Ready for legacy web services")
+        webAuthSession?.start()
     }
 }

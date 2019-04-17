@@ -10,36 +10,32 @@ import Foundation
 
 
 class D3Season: Codable {
-    var seasonId: Int = 0
-    var paragonLevel: Int = 0
-    var paragonLevelHardcore: Int = 0
-    var highestHardcoreLevel: Int = 0
+    let seasonId: Int
+    let paragonLevel: Int
+    let paragonLevelHardcore: Int
+    let highestHardcoreLevel: Int
     
-    var kills: Kills = Kills()
-    var timePlayed: TimePlayed = TimePlayed()
+    let kills: Kills
+    let timePlayed: TimePlayed
 }
 
 
 
 // https://us.api.battle.net/data/d3/season/?namespace=2-6-US
-class D3SeasonIndex: Codable {
-    var _links: SelfLink<D3SeasonIndex> = SelfLink<D3SeasonIndex>()
-    var season: [Link<D3Season>] = [Link<D3Season>]()
+class D3SeasonIndex: Codable, SelfDecodable {
+    let _links: SelfLink<D3SeasonIndex>
+    let season: [Link<D3Season>]
     
-    var currentSeason: Int = 0
-    var serviceCurrentSeason: Int = 0
-    var serviceSeasonState: String = ""
-    var lastUpdateTime: String = ""
-    var generatedBy: String = ""
+    let currentSeason: Int
+    let serviceCurrentSeason: Int
+    let serviceSeasonState: String
+    let lastUpdateTime: String
+    let generatedBy: String
     
-    enum CodingKeys: String, CodingKey {
-        case _links
-        case season
-        case currentSeason = "current_season"
-        case serviceCurrentSeason = "service_current_season"
-        case serviceSeasonState = "service_season_state"
-        case lastUpdateTime = "last_update_time"
-        case generatedBy = "generated_by"
+    static var decoder: JSONDecoder {
+        let decoder = JSONDecoder()
+        decoder.keyDecodingStrategy = .convertFromSnakeCase
+        return decoder
     }
 }
 
@@ -47,11 +43,11 @@ class D3SeasonIndex: Codable {
 
 // https://us.api.battle.net/data/d3/season/1?namespace=2-6-US
 class D3SeasonLeaderboardIndex: Codable {
-    var _links: SelfLink<D3SeasonLeaderboardIndex> = SelfLink<D3SeasonLeaderboardIndex>()
-    var leaderboard: [SeasonLeaderboardLink] = [SeasonLeaderboardLink]()
-    var seasonID: Int = 0
-    var lastUpdateTime: String = ""
-    var generatedBy: String = ""
+    let _links: SelfLink<D3SeasonLeaderboardIndex>
+    let leaderboard: [SeasonLeaderboardLink]
+    let seasonID: Int
+    let lastUpdateTime: String
+    let generatedBy: String
     
     enum CodingKeys: String, CodingKey {
         case _links
@@ -64,48 +60,41 @@ class D3SeasonLeaderboardIndex: Codable {
 
 
 
-class SeasonLeaderboardLink: Codable {
-    var ladder: Link<SeasonLeaderboard> = Link<SeasonLeaderboard>()
-    var heroClassString: String? = nil
-    var teamSize: Int? = nil
-    var hardcore: Bool? = nil
+class SeasonLeaderboardLink: Codable, SelfDecodable {
+    let ladder: Link<SeasonLeaderboard>
+    let heroClassString: String?
+    let teamSize: Int?
+    let hardcore: Bool?
     
-    enum CodingKeys: String, CodingKey {
-        case ladder
-        case heroClassString = "hero_class_string"
-        case teamSize = "team_size"
-        case hardcore
+    static var decoder: JSONDecoder {
+        let decoder = JSONDecoder()
+        decoder.keyDecodingStrategy = .convertFromSnakeCase
+        return decoder
     }
 }
 
 
 
 // https://us.api.battle.net/data/d3/season/1/leaderboard/achievement-points?namespace=2-6-US
-class SeasonLeaderboard: Codable {
-    var _links: SelfLink<SeasonLeaderboard> = SelfLink<SeasonLeaderboard>()
-    var key: String = ""
-    var title: LocaleString = LocaleString()
-    var season: Int = 0
+class SeasonLeaderboard: Codable, SelfDecodable {
+    let _links: SelfLink<SeasonLeaderboard>
+    let key: String
+    let title: LocaleString
+    let season: Int
     
-    var lastUpdateTime: String = ""
-    var generatedBy: String = ""
+    let lastUpdateTime: String
+    let generatedBy: String
     
-    var row: [LeaderboardEntry] = [LeaderboardEntry]()
-    var column: [LeaderboardColumn] = [LeaderboardColumn]()
+    let row: [LeaderboardEntry]
+    let column: [LeaderboardColumn]
     
-    var achievementPoints: Bool = false
+    let achievementPoints: Bool
     
     
-    enum CodingKeys: String, CodingKey {
-        case _links
-        case key
-        case title
-        case season
-        case lastUpdateTime = "last_update_time"
-        case generatedBy = "generated_by"
-        case row
-        case column
-        case achievementPoints = "achievement_points"
+    static var decoder: JSONDecoder {
+        let decoder = JSONDecoder()
+        decoder.keyDecodingStrategy = .convertFromSnakeCase
+        return decoder
     }
 }
 

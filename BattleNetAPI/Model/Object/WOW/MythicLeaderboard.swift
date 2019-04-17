@@ -10,41 +10,34 @@ import Foundation
 
 
 // https://us.api.battle.net/data/wow/connected-realm/11/mythic-leaderboard/?namespace=dynamic-us
-class MythicLeaderboardIndex: Codable {
-    var _links: SelfLink<MythicLeaderboardIndex> = SelfLink<MythicLeaderboardIndex>()
-    var currentLeaderboards: [MythicLeaderboardLink] = [MythicLeaderboardLink]()
+class MythicLeaderboardIndex: Codable, SelfDecodable {
+    let _links: SelfLink<MythicLeaderboardIndex>
+    let currentLeaderboards: [KeyLink<MythicLeaderboard>]
     
-    enum CodingKeys: String, CodingKey {
-        case _links
-        case currentLeaderboards = "current_leaderboards"
+    static var decoder: JSONDecoder {
+        let decoder = JSONDecoder()
+        decoder.keyDecodingStrategy = .convertFromSnakeCase
+        return decoder
     }
 }
 
 
-
-class MythicLeaderboardLink: Codable {
-    var key: Link<MythicLeaderboard> = Link<MythicLeaderboard>()
-    var id: Int = 0
-    var name: String = ""
-}
-
-
-
 // https://us.api.battle.net/data/wow/connected-realm/11/mythic-leaderboard/197/period/642?namespace=dynamic-us
+/// - note: Contains camelCase and snake_case keys (with id)
 class MythicLeaderboard: Codable {
-    var _links: SelfLink<MythicLeaderboard> = SelfLink<MythicLeaderboard>()
-    var name: String = ""
+    let _links: SelfLink<MythicLeaderboard>
+    let name: String
     
-    var map: WOWMap = WOWMap()
-    var mapChallengeModeID: Int = 0
+    let map: WOWMap
+    let mapChallengeModeID: Int
     
-    var period: Int = 0
-    var periodStartTimestamp: Int = 0
-    var periodEndTimestamp: Int = 0
+    let period: Int
+    let periodStartTimestamp: Int
+    let periodEndTimestamp: Int
     
-    var connectedRealm: Link<ConnectedRealm> = Link<ConnectedRealm>()
-    var leadingGroups: [LeadingGroup] = [LeadingGroup]()
-    var keystoneAffixes: [KeystoneAffixSummary] = [KeystoneAffixSummary]()
+    let connectedRealm: Link<ConnectedRealm>
+    let leadingGroups: [LeadingGroup]
+    let keystoneAffixes: [KeystoneAffixSummary]
     
     enum CodingKeys: String, CodingKey {
         case _links
@@ -62,42 +55,13 @@ class MythicLeaderboard: Codable {
 
 
 
-class KeystoneAffixSummary: Codable {
-    var keystoneAffix: KeystoneAffixLink = KeystoneAffixLink()
-    var startingLevel: Int = 0
-    
-    enum CodingKeys: String, CodingKey {
-        case keystoneAffix = "keystone_affix"
-        case startingLevel = "starting_level"
-    }
-}
-
-
-
-class KeystoneAffixLink: Codable {
-    var key: Link<KeystoneAffix> = Link<KeystoneAffix>()
-    var id: Int = 0
-    var name: String = ""
-}
-
-
-/**
- - note: The KeystoneAffix service is currently inaccessible to the public
- */
-// https://us.api.battle.net/data/wow/keystone-affix/6?namespace=static-7.3.5_25875-us
-class KeystoneAffix: Codable {
-    
-}
-
-
-
 class LeadingGroup: Codable {
-    var ranking: Int = 0
-    var duration: Int = 0
-    var completedTimestamp: Int = 0
-    var keystoneLevel: Int = 0
+    let ranking: Int
+    let duration: Int
+    let completedTimestamp: Int
+    let keystoneLevel: Int
     
-    var members: [PartyMember] = [PartyMember]()
+    let members: [PartyMember]
     
     enum CodingKeys: String, CodingKey {
         case ranking
@@ -111,23 +75,23 @@ class LeadingGroup: Codable {
 
 
 class PartyMember: Codable {
-    var profile: Profile = Profile()
-    var faction: Faction = Faction()
-    var specialization: SpecializationLink = SpecializationLink()
+    let profile: WOWProfile
+    let faction: Faction
+    let specialization: KeyLink<Specialization>
 }
 
 
 
-class Profile: Codable {
-    var id: Int = 0
-    var name: String = ""
-    var realm: RealmLink = RealmLink()
+class WOWProfile: Codable {
+    let id: Int
+    let name: String
+    let realm: KeyLink<Realm>
 }
 
 
 
 class Faction: Codable {
-    var type: FactionType = .alliance
+    let type: FactionType
 }
 
 enum FactionType: String, Codable {
@@ -136,9 +100,49 @@ enum FactionType: String, Codable {
 }
 
 
+class WOWFaction: Codable {
+    let id: Int
+    let type: String
+    let name: String
+}
+
 
 class WOWMap: Codable {
-    var id: Int = 0
-    var name: String = ""
+    let id: Int
+    let name: String
 }
+
+
+
+class MythicRaidLeaderboard: Codable, SelfDecodable {
+    let _links: SelfLink<MythicRaidLeaderboard>
+    let slug: String
+    let criteriaType: String
+    let zone: ZoneInfo
+    let entries: [Entry]
+    
+    static var decoder: JSONDecoder {
+        let decoder = JSONDecoder()
+        decoder.keyDecodingStrategy = .convertFromSnakeCase
+        return decoder
+    }
+}
+
+
+class Entry: Codable {
+    let guild: Guild
+    let faction: Faction
+    let timestamp: Int
+    let region: APIRegion
+    let rank: Int
+}
+
+
+class Guild: Codable {
+    let name: String
+    let id: Int
+    let realm: RealmIndex
+}
+
+
 

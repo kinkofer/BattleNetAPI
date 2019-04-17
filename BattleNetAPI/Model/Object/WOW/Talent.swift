@@ -9,13 +9,13 @@
 import Foundation
 
 
-typealias TalentDictionary = [String: TalentLegacy]
+typealias ClassTalentDictionary = [String: ClassTalent]
 
-class TalentLegacy: Codable {
-    var specs: [SpecializationLegacy] = [SpecializationLegacy]()
-    var talents: [[[TalentElement]]] = [[[TalentElement]]]()
-    var `class`: String = ""
-    var petSpecs: [SpecializationLegacy]? = nil
+class ClassTalent: Codable {
+    let specs: [CharacterSpecialization]
+    let talents: [[[TalentElement]]]
+    let `class`: String
+    let petSpecs: [CharacterSpecialization]?
 }
 
 
@@ -29,35 +29,57 @@ enum RoleType: String, Codable {
 
 
 class TalentElement: Codable {
-    var tier: Int = 0
-    var column: Int = 0
-    var spell: SpellLegacy = SpellLegacy()
-    var spec: SpecializationLegacy? = nil
+    let tier: Int
+    let column: Int
+    let spell: CharacterSpell
+    let spec: CharacterSpecialization?
 }
 
 
 
-class SpellLegacy: Codable {
-    var id: Int = 0
-    var name: String = ""
-    var icon: String = ""
-    var description: String = ""
-    var castTime: CastTime = .instant
-    var range: Range? = nil
-    var cooldown: String? = nil
-    var powerCost: String? = nil
-    var subtext: String? = nil
+class CharacterSpell: Codable {
+    let id: Int
+    let name: String
+    let icon: String
+    let description: String
+    let castTime: CastTime
+    let range: Range?
+    let cooldown: String?
+    let powerCost: String?
+    let subtext: String?
 }
 
 
 
 class CharacterTalent: Codable {
-    var talents: [TalentElement] = [TalentElement]()
-    var spec: SpecializationLegacy? = nil
-    var selected: Bool? = nil
-    var calcTalent: String = ""
-    var calcSpec: String = ""
+    let talents: [TalentElement]
+    let spec: CharacterSpecialization?
+    let selected: Bool?
+    let calcTalent: String
+    let calcSpec: String
 }
 
 
 
+class PVPTalentSlots: Codable, SelfDecodable {
+    let _links: SelfLink<PVPTalentSlots>
+    let talentSlots: [TalentSlot]
+    
+    static var decoder: JSONDecoder {
+        let decoder = JSONDecoder()
+        decoder.keyDecodingStrategy = .convertFromSnakeCase
+        return decoder
+    }
+}
+
+
+class TalentSlot: Codable, SelfDecodable {
+    let slotNumber: Int
+    let unlockPlayerLevel: Int
+    
+    static var decoder: JSONDecoder {
+        let decoder = JSONDecoder()
+        decoder.keyDecodingStrategy = .convertFromSnakeCase
+        return decoder
+    }
+}

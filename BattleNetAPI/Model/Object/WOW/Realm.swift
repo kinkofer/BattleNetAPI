@@ -9,95 +9,81 @@
 import Foundation
 
 
-
 class RealmIndexResult: Codable {
-    var realms: [RealmIndex] = [RealmIndex]()
+    let realms: [RealmIndex]
 }
-
 
 
 class RealmIndex: Codable {
-    var id: Int = 0
-    var name: String = ""
-    var slug: String = ""
-}
-
-
-class RealmLink: Codable {
-    var key: Link<Region> = Link<Region>()
-    var id: Int = 0
-    var slug: String = ""
+    let id: Int
+    let name: String
+    let slug: String
 }
 
 
 // https://us.api.battle.net/data/wow/realm/61?namespace=dynamic-us
-class Realm: Codable {
-    var id = 0
-    var name = ""
-    var slug = ""
+class Realm: Codable, SelfDecodable {
+    let _links: SelfLink<Realm>?
+    let id: Int
+    let name: String
+    let slug: String
     
-    var isTournament = false
+    let isTournament: Bool
     
-    var type = RealmType()
-    var category = ""
-    var locale = ""
-    var timezone = ""
+    let type: RealmInfo
+    let category: String
+    let locale: String
+    let timezone: String
     
-    var region = RegionLink()
-    var connectedRealm: Link<ConnectedRealm> = Link<ConnectedRealm>()
+    let region: KeyLink<Region>
+    let connectedRealm: Link<ConnectedRealm>
     
-    enum CodingKeys: String, CodingKey {
-        case id
-        case name
-        case slug
-        case isTournament = "is_tournament"
-        case type
-        case category
-        case timezone
-        case region
+    static var decoder: JSONDecoder {
+        let decoder = JSONDecoder()
+        decoder.keyDecodingStrategy = .convertFromSnakeCase
+        return decoder
     }
 }
 
 
 
-class RealmType: Codable {
-    var name: String = ""
-    var type: String = ""
+class RealmInfo: Codable {
+    let name: String
+    let type: String
 }
 
 
 
-// MARK: - Realm Legacy
+// MARK: - Realm Data Resource
 
-class RealmIndexLegacy: Codable {
-    var realms: [RealmLegacy] = [RealmLegacy]()
-}
-
-
-
-class RealmLegacy: Codable {
-    var type: RealmTypeLegacy = .pve
-    var population: RealmPopulation = .notApplicable
-    var queue: Bool = false
-    var status: Bool = false
-    var name: String = ""
-    var slug: String = ""
-    var battlegroup: String = ""
-    var locale: String = ""
-    var timezone: String = ""
-    var connectedRealms: [String] = [String]()
+class WOWRealmIndex: Codable, SelfDecodable {
+    let realms: [WOWRealm]
     
-    enum CodingKeys: String, CodingKey {
-        case type
-        case population
-        case queue
-        case status
-        case name
-        case slug
-        case battlegroup
-        case locale
-        case timezone
-        case connectedRealms = "connected_realms"
+    static var decoder: JSONDecoder {
+        let decoder = JSONDecoder()
+        decoder.keyDecodingStrategy = .convertFromSnakeCase
+        return decoder
+    }
+}
+
+
+
+class WOWRealm: Codable, SelfDecodable {
+    let type: RealmType
+    let population: RealmPopulation
+    let queue: Bool
+    let status: Bool
+    let name: String
+    let slug: String
+    let battlegroup: String
+    let locale: String
+    let timezone: String
+    let connectedRealms: [String]
+    
+    static var decoder: JSONDecoder {
+        let decoder = JSONDecoder()
+        decoder.keyDecodingStrategy = .convertFromSnakeCase
+        return decoder
     }
 }
 
@@ -111,22 +97,20 @@ enum RealmPopulation: String, Codable {
 }
 
 
-enum RealmTypeLegacy: String, Codable {
-    case pve = "pve"
-    case pvp = "pvp"
-    case rp = "rp"
-    case rppvp = "rppvp"
+enum RealmType: String, Codable {
+    case normal
+    case roleplaying
 }
 
 
 
-class RealmSummaryLegacy: Codable {
-    var name: String = ""
-    var slug: String = ""
-    var battlegroup: String = ""
-    var locale: String = ""
-    var timezone: String = ""
-    var connectedRealms: [String] = [String]()
+class RealmSummary: Codable {
+    let name: String
+    let slug: String
+    let battlegroup: String
+    let locale: String
+    let timezone: String
+    let connectedRealms: [String]
     
     enum CodingKeys: String, CodingKey {
         case name

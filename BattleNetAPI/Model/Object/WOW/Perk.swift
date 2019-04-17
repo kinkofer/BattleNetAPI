@@ -10,12 +10,12 @@ import Foundation
 
 
 class PerkIndex: Codable {
-    var perks: [Perk] = [Perk]()
+    let perks: [Perk]
 }
 
 
 
 class Perk: Codable {
-    var guildLevel: Int = 0
-    var spell: Spell = Spell()
+    let guildLevel: Int
+    let spell: Spell
 }

@@ -10,8 +10,8 @@ import Foundation
 
 
 class WOWRecipe: Codable {
-    var id: Int = 0
-    var name: String = ""
-    var profession: String = ""
-    var icon: String = ""
+    let id: Int
+    let name: String
+    let profession: String
+    let icon: String
 }
