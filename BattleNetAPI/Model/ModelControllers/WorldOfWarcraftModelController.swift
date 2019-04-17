@@ -35,6 +35,22 @@ class WorldOfWarcraftModelController {
     }
     
     
+    // MARK: - WoW Mythic Keystone Character Profile API
+    
+    func getMythicKeystoneProfile(characterName: String, realmSlug: String, region: APIRegion = Current.region, locale: APILocale = Current.locale, completion: @escaping (_ result: Result<MythicKeystoneProfile, HTTPError>) -> Void) {
+        BattleNetAPI.wow.getMythicKeystoneProfile(characterName: characterName, realmSlug: realmSlug, region: region, locale: locale) { result in
+            result.decode(completion: completion)
+        }
+    }
+    
+    
+    func getMythicKeystoneProfileSeason(seasonID: Int, characterName: String, realmSlug: String, region: APIRegion = Current.region, locale: APILocale = Current.locale, completion: @escaping (_ result: Result<MythicKeystoneProfileSeason, HTTPError>) -> Void) {
+        BattleNetAPI.wow.getMythicKeystoneProfileSeason(seasonID: seasonID, characterName: characterName, realmSlug: realmSlug, region: region, locale: locale) { result in
+            result.decode(completion: completion)
+        }
+    }
+    
+    
     
     // MARK: - Connected Realm API
     

@@ -45,6 +45,41 @@ class WorldOfWarcraftTests: XCTestCase {
     }
     
     
+    // MARK: WoW Mythic Keystone Character Profile API
+    
+    func testGetMythicKeystoneProfile() {
+        let characterName = "kenkan"
+        let realm = "aegwynn"
+        
+        let wsResponseExpectation = expectation(description: "Web Service returned a response")
+        
+        BattleNetAPI.wow.getMythicKeystoneProfile(characterName: characterName, realmSlug: realm, region: region, locale: locale) { result in
+            BattleNetAPITests.webServiceClosureTest(result: result, decodable: MythicKeystoneProfile.self, expectation: wsResponseExpectation)
+        }
+        
+        waitForExpectations(timeout: 20) { error in
+            XCTAssertNil(error, "Exceeded timeout")
+        }
+    }
+    
+    
+    func testGetMythicKeystoneProfileSeason() {
+        let seasonID = 1
+        let characterName = "kenkan"
+        let realm = "aegwynn"
+        
+        let wsResponseExpectation = expectation(description: "Web Service returned a response")
+        
+        BattleNetAPI.wow.getMythicKeystoneProfileSeason(seasonID: seasonID, characterName: characterName, realmSlug: realm, region: region, locale: locale) { result in
+            BattleNetAPITests.webServiceClosureTest(result: result, decodable: MythicKeystoneProfileSeason.self, expectation: wsResponseExpectation)
+        }
+        
+        waitForExpectations(timeout: 20) { error in
+            XCTAssertNil(error, "Exceeded timeout")
+        }
+    }
+    
+    
     
     // MARK: - Connected Realm API
     

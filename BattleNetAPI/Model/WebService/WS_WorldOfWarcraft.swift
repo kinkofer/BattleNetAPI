@@ -61,6 +61,51 @@ class WS_WorldOfWarcraft: WebService {
     }
     
     
+    // MARK: WoW Mythic Keystone Character Profile API
+    
+    /**
+     Returns a Mythic Keystone Profile index for a character.
+     
+     - note: This request returns a 404 for characters that have not completed a Mythic Keystone dungeon.
+     
+     - parameter characterName: The lowercase name of the character
+     - parameter realmSlug: The slug of the realm
+     - parameter region: What region the request is being made
+     - parameter completion: Returns a Result with the Data if `success` or an HTTPError if `failure`
+     */
+    func getMythicKeystoneProfile(characterName: String, realmSlug: String, region: APIRegion, locale: APILocale?, completion: @escaping (_ result: Result<Data, HTTPError>) -> Void) {
+        let apiType: APIType = .profile
+        var urlStr = getBaseURL(region: region, apiType: apiType) + "/character/\(realmSlug)/\(characterName)/mythic-keystone-profile"
+        urlStr = appendSharedURLParameters(to: urlStr, withNamespace: "profile", region: region, locale: locale)
+        
+        self.callWebService(urlStr: urlStr, method: .get, apiType: .profile) { result in
+            completion(result)
+        }
+    }
+    
+    
+    /**
+     Returns a Mythic Keystone Profile index for a character.
+     
+     - note: This request returns a 404 for characters that have not completed a Mythic Keystone dungeon.
+     
+     - parameter seasonID: The ID of the Mythic Keystone season
+     - parameter characterName: The lowercase name of the character
+     - parameter realmSlug: The slug of the realm
+     - parameter region: What region the request is being made
+     - parameter completion: Returns a Result with the Data if `success` or an HTTPError if `failure`
+     */
+    func getMythicKeystoneProfileSeason(seasonID: Int, characterName: String, realmSlug: String, region: APIRegion, locale: APILocale?, completion: @escaping (_ result: Result<Data, HTTPError>) -> Void) {
+        let apiType: APIType = .profile
+        var urlStr = getBaseURL(region: region, apiType: apiType) + "/character/\(realmSlug)/\(characterName)/mythic-keystone-profile/season/\(seasonID)"
+        urlStr = appendSharedURLParameters(to: urlStr, withNamespace: "profile", region: region, locale: locale)
+        
+        self.callWebService(urlStr: urlStr, method: .get, apiType: .profile) { result in
+            completion(result)
+        }
+    }
+    
+    
     
     // MARK: - Game Data API
     
@@ -687,7 +732,7 @@ class WS_WorldOfWarcraft: WebService {
     
     
     
-    // MARK: - Boss API
+    // MARK: Boss API
     
     /**
      A list of all supported bosses. A 'boss' in this context should be considered a boss encounter, which may include more than one NPC.
@@ -826,7 +871,7 @@ class WS_WorldOfWarcraft: WebService {
     
     
     
-    // MARK: - Item API
+    // MARK: Item API
     
     /**
      The item API provides detailed item information. This includes item set information if this item is part of a set.

@@ -397,7 +397,7 @@ class WorldOfWarcraftViewController: UITableViewController, APIViewer {
     }
     
     
-    // MARK: - Mythic Keystone Dungeon API
+    // MARK: Mythic Keystone Dungeon API
     
     func getMythicKeystoneDungeons(region: APIRegion = Current.region, locale: APILocale? = Current.locale) {
         wowMC.getMythicKeystoneDungeons(region: region, locale: locale) { result in
@@ -1242,6 +1242,32 @@ class WorldOfWarcraftViewController: UITableViewController, APIViewer {
     }
     
     
+    // MARK: - Profile APIs
+    // MARK: WoW Mythic Keystone Character Profile API
+    
+    func getMythicKeystoneProfile(characterName: String, realmSlug: String, region: APIRegion = Current.region, locale: APILocale = Current.locale) {
+        wowMC.getMythicKeystoneProfile(characterName: characterName, realmSlug: realmSlug, region: region, locale: locale) { result in
+            switch result {
+            case .success(let profile):
+                Debug.print("Retrieved profile \(characterName) with \(profile.currentPeriod.bestRuns.count) best run(s)")
+            case .failure(let error):
+                self.handleError(error)
+            }
+        }
+    }
+    
+    
+    func getMythicKeystoneProfileSeason(seasonID: Int, characterName: String, realmSlug: String, region: APIRegion = Current.region, locale: APILocale = Current.locale) {
+        wowMC.getMythicKeystoneProfileSeason(seasonID: seasonID, characterName: characterName, realmSlug: realmSlug, region: region, locale: locale) { result in
+            switch result {
+            case .success(let season):
+                Debug.print("Retrieved season \(seasonID) with \(season.bestRuns.count) best run(s)")
+            case .failure(let error):
+                self.handleError(error)
+            }
+        }
+    }
+    
     
     // MARK: - Error handling
     
@@ -1473,9 +1499,9 @@ class WorldOfWarcraftViewController: UITableViewController, APIViewer {
             
             switch service {
             case .getCharacterMythicKeystoneProfile:
-                break
+                getMythicKeystoneProfile(characterName: "kenkan", realmSlug: "aegwynn")
             case .getCharacterMythicKeystoneProfileSeason:
-                break
+                getMythicKeystoneProfileSeason(seasonID: 1, characterName: "kenkan", realmSlug: "aegwynn")
             }
         }
     }
