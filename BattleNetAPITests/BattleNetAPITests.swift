@@ -13,8 +13,8 @@ import XCTest
 let clientID = AuthToken.clientID
 let clientSecret = AuthToken.clientSecret
 
-let clientAccessToken: String = AuthToken.clientAccessToken!
-let userAccessToken: String = AuthToken.userAccessToken!
+let clientAccessToken = AuthToken.clientAccessToken
+let userAccessToken = AuthToken.userAccessToken
 
 
 class BattleNetAPITests: XCTestCase {
@@ -22,8 +22,6 @@ class BattleNetAPITests: XCTestCase {
     override func setUp() {
         super.setUp()
         // Put setup code here. This method is called before the invocation of each test method in the class.
-        
-        
     }
     
     override func tearDown() {

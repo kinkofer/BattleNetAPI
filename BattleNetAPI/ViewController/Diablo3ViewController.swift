@@ -20,8 +20,10 @@ class Diablo3ViewController: UITableViewController, APIViewer {
     }
     
     
-    enum SectionType: String {
+    enum API: String {
+        // Game Data
         case gameData = "Game Data API"
+        // Community
         case d3Act = "D3 Act API"
         case d3ArtisanAndRecipe = "D3 Aristan and Recipe API"
         case d3Follower = "D3 Follower API"
@@ -41,6 +43,8 @@ class Diablo3ViewController: UITableViewController, APIViewer {
         case era = "Era"
         case eraLeaderboard = "Era Leaderboard"
     }
+    
+    
     
     enum CommunityService: String, CaseIterable {
         // Act
@@ -68,7 +72,7 @@ class Diablo3ViewController: UITableViewController, APIViewer {
     
     
     struct Section: TableSection {
-        typealias SectionTypeEnum = SectionType
+        typealias SectionType = API
         
         var type: SectionType
         var rows: [Any]
@@ -138,6 +142,11 @@ class Diablo3ViewController: UITableViewController, APIViewer {
             switch result {
             case .success(let seasonIndex):
                 Debug.print("Retrieved \(seasonIndex.season.count) Seasons")
+                let viewController = ViewerTableViewController()
+                viewController.dataSourceObj = seasonIndex
+                DispatchQueue.main.async {
+                    self.navigationController?.pushViewController(viewController, animated: true)
+                }
             case .failure(let error):
                 self.handleError(error)
             }
@@ -150,6 +159,11 @@ class Diablo3ViewController: UITableViewController, APIViewer {
             switch result {
             case .success(let seasonLeaderboard):
                 Debug.print("Retrieved \(seasonLeaderboard.leaderboard.count) Leaderboards for Season \(seasonID)")
+                let viewController = ViewerTableViewController()
+                viewController.dataSourceObj = seasonLeaderboard
+                DispatchQueue.main.async {
+                    self.navigationController?.pushViewController(viewController, animated: true)
+                }
             case .failure(let error):
                 self.handleError(error)
             }
@@ -162,6 +176,11 @@ class Diablo3ViewController: UITableViewController, APIViewer {
             switch result {
             case .success(let leaderboard):
                 Debug.print("Retrieved Season Leaderboard \(leaderboard.season) which has \(leaderboard.column.count) Column(s) and \(leaderboard.row.count) Entry(s)")
+                let viewController = ViewerTableViewController()
+                viewController.dataSourceObj = leaderboard
+                DispatchQueue.main.async {
+                    self.navigationController?.pushViewController(viewController, animated: true)
+                }
             case .failure(let error):
                 self.handleError(error)
             }
@@ -174,6 +193,11 @@ class Diablo3ViewController: UITableViewController, APIViewer {
             switch result {
             case .success(let eraIndex):
                 Debug.print("Retrieved \(eraIndex.era.count) Eras")
+                let viewController = ViewerTableViewController()
+                viewController.dataSourceObj = eraIndex
+                DispatchQueue.main.async {
+                    self.navigationController?.pushViewController(viewController, animated: true)
+                }
             case .failure(let error):
                 self.handleError(error)
             }
@@ -186,6 +210,11 @@ class Diablo3ViewController: UITableViewController, APIViewer {
             switch result {
             case .success(let eraLeaderboard):
                 Debug.print("Retrieved \(eraLeaderboard.leaderboard.count) Leaderboards for Era \(eraID)")
+                let viewController = ViewerTableViewController()
+                viewController.dataSourceObj = eraLeaderboard
+                DispatchQueue.main.async {
+                    self.navigationController?.pushViewController(viewController, animated: true)
+                }
             case .failure(let error):
                 self.handleError(error)
             }
@@ -198,6 +227,11 @@ class Diablo3ViewController: UITableViewController, APIViewer {
             switch result {
             case .success(let leaderboard):
                 Debug.print("Retrieved Era Leaderboard \(leaderboard.era) which has \(leaderboard.column.count) Column(s) and \(leaderboard.row.count) Entry(s)")
+                let viewController = ViewerTableViewController()
+                viewController.dataSourceObj = leaderboard
+                DispatchQueue.main.async {
+                    self.navigationController?.pushViewController(viewController, animated: true)
+                }
             case .failure(let error):
                 self.handleError(error)
             }
@@ -213,6 +247,11 @@ class Diablo3ViewController: UITableViewController, APIViewer {
             switch result {
             case .success(let acts):
                 Debug.print("Retrieved \(acts.count) Acts")
+                let viewController = ViewerTableViewController()
+                viewController.dataSourceArr = acts
+                DispatchQueue.main.async {
+                    self.navigationController?.pushViewController(viewController, animated: true)
+                }
             case .failure(let error):
                 self.handleError(error)
             }
@@ -225,6 +264,11 @@ class Diablo3ViewController: UITableViewController, APIViewer {
             switch result {
             case .success(let act):
                 Debug.print("Retrieved \(act.name)")
+                let viewController = ViewerTableViewController()
+                viewController.dataSourceObj = act
+                DispatchQueue.main.async {
+                    self.navigationController?.pushViewController(viewController, animated: true)
+                }
             case .failure(let error):
                 self.handleError(error)
             }
@@ -237,6 +281,11 @@ class Diablo3ViewController: UITableViewController, APIViewer {
             switch result {
             case .success(let artisan):
                 Debug.print("Artisan \(artisan.name) has \(artisan.training.tiers.first!.trainedRecipes.count) Trained Recipes at first tier")
+                let viewController = ViewerTableViewController()
+                viewController.dataSourceObj = artisan
+                DispatchQueue.main.async {
+                    self.navigationController?.pushViewController(viewController, animated: true)
+                }
             case .failure(let error):
                 self.handleError(error)
             }
@@ -249,6 +298,11 @@ class Diablo3ViewController: UITableViewController, APIViewer {
             switch result {
             case .success(let recipe):
                 Debug.print("Recipe \(recipe.name) has \(recipe.reagents.count) Reagents and produces \(recipe.itemProduced.name)")
+                let viewController = ViewerTableViewController()
+                viewController.dataSourceObj = recipe
+                DispatchQueue.main.async {
+                    self.navigationController?.pushViewController(viewController, animated: true)
+                }
             case .failure(let error):
                 self.handleError(error)
             }
@@ -261,6 +315,11 @@ class Diablo3ViewController: UITableViewController, APIViewer {
             switch result {
             case .success(let follower):
                 Debug.print("Follower \(follower.name) has \(follower.skills.count) Skills")
+                let viewController = ViewerTableViewController()
+                viewController.dataSourceObj = follower
+                DispatchQueue.main.async {
+                    self.navigationController?.pushViewController(viewController, animated: true)
+                }
             case .failure(let error):
                 self.handleError(error)
             }
@@ -273,6 +332,11 @@ class Diablo3ViewController: UITableViewController, APIViewer {
             switch result {
             case .success(let d3Class):
                 Debug.print("Class \(d3Class.name) has \(d3Class.skills.active.count) Active Skills")
+                let viewController = ViewerTableViewController()
+                viewController.dataSourceObj = d3Class
+                DispatchQueue.main.async {
+                    self.navigationController?.pushViewController(viewController, animated: true)
+                }
             case .failure(let error):
                 self.handleError(error)
             }
@@ -285,6 +349,11 @@ class Diablo3ViewController: UITableViewController, APIViewer {
             switch result {
             case .success(let skillConfig):
                 Debug.print("Skill \(skillConfig.skill.name) has \(skillConfig.runes?.count ?? 0) Runes")
+                let viewController = ViewerTableViewController()
+                viewController.dataSourceObj = skillConfig
+                DispatchQueue.main.async {
+                    self.navigationController?.pushViewController(viewController, animated: true)
+                }
             case .failure(let error):
                 self.handleError(error)
             }
@@ -297,6 +366,11 @@ class Diablo3ViewController: UITableViewController, APIViewer {
             switch result {
             case .success(let itemTypes):
                 Debug.print("Retrieved \(itemTypes.count) Item Type(s)")
+                let viewController = ViewerTableViewController()
+                viewController.dataSourceArr = itemTypes
+                DispatchQueue.main.async {
+                    self.navigationController?.pushViewController(viewController, animated: true)
+                }
             case .failure(let error):
                 self.handleError(error)
             }
@@ -309,6 +383,11 @@ class Diablo3ViewController: UITableViewController, APIViewer {
             switch result {
             case .success(let items):
                 Debug.print("Retrieved \(items.count) Item(s)")
+                let viewController = ViewerTableViewController()
+                viewController.dataSourceArr = items
+                DispatchQueue.main.async {
+                    self.navigationController?.pushViewController(viewController, animated: true)
+                }
             case .failure(let error):
                 self.handleError(error)
             }
@@ -321,6 +400,11 @@ class Diablo3ViewController: UITableViewController, APIViewer {
             switch result {
             case .success(let item):
                 Debug.print("Retrieved Full Item \(item.name)")
+                let viewController = ViewerTableViewController()
+                viewController.dataSourceObj = item
+                DispatchQueue.main.async {
+                    self.navigationController?.pushViewController(viewController, animated: true)
+                }
             case .failure(let error):
                 self.handleError(error)
             }
@@ -333,6 +417,11 @@ class Diablo3ViewController: UITableViewController, APIViewer {
             switch result {
             case .success(let profile):
                 Debug.print("Retrieved Profile \(profile.battleTag)")
+                let viewController = ViewerTableViewController()
+                viewController.dataSourceObj = profile
+                DispatchQueue.main.async {
+                    self.navigationController?.pushViewController(viewController, animated: true)
+                }
             case .failure(let error):
                 self.handleError(error)
             }
@@ -345,6 +434,11 @@ class Diablo3ViewController: UITableViewController, APIViewer {
             switch result {
             case .success(let hero):
                 Debug.print("Retrieved Hero \(hero.name) with Main Hand Item \(hero.items.mainHand?.name ?? "no item")")
+                let viewController = ViewerTableViewController()
+                viewController.dataSourceObj = hero
+                DispatchQueue.main.async {
+                    self.navigationController?.pushViewController(viewController, animated: true)
+                }
             case .failure(let error):
                 self.handleError(error)
             }
@@ -371,6 +465,11 @@ class Diablo3ViewController: UITableViewController, APIViewer {
                              equippedItems.offHand?.slots].compactMap({$0})
                 
                 Debug.print("Hero \(heroID) has items equipped to \(slots.joined(separator: ", "))")
+                let viewController = ViewerTableViewController()
+                viewController.dataSourceObj = equippedItems
+                DispatchQueue.main.async {
+                    self.navigationController?.pushViewController(viewController, animated: true)
+                }
             case .failure(let error):
                 self.handleError(error)
             }
@@ -401,6 +500,11 @@ class Diablo3ViewController: UITableViewController, APIViewer {
                 Debug.print("Hero \(heroID)'s templar has items equipped to \(slots(heroFollower.templar).joined(separator: ", "))")
                 Debug.print("Hero \(heroID)'s scoundrel has items equipped to \(slots(heroFollower.scoundrel).joined(separator: ", "))")
                 Debug.print("Hero \(heroID)'s enchantress has items equipped to \(slots(heroFollower.enchantress).joined(separator: ", "))")
+                let viewController = ViewerTableViewController()
+                viewController.dataSourceObj = heroFollower
+                DispatchQueue.main.async {
+                    self.navigationController?.pushViewController(viewController, animated: true)
+                }
             case .failure(let error):
                 self.handleError(error)
             }

@@ -12,7 +12,7 @@ import Foundation
 class WS_WorldOfWarcraft: WebService {
     private let network = Network.shared
     
-    func getBaseURL(region: APIRegion, apiType: APIType?) -> String {
+    internal func getBaseURL(region: APIRegion, apiType: APIType?) -> String {
         var url = region.apiURI
         
         if let apiType = apiType {

@@ -14,7 +14,7 @@ class StarCraft2ViewController: UITableViewController, APIViewer {
     }
     
     
-    enum SectionType: String {
+    enum API: String {
         case gameData = "Game Data API"
         case profile = "Profile API"
         case ladder = "Ladder API"
@@ -44,7 +44,7 @@ class StarCraft2ViewController: UITableViewController, APIViewer {
     
     
     struct Section: TableSection {
-        typealias SectionTypeEnum = SectionType
+        typealias SectionType = API
         
         var type: SectionType
         var rows: [Any]
@@ -105,6 +105,11 @@ class StarCraft2ViewController: UITableViewController, APIViewer {
             switch result {
             case .success(let league):
                 Debug.print("Retrieved League \(league.key.leagueID) with \(league.tier.count) tier(s)")
+                let viewController = ViewerTableViewController()
+                viewController.dataSourceObj = league
+                DispatchQueue.main.async {
+                    self.navigationController?.pushViewController(viewController, animated: true)
+                }
             case .failure(let error):
                 self.handleError(error)
             }
@@ -122,6 +127,11 @@ class StarCraft2ViewController: UITableViewController, APIViewer {
             switch result {
             case .success(let profile):
                 Debug.print("Retrieved profile with \(profile.achievements.count) Achievements, \(profile.categories.count) Categories, \(profile.criteria.count) Criteria, \(profile.rewards.count) Rewards")
+                let viewController = ViewerTableViewController()
+                viewController.dataSourceObj = profile
+                DispatchQueue.main.async {
+                    self.navigationController?.pushViewController(viewController, animated: true)
+                }
             case .failure(let error):
                 self.handleError(error)
             }
@@ -134,6 +144,11 @@ class StarCraft2ViewController: UITableViewController, APIViewer {
             switch result {
             case .success(let player):
                 Debug.print("Retrieved player \(player.name) with profileID \(player.profileID) and realmID \(player.realmID)")
+                let viewController = ViewerTableViewController()
+                viewController.dataSourceObj = player
+                DispatchQueue.main.async {
+                    self.navigationController?.pushViewController(viewController, animated: true)
+                }
             case .failure(let error):
                 self.handleError(error)
             }
@@ -146,6 +161,11 @@ class StarCraft2ViewController: UITableViewController, APIViewer {
             switch result {
             case .success(let profile):
                 Debug.print("Retrieved profile \(profile.summary.displayName) with \(profile.earnedAchievements.count) earned achievement(s)")
+                let viewController = ViewerTableViewController()
+                viewController.dataSourceObj = profile
+                DispatchQueue.main.async {
+                    self.navigationController?.pushViewController(viewController, animated: true)
+                }
             case .failure(let error):
                 self.handleError(error)
             }
@@ -158,6 +178,11 @@ class StarCraft2ViewController: UITableViewController, APIViewer {
             switch result {
             case .success(let ladderSummary):
                 Debug.print("Ladder Summary retrieved with \(ladderSummary.allLadderMemberships.count) ladder membership(s), \(ladderSummary.placementMatches.count) placement match(s), and \(ladderSummary.showCaseEntries.count) show case entry(s)")
+                let viewController = ViewerTableViewController()
+                viewController.dataSourceObj = ladderSummary
+                DispatchQueue.main.async {
+                    self.navigationController?.pushViewController(viewController, animated: true)
+                }
             case .failure(let error):
                 self.handleError(error)
             }
@@ -170,6 +195,11 @@ class StarCraft2ViewController: UITableViewController, APIViewer {
             switch result {
             case .success(let ladder):
                 Debug.print("Ladder retrieved in \(ladder.league) league with \(ladder.ladderTeams.count) ladder teams(s)")
+                let viewController = ViewerTableViewController()
+                viewController.dataSourceObj = ladder
+                DispatchQueue.main.async {
+                    self.navigationController?.pushViewController(viewController, animated: true)
+                }
             case .failure(let error):
                 self.handleError(error)
             }
@@ -184,6 +214,11 @@ class StarCraft2ViewController: UITableViewController, APIViewer {
             switch result {
             case .success(let leaderboard):
                 Debug.print("Retrieved Grandmaster Leaderbaord with \(leaderboard.ladderTeams.count) ladder teams(s)")
+                let viewController = ViewerTableViewController()
+                viewController.dataSourceObj = leaderboard
+                DispatchQueue.main.async {
+                    self.navigationController?.pushViewController(viewController, animated: true)
+                }
             case .failure(let error):
                 self.handleError(error)
             }
@@ -196,6 +231,11 @@ class StarCraft2ViewController: UITableViewController, APIViewer {
             switch result {
             case .success(let season):
                 Debug.print("Retrieved \(season.year) season")
+                let viewController = ViewerTableViewController()
+                viewController.dataSourceObj = season
+                DispatchQueue.main.async {
+                    self.navigationController?.pushViewController(viewController, animated: true)
+                }
             case .failure(let error):
                 self.handleError(error)
             }
@@ -210,6 +250,11 @@ class StarCraft2ViewController: UITableViewController, APIViewer {
             switch result {
             case .success(let players):
                 Debug.print("Retrieved \(players.count) player(s) named \(players.map { $0.name }.joined(separator: ", "))")
+                let viewController = ViewerTableViewController()
+                viewController.dataSourceArr = players
+                DispatchQueue.main.async {
+                    self.navigationController?.pushViewController(viewController, animated: true)
+                }
             case .failure(let error):
                 self.handleError(error)
             }

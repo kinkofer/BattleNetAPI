@@ -10,9 +10,9 @@ import Foundation
 
 
 public protocol TableSection {
-    associatedtype SectionTypeEnum: Equatable
+    associatedtype SectionType: Equatable
     
-    var type: SectionTypeEnum { get }
+    var type: SectionType { get }
     var rows: [Any] { get set }
     
     
@@ -25,7 +25,7 @@ public protocol TableSection {
 extension Array where Element: TableSection {
     /// Returns the first TableSection in the array that matches the type
     /// - note: The TableSection array is expected to have unique types, that's why it only returns one section
-    public func getSection(for type: Element.SectionTypeEnum) -> Element? {
+    public func getSection(for type: Element.SectionType) -> Element? {
         return self.first { $0.type == type }
     }
     

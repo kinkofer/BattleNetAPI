@@ -25,7 +25,7 @@ class MythicKeystoneProfile: Codable, SelfDecodable {
 
 class CurrentPeriod: Codable, SelfDecodable {
     let period: KeyLink<MythicKeystoneProfileSeason>
-    let bestRuns: [BestRun]
+    let bestRuns: [BestRun]?
     
     static var decoder: JSONDecoder {
         let decoder = JSONDecoder()

@@ -1,9 +1,9 @@
 //
-//  BattleNetAPI.swift
+//  API_Enums.swift
 //  BattleNetAPI
 //
-//  Created by Christopher Jennewein on 4/6/18.
-//  Copyright © 2018 Prismatic Games. All rights reserved.
+//  Created by Christopher Jennewein on 6/2/19.
+//  Copyright © 2019 Prismatic Games. All rights reserved.
 //
 
 import Foundation
@@ -14,7 +14,6 @@ enum APIType: String {
     case gameData = "data"
     case profile
     case community
-    
     
     var displayName: String {
         switch self {
@@ -148,20 +147,4 @@ enum APILocale: String {
     case ru_RU
     case zh_CN
     case zh_TW
-}
-
-
-/// This class is an interface to all the web services, with separate properties for accessing authentication, user, and specific game web services.
-class BattleNetAPI {
-    /// Authenication web services
-    public static let authentication = WS_Authentication()
-    /// User web services
-    public static let user = WS_User()
-    
-    /// World of Warcraft web services
-    public static let wow = WS_WorldOfWarcraft()
-    /// StarCraft 2 web services
-    public static let sc2 = WS_StarCraft2()
-    /// Diablo 3 web services
-    public static let d3 = WS_Diablo3()
 }

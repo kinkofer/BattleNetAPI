@@ -23,7 +23,7 @@ class ViewController: UIViewController {
     
     
     struct Section: TableSection {
-        typealias SectionTypeEnum = Game
+        typealias SectionType = Game
         
         var type: Game
         var rows: [Any]

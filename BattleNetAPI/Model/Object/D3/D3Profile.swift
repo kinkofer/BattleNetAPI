@@ -58,13 +58,13 @@ class Kills: Codable {
 
 
 class TimePlayed: Codable {
-    let demonHunter: Double
     let barbarian: Double
-    let witchDoctor: Double
-    let necromancer: Double
-    let wizard: Double
-    let monk: Double
     let crusader: Double
+    let demonHunter: Double
+    let monk: Double
+    let necromancer: Double
+    let witchDoctor: Double
+    let wizard: Double
     
     enum CodingKeys: String, CodingKey {
         case demonHunter = "demon-hunter"
