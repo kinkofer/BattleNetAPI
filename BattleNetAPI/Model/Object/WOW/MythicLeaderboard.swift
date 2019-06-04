@@ -28,7 +28,7 @@ class MythicLeaderboard: Codable {
     let _links: SelfLink<MythicLeaderboard>
     let name: String
     
-    let map: WOWMap
+    let map: Map
     let mapChallengeModeID: Int
     
     let period: Int
@@ -105,13 +105,6 @@ class WOWFaction: Codable {
     let type: String
     let name: String
 }
-
-
-class WOWMap: Codable {
-    let id: Int
-    let name: String
-}
-
 
 
 class MythicRaidLeaderboard: Codable, SelfDecodable {

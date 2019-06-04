@@ -14,7 +14,7 @@ class WorldOfWarcraftViewController: UITableViewController, APIViewer {
     }
     
     
-    enum SectionType: String {
+    enum API: String {
         // Game Data
         case connectedRealm = "Connected Realm API"
         case mythicKeystoneAffix = "Mythic Keystone Affix API"
@@ -212,7 +212,7 @@ class WorldOfWarcraftViewController: UITableViewController, APIViewer {
     
     
     struct Section: TableSection {
-        typealias SectionTypeEnum = SectionType
+        typealias SectionType = API
         
         var type: SectionType
         var rows: [Any]
@@ -338,6 +338,11 @@ class WorldOfWarcraftViewController: UITableViewController, APIViewer {
             switch result {
             case .success(let connectedRealms):
                 Debug.print("Retrieved \(connectedRealms.count) conntected Realm(s)")
+                let viewController = ViewerTableViewController()
+                viewController.dataSourceArr = connectedRealms
+                DispatchQueue.main.async {
+                    self.navigationController?.pushViewController(viewController, animated: true)
+                }
             case .failure(let error):
                 self.handleError(error)
             }
@@ -350,6 +355,11 @@ class WorldOfWarcraftViewController: UITableViewController, APIViewer {
             switch result {
             case .success(let connectedRealm):
                 Debug.print("Retrieved connectedRealm.id \(connectedRealm.id) with \(connectedRealm.realms.count) Realm(s)")
+                let viewController = ViewerTableViewController()
+                viewController.dataSourceObj = connectedRealm
+                DispatchQueue.main.async {
+                    self.navigationController?.pushViewController(viewController, animated: true)
+                }
             case .failure(let error):
                 self.handleError(error)
             }
@@ -364,6 +374,11 @@ class WorldOfWarcraftViewController: UITableViewController, APIViewer {
             switch result {
             case .success(let mythicKeystoneAffixes):
                 Debug.print("Retrieved \(mythicKeystoneAffixes.affixes.count) mythic keystone affix(s)")
+                let viewController = ViewerTableViewController()
+                viewController.dataSourceObj = mythicKeystoneAffixes
+                DispatchQueue.main.async {
+                    self.navigationController?.pushViewController(viewController, animated: true)
+                }
             case .failure(let error):
                 self.handleError(error)
             }
@@ -376,6 +391,11 @@ class WorldOfWarcraftViewController: UITableViewController, APIViewer {
             switch result {
             case .success(let mythicKeystoneAffix):
                 Debug.print("Retrieved mythic keystone affix \(mythicKeystoneAffix.name)")
+                let viewController = ViewerTableViewController()
+                viewController.dataSourceObj = mythicKeystoneAffix
+                DispatchQueue.main.async {
+                    self.navigationController?.pushViewController(viewController, animated: true)
+                }
             case .failure(let error):
                 self.handleError(error)
             }
@@ -390,6 +410,11 @@ class WorldOfWarcraftViewController: UITableViewController, APIViewer {
             switch result {
             case .success(let mythicRaidLeaderboard):
                 Debug.print("Retrieved mythic raid leaderboard with \(mythicRaidLeaderboard.entries.count) entry(s)")
+                let viewController = ViewerTableViewController()
+                viewController.dataSourceObj = mythicRaidLeaderboard
+                DispatchQueue.main.async {
+                    self.navigationController?.pushViewController(viewController, animated: true)
+                }
             case .failure(let error):
                 self.handleError(error)
             }
@@ -404,6 +429,11 @@ class WorldOfWarcraftViewController: UITableViewController, APIViewer {
             switch result {
             case .success(let mythicKeystoneDungeons):
                 Debug.print("Retrieved \(mythicKeystoneDungeons.dungeons.count) mythic keystone dungeon(s)")
+                let viewController = ViewerTableViewController()
+                viewController.dataSourceObj = mythicKeystoneDungeons
+                DispatchQueue.main.async {
+                    self.navigationController?.pushViewController(viewController, animated: true)
+                }
             case .failure(let error):
                 self.handleError(error)
             }
@@ -416,6 +446,11 @@ class WorldOfWarcraftViewController: UITableViewController, APIViewer {
             switch result {
             case .success(let mythicKeystoneDungeon):
                 Debug.print("Retrieved mythic keystone dungeon \(mythicKeystoneDungeon.name) with \(mythicKeystoneDungeon.keystoneUpgrades.count) keystone upgrade(s)")
+                let viewController = ViewerTableViewController()
+                viewController.dataSourceObj = mythicKeystoneDungeon
+                DispatchQueue.main.async {
+                    self.navigationController?.pushViewController(viewController, animated: true)
+                }
             case .failure(let error):
                 self.handleError(error)
             }
@@ -426,8 +461,13 @@ class WorldOfWarcraftViewController: UITableViewController, APIViewer {
     func getMythicKeystones(region: APIRegion = Current.region, locale: APILocale? = Current.locale) {
         wowMC.getMythicKeystones(region: region, locale: locale) { result in
             switch result {
-            case .success(_):
+            case .success(let mythicKeystoneIndex):
                 Debug.print("Retrieved mythic keystone index")
+                let viewController = ViewerTableViewController()
+                viewController.dataSourceObj = mythicKeystoneIndex
+                DispatchQueue.main.async {
+                    self.navigationController?.pushViewController(viewController, animated: true)
+                }
             case .failure(let error):
                 self.handleError(error)
             }
@@ -440,6 +480,11 @@ class WorldOfWarcraftViewController: UITableViewController, APIViewer {
             switch result {
             case .success(let mythicKeystonePeriods):
                 Debug.print("Retrieved \(mythicKeystonePeriods.periods.count) mythic keystone period(s)")
+                let viewController = ViewerTableViewController()
+                viewController.dataSourceObj = mythicKeystonePeriods
+                DispatchQueue.main.async {
+                    self.navigationController?.pushViewController(viewController, animated: true)
+                }
             case .failure(let error):
                 self.handleError(error)
             }
@@ -452,6 +497,11 @@ class WorldOfWarcraftViewController: UITableViewController, APIViewer {
             switch result {
             case .success(let mythicKeystonePeriod):
                 Debug.print("Retrieved mythic keystone period \(mythicKeystonePeriod.id)")
+                let viewController = ViewerTableViewController()
+                viewController.dataSourceObj = mythicKeystonePeriod
+                DispatchQueue.main.async {
+                    self.navigationController?.pushViewController(viewController, animated: true)
+                }
             case .failure(let error):
                 self.handleError(error)
             }
@@ -464,6 +514,11 @@ class WorldOfWarcraftViewController: UITableViewController, APIViewer {
             switch result {
             case .success(let mythicKeystoneSeasons):
                 Debug.print("Retrieved \(mythicKeystoneSeasons.seasons.count) mythic keystone season(s)")
+                let viewController = ViewerTableViewController()
+                viewController.dataSourceObj = mythicKeystoneSeasons
+                DispatchQueue.main.async {
+                    self.navigationController?.pushViewController(viewController, animated: true)
+                }
             case .failure(let error):
                 self.handleError(error)
             }
@@ -476,6 +531,11 @@ class WorldOfWarcraftViewController: UITableViewController, APIViewer {
             switch result {
             case .success(let mythicKeystoneSeason):
                 Debug.print("Retrieved mythic keystone season \(mythicKeystoneSeason.id) with \(mythicKeystoneSeason.periods.count) keystone period(s)")
+                let viewController = ViewerTableViewController()
+                viewController.dataSourceObj = mythicKeystoneSeason
+                DispatchQueue.main.async {
+                    self.navigationController?.pushViewController(viewController, animated: true)
+                }
             case .failure(let error):
                 self.handleError(error)
             }
@@ -490,6 +550,11 @@ class WorldOfWarcraftViewController: UITableViewController, APIViewer {
             switch result {
             case .success(let leaderboards):
                 Debug.print("Retrieved \(leaderboards.currentLeaderboards.count) Current Leaderboard(s)")
+                let viewController = ViewerTableViewController()
+                viewController.dataSourceObj = leaderboards
+                DispatchQueue.main.async {
+                    self.navigationController?.pushViewController(viewController, animated: true)
+                }
             case .failure(let error):
                 self.handleError(error)
             }
@@ -503,6 +568,11 @@ class WorldOfWarcraftViewController: UITableViewController, APIViewer {
             case .success(let leaderboard):
                 let keystoneAffixes = leaderboard.keystoneAffixes.compactMap { $0.keystoneAffix.name }
                 Debug.print("Retrieved Mythic Leaderboard \(leaderboard.name) with Keystone Affixes \(keystoneAffixes.joined(separator: ", "))")
+                let viewController = ViewerTableViewController()
+                viewController.dataSourceObj = leaderboard
+                DispatchQueue.main.async {
+                    self.navigationController?.pushViewController(viewController, animated: true)
+                }
             case .failure(let error):
                 self.handleError(error)
             }
@@ -516,6 +586,11 @@ class WorldOfWarcraftViewController: UITableViewController, APIViewer {
             case .success(let mythicChallengeMode):
                 let keystoneAffixes = mythicChallengeMode.currentKeystoneAffixes.compactMap { $0.keystoneAffix.name }
                 Debug.print("Retrieved Mythic Challenge Mode with Current Period \(mythicChallengeMode.currentPeriod) with Keystone Affixes \(keystoneAffixes.joined(separator: ", "))")
+                let viewController = ViewerTableViewController()
+                viewController.dataSourceObj = mythicChallengeMode
+                DispatchQueue.main.async {
+                    self.navigationController?.pushViewController(viewController, animated: true)
+                }
             case .failure(let error):
                 self.handleError(error)
             }
@@ -530,6 +605,11 @@ class WorldOfWarcraftViewController: UITableViewController, APIViewer {
             switch result {
             case .success(let classIndex):
                 Debug.print("Retrieved \(classIndex.classes.count) WOW Playable Class(s)")
+                let viewController = ViewerTableViewController()
+                viewController.dataSourceObj = classIndex
+                DispatchQueue.main.async {
+                    self.navigationController?.pushViewController(viewController, animated: true)
+                }
             case .failure(let error):
                 self.handleError(error)
             }
@@ -543,14 +623,10 @@ class WorldOfWarcraftViewController: UITableViewController, APIViewer {
             case .success(let wowClass):
                 let specializations = wowClass.specializations.map { $0.name ?? "Unknown" }
                 Debug.print("Retrieved WOW Class \(wowClass.name) with Specializations \(specializations.joined(separator: ", "))")
-                
-                self.wowMC.getResource(from: wowClass.media.key) { result in
-                    switch result {
-                    case .success(let media):
-                        Debug.print("\(media.assets.first!.value)")
-                    case .failure(let error):
-                        self.handleError(error)
-                    }
+                let viewController = ViewerTableViewController()
+                viewController.dataSourceObj = wowClass
+                DispatchQueue.main.async {
+                    self.navigationController?.pushViewController(viewController, animated: true)
                 }
             case .failure(let error):
                 self.handleError(error)
@@ -564,6 +640,11 @@ class WorldOfWarcraftViewController: UITableViewController, APIViewer {
             switch result {
             case .success(let pvpTalentSlots):
                 Debug.print("Retrieved PvP Talent Slots with \(pvpTalentSlots.talentSlots.count) talent slot(s)")
+                let viewController = ViewerTableViewController()
+                viewController.dataSourceObj = pvpTalentSlots
+                DispatchQueue.main.async {
+                    self.navigationController?.pushViewController(viewController, animated: true)
+                }
             case .failure(let error):
                 self.handleError(error)
             }
@@ -578,6 +659,11 @@ class WorldOfWarcraftViewController: UITableViewController, APIViewer {
             switch result {
             case .success(let specializations):
                 Debug.print("Retrieved \(specializations.characterSpecializations.count) Character Specialization(s) and \(specializations.petSpecializations.count) Pet Specialization(s)")
+                let viewController = ViewerTableViewController()
+                viewController.dataSourceObj = specializations
+                DispatchQueue.main.async {
+                    self.navigationController?.pushViewController(viewController, animated: true)
+                }
             case .failure(let error):
                 self.handleError(error)
             }
@@ -590,6 +676,11 @@ class WorldOfWarcraftViewController: UITableViewController, APIViewer {
             switch result {
             case .success(let specialization):
                 Debug.print("Retrieved Specialization \(specialization.name) for Playable Class \(specialization.playableClass.name ?? "Unknown")")
+                let viewController = ViewerTableViewController()
+                viewController.dataSourceObj = specialization
+                DispatchQueue.main.async {
+                    self.navigationController?.pushViewController(viewController, animated: true)
+                }
             case .failure(let error):
                 self.handleError(error)
             }
@@ -604,6 +695,11 @@ class WorldOfWarcraftViewController: UITableViewController, APIViewer {
             switch result {
             case .success(let powerTypeIndex):
                 Debug.print("Retrieved \(powerTypeIndex.powerTypes.count) Power Type(s)")
+                let viewController = ViewerTableViewController()
+                viewController.dataSourceObj = powerTypeIndex
+                DispatchQueue.main.async {
+                    self.navigationController?.pushViewController(viewController, animated: true)
+                }
             case .failure(let error):
                 self.handleError(error)
             }
@@ -616,6 +712,11 @@ class WorldOfWarcraftViewController: UITableViewController, APIViewer {
             switch result {
             case .success(let powerType):
                 Debug.print("Retrieved Power Type \(powerType.name)")
+                let viewController = ViewerTableViewController()
+                viewController.dataSourceObj = powerType
+                DispatchQueue.main.async {
+                    self.navigationController?.pushViewController(viewController, animated: true)
+                }
             case .failure(let error):
                 self.handleError(error)
             }
@@ -630,6 +731,11 @@ class WorldOfWarcraftViewController: UITableViewController, APIViewer {
             switch result {
             case .success(let racesIndex):
                 Debug.print("Retrieved \(racesIndex.races.count) Playable Character Race(s)")
+                let viewController = ViewerTableViewController()
+                viewController.dataSourceObj = racesIndex
+                DispatchQueue.main.async {
+                    self.navigationController?.pushViewController(viewController, animated: true)
+                }
             case .failure(let error):
                 self.handleError(error)
             }
@@ -642,6 +748,11 @@ class WorldOfWarcraftViewController: UITableViewController, APIViewer {
             switch result {
             case .success(let race):
                 Debug.print("Retrieved Race \(race.genderName.femaleName)/\(race.genderName.maleName)")
+                let viewController = ViewerTableViewController()
+                viewController.dataSourceObj = race
+                DispatchQueue.main.async {
+                    self.navigationController?.pushViewController(viewController, animated: true)
+                }
             case .failure(let error):
                 self.handleError(error)
             }
@@ -656,6 +767,11 @@ class WorldOfWarcraftViewController: UITableViewController, APIViewer {
             switch result {
             case .success(let realms):
                 Debug.print("Retrieved \(realms.count) Realm(s)")
+                let viewController = ViewerTableViewController()
+                viewController.dataSourceArr = realms
+                DispatchQueue.main.async {
+                    self.navigationController?.pushViewController(viewController, animated: true)
+                }
             case .failure(let error):
                 self.handleError(error)
             }
@@ -668,6 +784,11 @@ class WorldOfWarcraftViewController: UITableViewController, APIViewer {
             switch result {
             case .success(let realm):
                 Debug.print("Retrieved Realm \(realm.name)")
+                let viewController = ViewerTableViewController()
+                viewController.dataSourceObj = realm
+                DispatchQueue.main.async {
+                    self.navigationController?.pushViewController(viewController, animated: true)
+                }
             case .failure(let error):
                 self.handleError(error)
             }
@@ -682,6 +803,11 @@ class WorldOfWarcraftViewController: UITableViewController, APIViewer {
             switch result {
             case .success(let regions):
                 Debug.print("Retrieved \(regions.count) Region(s)")
+                let viewController = ViewerTableViewController()
+                viewController.dataSourceArr = regions
+                DispatchQueue.main.async {
+                    self.navigationController?.pushViewController(viewController, animated: true)
+                }
             case .failure(let error):
                 self.handleError(error)
             }
@@ -694,6 +820,11 @@ class WorldOfWarcraftViewController: UITableViewController, APIViewer {
             switch result {
             case .success(let region):
                 Debug.print("Retrieved Region \(region.name)")
+                let viewController = ViewerTableViewController()
+                viewController.dataSourceObj = region
+                DispatchQueue.main.async {
+                    self.navigationController?.pushViewController(viewController, animated: true)
+                }
             case .failure(let error):
                 self.handleError(error)
             }
@@ -708,6 +839,11 @@ class WorldOfWarcraftViewController: UITableViewController, APIViewer {
             switch result {
             case .success(let tokenIndex):
                 Debug.print("TokenIndex.lastUpdatedTimestamp: \(tokenIndex.lastUpdatedTimestamp)")
+                let viewController = ViewerTableViewController()
+                viewController.dataSourceObj = tokenIndex
+                DispatchQueue.main.async {
+                    self.navigationController?.pushViewController(viewController, animated: true)
+                }
             case .failure(let error):
                 self.handleError(error)
             }
@@ -725,6 +861,11 @@ class WorldOfWarcraftViewController: UITableViewController, APIViewer {
             switch result {
             case .success(let achievement):
                 Debug.print("Retrieved Achievement \(achievement.title)")
+                let viewController = ViewerTableViewController()
+                viewController.dataSourceObj = achievement
+                DispatchQueue.main.async {
+                    self.navigationController?.pushViewController(viewController, animated: true)
+                }
             case .failure(let error):
                 self.handleError(error)
             }
@@ -739,6 +880,11 @@ class WorldOfWarcraftViewController: UITableViewController, APIViewer {
             switch result {
             case .success(let auction):
                 Debug.print("Retrieved \(auction.files.count) Auction(s)")
+                let viewController = ViewerTableViewController()
+                viewController.dataSourceObj = auction
+                DispatchQueue.main.async {
+                    self.navigationController?.pushViewController(viewController, animated: true)
+                }
             case .failure(let error):
                 self.handleError(error)
             }
@@ -753,6 +899,11 @@ class WorldOfWarcraftViewController: UITableViewController, APIViewer {
             switch result {
             case .success(let bosses):
                 Debug.print("Retrieved \(bosses.count) Boss(s)")
+                let viewController = ViewerTableViewController()
+                viewController.dataSourceArr = bosses
+                DispatchQueue.main.async {
+                    self.navigationController?.pushViewController(viewController, animated: true)
+                }
             case .failure(let error):
                 self.handleError(error)
             }
@@ -765,6 +916,11 @@ class WorldOfWarcraftViewController: UITableViewController, APIViewer {
             switch result {
             case .success(let boss):
                 Debug.print("Retrieved Boss \(boss.name)")
+                let viewController = ViewerTableViewController()
+                viewController.dataSourceObj = boss
+                DispatchQueue.main.async {
+                    self.navigationController?.pushViewController(viewController, animated: true)
+                }
             case .failure(let error):
                 self.handleError(error)
             }
@@ -779,6 +935,11 @@ class WorldOfWarcraftViewController: UITableViewController, APIViewer {
             switch result {
             case .success(let challenges):
                 Debug.print("Retrieved \(challenges.count) Challenge(s)")
+                let viewController = ViewerTableViewController()
+                viewController.dataSourceArr = challenges
+                DispatchQueue.main.async {
+                    self.navigationController?.pushViewController(viewController, animated: true)
+                }
             case .failure(let error):
                 self.handleError(error)
             }
@@ -791,6 +952,11 @@ class WorldOfWarcraftViewController: UITableViewController, APIViewer {
             switch result {
             case .success(let challenges):
                 Debug.print("Retrieved \(challenges.count) Challenge(s)")
+                let viewController = ViewerTableViewController()
+                viewController.dataSourceArr = challenges
+                DispatchQueue.main.async {
+                    self.navigationController?.pushViewController(viewController, animated: true)
+                }
             case .failure(let error):
                 self.handleError(error)
             }
@@ -877,6 +1043,12 @@ class WorldOfWarcraftViewController: UITableViewController, APIViewer {
                 if let audit = character.audit {
                     print("... with Appropriate Armor Type \(audit.appropriateArmorType)")
                 }
+                
+                let viewController = ViewerTableViewController()
+                viewController.dataSourceObj = character
+                DispatchQueue.main.async {
+                    self.navigationController?.pushViewController(viewController, animated: true)
+                }
             case .failure(let error):
                 self.handleError(error)
             }
@@ -907,6 +1079,12 @@ class WorldOfWarcraftViewController: UITableViewController, APIViewer {
                 if let news = guild.news {
                     print("... with \(news.count) News Item(s)")
                 }
+                
+                let viewController = ViewerTableViewController()
+                viewController.dataSourceObj = guild
+                DispatchQueue.main.async {
+                    self.navigationController?.pushViewController(viewController, animated: true)
+                }
             case .failure(let error):
                 self.handleError(error)
             }
@@ -921,6 +1099,11 @@ class WorldOfWarcraftViewController: UITableViewController, APIViewer {
             switch result {
             case .success(let item):
                 Debug.print("Retrieved WOW Item \(item.name)")
+                let viewController = ViewerTableViewController()
+                viewController.dataSourceObj = item
+                DispatchQueue.main.async {
+                    self.navigationController?.pushViewController(viewController, animated: true)
+                }
             case .failure(let error):
                 self.handleError(error)
             }
@@ -933,6 +1116,11 @@ class WorldOfWarcraftViewController: UITableViewController, APIViewer {
             switch result {
             case .success(let itemSet):
                 Debug.print("Retrieved WOW Item Set \(itemSet.name) with \(itemSet.items.count) Item(s)")
+                let viewController = ViewerTableViewController()
+                viewController.dataSourceObj = itemSet
+                DispatchQueue.main.async {
+                    self.navigationController?.pushViewController(viewController, animated: true)
+                }
             case .failure(let error):
                 self.handleError(error)
             }
@@ -951,6 +1139,11 @@ class WorldOfWarcraftViewController: UITableViewController, APIViewer {
                 let aquaticMounts = mounts.filter { $0.isAquatic }
                 let jumpingMounts = mounts.filter { $0.isJumping }
                 Debug.print("Retrieved \(mounts.count) Mount(s): \(groundMounts.count) Ground, \(flyingMounts.count) Flying, \(aquaticMounts.count) Aquatic, \(jumpingMounts.count) Jumping")
+                let viewController = ViewerTableViewController()
+                viewController.dataSourceArr = mounts
+                DispatchQueue.main.async {
+                    self.navigationController?.pushViewController(viewController, animated: true)
+                }
             case .failure(let error):
                 self.handleError(error)
             }
@@ -965,6 +1158,11 @@ class WorldOfWarcraftViewController: UITableViewController, APIViewer {
             switch result {
             case .success(let pets):
                 Debug.print("Retrieved \(pets.count) Pet(s)")
+                let viewController = ViewerTableViewController()
+                viewController.dataSourceArr = pets
+                DispatchQueue.main.async {
+                    self.navigationController?.pushViewController(viewController, animated: true)
+                }
             case .failure(let error):
                 self.handleError(error)
             }
@@ -977,6 +1175,11 @@ class WorldOfWarcraftViewController: UITableViewController, APIViewer {
             switch result {
             case .success(let petAbility):
                 Debug.print("Retrieved Pet Ability \(petAbility.name)")
+                let viewController = ViewerTableViewController()
+                viewController.dataSourceObj = petAbility
+                DispatchQueue.main.async {
+                    self.navigationController?.pushViewController(viewController, animated: true)
+                }
             case .failure(let error):
                 self.handleError(error)
             }
@@ -989,6 +1192,11 @@ class WorldOfWarcraftViewController: UITableViewController, APIViewer {
             switch result {
             case .success(let petSpecies):
                 Debug.print("Retrieved Pet Species \(petSpecies.name)")
+                let viewController = ViewerTableViewController()
+                viewController.dataSourceObj = petSpecies
+                DispatchQueue.main.async {
+                    self.navigationController?.pushViewController(viewController, animated: true)
+                }
             case .failure(let error):
                 self.handleError(error)
             }
@@ -1001,6 +1209,11 @@ class WorldOfWarcraftViewController: UITableViewController, APIViewer {
             switch result {
             case .success(let petStats):
                 Debug.print("Retrieved Pet Stats: health \(petStats.health), power \(petStats.power), speed \(petStats.speed)")
+                let viewController = ViewerTableViewController()
+                viewController.dataSourceObj = petStats
+                DispatchQueue.main.async {
+                    self.navigationController?.pushViewController(viewController, animated: true)
+                }
             case .failure(let error):
                 self.handleError(error)
             }
@@ -1015,6 +1228,11 @@ class WorldOfWarcraftViewController: UITableViewController, APIViewer {
             switch result {
             case .success(let leaderboard):
                 Debug.print("Retrieved WOW Leaderboard with \(leaderboard.rows.count) entry(s)")
+                let viewController = ViewerTableViewController()
+                viewController.dataSourceObj = leaderboard
+                DispatchQueue.main.async {
+                    self.navigationController?.pushViewController(viewController, animated: true)
+                }
             case .failure(let error):
                 self.handleError(error)
             }
@@ -1029,6 +1247,11 @@ class WorldOfWarcraftViewController: UITableViewController, APIViewer {
             switch result {
             case .success(let quest):
                 Debug.print("Retrieved WOW Quest \(quest.title)")
+                let viewController = ViewerTableViewController()
+                viewController.dataSourceObj = quest
+                DispatchQueue.main.async {
+                    self.navigationController?.pushViewController(viewController, animated: true)
+                }
             case .failure(let error):
                 self.handleError(error)
             }
@@ -1043,6 +1266,11 @@ class WorldOfWarcraftViewController: UITableViewController, APIViewer {
             switch result {
             case .success(let realms):
                 Debug.print("Retrieved Status for \(realms.count) WOW Realm(s)")
+                let viewController = ViewerTableViewController()
+                viewController.dataSourceArr = realms
+                DispatchQueue.main.async {
+                    self.navigationController?.pushViewController(viewController, animated: true)
+                }
             case .failure(let error):
                 self.handleError(error)
             }
@@ -1057,6 +1285,11 @@ class WorldOfWarcraftViewController: UITableViewController, APIViewer {
             switch result {
             case .success(let recipe):
                 Debug.print("Retrieved WOW Recipe \(recipe.name)")
+                let viewController = ViewerTableViewController()
+                viewController.dataSourceObj = recipe
+                DispatchQueue.main.async {
+                    self.navigationController?.pushViewController(viewController, animated: true)
+                }
             case .failure(let error):
                 self.handleError(error)
             }
@@ -1071,6 +1304,11 @@ class WorldOfWarcraftViewController: UITableViewController, APIViewer {
             switch result {
             case .success(let spell):
                 Debug.print("Retrieved WOW Spell \(spell.name)")
+                let viewController = ViewerTableViewController()
+                viewController.dataSourceObj = spell
+                DispatchQueue.main.async {
+                    self.navigationController?.pushViewController(viewController, animated: true)
+                }
             case .failure(let error):
                 self.handleError(error)
             }
@@ -1085,6 +1323,11 @@ class WorldOfWarcraftViewController: UITableViewController, APIViewer {
             switch result {
             case .success(let characters):
                 Debug.print("Retrieved \(characters.count) Character(s)")
+                let viewController = ViewerTableViewController()
+                viewController.dataSourceArr = characters
+                DispatchQueue.main.async {
+                    self.navigationController?.pushViewController(viewController, animated: true)
+                }
             case .failure(let error):
                 self.handleError(error)
             }
@@ -1101,6 +1344,11 @@ class WorldOfWarcraftViewController: UITableViewController, APIViewer {
                 let raids = zones.filter { $0.isRaid }
                 let dungeons = zones.filter { $0.isDungeon }
                 Debug.print("Retrieved \(zones.count) Zone(s) with \(raids.count) Raid(s) and \(dungeons.count) Dungeon(s)")
+                let viewController = ViewerTableViewController()
+                viewController.dataSourceArr = zones
+                DispatchQueue.main.async {
+                    self.navigationController?.pushViewController(viewController, animated: true)
+                }
             case .failure(let error):
                 self.handleError(error)
             }
@@ -1115,6 +1363,11 @@ class WorldOfWarcraftViewController: UITableViewController, APIViewer {
             switch result {
             case .success(let zone):
                 Debug.print("Retrieved Zone \(zone.name) with \(zone.bosses.count) Bosses")
+                let viewController = ViewerTableViewController()
+                viewController.dataSourceObj = zone
+                DispatchQueue.main.async {
+                    self.navigationController?.pushViewController(viewController, animated: true)
+                }
             case .failure(let error):
                 self.handleError(error)
             }
@@ -1127,6 +1380,11 @@ class WorldOfWarcraftViewController: UITableViewController, APIViewer {
             switch result {
             case .success(let battlegroups):
                 Debug.print("Retrieved \(battlegroups.count) Battlegroup(s)")
+                let viewController = ViewerTableViewController()
+                viewController.dataSourceArr = battlegroups
+                DispatchQueue.main.async {
+                    self.navigationController?.pushViewController(viewController, animated: true)
+                }
             case .failure(let error):
                 self.handleError(error)
             }
@@ -1139,6 +1397,11 @@ class WorldOfWarcraftViewController: UITableViewController, APIViewer {
             switch result {
             case .success(let races):
                 Debug.print("Retrieved \(races.count) Race(s)")
+                let viewController = ViewerTableViewController()
+                viewController.dataSourceArr = races
+                DispatchQueue.main.async {
+                    self.navigationController?.pushViewController(viewController, animated: true)
+                }
             case .failure(let error):
                 self.handleError(error)
             }
@@ -1151,6 +1414,11 @@ class WorldOfWarcraftViewController: UITableViewController, APIViewer {
             switch result {
             case .success(let classes):
                 Debug.print("Retrieved \(classes.count) WOW Class(s)")
+                let viewController = ViewerTableViewController()
+                viewController.dataSourceArr = classes
+                DispatchQueue.main.async {
+                    self.navigationController?.pushViewController(viewController, animated: true)
+                }
             case .failure(let error):
                 self.handleError(error)
             }
@@ -1163,6 +1431,11 @@ class WorldOfWarcraftViewController: UITableViewController, APIViewer {
             switch result {
             case .success(let achievementCategories):
                 Debug.print("Retrieved \(achievementCategories.count) WOW Achievement Category(s)")
+                let viewController = ViewerTableViewController()
+                viewController.dataSourceArr = achievementCategories
+                DispatchQueue.main.async {
+                    self.navigationController?.pushViewController(viewController, animated: true)
+                }
             case .failure(let error):
                 self.handleError(error)
             }
@@ -1175,6 +1448,11 @@ class WorldOfWarcraftViewController: UITableViewController, APIViewer {
             switch result {
             case .success(let rewards):
                 Debug.print("Retrieved \(rewards.count) WOW Guild Reward(s)")
+                let viewController = ViewerTableViewController()
+                viewController.dataSourceArr = rewards
+                DispatchQueue.main.async {
+                    self.navigationController?.pushViewController(viewController, animated: true)
+                }
             case .failure(let error):
                 self.handleError(error)
             }
@@ -1187,6 +1465,11 @@ class WorldOfWarcraftViewController: UITableViewController, APIViewer {
             switch result {
             case .success(let perks):
                 Debug.print("Retrieved \(perks.count) WOW Guild Perk(s)")
+                let viewController = ViewerTableViewController()
+                viewController.dataSourceArr = perks
+                DispatchQueue.main.async {
+                    self.navigationController?.pushViewController(viewController, animated: true)
+                }
             case .failure(let error):
                 self.handleError(error)
             }
@@ -1199,6 +1482,11 @@ class WorldOfWarcraftViewController: UITableViewController, APIViewer {
             switch result {
             case .success(let achievementCategories):
                 Debug.print("Retrieved \(achievementCategories.count) WOW Guild Achievement Category(s)")
+                let viewController = ViewerTableViewController()
+                viewController.dataSourceArr = achievementCategories
+                DispatchQueue.main.async {
+                    self.navigationController?.pushViewController(viewController, animated: true)
+                }
             case .failure(let error):
                 self.handleError(error)
             }
@@ -1207,10 +1495,15 @@ class WorldOfWarcraftViewController: UITableViewController, APIViewer {
     
     
     func getItemClasses(region: APIRegion = Current.region, locale: APILocale = Current.locale) {
-        wowMC.getGuildAchievements(region: region, locale: locale) { result in
+        wowMC.getItemClasses(region: region, locale: locale) { result in
             switch result {
             case .success(let itemClasses):
                 Debug.print("Retrieved \(itemClasses.count) Item Class(s)")
+                let viewController = ViewerTableViewController()
+                viewController.dataSourceArr = itemClasses
+                DispatchQueue.main.async {
+                    self.navigationController?.pushViewController(viewController, animated: true)
+                }
             case .failure(let error):
                 self.handleError(error)
             }
@@ -1223,6 +1516,11 @@ class WorldOfWarcraftViewController: UITableViewController, APIViewer {
             switch result {
             case .success(let talentDictionary):
                 Debug.print("Retrieved Talents for \(talentDictionary.keys.count) Class(s)")
+                let viewController = ViewerTableViewController()
+                viewController.dataSourceArr = talentDictionary.map { $0.value }
+                DispatchQueue.main.async {
+                    self.navigationController?.pushViewController(viewController, animated: true)
+                }
             case .failure(let error):
                 self.handleError(error)
             }
@@ -1235,6 +1533,11 @@ class WorldOfWarcraftViewController: UITableViewController, APIViewer {
             switch result {
             case .success(let petTypes):
                 Debug.print("Retrieved \(petTypes.count) Pet Type(s)")
+                let viewController = ViewerTableViewController()
+                viewController.dataSourceArr = petTypes
+                DispatchQueue.main.async {
+                    self.navigationController?.pushViewController(viewController, animated: true)
+                }
             case .failure(let error):
                 self.handleError(error)
             }
@@ -1249,7 +1552,12 @@ class WorldOfWarcraftViewController: UITableViewController, APIViewer {
         wowMC.getMythicKeystoneProfile(characterName: characterName, realmSlug: realmSlug, region: region, locale: locale) { result in
             switch result {
             case .success(let profile):
-                Debug.print("Retrieved profile \(characterName) with \(profile.currentPeriod.bestRuns.count) best run(s)")
+                Debug.print("Retrieved profile \(characterName)")
+                let viewController = ViewerTableViewController()
+                viewController.dataSourceObj = profile
+                DispatchQueue.main.async {
+                    self.navigationController?.pushViewController(viewController, animated: true)
+                }
             case .failure(let error):
                 self.handleError(error)
             }
@@ -1262,6 +1570,11 @@ class WorldOfWarcraftViewController: UITableViewController, APIViewer {
             switch result {
             case .success(let season):
                 Debug.print("Retrieved season \(seasonID) with \(season.bestRuns.count) best run(s)")
+                let viewController = ViewerTableViewController()
+                viewController.dataSourceObj = season
+                DispatchQueue.main.async {
+                    self.navigationController?.pushViewController(viewController, animated: true)
+                }
             case .failure(let error):
                 self.handleError(error)
             }

@@ -14,6 +14,6 @@ struct AuthToken {
     static let clientSecret = "CLIENT_SECRET"
     
     // For use with unit testing only
-    static let clientAccessToken = "CLIENT_ACCESS_TOKEN"
-    static let userAccessToken = "USER_ACCESS_TOKEN"
+    static let clientAccessToken: String? = nil // "CLIENT_ACCESS_TOKEN"
+    static let userAccessToken: String? = nil // "USER_ACCESS_TOKEN"
 }

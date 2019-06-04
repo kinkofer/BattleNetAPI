@@ -19,6 +19,16 @@ class StarCraft2Tests: XCTestCase {
         super.setUp()
         // Put setup code here. This method is called before the invocation of each test method in the class.
         
+        guard let clientAccessToken = clientAccessToken else {
+            XCTFail("clientAccessToken must be set in AuthToken. The token is logged in the console when running ViewController.viewDidLoad().")
+            return
+        }
+        
+        guard let userAccessToken = userAccessToken else {
+            XCTFail("userAccessToken must be set in AuthToken. The token is logged in the console when running authenticateUser(showAPI:).")
+            return
+        }
+        
         Network.shared.clientAccessToken = clientAccessToken
         Network.shared.userAccessToken = userAccessToken
     }

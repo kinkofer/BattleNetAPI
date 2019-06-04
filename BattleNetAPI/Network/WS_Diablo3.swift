@@ -10,7 +10,7 @@ import Foundation
 
 
 class WS_Diablo3: WebService {
-    func getBaseURL(region: APIRegion, apiType: APIType?) -> String {
+    internal func getBaseURL(region: APIRegion, apiType: APIType?) -> String {
         var url = "\(region.apiURI)"
         
         if let apiType = apiType {

@@ -77,9 +77,9 @@ class TeamMember: Codable {
 class Ladder: Codable {
     let ladderTeams: [LadderTeam]
     let allLadderMemberships: [LadderMembership]
-    let localizedDivision: String
-    let league: String
-    let currentLadderMembership: LadderMembership
+    let localizedDivision: String?
+    let league: String?
+    let currentLadderMembership: LadderMembership?
     let ranksAndPools: [RanksAndPool]
 }
 

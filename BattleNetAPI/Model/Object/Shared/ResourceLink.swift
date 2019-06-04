@@ -10,7 +10,11 @@ import Foundation
 
 
 class SelfLink<Resource>: Codable {
-    let `self`: Link<Resource>
+    let link: Link<Resource>
+    
+    enum CodingKeys: String, CodingKey {
+        case link = "self"
+    }
 }
 
 

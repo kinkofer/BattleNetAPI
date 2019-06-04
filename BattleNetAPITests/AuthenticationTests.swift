@@ -40,6 +40,11 @@ class AuthenticationTests: XCTestCase {
     
     
     func testValidateClientAccessToken() {
+        guard let clientAccessToken = clientAccessToken else {
+            XCTFail("clientAccessToken must be set in AuthToken. The token is logged in the console when running ViewController.viewDidLoad().")
+            return
+        }
+        
         let wsResponseExpectation = expectation(description: "Web Service returned a response")
         
         BattleNetAPI.authentication.validateClientAccessToken(clientAccessToken, region: .us) { result in
@@ -53,6 +58,11 @@ class AuthenticationTests: XCTestCase {
     
     
     func testValidateUserAccessToken() {
+        guard let userAccessToken = userAccessToken else {
+            XCTFail("userAccessToken must be set in AuthToken. The token is logged in the console when running authenticateUser(showAPI:).")
+            return
+        }
+        
         let wsResponseExpectation = expectation(description: "Web Service returned a response")
         
         BattleNetAPI.authentication.validateUserAccessToken(userAccessToken, region: .us) { result in
