@@ -70,7 +70,7 @@ class AuthenticationManager {
     }
     
     
-    func getUserAccessToken(scope: Scope, completion: @escaping (_ result: Result<String, HTTPError>) -> Void) {
+    func getUserAccessToken(scope: Scope, on providerContext: ASWebAuthenticationPresentationContextProviding, completion: @escaping (_ result: Result<String, HTTPError>) -> Void) {
         if let userAccessToken = userAccessToken {
             authMC.validateUserAccessToken(userAccessToken) { result in
                 DispatchQueue.main.async {
@@ -85,12 +85,19 @@ class AuthenticationManager {
             }
         }
         else {
-            authenicateUser(scope: scope, completion: completion)
+            authenicateUser(scope: scope, on: providerContext, completion: completion)
         }
     }
     
     
-    private func authenicateUser(scope: Scope, completion: @escaping (_ result: Result<String, HTTPError>) -> Void) {
+    /**
+     Opens the sign in page for BattleNet to allow the user to authenticate.
+     
+     - parameter scope: The games you are requesting the user to give you access to.
+     - parameter providerContext: The view where the sign in page will be presented
+     - parameter completion: The result of the user's sign in attempt, containing the user's access token if they successfully authenticated.
+     */
+    private func authenicateUser(scope: Scope, on providerContext: ASWebAuthenticationPresentationContextProviding, completion: @escaping (_ result: Result<String, HTTPError>) -> Void) {
         let redirectUrlStr = "https://oauth.click/BattleNetAPI/"
         guard let url = authMC.getOAuthURL(region: Current.region, clientID: clientID, scope: scope, redirectURL: redirectUrlStr) else {
             return
@@ -123,6 +130,8 @@ class AuthenticationManager {
                 }
             }
         }
+        
+        webAuthSession?.presentationContextProvider = providerContext
         webAuthSession?.start()
     }
 }
