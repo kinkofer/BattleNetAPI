@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import AuthenticationServices
 
 
 class ViewController: UIViewController {
@@ -102,7 +103,7 @@ class ViewController: UIViewController {
     
     
     func authenticateUser(showAPI: (APIType, Game)? = nil) {
-        self.authManager.getUserAccessToken(scope: [.sc2, .wow]) { result in
+        self.authManager.getUserAccessToken(scope: [.sc2, .wow], on: self) { result in
             switch result {
             case .success(let userAccessToken):
                 Debug.print("userAccessToken: \(userAccessToken)")
@@ -203,7 +204,7 @@ extension ViewController: UITableViewDelegate {
             })
         }
         else {
-            authManager.getUserAccessToken(scope: [.wow, .sc2]) { result in
+            authManager.getUserAccessToken(scope: [.wow, .sc2], on: self) { result in
                 switch result {
                 case .success(_):
                     self.showAPI(type: apiType, for: section.type)
@@ -212,5 +213,13 @@ extension ViewController: UITableViewDelegate {
                 }
             }
         }
+    }
+}
+
+
+
+extension ViewController: ASWebAuthenticationPresentationContextProviding {
+    func presentationAnchor(for session: ASWebAuthenticationSession) -> ASPresentationAnchor {
+        return self.view.window ?? ASPresentationAnchor()
     }
 }
