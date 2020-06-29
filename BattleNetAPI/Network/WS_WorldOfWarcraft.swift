@@ -1037,7 +1037,7 @@ class WS_WorldOfWarcraft: WebService {
             bracket == "3v3" ||
             bracket == "5v5" ||
             bracket == "rbg" else {
-            completion(.failure(HTTPError(type: .unexpectedBody)))
+            completion(.failure(HTTPError.unexpectedBody))
             return
         }
         

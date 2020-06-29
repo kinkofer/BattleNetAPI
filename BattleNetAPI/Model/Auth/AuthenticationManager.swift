@@ -113,7 +113,7 @@ class AuthenticationManager {
                 let state = UserDefaults.standard.string(forKey: "state"),
                 let callbackState = callbackUrl.queryParameters?.first(where: { $0.name == "state" })?.value,
                 state == callbackState else {
-                    completion(.failure(HTTPError(type: .unexpectedResponse)))
+                    completion(.failure(HTTPError.unexpectedResponse))
                     return
             }
             

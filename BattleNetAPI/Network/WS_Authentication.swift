@@ -32,7 +32,7 @@ class WS_Authentication: WebService {
         // Validate clientID and clientSecret
         guard !clientID.isEmpty,
             !clientSecret.isEmpty else {
-                completion(.failure(HTTPError(type: .invalidRequest)))
+                completion(.failure(HTTPError.invalidRequest))
                 return
         }
         
@@ -43,7 +43,7 @@ class WS_Authentication: WebService {
         let urlStr = region.tokenURI
         
         guard let body = "grant_type=client_credentials".data(using: .utf8) else {
-            completion(.failure(HTTPError(type: .unexpectedBody)))
+            completion(.failure(HTTPError.unexpectedBody))
             return
         }
         
@@ -57,11 +57,11 @@ class WS_Authentication: WebService {
                         completion(result)
                     }
                     else {
-                        completion(.failure(HTTPError(type: .unexpectedResponse)))
+                        completion(.failure(HTTPError.unexpectedResponse))
                     }
                 }
                 catch {
-                    completion(.failure(HTTPError(type: .jsonParsingError)))
+                    completion(.failure(HTTPError.jsonParsingError))
                 }
             case .failure(_):
                 completion(result)
@@ -84,7 +84,7 @@ class WS_Authentication: WebService {
         // Validate clientID and clientSecret
         guard !clientID.isEmpty,
             !clientSecret.isEmpty else {
-                completion(.failure(HTTPError(type: .invalidRequest)))
+                completion(.failure(HTTPError.invalidRequest))
                 return
         }
         
@@ -107,11 +107,11 @@ class WS_Authentication: WebService {
                         completion(result)
                     }
                     else {
-                        completion(.failure(HTTPError(type: .unexpectedResponse)))
+                        completion(.failure(HTTPError.unexpectedResponse))
                     }
                 }
                 catch {
-                    completion(.failure(HTTPError(type: .jsonParsingError)))
+                    completion(.failure(HTTPError.jsonParsingError))
                 }
             case .failure(_):
                 completion(result)
@@ -129,7 +129,7 @@ class WS_Authentication: WebService {
      */
     func validateClientAccessToken(_ token: String, region: APIRegion, completion: @escaping (_ result: Result<Data, HTTPError>) -> Void) {
         guard !token.isEmpty else {
-            completion(.failure(HTTPError(type: .unexpectedBody)))
+            completion(.failure(HTTPError.unexpectedBody))
             return
         }
         

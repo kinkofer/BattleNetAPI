@@ -516,7 +516,7 @@ class Diablo3ViewController: UITableViewController, APIViewer {
     // MARK: - Error handling
     
     func handleError(_ error: HTTPError, function: String = #function) {
-        Debug.print(error.message, function: function)
+        Debug.print(error.localizedDescription, function: function)
     }
     
     

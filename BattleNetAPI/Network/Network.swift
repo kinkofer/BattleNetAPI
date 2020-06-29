@@ -9,11 +9,6 @@
 import Foundation
 
 
-enum HTTPMethod: String {
-    case get, post, put, delete, patch, head
-}
-
-
 class Network {
     static let shared = Network()
     private init() { }
@@ -75,25 +70,22 @@ class Network {
                     completion(.success(data))
                 }
                 else if self.hasInvalidCredentials(response: response, data: data) {
-                    completion(.failure(HTTPError(type: .unauthorized)))
-                }
-                else if let httpError = HTTPError(statusCode: statusCode) {
-                    completion(.failure(httpError))
+                    completion(.failure(HTTPError.unauthorized))
                 }
                 else {
-                    completion(.failure(HTTPError(type: .httpError)))
+                    completion(.failure(HTTPError.httpError))
                 }
             }
             else if let error = error as NSError? {
-                if error.code == HTTPError.ErrorType.timeout.code {
-                    completion(.failure(HTTPError(type: .timeout)))
+                if error.code == HTTPError.timeout.code {
+                    completion(.failure(HTTPError.timeout))
                 }
                 else {
-                    completion(.failure(HTTPError(from: error)))
+                    completion(.failure(HTTPError.other(error)))
                 }
             }
             else {
-                completion(.failure(HTTPError(type: .httpError)))
+                completion(.failure(HTTPError.httpError))
             }
         }.resume()
     }

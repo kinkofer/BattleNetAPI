@@ -263,7 +263,7 @@ class WorldOfWarcraftModelController {
     
     func getRealm(id: Int? = nil, slug: String? = nil, region: APIRegion = Current.region, locale: APILocale? = Current.locale, completion: @escaping (_ result: Result<Realm, HTTPError>) -> Void) {
         guard (id != nil || slug != nil) else {
-            completion(.failure(HTTPError(type: .unexpectedBody, code: 0, description: "Must pass a value for id or slug")))
+            completion(.failure(HTTPError.unexpectedBody))
             return
         }
         

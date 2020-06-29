@@ -81,6 +81,12 @@
 		599A5AC62266F2F7005D189E /* MythicKeystoneProfile.swift in Sources */ = {isa = PBXBuildFile; fileRef = 599A5AC52266F2F7005D189E /* MythicKeystoneProfile.swift */; };
 		59A21DFA208EF5D4005C7EF6 /* Battlegroups.swift in Sources */ = {isa = PBXBuildFile; fileRef = 59A21DF9208EF5D4005C7EF6 /* Battlegroups.swift */; };
 		59A21E0020914093005C7EF6 /* Guild.swift in Sources */ = {isa = PBXBuildFile; fileRef = 59A21DFF20914093005C7EF6 /* Guild.swift */; };
+		59B7BD1924A9667800B7CAC7 /* APICall.swift in Sources */ = {isa = PBXBuildFile; fileRef = 59B7BD1824A9667800B7CAC7 /* APICall.swift */; };
+		59B7BD1B24A9689000B7CAC7 /* HTTPWebService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 59B7BD1A24A9689000B7CAC7 /* HTTPWebService.swift */; };
+		59B7BD1D24A96E0000B7CAC7 /* Publisher+JSON.swift in Sources */ = {isa = PBXBuildFile; fileRef = 59B7BD1C24A96E0000B7CAC7 /* Publisher+JSON.swift */; };
+		59B7BD1F24A96E5F00B7CAC7 /* URLSession+Request.swift in Sources */ = {isa = PBXBuildFile; fileRef = 59B7BD1E24A96E5F00B7CAC7 /* URLSession+Request.swift */; };
+		59B7BD2124A96F7C00B7CAC7 /* URLRequest+.swift in Sources */ = {isa = PBXBuildFile; fileRef = 59B7BD2024A96F7C00B7CAC7 /* URLRequest+.swift */; };
+		59B7BD2324A9703900B7CAC7 /* Error+Alert.swift in Sources */ = {isa = PBXBuildFile; fileRef = 59B7BD2224A9703900B7CAC7 /* Error+Alert.swift */; };
 		59BD311D21A061B600C6102E /* SC2Profile.swift in Sources */ = {isa = PBXBuildFile; fileRef = 59BD311C21A061B600C6102E /* SC2Profile.swift */; };
 		59BD311F21A0702B00C6102E /* SC2Reward.swift in Sources */ = {isa = PBXBuildFile; fileRef = 59BD311E21A0702B00C6102E /* SC2Reward.swift */; };
 		59BD312121A0704600C6102E /* SC2Achievement.swift in Sources */ = {isa = PBXBuildFile; fileRef = 59BD312021A0704600C6102E /* SC2Achievement.swift */; };
@@ -199,6 +205,12 @@
 		599A5AC52266F2F7005D189E /* MythicKeystoneProfile.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MythicKeystoneProfile.swift; sourceTree = "<group>"; };
 		59A21DF9208EF5D4005C7EF6 /* Battlegroups.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Battlegroups.swift; sourceTree = "<group>"; };
 		59A21DFF20914093005C7EF6 /* Guild.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Guild.swift; sourceTree = "<group>"; };
+		59B7BD1824A9667800B7CAC7 /* APICall.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = APICall.swift; sourceTree = "<group>"; };
+		59B7BD1A24A9689000B7CAC7 /* HTTPWebService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HTTPWebService.swift; sourceTree = "<group>"; };
+		59B7BD1C24A96E0000B7CAC7 /* Publisher+JSON.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Publisher+JSON.swift"; sourceTree = "<group>"; };
+		59B7BD1E24A96E5F00B7CAC7 /* URLSession+Request.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "URLSession+Request.swift"; sourceTree = "<group>"; };
+		59B7BD2024A96F7C00B7CAC7 /* URLRequest+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "URLRequest+.swift"; sourceTree = "<group>"; };
+		59B7BD2224A9703900B7CAC7 /* Error+Alert.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Error+Alert.swift"; sourceTree = "<group>"; };
 		59BD311C21A061B600C6102E /* SC2Profile.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SC2Profile.swift; sourceTree = "<group>"; };
 		59BD311E21A0702B00C6102E /* SC2Reward.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SC2Reward.swift; sourceTree = "<group>"; };
 		59BD312021A0704600C6102E /* SC2Achievement.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SC2Achievement.swift; sourceTree = "<group>"; };
@@ -438,10 +450,12 @@
 		59E425D520789A5C0046EB84 /* Network */ = {
 			isa = PBXGroup;
 			children = (
+				59B7BD1824A9667800B7CAC7 /* APICall.swift */,
 				5941816722A4D3B00078B7D2 /* API_Enums.swift */,
 				59E425D3207884DE0046EB84 /* BattleNetAPI.swift */,
 				59E425CB207874450046EB84 /* HTTPError.swift */,
 				59E425D120787FEF0046EB84 /* HTTPHeader.swift */,
+				59B7BD1A24A9689000B7CAC7 /* HTTPWebService.swift */,
 				59E425C9207872EC0046EB84 /* Network.swift */,
 				59E425CF20787F990046EB84 /* WebService.swift */,
 				59E425CD20787F640046EB84 /* WS_Authentication.swift */,
@@ -485,8 +499,12 @@
 				5954B1B7207A8B7900CC36D1 /* JSONHelper.swift */,
 				593F23282265329F00C5F1F5 /* Result.swift */,
 				59419F962259EEB200492BE7 /* TableSection.swift */,
+				59B7BD1C24A96E0000B7CAC7 /* Publisher+JSON.swift */,
+				59B7BD1E24A96E5F00B7CAC7 /* URLSession+Request.swift */,
 				5954B1B3207A831200CC36D1 /* UIViewController+Alert.swift */,
 				5967ACC22088DC85009BFBAF /* URL+Query.swift */,
+				59B7BD2024A96F7C00B7CAC7 /* URLRequest+.swift */,
+				59B7BD2224A9703900B7CAC7 /* Error+Alert.swift */,
 			);
 			path = Utilities;
 			sourceTree = "<group>";
@@ -627,7 +645,9 @@
 				59397CEF207D5F890077018E /* D3Skill.swift in Sources */,
 				59419F972259EEB200492BE7 /* TableSection.swift in Sources */,
 				5954B1AF2079273000CC36D1 /* Scope.swift in Sources */,
+				59B7BD2124A96F7C00B7CAC7 /* URLRequest+.swift in Sources */,
 				59D09C48208D624A006BB4B7 /* Mount.swift in Sources */,
+				59B7BD1F24A96E5F00B7CAC7 /* URLSession+Request.swift in Sources */,
 				59397CE7207C65EC0077018E /* Act.swift in Sources */,
 				59BD311D21A061B600C6102E /* SC2Profile.swift in Sources */,
 				59E425A6207871C20046EB84 /* ViewController.swift in Sources */,
@@ -647,6 +667,7 @@
 				59F87CC2227625CB00B907A7 /* ViewerTableViewController.swift in Sources */,
 				5954B1B6207A882000CC36D1 /* UserToken.swift in Sources */,
 				59397CD4207B52000077018E /* WOWCharacter.swift in Sources */,
+				59B7BD1924A9667800B7CAC7 /* APICall.swift in Sources */,
 				59E425DF2078B0480046EB84 /* Debug.swift in Sources */,
 				5935FBB62094EDE40068AF8A /* Talent.swift in Sources */,
 				593E0D4B2091594D00164F3D /* Perk.swift in Sources */,
@@ -663,8 +684,10 @@
 				593A3AE920806A3C0047B4C0 /* Ladder.swift in Sources */,
 				5967ACC720893371009BFBAF /* Specialization.swift in Sources */,
 				599A5AC62266F2F7005D189E /* MythicKeystoneProfile.swift in Sources */,
+				59B7BD1B24A9689000B7CAC7 /* HTTPWebService.swift in Sources */,
 				5967ACB820878E0F009BFBAF /* Era.swift in Sources */,
 				5939509B208ED0C600EABFA2 /* Zone.swift in Sources */,
+				59B7BD2324A9703900B7CAC7 /* Error+Alert.swift in Sources */,
 				59E425CE20787F640046EB84 /* WS_Authentication.swift in Sources */,
 				59397CE0207C5FE20077018E /* WS_Diablo3.swift in Sources */,
 				59E425DD2078AA4B0046EB84 /* ClientToken.swift in Sources */,
@@ -687,6 +710,7 @@
 				59D09C4A208D75E4006BB4B7 /* Pet.swift in Sources */,
 				59BD312321A0707B00C6102E /* SC2Criteria.swift in Sources */,
 				59397CE5207C63E70077018E /* Diablo3ModelController.swift in Sources */,
+				59B7BD1D24A96E0000B7CAC7 /* Publisher+JSON.swift in Sources */,
 				593F23292265329F00C5F1F5 /* Result.swift in Sources */,
 				59E425D720789AC40046EB84 /* Access.swift in Sources */,
 				5967ACC32088DC85009BFBAF /* URL+Query.swift in Sources */,

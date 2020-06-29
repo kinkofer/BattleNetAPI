@@ -37,7 +37,7 @@ extension Result where Failure == HTTPError {
                 }
             }
             else {
-                Debug.print(error.message, file: file, function: function, line: line)
+                Debug.print(error.localizedDescription, file: file, function: function, line: line)
             }
         }
         catch { }
@@ -52,8 +52,7 @@ extension Result where Success == Bool, Failure == HTTPError {
             self = .success(true)
         }
         else {
-            let error = HTTPError(type: .httpError, code: 2, description: "Result was deemed a failure.")
-            self = .failure(error)
+            self = .failure(HTTPError.httpError)
         }
     }
 }
@@ -75,7 +74,7 @@ extension Result where Success == Data, Failure == HTTPError {
                 completion(.success(decoded))
             }
             catch {
-                completion(.failure(HTTPError(type: .jsonParsingError)))
+                completion(.failure(HTTPError.jsonParsingError))
             }
         case .failure(let error):
             completion(.failure(error))
@@ -96,11 +95,11 @@ extension Result where Success == Data, Failure == HTTPError {
                     completion(.success(decoded))
                 }
                 else {
-                    completion(.failure(HTTPError(type: .unexpectedResponse)))
+                    completion(.failure(HTTPError.unexpectedResponse))
                 }
             }
             catch {
-                completion(.failure(HTTPError(type: .jsonParsingError)))
+                completion(.failure(HTTPError.jsonParsingError))
             }
         case .failure(let error):
             completion(.failure(error))

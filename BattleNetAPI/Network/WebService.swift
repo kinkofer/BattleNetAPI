@@ -16,7 +16,7 @@ protocol WebService: class {
     /// Web service urls must include certain parameters, like namespace
     func appendSharedURLParameters(to urlStr: String, withNamespace namespace: String, region: APIRegion, locale: APILocale?) -> String
     /// Starts a web service request
-    func callWebService(urlStr: String, method: HTTPMethod, apiType: APIType?, body: Data?, headers: [HTTPHeader], completion: @escaping (_ result: Result<Data, HTTPError>) -> Void)
+    func callWebService(urlStr: String, method: HTTPMethod, apiType: APIType?, body: Data?, headers: [HTTPHeader]?, completion: @escaping (_ result: Result<Data, HTTPError>) -> Void)
 }
 
 
@@ -54,22 +54,17 @@ extension WebService {
      - parameter headers: Configures the HTTP request with the included headers. By default, the Accept and Content-Type headers are configured with json
      - parameter completion: Returns the web service response and error
      */
-    func callWebService(urlStr: String, method: HTTPMethod, apiType: APIType? = nil, body: Data? = nil, headers: [HTTPHeader] = [], completion: @escaping (_ result: Result<Data, HTTPError>) -> Void) {
+    func callWebService(urlStr: String, method: HTTPMethod, apiType: APIType? = nil, body: Data? = nil, headers: [HTTPHeader]? = nil, completion: @escaping (_ result: Result<Data, HTTPError>) -> Void) {
         guard let url = URL(string: urlStr) else {
-            completion(.failure(HTTPError(type: .invalidRequest)))
+            completion(.failure(HTTPError.invalidRequest))
             return
         }
         
         // Construct the default request
         if var request = Network.shared.createRequest(with: url, method: method, apiType: apiType) {
             // Add (or overwrite default) headers
-            for header in headers {
-                switch header {
-                case .contentType(let mediaType):
-                    request.setValue(mediaType.headerValue, forHTTPHeaderField: header.key)
-                case .accept(let mediaType):
-                    request.setValue(mediaType.headerValue, forHTTPHeaderField: header.key)
-                }
+            if let headers = headers {
+                request.addHeaders(headers)
             }
             
             // Add optional body
@@ -81,7 +76,7 @@ extension WebService {
             }
         }
         else {
-            completion(.failure(HTTPError(type: .unauthorized)))
+            completion(.failure(HTTPError.unauthorized))
         }
     }
 }
