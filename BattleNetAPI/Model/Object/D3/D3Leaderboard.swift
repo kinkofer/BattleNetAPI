@@ -9,17 +9,17 @@
 import Foundation
 
 
-class LeaderboardColumn: Codable {
-    let id: String
-    let hidden: Bool
-    let order: Int?
-    let label: LocaleString
-    let type: LeaderboardColumnType
+public class LeaderboardColumn: Codable {
+    public let id: String
+    public let hidden: Bool
+    public let order: Int?
+    public let label: LocaleString
+    public let type: LeaderboardColumnType
 }
 
 
 
-enum LeaderboardColumnType: String, Codable {
+public enum LeaderboardColumnType: String, Codable {
     case datetime = "DATETIME"
     case number = "NUMBER"
     case string = "STRING"
@@ -28,27 +28,27 @@ enum LeaderboardColumnType: String, Codable {
 
 
 
-class LeaderboardEntry: Codable {
-    let player: [D3Player]
-    let order: Int
-    let data: [Datum]
+public class LeaderboardEntry: Codable {
+    public let player: [D3Player]
+    public let order: Int
+    public let data: [Datum]
 }
 
 
 
-class Datum: Codable {
-    let id: String
-    let number: Int?
-    let timestamp: Double?
-    let string: String?
+public class Datum: Codable {
+    public let id: String
+    public let number: Int?
+    public let timestamp: Double?
+    public let string: String?
 }
 
 
 
-class D3Player: Codable {
-    let key: String
-    let accountID: Double
-    let data: [Datum]
+public class D3Player: Codable {
+    public let key: String
+    public let accountID: Double
+    public let data: [Datum]
     
     enum CodingKeys: String, CodingKey {
         case key

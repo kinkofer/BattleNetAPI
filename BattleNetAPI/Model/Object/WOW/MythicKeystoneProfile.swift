@@ -9,13 +9,13 @@
 import Foundation
 
 
-class MythicKeystoneProfile: Codable, SelfDecodable {
-    let _links: SelfLink<MythicKeystoneProfile>
-    let character: Link<WOWCharacterProfile>
-    let currentPeriod: CurrentPeriod
-    let seasons: [KeyLink<MythicKeystoneProfileSeason>]
+public class MythicKeystoneProfile: Codable, SelfDecodable {
+    public let _links: SelfLink<MythicKeystoneProfile>
+    public let character: Link<WOWCharacterProfile>
+    public let currentPeriod: CurrentPeriod
+    public let seasons: [KeyLink<MythicKeystoneProfileSeason>]
     
-    static var decoder: JSONDecoder {
+    public static var decoder: JSONDecoder {
         let decoder = JSONDecoder()
         decoder.keyDecodingStrategy = .convertFromSnakeCase
         return decoder
@@ -23,11 +23,11 @@ class MythicKeystoneProfile: Codable, SelfDecodable {
 }
 
 
-class CurrentPeriod: Codable, SelfDecodable {
-    let period: KeyLink<MythicKeystoneProfileSeason>
-    let bestRuns: [BestRun]?
+public class CurrentPeriod: Codable, SelfDecodable {
+    public let period: KeyLink<MythicKeystoneProfileSeason>
+    public let bestRuns: [BestRun]?
     
-    static var decoder: JSONDecoder {
+    public static var decoder: JSONDecoder {
         let decoder = JSONDecoder()
         decoder.keyDecodingStrategy = .convertFromSnakeCase
         return decoder
@@ -35,16 +35,16 @@ class CurrentPeriod: Codable, SelfDecodable {
 }
 
 
-class BestRun: Codable, SelfDecodable {
-    let completedTimestamp: Int
-    let duration: Int
-    let keystoneLevel: Int
-    let keystoneAffixes: [KeyLink<KeystoneAffix>]
-    let members: [Member]
-    let dungeon: KeyLink<KeystoneAffix>
-    let isCompletedWithinTime: Bool
+public class BestRun: Codable, SelfDecodable {
+    public let completedTimestamp: Int
+    public let duration: Int
+    public let keystoneLevel: Int
+    public let keystoneAffixes: [KeyLink<KeystoneAffix>]
+    public let members: [Member]
+    public let dungeon: KeyLink<KeystoneAffix>
+    public let isCompletedWithinTime: Bool
     
-    static var decoder: JSONDecoder {
+    public static var decoder: JSONDecoder {
         let decoder = JSONDecoder()
         decoder.keyDecodingStrategy = .convertFromSnakeCase
         return decoder
@@ -52,13 +52,13 @@ class BestRun: Codable, SelfDecodable {
 }
 
 
-class Member: Codable, SelfDecodable {
-    let character: MemberCharacter
-    let specialization: KeyLink<Specialization>
-    let race: KeyLink<WOWRace>
-    let equippedItemLevel: Int
+public class Member: Codable, SelfDecodable {
+    public let character: MemberCharacter
+    public let specialization: KeyLink<Specialization>
+    public let race: KeyLink<WOWRace>
+    public let equippedItemLevel: Int
     
-    static var decoder: JSONDecoder {
+    public static var decoder: JSONDecoder {
         let decoder = JSONDecoder()
         decoder.keyDecodingStrategy = .convertFromSnakeCase
         return decoder
@@ -66,27 +66,27 @@ class Member: Codable, SelfDecodable {
 }
 
 
-class MemberCharacter: Codable {
-    let name: String
-    let id: Int
-    let realm: MythicKeystoneRealm
+public class MemberCharacter: Codable {
+    public let name: String
+    public let id: Int
+    public let realm: MythicKeystoneRealm
 }
 
 
-class MythicKeystoneRealm: Codable {
-    let key: Link<WOWRealm>
-    let id: Int
-    let slug: String
+public class MythicKeystoneRealm: Codable {
+    public let key: Link<WOWRealm>
+    public let id: Int
+    public let slug: String
 }
 
 
-class MythicKeystoneProfileSeason: Codable, SelfDecodable {
-    let _links: SelfLink<MythicKeystoneProfileSeason>
-    let season: KeyLink<MythicKeystoneSeason>
-    let bestRuns: [BestRun]
-    let character: Link<WOWCharacterProfile>
+public class MythicKeystoneProfileSeason: Codable, SelfDecodable {
+    public let _links: SelfLink<MythicKeystoneProfileSeason>
+    public let season: KeyLink<MythicKeystoneSeason>
+    public let bestRuns: [BestRun]
+    public let character: Link<WOWCharacterProfile>
     
-    static var decoder: JSONDecoder {
+    public static var decoder: JSONDecoder {
         let decoder = JSONDecoder()
         decoder.keyDecodingStrategy = .convertFromSnakeCase
         return decoder

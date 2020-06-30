@@ -9,13 +9,13 @@
 import Foundation
 
 
-class D3Class: Codable {
-    let slug: String
-    let name: String
-    let maleName: String
-    let femaleName: String
-    let icon: String
+public class D3Class: Codable {
+    public let slug: String
+    public let name: String
+    public let maleName: String
+    public let femaleName: String
+    public let icon: String
     
-    let skillCategories: [D3SkillCategory]
-    let skills: D3SkillSet
+    public let skillCategories: [D3SkillCategory]
+    public let skills: D3SkillSet
 }

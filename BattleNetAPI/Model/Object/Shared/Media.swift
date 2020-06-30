@@ -9,21 +9,21 @@
 import Foundation
 
 
-class MediaLink: Codable {
-    let key: Link<Media>
-    let id: Int
+public class MediaLink: Codable {
+    public let key: Link<Media>
+    public let id: Int
 }
 
 
 
-class Media: Codable {
-    let _links: SelfLink<Media>
-    let assets: [MediaAsset]
+public class Media: Codable {
+    public let _links: SelfLink<Media>
+    public let assets: [MediaAsset]
 }
 
 
 
-class MediaAsset: Codable {
-    let key: String
-    let value: String
+public class MediaAsset: Codable {
+    public let key: String
+    public let value: String
 }

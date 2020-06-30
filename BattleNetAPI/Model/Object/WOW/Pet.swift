@@ -9,22 +9,22 @@
 import Foundation
 
 
-class PetIndex: Codable {
-    let pets: [Pet]
+public class PetIndex: Codable {
+    public let pets: [Pet]
 }
 
 
-class Pet: Codable {
-    let canBattle: Bool
-    let creatureID: Int
-    let name: String
-    let family: PetFamily
-    let icon: String
-    let qualityID: Int
-    let stats: PetStats
-    let strongAgainst: [PetFamily]
-    let typeID: Int
-    let weakAgainst: [PetFamily]
+public class Pet: Codable {
+    public let canBattle: Bool
+    public let creatureID: Int
+    public let name: String
+    public let family: PetFamily
+    public let icon: String
+    public let qualityID: Int
+    public let stats: PetStats
+    public let strongAgainst: [PetFamily]
+    public let typeID: Int
+    public let weakAgainst: [PetFamily]
     
     enum CodingKeys: String, CodingKey {
         case canBattle
@@ -41,7 +41,7 @@ class Pet: Codable {
 }
 
 
-enum PetFamily: String, Codable {
+public enum PetFamily: String, Codable {
     case beast = "beast"
     case critter = "critter"
     case dragonkin = "dragonkin"
@@ -56,14 +56,14 @@ enum PetFamily: String, Codable {
 
 
 
-class PetStats: Codable {
-    let speciesID: Int
-    let breedID: Int
-    let petQualityID: Int
-    let level: Int
-    let health: Int
-    let power: Int
-    let speed: Int
+public class PetStats: Codable {
+    public let speciesID: Int
+    public let breedID: Int
+    public let petQualityID: Int
+    public let level: Int
+    public let health: Int
+    public let power: Int
+    public let speed: Int
     
     enum CodingKeys: String, CodingKey {
         case speciesID = "speciesId"
@@ -78,16 +78,16 @@ class PetStats: Codable {
 
 
 
-class PetSpecies: Codable {
-    let speciesID: Int
-    let petTypeID: Int
-    let creatureID: Int
-    let name: String
-    let canBattle: Bool
-    let icon: String
-    let description: String
-    let source: String
-    let abilities: [PetSpeciesAbility]
+public class PetSpecies: Codable {
+    public let speciesID: Int
+    public let petTypeID: Int
+    public let creatureID: Int
+    public let name: String
+    public let canBattle: Bool
+    public let icon: String
+    public let description: String
+    public let source: String
+    public let abilities: [PetSpeciesAbility]
     
     enum CodingKeys: String, CodingKey {
         case speciesID = "speciesId"
@@ -104,18 +104,18 @@ class PetSpecies: Codable {
 
 
 
-class PetSpeciesAbility: Codable {
-    let slot: Int
-    let order: Int
-    let requiredLevel: Int
-    let id: Int
-    let name: String
-    let icon: String
-    let cooldown: Int
-    let rounds: Int
-    let petTypeID: Int
-    let isPassive: Bool
-    let hideHints: Bool
+public class PetSpeciesAbility: Codable {
+    public let slot: Int
+    public let order: Int
+    public let requiredLevel: Int
+    public let id: Int
+    public let name: String
+    public let icon: String
+    public let cooldown: Int
+    public let rounds: Int
+    public let petTypeID: Int
+    public let isPassive: Bool
+    public let hideHints: Bool
     
     enum CodingKeys: String, CodingKey {
         case slot
@@ -134,15 +134,15 @@ class PetSpeciesAbility: Codable {
 
 
 
-class PetAbility: Codable {
-    let id: Int
-    let name: String
-    let icon: String
-    let cooldown: Int
-    let rounds: Int
-    let petTypeID: Int
-    let isPassive: Bool
-    let hideHints: Bool
+public class PetAbility: Codable {
+    public let id: Int
+    public let name: String
+    public let icon: String
+    public let cooldown: Int
+    public let rounds: Int
+    public let petTypeID: Int
+    public let isPassive: Bool
+    public let hideHints: Bool
     
     enum CodingKeys: String, CodingKey {
         case id
@@ -158,19 +158,19 @@ class PetAbility: Codable {
 
 
 
-class PetTypeIndex: Codable {
-    let petTypes: [PetType]
+public class PetTypeIndex: Codable {
+    public let petTypes: [PetType]
 }
 
 
 
-class PetType: Codable {
-    let id: Int
-    let key: String
-    let name: String
-    let typeAbilityID: Int
-    let strongAgainstID: Int
-    let weakAgainstID: Int
+public class PetType: Codable {
+    public let id: Int
+    public let key: String
+    public let name: String
+    public let typeAbilityID: Int
+    public let strongAgainstID: Int
+    public let weakAgainstID: Int
     
     enum CodingKeys: String, CodingKey {
         case id
@@ -184,14 +184,14 @@ class PetType: Codable {
 
 
 
-class HunterPet: Codable {
-    let name: String
-    let creature: Int
-    let slot: Int
-    let spec: CharacterSpecialization
-    let calcSpec: String
-    let familyID: Int
-    let familyName: String
+public class HunterPet: Codable {
+    public let name: String
+    public let creature: Int
+    public let slot: Int
+    public let spec: CharacterSpecialization
+    public let calcSpec: String
+    public let familyID: Int
+    public let familyName: String
     
     enum CodingKeys: String, CodingKey {
         case name
@@ -206,29 +206,29 @@ class HunterPet: Codable {
 
 
 
-class CollectedPetIndex: Codable {
-    let collected: [CollectedPet]
-    let numCollected: Int
-    let numNotCollected: Int
+public class CollectedPetIndex: Codable {
+    public let collected: [CollectedPet]
+    public let numCollected: Int
+    public let numNotCollected: Int
 }
 
 
 
-class CollectedPet: Codable {
-    let spellID: Int
-    let qualityID: Int
-    let stats: PetStats
-    let isThirdAbilitySlotSelected: Bool
-    let canBattle: Bool
-    let isFavorite: Bool
-    let isSecondAbilitySlotSelected: Bool
-    let battlePetGUID: String
-    let icon: String
-    let isFirstAbilitySlotSelected: Bool
-    let creatureID: Int
-    let creatureName: String
-    let name: String
-    let itemID: Int
+public class CollectedPet: Codable {
+    public let spellID: Int
+    public let qualityID: Int
+    public let stats: PetStats
+    public let isThirdAbilitySlotSelected: Bool
+    public let canBattle: Bool
+    public let isFavorite: Bool
+    public let isSecondAbilitySlotSelected: Bool
+    public let battlePetGUID: String
+    public let icon: String
+    public let isFirstAbilitySlotSelected: Bool
+    public let creatureID: Int
+    public let creatureName: String
+    public let name: String
+    public let itemID: Int
     
     enum CodingKeys: String, CodingKey {
         case spellID = "spellId"
@@ -250,12 +250,12 @@ class CollectedPet: Codable {
 
 
 
-class PetSlot: Codable {
-    let slot: Int
-    let isLocked: Bool
-    let abilities: [Int]
-    let battlePetGUID: String
-    let isEmpty: Bool
+public class PetSlot: Codable {
+    public let slot: Int
+    public let isLocked: Bool
+    public let abilities: [Int]
+    public let battlePetGUID: String
+    public let isEmpty: Bool
     
     enum CodingKeys: String, CodingKey {
         case slot

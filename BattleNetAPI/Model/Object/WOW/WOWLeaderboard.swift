@@ -9,12 +9,12 @@
 import Foundation
 
 
-class WOWLeaderboard: Codable {
-    let rows: [WOWLeaderboardEntry]
+public class WOWLeaderboard: Codable {
+    public let rows: [WOWLeaderboardEntry]
 }
 
 
-enum WOWLeaderboardBracket: String {
+public enum WOWLeaderboardBracket: String {
     case _2v2 = "2v2"
     case _3v3 = "3v3"
     case _5v5 = "5v5"
@@ -23,22 +23,22 @@ enum WOWLeaderboardBracket: String {
 
 
 
-class WOWLeaderboardEntry: Codable {
-    let ranking: Int
-    let rating: Int
-    let name: String
-    let realmID: Int
-    let realmName: String
-    let realmSlug: String
-    let raceID: Int
-    let classID: Int
-    let specID: Int
-    let factionID: Int
-    let genderID: Int
-    let seasonWins: Int
-    let seasonLosses: Int
-    let weeklyWins: Int
-    let weeklyLosses: Int
+public class WOWLeaderboardEntry: Codable {
+    public let ranking: Int
+    public let rating: Int
+    public let name: String
+    public let realmID: Int
+    public let realmName: String
+    public let realmSlug: String
+    public let raceID: Int
+    public let classID: Int
+    public let specID: Int
+    public let factionID: Int
+    public let genderID: Int
+    public let seasonWins: Int
+    public let seasonLosses: Int
+    public let weeklyWins: Int
+    public let weeklyLosses: Int
     
     enum CodingKeys: String, CodingKey {
         case ranking
@@ -61,18 +61,18 @@ class WOWLeaderboardEntry: Codable {
 
 
 
-class WOWPVP: Codable {
-    let brackets: WOWBrackets
+public class WOWPVP: Codable {
+    public let brackets: WOWBrackets
 }
 
 
 
-class WOWBrackets: Codable {
-    let arenaBracket2V2: WOWArenaBracket
-    let arenaBracket2V2Skirmish: WOWArenaBracket
-    let arenaBracket3V3: WOWArenaBracket
-    let arenaBracketRbg: WOWArenaBracket
-    let unknown: WOWArenaBracket
+public class WOWBrackets: Codable {
+    public let arenaBracket2V2: WOWArenaBracket
+    public let arenaBracket2V2Skirmish: WOWArenaBracket
+    public let arenaBracket3V3: WOWArenaBracket
+    public let arenaBracketRbg: WOWArenaBracket
+    public let unknown: WOWArenaBracket
     
     enum CodingKeys: String, CodingKey {
         case arenaBracket3V3 = "ARENA_BRACKET_3v3"
@@ -85,15 +85,15 @@ class WOWBrackets: Codable {
 
 
 
-class WOWArenaBracket: Codable {
-    let slug: String
-    let rating: Int
+public class WOWArenaBracket: Codable {
+    public let slug: String
+    public let rating: Int
     
-    let weeklyWon: Int
-    let weeklyLost: Int
-    let weeklyPlayed: Int
+    public let weeklyWon: Int
+    public let weeklyLost: Int
+    public let weeklyPlayed: Int
     
-    let seasonWon: Int
-    let seasonLost: Int
-    let seasonPlayed: Int
+    public let seasonWon: Int
+    public let seasonLost: Int
+    public let seasonPlayed: Int
 }

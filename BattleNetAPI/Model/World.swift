@@ -9,10 +9,10 @@
 import Foundation
 
 
-var Current = World()
+public var Current = World()
 
 
-struct World {
-    var region = APIRegion.us
-    var locale = APILocale.en_US
+public struct World {
+    public var region = APIRegion.us
+    public var locale = APILocale.en_US
 }

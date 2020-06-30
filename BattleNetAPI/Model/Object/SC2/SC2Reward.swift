@@ -9,17 +9,17 @@
 import Foundation
 
 
-class SC2Reward: Codable {
-    let id: String
-    let achievementID: String?
-    let name: String
+public class SC2Reward: Codable {
+    public let id: String
+    public let achievementID: String?
+    public let name: String
 
-    let imageUrl: String
-    let isSkin: Bool
-    let uiOrderHint: Int
-    let unlockableType: String
-    let flags: Int
-    let command: String?
+    public let imageUrl: String
+    public let isSkin: Bool
+    public let uiOrderHint: Int
+    public let unlockableType: String
+    public let flags: Int
+    public let command: String?
     
     
     enum CodingKeys: String, CodingKey {

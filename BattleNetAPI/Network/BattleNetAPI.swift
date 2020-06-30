@@ -10,7 +10,7 @@ import Foundation
 
 
 /// This class is an interface to all the web services, with separate properties for accessing authentication, user, and specific game web services.
-class BattleNetAPI {
+public class BattleNetAPI {
     /// Authenication web services
     public static let authentication = WS_Authentication()
     /// User web services

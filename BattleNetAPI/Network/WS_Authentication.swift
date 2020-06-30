@@ -9,7 +9,7 @@
 import Foundation
 
 
-class WS_Authentication: WebService {
+public class WS_Authentication: WebService {
     private let network = Network.shared
     
     

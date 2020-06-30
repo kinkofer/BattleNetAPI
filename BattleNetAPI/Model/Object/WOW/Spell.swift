@@ -9,15 +9,15 @@
 import Foundation
 
 
-class Spell: Codable {
-    let id: Int
-    let name: String
-    let description: String
-    let icon: String
+public class Spell: Codable {
+    public let id: Int
+    public let name: String
+    public let description: String
+    public let icon: String
     
-    let castTime: String
+    public let castTime: String
     
-    let subtext: String?
-    let powerCost: String?
-    let cooldown: String?
+    public let subtext: String?
+    public let powerCost: String?
+    public let cooldown: String?
 }

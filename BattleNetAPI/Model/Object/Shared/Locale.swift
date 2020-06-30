@@ -9,21 +9,21 @@
 import Foundation
 
 
-class LocaleString: Codable {
-    let de_DE: String?
-    let en_US: String?
-    let en_GB: String?
-    let es_ES: String?
-    let es_MX: String?
-    let fr_FR: String?
-    let it_IT: String?
-    let ko_KR: String?
-    let pl_PL: String?
-    let pt_BR: String?
-    let pt_PT: String?
-    let ru_RU: String?
-    let zh_CN: String?
-    let zh_TW: String?
+public class LocaleString: Codable {
+    public let de_DE: String?
+    public let en_US: String?
+    public let en_GB: String?
+    public let es_ES: String?
+    public let es_MX: String?
+    public let fr_FR: String?
+    public let it_IT: String?
+    public let ko_KR: String?
+    public let pl_PL: String?
+    public let pt_BR: String?
+    public let pt_PT: String?
+    public let ru_RU: String?
+    public let zh_CN: String?
+    public let zh_TW: String?
     
     
     enum CodingKeys: String, CodingKey {

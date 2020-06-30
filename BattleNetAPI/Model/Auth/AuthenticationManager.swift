@@ -10,18 +10,18 @@ import Foundation
 import AuthenticationServices
 
 
-class AuthenticationManager {
-    let authMC = AuthenticationModelController.shared
+public class AuthenticationManager {
+    public let authMC = AuthenticationModelController.shared
     
     /// The clientID is a unique token provided by the Blizzard Battle.net Developer Portal
-    let clientID = AuthToken.clientID
+    public let clientID = AuthToken.clientID
     /// The clientSecret is a unique token provided by the Blizzard Battle.net Developer Portal
-    let clientSecret = AuthToken.clientSecret
+    public let clientSecret = AuthToken.clientSecret
     
     /// The clientAccessToken is required for your app to make API calls. It is retrieved from a service that only requires your clientToken and clientSecret.
-    var clientAccessToken: String?
+    public var clientAccessToken: String?
     /// The userAccessToken is used to make API calls that require the user's permission. It is retrieved from a redirect after the user enters their credentials.
-    var userAccessToken: String?
+    public var userAccessToken: String?
     
     private var webAuthSession: ASWebAuthenticationSession?
     
@@ -29,7 +29,7 @@ class AuthenticationManager {
     
     // MARK: - Init
     
-    init() {
+    public init() {
         // TODO: retrieve access tokens from keychain
         clientAccessToken = AuthToken.clientAccessToken
         userAccessToken = AuthToken.userAccessToken
@@ -39,7 +39,7 @@ class AuthenticationManager {
     
     // MARK: -
     
-    func getClientAccessToken(completion: @escaping (_ result: Result<String, HTTPError>) -> Void) {
+    public func getClientAccessToken(completion: @escaping (_ result: Result<String, HTTPError>) -> Void) {
         if let accessToken = clientAccessToken {
             authMC.validateClientAccessToken(accessToken) { result in
                 DispatchQueue.main.async {
@@ -70,7 +70,7 @@ class AuthenticationManager {
     }
     
     
-    func getUserAccessToken(scope: Scope, on providerContext: ASWebAuthenticationPresentationContextProviding, completion: @escaping (_ result: Result<String, HTTPError>) -> Void) {
+    public func getUserAccessToken(scope: Scope, on providerContext: ASWebAuthenticationPresentationContextProviding, completion: @escaping (_ result: Result<String, HTTPError>) -> Void) {
         if let userAccessToken = userAccessToken {
             authMC.validateUserAccessToken(userAccessToken) { result in
                 DispatchQueue.main.async {

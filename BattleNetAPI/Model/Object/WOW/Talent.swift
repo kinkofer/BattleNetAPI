@@ -9,18 +9,18 @@
 import Foundation
 
 
-typealias ClassTalentDictionary = [String: ClassTalent]
+public typealias ClassTalentDictionary = [String: ClassTalent]
 
-class ClassTalent: Codable {
-    let specs: [CharacterSpecialization]
-    let talents: [[[TalentElement]]]
-    let `class`: String
-    let petSpecs: [CharacterSpecialization]?
+public class ClassTalent: Codable {
+    public let specs: [CharacterSpecialization]
+    public let talents: [[[TalentElement]]]
+    public let `class`: String
+    public let petSpecs: [CharacterSpecialization]?
 }
 
 
 
-enum RoleType: String, Codable {
+public enum RoleType: String, Codable {
     case dps = "DPS"
     case healing = "HEALING"
     case tank = "TANK"
@@ -28,44 +28,44 @@ enum RoleType: String, Codable {
 
 
 
-class TalentElement: Codable {
-    let tier: Int
-    let column: Int
-    let spell: CharacterSpell
-    let spec: CharacterSpecialization?
+public class TalentElement: Codable {
+    public let tier: Int
+    public let column: Int
+    public let spell: CharacterSpell
+    public let spec: CharacterSpecialization?
 }
 
 
 
-class CharacterSpell: Codable {
-    let id: Int
-    let name: String
-    let icon: String
-    let description: String
-    let castTime: CastTime
-    let range: Range?
-    let cooldown: String?
-    let powerCost: String?
-    let subtext: String?
+public class CharacterSpell: Codable {
+    public let id: Int
+    public let name: String
+    public let icon: String
+    public let description: String
+    public let castTime: CastTime
+    public let range: Range?
+    public let cooldown: String?
+    public let powerCost: String?
+    public let subtext: String?
 }
 
 
 
-class CharacterTalent: Codable {
-    let talents: [TalentElement]
-    let spec: CharacterSpecialization?
-    let selected: Bool?
-    let calcTalent: String
-    let calcSpec: String
+public class CharacterTalent: Codable {
+    public let talents: [TalentElement]
+    public let spec: CharacterSpecialization?
+    public let selected: Bool?
+    public let calcTalent: String
+    public let calcSpec: String
 }
 
 
 
-class PVPTalentSlots: Codable, SelfDecodable {
-    let _links: SelfLink<PVPTalentSlots>
-    let talentSlots: [TalentSlot]
+public class PVPTalentSlots: Codable, SelfDecodable {
+    public let _links: SelfLink<PVPTalentSlots>
+    public let talentSlots: [TalentSlot]
     
-    static var decoder: JSONDecoder {
+    public static var decoder: JSONDecoder {
         let decoder = JSONDecoder()
         decoder.keyDecodingStrategy = .convertFromSnakeCase
         return decoder
@@ -73,11 +73,11 @@ class PVPTalentSlots: Codable, SelfDecodable {
 }
 
 
-class TalentSlot: Codable, SelfDecodable {
-    let slotNumber: Int
-    let unlockPlayerLevel: Int
+public class TalentSlot: Codable, SelfDecodable {
+    public let slotNumber: Int
+    public let unlockPlayerLevel: Int
     
-    static var decoder: JSONDecoder {
+    public static var decoder: JSONDecoder {
         let decoder = JSONDecoder()
         decoder.keyDecodingStrategy = .convertFromSnakeCase
         return decoder

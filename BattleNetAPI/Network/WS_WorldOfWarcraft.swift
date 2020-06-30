@@ -9,7 +9,7 @@
 import Foundation
 
 
-class WS_WorldOfWarcraft: WebService {
+public class WS_WorldOfWarcraft: WebService {
     private let network = Network.shared
     
     internal func getBaseURL(region: APIRegion, apiType: APIType?) -> String {

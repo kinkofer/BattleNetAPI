@@ -9,31 +9,31 @@
 import Foundation
 
 
-class MountIndex: Codable {
-    let mounts: [Mount]
+public class MountIndex: Codable {
+    public let mounts: [Mount]
 }
 
 
 
-class CollectedMountIndex: Codable {
-    let collected: [Mount]
-    let numCollected: Int
-    let numNotCollected: Int
+public class CollectedMountIndex: Codable {
+    public let collected: [Mount]
+    public let numCollected: Int
+    public let numNotCollected: Int
 }
 
 
 
-class Mount: Codable {
-    let name: String
-    let spellID: Int
-    let creatureID: Int
-    let itemID: Int
-    let qualityID: Int
-    let icon: String?
-    let isGround: Bool
-    let isFlying: Bool
-    let isAquatic: Bool
-    let isJumping: Bool
+public class Mount: Codable {
+    public let name: String
+    public let spellID: Int
+    public let creatureID: Int
+    public let itemID: Int
+    public let qualityID: Int
+    public let icon: String?
+    public let isGround: Bool
+    public let isFlying: Bool
+    public let isAquatic: Bool
+    public let isJumping: Bool
     
     enum CodingKeys: String, CodingKey {
         case name

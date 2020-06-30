@@ -1,0 +1,523 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 50;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		5921165424AADAAE0028BAE2 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5921165324AADAAE0028BAE2 /* AppDelegate.swift */; };
+		5921165624AADAAE0028BAE2 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5921165524AADAAE0028BAE2 /* SceneDelegate.swift */; };
+		5921165D24AADAB40028BAE2 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 5921165C24AADAB40028BAE2 /* Assets.xcassets */; };
+		5921166024AADAB40028BAE2 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 5921165E24AADAB40028BAE2 /* LaunchScreen.storyboard */; };
+		598AC15B24AADFD7002F2ED3 /* D3Viewables.swift in Sources */ = {isa = PBXBuildFile; fileRef = 598AC14E24AADBE0002F2ED3 /* D3Viewables.swift */; };
+		598AC15C24AADFD7002F2ED3 /* Viewable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 598AC15124AADBE0002F2ED3 /* Viewable.swift */; };
+		598AC15D24AADFD7002F2ED3 /* SC2Viewables.swift in Sources */ = {isa = PBXBuildFile; fileRef = 598AC14F24AADBE0002F2ED3 /* SC2Viewables.swift */; };
+		598AC15E24AADFD7002F2ED3 /* WOWViewables.swift in Sources */ = {isa = PBXBuildFile; fileRef = 598AC15224AADBE0002F2ED3 /* WOWViewables.swift */; };
+		598AC15F24AADFD7002F2ED3 /* SharedViewables.swift in Sources */ = {isa = PBXBuildFile; fileRef = 598AC15024AADBE0002F2ED3 /* SharedViewables.swift */; };
+		598AC16024AADFDB002F2ED3 /* Diablo3ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 598AC15624AADC62002F2ED3 /* Diablo3ViewController.swift */; };
+		598AC16124AADFDB002F2ED3 /* StarCraft2ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 598AC15724AADC62002F2ED3 /* StarCraft2ViewController.swift */; };
+		598AC16224AADFDB002F2ED3 /* WorldOfWarcraftViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 598AC15824AADC62002F2ED3 /* WorldOfWarcraftViewController.swift */; };
+		598AC16324AADFDB002F2ED3 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 598AC15524AADC62002F2ED3 /* ViewController.swift */; };
+		598AC16424AADFDB002F2ED3 /* ViewerTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 598AC15924AADC62002F2ED3 /* ViewerTableViewController.swift */; };
+		598AC16524AADFDE002F2ED3 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 598AC14B24AADBE0002F2ED3 /* Main.storyboard */; };
+		598AC16724AAF449002F2ED3 /* BattleNetAPI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 598AC14924AADBBE002F2ED3 /* BattleNetAPI.framework */; };
+		598AC16824AAF449002F2ED3 /* BattleNetAPI.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 598AC14924AADBBE002F2ED3 /* BattleNetAPI.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		598AC16C24AB00CE002F2ED3 /* TableSection.swift in Sources */ = {isa = PBXBuildFile; fileRef = 598AC16B24AB00CE002F2ED3 /* TableSection.swift */; };
+		598AC16E24AB00D6002F2ED3 /* Debug.swift in Sources */ = {isa = PBXBuildFile; fileRef = 598AC16D24AB00D6002F2ED3 /* Debug.swift */; };
+		598AC17024AB00F0002F2ED3 /* Error+Alert.swift in Sources */ = {isa = PBXBuildFile; fileRef = 598AC16F24AB00EF002F2ED3 /* Error+Alert.swift */; };
+		598AC17224AB0101002F2ED3 /* UIViewController+Alert.swift in Sources */ = {isa = PBXBuildFile; fileRef = 598AC17124AB0100002F2ED3 /* UIViewController+Alert.swift */; };
+		598AC17424AB02ED002F2ED3 /* Array+Subscript.swift in Sources */ = {isa = PBXBuildFile; fileRef = 598AC17324AB02ED002F2ED3 /* Array+Subscript.swift */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXContainerItemProxy section */
+		598AC14424AADBBE002F2ED3 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 598AC13E24AADBBE002F2ED3 /* BattleNetAPI.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 59E425A0207871C20046EB84;
+			remoteInfo = "BattleNetAPI-App";
+		};
+		598AC14624AADBBE002F2ED3 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 598AC13E24AADBBE002F2ED3 /* BattleNetAPI.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 59E425B4207871C50046EB84;
+			remoteInfo = BattleNetAPITests;
+		};
+		598AC14824AADBBE002F2ED3 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 598AC13E24AADBBE002F2ED3 /* BattleNetAPI.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 598AC0D824A9B6B0002F2ED3;
+			remoteInfo = BattleNetAPI;
+		};
+/* End PBXContainerItemProxy section */
+
+/* Begin PBXCopyFilesBuildPhase section */
+		598AC16924AAF449002F2ED3 /* Embed Frameworks */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "";
+			dstSubfolderSpec = 10;
+			files = (
+				598AC16824AAF449002F2ED3 /* BattleNetAPI.framework in Embed Frameworks */,
+			);
+			name = "Embed Frameworks";
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXCopyFilesBuildPhase section */
+
+/* Begin PBXFileReference section */
+		5921165024AADAAE0028BAE2 /* BattleNetAPI-iOS.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "BattleNetAPI-iOS.app"; sourceTree = BUILT_PRODUCTS_DIR; };
+		5921165324AADAAE0028BAE2 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
+		5921165524AADAAE0028BAE2 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
+		5921165C24AADAB40028BAE2 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
+		5921165F24AADAB40028BAE2 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
+		5921166124AADAB40028BAE2 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		598AC13E24AADBBE002F2ED3 /* BattleNetAPI.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = BattleNetAPI.xcodeproj; path = ../../BattleNetAPI.xcodeproj; sourceTree = "<group>"; };
+		598AC14A24AADBE0002F2ED3 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
+		598AC14E24AADBE0002F2ED3 /* D3Viewables.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = D3Viewables.swift; sourceTree = "<group>"; };
+		598AC14F24AADBE0002F2ED3 /* SC2Viewables.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SC2Viewables.swift; sourceTree = "<group>"; };
+		598AC15024AADBE0002F2ED3 /* SharedViewables.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SharedViewables.swift; sourceTree = "<group>"; };
+		598AC15124AADBE0002F2ED3 /* Viewable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Viewable.swift; sourceTree = "<group>"; };
+		598AC15224AADBE0002F2ED3 /* WOWViewables.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WOWViewables.swift; sourceTree = "<group>"; };
+		598AC15524AADC62002F2ED3 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
+		598AC15624AADC62002F2ED3 /* Diablo3ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Diablo3ViewController.swift; sourceTree = "<group>"; };
+		598AC15724AADC62002F2ED3 /* StarCraft2ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StarCraft2ViewController.swift; sourceTree = "<group>"; };
+		598AC15824AADC62002F2ED3 /* WorldOfWarcraftViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WorldOfWarcraftViewController.swift; sourceTree = "<group>"; };
+		598AC15924AADC62002F2ED3 /* ViewerTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewerTableViewController.swift; sourceTree = "<group>"; };
+		598AC16B24AB00CE002F2ED3 /* TableSection.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = TableSection.swift; path = ../../../../BattleNetAPI/Utilities/TableSection.swift; sourceTree = "<group>"; };
+		598AC16D24AB00D6002F2ED3 /* Debug.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Debug.swift; sourceTree = "<group>"; };
+		598AC16F24AB00EF002F2ED3 /* Error+Alert.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Error+Alert.swift"; sourceTree = "<group>"; };
+		598AC17124AB0100002F2ED3 /* UIViewController+Alert.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIViewController+Alert.swift"; sourceTree = "<group>"; };
+		598AC17324AB02ED002F2ED3 /* Array+Subscript.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Array+Subscript.swift"; sourceTree = "<group>"; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		5921164D24AADAAE0028BAE2 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				598AC16724AAF449002F2ED3 /* BattleNetAPI.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		5921164724AADAAE0028BAE2 = {
+			isa = PBXGroup;
+			children = (
+				598AC13E24AADBBE002F2ED3 /* BattleNetAPI.xcodeproj */,
+				5921165224AADAAE0028BAE2 /* BattleNetAPI-iOS */,
+				5921165124AADAAE0028BAE2 /* Products */,
+				598AC16624AAF449002F2ED3 /* Frameworks */,
+			);
+			sourceTree = "<group>";
+		};
+		5921165124AADAAE0028BAE2 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				5921165024AADAAE0028BAE2 /* BattleNetAPI-iOS.app */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		5921165224AADAAE0028BAE2 /* BattleNetAPI-iOS */ = {
+			isa = PBXGroup;
+			children = (
+				5921165324AADAAE0028BAE2 /* AppDelegate.swift */,
+				5921165524AADAAE0028BAE2 /* SceneDelegate.swift */,
+				598AC15424AADBE0002F2ED3 /* View */,
+				598AC15A24AADC62002F2ED3 /* ViewController */,
+				598AC16A24AB00BC002F2ED3 /* Utilities */,
+				5921165C24AADAB40028BAE2 /* Assets.xcassets */,
+				5921165E24AADAB40028BAE2 /* LaunchScreen.storyboard */,
+				5921166124AADAB40028BAE2 /* Info.plist */,
+			);
+			path = "BattleNetAPI-iOS";
+			sourceTree = "<group>";
+		};
+		598AC13F24AADBBE002F2ED3 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				598AC14524AADBBE002F2ED3 /* BattleNetAPI-App.app */,
+				598AC14724AADBBE002F2ED3 /* BattleNetAPITests.xctest */,
+				598AC14924AADBBE002F2ED3 /* BattleNetAPI.framework */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		598AC15324AADBE0002F2ED3 /* Viewables */ = {
+			isa = PBXGroup;
+			children = (
+				598AC14E24AADBE0002F2ED3 /* D3Viewables.swift */,
+				598AC14F24AADBE0002F2ED3 /* SC2Viewables.swift */,
+				598AC15024AADBE0002F2ED3 /* SharedViewables.swift */,
+				598AC15124AADBE0002F2ED3 /* Viewable.swift */,
+				598AC15224AADBE0002F2ED3 /* WOWViewables.swift */,
+			);
+			path = Viewables;
+			sourceTree = "<group>";
+		};
+		598AC15424AADBE0002F2ED3 /* View */ = {
+			isa = PBXGroup;
+			children = (
+				598AC14B24AADBE0002F2ED3 /* Main.storyboard */,
+				598AC15324AADBE0002F2ED3 /* Viewables */,
+			);
+			path = View;
+			sourceTree = "<group>";
+		};
+		598AC15A24AADC62002F2ED3 /* ViewController */ = {
+			isa = PBXGroup;
+			children = (
+				598AC15524AADC62002F2ED3 /* ViewController.swift */,
+				598AC15624AADC62002F2ED3 /* Diablo3ViewController.swift */,
+				598AC15724AADC62002F2ED3 /* StarCraft2ViewController.swift */,
+				598AC15824AADC62002F2ED3 /* WorldOfWarcraftViewController.swift */,
+				598AC15924AADC62002F2ED3 /* ViewerTableViewController.swift */,
+			);
+			path = ViewController;
+			sourceTree = "<group>";
+		};
+		598AC16624AAF449002F2ED3 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		598AC16A24AB00BC002F2ED3 /* Utilities */ = {
+			isa = PBXGroup;
+			children = (
+				598AC17324AB02ED002F2ED3 /* Array+Subscript.swift */,
+				598AC16D24AB00D6002F2ED3 /* Debug.swift */,
+				598AC16F24AB00EF002F2ED3 /* Error+Alert.swift */,
+				598AC16B24AB00CE002F2ED3 /* TableSection.swift */,
+				598AC17124AB0100002F2ED3 /* UIViewController+Alert.swift */,
+			);
+			path = Utilities;
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXNativeTarget section */
+		5921164F24AADAAE0028BAE2 /* BattleNetAPI-iOS */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 5921166424AADAB40028BAE2 /* Build configuration list for PBXNativeTarget "BattleNetAPI-iOS" */;
+			buildPhases = (
+				5921164C24AADAAE0028BAE2 /* Sources */,
+				5921164D24AADAAE0028BAE2 /* Frameworks */,
+				5921164E24AADAAE0028BAE2 /* Resources */,
+				598AC16924AAF449002F2ED3 /* Embed Frameworks */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = "BattleNetAPI-iOS";
+			productName = "BattleNetAPI-iOS";
+			productReference = 5921165024AADAAE0028BAE2 /* BattleNetAPI-iOS.app */;
+			productType = "com.apple.product-type.application";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		5921164824AADAAE0028BAE2 /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				LastSwiftUpdateCheck = 1150;
+				LastUpgradeCheck = 1150;
+				ORGANIZATIONNAME = "Prismatic Games";
+				TargetAttributes = {
+					5921164F24AADAAE0028BAE2 = {
+						CreatedOnToolsVersion = 11.5;
+					};
+				};
+			};
+			buildConfigurationList = 5921164B24AADAAE0028BAE2 /* Build configuration list for PBXProject "BattleNetAPI-iOS" */;
+			compatibilityVersion = "Xcode 9.3";
+			developmentRegion = en;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				en,
+				Base,
+			);
+			mainGroup = 5921164724AADAAE0028BAE2;
+			productRefGroup = 5921165124AADAAE0028BAE2 /* Products */;
+			projectDirPath = "";
+			projectReferences = (
+				{
+					ProductGroup = 598AC13F24AADBBE002F2ED3 /* Products */;
+					ProjectRef = 598AC13E24AADBBE002F2ED3 /* BattleNetAPI.xcodeproj */;
+				},
+			);
+			projectRoot = "";
+			targets = (
+				5921164F24AADAAE0028BAE2 /* BattleNetAPI-iOS */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXReferenceProxy section */
+		598AC14524AADBBE002F2ED3 /* BattleNetAPI-App.app */ = {
+			isa = PBXReferenceProxy;
+			fileType = wrapper.application;
+			path = "BattleNetAPI-App.app";
+			remoteRef = 598AC14424AADBBE002F2ED3 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		598AC14724AADBBE002F2ED3 /* BattleNetAPITests.xctest */ = {
+			isa = PBXReferenceProxy;
+			fileType = wrapper.cfbundle;
+			path = BattleNetAPITests.xctest;
+			remoteRef = 598AC14624AADBBE002F2ED3 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		598AC14924AADBBE002F2ED3 /* BattleNetAPI.framework */ = {
+			isa = PBXReferenceProxy;
+			fileType = wrapper.framework;
+			path = BattleNetAPI.framework;
+			remoteRef = 598AC14824AADBBE002F2ED3 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+/* End PBXReferenceProxy section */
+
+/* Begin PBXResourcesBuildPhase section */
+		5921164E24AADAAE0028BAE2 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				598AC16524AADFDE002F2ED3 /* Main.storyboard in Resources */,
+				5921166024AADAB40028BAE2 /* LaunchScreen.storyboard in Resources */,
+				5921165D24AADAB40028BAE2 /* Assets.xcassets in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
+
+/* Begin PBXSourcesBuildPhase section */
+		5921164C24AADAAE0028BAE2 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				598AC17024AB00F0002F2ED3 /* Error+Alert.swift in Sources */,
+				598AC16C24AB00CE002F2ED3 /* TableSection.swift in Sources */,
+				598AC15F24AADFD7002F2ED3 /* SharedViewables.swift in Sources */,
+				598AC15C24AADFD7002F2ED3 /* Viewable.swift in Sources */,
+				598AC15D24AADFD7002F2ED3 /* SC2Viewables.swift in Sources */,
+				598AC17424AB02ED002F2ED3 /* Array+Subscript.swift in Sources */,
+				598AC16124AADFDB002F2ED3 /* StarCraft2ViewController.swift in Sources */,
+				598AC16E24AB00D6002F2ED3 /* Debug.swift in Sources */,
+				598AC17224AB0101002F2ED3 /* UIViewController+Alert.swift in Sources */,
+				598AC16324AADFDB002F2ED3 /* ViewController.swift in Sources */,
+				598AC16024AADFDB002F2ED3 /* Diablo3ViewController.swift in Sources */,
+				598AC15E24AADFD7002F2ED3 /* WOWViewables.swift in Sources */,
+				5921165424AADAAE0028BAE2 /* AppDelegate.swift in Sources */,
+				5921165624AADAAE0028BAE2 /* SceneDelegate.swift in Sources */,
+				598AC16224AADFDB002F2ED3 /* WorldOfWarcraftViewController.swift in Sources */,
+				598AC15B24AADFD7002F2ED3 /* D3Viewables.swift in Sources */,
+				598AC16424AADFDB002F2ED3 /* ViewerTableViewController.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin PBXVariantGroup section */
+		5921165E24AADAB40028BAE2 /* LaunchScreen.storyboard */ = {
+			isa = PBXVariantGroup;
+			children = (
+				5921165F24AADAB40028BAE2 /* Base */,
+			);
+			name = LaunchScreen.storyboard;
+			sourceTree = "<group>";
+		};
+		598AC14B24AADBE0002F2ED3 /* Main.storyboard */ = {
+			isa = PBXVariantGroup;
+			children = (
+				598AC14A24AADBE0002F2ED3 /* Base */,
+			);
+			name = Main.storyboard;
+			sourceTree = "<group>";
+		};
+/* End PBXVariantGroup section */
+
+/* Begin XCBuildConfiguration section */
+		5921166224AADAB40028BAE2 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = dwarf;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_TESTABILITY = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu11;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 13.5;
+				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
+				MTL_FAST_MATH = YES;
+				ONLY_ACTIVE_ARCH = YES;
+				SDKROOT = iphoneos;
+				SWIFT_ACTIVE_COMPILATION_CONDITIONS = DEBUG;
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+			};
+			name = Debug;
+		};
+		5921166324AADAB40028BAE2 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				ENABLE_NS_ASSERTIONS = NO;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu11;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 13.5;
+				MTL_ENABLE_DEBUG_INFO = NO;
+				MTL_FAST_MATH = YES;
+				SDKROOT = iphoneos;
+				SWIFT_COMPILATION_MODE = wholemodule;
+				SWIFT_OPTIMIZATION_LEVEL = "-O";
+				VALIDATE_PRODUCT = YES;
+			};
+			name = Release;
+		};
+		5921166524AADAB40028BAE2 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = W5SXX2FNDK;
+				INFOPLIST_FILE = "BattleNetAPI-iOS/Info.plist";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = "com.prismatic-games.BattleNetAPI-iOS";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Debug;
+		};
+		5921166624AADAB40028BAE2 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = W5SXX2FNDK;
+				INFOPLIST_FILE = "BattleNetAPI-iOS/Info.plist";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = "com.prismatic-games.BattleNetAPI-iOS";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		5921164B24AADAAE0028BAE2 /* Build configuration list for PBXProject "BattleNetAPI-iOS" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				5921166224AADAB40028BAE2 /* Debug */,
+				5921166324AADAB40028BAE2 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		5921166424AADAB40028BAE2 /* Build configuration list for PBXNativeTarget "BattleNetAPI-iOS" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				5921166524AADAB40028BAE2 /* Debug */,
+				5921166624AADAB40028BAE2 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+/* End XCConfigurationList section */
+	};
+	rootObject = 5921164824AADAAE0028BAE2 /* Project object */;
+}

@@ -9,7 +9,7 @@
 import Foundation
 
 
-enum LeagueQueue: String {
+public enum LeagueQueue: String {
     case woL1v1 = "WoL 1v1"
     case woL2v2 = "WoL 2v2"
     case woL3v3 = "WoL 3v3"
@@ -25,12 +25,12 @@ enum LeagueQueue: String {
     case lotVArchon = "LotV Archon"
     
     
-    var title: String {
+    public var title: String {
         return rawValue
     }
     
     
-    var id: Int {
+    public var id: Int {
         switch self {
         case .woL1v1: return 1
         case .woL2v2: return 2
@@ -51,17 +51,17 @@ enum LeagueQueue: String {
 
 
 
-enum LeagueTeam: String {
+public enum LeagueTeam: String {
     case arranged = "Arranged"
     case random = "Random"
     
     
-    var title: String {
+    public var title: String {
         return rawValue
     }
     
     
-    var id: Int {
+    public var id: Int {
         switch self {
         case .arranged: return 0
         case .random: return 1
@@ -71,7 +71,7 @@ enum LeagueTeam: String {
 
 
 
-enum LeagueType: String {
+public enum LeagueType: String {
     case bronze = "Bronze"
     case silver = "Silver"
     case gold = "Gold"
@@ -81,12 +81,12 @@ enum LeagueType: String {
     case grandmaster = "Grandmaster"
     
     
-    var title: String {
+    public var title: String {
         return rawValue
     }
     
     
-    var id: Int {
+    public var id: Int {
         switch self {
         case .bronze: return 0
         case .silver: return 1

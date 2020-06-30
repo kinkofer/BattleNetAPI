@@ -9,13 +9,13 @@
 import Foundation
 
 
-class Auction: Codable {
-    let files: [AuctionFile]
+public class Auction: Codable {
+    public let files: [AuctionFile]
 }
 
 
 
-class AuctionFile: Codable {
-    let url: String
-    let lastModified: Double
+public class AuctionFile: Codable {
+    public let url: String
+    public let lastModified: Double
 }

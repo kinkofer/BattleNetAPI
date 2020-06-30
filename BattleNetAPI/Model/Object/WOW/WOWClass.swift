@@ -9,22 +9,22 @@
 import Foundation
 
 
-class WOWClassIndex: Codable {
-    let _links: SelfLink<WOWClassIndex>
-    let classes: [KeyLink<WOWClass>]
+public class WOWClassIndex: Codable {
+    public let _links: SelfLink<WOWClassIndex>
+    public let classes: [KeyLink<WOWClass>]
 }
 
 
-class WOWClass: Codable, SelfDecodable {
-    let _links: SelfLink<WOWClass>
-    let id: Int
-    let name: String
-    let genderName: GenderName
-    let powerType: KeyLink<PowerType>
-    let specializations: [KeyLink<Specialization>]
-    let media: MediaLink
+public class WOWClass: Codable, SelfDecodable {
+    public let _links: SelfLink<WOWClass>
+    public let id: Int
+    public let name: String
+    public let genderName: GenderName
+    public let powerType: KeyLink<PowerType>
+    public let specializations: [KeyLink<Specialization>]
+    public let media: MediaLink
     
-    static var decoder: JSONDecoder {
+    public static var decoder: JSONDecoder {
         let decoder = JSONDecoder()
         decoder.keyDecodingStrategy = .convertFromSnakeCase
         return decoder
@@ -33,17 +33,17 @@ class WOWClass: Codable, SelfDecodable {
 
 
 
-class GenderName: Codable {
-    let male: String
-    let female: String
+public class GenderName: Codable {
+    public let male: String
+    public let female: String
 }
 
 
-class GenderName2: Codable, SelfDecodable {
-    let maleName: String
-    let femaleName: String
+public class GenderName2: Codable, SelfDecodable {
+    public let maleName: String
+    public let femaleName: String
     
-    static var decoder: JSONDecoder {
+    public static var decoder: JSONDecoder {
         let decoder = JSONDecoder()
         decoder.keyDecodingStrategy = .convertFromSnakeCase
         return decoder
@@ -52,16 +52,16 @@ class GenderName2: Codable, SelfDecodable {
 
 
 
-// MARK: - Class Data Resource
+// MARK: - public class Data Resource
 
-class WOWCharacterClassIndex: Codable {
-    let classes: [WOWCharacterClass]
+public class WOWCharacterClassIndex: Codable {
+    public let classes: [WOWCharacterClass]
 }
 
 
-class WOWCharacterClass: Codable {
-    let id: Int
-    let mask: Int
-    let powerType: String
-    let name: String
+public class WOWCharacterClass: Codable {
+    public let id: Int
+    public let mask: Int
+    public let powerType: String
+    public let name: String
 }

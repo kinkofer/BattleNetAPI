@@ -9,21 +9,21 @@
 import Foundation
 
 
-class LadderSummary: Codable {
-    let showCaseEntries: [ShowCaseEntry]
-    let placementMatches: [PlacementMatch]
-    let allLadderMemberships: [LadderMembership]
+public class LadderSummary: Codable {
+    public let showCaseEntries: [ShowCaseEntry]
+    public let placementMatches: [PlacementMatch]
+    public let allLadderMemberships: [LadderMembership]
 }
 
 
-class ShowCaseEntry: Codable {
-    let ladderID: String
-    let team: Team
-    let leagueName: String
-    let localizedDivisionName: String
-    let rank: Int
-    let wins: Int
-    let losses: Int
+public class ShowCaseEntry: Codable {
+    public let ladderID: String
+    public let team: Team
+    public let leagueName: String
+    public let localizedDivisionName: String
+    public let rank: Int
+    public let wins: Int
+    public let losses: Int
     
     enum CodingKeys: String, CodingKey {
         case ladderID = "ladderId"
@@ -32,17 +32,17 @@ class ShowCaseEntry: Codable {
 }
 
 
-class PlacementMatch: Codable {
-    let localizedGameMode: String
-    let members: [TeamMember]
-    let gamesRemaining: Int
+public class PlacementMatch: Codable {
+    public let localizedGameMode: String
+    public let members: [TeamMember]
+    public let gamesRemaining: Int
 }
 
 
-class LadderMembership: Codable {
-    let ladderID: String
-    let localizedGameMode: String
-    let rank: Int?
+public class LadderMembership: Codable {
+    public let ladderID: String
+    public let localizedGameMode: String
+    public let rank: Int?
     
     enum CodingKeys: String, CodingKey {
         case ladderID = "ladderId"
@@ -51,18 +51,18 @@ class LadderMembership: Codable {
 }
 
 
-class Team: Codable {
-    let localizedGameMode: String
-    let members: [TeamMember]
+public class Team: Codable {
+    public let localizedGameMode: String
+    public let members: [TeamMember]
 }
 
 
-class TeamMember: Codable {
-    let favoriteRace: FavoriteRace?
-    let name: String
-    let playerID: String
-    let region: Int
-    let clanTag: String?
+public class TeamMember: Codable {
+    public let favoriteRace: FavoriteRace?
+    public let name: String
+    public let playerID: String
+    public let region: Int
+    public let clanTag: String?
     
     enum CodingKeys: String, CodingKey {
         case favoriteRace
@@ -74,38 +74,38 @@ class TeamMember: Codable {
 }
 
 
-class Ladder: Codable {
-    let ladderTeams: [LadderTeam]
-    let allLadderMemberships: [LadderMembership]
-    let localizedDivision: String?
-    let league: String?
-    let currentLadderMembership: LadderMembership?
-    let ranksAndPools: [RanksAndPool]
+public class Ladder: Codable {
+    public let ladderTeams: [LadderTeam]
+    public let allLadderMemberships: [LadderMembership]
+    public let localizedDivision: String?
+    public let league: String?
+    public let currentLadderMembership: LadderMembership?
+    public let ranksAndPools: [RanksAndPool]
 }
 
 
-class LadderTeam: Codable {
-    let teamMembers: [LadderTeamMember]
-    let previousRank: Int
-    let points: Int
-    let wins: Int
-    let losses: Int
-    let mmr: Int?
-    let joinTimestamp: Int
+public class LadderTeam: Codable {
+    public let teamMembers: [LadderTeamMember]
+    public let previousRank: Int
+    public let points: Int
+    public let wins: Int
+    public let losses: Int
+    public let mmr: Int?
+    public let joinTimestamp: Int
 }
 
 
-class LadderTeamMember: Codable {
-    let id: String
-    let realm: Int
-    let region: Int
-    let displayName: String
-    let favoriteRace: FavoriteRace?
-    let clanTag: String?
+public class LadderTeamMember: Codable {
+    public let id: String
+    public let realm: Int
+    public let region: Int
+    public let displayName: String
+    public let favoriteRace: FavoriteRace?
+    public let clanTag: String?
 }
 
 
-enum FavoriteRace: String, Codable {
+public enum FavoriteRace: String, Codable {
     case protoss = "protoss"
     case random = "random"
     case terran = "terran"
@@ -113,13 +113,13 @@ enum FavoriteRace: String, Codable {
 }
 
 
-class RanksAndPool: Codable {
-    let rank: Int
-    let mmr: Int
-    let bonusPool: Int
+public class RanksAndPool: Codable {
+    public let rank: Int
+    public let mmr: Int
+    public let bonusPool: Int
 }
 
 
-class GrandmasterLeaderboard: Codable {
-    let ladderTeams: [LadderTeam]
+public class GrandmasterLeaderboard: Codable {
+    public let ladderTeams: [LadderTeam]
 }

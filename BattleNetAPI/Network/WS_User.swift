@@ -9,7 +9,7 @@
 import Foundation
 
 
-class WS_User: WebService {
+public class WS_User: WebService {
     private let network = Network.shared
     
     func getBaseURL(region: APIRegion, apiType: APIType?) -> String {

@@ -9,25 +9,25 @@
 import Foundation
 
 
-class KeystoneAffixIndex: Codable {
-    let _links: SelfLink<KeystoneAffixIndex>
-    let affixes: [KeyLink<KeystoneAffix>]
+public class KeystoneAffixIndex: Codable {
+    public let _links: SelfLink<KeystoneAffixIndex>
+    public let affixes: [KeyLink<KeystoneAffix>]
 }
 
 
-class KeystoneAffix: Codable {
-    let _links: SelfLink<KeystoneAffix>
-    let id: Int
-    let name: String
-    let description: String
-    let media: MediaLink
+public class KeystoneAffix: Codable {
+    public let _links: SelfLink<KeystoneAffix>
+    public let id: Int
+    public let name: String
+    public let description: String
+    public let media: MediaLink
 }
 
 
 /// - note: Property of class that contains camelCase and snake_case keys
-class KeystoneAffixSummary: Codable {
-    let keystoneAffix: KeyLink<KeystoneAffix>
-    let startingLevel: Int
+public class KeystoneAffixSummary: Codable {
+    public let keystoneAffix: KeyLink<KeystoneAffix>
+    public let startingLevel: Int
     
     enum CodingKeys: String, CodingKey {
         case keystoneAffix = "keystone_affix"

@@ -10,33 +10,33 @@ import Foundation
 
 
 
-class WOWCharacterResult: Codable {
-    let characters: [WOWCharacter]
+public class WOWCharacterResult: Codable {
+    public let characters: [WOWCharacter]
 }
 
 
-struct WOWCharacterField: OptionSet {
-    let rawValue: Int
+public struct WOWCharacterField: OptionSet {
+    public let rawValue: Int
     
-    static let achievements = WOWCharacterField(rawValue: 1 << 0)
-    static let appearance = WOWCharacterField(rawValue: 1 << 1)
-    static let feed = WOWCharacterField(rawValue: 1 << 2)
-    static let guild = WOWCharacterField(rawValue: 1 << 3)
-    static let hunterPets = WOWCharacterField(rawValue: 1 << 4)
-    static let items = WOWCharacterField(rawValue: 1 << 5)
-    static let mounts = WOWCharacterField(rawValue: 1 << 6)
-    static let pets = WOWCharacterField(rawValue: 1 << 7)
-    static let petSlots = WOWCharacterField(rawValue: 1 << 8)
-    static let professions = WOWCharacterField(rawValue: 1 << 9)
-    static let progression = WOWCharacterField(rawValue: 1 << 10)
-    static let pvp = WOWCharacterField(rawValue: 1 << 11)
-    static let quests = WOWCharacterField(rawValue: 1 << 12)
-    static let reputation = WOWCharacterField(rawValue: 1 << 13)
-    static let statistics = WOWCharacterField(rawValue: 1 << 14)
-    static let stats = WOWCharacterField(rawValue: 1 << 15)
-    static let talents = WOWCharacterField(rawValue: 1 << 16)
-    static let titles = WOWCharacterField(rawValue: 1 << 17)
-    static let audit = WOWCharacterField(rawValue: 1 << 18)
+    public static let achievements = WOWCharacterField(rawValue: 1 << 0)
+    public static let appearance = WOWCharacterField(rawValue: 1 << 1)
+    public static let feed = WOWCharacterField(rawValue: 1 << 2)
+    public static let guild = WOWCharacterField(rawValue: 1 << 3)
+    public static let hunterPets = WOWCharacterField(rawValue: 1 << 4)
+    public static let items = WOWCharacterField(rawValue: 1 << 5)
+    public static let mounts = WOWCharacterField(rawValue: 1 << 6)
+    public static let pets = WOWCharacterField(rawValue: 1 << 7)
+    public static let petSlots = WOWCharacterField(rawValue: 1 << 8)
+    public static let professions = WOWCharacterField(rawValue: 1 << 9)
+    public static let progression = WOWCharacterField(rawValue: 1 << 10)
+    public static let pvp = WOWCharacterField(rawValue: 1 << 11)
+    public static let quests = WOWCharacterField(rawValue: 1 << 12)
+    public static let reputation = WOWCharacterField(rawValue: 1 << 13)
+    public static let statistics = WOWCharacterField(rawValue: 1 << 14)
+    public static let stats = WOWCharacterField(rawValue: 1 << 15)
+    public static let talents = WOWCharacterField(rawValue: 1 << 16)
+    public static let titles = WOWCharacterField(rawValue: 1 << 17)
+    public static let audit = WOWCharacterField(rawValue: 1 << 18)
     
     
     var toArray: [String] {
@@ -64,112 +64,117 @@ struct WOWCharacterField: OptionSet {
         
         return array
     }
+    
+    
+    public init(rawValue: Int) {
+        self.rawValue = rawValue
+    }
 }
 
 
-class WOWCharacter: Codable {
-    let name: String
-    let level: Int
-    let `class`: Int
-    let race: Int
-    let gender: Int
+public class WOWCharacter: Codable {
+    public let name: String
+    public let level: Int
+    public let `class`: Int
+    public let race: Int
+    public let gender: Int
     
-    let realm: String
-    let battlegroup: String
-    let achievementPoints: Int
-    let thumbnail: String
-    let lastModified: Int
+    public let realm: String
+    public let battlegroup: String
+    public let achievementPoints: Int
+    public let thumbnail: String
+    public let lastModified: Int
     
-    let guild: String?
-    let guildRealm: String?
+    public let guild: String?
+    public let guildRealm: String?
     
-    let spec: CharacterSpecialization?
-}
-
-
-
-class WOWCharacterProfile: Codable {
-    let name: String
-    let level: Int
-    let `class`: Int
-    let race: Int
-    let gender: Int
-    
-    let realm: String
-    let battlegroup: String
-    let achievementPoints: Int
-    let thumbnail: String
-    let lastModified: Int
-    
-    let spec: CharacterSpecialization?
-    
-    let calcClass: String?
-    let faction: Int?
-    let totalHonorableKills: Int?
-    
-    let appearance: WOWCharacterAppearance?
-    let titles: [WOWCharacterTitle]?
-    
-    let statistics: StatisticIndex?
-    let stats: WOWCharacterStats?
-    let achievements: WOWAchievementStatus?
-    let feed: [Feed]?
-    
-    let items: WOWEquippedItems?
-    let professions: Professions?
-    let talents: [CharacterTalent]?
-    
-    let reputation: [Reputation]?
-    let progression: WOWProgression?
-    let quests: [Int]?
-    
-    let mounts: CollectedMountIndex?
-    let pets: CollectedPetIndex?
-    let petSlots: [PetSlot]?
-    let hunterPets: [HunterPet]?
-    
-    let guild: WOWGuild?
-    let pvp: WOWPVP?
-    let audit: Audit?
+    public let spec: CharacterSpecialization?
 }
 
 
 
-class RaceIndex: Codable {
-    let races: [Race]
+public class WOWCharacterProfile: Codable {
+    public let name: String
+    public let level: Int
+    public let `class`: Int
+    public let race: Int
+    public let gender: Int
+    
+    public let realm: String
+    public let battlegroup: String
+    public let achievementPoints: Int
+    public let thumbnail: String
+    public let lastModified: Int
+    
+    public let spec: CharacterSpecialization?
+    
+    public let calcClass: String?
+    public let faction: Int?
+    public let totalHonorableKills: Int?
+    
+    public let appearance: WOWCharacterAppearance?
+    public let titles: [WOWCharacterTitle]?
+    
+    public let statistics: StatisticIndex?
+    public let stats: WOWCharacterStats?
+    public let achievements: WOWAchievementStatus?
+    public let feed: [Feed]?
+    
+    public let items: WOWEquippedItems?
+    public let professions: Professions?
+    public let talents: [CharacterTalent]?
+    
+    public let reputation: [Reputation]?
+    public let progression: WOWProgression?
+    public let quests: [Int]?
+    
+    public let mounts: CollectedMountIndex?
+    public let pets: CollectedPetIndex?
+    public let petSlots: [PetSlot]?
+    public let hunterPets: [HunterPet]?
+    
+    public let guild: WOWGuild?
+    public let pvp: WOWPVP?
+    public let audit: Audit?
 }
 
 
 
-class Race: Codable {
-    let id: Int
-    let mask: Int
-    let side: RaceFaction
-    let name: String
+public class RaceIndex: Codable {
+    public let races: [Race]
 }
 
 
-enum RaceFaction: String, Codable {
+
+public class Race: Codable {
+    public let id: Int
+    public let mask: Int
+    public let side: RaceFaction
+    public let name: String
+}
+
+
+public enum RaceFaction: String, Codable {
     case alliance = "alliance"
     case horde = "horde"
     case neutral = "neutral"
 }
 
 
-class WOWRaceIndex: Codable {
-    let _links: SelfLink<WOWRaceIndex>
-    let races: [KeyLink<WOWRace>]
+public class WOWRaceIndex: Codable {
+    public let _links: SelfLink<WOWRaceIndex>
+    public let races: [KeyLink<WOWRace>]
 }
 
 
-class WOWRace: Codable, SelfDecodable {
-    let _links: SelfLink<WOWRace>
-    let id: Int
-    let name: String
-    let genderName: GenderName2
-    let faction: [WOWFaction]
+public class WOWRace: Codable, SelfDecodable {
+    public let _links: SelfLink<WOWRace>
+    public let id: Int
+    public let name: String
+    public let genderName: GenderName2
+    public let faction: [WOWFaction]
     
-    static var decoder: JSONDecoder {
+    public static var decoder: JSONDecoder {
         let decoder = JSONDecoder()
         decoder.keyDecodingStrategy = .convertFromSnakeCase
         return decoder
@@ -178,90 +183,90 @@ class WOWRace: Codable, SelfDecodable {
 
 
 
-class WOWCharacterAppearance: Codable {
-    let faceVariation: Int
-    let skinColor: Int
-    let hairVariation: Int
-    let hairColor: Int
-    let featureVariation: Int
-    let showHelm: Bool
-    let showCloak: Bool
-    let customDisplayOptions: [Int]
+public class WOWCharacterAppearance: Codable {
+    public let faceVariation: Int
+    public let skinColor: Int
+    public let hairVariation: Int
+    public let hairColor: Int
+    public let featureVariation: Int
+    public let showHelm: Bool
+    public let showCloak: Bool
+    public let customDisplayOptions: [Int]
 }
 
 
 
-class Feed: Codable {
-    let type: String
-    let timestamp: Int
+public class Feed: Codable {
+    public let type: String
+    public let timestamp: Int
     
-    let name: String?
-    let character: String?
-    let featOfStrength: Bool?
-    let achievement: WOWAchievement?
-    let criteria: WOWAchievementCriterion?
+    public let name: String?
+    public let character: String?
+    public let featOfStrength: Bool?
+    public let achievement: WOWAchievement?
+    public let criteria: WOWAchievementCriterion?
     
-    let itemID: Int?
-    let quantity: Int?
+    public let itemID: Int?
+    public let quantity: Int?
     
-    let context: String?
-    let bonusLists: [Int]?
+    public let context: String?
+    public let bonusLists: [Int]?
 }
 
 
 
-class Professions: Codable {
-    let primary: [Profession]
-    let secondary: [Profession]
+public class Professions: Codable {
+    public let primary: [Profession]
+    public let secondary: [Profession]
 }
 
 
 
-class Profession: Codable {
-    let id: Int
-    let icon: String?
-    let recipes: [Int]
-    let name: String
-    let rank: Int
-    let max: Int
+public class Profession: Codable {
+    public let id: Int
+    public let icon: String?
+    public let recipes: [Int]
+    public let name: String
+    public let rank: Int
+    public let max: Int
 }
 
 
 
-class WOWProgression: Codable {
-    let raids: [Raid]
+public class WOWProgression: Codable {
+    public let raids: [Raid]
 }
 
 
 
-class Raid: Codable {
-    let id: Int
-    let name: String
+public class Raid: Codable {
+    public let id: Int
+    public let name: String
     
-    let normal: Int
-    let heroic: Int
-    let mythic: Int
-    let lfr: Int
+    public let normal: Int
+    public let heroic: Int
+    public let mythic: Int
+    public let lfr: Int
     
-    let bosses: [RaidBoss]
+    public let bosses: [RaidBoss]
 }
 
 
 
-class Reputation: Codable {
-    let id: Int
-    let value: Int
-    let name: String
-    let standing: Int
-    let max: Int
+public class Reputation: Codable {
+    public let id: Int
+    public let value: Int
+    public let name: String
+    public let standing: Int
+    public let max: Int
 }
 
 
 
-class StatisticIndex: Codable {
-    let id: Int
-    let name: String
-    let subcategories: [StatisticSubcategory]
+public class StatisticIndex: Codable {
+    public let id: Int
+    public let name: String
+    public let subcategories: [StatisticSubcategory]
     
     enum CodingKeys: String, CodingKey {
         case id
@@ -272,11 +277,11 @@ class StatisticIndex: Codable {
 
 
 
-class StatisticSubcategory: Codable {
-    let id: Int
-    let statistics: [Statistic]
-    let subcategories: [StatisticSubcategory]?
-    let name: String
+public class StatisticSubcategory: Codable {
+    public let id: Int
+    public let statistics: [Statistic]
+    public let subcategories: [StatisticSubcategory]?
+    public let name: String
     
     enum CodingKeys: String, CodingKey {
         case id
@@ -288,101 +293,101 @@ class StatisticSubcategory: Codable {
 
 
 
-class Statistic: Codable {
-    let id: Int
-    let quantity: Int
-    let money: Bool
-    let name: String
-    let lastUpdated: Int
-    let highest: String?
+public class Statistic: Codable {
+    public let id: Int
+    public let quantity: Int
+    public let money: Bool
+    public let name: String
+    public let lastUpdated: Int
+    public let highest: String?
 }
 
 
 
-class WOWCharacterStats: Codable {
-    let mainHandDmgMin: Int
-    let int: Int
-    let hasteRating: Int
-    let mastery: Double
-    let versatilityHealingDoneBonus: Double
-    let parryRating: Int
-    let health: Int
-    let dodge: Int
-    let mana5Combat: Int
-    let mainHandDmgMax: Int
-    let offHandSpeed: Double
-    let sta: Int
-    let leechRatingBonus: Int
-    let leech: Int
-    let speedRatingBonus: Int
-    let offHandDmgMin: Int
-    let offHandDps: Double
-    let str: Int
-    let agi: Int
-    let spellPen: Int
-    let powerType: String
-    let mainHandSpeed: Double
-    let offHandDmgMax: Int
-    let crit: Double
-    let dodgeRating: Int
-    let rangedDmgMin: Int
-    let power: Int
-    let spellCritRating: Int
-    let leechRating: Int
-    let armor: Int
-    let parry: Double
-    let hasteRatingPercent: Double
-    let mana5: Int
-    let rangedDmgMax: Int
-    let avoidanceRating: Int
-    let spellCrit: Double
-    let versatilityDamageTakenBonus: Double
-    let critRating: Int
-    let haste: Double
-    let versatility: Int
-    let blockRating: Int
-    let mainHandDps: Double
-    let rangedSpeed: Int
-    let rangedDps: Int
-    let masteryRating: Int
-    let speedRating: Double
-    let versatilityDamageDoneBonus: Double
-    let block: Int
-    let avoidanceRatingBonus: Int
+public class WOWCharacterStats: Codable {
+    public let mainHandDmgMin: Int
+    public let int: Int
+    public let hasteRating: Int
+    public let mastery: Double
+    public let versatilityHealingDoneBonus: Double
+    public let parryRating: Int
+    public let health: Int
+    public let dodge: Int
+    public let mana5Combat: Int
+    public let mainHandDmgMax: Int
+    public let offHandSpeed: Double
+    public let sta: Int
+    public let leechRatingBonus: Int
+    public let leech: Int
+    public let speedRatingBonus: Int
+    public let offHandDmgMin: Int
+    public let offHandDps: Double
+    public let str: Int
+    public let agi: Int
+    public let spellPen: Int
+    public let powerType: String
+    public let mainHandSpeed: Double
+    public let offHandDmgMax: Int
+    public let crit: Double
+    public let dodgeRating: Int
+    public let rangedDmgMin: Int
+    public let power: Int
+    public let spellCritRating: Int
+    public let leechRating: Int
+    public let armor: Int
+    public let parry: Double
+    public let hasteRatingPercent: Double
+    public let mana5: Int
+    public let rangedDmgMax: Int
+    public let avoidanceRating: Int
+    public let spellCrit: Double
+    public let versatilityDamageTakenBonus: Double
+    public let critRating: Int
+    public let haste: Double
+    public let versatility: Int
+    public let blockRating: Int
+    public let mainHandDps: Double
+    public let rangedSpeed: Int
+    public let rangedDps: Int
+    public let masteryRating: Int
+    public let speedRating: Double
+    public let versatilityDamageDoneBonus: Double
+    public let block: Int
+    public let avoidanceRatingBonus: Int
 }
 
 
 
-class WOWCharacterTitle: Codable {
-    let id: Int
-    let name: String
-    let selected: Bool?
+public class WOWCharacterTitle: Codable {
+    public let id: Int
+    public let name: String
+    public let selected: Bool?
 }
 
 
 
-class Audit: Codable {
-    let noSpec: Bool
-    let appropriateArmorType: Int
-    let emptySockets: Int
-    let emptyGlyphSlots: Int
-    let unspentTalentPoints: Int
-    let lowLevelThreshold: Int
-    let nMissingJewelcrafterGems: Int
-    let numberOfIssues: Int
+public class Audit: Codable {
+    public let noSpec: Bool
+    public let appropriateArmorType: Int
+    public let emptySockets: Int
+    public let emptyGlyphSlots: Int
+    public let unspentTalentPoints: Int
+    public let lowLevelThreshold: Int
+    public let nMissingJewelcrafterGems: Int
+    public let numberOfIssues: Int
     
-    let lowLevelItems: [String: Int]
-    let inappropriateArmorType: [String: Int]
-    let itemsWithEmptySockets: [String: Int]
-    let unenchantedItems: [String: Int]
-    let slots: [String: Int]
+    public let lowLevelItems: [String: Int]
+    public let inappropriateArmorType: [String: Int]
+    public let itemsWithEmptySockets: [String: Int]
+    public let unenchantedItems: [String: Int]
+    public let slots: [String: Int]
     
-    let missingEnchanterEnchants: [String: Int]
-    let missingScribeEnchants: [String: Int]
-    let missingExtraSockets: [String: Int]
-    let missingBlacksmithSockets: [String: Int]
-    let missingLeatherworkerEnchants: [String: Int]
-    let missingEngineerEnchants: [String: Int]
+    public let missingEnchanterEnchants: [String: Int]
+    public let missingScribeEnchants: [String: Int]
+    public let missingExtraSockets: [String: Int]
+    public let missingBlacksmithSockets: [String: Int]
+    public let missingLeatherworkerEnchants: [String: Int]
+    public let missingEngineerEnchants: [String: Int]
     
-    let recommendedBeltBuckle: WOWItem
+    public let recommendedBeltBuckle: WOWItem
 }

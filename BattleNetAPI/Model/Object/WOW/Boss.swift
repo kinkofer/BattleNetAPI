@@ -9,27 +9,27 @@
 import Foundation
 
 
-class BossIndex: Codable {
-    let bosses: [Boss]
+public class BossIndex: Codable {
+    public let bosses: [Boss]
 }
 
 
 
-class Boss: Codable {
-    let id: Int
-    let name: String
-    let urlSlug: String
-    let description: String?
-    let zoneID: Int
-    let availableInNormalMode: Bool
-    let availableInHeroicMode: Bool
-    let health: Int
-    let heroicHealth: Int
-    let level: Int
-    let heroicLevel: Int
-    let journalID: Int?
-    let npcs: [NPC]
-    let location: Location?
+public class Boss: Codable {
+    public let id: Int
+    public let name: String
+    public let urlSlug: String
+    public let description: String?
+    public let zoneID: Int
+    public let availableInNormalMode: Bool
+    public let availableInHeroicMode: Bool
+    public let health: Int
+    public let heroicHealth: Int
+    public let level: Int
+    public let heroicLevel: Int
+    public let journalID: Int?
+    public let npcs: [NPC]
+    public let location: Location?
     
     enum CodingKeys: String, CodingKey {
         case id
@@ -51,11 +51,11 @@ class Boss: Codable {
 
 
 
-class NPC: Codable {
-    let id: Int
-    let name: String
-    let urlSlug: String
-    let creatureDisplayID: Int
+public class NPC: Codable {
+    public let id: Int
+    public let name: String
+    public let urlSlug: String
+    public let creatureDisplayID: Int
     
     enum CodingKeys: String, CodingKey {
         case id
@@ -67,15 +67,15 @@ class NPC: Codable {
 
 
 
-class RaidBoss: Codable {
-    let id: Int
-    let name: String
-    let normalTimestamp: Int?
-    let normalKills: Int?
-    let heroicTimestamp: Int?
-    let heroicKills: Int?
-    let lfrKills: Int?
-    let lfrTimestamp: Int?
-    let mythicTimestamp: Int?
-    let mythicKills: Int?
+public class RaidBoss: Codable {
+    public let id: Int
+    public let name: String
+    public let normalTimestamp: Int?
+    public let normalKills: Int?
+    public let heroicTimestamp: Int?
+    public let heroicKills: Int?
+    public let lfrKills: Int?
+    public let lfrTimestamp: Int?
+    public let mythicTimestamp: Int?
+    public let mythicKills: Int?
 }

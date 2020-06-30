@@ -10,12 +10,12 @@ import Foundation
 
 
 /// The type of data being retrieved from the web services. Raw data used in web service urls, and used to determine if client or user authorization is required.
-enum APIType: String {
+public enum APIType: String {
     case gameData = "data"
     case profile
     case community
     
-    var displayName: String {
+    public var displayName: String {
         switch self {
         case .gameData: return "Game Data APIs"
         case .profile: return "Profile APIs"
@@ -27,7 +27,7 @@ enum APIType: String {
 
 
 /// The supported regions for the API services
-enum APIRegion: String, CaseIterable, Codable {
+public enum APIRegion: String, CaseIterable, Codable {
     /// China
     case cn
     /// Europe
@@ -133,7 +133,7 @@ enum APIRegion: String, CaseIterable, Codable {
 
 
 /// The locale is used to retrieve values in the specified language
-enum APILocale: String {
+public enum APILocale: String {
     case de_DE
     case en_US
     case en_GB

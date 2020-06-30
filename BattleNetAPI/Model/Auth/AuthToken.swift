@@ -9,11 +9,11 @@
 import Foundation
 
 
-struct AuthToken {
-    static let clientID = "CLIENT_ID"
-    static let clientSecret = "CLIENT_SECRET"
+public struct AuthToken {
+    public static let clientID = "CLIENT_ID"
+    public static let clientSecret = "CLIENT_SECRET"
     
     // For use with unit testing only
-    static let clientAccessToken: String? = nil // "CLIENT_ACCESS_TOKEN"
-    static let userAccessToken: String? = nil // "USER_ACCESS_TOKEN"
+    public static let clientAccessToken: String? = nil // "CLIENT_ACCESS_TOKEN"
+    public static let userAccessToken: String? = nil // "USER_ACCESS_TOKEN"
 }

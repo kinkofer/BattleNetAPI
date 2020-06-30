@@ -9,28 +9,28 @@
 import Foundation
 
 
-class MythicKeystoneIndex: Codable {
-    let _links: SelfLink<MythicKeystoneIndex>
-    let seasons: Link<MythicKeystoneSeasonIndex>
-    let dungeons: Link<MythicKeystoneDungeonIndex>
+public class MythicKeystoneIndex: Codable {
+    public let _links: SelfLink<MythicKeystoneIndex>
+    public let seasons: Link<MythicKeystoneSeasonIndex>
+    public let dungeons: Link<MythicKeystoneDungeonIndex>
 }
 
 
-class MythicKeystoneDungeonIndex: Codable {
-    let _links: SelfLink<MythicKeystoneDungeonIndex>
-    let dungeons: [KeyLink<MythicKeystoneDungeon>]
+public class MythicKeystoneDungeonIndex: Codable {
+    public let _links: SelfLink<MythicKeystoneDungeonIndex>
+    public let dungeons: [KeyLink<MythicKeystoneDungeon>]
 }
 
 
-class MythicKeystoneDungeon: Codable, SelfDecodable {
-    let _links: SelfLink<MythicKeystoneDungeon>
-    let id: Int
-    let name: String
-    let map: Map
-    let zone: ZoneSlug
-    let keystoneUpgrades: [KeystoneUpgrade]
+public class MythicKeystoneDungeon: Codable, SelfDecodable {
+    public let _links: SelfLink<MythicKeystoneDungeon>
+    public let id: Int
+    public let name: String
+    public let map: Map
+    public let zone: ZoneSlug
+    public let keystoneUpgrades: [KeystoneUpgrade]
     
-    static var decoder: JSONDecoder {
+    public static var decoder: JSONDecoder {
         let decoder = JSONDecoder()
         decoder.keyDecodingStrategy = .convertFromSnakeCase
         return decoder
@@ -38,11 +38,11 @@ class MythicKeystoneDungeon: Codable, SelfDecodable {
 }
 
 
-class KeystoneUpgrade: Codable, SelfDecodable {
-    let upgradeLevel: Int
-    let qualifyingDuration: Int
+public class KeystoneUpgrade: Codable, SelfDecodable {
+    public let upgradeLevel: Int
+    public let qualifyingDuration: Int
     
-    static var decoder: JSONDecoder {
+    public static var decoder: JSONDecoder {
         let decoder = JSONDecoder()
         decoder.keyDecodingStrategy = .convertFromSnakeCase
         return decoder
@@ -50,19 +50,19 @@ class KeystoneUpgrade: Codable, SelfDecodable {
 }
 
 
-class Map: Codable {
-    let name: String
-    let id: Int
+public class Map: Codable {
+    public let name: String
+    public let id: Int
 }
 
 
 
-class MythicKeystonePeriodIndex: Codable, SelfDecodable {
-    let _links: SelfLink<MythicKeystonePeriodIndex>
-    let periods: [KeyLink<MythicKeystonePeriod>]
-    let currentPeriod: KeyLink<MythicKeystonePeriod>
+public class MythicKeystonePeriodIndex: Codable, SelfDecodable {
+    public let _links: SelfLink<MythicKeystonePeriodIndex>
+    public let periods: [KeyLink<MythicKeystonePeriod>]
+    public let currentPeriod: KeyLink<MythicKeystonePeriod>
     
-    static var decoder: JSONDecoder {
+    public static var decoder: JSONDecoder {
         let decoder = JSONDecoder()
         decoder.keyDecodingStrategy = .convertFromSnakeCase
         return decoder
@@ -70,13 +70,13 @@ class MythicKeystonePeriodIndex: Codable, SelfDecodable {
 }
 
 
-class MythicKeystonePeriod: Codable, SelfDecodable {
-    let _links: SelfLink<MythicKeystonePeriod>
-    let id: Int
-    let startTimestamp: Int
-    let endTimestamp: Int
+public class MythicKeystonePeriod: Codable, SelfDecodable {
+    public let _links: SelfLink<MythicKeystonePeriod>
+    public let id: Int
+    public let startTimestamp: Int
+    public let endTimestamp: Int
     
-    static var decoder: JSONDecoder {
+    public static var decoder: JSONDecoder {
         let decoder = JSONDecoder()
         decoder.keyDecodingStrategy = .convertFromSnakeCase
         return decoder
@@ -84,12 +84,12 @@ class MythicKeystonePeriod: Codable, SelfDecodable {
 }
 
 
-class MythicKeystoneSeasonIndex: Codable, SelfDecodable {
-    let _links: SelfLink<MythicKeystoneSeasonIndex>
-    let seasons: [KeyLink<MythicKeystoneSeason>]
-    let currentSeason: KeyLink<MythicKeystoneSeason>
+public class MythicKeystoneSeasonIndex: Codable, SelfDecodable {
+    public let _links: SelfLink<MythicKeystoneSeasonIndex>
+    public let seasons: [KeyLink<MythicKeystoneSeason>]
+    public let currentSeason: KeyLink<MythicKeystoneSeason>
     
-    static var decoder: JSONDecoder {
+    public static var decoder: JSONDecoder {
         let decoder = JSONDecoder()
         decoder.keyDecodingStrategy = .convertFromSnakeCase
         return decoder
@@ -98,14 +98,14 @@ class MythicKeystoneSeasonIndex: Codable, SelfDecodable {
 
 
 
-class MythicKeystoneSeason: Codable, SelfDecodable {
-    let _links: SelfLink<MythicKeystoneSeason>
-    let id: Int
-    let startTimestamp: Int
-    let endTimestamp: Int
-    let periods: [KeyLink<MythicKeystonePeriod>]
+public class MythicKeystoneSeason: Codable, SelfDecodable {
+    public let _links: SelfLink<MythicKeystoneSeason>
+    public let id: Int
+    public let startTimestamp: Int
+    public let endTimestamp: Int
+    public let periods: [KeyLink<MythicKeystonePeriod>]
     
-    static var decoder: JSONDecoder {
+    public static var decoder: JSONDecoder {
         let decoder = JSONDecoder()
         decoder.keyDecodingStrategy = .convertFromSnakeCase
         return decoder

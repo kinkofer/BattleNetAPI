@@ -9,37 +9,37 @@
 import Foundation
 
 
-class ZoneIndex: Codable {
-    let zones: [Zone]
+public class ZoneIndex: Codable {
+    public let zones: [Zone]
 }
 
 
-class ZoneInfo: Codable {
-    let key: Link<ZoneInfo>
-    let name: String
+public class ZoneInfo: Codable {
+    public let key: Link<ZoneInfo>
+    public let name: String
 }
 
 
-class Zone: Codable {
-    let id: Int
-    let name: String
-    let urlSlug: String
-    let description: String
-    let location: Location
-    let expansionID: Int
-    let patch: String?
-    let numPlayers: NumPlayers = .five
-    let isDungeon: Bool
-    let isRaid: Bool
-    let advisedMinLevel: Int
-    let advisedMaxLevel: Int
-    let advisedHeroicMinLevel: Int
-    let advisedHeroicMaxLevel: Int
-    let availableModes: [ZoneMode]
-    let lfgNormalMinGearLevel: Int
-    let lfgHeroicMinGearLevel: Int
-    let floors: Int
-    let bosses: [Boss]
+public class Zone: Codable {
+    public let id: Int
+    public let name: String
+    public let urlSlug: String
+    public let description: String
+    public let location: Location
+    public let expansionID: Int
+    public let patch: String?
+    public let numPlayers: NumPlayers = .five
+    public let isDungeon: Bool
+    public let isRaid: Bool
+    public let advisedMinLevel: Int
+    public let advisedMaxLevel: Int
+    public let advisedHeroicMinLevel: Int
+    public let advisedHeroicMaxLevel: Int
+    public let availableModes: [ZoneMode]
+    public let lfgNormalMinGearLevel: Int
+    public let lfgHeroicMinGearLevel: Int
+    public let floors: Int
+    public let bosses: [Boss]
     
     enum CodingKeys: String, CodingKey {
         case id
@@ -65,7 +65,7 @@ class Zone: Codable {
 }
 
 
-enum ZoneMode: String, Codable {
+public enum ZoneMode: String, Codable {
     case dungeonHeroic = "DUNGEON_HEROIC"
     case dungeonMythic = "DUNGEON_MYTHIC"
     case dungeonNormal = "DUNGEON_NORMAL"
@@ -82,18 +82,18 @@ enum ZoneMode: String, Codable {
 }
 
 
-class ZoneSlug: Codable {
-    let slug: String
+public class ZoneSlug: Codable {
+    public let slug: String
 }
 
 
-class Location: Codable {
-    let id: Int
-    let name: String
+public class Location: Codable {
+    public let id: Int
+    public let name: String
 }
 
 
-enum NumPlayers: String, Codable {
+public enum NumPlayers: String, Codable {
     case ten = "10"
     case tenTwentyFive = "10/25"
     case tenToThirty = "10-30"

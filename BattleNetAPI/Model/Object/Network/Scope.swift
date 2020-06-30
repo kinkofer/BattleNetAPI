@@ -9,16 +9,16 @@
 import Foundation
 
 
-struct Scope: OptionSet {
-    let rawValue: Int
+public struct Scope: OptionSet {
+    public let rawValue: Int
     
     /// World of Warcraft scope
-    static let wow = Scope(rawValue: 1 << 0)
+    public static let wow = Scope(rawValue: 1 << 0)
     /// Starcraft 2 scope
-    static let sc2 = Scope(rawValue: 1 << 1)
+    public static let sc2 = Scope(rawValue: 1 << 1)
     
     
-    var scopeValue: String {
+    public var scopeValue: String {
         var values = [String]()
         
         if self.contains(.wow) {
@@ -30,5 +30,10 @@ struct Scope: OptionSet {
         }
         
         return values.joined(separator: " ")
+    }
+    
+    
+    public init(rawValue: Int) {
+        self.rawValue = rawValue
     }
 }

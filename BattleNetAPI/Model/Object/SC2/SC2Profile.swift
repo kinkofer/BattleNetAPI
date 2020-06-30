@@ -9,21 +9,21 @@
 import Foundation
 
 
-class SC2ProfileData: Codable {
-    let rewards: [SC2Reward]
-    let achievements: [SC2Achievement]
-    let criteria: [SC2Criteria]
-    let categories: [SC2Category]
+public class SC2ProfileData: Codable {
+    public let rewards: [SC2Reward]
+    public let achievements: [SC2Achievement]
+    public let criteria: [SC2Criteria]
+    public let categories: [SC2Category]
 }
 
 
-class SC2ProfileMetadata: Codable {
-    let profileID: String
-    let profileUrl: String
-    let name: String
-    let realmID: Int
-    let regionID: Int
-    let avatarUrl: String
+public class SC2ProfileMetadata: Codable {
+    public let profileID: String
+    public let profileUrl: String
+    public let name: String
+    public let realmID: Int
+    public let regionID: Int
+    public let avatarUrl: String
     
     enum CodingKeys: String, CodingKey {
         case profileID = "profileId"
@@ -36,92 +36,92 @@ class SC2ProfileMetadata: Codable {
 }
 
 
-class SC2Profile: Codable {
-    let summary: SC2ProfileSummary
-    let snapshot: SC2ProfileSnapshot
-    let career: SC2ProfileCareer
-    let swarmLevels: SC2ProfileSwarmLevel
-    let campaign: SC2ProfileCampaign
-    let categoryPointProgress: [CategoryPointProgress]
-    let achievementShowcase: [String]
-    let earnedRewards: [EarnedReward]
-    let earnedAchievements: [EarnedAchievement]
+public class SC2Profile: Codable {
+    public let summary: SC2ProfileSummary
+    public let snapshot: SC2ProfileSnapshot
+    public let career: SC2ProfileCareer
+    public let swarmLevels: SC2ProfileSwarmLevel
+    public let campaign: SC2ProfileCampaign
+    public let categoryPointProgress: [CategoryPointProgress]
+    public let achievementShowcase: [String]
+    public let earnedRewards: [EarnedReward]
+    public let earnedAchievements: [EarnedAchievement]
 }
 
 
-class SC2ProfileSummary: Codable {
-    let id: String
-    let realm: Int
-    let displayName: String
-    let portrait: String
-    let decalTerran: String
-    let decalProtoss: String
-    let decalZerg: String
-    let totalSwarmLevel: Int
-    let totalAchievementPoints: Int
+public class SC2ProfileSummary: Codable {
+    public let id: String
+    public let realm: Int
+    public let displayName: String
+    public let portrait: String
+    public let decalTerran: String
+    public let decalProtoss: String
+    public let decalZerg: String
+    public let totalSwarmLevel: Int
+    public let totalAchievementPoints: Int
 }
 
 
-class SC2ProfileSnapshot: Codable {
-    let seasonSnapshot: [String: SeasonSnapshot]
-    let totalRankedSeasonGamesPlayed: Int
+public class SC2ProfileSnapshot: Codable {
+    public let seasonSnapshot: [String: SeasonSnapshot]
+    public let totalRankedSeasonGamesPlayed: Int
 }
 
 
-class SeasonSnapshot: Codable {
-    let rank: Int
-    let leagueName: String?
-    let totalGames: Int
-    let totalWins: Int
+public class SeasonSnapshot: Codable {
+    public let rank: Int
+    public let leagueName: String?
+    public let totalGames: Int
+    public let totalWins: Int
 }
 
 
-class SC2ProfileCareer: Codable {
-    let terranWins: Int
-    let zergWins: Int
-    let protossWins: Int
-    let totalCareerGames: Int
-    let totalGamesThisSeason: Int
-    let current1v1LeagueName: String?
-    let currentBestTeamLeagueName: String?
-    let best1v1Finish: BestFinish
-    let bestTeamFinish: BestFinish
+public class SC2ProfileCareer: Codable {
+    public let terranWins: Int
+    public let zergWins: Int
+    public let protossWins: Int
+    public let totalCareerGames: Int
+    public let totalGamesThisSeason: Int
+    public let current1v1LeagueName: String?
+    public let currentBestTeamLeagueName: String?
+    public let best1v1Finish: BestFinish
+    public let bestTeamFinish: BestFinish
 }
 
 
-class BestFinish: Codable {
-    let leagueName: String?
-    let timesAchieved: Int
+public class BestFinish: Codable {
+    public let leagueName: String?
+    public let timesAchieved: Int
 }
 
 
-class SC2ProfileCampaign: Codable {
-    let difficultyCompleted: DifficultyCompleted
+public class SC2ProfileCampaign: Codable {
+    public let difficultyCompleted: DifficultyCompleted
 }
 
 
-class DifficultyCompleted: Codable {
+public class DifficultyCompleted: Codable {
 }
 
 
-class SC2ProfileSwarmLevel: Codable {
-    let level: Int
-    let terran: RaceLevelPoints
-    let zerg: RaceLevelPoints
-    let protoss: RaceLevelPoints
+public class SC2ProfileSwarmLevel: Codable {
+    public let level: Int
+    public let terran: RaceLevelPoints
+    public let zerg: RaceLevelPoints
+    public let protoss: RaceLevelPoints
 }
 
 
-class RaceLevelPoints: Codable {
-    let level: Int
-    let maxLevelPoints: Int
-    let currentLevelPoints: Int
+public class RaceLevelPoints: Codable {
+    public let level: Int
+    public let maxLevelPoints: Int
+    public let currentLevelPoints: Int
 }
 
 
-class CategoryPointProgress: Codable {
-    let categoryID: String
-    let pointsEarned: Int
+public class CategoryPointProgress: Codable {
+    public let categoryID: String
+    public let pointsEarned: Int
     
     enum CodingKeys: String, CodingKey {
         case categoryID = "categoryId"
@@ -130,16 +130,16 @@ class CategoryPointProgress: Codable {
 }
 
 
-class EarnedAchievement: Codable {
-    let achievementID: String
-    let completionDate: Double
-    let numCompletedAchievementsInSeries: Int
-    let totalAchievementsInSeries: Int
-    let isComplete: Bool
-    let inProgress: Bool
-    let criteria: [SC2AchievementCriterion]
-    let nextProgressEarnedQuantity: Int?
-    let nextProgressRequiredQuantity: Int?
+public class EarnedAchievement: Codable {
+    public let achievementID: String
+    public let completionDate: Double
+    public let numCompletedAchievementsInSeries: Int
+    public let totalAchievementsInSeries: Int
+    public let isComplete: Bool
+    public let inProgress: Bool
+    public let criteria: [SC2AchievementCriterion]
+    public let nextProgressEarnedQuantity: Int?
+    public let nextProgressRequiredQuantity: Int?
     
     enum CodingKeys: String, CodingKey {
         case achievementID = "achievementId"
@@ -148,9 +148,9 @@ class EarnedAchievement: Codable {
 }
 
 
-class SC2AchievementCriterion: Codable {
-    let criterionID: String
-    let earned: SC2AchievementEarned?
+public class SC2AchievementCriterion: Codable {
+    public let criterionID: String
+    public let earned: SC2AchievementEarned?
     
     enum CodingKeys: String, CodingKey {
         case criterionID = "criterionId"
@@ -159,17 +159,17 @@ class SC2AchievementCriterion: Codable {
 }
 
 
-class SC2AchievementEarned: Codable {
-    let quantity: Int
-    let startTime: Int
+public class SC2AchievementEarned: Codable {
+    public let quantity: Int
+    public let startTime: Int
 }
 
 
-class EarnedReward: Codable {
-    let rewardID: String
-    let selected: Bool
-    let achievementID: String?
-    let category: String?
+public class EarnedReward: Codable {
+    public let rewardID: String
+    public let selected: Bool
+    public let achievementID: String?
+    public let category: String?
     
     enum CodingKeys: String, CodingKey {
         case rewardID = "rewardId"

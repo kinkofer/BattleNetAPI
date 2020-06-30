@@ -9,23 +9,23 @@
 import Foundation
 
 
-class ActIndex: Codable {
-    let acts: [Act]
+public class ActIndex: Codable {
+    public let acts: [Act]
 }
 
 
 
-class Act: Codable {
-    let number: Int
-    let name: String
-    let slug: String
-    let quests: [D3Quest]
+public class Act: Codable {
+    public let number: Int
+    public let name: String
+    public let slug: String
+    public let quests: [D3Quest]
 }
 
 
 
-class D3Quest: Codable {
-    let id: Int?
-    let name: String
-    let slug: String
+public class D3Quest: Codable {
+    public let id: Int?
+    public let name: String
+    public let slug: String
 }

@@ -9,8 +9,8 @@
 import Foundation
 
 
-class User: Codable {
-    let id: Int
-    let battletag: String
-    let sub: String
+public class User: Codable {
+    public let id: Int
+    public let battletag: String
+    public let sub: String
 }

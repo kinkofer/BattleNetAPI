@@ -9,8 +9,8 @@
 import Foundation
 
 
-class SelfLink<Resource>: Codable {
-    let link: Link<Resource>
+public class SelfLink<Resource>: Codable {
+    public let link: Link<Resource>
     
     enum CodingKeys: String, CodingKey {
         case link = "self"
@@ -19,14 +19,14 @@ class SelfLink<Resource>: Codable {
 
 
 
-class KeyLink<Resource>: Codable {
-    let key: Link<Resource>
-    let id: Int?
-    let name: String?
+public class KeyLink<Resource>: Codable {
+    public let key: Link<Resource>
+    public let id: Int?
+    public let name: String?
 }
 
 
 
-class Link<Resouce>: Codable {
-    let href: String
+public class Link<Resouce>: Codable {
+    public let href: String
 }

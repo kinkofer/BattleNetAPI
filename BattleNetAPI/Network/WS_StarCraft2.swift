@@ -9,7 +9,7 @@
 import Foundation
 
 
-class WS_StarCraft2: WebService {
+public class WS_StarCraft2: WebService {
     internal func getBaseURL(region: APIRegion, apiType: APIType?) -> String {
         var url = "\(region.apiURI)"
         

@@ -9,36 +9,36 @@
 import Foundation
 
 
-class RealmIndexResult: Codable {
-    let realms: [RealmIndex]
+public class RealmIndexResult: Codable {
+    public let realms: [RealmIndex]
 }
 
 
-class RealmIndex: Codable {
-    let id: Int
-    let name: String
-    let slug: String
+public class RealmIndex: Codable {
+    public let id: Int
+    public let name: String
+    public let slug: String
 }
 
 
 // https://us.api.battle.net/data/wow/realm/61?namespace=dynamic-us
-class Realm: Codable, SelfDecodable {
-    let _links: SelfLink<Realm>?
-    let id: Int
-    let name: String
-    let slug: String
+public class Realm: Codable, SelfDecodable {
+    public let _links: SelfLink<Realm>?
+    public let id: Int
+    public let name: String
+    public let slug: String
     
-    let isTournament: Bool
+    public let isTournament: Bool
     
-    let type: RealmInfo
-    let category: String
-    let locale: String
-    let timezone: String
+    public let type: RealmInfo
+    public let category: String
+    public let locale: String
+    public let timezone: String
     
-    let region: KeyLink<Region>
-    let connectedRealm: Link<ConnectedRealm>
+    public let region: KeyLink<Region>
+    public let connectedRealm: Link<ConnectedRealm>
     
-    static var decoder: JSONDecoder {
+    public static var decoder: JSONDecoder {
         let decoder = JSONDecoder()
         decoder.keyDecodingStrategy = .convertFromSnakeCase
         return decoder
@@ -47,19 +47,19 @@ class Realm: Codable, SelfDecodable {
 
 
 
-class RealmInfo: Codable {
-    let name: String
-    let type: String
+public class RealmInfo: Codable {
+    public let name: String
+    public let type: String
 }
 
 
 
 // MARK: - Realm Data Resource
 
-class WOWRealmIndex: Codable, SelfDecodable {
-    let realms: [WOWRealm]
+public class WOWRealmIndex: Codable, SelfDecodable {
+    public let realms: [WOWRealm]
     
-    static var decoder: JSONDecoder {
+    public static var decoder: JSONDecoder {
         let decoder = JSONDecoder()
         decoder.keyDecodingStrategy = .convertFromSnakeCase
         return decoder
@@ -68,19 +68,19 @@ class WOWRealmIndex: Codable, SelfDecodable {
 
 
 
-class WOWRealm: Codable, SelfDecodable {
-    let type: RealmType
-    let population: RealmPopulation
-    let queue: Bool
-    let status: Bool
-    let name: String
-    let slug: String
-    let battlegroup: String
-    let locale: String
-    let timezone: String
-    let connectedRealms: [String]
+public class WOWRealm: Codable, SelfDecodable {
+    public let type: RealmType
+    public let population: RealmPopulation
+    public let queue: Bool
+    public let status: Bool
+    public let name: String
+    public let slug: String
+    public let battlegroup: String
+    public let locale: String
+    public let timezone: String
+    public let connectedRealms: [String]
     
-    static var decoder: JSONDecoder {
+    public static var decoder: JSONDecoder {
         let decoder = JSONDecoder()
         decoder.keyDecodingStrategy = .convertFromSnakeCase
         return decoder
@@ -88,7 +88,7 @@ class WOWRealm: Codable, SelfDecodable {
 }
 
 
-enum RealmPopulation: String, Codable {
+public enum RealmPopulation: String, Codable {
     case full = "full"
     case high = "high"
     case low = "low"
@@ -97,20 +97,20 @@ enum RealmPopulation: String, Codable {
 }
 
 
-enum RealmType: String, Codable {
+public enum RealmType: String, Codable {
     case normal
     case roleplaying
 }
 
 
 
-class RealmSummary: Codable {
-    let name: String
-    let slug: String
-    let battlegroup: String
-    let locale: String
-    let timezone: String
-    let connectedRealms: [String]
+public class RealmSummary: Codable {
+    public let name: String
+    public let slug: String
+    public let battlegroup: String
+    public let locale: String
+    public let timezone: String
+    public let connectedRealms: [String]
     
     enum CodingKeys: String, CodingKey {
         case name

@@ -9,30 +9,30 @@
 import Foundation
 
 
-class Follower: Codable {
-    let slug: String
-    let name: String
-    let realName: String
-    let portrait: String
+public class Follower: Codable {
+    public let slug: String
+    public let name: String
+    public let realName: String
+    public let portrait: String
     
-    let skills: [D3Skill]
+    public let skills: [D3Skill]
 }
 
 
 
-class FollowerHero: Codable {
-    let slug: String
-    let level: Int
+public class FollowerHero: Codable {
+    public let slug: String
+    public let level: Int
     
-    let items: EquippedItems
-    let stats: FollowerStats
-    let skills: [D3Skill]
+    public let items: EquippedItems
+    public let stats: FollowerStats
+    public let skills: [D3Skill]
 }
 
 
 
-class FollowerStats: Codable {
-    let goldFind: Double
-    let magicFind: Double
-    let experienceBonus: Double
+public class FollowerStats: Codable {
+    public let goldFind: Double
+    public let magicFind: Double
+    public let experienceBonus: Double
 }

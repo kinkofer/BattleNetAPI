@@ -9,11 +9,11 @@
 import Foundation
 
 
-class PowerTypeIndex: Codable, SelfDecodable {
-    let _links: SelfLink<PowerTypeIndex>
-    let powerTypes: [KeyLink<PowerType>]
+public class PowerTypeIndex: Codable, SelfDecodable {
+    public let _links: SelfLink<PowerTypeIndex>
+    public let powerTypes: [KeyLink<PowerType>]
     
-    static var decoder: JSONDecoder {
+    public static var decoder: JSONDecoder {
         let decoder = JSONDecoder()
         decoder.keyDecodingStrategy = .convertFromSnakeCase
         return decoder
@@ -21,8 +21,8 @@ class PowerTypeIndex: Codable, SelfDecodable {
 }
 
 
-class PowerType: Codable {
-    let _links: SelfLink<PowerType>
-    let id: Int
-    let name: String
+public class PowerType: Codable {
+    public let _links: SelfLink<PowerType>
+    public let id: Int
+    public let name: String
 }

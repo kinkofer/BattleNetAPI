@@ -9,14 +9,14 @@
 import Foundation
 
 
-class SC2Criteria: Codable {
-    let id: String
-    let achievementID: String
-    let uiOrderHint: Int
-    let evaluationClass: String
-    let necessaryQuantity: Int
-    let description: String
-    let flags: Int
+public class SC2Criteria: Codable {
+    public let id: String
+    public let achievementID: String
+    public let uiOrderHint: Int
+    public let evaluationClass: String
+    public let necessaryQuantity: Int
+    public let description: String
+    public let flags: Int
     
     enum CodingKeys: String, CodingKey {
         case id

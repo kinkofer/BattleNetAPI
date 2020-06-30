@@ -9,26 +9,26 @@
 import Foundation
 
 
-class WOWGuild: Codable {
-    let name: String
-    let realm: String
-    let battlegroup: String
-    let members: Int
-    let achievementPoints: Int
-    let emblem: Emblem
+public class WOWGuild: Codable {
+    public let name: String
+    public let realm: String
+    public let battlegroup: String
+    public let members: Int
+    public let achievementPoints: Int
+    public let emblem: Emblem
 }
 
 
 
-class Emblem: Codable {
-    let icon: Int
-    let iconColor: String
-    let iconColorID: Int
-    let border: Int
-    let borderColor: String
-    let borderColorID: Int
-    let backgroundColor: String
-    let backgroundColorID: Int
+public class Emblem: Codable {
+    public let icon: Int
+    public let iconColor: String
+    public let iconColorID: Int
+    public let border: Int
+    public let borderColor: String
+    public let borderColorID: Int
+    public let backgroundColor: String
+    public let backgroundColorID: Int
     
     enum CodingKeys: String, CodingKey {
         case icon
@@ -44,32 +44,32 @@ class Emblem: Codable {
 
 
 
-class WOWGuildRewardIndex: Codable {
-    let rewards: [WOWGuildReward]
+public class WOWGuildRewardIndex: Codable {
+    public let rewards: [WOWGuildReward]
 }
 
 
 
-class WOWGuildReward: Codable {
-    let minGuildLevel: Int
-    let minGuildRepLevel: Int
-    let races: [Int]?
-    let achievement: WOWAchievement?
-    let item: WOWItemSummary
+public class WOWGuildReward: Codable {
+    public let minGuildLevel: Int
+    public let minGuildRepLevel: Int
+    public let races: [Int]?
+    public let achievement: WOWAchievement?
+    public let item: WOWItemSummary
 }
 
 
 
-struct WOWGuildField: OptionSet {
-    let rawValue: Int
+public struct WOWGuildField: OptionSet {
+    public let rawValue: Int
     
-    static let achievements = WOWGuildField(rawValue: 1 << 0)
-    static let challenges = WOWGuildField(rawValue: 1 << 1)
-    static let members = WOWGuildField(rawValue: 1 << 2)
-    static let news = WOWGuildField(rawValue: 1 << 3)
+    public static let achievements = WOWGuildField(rawValue: 1 << 0)
+    public static let challenges = WOWGuildField(rawValue: 1 << 1)
+    public static let members = WOWGuildField(rawValue: 1 << 2)
+    public static let news = WOWGuildField(rawValue: 1 << 3)
     
     
-    var toArray: [String] {
+    public var toArray: [String] {
         var array = [String]()
         
         if self.contains(.achievements) { array.append("achievements") }
@@ -79,25 +79,30 @@ struct WOWGuildField: OptionSet {
         
         return array
     }
+    
+    
+    public init(rawValue: Int) {
+        self.rawValue = rawValue
+    }
 }
 
 
 
 // https://us.api.battle.net/wow/guild/illidan/limit?fields=achievements
-class WOWGuildProfile: Codable {
-    let lastModified: Int
-    let name: String
-    let realm: String
-    let battlegroup: String
-    let level: Int
-    let side: Int
-    let achievementPoints: Int
-    let emblem: Emblem
+public class WOWGuildProfile: Codable {
+    public let lastModified: Int
+    public let name: String
+    public let realm: String
+    public let battlegroup: String
+    public let level: Int
+    public let side: Int
+    public let achievementPoints: Int
+    public let emblem: Emblem
     
-    let achievements: WOWAchievementStatus?
-    let challenges: [Challenge]?
-    let members: [GuildMember]?
-    let news: [Feed]?
+    public let achievements: WOWAchievementStatus?
+    public let challenges: [Challenge]?
+    public let members: [GuildMember]?
+    public let news: [Feed]?
     
     enum CodingKeys: String, CodingKey {
         case lastModified
@@ -117,28 +122,28 @@ class WOWGuildProfile: Codable {
 
 
 
-class GuildMember: Codable {
-    let character: GuildCharacter?
-    let spec: CharacterSpecialization?
+public class GuildMember: Codable {
+    public let character: GuildCharacter?
+    public let spec: CharacterSpecialization?
 }
 
 
 
-class GuildCharacter: Codable {
-    let name: String
-    let `class`: Int
-    let gender: Int
-    let race: Int
-    let level: Int
+public class GuildCharacter: Codable {
+    public let name: String
+    public let `class`: Int
+    public let gender: Int
+    public let race: Int
+    public let level: Int
     
-    let realm: String?
-    let guild: String?
-    let guildRealm: String?
+    public let realm: String?
+    public let guild: String?
+    public let guildRealm: String?
     
-    let battlegroup: String?
-    let achievementPoints: Int
-    let lastModified: Int
-    let thumbnail: String
+    public let battlegroup: String?
+    public let achievementPoints: Int
+    public let lastModified: Int
+    public let thumbnail: String
     
-    let spec: CharacterSpecialization?
+    public let spec: CharacterSpecialization?
 }

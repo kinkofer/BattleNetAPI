@@ -9,11 +9,11 @@
 import Foundation
 
 
-class TokenIndex: Codable, SelfDecodable {
-    let lastUpdatedTimestamp: Int
-    let price: Int
+public class TokenIndex: Codable, SelfDecodable {
+    public let lastUpdatedTimestamp: Int
+    public let price: Int
     
-    static var decoder: JSONDecoder {
+    public static var decoder: JSONDecoder {
         let decoder = JSONDecoder()
         decoder.keyDecodingStrategy = .convertFromSnakeCase
         return decoder

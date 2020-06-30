@@ -9,16 +9,16 @@
 import Foundation
 
 
-class MatchIndex: Codable {
-    let matches: [Match]
+public class MatchIndex: Codable {
+    public let matches: [Match]
 }
 
 
 
-class Match: Codable {
-    let map: String
-    let type: String
-    let decision: String
-    let speed: String
-    let date: Double
+public class Match: Codable {
+    public let map: String
+    public let type: String
+    public let decision: String
+    public let speed: String
+    public let date: Double
 }

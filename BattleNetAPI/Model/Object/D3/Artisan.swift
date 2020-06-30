@@ -9,38 +9,38 @@
 import Foundation
 
 
-class Artisan: Codable {
-    let slug: String
-    let name: String
-    let portrait: String
+public class Artisan: Codable {
+    public let slug: String
+    public let name: String
+    public let portrait: String
     
-    let training: Training
+    public let training: Training
 }
 
 
-class Training: Codable {
-    let tiers: [Tier]
+public class Training: Codable {
+    public let tiers: [Tier]
 }
 
 
-class Tier: Codable {
-    let tier: Int
-    let trainedRecipes: [D3Recipe]
+public class Tier: Codable {
+    public let tier: Int
+    public let trainedRecipes: [D3Recipe]
 }
 
 
-class D3Recipe: Codable {
-    let id: String
-    let slug: String
-    let name: String
+public class D3Recipe: Codable {
+    public let id: String
+    public let slug: String
+    public let name: String
     
-    let cost: Int
-    let reagents: [Reagent]
-    let itemProduced: D3Item
+    public let cost: Int
+    public let reagents: [Reagent]
+    public let itemProduced: D3Item
 }
 
 
-class Reagent: Codable {
-    let quantity: Int
-    let item: D3Item
+public class Reagent: Codable {
+    public let quantity: Int
+    public let item: D3Item
 }

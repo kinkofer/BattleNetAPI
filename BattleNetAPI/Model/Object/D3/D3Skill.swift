@@ -9,43 +9,43 @@
 import Foundation
 
 
-class D3Skill: Codable {
-    let slug: String
-    let name: String
-    let icon: String
-    let level: Int
+public class D3Skill: Codable {
+    public let slug: String
+    public let name: String
+    public let icon: String
+    public let level: Int
     
-    let tooltipUrl: String
-    let description: String
-    let descriptionHtml: String
+    public let tooltipUrl: String
+    public let description: String
+    public let descriptionHtml: String
 }
 
 
-class D3SkillCategory: Codable {
-    let slug: String
-    let name: String
+public class D3SkillCategory: Codable {
+    public let slug: String
+    public let name: String
 }
 
 
-class D3SkillSet: Codable {
-    let active: [D3Skill]
-    let passive: [D3Skill]
+public class D3SkillSet: Codable {
+    public let active: [D3Skill]
+    public let passive: [D3Skill]
 }
 
 
-class D3SkillConfiguration: Codable {
-    let skill: D3Skill
-    let runes: [Rune]?
-    let rune: Rune?
+public class D3SkillConfiguration: Codable {
+    public let skill: D3Skill
+    public let runes: [Rune]?
+    public let rune: Rune?
 }
 
 
-class Rune: Codable {
-    let slug: String
-    let name: String
-    let type: String
-    let level: Int
+public class Rune: Codable {
+    public let slug: String
+    public let name: String
+    public let type: String
+    public let level: Int
     
-    let description: String
-    let descriptionHtml: String
+    public let description: String
+    public let descriptionHtml: String
 }

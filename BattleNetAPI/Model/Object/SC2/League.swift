@@ -9,19 +9,19 @@
 import Foundation
 
 
-class League: Codable {
-    let _links: SelfLink<League>
-    let key: LeagueKey
-    let tier: [LeagueTier]
+public class League: Codable {
+    public let _links: SelfLink<League>
+    public let key: LeagueKey
+    public let tier: [LeagueTier]
 }
 
 
 
-class LeagueKey: Codable {
-    let leagueID: Int
-    let seasonID: Int
-    let queueID: Int
-    let teamType: Int
+public class LeagueKey: Codable {
+    public let leagueID: Int
+    public let seasonID: Int
+    public let queueID: Int
+    public let teamType: Int
     
     enum CodingKeys: String, CodingKey {
         case leagueID = "league_id"
@@ -33,17 +33,17 @@ class LeagueKey: Codable {
 
 
 
-class LeagueTier: Codable {
-    let id: Int
-    let division: [Division]
+public class LeagueTier: Codable {
+    public let id: Int
+    public let division: [Division]
 }
 
 
 
-class Division: Codable {
-    let id: Int
-    let ladderID: Int
-    let memberCount: Int
+public class Division: Codable {
+    public let id: Int
+    public let ladderID: Int
+    public let memberCount: Int
     
     enum CodingKeys: String, CodingKey {
         case id

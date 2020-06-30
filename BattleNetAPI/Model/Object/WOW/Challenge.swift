@@ -9,8 +9,8 @@
 import Foundation
 
 
-class ChallengeIndex: Codable {
-    let challenges: [Challenge]
+public class ChallengeIndex: Codable {
+    public let challenges: [Challenge]
     
     enum CodingKeys: String, CodingKey {
         case challenges = "challenge"
@@ -20,27 +20,27 @@ class ChallengeIndex: Codable {
 
 
 /// - note: Contains camelCase and snake_case keys
-class Challenge: Codable {
-    let realm: RealmSummary?
-    let map: ChallengeModeMap?
-    let groups: [ChallengeModeGroup]
+public class Challenge: Codable {
+    public let realm: RealmSummary?
+    public let map: ChallengeModeMap?
+    public let groups: [ChallengeModeGroup]
 }
 
 
 
-class ChallengeModeGroup: Codable {
-    let ranking: Int
-    let time: ChallengeCriteria
-    let date: String
-    let medal: String?
-    let faction: ChallengeFactionType
-    let isRecurring: Bool
-    let members: [ChallengeModeMember]
+public class ChallengeModeGroup: Codable {
+    public let ranking: Int
+    public let time: ChallengeCriteria
+    public let date: String
+    public let medal: String?
+    public let faction: ChallengeFactionType
+    public let isRecurring: Bool
+    public let members: [ChallengeModeMember]
 }
 
 
 
-enum ChallengeFactionType: String, Codable {
+public enum ChallengeFactionType: String, Codable {
     case alliance = "alliance"
     case horde = "horde"
     case none = "none"
@@ -48,31 +48,31 @@ enum ChallengeFactionType: String, Codable {
 
 
 
-class ChallengeModeMember: Codable {
-    let character: WOWCharacter?
-    let spec: CharacterSpecialization
+public class ChallengeModeMember: Codable {
+    public let character: WOWCharacter?
+    public let spec: CharacterSpecialization
 }
 
 
 
 
-class ChallengeCriteria: Codable {
-    let time: Int
-    let hours: Int
-    let minutes: Int
-    let seconds: Int
-    let milliseconds: Int
-    let isPositive: Bool
+public class ChallengeCriteria: Codable {
+    public let time: Int
+    public let hours: Int
+    public let minutes: Int
+    public let seconds: Int
+    public let milliseconds: Int
+    public let isPositive: Bool
 }
 
 
 
-class ChallengeModeMap: Codable {
-    let id: Int
-    let name: String
-    let slug: String
-    let hasChallengeMode: Bool
-    let bronzeCriteria: ChallengeCriteria
-    let silverCriteria: ChallengeCriteria
-    let goldCriteria: ChallengeCriteria
+public class ChallengeModeMap: Codable {
+    public let id: Int
+    public let name: String
+    public let slug: String
+    public let hasChallengeMode: Bool
+    public let bronzeCriteria: ChallengeCriteria
+    public let silverCriteria: ChallengeCriteria
+    public let goldCriteria: ChallengeCriteria
 }

@@ -9,14 +9,14 @@
 import Foundation
 
 
-class RegionIndexResult: Codable {
-    let regions: [Link<Region>]
+public class RegionIndexResult: Codable {
+    public let regions: [Link<Region>]
 }
 
 
 // https://us.api.battle.net/data/wow/region/1
-class Region: Codable {
-    let id: Int
-    let name: String
-    let tag: String
+public class Region: Codable {
+    public let id: Int
+    public let name: String
+    public let tag: String
 }

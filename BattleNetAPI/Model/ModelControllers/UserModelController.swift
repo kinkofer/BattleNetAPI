@@ -9,12 +9,12 @@
 import Foundation
 
 
-class UserModelController {
-    static let shared = UserModelController()
+public class UserModelController {
+    public static let shared = UserModelController()
     private init() { }
     
     
-    func getUser(region: APIRegion = Current.region, completion: @escaping (_ result: Result<User, HTTPError>) -> Void) {
+    public func getUser(region: APIRegion = Current.region, completion: @escaping (_ result: Result<User, HTTPError>) -> Void) {
         BattleNetAPI.user.getUserInfo(region: region) { result in
             result.decode(completion: completion)
         }

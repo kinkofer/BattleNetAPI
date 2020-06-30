@@ -9,9 +9,9 @@
 import Foundation
 
 
-class WOWRecipe: Codable {
-    let id: Int
-    let name: String
-    let profession: String
-    let icon: String
+public class WOWRecipe: Codable {
+    public let id: Int
+    public let name: String
+    public let profession: String
+    public let icon: String
 }

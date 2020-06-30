@@ -10,11 +10,11 @@ import Foundation
 
 
 // https://us.api.battle.net/data/wow/connected-realm/11/mythic-leaderboard/?namespace=dynamic-us
-class MythicLeaderboardIndex: Codable, SelfDecodable {
-    let _links: SelfLink<MythicLeaderboardIndex>
-    let currentLeaderboards: [KeyLink<MythicLeaderboard>]
+public class MythicLeaderboardIndex: Codable, SelfDecodable {
+    public let _links: SelfLink<MythicLeaderboardIndex>
+    public let currentLeaderboards: [KeyLink<MythicLeaderboard>]
     
-    static var decoder: JSONDecoder {
+    public static var decoder: JSONDecoder {
         let decoder = JSONDecoder()
         decoder.keyDecodingStrategy = .convertFromSnakeCase
         return decoder
@@ -24,20 +24,20 @@ class MythicLeaderboardIndex: Codable, SelfDecodable {
 
 // https://us.api.battle.net/data/wow/connected-realm/11/mythic-leaderboard/197/period/642?namespace=dynamic-us
 /// - note: Contains camelCase and snake_case keys (with id)
-class MythicLeaderboard: Codable {
-    let _links: SelfLink<MythicLeaderboard>
-    let name: String
+public class MythicLeaderboard: Codable {
+    public let _links: SelfLink<MythicLeaderboard>
+    public let name: String
     
-    let map: Map
-    let mapChallengeModeID: Int
+    public let map: Map
+    public let mapChallengeModeID: Int
     
-    let period: Int
-    let periodStartTimestamp: Int
-    let periodEndTimestamp: Int
+    public let period: Int
+    public let periodStartTimestamp: Int
+    public let periodEndTimestamp: Int
     
-    let connectedRealm: Link<ConnectedRealm>
-    let leadingGroups: [LeadingGroup]
-    let keystoneAffixes: [KeystoneAffixSummary]
+    public let connectedRealm: Link<ConnectedRealm>
+    public let leadingGroups: [LeadingGroup]
+    public let keystoneAffixes: [KeystoneAffixSummary]
     
     enum CodingKeys: String, CodingKey {
         case _links
@@ -55,13 +55,13 @@ class MythicLeaderboard: Codable {
 
 
 
-class LeadingGroup: Codable {
-    let ranking: Int
-    let duration: Int
-    let completedTimestamp: Int
-    let keystoneLevel: Int
+public class LeadingGroup: Codable {
+    public let ranking: Int
+    public let duration: Int
+    public let completedTimestamp: Int
+    public let keystoneLevel: Int
     
-    let members: [PartyMember]
+    public let members: [PartyMember]
     
     enum CodingKeys: String, CodingKey {
         case ranking
@@ -74,47 +74,47 @@ class LeadingGroup: Codable {
 
 
 
-class PartyMember: Codable {
-    let profile: WOWProfile
-    let faction: Faction
-    let specialization: KeyLink<Specialization>
+public class PartyMember: Codable {
+    public let profile: WOWProfile
+    public let faction: Faction
+    public let specialization: KeyLink<Specialization>
 }
 
 
 
-class WOWProfile: Codable {
-    let id: Int
-    let name: String
-    let realm: KeyLink<Realm>
+public class WOWProfile: Codable {
+    public let id: Int
+    public let name: String
+    public let realm: KeyLink<Realm>
 }
 
 
 
-class Faction: Codable {
-    let type: FactionType
+public class Faction: Codable {
+    public let type: FactionType
 }
 
-enum FactionType: String, Codable {
+public enum FactionType: String, Codable {
     case alliance = "ALLIANCE"
     case horde = "HORDE"
 }
 
 
-class WOWFaction: Codable {
-    let id: Int
-    let type: String
-    let name: String
+public class WOWFaction: Codable {
+    public let id: Int
+    public let type: String
+    public let name: String
 }
 
 
-class MythicRaidLeaderboard: Codable, SelfDecodable {
-    let _links: SelfLink<MythicRaidLeaderboard>
-    let slug: String
-    let criteriaType: String
-    let zone: ZoneInfo
-    let entries: [Entry]
+public class MythicRaidLeaderboard: Codable, SelfDecodable {
+    public let _links: SelfLink<MythicRaidLeaderboard>
+    public let slug: String
+    public let criteriaType: String
+    public let zone: ZoneInfo
+    public let entries: [Entry]
     
-    static var decoder: JSONDecoder {
+    public static var decoder: JSONDecoder {
         let decoder = JSONDecoder()
         decoder.keyDecodingStrategy = .convertFromSnakeCase
         return decoder
@@ -122,19 +122,19 @@ class MythicRaidLeaderboard: Codable, SelfDecodable {
 }
 
 
-class Entry: Codable {
-    let guild: Guild
-    let faction: Faction
-    let timestamp: Int
-    let region: APIRegion
-    let rank: Int
+public class Entry: Codable {
+    public let guild: Guild
+    public let faction: Faction
+    public let timestamp: Int
+    public let region: APIRegion
+    public let rank: Int
 }
 
 
-class Guild: Codable {
-    let name: String
-    let id: Int
-    let realm: RealmIndex
+public class Guild: Codable {
+    public let name: String
+    public let id: Int
+    public let realm: RealmIndex
 }
 
 

@@ -9,20 +9,20 @@
 import Foundation
 
 
-class Hero: Codable {
-    let id: Int
-    let name: String
-    let `class`: String
-    let classSlug: String
-    let gender: Int
-    let level: Int
-    let paragonLevel: Int
+public class Hero: Codable {
+    public let id: Int
+    public let name: String
+    public let `class`: String
+    public let classSlug: String
+    public let gender: Int
+    public let level: Int
+    public let paragonLevel: Int
     
-    let kills: Kills
-    let hardcore: Bool
-    let seasonal: Bool
-    let dead: Bool
-    let lastUpdated: Double
+    public let kills: Kills
+    public let hardcore: Bool
+    public let seasonal: Bool
+    public let dead: Bool
+    public let lastUpdated: Double
     
     
     enum CodingKeys: String, CodingKey {
@@ -44,101 +44,101 @@ class Hero: Codable {
 
 
 
-class FullHero: Codable {
-    let id: Int
-    let name: String
-    let `class`: String
-    let gender: Int
-    let level: Int
-    let paragonLevel: Int
+public class FullHero: Codable {
+    public let id: Int
+    public let name: String
+    public let `class`: String
+    public let gender: Int
+    public let level: Int
+    public let paragonLevel: Int
     
-    let kills: Kills
-    let hardcore: Bool
-    let seasonal: Bool
-    let seasonCreated: Int
+    public let kills: Kills
+    public let hardcore: Bool
+    public let seasonal: Bool
+    public let seasonCreated: Int
     
-    let alive: Bool
-    let lastUpdated: Double
-    let highestSoloRiftCompleted: Int
+    public let alive: Bool
+    public let lastUpdated: Double
+    public let highestSoloRiftCompleted: Int
     
-    let stats: D3StatBlock
-    let skills: HeroSkillSet
-    let items: EquippedItems
+    public let stats: D3StatBlock
+    public let skills: HeroSkillSet
+    public let items: EquippedItems
 
-    let followers: HeroFollowers
-    let legendaryPowers: [D3EquippedItem]
+    public let followers: HeroFollowers
+    public let legendaryPowers: [D3EquippedItem]
     
-    let progression: D3Progression
+    public let progression: D3Progression
 }
 
 
 
-class HeroFollowers: Codable {
-    let enchantress: FollowerHero
-    let scoundrel: FollowerHero
-    let templar: FollowerHero
+public class HeroFollowers: Codable {
+    public let enchantress: FollowerHero
+    public let scoundrel: FollowerHero
+    public let templar: FollowerHero
 }
 
 
 
-class HeroFollowerItems: Codable {
-    let enchantress: FullEquippedItems
-    let scoundrel: FullEquippedItems
-    let templar: FullEquippedItems
+public class HeroFollowerItems: Codable {
+    public let enchantress: FullEquippedItems
+    public let scoundrel: FullEquippedItems
+    public let templar: FullEquippedItems
 }
 
 
 
-class HeroSkillSet: Codable {
-    let active: [D3SkillConfiguration]
-    let passive: [D3SkillConfiguration]
+public class HeroSkillSet: Codable {
+    public let active: [D3SkillConfiguration]
+    public let passive: [D3SkillConfiguration]
 }
 
 
 
-class D3Progression: Codable {
-    let act1: CompletedAct
-    let act2: CompletedAct
-    let act3: CompletedAct
-    let act4: CompletedAct
-    let act5: CompletedAct
+public class D3Progression: Codable {
+    public let act1: CompletedAct
+    public let act2: CompletedAct
+    public let act3: CompletedAct
+    public let act4: CompletedAct
+    public let act5: CompletedAct
 }
 
 
 
-class CompletedAct: Codable {
-    let completed: Bool
-    let completedQuests: [D3Quest]
+public class CompletedAct: Codable {
+    public let completed: Bool
+    public let completedQuests: [D3Quest]
 }
 
 
 
-class D3StatBlock: Codable {
-    let life: Double
-    let damage: Double
-    let toughness: Double
-    let healing: Double
-    let attackSpeed: Double
-    let armor: Double
-    let strength: Double
-    let dexterity: Double
-    let vitality: Double
-    let intelligence: Double
-    let physicalResist: Double
-    let fireResist: Double
-    let coldResist: Double
-    let lightningResist: Double
-    let poisonResist: Double
-    let arcaneResist: Double
-    let blockChance: Double
-    let blockAmountMin: Double
-    let blockAmountMax: Double
-    let goldFind: Double
-    let critChance: Double
-    let thorns: Double
-    let lifeSteal: Double
-    let lifePerKill: Double
-    let lifeOnHit: Double
-    let primaryResource: Double
-    let secondaryResource: Double
+public class D3StatBlock: Codable {
+    public let life: Double
+    public let damage: Double
+    public let toughness: Double
+    public let healing: Double
+    public let attackSpeed: Double
+    public let armor: Double
+    public let strength: Double
+    public let dexterity: Double
+    public let vitality: Double
+    public let intelligence: Double
+    public let physicalResist: Double
+    public let fireResist: Double
+    public let coldResist: Double
+    public let lightningResist: Double
+    public let poisonResist: Double
+    public let arcaneResist: Double
+    public let blockChance: Double
+    public let blockAmountMin: Double
+    public let blockAmountMax: Double
+    public let goldFind: Double
+    public let critChance: Double
+    public let thorns: Double
+    public let lifeSteal: Double
+    public let lifePerKill: Double
+    public let lifeOnHit: Double
+    public let primaryResource: Double
+    public let secondaryResource: Double
 }

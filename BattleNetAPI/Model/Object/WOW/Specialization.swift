@@ -9,12 +9,12 @@
 import Foundation
 
 
-class SpecializationIndex: Codable, SelfDecodable {
-    let _links: SelfLink<SpecializationIndex>
-    let characterSpecializations: [KeyLink<Specialization>]
-    let petSpecializations: [KeyLink<Specialization>]
+public class SpecializationIndex: Codable, SelfDecodable {
+    public let _links: SelfLink<SpecializationIndex>
+    public let characterSpecializations: [KeyLink<Specialization>]
+    public let petSpecializations: [KeyLink<Specialization>]
     
-    static var decoder: JSONDecoder {
+    public static var decoder: JSONDecoder {
         let decoder = JSONDecoder()
         decoder.keyDecodingStrategy = .convertFromSnakeCase
         return decoder
@@ -24,20 +24,20 @@ class SpecializationIndex: Codable, SelfDecodable {
 
 
 // https://us.api.battle.net/data/wow/playable-specialization/65?namespace=static-7.3.5_25875-us
-class Specialization: Codable, SelfDecodable {
-    let _links: SelfLink<Specialization>
-    let id: Int
-    let name: String
+public class Specialization: Codable, SelfDecodable {
+    public let _links: SelfLink<Specialization>
+    public let id: Int
+    public let name: String
 
-    let playableClass: KeyLink<WOWClass>
-    let genderDescription: GenderName
-    let role: Role
-    let pvpTalents: [Talent]
-    let talentTiers: [TalentTier]
+    public let playableClass: KeyLink<WOWClass>
+    public let genderDescription: GenderName
+    public let role: Role
+    public let pvpTalents: [Talent]
+    public let talentTiers: [TalentTier]
     
-    let media: MediaLink
+    public let media: MediaLink
     
-    static var decoder: JSONDecoder {
+    public static var decoder: JSONDecoder {
         let decoder = JSONDecoder()
         decoder.keyDecodingStrategy = .convertFromSnakeCase
         return decoder
@@ -46,23 +46,23 @@ class Specialization: Codable, SelfDecodable {
 
 
 
-class Role: Codable {
-    let type: String
-    let name: String
+public class Role: Codable {
+    public let type: String
+    public let name: String
 }
 
 
-class TalentTier: Codable {
-    let level: Int
-    let talents: [Talent]
+public class TalentTier: Codable {
+    public let level: Int
+    public let talents: [Talent]
 }
 
 
-class Talent: Codable, SelfDecodable {
-    let talent: KeyLink<WOWClass>
-    let spellTooltip: SpellTooltip
+public class Talent: Codable, SelfDecodable {
+    public let talent: KeyLink<WOWClass>
+    public let spellTooltip: SpellTooltip
     
-    static var decoder: JSONDecoder {
+    public static var decoder: JSONDecoder {
         let decoder = JSONDecoder()
         decoder.keyDecodingStrategy = .convertFromSnakeCase
         return decoder
@@ -70,14 +70,14 @@ class Talent: Codable, SelfDecodable {
 }
 
 
-class SpellTooltip: Codable, SelfDecodable {
-    let description: String
-    let castTime: CastTime
-    let cooldown: String?
-    let powerCost: String?
-    let range: Range?
+public class SpellTooltip: Codable, SelfDecodable {
+    public let description: String
+    public let castTime: CastTime
+    public let cooldown: String?
+    public let powerCost: String?
+    public let range: Range?
     
-    static var decoder: JSONDecoder {
+    public static var decoder: JSONDecoder {
         let decoder = JSONDecoder()
         decoder.keyDecodingStrategy = .convertFromSnakeCase
         return decoder
@@ -85,7 +85,7 @@ class SpellTooltip: Codable, SelfDecodable {
 }
 
 
-enum CastTime: String, Codable {
+public enum CastTime: String, Codable {
     case channeled = "Channeled"
     case instant = "Instant"
     case passive = "Passive"
@@ -100,7 +100,7 @@ enum CastTime: String, Codable {
 }
 
 
-enum Range: String, Codable {
+public enum Range: String, Codable {
     case meleeRange = "Melee Range"
     case tenYdRange = "10 yd range"
     case fifteenYdRange = "15 yd range"
@@ -117,11 +117,11 @@ enum Range: String, Codable {
 
 
 
-class CharacterSpecialization: Codable {
-    let name: String
-    let role: RoleType
-    let backgroundImage: String
-    let icon: String
-    let description: String
-    let order: Int
+public class CharacterSpecialization: Codable {
+    public let name: String
+    public let role: RoleType
+    public let backgroundImage: String
+    public let icon: String
+    public let description: String
+    public let order: Int
 }

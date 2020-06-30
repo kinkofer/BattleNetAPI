@@ -44,7 +44,7 @@ class BattleNetAPITests: XCTestCase {
                 XCTFail("Could not decode")
             }
         case .failure(let error):
-            XCTAssertNil(error, "Web service error: \(error.message)")
+            XCTAssertNil(error, "Web service error: \(error.localizedDescription)")
         }
         
         expectation.fulfill()

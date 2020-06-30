@@ -10,10 +10,10 @@ import Foundation
 
 
 
-class ClientToken: Codable {
-    let clientID: String
-    let expiresIn: Int
-    let authorities: [Authority]
+public class ClientToken: Codable {
+    public let clientID: String
+    public let expiresIn: Int
+    public let authorities: [Authority]
     
     enum CodingKeys: String, CodingKey {
         case clientID = "client_id"
@@ -23,7 +23,7 @@ class ClientToken: Codable {
 }
 
 extension ClientToken: CustomDebugStringConvertible {
-    var debugDescription: String {
+    public var debugDescription: String {
         return """
         ClientToken {
             clientID: \(clientID),
@@ -36,8 +36,8 @@ extension ClientToken: CustomDebugStringConvertible {
 
 
 
-class Authority: Codable {
-    let role: String
+public class Authority: Codable {
+    public let role: String
     
     enum CodingKeys: String, CodingKey {
         case role = "authority"
@@ -45,7 +45,7 @@ class Authority: Codable {
 }
 
 extension Authority: CustomDebugStringConvertible {
-    var debugDescription: String {
+    public var debugDescription: String {
         return """
         {authority: \(role)}
         """

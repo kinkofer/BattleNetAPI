@@ -9,11 +9,11 @@
 import Foundation
 
 
-class Image: Codable {
-    var x: Int
-    var y: Int
-    var w: Int
-    var h: Int
-    var offset: Int
-    var url: String
+public class Image: Codable {
+    public var x: Int
+    public var y: Int
+    public var w: Int
+    public var h: Int
+    public var offset: Int
+    public var url: String
 }

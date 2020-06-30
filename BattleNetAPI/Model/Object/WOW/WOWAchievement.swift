@@ -9,32 +9,32 @@
 import Foundation
 
 
-class WOWAchievementIndex: Codable {
-    let achievements: [WOWAchievementCategory]
+public class WOWAchievementIndex: Codable {
+    public let achievements: [WOWAchievementCategory]
 }
 
 
 
-class WOWAchievementCategory: Codable {
-    let id: Int
-    let name: String
-    let achievements: [WOWAchievement]?
-    let categories: [WOWAchievementCategory]?
+public class WOWAchievementCategory: Codable {
+    public let id: Int
+    public let name: String
+    public let achievements: [WOWAchievement]?
+    public let categories: [WOWAchievementCategory]?
 }
 
 
 
-class WOWAchievement: Codable {
-    let id: Int
-    let title: String
-    let points: Int
-    let description: String
-    let reward: String?
-    let rewardItems: [WOWItemSummary]
-    let icon: String
-    let criteria: [WOWAchievementCriterion]
-    let accountWide: Bool
-    let factionID: Int
+public class WOWAchievement: Codable {
+    public let id: Int
+    public let title: String
+    public let points: Int
+    public let description: String
+    public let reward: String?
+    public let rewardItems: [WOWItemSummary]
+    public let icon: String
+    public let criteria: [WOWAchievementCriterion]
+    public let accountWide: Bool
+    public let factionID: Int
     
     enum CodingKeys: String, CodingKey {
         case id
@@ -52,21 +52,21 @@ class WOWAchievement: Codable {
 
 
 
-class WOWAchievementCriterion: Codable {
-    let id: Int
-    let description: String
-    let orderIndex: Int
-    let max: Int
+public class WOWAchievementCriterion: Codable {
+    public let id: Int
+    public let description: String
+    public let orderIndex: Int
+    public let max: Int
 }
 
 
 
-class WOWAchievementStatus: Codable {
-    let achievementsCompleted: [Int]
-    let achievementsCompletedTimestamp: [Int]
-    let criteria: [Int]
-    let criteriaQuantity: [Int]
-    let criteriaTimestamp: [Int]
-    let criteriaCreated: [Int]
+public class WOWAchievementStatus: Codable {
+    public let achievementsCompleted: [Int]
+    public let achievementsCompletedTimestamp: [Int]
+    public let criteria: [Int]
+    public let criteriaQuantity: [Int]
+    public let criteriaTimestamp: [Int]
+    public let criteriaCreated: [Int]
 }
 

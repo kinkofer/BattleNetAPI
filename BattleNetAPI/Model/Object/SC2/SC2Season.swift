@@ -9,12 +9,12 @@
 import Foundation
 
 
-class SC2Season: Codable {
-    let seasonID: Int
-    let number: Int
-    let year: Int
-    let startDate: String
-    let endDate: String
+public class SC2Season: Codable {
+    public let seasonID: Int
+    public let number: Int
+    public let year: Int
+    public let startDate: String
+    public let endDate: String
     
     enum CodingKeys: String, CodingKey {
         case seasonID = "seasonId"

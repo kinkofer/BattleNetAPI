@@ -9,11 +9,11 @@
 import Foundation
 
 
-class WOWQuest: Codable {
-    let id: Int
-    let title: String
-    let reqLevel: Int
-    let suggestedPartyMembers: Int
-    let category: String
-    let level: Int
+public class WOWQuest: Codable {
+    public let id: Int
+    public let title: String
+    public let reqLevel: Int
+    public let suggestedPartyMembers: Int
+    public let category: String
+    public let level: Int
 }

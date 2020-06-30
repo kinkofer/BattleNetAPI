@@ -9,7 +9,7 @@
 import Foundation
 
 
-class WS_Diablo3: WebService {
+public class WS_Diablo3: WebService {
     internal func getBaseURL(region: APIRegion, apiType: APIType?) -> String {
         var url = "\(region.apiURI)"
         

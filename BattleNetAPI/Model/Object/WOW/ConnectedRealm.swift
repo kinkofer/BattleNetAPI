@@ -10,11 +10,11 @@ import Foundation
 
 
 // https://us.api.battle.net/data/wow/connected-realm/?namespace=dynamic-us
-class ConnectedRealmIndex: Codable, SelfDecodable {
-    let _links: SelfLink<ConnectedRealmIndex>
-    let connectedRealms: [Link<ConnectedRealm>]
+public class ConnectedRealmIndex: Codable, SelfDecodable {
+    public let _links: SelfLink<ConnectedRealmIndex>
+    public let connectedRealms: [Link<ConnectedRealm>]
     
-    static var decoder: JSONDecoder {
+    public static var decoder: JSONDecoder {
         let decoder = JSONDecoder()
         decoder.keyDecodingStrategy = .convertFromSnakeCase
         return decoder
@@ -24,19 +24,19 @@ class ConnectedRealmIndex: Codable, SelfDecodable {
 
 
 // https://us.api.battle.net/data/wow/connected-realm/11?namespace=dynamic-us
-class ConnectedRealm: Codable, SelfDecodable {
-    let _links: SelfLink<ConnectedRealm>
-    let id: Int
+public class ConnectedRealm: Codable, SelfDecodable {
+    public let _links: SelfLink<ConnectedRealm>
+    public let id: Int
     
-    let realms: [Realm]
+    public let realms: [Realm]
     
-    let hasQueue: Bool
-    let status: ConnectedRealmStatus
-    let population: ConnectedRealmPopulation
+    public let hasQueue: Bool
+    public let status: ConnectedRealmStatus
+    public let population: ConnectedRealmPopulation
     
-    let mythicLeaderboards: Link<MythicLeaderboard>
+    public let mythicLeaderboards: Link<MythicLeaderboard>
     
-    static var decoder: JSONDecoder {
+    public static var decoder: JSONDecoder {
         let decoder = JSONDecoder()
         decoder.keyDecodingStrategy = .convertFromSnakeCase
         return decoder
@@ -45,14 +45,14 @@ class ConnectedRealm: Codable, SelfDecodable {
 
 
 
-class ConnectedRealmStatus: Codable {
-    let type: String
-    let name: String
+public class ConnectedRealmStatus: Codable {
+    public let type: String
+    public let name: String
 }
 
 
 
-class ConnectedRealmPopulation: Codable {
-    let type: String
-    let name: String
+public class ConnectedRealmPopulation: Codable {
+    public let type: String
+    public let name: String
 }

@@ -9,13 +9,13 @@
 import Foundation
 
 
-class PerkIndex: Codable {
-    let perks: [Perk]
+public class PerkIndex: Codable {
+    public let perks: [Perk]
 }
 
 
 
-class Perk: Codable {
-    let guildLevel: Int
-    let spell: Spell
+public class Perk: Codable {
+    public let guildLevel: Int
+    public let spell: Spell
 }

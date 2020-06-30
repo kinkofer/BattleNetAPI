@@ -6,7 +6,7 @@
 //  Copyright © 2019 Prismatic Games. All rights reserved.
 //
 
-import UIKit
+import Foundation
 
 
 extension Result {
@@ -17,30 +17,6 @@ extension Result {
         case .failure:
             return false
         }
-    }
-}
-
-
-
-extension Result where Failure == HTTPError {
-    /// Returns the success value in a closure or logs the error
-    /// - parameter presentErrorOn: If a viewController is passed in it will present the default HTTPError alert controller, otherwise it will log the error messsage in the console
-    /// - parameter successHandler: The closure contains the success value
-    public func getSuccessValue(presentErrorOn viewController: UIViewController? = nil, file: String = #file, function: String = #function, line: Int = #line, successHandler: @escaping (Success) -> Void) {
-        do {
-            successHandler(try get())
-        }
-        catch let error as HTTPError {
-            if let viewController = viewController {
-                DispatchQueue.main.async {
-                    viewController.present(error.alert, animated: true)
-                }
-            }
-            else {
-                Debug.print(error.localizedDescription, file: file, function: function, line: line)
-            }
-        }
-        catch { }
     }
 }
 

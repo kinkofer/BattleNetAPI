@@ -9,15 +9,15 @@
 import Foundation
 
 
-class SC2Category: Codable {
-    let points: Int
-    let uiOrderHint: Int
-    let featuredAchievementID: String
-    let id: String
-    let parentCategoryID: String?
-    let childrenCategoryIDs: [String]
-    let name: String
-    let medalTiers: [Int]?
+public class SC2Category: Codable {
+    public let points: Int
+    public let uiOrderHint: Int
+    public let featuredAchievementID: String
+    public let id: String
+    public let parentCategoryID: String?
+    public let childrenCategoryIDs: [String]
+    public let name: String
+    public let medalTiers: [Int]?
     
     enum CodingKeys: String, CodingKey {
         case points

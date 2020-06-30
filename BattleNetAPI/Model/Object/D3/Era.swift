@@ -10,14 +10,14 @@ import Foundation
 
 
 // https://us.api.battle.net/data/d3/era/?namespace=2-6-US
-class EraIndex: Codable, SelfDecodable {
-    let _links: SelfLink<EraIndex>
-    let era: [Link<EraLeaderboardIndex>]
-    let currentEra: Int
-    let lastUpdateTime: String
-    let generatedBy: String
+public class EraIndex: Codable, SelfDecodable {
+    public let _links: SelfLink<EraIndex>
+    public let era: [Link<EraLeaderboardIndex>]
+    public let currentEra: Int
+    public let lastUpdateTime: String
+    public let generatedBy: String
     
-    static var decoder: JSONDecoder {
+    public static var decoder: JSONDecoder {
         let decoder = JSONDecoder()
         decoder.keyDecodingStrategy = .convertFromSnakeCase
         return decoder
@@ -27,13 +27,13 @@ class EraIndex: Codable, SelfDecodable {
 
 
 // https://us.api.battle.net/data/d3/era/1?namespace=2-6-US
-class EraLeaderboardIndex: Codable {
-    let _links: SelfLink<EraLeaderboardIndex>
-    let leaderboard: [EraLeaderboardLink]
-    let eraID: Int
-    let eraStartDate: Double
-    let lastUpdateTime: String
-    let generatedBy: String
+public class EraLeaderboardIndex: Codable {
+    public let _links: SelfLink<EraLeaderboardIndex>
+    public let leaderboard: [EraLeaderboardLink]
+    public let eraID: Int
+    public let eraStartDate: Double
+    public let lastUpdateTime: String
+    public let generatedBy: String
     
     enum CodingKeys: String, CodingKey {
         case _links
@@ -47,13 +47,13 @@ class EraLeaderboardIndex: Codable {
 
 
 
-class EraLeaderboardLink: Codable, SelfDecodable {
-    let ladder: Link<EraLeaderboard>
-    let heroClassString: String?
-    let teamSize: Int?
-    let hardcore: Bool?
+public class EraLeaderboardLink: Codable, SelfDecodable {
+    public let ladder: Link<EraLeaderboard>
+    public let heroClassString: String?
+    public let teamSize: Int?
+    public let hardcore: Bool?
     
-    static var decoder: JSONDecoder {
+    public static var decoder: JSONDecoder {
         let decoder = JSONDecoder()
         decoder.keyDecodingStrategy = .convertFromSnakeCase
         return decoder
@@ -63,23 +63,23 @@ class EraLeaderboardLink: Codable, SelfDecodable {
 
 
 // https://us.api.battle.net/data/d3/era/1/leaderboard/rift-barbarian?namespace=2-6-US
-class EraLeaderboard: Codable, SelfDecodable {
-    let _links: SelfLink<EraLeaderboard>
-    let key: String
-    let title: LocaleString
-    let era: Int
+public class EraLeaderboard: Codable, SelfDecodable {
+    public let _links: SelfLink<EraLeaderboard>
+    public let key: String
+    public let title: LocaleString
+    public let era: Int
     
-    let lastUpdateTime: String
-    let generatedBy: String
+    public let lastUpdateTime: String
+    public let generatedBy: String
     
-    let row: [LeaderboardEntry]
-    let column: [LeaderboardColumn]
+    public let row: [LeaderboardEntry]
+    public let column: [LeaderboardColumn]
     
-    let greaterRiftSoloClass: String
-    let greaterRift: Bool
+    public let greaterRiftSoloClass: String
+    public let greaterRift: Bool
     
     
-    static var decoder: JSONDecoder {
+    public static var decoder: JSONDecoder {
         let decoder = JSONDecoder()
         decoder.keyDecodingStrategy = .convertFromSnakeCase
         return decoder

@@ -10,10 +10,10 @@ import Foundation
 
 
 public class Access: Codable {
-    var token: String
-    var type: String
-    var expiresIn: Int
-    var scope: String?
+    public var token: String
+    public var type: String
+    public var expiresIn: Int
+    public var scope: String?
     
     enum CodingKeys: String, CodingKey {
         case token = "access_token"

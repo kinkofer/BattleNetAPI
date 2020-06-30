@@ -9,30 +9,30 @@
 import Foundation
 
 
-class D3Season: Codable {
-    let seasonId: Int
-    let paragonLevel: Int
-    let paragonLevelHardcore: Int
-    let highestHardcoreLevel: Int
+public class D3Season: Codable {
+    public let seasonId: Int
+    public let paragonLevel: Int
+    public let paragonLevelHardcore: Int
+    public let highestHardcoreLevel: Int
     
-    let kills: Kills
-    let timePlayed: TimePlayed
+    public let kills: Kills
+    public let timePlayed: TimePlayed
 }
 
 
 
 // https://us.api.battle.net/data/d3/season/?namespace=2-6-US
-class D3SeasonIndex: Codable, SelfDecodable {
-    let _links: SelfLink<D3SeasonIndex>
-    let season: [Link<D3Season>]
+public class D3SeasonIndex: Codable, SelfDecodable {
+    public let _links: SelfLink<D3SeasonIndex>
+    public let season: [Link<D3Season>]
     
-    let currentSeason: Int
-    let serviceCurrentSeason: Int
-    let serviceSeasonState: String
-    let lastUpdateTime: String
-    let generatedBy: String
+    public let currentSeason: Int
+    public let serviceCurrentSeason: Int
+    public let serviceSeasonState: String
+    public let lastUpdateTime: String
+    public let generatedBy: String
     
-    static var decoder: JSONDecoder {
+    public static var decoder: JSONDecoder {
         let decoder = JSONDecoder()
         decoder.keyDecodingStrategy = .convertFromSnakeCase
         return decoder
@@ -42,12 +42,12 @@ class D3SeasonIndex: Codable, SelfDecodable {
 
 
 // https://us.api.battle.net/data/d3/season/1?namespace=2-6-US
-class D3SeasonLeaderboardIndex: Codable {
-    let _links: SelfLink<D3SeasonLeaderboardIndex>
-    let leaderboard: [SeasonLeaderboardLink]
-    let seasonID: Int
-    let lastUpdateTime: String
-    let generatedBy: String
+public class D3SeasonLeaderboardIndex: Codable {
+    public let _links: SelfLink<D3SeasonLeaderboardIndex>
+    public let leaderboard: [SeasonLeaderboardLink]
+    public let seasonID: Int
+    public let lastUpdateTime: String
+    public let generatedBy: String
     
     enum CodingKeys: String, CodingKey {
         case _links
@@ -60,13 +60,13 @@ class D3SeasonLeaderboardIndex: Codable {
 
 
 
-class SeasonLeaderboardLink: Codable, SelfDecodable {
-    let ladder: Link<SeasonLeaderboard>
-    let heroClassString: String?
-    let teamSize: Int?
-    let hardcore: Bool?
+public class SeasonLeaderboardLink: Codable, SelfDecodable {
+    public let ladder: Link<SeasonLeaderboard>
+    public let heroClassString: String?
+    public let teamSize: Int?
+    public let hardcore: Bool?
     
-    static var decoder: JSONDecoder {
+    public static var decoder: JSONDecoder {
         let decoder = JSONDecoder()
         decoder.keyDecodingStrategy = .convertFromSnakeCase
         return decoder
@@ -76,22 +76,22 @@ class SeasonLeaderboardLink: Codable, SelfDecodable {
 
 
 // https://us.api.battle.net/data/d3/season/1/leaderboard/achievement-points?namespace=2-6-US
-class SeasonLeaderboard: Codable, SelfDecodable {
-    let _links: SelfLink<SeasonLeaderboard>
-    let key: String
-    let title: LocaleString
-    let season: Int
+public class SeasonLeaderboard: Codable, SelfDecodable {
+    public let _links: SelfLink<SeasonLeaderboard>
+    public let key: String
+    public let title: LocaleString
+    public let season: Int
     
-    let lastUpdateTime: String
-    let generatedBy: String
+    public let lastUpdateTime: String
+    public let generatedBy: String
     
-    let row: [LeaderboardEntry]
-    let column: [LeaderboardColumn]
+    public let row: [LeaderboardEntry]
+    public let column: [LeaderboardColumn]
     
-    let achievementPoints: Bool
+    public let achievementPoints: Bool
     
     
-    static var decoder: JSONDecoder {
+    public static var decoder: JSONDecoder {
         let decoder = JSONDecoder()
         decoder.keyDecodingStrategy = .convertFromSnakeCase
         return decoder
