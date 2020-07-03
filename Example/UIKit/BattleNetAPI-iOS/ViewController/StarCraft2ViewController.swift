@@ -69,7 +69,7 @@ class StarCraft2ViewController: UITableViewController, APIViewer {
     }
     
     
-    let sc2MC = StarCraft2ModelController.shared
+    let sc2MC = StarCraft2ModelController(region: Current.region, locale: Current.locale)
     
     public var apiType: APIType = .gameData
     
@@ -102,8 +102,8 @@ class StarCraft2ViewController: UITableViewController, APIViewer {
     
     // MARK: - Game Data APIs
     
-    func getLeagueData(seasonID: Int, queue: LeagueQueue, team: LeagueTeam, league: LeagueType, region: APIRegion = Current.region, locale: APILocale = Current.locale) {
-        sc2MC.getLeagueData(seasonID: seasonID, queue: queue, team: team, league: league, region: region, locale: locale) { result in
+    func getLeagueData(seasonID: Int, queue: LeagueQueue, team: LeagueTeam, league: LeagueType) {
+        sc2MC.getLeagueData(seasonID: seasonID, queue: queue, team: team, league: league) { result in
             switch result {
             case .success(let league):
                 Debug.print("Retrieved League \(league.key.leagueID) with \(league.tier.count) tier(s)")
@@ -124,8 +124,8 @@ class StarCraft2ViewController: UITableViewController, APIViewer {
     
     // MARK: Profile API
     
-    func getProfileData(sc2Region: APIRegion, region: APIRegion = Current.region, locale: APILocale = Current.locale) {
-        self.sc2MC.getProfileData(sc2Region: sc2Region, region: region, locale: locale) { result in
+    func getProfileData(sc2Region: APIRegion) {
+        self.sc2MC.getProfileData(sc2Region: sc2Region) { result in
             switch result {
             case .success(let profile):
                 Debug.print("Retrieved profile with \(profile.achievements.count) Achievements, \(profile.categories.count) Categories, \(profile.criteria.count) Criteria, \(profile.rewards.count) Rewards")
@@ -141,8 +141,8 @@ class StarCraft2ViewController: UITableViewController, APIViewer {
     }
     
     
-    func getProfileMetadata(id: Int, sc2Region: APIRegion, realmID: Int, region: APIRegion = Current.region, locale: APILocale = Current.locale) {
-        self.sc2MC.getProfileMetadata(id: id, sc2Region: sc2Region, realmID: realmID, region: region, locale: locale) { result in
+    func getProfileMetadata(id: Int, sc2Region: APIRegion, realmID: Int) {
+        self.sc2MC.getProfileMetadata(id: id, sc2Region: sc2Region, realmID: realmID) { result in
             switch result {
             case .success(let player):
                 Debug.print("Retrieved player \(player.name) with profileID \(player.profileID) and realmID \(player.realmID)")
@@ -158,8 +158,8 @@ class StarCraft2ViewController: UITableViewController, APIViewer {
     }
     
     
-    func getProfile(id: Int, sc2Region: APIRegion, realmID: Int, region: APIRegion = Current.region, locale: APILocale = Current.locale) {
-        self.sc2MC.getProfile(id: id, sc2Region: sc2Region, realmID: realmID, region: region, locale: locale) { result in
+    func getProfile(id: Int, sc2Region: APIRegion, realmID: Int) {
+        self.sc2MC.getProfile(id: id, sc2Region: sc2Region, realmID: realmID) { result in
             switch result {
             case .success(let profile):
                 Debug.print("Retrieved profile \(profile.summary.displayName) with \(profile.earnedAchievements.count) earned achievement(s)")
@@ -175,8 +175,8 @@ class StarCraft2ViewController: UITableViewController, APIViewer {
     }
     
     
-    func getLadderSummary(profileID: Int, sc2Region: APIRegion, realmID: Int, region: APIRegion = Current.region, locale: APILocale = Current.locale) {
-        self.sc2MC.getLadderSummary(profileID: profileID, sc2Region: sc2Region, realmID: realmID, region: region, locale: locale) { result in
+    func getLadderSummary(profileID: Int, sc2Region: APIRegion, realmID: Int) {
+        self.sc2MC.getLadderSummary(profileID: profileID, sc2Region: sc2Region, realmID: realmID) { result in
             switch result {
             case .success(let ladderSummary):
                 Debug.print("Ladder Summary retrieved with \(ladderSummary.allLadderMemberships.count) ladder membership(s), \(ladderSummary.placementMatches.count) placement match(s), and \(ladderSummary.showCaseEntries.count) show case entry(s)")
@@ -192,8 +192,8 @@ class StarCraft2ViewController: UITableViewController, APIViewer {
     }
     
     
-    func getLadder(id: Int, profileID: Int, sc2Region: APIRegion, realmID: Int, region: APIRegion = Current.region, locale: APILocale = Current.locale) {
-        self.sc2MC.getLadder(id: id, profileID: profileID, sc2Region: sc2Region, realmID: realmID, region: region, locale: locale) { result in
+    func getLadder(id: Int, profileID: Int, sc2Region: APIRegion, realmID: Int) {
+        self.sc2MC.getLadder(id: id, profileID: profileID, sc2Region: sc2Region, realmID: realmID) { result in
             switch result {
             case .success(let ladder):
                 Debug.print("Ladder retrieved in \(ladder.league) league with \(ladder.ladderTeams.count) ladder teams(s)")
@@ -211,8 +211,8 @@ class StarCraft2ViewController: UITableViewController, APIViewer {
     
     // MARK: Ladder API
     
-    func getGrandmasterLeaderboard(sc2Region: APIRegion, region: APIRegion = Current.region, locale: APILocale = Current.locale) {
-        self.sc2MC.getGrandmasterLeaderboard(sc2Region: sc2Region, region: region, locale: locale) { result in
+    func getGrandmasterLeaderboard(sc2Region: APIRegion) {
+        self.sc2MC.getGrandmasterLeaderboard(sc2Region: sc2Region) { result in
             switch result {
             case .success(let leaderboard):
                 Debug.print("Retrieved Grandmaster Leaderbaord with \(leaderboard.ladderTeams.count) ladder teams(s)")
@@ -228,8 +228,8 @@ class StarCraft2ViewController: UITableViewController, APIViewer {
     }
     
     
-    func getLadderSeason(sc2Region: APIRegion, region: APIRegion = Current.region, locale: APILocale = Current.locale) {
-        self.sc2MC.getLadderSeason(sc2Region: sc2Region, region: region, locale: locale) { result in
+    func getLadderSeason(sc2Region: APIRegion) {
+        self.sc2MC.getLadderSeason(sc2Region: sc2Region) { result in
             switch result {
             case .success(let season):
                 Debug.print("Retrieved \(season.year) season")
@@ -247,8 +247,8 @@ class StarCraft2ViewController: UITableViewController, APIViewer {
     
     // MARK: Account API
     
-    func getPlayers(userID: Int, region: APIRegion = Current.region) {
-        sc2MC.getPlayers(userID: userID, region: region) { result in
+    func getPlayers(userID: Int) {
+        sc2MC.getPlayers(userID: userID) { result in
             switch result {
             case .success(let players):
                 Debug.print("Retrieved \(players.count) player(s) named \(players.map { $0.name }.joined(separator: ", "))")

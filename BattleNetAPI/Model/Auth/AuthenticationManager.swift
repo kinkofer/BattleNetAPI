@@ -11,7 +11,7 @@ import AuthenticationServices
 
 
 public class AuthenticationManager {
-    public let authMC = AuthenticationModelController.shared
+    private let authMC: AuthenticationModelController
     
     /// The clientID is a unique token provided by the Blizzard Battle.net Developer Portal
     public let clientID = AuthToken.clientID
@@ -29,10 +29,11 @@ public class AuthenticationManager {
     
     // MARK: - Init
     
-    public init() {
+    public init(region: APIRegion, locale: APILocale) {
         // TODO: retrieve access tokens from keychain
         clientAccessToken = AuthToken.clientAccessToken
         userAccessToken = AuthToken.userAccessToken
+        authMC = AuthenticationModelController(region: region, locale: locale)
     }
     
     
@@ -69,8 +70,16 @@ public class AuthenticationManager {
         }
     }
     
-    
-    public func getUserAccessToken(scope: Scope, on providerContext: ASWebAuthenticationPresentationContextProviding, completion: @escaping (_ result: Result<String, HTTPError>) -> Void) {
+    /**
+     Retrieves the user access token if previously stored, or prompts the user to authenicate with BattleNet to get a new user access token.
+     
+     - parameter scope: The games you are requesting the user to give you access to.
+     - parameter providerContext: The view where the sign in page will be presented
+     - parameter scheme: The custom URL scheme that the app expects in the callback URL.
+     - parameter redirectUrl: A URL with the http or https scheme pointing to the authentication webpage.
+     - parameter completion: The result of the user's sign in attempt, containing the user's access token if they successfully authenticated.
+     */
+    public func getUserAccessToken(scope: Scope, on providerContext: ASWebAuthenticationPresentationContextProviding, scheme: String, redirectUrl: String, completion: @escaping (_ result: Result<String, HTTPError>) -> Void) {
         if let userAccessToken = userAccessToken {
             authMC.validateUserAccessToken(userAccessToken) { result in
                 DispatchQueue.main.async {
@@ -85,7 +94,7 @@ public class AuthenticationManager {
             }
         }
         else {
-            authenicateUser(scope: scope, on: providerContext, completion: completion)
+            authenicateUser(scope: scope, on: providerContext, scheme: scheme, redirectUrl: redirectUrl, completion: completion)
         }
     }
     
@@ -95,15 +104,16 @@ public class AuthenticationManager {
      
      - parameter scope: The games you are requesting the user to give you access to.
      - parameter providerContext: The view where the sign in page will be presented
+     - parameter scheme: The custom URL scheme that the app expects in the callback URL.
+     - parameter redirectUrl: A URL with the http or https scheme pointing to the authentication webpage.
      - parameter completion: The result of the user's sign in attempt, containing the user's access token if they successfully authenticated.
      */
-    private func authenicateUser(scope: Scope, on providerContext: ASWebAuthenticationPresentationContextProviding, completion: @escaping (_ result: Result<String, HTTPError>) -> Void) {
-        let redirectUrlStr = "https://oauth.click/BattleNetAPI/"
-        guard let url = authMC.getOAuthURL(region: Current.region, clientID: clientID, scope: scope, redirectURL: redirectUrlStr) else {
+    private func authenicateUser(scope: Scope, on providerContext: ASWebAuthenticationPresentationContextProviding, scheme: String, redirectUrl: String, completion: @escaping (_ result: Result<String, HTTPError>) -> Void) {
+        guard let url = authMC.getOAuthURL(clientID: clientID, scope: scope, redirectURL: redirectUrl) else {
             return
         }
         
-        webAuthSession = ASWebAuthenticationSession(url: url, callbackURLScheme: "BattleNetAPI://") { callback, error in
+        webAuthSession = ASWebAuthenticationSession(url: url, callbackURLScheme: scheme) { callback, error in
             guard error == nil,
                 let callbackUrl = callback else {
                     return
@@ -117,7 +127,7 @@ public class AuthenticationManager {
                     return
             }
             
-            self.authMC.getUserAccessToken(region: Current.region, clientID: self.clientID, clientSecret: self.clientSecret, code: code, redirectURL: redirectUrlStr) { result in
+            self.authMC.getUserAccessToken(clientID: self.clientID, clientSecret: self.clientSecret, code: code, redirectURL: redirectUrl) { result in
                 DispatchQueue.main.async {
                     switch result {
                     case .success(let access):

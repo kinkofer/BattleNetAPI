@@ -12,14 +12,24 @@ import Foundation
 /// This class is an interface to all the web services, with separate properties for accessing authentication, user, and specific game web services.
 public class BattleNetAPI {
     /// Authenication web services
-    public static let authentication = WS_Authentication()
+    public lazy var authentication = WS_Authentication(region: region, locale: locale)
     /// User web services
-    public static let user = WS_User()
+    public lazy var user = WS_User(region: region, locale: locale)
     
     /// World of Warcraft web services
-    public static let wow = WS_WorldOfWarcraft()
+    public lazy var wow = WS_WorldOfWarcraft(region: region, locale: locale)
     /// StarCraft 2 web services
-    public static let sc2 = WS_StarCraft2()
+    public lazy var sc2 = WS_StarCraft2(region: region, locale: locale)
     /// Diablo 3 web services
-    public static let d3 = WS_Diablo3()
+    public lazy var d3 = WS_Diablo3(region: region, locale: locale)
+    
+    
+    let region: APIRegion
+    let locale: APILocale
+    
+    
+    public init(region: APIRegion, locale: APILocale) {
+        self.region = region
+        self.locale = locale
+    }
 }

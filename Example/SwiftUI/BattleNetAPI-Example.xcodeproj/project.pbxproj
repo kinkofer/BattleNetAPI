@@ -13,31 +13,22 @@
 		598AC0BD24A986E5002F2ED3 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 598AC0A824A986E3002F2ED3 /* ContentView.swift */; };
 		598AC0BE24A986E5002F2ED3 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 598AC0A924A986E4002F2ED3 /* Assets.xcassets */; };
 		598AC0BF24A986E5002F2ED3 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 598AC0A924A986E4002F2ED3 /* Assets.xcassets */; };
-		598AC13B24A9B73E002F2ED3 /* BattleNetAPI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 598AC13A24A9B737002F2ED3 /* BattleNetAPI.framework */; };
-		598AC13C24A9B73E002F2ED3 /* BattleNetAPI.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 598AC13A24A9B737002F2ED3 /* BattleNetAPI.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
-		598AC0CD24A9958A002F2ED3 /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = 598AC0C824A9958A002F2ED3 /* BattleNetAPI.xcodeproj */;
-			proxyType = 2;
-			remoteGlobalIDString = 59E425A0207871C20046EB84;
-			remoteInfo = BattleNetAPI;
-		};
-		598AC0CF24A9958A002F2ED3 /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = 598AC0C824A9958A002F2ED3 /* BattleNetAPI.xcodeproj */;
-			proxyType = 2;
-			remoteGlobalIDString = 59E425B4207871C50046EB84;
-			remoteInfo = BattleNetAPITests;
-		};
-		598AC13924A9B737002F2ED3 /* PBXContainerItemProxy */ = {
+		598AC19424AC1D0E002F2ED3 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = 598AC0C824A9958A002F2ED3 /* BattleNetAPI.xcodeproj */;
 			proxyType = 2;
 			remoteGlobalIDString = 598AC0D824A9B6B0002F2ED3;
 			remoteInfo = BattleNetAPI;
+		};
+		598AC19624AC1D0E002F2ED3 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 598AC0C824A9958A002F2ED3 /* BattleNetAPI.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 598AC17C24AB1350002F2ED3;
+			remoteInfo = BattleNetAPITests;
 		};
 /* End PBXContainerItemProxy section */
 
@@ -48,7 +39,6 @@
 			dstPath = "";
 			dstSubfolderSpec = 10;
 			files = (
-				598AC13C24A9B73E002F2ED3 /* BattleNetAPI.framework in Embed Frameworks */,
 			);
 			name = "Embed Frameworks";
 			runOnlyForDeploymentPostprocessing = 0;
@@ -64,7 +54,7 @@
 		598AC0B624A986E5002F2ED3 /* BattleNetAPI-Example.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "BattleNetAPI-Example.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		598AC0B824A986E5002F2ED3 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		598AC0B924A986E5002F2ED3 /* macOS.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = macOS.entitlements; sourceTree = "<group>"; };
-		598AC0C824A9958A002F2ED3 /* BattleNetAPI.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = BattleNetAPI.xcodeproj; path = ../BattleNetAPI.xcodeproj; sourceTree = "<group>"; };
+		598AC0C824A9958A002F2ED3 /* BattleNetAPI.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = BattleNetAPI.xcodeproj; path = ../../BattleNetAPI.xcodeproj; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -72,7 +62,6 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				598AC13B24A9B73E002F2ED3 /* BattleNetAPI.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -134,21 +123,20 @@
 			path = macOS;
 			sourceTree = "<group>";
 		};
-		598AC0C924A9958A002F2ED3 /* Products */ = {
-			isa = PBXGroup;
-			children = (
-				598AC0CE24A9958A002F2ED3 /* BattleNetAPI.app */,
-				598AC0D024A9958A002F2ED3 /* BattleNetAPITests.xctest */,
-				598AC13A24A9B737002F2ED3 /* BattleNetAPI.framework */,
-			);
-			name = Products;
-			sourceTree = "<group>";
-		};
 		598AC0D124A9AC42002F2ED3 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
 			);
 			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		598AC19024AC1D0E002F2ED3 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				598AC19524AC1D0E002F2ED3 /* BattleNetAPI.framework */,
+				598AC19724AC1D0E002F2ED3 /* BattleNetAPITests.xctest */,
+			);
+			name = Products;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -219,7 +207,7 @@
 			projectDirPath = "";
 			projectReferences = (
 				{
-					ProductGroup = 598AC0C924A9958A002F2ED3 /* Products */;
+					ProductGroup = 598AC19024AC1D0E002F2ED3 /* Products */;
 					ProjectRef = 598AC0C824A9958A002F2ED3 /* BattleNetAPI.xcodeproj */;
 				},
 			);
@@ -232,25 +220,18 @@
 /* End PBXProject section */
 
 /* Begin PBXReferenceProxy section */
-		598AC0CE24A9958A002F2ED3 /* BattleNetAPI.app */ = {
-			isa = PBXReferenceProxy;
-			fileType = wrapper.application;
-			path = BattleNetAPI.app;
-			remoteRef = 598AC0CD24A9958A002F2ED3 /* PBXContainerItemProxy */;
-			sourceTree = BUILT_PRODUCTS_DIR;
-		};
-		598AC0D024A9958A002F2ED3 /* BattleNetAPITests.xctest */ = {
-			isa = PBXReferenceProxy;
-			fileType = wrapper.cfbundle;
-			path = BattleNetAPITests.xctest;
-			remoteRef = 598AC0CF24A9958A002F2ED3 /* PBXContainerItemProxy */;
-			sourceTree = BUILT_PRODUCTS_DIR;
-		};
-		598AC13A24A9B737002F2ED3 /* BattleNetAPI.framework */ = {
+		598AC19524AC1D0E002F2ED3 /* BattleNetAPI.framework */ = {
 			isa = PBXReferenceProxy;
 			fileType = wrapper.framework;
 			path = BattleNetAPI.framework;
-			remoteRef = 598AC13924A9B737002F2ED3 /* PBXContainerItemProxy */;
+			remoteRef = 598AC19424AC1D0E002F2ED3 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		598AC19724AC1D0E002F2ED3 /* BattleNetAPITests.xctest */ = {
+			isa = PBXReferenceProxy;
+			fileType = wrapper.cfbundle;
+			path = BattleNetAPITests.xctest;
+			remoteRef = 598AC19624AC1D0E002F2ED3 /* PBXContainerItemProxy */;
 			sourceTree = BUILT_PRODUCTS_DIR;
 		};
 /* End PBXReferenceProxy section */

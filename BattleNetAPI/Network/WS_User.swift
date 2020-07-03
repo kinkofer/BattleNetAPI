@@ -9,10 +9,11 @@
 import Foundation
 
 
-public class WS_User: WebService {
-    private let network = Network.shared
+public struct WS_User: WebService {
+    var region: APIRegion
+    var locale: APILocale?
     
-    func getBaseURL(region: APIRegion, apiType: APIType?) -> String {
+    func getBaseURL(apiType: APIType?) -> String {
         return "\(region.oauthURI)"
     }
     
@@ -26,9 +27,9 @@ public class WS_User: WebService {
      - parameter region: What region the request is being made
      - parameter completion: Returns a Result with the Data if `success` or an HTTPError if `failure`
      */
-    func getUserInfo(region: APIRegion, completion: @escaping (_ result: Result<Data, HTTPError>) -> Void) {
+    func getUserInfo(completion: @escaping (_ result: Result<Data, HTTPError>) -> Void) {
         let apiType: APIType = .profile
-        let urlStr = getBaseURL(region: region, apiType: apiType) + "/userinfo"
+        let urlStr = getBaseURL(apiType: apiType) + "/userinfo"
         
         self.callWebService(urlStr: urlStr, method: .get, apiType: apiType) { result in
             completion(result)

@@ -9,13 +9,21 @@
 import Foundation
 
 
-public class UserModelController {
-    public static let shared = UserModelController()
-    private init() { }
+public struct UserModelController {
+    let battleNetAPI: BattleNetAPI
+    
+    var region: APIRegion
+    var locale: APILocale?
+    
+    public init(region: APIRegion, locale: APILocale?) {
+        self.battleNetAPI = BattleNetAPI(region: .us, locale: .en_US)
+        self.region = region
+        self.locale = locale
+    }
     
     
-    public func getUser(region: APIRegion = Current.region, completion: @escaping (_ result: Result<User, HTTPError>) -> Void) {
-        BattleNetAPI.user.getUserInfo(region: region) { result in
+    public func getUser(completion: @escaping (_ result: Result<User, HTTPError>) -> Void) {
+        battleNetAPI.user.getUserInfo() { result in
             result.decode(completion: completion)
         }
     }

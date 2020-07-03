@@ -29,16 +29,10 @@
 		598AC17024AB00F0002F2ED3 /* Error+Alert.swift in Sources */ = {isa = PBXBuildFile; fileRef = 598AC16F24AB00EF002F2ED3 /* Error+Alert.swift */; };
 		598AC17224AB0101002F2ED3 /* UIViewController+Alert.swift in Sources */ = {isa = PBXBuildFile; fileRef = 598AC17124AB0100002F2ED3 /* UIViewController+Alert.swift */; };
 		598AC17424AB02ED002F2ED3 /* Array+Subscript.swift in Sources */ = {isa = PBXBuildFile; fileRef = 598AC17324AB02ED002F2ED3 /* Array+Subscript.swift */; };
+		59C229FF24AEAEF200472ADF /* World.swift in Sources */ = {isa = PBXBuildFile; fileRef = 59C229FC24AEAEF200472ADF /* World.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
-		598AC14424AADBBE002F2ED3 /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = 598AC13E24AADBBE002F2ED3 /* BattleNetAPI.xcodeproj */;
-			proxyType = 2;
-			remoteGlobalIDString = 59E425A0207871C20046EB84;
-			remoteInfo = "BattleNetAPI-App";
-		};
 		598AC14624AADBBE002F2ED3 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = 598AC13E24AADBBE002F2ED3 /* BattleNetAPI.xcodeproj */;
@@ -93,6 +87,7 @@
 		598AC16F24AB00EF002F2ED3 /* Error+Alert.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Error+Alert.swift"; sourceTree = "<group>"; };
 		598AC17124AB0100002F2ED3 /* UIViewController+Alert.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIViewController+Alert.swift"; sourceTree = "<group>"; };
 		598AC17324AB02ED002F2ED3 /* Array+Subscript.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Array+Subscript.swift"; sourceTree = "<group>"; };
+		59C229FC24AEAEF200472ADF /* World.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = World.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -134,7 +129,6 @@
 				598AC15A24AADC62002F2ED3 /* ViewController */,
 				598AC16A24AB00BC002F2ED3 /* Utilities */,
 				5921165C24AADAB40028BAE2 /* Assets.xcassets */,
-				5921165E24AADAB40028BAE2 /* LaunchScreen.storyboard */,
 				5921166124AADAB40028BAE2 /* Info.plist */,
 			);
 			path = "BattleNetAPI-iOS";
@@ -143,9 +137,8 @@
 		598AC13F24AADBBE002F2ED3 /* Products */ = {
 			isa = PBXGroup;
 			children = (
-				598AC14524AADBBE002F2ED3 /* BattleNetAPI-App.app */,
-				598AC14724AADBBE002F2ED3 /* BattleNetAPITests.xctest */,
 				598AC14924AADBBE002F2ED3 /* BattleNetAPI.framework */,
+				598AC14724AADBBE002F2ED3 /* BattleNetAPITests.xctest */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -166,6 +159,7 @@
 			isa = PBXGroup;
 			children = (
 				598AC14B24AADBE0002F2ED3 /* Main.storyboard */,
+				5921165E24AADAB40028BAE2 /* LaunchScreen.storyboard */,
 				598AC15324AADBE0002F2ED3 /* Viewables */,
 			);
 			path = View;
@@ -198,6 +192,7 @@
 				598AC16F24AB00EF002F2ED3 /* Error+Alert.swift */,
 				598AC16B24AB00CE002F2ED3 /* TableSection.swift */,
 				598AC17124AB0100002F2ED3 /* UIViewController+Alert.swift */,
+				59C229FC24AEAEF200472ADF /* World.swift */,
 			);
 			path = Utilities;
 			sourceTree = "<group>";
@@ -263,13 +258,6 @@
 /* End PBXProject section */
 
 /* Begin PBXReferenceProxy section */
-		598AC14524AADBBE002F2ED3 /* BattleNetAPI-App.app */ = {
-			isa = PBXReferenceProxy;
-			fileType = wrapper.application;
-			path = "BattleNetAPI-App.app";
-			remoteRef = 598AC14424AADBBE002F2ED3 /* PBXContainerItemProxy */;
-			sourceTree = BUILT_PRODUCTS_DIR;
-		};
 		598AC14724AADBBE002F2ED3 /* BattleNetAPITests.xctest */ = {
 			isa = PBXReferenceProxy;
 			fileType = wrapper.cfbundle;
@@ -304,6 +292,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				59C229FF24AEAEF200472ADF /* World.swift in Sources */,
 				598AC17024AB00F0002F2ED3 /* Error+Alert.swift in Sources */,
 				598AC16C24AB00CE002F2ED3 /* TableSection.swift in Sources */,
 				598AC15F24AADFD7002F2ED3 /* SharedViewables.swift in Sources */,

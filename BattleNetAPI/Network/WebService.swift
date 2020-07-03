@@ -10,11 +10,14 @@ import Foundation
 
 
 /// A protocol for a class that calls web services
-protocol WebService: class {
+protocol WebService {
+    var region: APIRegion { get }
+    var locale: APILocale? { get }
+    
     /// The base url of the web service to call
-    func getBaseURL(region: APIRegion, apiType: APIType?) -> String
+    func getBaseURL(apiType: APIType?) -> String
     /// Web service urls must include certain parameters, like namespace
-    func appendSharedURLParameters(to urlStr: String, withNamespace namespace: String, region: APIRegion, locale: APILocale?) -> String
+    func appendSharedURLParameters(to urlStr: String, withNamespace namespace: String) -> String
     /// Starts a web service request
     func callWebService(urlStr: String, method: HTTPMethod, apiType: APIType?, body: Data?, headers: [HTTPHeader]?, completion: @escaping (_ result: Result<Data, HTTPError>) -> Void)
 }
@@ -29,7 +32,7 @@ extension WebService {
      - parameter region: The user's region
      - parameter locale: Ther user's locale
     */
-    func appendSharedURLParameters(to urlStr: String, withNamespace namespace: String = "dynamic", region: APIRegion, locale: APILocale? = .en_US) -> String {
+    func appendSharedURLParameters(to urlStr: String, withNamespace namespace: String = "dynamic") -> String {
         guard var url = URL(string: urlStr) else {
             fatalError("The web service URL is invalid")
         }

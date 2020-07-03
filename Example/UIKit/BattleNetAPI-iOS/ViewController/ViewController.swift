@@ -47,12 +47,12 @@ class ViewController: UIViewController {
     
     @IBOutlet weak var tableView: UITableView!
     
-    let authMC = AuthenticationModelController.shared
-    let userMC = UserModelController.shared
+    let authMC = AuthenticationModelController(region: Current.region, locale: Current.locale)
+    let userMC = UserModelController(region: Current.region, locale: Current.locale)
     
-    let d3MC = Diablo3ModelController.shared
-    let sc2MC = StarCraft2ModelController.shared
-    let wowMC = WorldOfWarcraftModelController.shared
+    let d3MC = Diablo3ModelController(region: Current.region, locale: Current.locale)
+    let sc2MC = StarCraft2ModelController(region: Current.region, locale: Current.locale)
+    let wowMC = WorldOfWarcraftModelController(region: Current.region, locale: Current.locale)
     
     
     let sections: [Section] = [Section(type: .battleNet, rows: [.profile]),
@@ -60,7 +60,7 @@ class ViewController: UIViewController {
                                Section(type: .starCraft2, rows: [.gameData, .community]),
                                Section(type: .worldOfWarcraft, rows: [.gameData, .profile, .community])]
     
-    let authManager = AuthenticationManager()
+    let authManager = AuthenticationManager(region: Current.region, locale: Current.locale)
     
     
     
@@ -69,7 +69,7 @@ class ViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        authManager.getClientAccessToken() { result in
+        authManager.getClientAccessToken { result in
             switch result {
             case .success(let token):
                 Debug.print("clientAccessToken: \(token)")
@@ -104,7 +104,7 @@ class ViewController: UIViewController {
     
     
     func authenticateUser(showAPI: (APIType, Game)? = nil) {
-        self.authManager.getUserAccessToken(scope: [.sc2, .wow], on: self) { result in
+        self.authManager.getUserAccessToken(scope: [.sc2, .wow], on: self, scheme: Current.scheme, redirectUrl: Current.redirectUrl) { result in
             switch result {
             case .success(let userAccessToken):
                 Debug.print("userAccessToken: \(userAccessToken)")
@@ -122,8 +122,8 @@ class ViewController: UIViewController {
     
     // MARK: - Profile API
     
-    func getUser(region: APIRegion = .us) {
-        userMC.getUser(region: region) { result in
+    func getUser() {
+        userMC.getUser { result in
             switch result {
             case .success(let user):
                 Debug.print("Retrieved User \(user.battletag)")
@@ -205,7 +205,7 @@ extension ViewController: UITableViewDelegate {
             })
         }
         else {
-            authManager.getUserAccessToken(scope: [.wow, .sc2], on: self) { result in
+            authManager.getUserAccessToken(scope: [.wow, .sc2], on: self, scheme: Current.scheme, redirectUrl: Current.redirectUrl) { result in
                 switch result {
                 case .success(_):
                     self.showAPI(type: apiType, for: section.type)

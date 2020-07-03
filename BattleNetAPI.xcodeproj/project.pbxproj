@@ -72,7 +72,6 @@
 		598AC11D24A9B710002F2ED3 /* ConnectedRealm.swift in Sources */ = {isa = PBXBuildFile; fileRef = 59397CCD207B488D0077018E /* ConnectedRealm.swift */; };
 		598AC11E24A9B710002F2ED3 /* Auction.swift in Sources */ = {isa = PBXBuildFile; fileRef = 59255BE3208CF71200CEF71A /* Auction.swift */; };
 		598AC11F24A9B710002F2ED3 /* Pet.swift in Sources */ = {isa = PBXBuildFile; fileRef = 59D09C49208D75E4006BB4B7 /* Pet.swift */; };
-		598AC12024A9B716002F2ED3 /* World.swift in Sources */ = {isa = PBXBuildFile; fileRef = 59419F9A225A58DF00492BE7 /* World.swift */; };
 		598AC12124A9B71F002F2ED3 /* API_Enums.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5941816722A4D3B00078B7D2 /* API_Enums.swift */; };
 		598AC12224A9B71F002F2ED3 /* WS_StarCraft2.swift in Sources */ = {isa = PBXBuildFile; fileRef = 59397CD9207C47EB0077018E /* WS_StarCraft2.swift */; };
 		598AC12324A9B71F002F2ED3 /* BattleNetAPI.swift in Sources */ = {isa = PBXBuildFile; fileRef = 59E425D3207884DE0046EB84 /* BattleNetAPI.swift */; };
@@ -166,7 +165,6 @@
 		593F23262263236600C5F1F5 /* PowerType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PowerType.swift; sourceTree = "<group>"; };
 		593F23282265329F00C5F1F5 /* Result.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Result.swift; sourceTree = "<group>"; };
 		5941816722A4D3B00078B7D2 /* API_Enums.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = API_Enums.swift; sourceTree = "<group>"; };
-		59419F9A225A58DF00492BE7 /* World.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = World.swift; sourceTree = "<group>"; };
 		5954B1AE2079273000CC36D1 /* Scope.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Scope.swift; sourceTree = "<group>"; };
 		5954B1B5207A882000CC36D1 /* UserToken.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserToken.swift; sourceTree = "<group>"; };
 		5954B1B7207A8B7900CC36D1 /* JSONHelper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JSONHelper.swift; sourceTree = "<group>"; };
@@ -391,7 +389,6 @@
 				5941816922A588150078B7D2 /* Auth */,
 				59E425DB2078A3970046EB84 /* ModelControllers */,
 				59E425D820789ACA0046EB84 /* Object */,
-				59419F9A225A58DF00492BE7 /* World.swift */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -578,7 +575,6 @@
 				598AC0E524A9B6F5002F2ED3 /* Artisan.swift in Sources */,
 				598AC0F924A9B704002F2ED3 /* LeagueEnums.swift in Sources */,
 				598AC11F24A9B710002F2ED3 /* Pet.swift in Sources */,
-				598AC12024A9B716002F2ED3 /* World.swift in Sources */,
 				598AC0FF24A9B709002F2ED3 /* Media.swift in Sources */,
 				598AC12A24A9B71F002F2ED3 /* APICall.swift in Sources */,
 				598AC10C24A9B710002F2ED3 /* WOWLeaderboard.swift in Sources */,

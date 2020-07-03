@@ -7,6 +7,7 @@
 //
 
 import Foundation
+import BattleNetAPI
 
 
 public var Current = World()
@@ -15,4 +16,7 @@ public var Current = World()
 public struct World {
     public var region = APIRegion.us
     public var locale = APILocale.en_US
+    
+    public var scheme = "APP_SCHEME"
+    public var redirectUrl = "REDIRECT_URL"
 }

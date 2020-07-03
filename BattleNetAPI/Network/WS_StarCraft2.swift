@@ -9,8 +9,13 @@
 import Foundation
 
 
-public class WS_StarCraft2: WebService {
-    internal func getBaseURL(region: APIRegion, apiType: APIType?) -> String {
+public struct WS_StarCraft2: WebService {
+    
+    var region: APIRegion
+    var locale: APILocale?
+    
+    
+    internal func getBaseURL(apiType: APIType?) -> String {
         var url = "\(region.apiURI)"
         
         if let apiType = apiType {
@@ -29,9 +34,12 @@ public class WS_StarCraft2: WebService {
     
     // MARK: - Game Data APIs
     
-    func getLeagueData(seasonID: Int, queue: LeagueQueue, team: LeagueTeam, league: LeagueType, region: APIRegion, locale: APILocale, completion: @escaping (_ result: Result<Data, HTTPError>) -> Void) {
+    func getLeagueData(seasonID: Int, queue: LeagueQueue, team: LeagueTeam, league: LeagueType, completion: @escaping (_ result: Result<Data, HTTPError>) -> Void) {
         let apiType: APIType = .gameData
-        let urlStr = getBaseURL(region: region, apiType: apiType) + "/league/\(seasonID)/\(queue.id)/\(team.id)/\(league.id)?locale=\(locale.rawValue)"
+        var urlStr = getBaseURL(apiType: apiType) + "/league/\(seasonID)/\(queue.id)/\(team.id)/\(league.id)"
+        if let locale = locale {
+            urlStr = urlStr + "?locale=\(locale.rawValue)"
+        }
         
         self.callWebService(urlStr: urlStr, method: .get, apiType: apiType) { result in
             completion(result)
@@ -52,9 +60,9 @@ public class WS_StarCraft2: WebService {
      - parameter locale: What locale to use in the response
      - parameter completion: Returns a Result with the Data if `success` or an HTTPError if `failure`
      */
-    func getProfileData(sc2Region: APIRegion, region: APIRegion, locale: APILocale, completion: @escaping (_ result: Result<Data, HTTPError>) -> Void) {
+    func getProfileData(sc2Region: APIRegion, completion: @escaping (_ result: Result<Data, HTTPError>) -> Void) {
         let apiType: APIType = .community
-        let urlStr = getBaseURL(region: region, apiType: apiType) + "/static/profile/\(sc2Region.id)"
+        let urlStr = getBaseURL(apiType: apiType) + "/static/profile/\(sc2Region.id)"
         
         self.callWebService(urlStr: urlStr, method: .get, apiType: apiType) { result in
             completion(result)
@@ -72,9 +80,9 @@ public class WS_StarCraft2: WebService {
      - parameter locale: What locale to use in the response
      - parameter completion: Returns a Result with the Data if `success` or an HTTPError if `failure`
      */
-    func getProfileMetadata(id: Int, sc2Region: APIRegion, realmID: Int, region: APIRegion, locale: APILocale, completion: @escaping (_ result: Result<Data, HTTPError>) -> Void) {
+    func getProfileMetadata(id: Int, sc2Region: APIRegion, realmID: Int, completion: @escaping (_ result: Result<Data, HTTPError>) -> Void) {
         let apiType: APIType = .community
-        let urlStr = getBaseURL(region: region, apiType: apiType) + "/metadata/profile/\(sc2Region.id)/\(realmID)/\(id)"
+        let urlStr = getBaseURL(apiType: apiType) + "/metadata/profile/\(sc2Region.id)/\(realmID)/\(id)"
         
         self.callWebService(urlStr: urlStr, method: .get, apiType: apiType) { result in
             completion(result)
@@ -92,9 +100,9 @@ public class WS_StarCraft2: WebService {
      - parameter locale: What locale to use in the response
      - parameter completion: Returns a Result with the Data if `success` or an HTTPError if `failure`
      */
-    func getProfile(id: Int, sc2Region: APIRegion, realmID: Int, region: APIRegion, locale: APILocale, completion: @escaping (_ result: Result<Data, HTTPError>) -> Void) {
+    func getProfile(id: Int, sc2Region: APIRegion, realmID: Int, completion: @escaping (_ result: Result<Data, HTTPError>) -> Void) {
         let apiType: APIType = .community
-        let urlStr = getBaseURL(region: region, apiType: apiType) + "/profile/\(sc2Region.id)/\(realmID)/\(id)"
+        let urlStr = getBaseURL(apiType: apiType) + "/profile/\(sc2Region.id)/\(realmID)/\(id)"
         
         self.callWebService(urlStr: urlStr, method: .get, apiType: apiType) { result in
             completion(result)
@@ -112,9 +120,9 @@ public class WS_StarCraft2: WebService {
      - parameter locale: What locale to use in the response
      - parameter completion: Returns a Result with the Data if `success` or an HTTPError if `failure`
      */
-    func getLadderSummary(profileID: Int, sc2Region: APIRegion, realmID: Int, region: APIRegion, locale: APILocale, completion: @escaping (_ result: Result<Data, HTTPError>) -> Void) {
+    func getLadderSummary(profileID: Int, sc2Region: APIRegion, realmID: Int, completion: @escaping (_ result: Result<Data, HTTPError>) -> Void) {
         let apiType: APIType = .community
-        let urlStr = getBaseURL(region: region, apiType: apiType) + "/profile/\(sc2Region.id)/\(realmID)/\(profileID)/ladder/summary"
+        let urlStr = getBaseURL(apiType: apiType) + "/profile/\(sc2Region.id)/\(realmID)/\(profileID)/ladder/summary"
         
         self.callWebService(urlStr: urlStr, method: .get, apiType: apiType) { result in
             completion(result)
@@ -133,9 +141,9 @@ public class WS_StarCraft2: WebService {
      - parameter locale: What locale to use in the response
      - parameter completion: Returns a Result with the Data if `success` or an HTTPError if `failure`
      */
-    func getLadder(id: Int, profileID: Int, sc2Region: APIRegion, realmID: Int, region: APIRegion, locale: APILocale, completion: @escaping (_ result: Result<Data, HTTPError>) -> Void) {
+    func getLadder(id: Int, profileID: Int, sc2Region: APIRegion, realmID: Int, completion: @escaping (_ result: Result<Data, HTTPError>) -> Void) {
         let apiType: APIType = .community
-        let urlStr = getBaseURL(region: region, apiType: apiType) + "/profile/\(sc2Region.id)/\(realmID)/\(profileID)/ladder/\(id)"
+        let urlStr = getBaseURL(apiType: apiType) + "/profile/\(sc2Region.id)/\(realmID)/\(profileID)/ladder/\(id)"
         
         self.callWebService(urlStr: urlStr, method: .get, apiType: apiType) { result in
             completion(result)
@@ -153,9 +161,9 @@ public class WS_StarCraft2: WebService {
      - parameter locale: What locale to use in the response
      - parameter completion: Returns a Result with the Data if `success` or an HTTPError if `failure`
      */
-    func getGrandmasterLeaderboard(sc2Region: APIRegion, region: APIRegion, locale: APILocale, completion: @escaping (_ result: Result<Data, HTTPError>) -> Void) {
+    func getGrandmasterLeaderboard(sc2Region: APIRegion, completion: @escaping (_ result: Result<Data, HTTPError>) -> Void) {
         let apiType: APIType = .community
-        let urlStr = getBaseURL(region: region, apiType: apiType) + "/ladder/grandmaster/\(sc2Region.id)"
+        let urlStr = getBaseURL(apiType: apiType) + "/ladder/grandmaster/\(sc2Region.id)"
         
         self.callWebService(urlStr: urlStr, method: .get, apiType: apiType) { result in
             completion(result)
@@ -171,9 +179,9 @@ public class WS_StarCraft2: WebService {
      - parameter locale: What locale to use in the response
      - parameter completion: Returns a Result with the Data if `success` or an HTTPError if `failure`
      */
-    func getLadderSeason(sc2Region: APIRegion, region: APIRegion, locale: APILocale, completion: @escaping (_ result: Result<Data, HTTPError>) -> Void) {
+    func getLadderSeason(sc2Region: APIRegion, completion: @escaping (_ result: Result<Data, HTTPError>) -> Void) {
         let apiType: APIType = .community
-        let urlStr = getBaseURL(region: region, apiType: apiType) + "/ladder/season/\(sc2Region.id)"
+        let urlStr = getBaseURL(apiType: apiType) + "/ladder/season/\(sc2Region.id)"
         
         self.callWebService(urlStr: urlStr, method: .get, apiType: apiType) { result in
             completion(result)
@@ -191,9 +199,9 @@ public class WS_StarCraft2: WebService {
      - parameter region: What region the request is being made
      - parameter completion: Returns a Result with the Data if `success` or an HTTPError if `failure`
      */
-    func getPlayers(userID id: Int, region: APIRegion, completion: @escaping (_ result: Result<Data, HTTPError>) -> Void) {
+    func getPlayers(userID id: Int, completion: @escaping (_ result: Result<Data, HTTPError>) -> Void) {
         let apiType: APIType = .community
-        let urlStr = getBaseURL(region: region, apiType: apiType) + "/player/\(id)"
+        let urlStr = getBaseURL(apiType: apiType) + "/player/\(id)"
         
         self.callWebService(urlStr: urlStr, method: .get, apiType: apiType) { result in
             completion(result)

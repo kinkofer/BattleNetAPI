@@ -9,8 +9,13 @@
 import Foundation
 
 
-public class WS_Diablo3: WebService {
-    internal func getBaseURL(region: APIRegion, apiType: APIType?) -> String {
+public struct WS_Diablo3: WebService {
+    
+    var region: APIRegion
+    var locale: APILocale?
+    
+    
+    internal func getBaseURL(apiType: APIType?) -> String {
         var url = "\(region.apiURI)"
         
         if let apiType = apiType {
@@ -50,9 +55,9 @@ public class WS_Diablo3: WebService {
      - parameter region: What region the request is being made
      - parameter completion: Returns a Result with the Data if `success` or an HTTPError if `failure`
      */
-    func getSeasons(region: APIRegion, completion: @escaping (_ result: Result<Data, HTTPError>) -> Void) {
+    func getSeasons(completion: @escaping (_ result: Result<Data, HTTPError>) -> Void) {
         let apiType: APIType = .gameData
-        let urlStr = getBaseURL(region: region, apiType: apiType) + "/season/"
+        let urlStr = getBaseURL(apiType: apiType) + "/season/"
         self.callWebService(urlStr: urlStr, method: .get, apiType: apiType) { result in
             completion(result)
         }
@@ -66,9 +71,9 @@ public class WS_Diablo3: WebService {
      - parameter seasonID: The season for the leaderboard list
      - parameter completion: Returns a Result with the Data if `success` or an HTTPError if `failure`
      */
-    func getLeaderboards(seasonID: Int, region: APIRegion, completion: @escaping (_ result: Result<Data, HTTPError>) -> Void) {
+    func getLeaderboards(seasonID: Int, completion: @escaping (_ result: Result<Data, HTTPError>) -> Void) {
         let apiType: APIType = .gameData
-        let urlStr = getBaseURL(region: region, apiType: apiType) + "/season/\(seasonID)"
+        let urlStr = getBaseURL(apiType: apiType) + "/season/\(seasonID)"
         self.callWebService(urlStr: urlStr, method: .get, apiType: apiType) { result in
             completion(result)
         }
@@ -83,9 +88,9 @@ public class WS_Diablo3: WebService {
      - parameter seasonID: The season for the leaderboard
      - parameter completion: Returns a Result with the Data if `success` or an HTTPError if `failure`
      */
-    func getLeaderboard(_ leaderboard: String, seasonID: Int, region: APIRegion, completion: @escaping (_ result: Result<Data, HTTPError>) -> Void) {
+    func getLeaderboard(_ leaderboard: String, seasonID: Int, completion: @escaping (_ result: Result<Data, HTTPError>) -> Void) {
         let apiType: APIType = .gameData
-        let urlStr = getBaseURL(region: region, apiType: apiType) + "/season/\(seasonID)/leaderboard/\(leaderboard)"
+        let urlStr = getBaseURL(apiType: apiType) + "/season/\(seasonID)/leaderboard/\(leaderboard)"
         self.callWebService(urlStr: urlStr, method: .get, apiType: apiType) { result in
             completion(result)
         }
@@ -98,9 +103,9 @@ public class WS_Diablo3: WebService {
      - parameter region: What region the request is being made
      - parameter completion: Returns a Result with the Data if `success` or an HTTPError if `failure`
      */
-    func getEras(region: APIRegion, completion: @escaping (_ result: Result<Data, HTTPError>) -> Void) {
+    func getEras(completion: @escaping (_ result: Result<Data, HTTPError>) -> Void) {
         let apiType: APIType = .gameData
-        let urlStr = getBaseURL(region: region, apiType: apiType) + "/era/"
+        let urlStr = getBaseURL(apiType: apiType) + "/era/"
         self.callWebService(urlStr: urlStr, method: .get, apiType: apiType) { result in
             completion(result)
         }
@@ -114,9 +119,9 @@ public class WS_Diablo3: WebService {
      - parameter region: What region the request is being made
      - parameter completion: Returns a Result with the Data if `success` or an HTTPError if `failure`
      */
-    func getLeaderboards(eraID: Int, region: APIRegion, completion: @escaping (_ result: Result<Data, HTTPError>) -> Void) {
+    func getLeaderboards(eraID: Int, completion: @escaping (_ result: Result<Data, HTTPError>) -> Void) {
         let apiType: APIType = .gameData
-        let urlStr = getBaseURL(region: region, apiType: apiType) + "/era/\(eraID)"
+        let urlStr = getBaseURL(apiType: apiType) + "/era/\(eraID)"
         self.callWebService(urlStr: urlStr, method: .get, apiType: apiType) { result in
             completion(result)
         }
@@ -131,9 +136,9 @@ public class WS_Diablo3: WebService {
      - parameter region: What region the request is being made
      - parameter completion: Returns a Result with the Data if `success` or an HTTPError if `failure`
      */
-    func getLeaderboard(_ leaderboard: String, eraID: Int, region: APIRegion, completion: @escaping (_ result: Result<Data, HTTPError>) -> Void) {
+    func getLeaderboard(_ leaderboard: String, eraID: Int, completion: @escaping (_ result: Result<Data, HTTPError>) -> Void) {
         let apiType: APIType = .gameData
-        let urlStr = getBaseURL(region: region, apiType: apiType) + "/era/\(eraID)/leaderboard/\(leaderboard)"
+        let urlStr = getBaseURL(apiType: apiType) + "/era/\(eraID)/leaderboard/\(leaderboard)"
         self.callWebService(urlStr: urlStr, method: .get, apiType: apiType) { result in
             completion(result)
         }
@@ -152,9 +157,9 @@ public class WS_Diablo3: WebService {
      - parameter locale: The locale that should be reflected in localized data
      - parameter completion: Returns a Result with the Data if `success` or an HTTPError if `failure`
      */
-    func getActs(region: APIRegion, locale: APILocale, completion: @escaping (_ result: Result<Data, HTTPError>) -> Void) {
+    func getActs(completion: @escaping (_ result: Result<Data, HTTPError>) -> Void) {
         let apiType: APIType = .community
-        let urlStr = getBaseURL(region: region, apiType: apiType) + "/act"
+        let urlStr = getBaseURL(apiType: apiType) + "/act"
         
         self.callWebService(urlStr: urlStr, method: .get, apiType: apiType) { result in
             completion(result)
@@ -170,9 +175,9 @@ public class WS_Diablo3: WebService {
      - parameter locale: The locale that should be reflected in localized data
      - parameter completion: Returns a Result with the Data if `success` or an HTTPError if `failure`
      */
-    func getAct(id: Int, region: APIRegion, locale: APILocale, completion: @escaping (_ result: Result<Data, HTTPError>) -> Void) {
+    func getAct(id: Int, completion: @escaping (_ result: Result<Data, HTTPError>) -> Void) {
         let apiType: APIType = .community
-        let urlStr = getBaseURL(region: region, apiType: apiType) + "/act/\(id)"
+        let urlStr = getBaseURL(apiType: apiType) + "/act/\(id)"
         
         self.callWebService(urlStr: urlStr, method: .get, apiType: apiType) { result in
             completion(result)
@@ -191,10 +196,10 @@ public class WS_Diablo3: WebService {
      - parameter locale: The locale that should be reflected in localized data
      - parameter completion: Returns a Result with the Data if `success` or an HTTPError if `failure`
      */
-    func getArtisan(slug: String, region: APIRegion, locale: APILocale, completion: @escaping (_ result: Result<Data, HTTPError>) -> Void) {
+    func getArtisan(slug: String, completion: @escaping (_ result: Result<Data, HTTPError>) -> Void) {
         let apiType: APIType = .community
-        var urlStr = getBaseURL(region: region, apiType: apiType) + "/artisan/\(slug)"
-        urlStr = appendSharedURLParameters(to: urlStr, region: region, locale: locale)
+        var urlStr = getBaseURL(apiType: apiType) + "/artisan/\(slug)"
+        urlStr = appendSharedURLParameters(to: urlStr)
         
         self.callWebService(urlStr: urlStr, method: .get, apiType: apiType) { result in
             completion(result)
@@ -211,10 +216,10 @@ public class WS_Diablo3: WebService {
      - parameter locale: The locale that should be reflected in localized data
      - parameter completion: Returns a Result with the Data if `success` or an HTTPError if `failure`
      */
-    func getRecipe(recipeSlug: String, artisanSlug: String, region: APIRegion, locale: APILocale, completion: @escaping (_ result: Result<Data, HTTPError>) -> Void) {
+    func getRecipe(recipeSlug: String, artisanSlug: String, completion: @escaping (_ result: Result<Data, HTTPError>) -> Void) {
         let apiType: APIType = .community
-        var urlStr = getBaseURL(region: region, apiType: apiType) + "/artisan/\(artisanSlug)/recipe/\(recipeSlug)"
-        urlStr = appendSharedURLParameters(to: urlStr, region: region, locale: locale)
+        var urlStr = getBaseURL(apiType: apiType) + "/artisan/\(artisanSlug)/recipe/\(recipeSlug)"
+        urlStr = appendSharedURLParameters(to: urlStr)
         
         self.callWebService(urlStr: urlStr, method: .get, apiType: apiType) { result in
             completion(result)
@@ -233,10 +238,10 @@ public class WS_Diablo3: WebService {
      - parameter locale: The locale that should be reflected in localized data
      - parameter completion: Returns a Result with the Data if `success` or an HTTPError if `failure`
      */
-    func getFollower(slug: String, region: APIRegion, locale: APILocale, completion: @escaping (_ result: Result<Data, HTTPError>) -> Void) {
+    func getFollower(slug: String, completion: @escaping (_ result: Result<Data, HTTPError>) -> Void) {
         let apiType: APIType = .community
-        var urlStr = getBaseURL(region: region, apiType: apiType) + "/follower/\(slug)"
-        urlStr = appendSharedURLParameters(to: urlStr, region: region, locale: locale)
+        var urlStr = getBaseURL(apiType: apiType) + "/follower/\(slug)"
+        urlStr = appendSharedURLParameters(to: urlStr)
         
         self.callWebService(urlStr: urlStr, method: .get, apiType: apiType) { result in
             completion(result)
@@ -255,10 +260,10 @@ public class WS_Diablo3: WebService {
      - parameter locale: The locale that should be reflected in localized data
      - parameter completion: Returns a Result with the Data if `success` or an HTTPError if `failure`
      */
-    func getClass(slug: String, region: APIRegion, locale: APILocale, completion: @escaping (_ result: Result<Data, HTTPError>) -> Void) {
+    func getClass(slug: String, completion: @escaping (_ result: Result<Data, HTTPError>) -> Void) {
         let apiType: APIType = .community
-        var urlStr = getBaseURL(region: region, apiType: apiType) + "/hero/\(slug)"
-        urlStr = appendSharedURLParameters(to: urlStr, region: region, locale: locale)
+        var urlStr = getBaseURL(apiType: apiType) + "/hero/\(slug)"
+        urlStr = appendSharedURLParameters(to: urlStr)
         
         self.callWebService(urlStr: urlStr, method: .get, apiType: apiType) { result in
             completion(result)
@@ -275,10 +280,10 @@ public class WS_Diablo3: WebService {
      - parameter locale: The locale that should be reflected in localized data
      - parameter completion: Returns a Result with the Data if `success` or an HTTPError if `failure`
      */
-    func getSkill(skillSlug: String, classSlug: String, region: APIRegion, locale: APILocale, completion: @escaping (_ result: Result<Data, HTTPError>) -> Void) {
+    func getSkill(skillSlug: String, classSlug: String, completion: @escaping (_ result: Result<Data, HTTPError>) -> Void) {
         let apiType: APIType = .community
-        var urlStr = getBaseURL(region: region, apiType: apiType) + "/hero/\(classSlug)/skill/\(skillSlug)"
-        urlStr = appendSharedURLParameters(to: urlStr, region: region, locale: locale)
+        var urlStr = getBaseURL(apiType: apiType) + "/hero/\(classSlug)/skill/\(skillSlug)"
+        urlStr = appendSharedURLParameters(to: urlStr)
         
         self.callWebService(urlStr: urlStr, method: .get, apiType: apiType) { result in
             completion(result)
@@ -296,10 +301,10 @@ public class WS_Diablo3: WebService {
      - parameter locale: The locale that should be reflected in localized data
      - parameter completion: Returns a Result with the Data if `success` or an HTTPError if `failure`
      */
-    func getItemTypes(region: APIRegion, locale: APILocale, completion: @escaping (_ result: Result<Data, HTTPError>) -> Void) {
+    func getItemTypes(completion: @escaping (_ result: Result<Data, HTTPError>) -> Void) {
         let apiType: APIType = .community
-        var urlStr = getBaseURL(region: region, apiType: apiType) + "/item-type"
-        urlStr = appendSharedURLParameters(to: urlStr, region: region, locale: locale)
+        var urlStr = getBaseURL(apiType: apiType) + "/item-type"
+        urlStr = appendSharedURLParameters(to: urlStr)
         
         self.callWebService(urlStr: urlStr, method: .get, apiType: apiType) { result in
             completion(result)
@@ -315,10 +320,10 @@ public class WS_Diablo3: WebService {
      - parameter locale: The locale that should be reflected in localized data
      - parameter completion: Returns a Result with the Data if `success` or an HTTPError if `failure`
      */
-    func getItemsByType(typeSlug: String, region: APIRegion, locale: APILocale, completion: @escaping (_ result: Result<Data, HTTPError>) -> Void) {
+    func getItemsByType(typeSlug: String, completion: @escaping (_ result: Result<Data, HTTPError>) -> Void) {
         let apiType: APIType = .community
-        var urlStr = getBaseURL(region: region, apiType: apiType) + "/item-type/\(typeSlug)"
-        urlStr = appendSharedURLParameters(to: urlStr, region: region, locale: locale)
+        var urlStr = getBaseURL(apiType: apiType) + "/item-type/\(typeSlug)"
+        urlStr = appendSharedURLParameters(to: urlStr)
         
         self.callWebService(urlStr: urlStr, method: .get, apiType: apiType) { result in
             completion(result)
@@ -337,10 +342,10 @@ public class WS_Diablo3: WebService {
      - parameter locale: The locale that should be reflected in localized data
      - parameter completion: Returns a Result with the Data if `success` or an HTTPError if `failure`
      */
-    func getItem(itemSlugAndID: String, region: APIRegion, locale: APILocale, completion: @escaping (_ result: Result<Data, HTTPError>) -> Void) {
+    func getItem(itemSlugAndID: String, completion: @escaping (_ result: Result<Data, HTTPError>) -> Void) {
         let apiType: APIType = .community
-        var urlStr = getBaseURL(region: region, apiType: apiType) + "/item/\(itemSlugAndID)"
-        urlStr = appendSharedURLParameters(to: urlStr, region: region, locale: locale)
+        var urlStr = getBaseURL(apiType: apiType) + "/item/\(itemSlugAndID)"
+        urlStr = appendSharedURLParameters(to: urlStr)
         
         self.callWebService(urlStr: urlStr, method: .get, apiType: apiType) { result in
             completion(result)
@@ -359,10 +364,10 @@ public class WS_Diablo3: WebService {
      - parameter locale: The locale that should be reflected in localized data
      - parameter completion: Returns a Result with the Data if `success` or an HTTPError if `failure`
     */
-    func getProfile(battleTag: String, region: APIRegion, locale: APILocale, completion: @escaping (_ result: Result<Data, HTTPError>) -> Void) {
+    func getProfile(battleTag: String, completion: @escaping (_ result: Result<Data, HTTPError>) -> Void) {
         let apiType: APIType = .profile
-        var urlStr = getBaseURL(region: region, apiType: apiType) + "/\(battleTag)/"
-        urlStr = appendSharedURLParameters(to: urlStr, region: region, locale: locale)
+        var urlStr = getBaseURL(apiType: apiType) + "/\(battleTag)/"
+        urlStr = appendSharedURLParameters(to: urlStr)
         
         self.callWebService(urlStr: urlStr, method: .get, apiType: apiType) { result in
             completion(result)
@@ -379,10 +384,10 @@ public class WS_Diablo3: WebService {
      - parameter locale: The locale that should be reflected in localized data
      - parameter completion: Returns a Result with the Data if `success` or an HTTPError if `failure`
      */
-    func getHero(heroID: Int, battleTag: String, region: APIRegion, locale: APILocale, completion: @escaping (_ result: Result<Data, HTTPError>) -> Void) {
+    func getHero(heroID: Int, battleTag: String, completion: @escaping (_ result: Result<Data, HTTPError>) -> Void) {
         let apiType: APIType = .profile
-        var urlStr = getBaseURL(region: region, apiType: apiType) + "/\(battleTag)/hero/\(heroID)"
-        urlStr = appendSharedURLParameters(to: urlStr, region: region, locale: locale)
+        var urlStr = getBaseURL(apiType: apiType) + "/\(battleTag)/hero/\(heroID)"
+        urlStr = appendSharedURLParameters(to: urlStr)
         
         self.callWebService(urlStr: urlStr, method: .get, apiType: apiType) { result in
             completion(result)
@@ -399,10 +404,10 @@ public class WS_Diablo3: WebService {
      - parameter locale: The locale that should be reflected in localized data
      - parameter completion: Returns a Result with the Data if `success` or an HTTPError if `failure`
      */
-    func getItemsForHero(heroID: Int, battleTag: String, region: APIRegion, locale: APILocale, completion: @escaping (_ result: Result<Data, HTTPError>) -> Void) {
+    func getItemsForHero(heroID: Int, battleTag: String, completion: @escaping (_ result: Result<Data, HTTPError>) -> Void) {
         let apiType: APIType = .profile
-        var urlStr = getBaseURL(region: region, apiType: apiType) + "/\(battleTag)/hero/\(heroID)/items"
-        urlStr = appendSharedURLParameters(to: urlStr, region: region, locale: locale)
+        var urlStr = getBaseURL(apiType: apiType) + "/\(battleTag)/hero/\(heroID)/items"
+        urlStr = appendSharedURLParameters(to: urlStr)
         
         self.callWebService(urlStr: urlStr, method: .get, apiType: apiType) { result in
             completion(result)
@@ -419,10 +424,10 @@ public class WS_Diablo3: WebService {
      - parameter locale: The locale that should be reflected in localized data
      - parameter completion: Returns a Result with the Data if `success` or an HTTPError if `failure`
      */
-    func getFollowerItemsForHero(heroID: Int, battleTag: String, region: APIRegion, locale: APILocale, completion: @escaping (_ result: Result<Data, HTTPError>) -> Void) {
+    func getFollowerItemsForHero(heroID: Int, battleTag: String, completion: @escaping (_ result: Result<Data, HTTPError>) -> Void) {
         let apiType: APIType = .profile
-        var urlStr = getBaseURL(region: region, apiType: apiType) + "/\(battleTag)/hero/\(heroID)/follower-items"
-        urlStr = appendSharedURLParameters(to: urlStr, region: region, locale: locale)
+        var urlStr = getBaseURL(apiType: apiType) + "/\(battleTag)/hero/\(heroID)/follower-items"
+        urlStr = appendSharedURLParameters(to: urlStr)
         
         self.callWebService(urlStr: urlStr, method: .get, apiType: apiType) { result in
             completion(result)

@@ -9,12 +9,14 @@
 import Foundation
 
 
-public class WS_Authentication: WebService {
+public struct WS_Authentication: WebService {
     private let network = Network.shared
     
+    var region: APIRegion
+    var locale: APILocale?
     
     
-    func getBaseURL(region: APIRegion, apiType: APIType?) -> String {
+    func getBaseURL(apiType: APIType?) -> String {
         return region.oauthURI
     }
     
@@ -180,7 +182,7 @@ public class WS_Authentication: WebService {
         let state = "BattleNetAPI\(Int(Date().timeIntervalSince1970))"
         UserDefaults.standard.set(state, forKey: "state")
         
-        let baseURL = getBaseURL(region: region, apiType: nil) + "/authorize"
+        let baseURL = getBaseURL(apiType: nil) + "/authorize"
         let urlStr = String(format: "\(baseURL)?client_id=%@&scope=%@&state=%@&redirect_uri=%@&response_type=code", clientID, scope.scopeValue, state, redirectURL)
         
         if let encodedURLStr = urlStr.addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed) {

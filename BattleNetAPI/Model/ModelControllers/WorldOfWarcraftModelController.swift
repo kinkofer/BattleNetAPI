@@ -9,14 +9,22 @@
 import Foundation
 
 
-public class WorldOfWarcraftModelController {
-    public static let shared = WorldOfWarcraftModelController()
-    private init() { }
+public struct WorldOfWarcraftModelController {
+    let battleNetAPI: BattleNetAPI
+    
+    var region: APIRegion
+    var locale: APILocale?
+    
+    public init(region: APIRegion, locale: APILocale?) {
+        self.battleNetAPI = BattleNetAPI(region: .us, locale: .en_US)
+        self.region = region
+        self.locale = locale
+    }
     
     
     /// Calls a web service identicated by the href in a Link object.
     public func getResource<T: Decodable>(from resourceLink: Link<T>, completion: @escaping (_ result: Result<T, HTTPError>) -> Void) {
-        BattleNetAPI.wow.getResource(from: resourceLink.href) { result in
+        battleNetAPI.wow.getResource(from: resourceLink.href) { result in
             result.decode(completion: completion)
         }
     }
@@ -25,8 +33,8 @@ public class WorldOfWarcraftModelController {
     
     // MARK: - Profile API
     
-    public func getCharacters(region: APIRegion = Current.region, completion: @escaping (_ result: Result<[WOWCharacter], HTTPError>) -> Void) {
-        BattleNetAPI.wow.getCharacters(region: region) { result in
+    public func getCharacters(completion: @escaping (_ result: Result<[WOWCharacter], HTTPError>) -> Void) {
+        battleNetAPI.wow.getCharacters(region: region) { result in
             let customDecode: ((_ data: Data) throws -> [WOWCharacter]) = { data in
                 return try WOWCharacterResult.decode(from: data).characters
             }
@@ -37,15 +45,15 @@ public class WorldOfWarcraftModelController {
     
     // MARK: - WoW Mythic Keystone Character Profile API
     
-    public func getMythicKeystoneProfile(characterName: String, realmSlug: String, region: APIRegion = Current.region, locale: APILocale = Current.locale, completion: @escaping (_ result: Result<MythicKeystoneProfile, HTTPError>) -> Void) {
-        BattleNetAPI.wow.getMythicKeystoneProfile(characterName: characterName, realmSlug: realmSlug, region: region, locale: locale) { result in
+    public func getMythicKeystoneProfile(characterName: String, realmSlug: String, completion: @escaping (_ result: Result<MythicKeystoneProfile, HTTPError>) -> Void) {
+        battleNetAPI.wow.getMythicKeystoneProfile(characterName: characterName, realmSlug: realmSlug) { result in
             result.decode(completion: completion)
         }
     }
     
     
-    public func getMythicKeystoneProfileSeason(seasonID: Int, characterName: String, realmSlug: String, region: APIRegion = Current.region, locale: APILocale = Current.locale, completion: @escaping (_ result: Result<MythicKeystoneProfileSeason, HTTPError>) -> Void) {
-        BattleNetAPI.wow.getMythicKeystoneProfileSeason(seasonID: seasonID, characterName: characterName, realmSlug: realmSlug, region: region, locale: locale) { result in
+    public func getMythicKeystoneProfileSeason(seasonID: Int, characterName: String, realmSlug: String, completion: @escaping (_ result: Result<MythicKeystoneProfileSeason, HTTPError>) -> Void) {
+        battleNetAPI.wow.getMythicKeystoneProfileSeason(seasonID: seasonID, characterName: characterName, realmSlug: realmSlug) { result in
             result.decode(completion: completion)
         }
     }
@@ -54,8 +62,8 @@ public class WorldOfWarcraftModelController {
     
     // MARK: - Connected Realm API
     
-    public func getConnectedRealmIndex(region: APIRegion = Current.region, locale: APILocale? = Current.locale, completion: @escaping (_ result: Result<[Link<ConnectedRealm>], HTTPError>) -> Void) {
-        BattleNetAPI.wow.getConnectedRealmIndex(region: region, locale: locale) { result in
+    public func getConnectedRealmIndex(completion: @escaping (_ result: Result<[Link<ConnectedRealm>], HTTPError>) -> Void) {
+        battleNetAPI.wow.getConnectedRealmIndex { result in
             let customDecode: ((_ data: Data) throws -> [Link<ConnectedRealm>]) = { data in
                 return try ConnectedRealmIndex.decode(from: data).connectedRealms
             }
@@ -64,8 +72,8 @@ public class WorldOfWarcraftModelController {
     }
     
     
-    public func getConnectedRealm(id: Int, region: APIRegion = Current.region, locale: APILocale? = Current.locale, completion: @escaping (_ result: Result<ConnectedRealm, HTTPError>) -> Void) {
-        BattleNetAPI.wow.getConnectedRealm(id: id, region: region, locale: locale) { result in
+    public func getConnectedRealm(id: Int, completion: @escaping (_ result: Result<ConnectedRealm, HTTPError>) -> Void) {
+        battleNetAPI.wow.getConnectedRealm(id: id) { result in
             result.decode(completion: completion)
         }
     }
@@ -74,15 +82,15 @@ public class WorldOfWarcraftModelController {
     
     // MARK: - Mythic Keystone Affix API
     
-    public func getMythicKeystoneAffixes(region: APIRegion = Current.region, locale: APILocale? = Current.locale, completion: @escaping (_ result: Result<KeystoneAffixIndex, HTTPError>) -> Void) {
-        BattleNetAPI.wow.getMythicKeystoneAffixes(region: region, locale: locale) { result in
+    public func getMythicKeystoneAffixes(completion: @escaping (_ result: Result<KeystoneAffixIndex, HTTPError>) -> Void) {
+        battleNetAPI.wow.getMythicKeystoneAffixes { result in
             result.decode(completion: completion)
         }
     }
     
     
-    public func getMythicKeystoneAffix(id: Int, region: APIRegion = Current.region, locale: APILocale? = Current.locale, completion: @escaping (_ result: Result<KeystoneAffix, HTTPError>) -> Void) {
-        BattleNetAPI.wow.getMythicKeystoneAffix(id: id, region: region, locale: locale) { result in
+    public func getMythicKeystoneAffix(id: Int, completion: @escaping (_ result: Result<KeystoneAffix, HTTPError>) -> Void) {
+        battleNetAPI.wow.getMythicKeystoneAffix(id: id) { result in
             result.decode(completion: completion)
         }
     }
@@ -90,8 +98,8 @@ public class WorldOfWarcraftModelController {
     
     // MARK: - Mythic Raid Leaderboard API
     
-    public func getMythicRaidLeaderboard(raid: String, faction: FactionType, region: APIRegion = Current.region, locale: APILocale? = Current.locale, completion: @escaping (_ result: Result<MythicRaidLeaderboard, HTTPError>) -> Void) {
-        BattleNetAPI.wow.getMythicRaidLeaderboard(raid: raid, faction: faction, region: region, locale: locale) { result in
+    public func getMythicRaidLeaderboard(raid: String, faction: FactionType, completion: @escaping (_ result: Result<MythicRaidLeaderboard, HTTPError>) -> Void) {
+        battleNetAPI.wow.getMythicRaidLeaderboard(raid: raid, faction: faction) { result in
             result.decode(completion: completion)
         }
     }
@@ -99,50 +107,50 @@ public class WorldOfWarcraftModelController {
     
     // MARK: - Mythic Keystone Dungeon API
     
-    public func getMythicKeystoneDungeons(region: APIRegion = Current.region, locale: APILocale? = Current.locale, completion: @escaping (_ result: Result<MythicKeystoneDungeonIndex, HTTPError>) -> Void) {
-        BattleNetAPI.wow.getMythicKeystoneDungeons(region: region, locale: locale) { result in
+    public func getMythicKeystoneDungeons(completion: @escaping (_ result: Result<MythicKeystoneDungeonIndex, HTTPError>) -> Void) {
+        battleNetAPI.wow.getMythicKeystoneDungeons { result in
             result.decode(completion: completion)
         }
     }
     
     
-    public func getMythicKeystoneDungeon(id: Int, region: APIRegion = Current.region, locale: APILocale? = Current.locale, completion: @escaping (_ result: Result<MythicKeystoneDungeon, HTTPError>) -> Void) {
-        BattleNetAPI.wow.getMythicKeystoneDungeon(id: id, region: region, locale: locale) { result in
+    public func getMythicKeystoneDungeon(id: Int, completion: @escaping (_ result: Result<MythicKeystoneDungeon, HTTPError>) -> Void) {
+        battleNetAPI.wow.getMythicKeystoneDungeon(id: id) { result in
             result.decode(completion: completion)
         }
     }
     
     
-    public func getMythicKeystones(region: APIRegion = Current.region, locale: APILocale? = Current.locale, completion: @escaping (_ result: Result<MythicKeystoneIndex, HTTPError>) -> Void) {
-        BattleNetAPI.wow.getMythicKeystones(region: region, locale: locale) { result in
+    public func getMythicKeystones(completion: @escaping (_ result: Result<MythicKeystoneIndex, HTTPError>) -> Void) {
+        battleNetAPI.wow.getMythicKeystones { result in
             result.decode(completion: completion)
         }
     }
     
     
-    public func getMythicKeystonePeriods(region: APIRegion = Current.region, locale: APILocale? = Current.locale, completion: @escaping (_ result: Result<MythicKeystonePeriodIndex, HTTPError>) -> Void) {
-        BattleNetAPI.wow.getMythicKeystonePeriods(region: region, locale: locale) { result in
+    public func getMythicKeystonePeriods(completion: @escaping (_ result: Result<MythicKeystonePeriodIndex, HTTPError>) -> Void) {
+        battleNetAPI.wow.getMythicKeystonePeriods { result in
             result.decode(completion: completion)
         }
     }
     
     
-    public func getMythicKeystonePeriod(id: Int, region: APIRegion = Current.region, locale: APILocale? = Current.locale, completion: @escaping (_ result: Result<MythicKeystonePeriod, HTTPError>) -> Void) {
-        BattleNetAPI.wow.getMythicKeystonePeriod(id: id, region: region, locale: locale) { result in
+    public func getMythicKeystonePeriod(id: Int, completion: @escaping (_ result: Result<MythicKeystonePeriod, HTTPError>) -> Void) {
+        battleNetAPI.wow.getMythicKeystonePeriod(id: id) { result in
             result.decode(completion: completion)
         }
     }
     
     
-    public func getMythicKeystoneSeasons(region: APIRegion = Current.region, locale: APILocale? = Current.locale, completion: @escaping (_ result: Result<MythicKeystoneSeasonIndex, HTTPError>) -> Void) {
-        BattleNetAPI.wow.getMythicKeystoneSeasons(region: region, locale: locale) { result in
+    public func getMythicKeystoneSeasons(completion: @escaping (_ result: Result<MythicKeystoneSeasonIndex, HTTPError>) -> Void) {
+        battleNetAPI.wow.getMythicKeystoneSeasons { result in
             result.decode(completion: completion)
         }
     }
     
     
-    public func getMythicKeystoneSeason(id: Int, region: APIRegion = Current.region, locale: APILocale? = Current.locale, completion: @escaping (_ result: Result<MythicKeystoneSeason, HTTPError>) -> Void) {
-        BattleNetAPI.wow.getMythicKeystoneSeason(id: id, region: region, locale: locale) { result in
+    public func getMythicKeystoneSeason(id: Int, completion: @escaping (_ result: Result<MythicKeystoneSeason, HTTPError>) -> Void) {
+        battleNetAPI.wow.getMythicKeystoneSeason(id: id) { result in
             result.decode(completion: completion)
         }
     }
@@ -150,15 +158,15 @@ public class WorldOfWarcraftModelController {
     
     // MARK: - Mythic Keystone Leaderboard API
     
-    public func getMythicLeaderboards(connectedRealmID: Int, region: APIRegion = Current.region, locale: APILocale? = Current.locale, completion: @escaping (_ result: Result<MythicLeaderboardIndex, HTTPError>) -> Void) {
-        BattleNetAPI.wow.getMythicLeaderboards(connectedRealmID: connectedRealmID, region: region, locale: locale) { result in
+    public func getMythicLeaderboards(connectedRealmID: Int, completion: @escaping (_ result: Result<MythicLeaderboardIndex, HTTPError>) -> Void) {
+        battleNetAPI.wow.getMythicLeaderboards(connectedRealmID: connectedRealmID) { result in
             result.decode(completion: completion)
         }
     }
     
     
-    public func getMythicLeaderboard(connectedRealmID: Int, dungeonID: Int, period: Int, region: APIRegion = Current.region, locale: APILocale? = Current.locale, completion: @escaping (_ result: Result<MythicLeaderboard, HTTPError>) -> Void) {
-        BattleNetAPI.wow.getMythicLeaderboard(connectedRealmID: connectedRealmID, dungeonID: dungeonID, period: period, region: region, locale: locale) { result in
+    public func getMythicLeaderboard(connectedRealmID: Int, dungeonID: Int, period: Int, completion: @escaping (_ result: Result<MythicLeaderboard, HTTPError>) -> Void) {
+        battleNetAPI.wow.getMythicLeaderboard(connectedRealmID: connectedRealmID, dungeonID: dungeonID, period: period) { result in
             result.decode(completion: completion)
         }
     }
@@ -167,8 +175,8 @@ public class WorldOfWarcraftModelController {
     
     // MARK: - Mythic Challenge Mode API
     
-    public func getMythicChallengeMode(region: APIRegion = Current.region, locale: APILocale? = Current.locale, completion: @escaping (_ result: Result<MythicChallengeMode, HTTPError>) -> Void) {
-        BattleNetAPI.wow.getMythicChallengeMode(region: region, locale: locale) { result in
+    public func getMythicChallengeMode(completion: @escaping (_ result: Result<MythicChallengeMode, HTTPError>) -> Void) {
+        battleNetAPI.wow.getMythicChallengeMode { result in
             result.decode(completion: completion)
         }
     }
@@ -177,22 +185,22 @@ public class WorldOfWarcraftModelController {
     
     // MARK: - Playable Class API
     
-    public func getPlayableClasses(region: APIRegion = Current.region, locale: APILocale? = Current.locale, completion: @escaping (_ result: Result<WOWClassIndex, HTTPError>) -> Void) {
-        BattleNetAPI.wow.getPlayableClasses(region: region, locale: locale) { result in
+    public func getPlayableClasses(completion: @escaping (_ result: Result<WOWClassIndex, HTTPError>) -> Void) {
+        battleNetAPI.wow.getPlayableClasses { result in
             result.decode(completion: completion)
         }
     }
     
     
-    public func getPlayableClass(id: Int, region: APIRegion = Current.region, locale: APILocale? = Current.locale, completion: @escaping (_ result: Result<WOWClass, HTTPError>) -> Void) {
-        BattleNetAPI.wow.getPlayableClass(id: id, region: region, locale: locale) { result in
+    public func getPlayableClass(id: Int, completion: @escaping (_ result: Result<WOWClass, HTTPError>) -> Void) {
+        battleNetAPI.wow.getPlayableClass(id: id) { result in
             result.decode(completion: completion)
         }
     }
     
     
-    public func getPlayableClassPvPTalentSlots(id: Int, region: APIRegion = Current.region, locale: APILocale? = Current.locale, completion: @escaping (_ result: Result<PVPTalentSlots, HTTPError>) -> Void) {
-        BattleNetAPI.wow.getPlayableClassPvPTalentSlots(id: id, region: region, locale: locale) { result in
+    public func getPlayableClassPvPTalentSlots(id: Int, completion: @escaping (_ result: Result<PVPTalentSlots, HTTPError>) -> Void) {
+        battleNetAPI.wow.getPlayableClassPvPTalentSlots(id: id) { result in
             result.decode(completion: completion)
         }
     }
@@ -201,15 +209,15 @@ public class WorldOfWarcraftModelController {
     
     // MARK: - Playable Specialization API
     
-    public func getPlayableSpecializations(region: APIRegion = Current.region, locale: APILocale? = Current.locale, completion: @escaping (_ result: Result<SpecializationIndex, HTTPError>) -> Void) {
-        BattleNetAPI.wow.getPlayableSpecializations(region: region, locale: locale) { result in
+    public func getPlayableSpecializations(completion: @escaping (_ result: Result<SpecializationIndex, HTTPError>) -> Void) {
+        battleNetAPI.wow.getPlayableSpecializations { result in
             result.decode(completion: completion)
         }
     }
     
     
-    public func getPlayableSpecialization(id: Int, region: APIRegion = Current.region, locale: APILocale? = Current.locale, completion: @escaping (_ result: Result<Specialization, HTTPError>) -> Void) {
-        BattleNetAPI.wow.getPlayableSpecialization(id: id, region: region, locale: locale) { result in
+    public func getPlayableSpecialization(id: Int, completion: @escaping (_ result: Result<Specialization, HTTPError>) -> Void) {
+        battleNetAPI.wow.getPlayableSpecialization(id: id) { result in
             result.decode(completion: completion)
         }
     }
@@ -218,15 +226,15 @@ public class WorldOfWarcraftModelController {
     
     // MARK: - Power Type API
     
-    public func getPowerTypes(region: APIRegion = Current.region, locale: APILocale? = Current.locale, completion: @escaping (_ result: Result<PowerTypeIndex, HTTPError>) -> Void) {
-        BattleNetAPI.wow.getPowerTypes(region: region, locale: locale) { result in
+    public func getPowerTypes(completion: @escaping (_ result: Result<PowerTypeIndex, HTTPError>) -> Void) {
+        battleNetAPI.wow.getPowerTypes { result in
             result.decode(completion: completion)
         }
     }
     
     
-    public func getPowerType(id: Int, region: APIRegion = Current.region, locale: APILocale? = Current.locale, completion: @escaping (_ result: Result<PowerType, HTTPError>) -> Void) {
-        BattleNetAPI.wow.getPowerType(id: id, region: region, locale: locale) { result in
+    public func getPowerType(id: Int, completion: @escaping (_ result: Result<PowerType, HTTPError>) -> Void) {
+        battleNetAPI.wow.getPowerType(id: id) { result in
             result.decode(completion: completion)
         }
     }
@@ -234,15 +242,15 @@ public class WorldOfWarcraftModelController {
     
     // MARK: - Playable Race API
     
-    public func getPlayableRaces(region: APIRegion = Current.region, locale: APILocale? = Current.locale, completion: @escaping (_ result: Result<WOWRaceIndex, HTTPError>) -> Void) {
-        BattleNetAPI.wow.getPlayableRaces(region: region, locale: locale) { result in
+    public func getPlayableRaces(completion: @escaping (_ result: Result<WOWRaceIndex, HTTPError>) -> Void) {
+        battleNetAPI.wow.getPlayableRaces { result in
             result.decode(completion: completion)
         }
     }
     
     
-    public func getPlayableRace(id: Int, region: APIRegion = Current.region, locale: APILocale? = Current.locale, completion: @escaping (_ result: Result<WOWRace, HTTPError>) -> Void) {
-        BattleNetAPI.wow.getPlayableRace(id: id, region: region, locale: locale) { result in
+    public func getPlayableRace(id: Int, completion: @escaping (_ result: Result<WOWRace, HTTPError>) -> Void) {
+        battleNetAPI.wow.getPlayableRace(id: id) { result in
             result.decode(completion: completion)
         }
     }
@@ -251,8 +259,8 @@ public class WorldOfWarcraftModelController {
     
     // MARK: - Realm API
     
-    public func getRealmIndex(region: APIRegion = Current.region, locale: APILocale? = Current.locale, completion: @escaping (_ result: Result<[RealmIndex], HTTPError>) -> Void) {
-        BattleNetAPI.wow.getRealmIndex(region: region, locale: locale) { result in
+    public func getRealmIndex(completion: @escaping (_ result: Result<[RealmIndex], HTTPError>) -> Void) {
+        battleNetAPI.wow.getRealmIndex { result in
             let customDecode: ((_ data: Data) throws -> [RealmIndex]) = { data in
                 return try RealmIndexResult.decode(from: data).realms
             }
@@ -261,7 +269,7 @@ public class WorldOfWarcraftModelController {
     }
     
     
-    public func getRealm(id: Int? = nil, slug: String? = nil, region: APIRegion = Current.region, locale: APILocale? = Current.locale, completion: @escaping (_ result: Result<Realm, HTTPError>) -> Void) {
+    public func getRealm(id: Int? = nil, slug: String? = nil, completion: @escaping (_ result: Result<Realm, HTTPError>) -> Void) {
         guard (id != nil || slug != nil) else {
             completion(.failure(HTTPError.unexpectedBody))
             return
@@ -276,7 +284,7 @@ public class WorldOfWarcraftModelController {
             realmSlug = slug!
         }
         
-        BattleNetAPI.wow.getRealm(realmSlug, region: region, locale: locale) { result in
+        battleNetAPI.wow.getRealm(realmSlug) { result in
             result.decode(completion: completion)
         }
     }
@@ -285,8 +293,8 @@ public class WorldOfWarcraftModelController {
     
     // MARK: - Region API
     
-    public func getRegionIndex(region: APIRegion = Current.region, locale: APILocale? = Current.locale, completion: @escaping (_ result: Result<[Link<Region>], HTTPError>) -> Void) {
-        BattleNetAPI.wow.getRegionIndex(region: region, locale: locale) { result in
+    public func getRegionIndex(completion: @escaping (_ result: Result<[Link<Region>], HTTPError>) -> Void) {
+        battleNetAPI.wow.getRegionIndex { result in
             let customDecode: ((_ data: Data) throws -> [Link<Region>]) = { data in
                 return try RegionIndexResult.decode(from: data).regions
             }
@@ -295,8 +303,8 @@ public class WorldOfWarcraftModelController {
     }
     
     
-    public func getRegion(id: Int, region: APIRegion = Current.region, locale: APILocale? = Current.locale, completion: @escaping (_ result: Result<Region, HTTPError>) -> Void) {
-        BattleNetAPI.wow.getRegion(id: id, region: region, locale: locale) { result in
+    public func getRegion(id: Int, completion: @escaping (_ result: Result<Region, HTTPError>) -> Void) {
+        battleNetAPI.wow.getRegion(id: id) { result in
             result.decode(completion: completion)
         }
     }
@@ -305,8 +313,8 @@ public class WorldOfWarcraftModelController {
     
     // MARK: - Token API
     
-    public func getTokenIndex(region: APIRegion = Current.region, locale: APILocale? = Current.locale, completion: @escaping (_ result: Result<TokenIndex, HTTPError>) -> Void) {
-        BattleNetAPI.wow.getTokenIndex(region: region, locale: locale) { result in
+    public func getTokenIndex(completion: @escaping (_ result: Result<TokenIndex, HTTPError>) -> Void) {
+        battleNetAPI.wow.getTokenIndex { result in
             result.decode(completion: completion)
         }
     }
@@ -315,8 +323,8 @@ public class WorldOfWarcraftModelController {
     
     // MARK: - Achievement API
     
-    public func getAchievement(id: Int, region: APIRegion = Current.region, locale: APILocale = Current.locale, completion: @escaping (_ result: Result<WOWAchievement, HTTPError>) -> Void) {
-        BattleNetAPI.wow.getAchievement(id: id, region: region, locale: locale) { result in
+    public func getAchievement(id: Int, completion: @escaping (_ result: Result<WOWAchievement, HTTPError>) -> Void) {
+        battleNetAPI.wow.getAchievement(id: id) { result in
             result.decode(completion: completion)
         }
     }
@@ -325,8 +333,8 @@ public class WorldOfWarcraftModelController {
     
     // MARK: - Auction API
     
-    public func getAuctions(realm: String, region: APIRegion = Current.region, locale: APILocale = Current.locale, completion: @escaping (_ result: Result<Auction, HTTPError>) -> Void) {
-        BattleNetAPI.wow.getAuctions(realm: realm, region: region, locale: locale) { result in
+    public func getAuctions(realm: String, completion: @escaping (_ result: Result<Auction, HTTPError>) -> Void) {
+        battleNetAPI.wow.getAuctions(realm: realm) { result in
             result.decode(completion: completion)
         }
     }
@@ -335,8 +343,8 @@ public class WorldOfWarcraftModelController {
     
     // MARK: - Boss API
     
-    public func getBosses(region: APIRegion = Current.region, locale: APILocale = Current.locale, completion: @escaping (_ result: Result<[Boss], HTTPError>) -> Void) {
-        BattleNetAPI.wow.getBosses(region: region, locale: locale) { result in
+    public func getBosses(completion: @escaping (_ result: Result<[Boss], HTTPError>) -> Void) {
+        battleNetAPI.wow.getBosses { result in
             let customDecode: ((_ data: Data) throws -> [Boss]) = { data in
                 return try BossIndex.decode(from: data).bosses
             }
@@ -345,8 +353,8 @@ public class WorldOfWarcraftModelController {
     }
     
     
-    public func getBoss(id: Int, region: APIRegion = Current.region, locale: APILocale = Current.locale, completion: @escaping (_ result: Result<Boss, HTTPError>) -> Void) {
-        BattleNetAPI.wow.getBoss(id: id, region: region, locale: locale) { result in
+    public func getBoss(id: Int, completion: @escaping (_ result: Result<Boss, HTTPError>) -> Void) {
+        battleNetAPI.wow.getBoss(id: id) { result in
             result.decode(completion: completion)
         }
     }
@@ -355,8 +363,8 @@ public class WorldOfWarcraftModelController {
     
     // MARK: - Challenge Mode API
     
-    public func getChallengeLeaderboards(realm: String, region: APIRegion = Current.region, locale: APILocale = Current.locale, completion: @escaping (_ result: Result<[Challenge], HTTPError>) -> Void) {
-        BattleNetAPI.wow.getChallengeLeaderboards(realm: realm, region: region, locale: locale) { result in
+    public func getChallengeLeaderboards(realm: String, completion: @escaping (_ result: Result<[Challenge], HTTPError>) -> Void) {
+        battleNetAPI.wow.getChallengeLeaderboards(realm: realm) { result in
             let customDecode: ((_ data: Data) throws -> [Challenge]) = { data in
                 return try ChallengeIndex.decode(from: data).challenges
             }
@@ -365,8 +373,8 @@ public class WorldOfWarcraftModelController {
     }
     
     
-    public func getTopChallengeLeaderboards(region: APIRegion = Current.region, locale: APILocale = Current.locale, completion: @escaping (_ result: Result<[Challenge], HTTPError>) -> Void) {
-        BattleNetAPI.wow.getTopChallengeLeaderboards(region: region, locale: locale) { result in
+    public func getTopChallengeLeaderboards(completion: @escaping (_ result: Result<[Challenge], HTTPError>) -> Void) {
+        battleNetAPI.wow.getTopChallengeLeaderboards { result in
             let customDecode: ((_ data: Data) throws -> [Challenge]) = { data in
                 return try ChallengeIndex.decode(from: data).challenges
             }
@@ -378,8 +386,8 @@ public class WorldOfWarcraftModelController {
     
     // MARK: - Character Profile API
     
-    public func getCharacter(_ name: String, realm: String, fields: WOWCharacterField?, region: APIRegion = Current.region, locale: APILocale = Current.locale, completion: @escaping (_ result: Result<WOWCharacterProfile, HTTPError>) -> Void) {
-        BattleNetAPI.wow.getCharacter(name, realm: realm, fields: fields?.toArray, region: region, locale: locale) { result in
+    public func getCharacter(_ name: String, realm: String, fields: WOWCharacterField?, completion: @escaping (_ result: Result<WOWCharacterProfile, HTTPError>) -> Void) {
+        battleNetAPI.wow.getCharacter(name, realm: realm, fields: fields?.toArray) { result in
             result.decode(completion: completion)
         }
     }
@@ -388,8 +396,8 @@ public class WorldOfWarcraftModelController {
     
     // MARK: - Guild Profile API
     
-    public func getGuild(_ name: String, realm: String, fields: WOWGuildField?, region: APIRegion = Current.region, locale: APILocale = Current.locale, completion: @escaping (_ result: Result<WOWGuildProfile, HTTPError>) -> Void) {
-        BattleNetAPI.wow.getGuild(name, realm: realm, fields: fields?.toArray, region: region, locale: locale) { result in
+    public func getGuild(_ name: String, realm: String, fields: WOWGuildField?, completion: @escaping (_ result: Result<WOWGuildProfile, HTTPError>) -> Void) {
+        battleNetAPI.wow.getGuild(name, realm: realm, fields: fields?.toArray) { result in
             result.decode(completion: completion)
         }
     }
@@ -398,15 +406,15 @@ public class WorldOfWarcraftModelController {
     
     // MARK: - Item API
     
-    public func getItem(id: Int, region: APIRegion = Current.region, locale: APILocale = Current.locale, completion: @escaping (_ result: Result<WOWItem, HTTPError>) -> Void) {
-        BattleNetAPI.wow.getItem(id: id, region: region, locale: locale) { result in
+    public func getItem(id: Int, completion: @escaping (_ result: Result<WOWItem, HTTPError>) -> Void) {
+        battleNetAPI.wow.getItem(id: id) { result in
             result.decode(completion: completion)
         }
     }
     
     
-    public func getItemSet(setID: Int, region: APIRegion = Current.region, locale: APILocale = Current.locale, completion: @escaping (_ result: Result<WOWItemSet, HTTPError>) -> Void) {
-        BattleNetAPI.wow.getItemSet(setID: setID, region: region, locale: locale) { result in
+    public func getItemSet(setID: Int, completion: @escaping (_ result: Result<WOWItemSet, HTTPError>) -> Void) {
+        battleNetAPI.wow.getItemSet(setID: setID) { result in
             result.decode(completion: completion)
         }
     }
@@ -415,8 +423,8 @@ public class WorldOfWarcraftModelController {
     
     // MARK: - Mount API
     
-    public func getMounts(region: APIRegion = Current.region, locale: APILocale = Current.locale, completion: @escaping (_ result: Result<[Mount], HTTPError>) -> Void) {
-        BattleNetAPI.wow.getMounts(region: region, locale: locale) { result in
+    public func getMounts(completion: @escaping (_ result: Result<[Mount], HTTPError>) -> Void) {
+        battleNetAPI.wow.getMounts { result in
             let customDecode: ((_ data: Data) throws -> [Mount]) = { data in
                 return try MountIndex.decode(from: data).mounts
             }
@@ -428,8 +436,8 @@ public class WorldOfWarcraftModelController {
     
     // MARK: - Pet API
     
-    public func getPets(region: APIRegion = Current.region, locale: APILocale = Current.locale, completion: @escaping (_ result: Result<[Pet], HTTPError>) -> Void) {
-        BattleNetAPI.wow.getPets(region: region, locale: locale) { result in
+    public func getPets(completion: @escaping (_ result: Result<[Pet], HTTPError>) -> Void) {
+        battleNetAPI.wow.getPets { result in
             let customDecode: ((_ data: Data) throws -> [Pet]) = { data in
                 return try PetIndex.decode(from: data).pets
             }
@@ -438,22 +446,22 @@ public class WorldOfWarcraftModelController {
     }
     
     
-    public func getPetAbility(abilityID: Int, region: APIRegion = Current.region, locale: APILocale = Current.locale, completion: @escaping (_ result: Result<PetAbility, HTTPError>) -> Void) {
-        BattleNetAPI.wow.getPetAbility(abilityID: abilityID, region: region, locale: locale) { result in
+    public func getPetAbility(abilityID: Int, completion: @escaping (_ result: Result<PetAbility, HTTPError>) -> Void) {
+        battleNetAPI.wow.getPetAbility(abilityID: abilityID) { result in
             result.decode(completion: completion)
         }
     }
     
     
-    public func getPetSpecies(speciesID: Int, region: APIRegion = Current.region, locale: APILocale = Current.locale, completion: @escaping (_ result: Result<PetSpecies, HTTPError>) -> Void) {
-        BattleNetAPI.wow.getPetSpecies(speciesID: speciesID, region: region, locale: locale) { result in
+    public func getPetSpecies(speciesID: Int, completion: @escaping (_ result: Result<PetSpecies, HTTPError>) -> Void) {
+        battleNetAPI.wow.getPetSpecies(speciesID: speciesID) { result in
             result.decode(completion: completion)
         }
     }
     
     
-    public func getPetStats(speciesID: Int, level: Int = 1, breedID: Int = 3, qualityID: Int = 1, region: APIRegion = Current.region, locale: APILocale = Current.locale, completion: @escaping (_ result: Result<PetStats, HTTPError>) -> Void) {
-        BattleNetAPI.wow.getPetStats(speciesID: speciesID, level: level, breedID: breedID, qualityID: qualityID, region: region, locale: locale) { result in
+    public func getPetStats(speciesID: Int, level: Int = 1, breedID: Int = 3, qualityID: Int = 1, completion: @escaping (_ result: Result<PetStats, HTTPError>) -> Void) {
+        battleNetAPI.wow.getPetStats(speciesID: speciesID, level: level, breedID: breedID, qualityID: qualityID) { result in
             result.decode(completion: completion)
         }
     }
@@ -462,8 +470,8 @@ public class WorldOfWarcraftModelController {
     
     // MARK: - PVP API
     
-    public func getLeaderboard(bracket: WOWLeaderboardBracket, region: APIRegion = Current.region, locale: APILocale = Current.locale, completion: @escaping (_ result: Result<WOWLeaderboard, HTTPError>) -> Void) {
-        BattleNetAPI.wow.getLeaderboard(bracket: bracket.rawValue, region: region, locale: locale) { result in
+    public func getLeaderboard(bracket: WOWLeaderboardBracket, completion: @escaping (_ result: Result<WOWLeaderboard, HTTPError>) -> Void) {
+        battleNetAPI.wow.getLeaderboard(bracket: bracket.rawValue) { result in
             result.decode(completion: completion)
         }
     }
@@ -472,8 +480,8 @@ public class WorldOfWarcraftModelController {
     
     // MARK: - Quest API
     
-    public func getQuest(id: Int, region: APIRegion = Current.region, locale: APILocale = Current.locale, completion: @escaping (_ result: Result<WOWQuest, HTTPError>) -> Void) {
-        BattleNetAPI.wow.getQuest(id: id, region: region, locale: locale) { result in
+    public func getQuest(id: Int, completion: @escaping (_ result: Result<WOWQuest, HTTPError>) -> Void) {
+        battleNetAPI.wow.getQuest(id: id) { result in
             result.decode(completion: completion)
         }
     }
@@ -482,8 +490,8 @@ public class WorldOfWarcraftModelController {
     
     // MARK: - Realm Status API
     
-    public func getRealmsStatus(region: APIRegion = Current.region, locale: APILocale = Current.locale, completion: @escaping (_ result: Result<[WOWRealm], HTTPError>) -> Void) {
-        BattleNetAPI.wow.getRealmsStatus(region: region, locale: locale) { result in
+    public func getRealmsStatus(completion: @escaping (_ result: Result<[WOWRealm], HTTPError>) -> Void) {
+        battleNetAPI.wow.getRealmsStatus { result in
             let customDecode: ((_ data: Data) throws -> [WOWRealm]) = { data in
                 return try WOWRealmIndex.decode(from: data).realms
             }
@@ -495,8 +503,8 @@ public class WorldOfWarcraftModelController {
     
     // MARK: - Recipe API
     
-    public func getRecipe(id: Int, region: APIRegion = Current.region, locale: APILocale = Current.locale, completion: @escaping (_ result: Result<WOWRecipe, HTTPError>) -> Void) {
-        BattleNetAPI.wow.getRecipe(id: id, region: region, locale: locale) { result in
+    public func getRecipe(id: Int, completion: @escaping (_ result: Result<WOWRecipe, HTTPError>) -> Void) {
+        battleNetAPI.wow.getRecipe(id: id) { result in
             result.decode(completion: completion)
         }
     }
@@ -505,8 +513,8 @@ public class WorldOfWarcraftModelController {
     
     // MARK: - Spell API
     
-    public func getSpell(id: Int, region: APIRegion = Current.region, locale: APILocale = Current.locale, completion: @escaping (_ result: Result<Spell, HTTPError>) -> Void) {
-        BattleNetAPI.wow.getSpell(id: id, region: region, locale: locale) { result in
+    public func getSpell(id: Int, completion: @escaping (_ result: Result<Spell, HTTPError>) -> Void) {
+        battleNetAPI.wow.getSpell(id: id) { result in
             result.decode(completion: completion)
         }
     }
@@ -515,8 +523,8 @@ public class WorldOfWarcraftModelController {
     
     // MARK: - Zone API
     
-    public func getZones(region: APIRegion = Current.region, locale: APILocale = Current.locale, completion: @escaping (_ result: Result<[Zone], HTTPError>) -> Void) {
-        BattleNetAPI.wow.getZones(region: region, locale: locale) { result in
+    public func getZones(completion: @escaping (_ result: Result<[Zone], HTTPError>) -> Void) {
+        battleNetAPI.wow.getZones { result in
             let customDecode: ((_ data: Data) throws -> [Zone]) = { data in
                 return try ZoneIndex.decode(from: data).zones
             }
@@ -525,8 +533,8 @@ public class WorldOfWarcraftModelController {
     }
     
     
-    public func getZone(id: Int, region: APIRegion = Current.region, locale: APILocale = Current.locale, completion: @escaping (_ result: Result<Zone, HTTPError>) -> Void) {
-        BattleNetAPI.wow.getZone(id: id, region: region, locale: locale) { result in
+    public func getZone(id: Int, completion: @escaping (_ result: Result<Zone, HTTPError>) -> Void) {
+        battleNetAPI.wow.getZone(id: id) { result in
             result.decode(completion: completion)
         }
     }
@@ -535,8 +543,8 @@ public class WorldOfWarcraftModelController {
     
     // MARK: - Data Resources
     
-    public func getBattlegroups(region: APIRegion = Current.region, locale: APILocale = Current.locale, completion: @escaping (_ result: Result<[Battlegroup], HTTPError>) -> Void) {
-        BattleNetAPI.wow.getBattlegroups(region: region, locale: locale) { result in
+    public func getBattlegroups(completion: @escaping (_ result: Result<[Battlegroup], HTTPError>) -> Void) {
+        battleNetAPI.wow.getBattlegroups { result in
             let customDecode: ((_ data: Data) throws -> [Battlegroup]) = { data in
                 return try BattlegroupIndex.decode(from: data).battlegroups
             }
@@ -545,8 +553,8 @@ public class WorldOfWarcraftModelController {
     }
     
     
-    public func getRaces(region: APIRegion = Current.region, locale: APILocale = Current.locale, completion: @escaping (_ result: Result<[Race], HTTPError>) -> Void) {
-        BattleNetAPI.wow.getRaces(region: region, locale: locale) { result in
+    public func getRaces(completion: @escaping (_ result: Result<[Race], HTTPError>) -> Void) {
+        battleNetAPI.wow.getRaces { result in
             let customDecode: ((_ data: Data) throws -> [Race]) = { data in
                 return try RaceIndex.decode(from: data).races
             }
@@ -555,8 +563,8 @@ public class WorldOfWarcraftModelController {
     }
     
     
-    public func getClasses(region: APIRegion = Current.region, locale: APILocale = Current.locale, completion: @escaping (_ result: Result<[WOWCharacterClass], HTTPError>) -> Void) {
-        BattleNetAPI.wow.getClasses(region: region, locale: locale) { result in
+    public func getClasses(completion: @escaping (_ result: Result<[WOWCharacterClass], HTTPError>) -> Void) {
+        battleNetAPI.wow.getClasses { result in
             let customDecode: ((_ data: Data) throws -> [WOWCharacterClass]) = { data in
                 return try WOWCharacterClassIndex.decode(from: data).classes
             }
@@ -565,8 +573,8 @@ public class WorldOfWarcraftModelController {
     }
     
     
-    public func getAchievements(region: APIRegion = Current.region, locale: APILocale = Current.locale, completion: @escaping (_ result: Result<[WOWAchievementCategory], HTTPError>) -> Void) {
-        BattleNetAPI.wow.getAchievements(region: region, locale: locale) { result in
+    public func getAchievements(completion: @escaping (_ result: Result<[WOWAchievementCategory], HTTPError>) -> Void) {
+        battleNetAPI.wow.getAchievements { result in
             let customDecode: ((_ data: Data) throws -> [WOWAchievementCategory]) = { data in
                 return try WOWAchievementIndex.decode(from: data).achievements
             }
@@ -575,8 +583,8 @@ public class WorldOfWarcraftModelController {
     }
     
     
-    public func getGuildRewards(region: APIRegion = Current.region, locale: APILocale = Current.locale, completion: @escaping (_ result: Result<[WOWGuildReward], HTTPError>) -> Void) {
-        BattleNetAPI.wow.getGuildRewards(region: region, locale: locale) { result in
+    public func getGuildRewards(completion: @escaping (_ result: Result<[WOWGuildReward], HTTPError>) -> Void) {
+        battleNetAPI.wow.getGuildRewards { result in
             let customDecode: ((_ data: Data) throws -> [WOWGuildReward]) = { data in
                 return try WOWGuildRewardIndex.decode(from: data).rewards
             }
@@ -585,8 +593,8 @@ public class WorldOfWarcraftModelController {
     }
     
     
-    public func getGuildPerks(region: APIRegion = Current.region, locale: APILocale = Current.locale, completion: @escaping (_ result: Result<[Perk], HTTPError>) -> Void) {
-        BattleNetAPI.wow.getGuildPerks(region: region, locale: locale) { result in
+    public func getGuildPerks(completion: @escaping (_ result: Result<[Perk], HTTPError>) -> Void) {
+        battleNetAPI.wow.getGuildPerks { result in
             let customDecode: ((_ data: Data) throws -> [Perk]) = { data in
                 return try PerkIndex.decode(from: data).perks
             }
@@ -595,8 +603,8 @@ public class WorldOfWarcraftModelController {
     }
     
     
-    public func getGuildAchievements(region: APIRegion = Current.region, locale: APILocale = Current.locale, completion: @escaping (_ result: Result<[WOWAchievementCategory], HTTPError>) -> Void) {
-        BattleNetAPI.wow.getGuildAchievements(region: region, locale: locale) { result in
+    public func getGuildAchievements(completion: @escaping (_ result: Result<[WOWAchievementCategory], HTTPError>) -> Void) {
+        battleNetAPI.wow.getGuildAchievements { result in
             let customDecode: ((_ data: Data) throws -> [WOWAchievementCategory]) = { data in
                 return try WOWAchievementIndex.decode(from: data).achievements
             }
@@ -605,8 +613,8 @@ public class WorldOfWarcraftModelController {
     }
     
     
-    public func getItemClasses(region: APIRegion = Current.region, locale: APILocale = Current.locale, completion: @escaping (_ result: Result<[ItemClass], HTTPError>) -> Void) {
-        BattleNetAPI.wow.getItemClasses(region: region, locale: locale) { result in
+    public func getItemClasses(completion: @escaping (_ result: Result<[ItemClass], HTTPError>) -> Void) {
+        battleNetAPI.wow.getItemClasses { result in
             let customDecode: ((_ data: Data) throws -> [ItemClass]) = { data in
                 return try ItemClassIndex.decode(from: data).classes
             }
@@ -615,15 +623,15 @@ public class WorldOfWarcraftModelController {
     }
     
     
-    public func getTalents(region: APIRegion = Current.region, locale: APILocale = Current.locale, completion: @escaping (_ result: Result<ClassTalentDictionary, HTTPError>) -> Void) {
-        BattleNetAPI.wow.getTalents(region: region, locale: locale) { result in
+    public func getTalents(completion: @escaping (_ result: Result<ClassTalentDictionary, HTTPError>) -> Void) {
+        battleNetAPI.wow.getTalents { result in
             result.decode(completion: completion)
         }
     }
     
     
-    public func getPetTypes(region: APIRegion = Current.region, locale: APILocale = Current.locale, completion: @escaping (_ result: Result<[PetType], HTTPError>) -> Void) {
-        BattleNetAPI.wow.getPetTypes(region: region, locale: locale) { result in
+    public func getPetTypes(completion: @escaping (_ result: Result<[PetType], HTTPError>) -> Void) {
+        battleNetAPI.wow.getPetTypes { result in
             let customDecode: ((_ data: Data) throws -> [PetType]) = { data in
                 return try PetTypeIndex.decode(from: data).petTypes
             }
