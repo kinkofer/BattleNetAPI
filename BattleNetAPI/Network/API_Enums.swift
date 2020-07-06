@@ -25,6 +25,28 @@ public enum APIType: String {
 }
 
 
+public enum APINamespace {
+    case `static`
+    case dynamic
+    case profile
+    case custom(String)
+    
+    
+    func getHeader(for region: APIRegion) -> HTTPHeader {
+        switch self {
+        case .static:
+            return .namespace("static" + region.namespaceExtension)
+        case .dynamic:
+            return .namespace("dynamic" + region.namespaceExtension)
+        case .profile:
+            return .namespace("profile" + region.namespaceExtension)
+        case .custom(let namespace):
+            return .namespace(namespace)
+        }
+    }
+}
+
+
 
 /// The supported regions for the API services
 public enum APIRegion: String, CaseIterable, Codable {

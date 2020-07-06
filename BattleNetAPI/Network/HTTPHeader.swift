@@ -14,6 +14,7 @@ public enum HTTPHeader {
     case accept(MediaType)
     case acceptVersion(String)
     case ifModifiedSince(Date)
+    case namespace(String)
     
     public var key: String {
         switch self {
@@ -23,6 +24,8 @@ public enum HTTPHeader {
             return "Accept"
         case .ifModifiedSince:
             return "If-Modified-Since"
+        case .namespace:
+            return "Battlenet-Namespace"
         }
     }
     
@@ -39,6 +42,8 @@ public enum HTTPHeader {
             dateFormatter.timeZone = TimeZone(abbreviation: "GMT")
             dateFormatter.dateFormat = "EEE, dd MMM yyyy HH:mm:ss zzz"
             return dateFormatter.string(from: date)
+        case .namespace(let namespace):
+            return namespace
         }
     }
 }

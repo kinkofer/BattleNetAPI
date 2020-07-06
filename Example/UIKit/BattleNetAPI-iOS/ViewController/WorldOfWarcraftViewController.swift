@@ -35,7 +35,6 @@ class WorldOfWarcraftViewController: UITableViewController, APIViewer {
         // Community
         case achievement = "Achievement API"
         case auction = "Auction API"
-        case boss = "Boss API"
         case challengeMode = "Challenge Mode API"
         case characterProfile = "Character Profile API"
         case guildProfile = "Guild Profile API"
@@ -117,9 +116,6 @@ class WorldOfWarcraftViewController: UITableViewController, APIViewer {
         case achievement = "Achievement"
         // Auction
         case auctionDataStatus = "Auction Data Status"
-        // Boss
-        case bossMasterList = "Boss Master List"
-        case boss = "Boss"
         // Challenge Mode
         case realmLeaderboard = "Realm Leaderboard"
         case regionLeaderboard = "Region Leaderboard"
@@ -192,7 +188,7 @@ class WorldOfWarcraftViewController: UITableViewController, APIViewer {
             switch self {
             case .characterAchievements, .guildAchievements:
                 return "Achievements"
-            case .bossMasterList, .mountMasterList, .petMasterList, .zoneMasterList:
+            case .mountMasterList, .petMasterList, .zoneMasterList:
                 return "Master List"
             case .characterStats, .petStats:
                 return "Stats"
@@ -285,7 +281,6 @@ class WorldOfWarcraftViewController: UITableViewController, APIViewer {
         case .community:
             let achievementAPIs: [CommunityService] = [.achievement]
             let auctionAPIs: [CommunityService] = [.auctionDataStatus]
-            let bossAPIs: [CommunityService] = [.bossMasterList, .boss]
             let challengeModeAPIs: [CommunityService] = [.realmLeaderboard, .regionLeaderboard]
             let characterProfileAPIs: [CommunityService] = [.characterProfile, .characterAchievements, .appearance, .feed, .guild, .hunterPets,
                                                             .items, .mounts, .pets, .petSlots, .professions, .progression, .pvp, .quests,
@@ -307,7 +302,6 @@ class WorldOfWarcraftViewController: UITableViewController, APIViewer {
             
             sections = [Section(type: .achievement, rows: achievementAPIs),
                         Section(type: .auction, rows: auctionAPIs),
-                        Section(type: .boss, rows: bossAPIs),
                         Section(type: .challengeMode, rows: challengeModeAPIs),
                         Section(type: .characterProfile, rows: characterProfileAPIs),
                         Section(type: .guildProfile, rows: guildProfileAPIs),
@@ -893,41 +887,6 @@ class WorldOfWarcraftViewController: UITableViewController, APIViewer {
         }
     }
     
-    
-    // MARK: Boss API
-    
-    func getBosses() {
-        wowMC.getBosses { result in
-            switch result {
-            case .success(let bosses):
-                Debug.print("Retrieved \(bosses.count) Boss(s)")
-                DispatchQueue.main.async {
-                    let viewController = ViewerTableViewController()
-                    viewController.dataSourceArr = bosses
-                    self.navigationController?.pushViewController(viewController, animated: true)
-                }
-            case .failure(let error):
-                self.handleError(error)
-            }
-        }
-    }
-    
-    
-    func getBoss(id: Int) {
-        wowMC.getBoss(id: id) { result in
-            switch result {
-            case .success(let boss):
-                Debug.print("Retrieved Boss \(boss.name)")
-                DispatchQueue.main.async {
-                    let viewController = ViewerTableViewController()
-                    viewController.dataSourceObj = boss
-                    self.navigationController?.pushViewController(viewController, animated: true)
-                }
-            case .failure(let error):
-                self.handleError(error)
-            }
-        }
-    }
     
     
     // MARK: Challenge Mode API
@@ -1586,7 +1545,7 @@ class WorldOfWarcraftViewController: UITableViewController, APIViewer {
     
     // MARK: - Error handling
     
-    func handleError(_ error: HTTPError, function: String = #function) {
+    func handleError(_ error: Error, function: String = #function) {
         Debug.print(error.localizedDescription, function: function)
     }
     
@@ -1700,10 +1659,6 @@ class WorldOfWarcraftViewController: UITableViewController, APIViewer {
                 getAchievement(id: 2144)
             case .auctionDataStatus:
                 getAuctions(realm: "medivh")
-            case .bossMasterList:
-                getBosses()
-            case .boss:
-                getBoss(id: 24723)
             case .realmLeaderboard:
                 getChallengeLeaderboards(realm: "medivh")
             case .regionLeaderboard:

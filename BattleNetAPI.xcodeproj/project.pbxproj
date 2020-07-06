@@ -79,7 +79,6 @@
 		598AC12524A9B71F002F2ED3 /* Network.swift in Sources */ = {isa = PBXBuildFile; fileRef = 59E425C9207872EC0046EB84 /* Network.swift */; };
 		598AC12624A9B71F002F2ED3 /* WS_User.swift in Sources */ = {isa = PBXBuildFile; fileRef = 59397CD1207B50520077018E /* WS_User.swift */; };
 		598AC12724A9B71F002F2ED3 /* HTTPError.swift in Sources */ = {isa = PBXBuildFile; fileRef = 59E425CB207874450046EB84 /* HTTPError.swift */; };
-		598AC12824A9B71F002F2ED3 /* HTTPWebService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 59B7BD1A24A9689000B7CAC7 /* HTTPWebService.swift */; };
 		598AC12924A9B71F002F2ED3 /* WS_Diablo3.swift in Sources */ = {isa = PBXBuildFile; fileRef = 59397CDF207C5FE20077018E /* WS_Diablo3.swift */; };
 		598AC12A24A9B71F002F2ED3 /* APICall.swift in Sources */ = {isa = PBXBuildFile; fileRef = 59B7BD1824A9667800B7CAC7 /* APICall.swift */; };
 		598AC12B24A9B71F002F2ED3 /* WS_WorldOfWarcraft.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5954B1B9207A9D2900CC36D1 /* WS_WorldOfWarcraft.swift */; };
@@ -183,7 +182,6 @@
 		59A21DF9208EF5D4005C7EF6 /* Battlegroups.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Battlegroups.swift; sourceTree = "<group>"; };
 		59A21DFF20914093005C7EF6 /* Guild.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Guild.swift; sourceTree = "<group>"; };
 		59B7BD1824A9667800B7CAC7 /* APICall.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = APICall.swift; sourceTree = "<group>"; };
-		59B7BD1A24A9689000B7CAC7 /* HTTPWebService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HTTPWebService.swift; sourceTree = "<group>"; };
 		59B7BD1C24A96E0000B7CAC7 /* Publisher+JSON.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Publisher+JSON.swift"; sourceTree = "<group>"; };
 		59B7BD1E24A96E5F00B7CAC7 /* URLSession+Request.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "URLSession+Request.swift"; sourceTree = "<group>"; };
 		59B7BD2024A96F7C00B7CAC7 /* URLRequest+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "URLRequest+.swift"; sourceTree = "<group>"; };
@@ -341,6 +339,18 @@
 			path = Resources;
 			sourceTree = "<group>";
 		};
+		59C22A0324B10F6900472ADF /* WebServices */ = {
+			isa = PBXGroup;
+			children = (
+				59E425CD20787F640046EB84 /* WS_Authentication.swift */,
+				59397CDF207C5FE20077018E /* WS_Diablo3.swift */,
+				59397CD9207C47EB0077018E /* WS_StarCraft2.swift */,
+				59397CD1207B50520077018E /* WS_User.swift */,
+				5954B1B9207A9D2900CC36D1 /* WS_WorldOfWarcraft.swift */,
+			);
+			path = WebServices;
+			sourceTree = "<group>";
+		};
 		59E42597207871C20046EB84 = {
 			isa = PBXGroup;
 			children = (
@@ -364,6 +374,7 @@
 			isa = PBXGroup;
 			children = (
 				59E425C5207871FD0046EB84 /* Model */,
+				59C22A0324B10F6900472ADF /* WebServices */,
 				59E425D520789A5C0046EB84 /* Network */,
 				59E425E02078B0560046EB84 /* Utilities */,
 			);
@@ -401,14 +412,8 @@
 				59E425D3207884DE0046EB84 /* BattleNetAPI.swift */,
 				59E425CB207874450046EB84 /* HTTPError.swift */,
 				59E425D120787FEF0046EB84 /* HTTPHeader.swift */,
-				59B7BD1A24A9689000B7CAC7 /* HTTPWebService.swift */,
 				59E425C9207872EC0046EB84 /* Network.swift */,
 				59E425CF20787F990046EB84 /* WebService.swift */,
-				59E425CD20787F640046EB84 /* WS_Authentication.swift */,
-				59397CDF207C5FE20077018E /* WS_Diablo3.swift */,
-				59397CD9207C47EB0077018E /* WS_StarCraft2.swift */,
-				59397CD1207B50520077018E /* WS_User.swift */,
-				5954B1B9207A9D2900CC36D1 /* WS_WorldOfWarcraft.swift */,
 			);
 			path = Network;
 			sourceTree = "<group>";
@@ -638,7 +643,6 @@
 				598AC12124A9B71F002F2ED3 /* API_Enums.swift in Sources */,
 				598AC0F124A9B6FF002F2ED3 /* UserToken.swift in Sources */,
 				598AC17524AB0484002F2ED3 /* AuthenticationManager.swift in Sources */,
-				598AC12824A9B71F002F2ED3 /* HTTPWebService.swift in Sources */,
 				598AC0F524A9B704002F2ED3 /* SC2Profile.swift in Sources */,
 				598AC10024A9B709002F2ED3 /* Image.swift in Sources */,
 				598AC0F024A9B6FF002F2ED3 /* Scope.swift in Sources */,

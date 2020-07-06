@@ -40,12 +40,12 @@ public class AuthenticationManager {
     
     // MARK: -
     
-    public func getClientAccessToken(completion: @escaping (_ result: Result<String, HTTPError>) -> Void) {
+    public func getClientAccessToken(completion: @escaping (_ result: Result<String, Error>) -> Void) {
         if let accessToken = clientAccessToken {
             authMC.validateClientAccessToken(accessToken) { result in
                 DispatchQueue.main.async {
                     switch result {
-                    case .success(_):
+                    case .success:
                         completion(.success(accessToken))
                     case .failure(let error):
                         self.clientAccessToken = nil
@@ -79,7 +79,7 @@ public class AuthenticationManager {
      - parameter redirectUrl: A URL with the http or https scheme pointing to the authentication webpage.
      - parameter completion: The result of the user's sign in attempt, containing the user's access token if they successfully authenticated.
      */
-    public func getUserAccessToken(scope: Scope, on providerContext: ASWebAuthenticationPresentationContextProviding, scheme: String, redirectUrl: String, completion: @escaping (_ result: Result<String, HTTPError>) -> Void) {
+    public func getUserAccessToken(scope: Scope, on providerContext: ASWebAuthenticationPresentationContextProviding, scheme: String, redirectUrl: String, completion: @escaping (_ result: Result<String, Error>) -> Void) {
         if let userAccessToken = userAccessToken {
             authMC.validateUserAccessToken(userAccessToken) { result in
                 DispatchQueue.main.async {
@@ -108,7 +108,8 @@ public class AuthenticationManager {
      - parameter redirectUrl: A URL with the http or https scheme pointing to the authentication webpage.
      - parameter completion: The result of the user's sign in attempt, containing the user's access token if they successfully authenticated.
      */
-    private func authenicateUser(scope: Scope, on providerContext: ASWebAuthenticationPresentationContextProviding, scheme: String, redirectUrl: String, completion: @escaping (_ result: Result<String, HTTPError>) -> Void) {
+    private func authenicateUser(scope: Scope, on providerContext: ASWebAuthenticationPresentationContextProviding,
+                                 scheme: String, redirectUrl: String, completion: @escaping (_ result: Result<String, Error>) -> Void) {
         guard let url = authMC.getOAuthURL(clientID: clientID, scope: scope, redirectURL: redirectUrl) else {
             return
         }

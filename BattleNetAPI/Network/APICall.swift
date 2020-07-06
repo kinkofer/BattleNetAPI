@@ -11,12 +11,17 @@ import Foundation
 
 protocol APICall {
     var path: String { get }
+    var apiType: APIType? { get }
 }
 
 
 extension APICall {
     func createUrl(baseURL: String) -> URL? {
         return URL(string: baseURL + path)
+    }
+    
+    func createUrl(baseURL: URL) -> URL? {
+        return baseURL.appendingPathComponent(path)
     }
     
     
@@ -30,7 +35,7 @@ extension APICall {
     }
     
     
-    private func createUrlRequest(url: URL, method: HTTPMethod, headers: [HTTPHeader]? = nil, body: Data? = nil) -> URLRequest {
+    func createUrlRequest(url: URL, method: HTTPMethod, headers: [HTTPHeader]? = nil, body: Data? = nil) -> URLRequest {
         var request = URLRequest(url: url)
         request.httpMethod = method.rawValue
         if let headers = headers {

@@ -9,7 +9,14 @@
 import Foundation
 
 
-public class SelfLink<Resource>: Codable {
+public protocol ResourceLinkable {
+    associatedtype Resource
+    
+    var link: Link<Resource> { get }
+}
+
+
+public class SelfLink<Resource>: Codable, ResourceLinkable {
     public let link: Link<Resource>
     
     enum CodingKeys: String, CodingKey {
@@ -19,10 +26,12 @@ public class SelfLink<Resource>: Codable {
 
 
 
-public class KeyLink<Resource>: Codable {
+public class KeyLink<Resource>: Codable, ResourceLinkable {
     public let key: Link<Resource>
     public let id: Int?
     public let name: String?
+    
+    public var link: Link<Resource> { return key }
 }
 
 

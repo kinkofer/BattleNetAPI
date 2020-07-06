@@ -22,7 +22,7 @@ public struct UserModelController {
     }
     
     
-    public func getUser(completion: @escaping (_ result: Result<User, HTTPError>) -> Void) {
+    public func getUser(completion: @escaping (_ result: Result<User, Error>) -> Void) {
         battleNetAPI.user.getUserInfo() { result in
             result.decode(completion: completion)
         }

@@ -137,7 +137,7 @@ class ViewController: UIViewController {
     
     // MARK: - Error handling
     
-    func handleError(_ error: HTTPError, function: String = #function) {
+    func handleError(_ error: Error, function: String = #function) {
         Debug.print(error.localizedDescription, function: function)
     }
     

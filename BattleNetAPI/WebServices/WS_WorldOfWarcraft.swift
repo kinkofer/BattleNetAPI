@@ -10,21 +10,85 @@ import Foundation
 
 
 public struct WS_WorldOfWarcraft: WebService {
+    public enum API: APICall {
+        // Game Data APIs
+        case achievement(Int)
+        case auctions(String)
+        case connectedRealmIndex
+        case connectedRealm(Int)
+        case item(Int)
+        case itemSet(Int)
+        case mountIndex
+        case mythicKeystoneAffixIndex
+        case mythicKeystoneAffix(Int)
+        // Profile APIs
+        case characters
+        case mythicKeystoneProfile(realmSlug: String, characterName: String)
+        
+        
+        var path: String {
+            switch self {
+            case .achievement(let id):
+                return "/achievement/\(id)"
+            case .auctions(let realm):
+                return "/auction/data/\(realm)"
+            case .connectedRealmIndex:
+                return "/connected-realm/index"
+            case .connectedRealm(let id):
+                return "/connected-realm/\(id)"
+            case .item(let id):
+                return "/item/\(id)"
+            case .itemSet(let setID):
+                return "/item-set/\(setID)"
+            case .mountIndex:
+                return "/mount/index"
+            case .mythicKeystoneAffixIndex:
+                return "/keystone-affix/index"
+            case .mythicKeystoneAffix(let id):
+                return "/keystone-affix/\(id)"
+            case .characters:
+                return "/user/characters"
+            case .mythicKeystoneProfile(let realmSlug, let characterName):
+                return "/character/\(realmSlug)/\(characterName)/mythic-keystone-profile"
+            }
+        }
+        
+        var apiType: APIType? {
+            switch self {
+            case .achievement,
+                 .auctions,
+                 .connectedRealmIndex, .connectedRealm,
+                 .item, .itemSet,
+                 .mountIndex,
+                 .mythicKeystoneAffixIndex, .mythicKeystoneAffix:
+                return .gameData
+            case .characters:
+                return .community
+            case .mythicKeystoneProfile:
+                return .profile
+            }
+        }
+    }
+    
+    
     var region: APIRegion
     var locale: APILocale?
     
+    var session: URLSession
     
-    internal func getBaseURL(apiType: APIType?) -> String {
-        var url = region.apiURI
+    
+    
+    internal func getBaseURL(apiType: APIType?) -> URL? {
+        var url = URL(string: region.apiURI)
         
         if let apiType = apiType {
             switch apiType {
             case .gameData:
-                url += "/data/wow"
+                url?.appendPathComponent("/data/wow")
             case .community:
-                url += "/wow"
+                url?.appendPathComponent("/wow")
             case .profile:
-                url += "/profile/wow"
+                url?.appendPathComponent("/profile/wow")
             }
         }
         
@@ -39,93 +103,76 @@ public struct WS_WorldOfWarcraft: WebService {
      - parameter urlStr: The url that will be used to make the web service call
      - parameter completion: Returns a Result with the Data if `success` or an HTTPError if `failure`
      */
-    func getResource(from urlStr: String, completion: @escaping (_ result: Result<Data, HTTPError>) -> Void) {
+    public func getResource(from urlStr: String, completion: @escaping (_ result: Result<Data, HTTPError>) -> Void) {
         self.callWebService(urlStr: urlStr, method: .get, apiType: .gameData) { result in
             completion(result)
         }
     }
     
     
-    
-    // MARK: - Profile API
-    
     /**
-     This provides data about the current logged in OAuth user's WoW profile.
+     Calls a data web service using a pre-constructed url typically found within another web service result.
      
-     - parameter region: What region the request is being made
-     - parameter completion: Returns a Result with the Data if `success` or an HTTPError if `failure`
-    */
-    func getCharacters(region: APIRegion, completion: @escaping (_ result: Result<Data, HTTPError>) -> Void) {
-        let urlStr = getBaseURL(apiType: .community) + "/user/characters"
-        self.callWebService(urlStr: urlStr, method: .get, apiType: .profile) { result in
-            completion(result)
-        }
-    }
-    
-    
-    // MARK: WoW Mythic Keystone Character Profile API
-    
-    /**
-     Returns a Mythic Keystone Profile index for a character.
-     
-     - note: This request returns a 404 for characters that have not completed a Mythic Keystone dungeon.
-     
-     - parameter characterName: The lowercase name of the character
-     - parameter realmSlug: The slug of the realm
-     - parameter region: What region the request is being made
+     - parameter resource: The resource that will be used to make the web service call
      - parameter completion: Returns a Result with the Data if `success` or an HTTPError if `failure`
      */
-    func getMythicKeystoneProfile(characterName: String, realmSlug: String, completion: @escaping (_ result: Result<Data, HTTPError>) -> Void) {
-        let apiType: APIType = .profile
-        var urlStr = getBaseURL(apiType: apiType) + "/character/\(realmSlug)/\(characterName)/mythic-keystone-profile"
-        urlStr = appendSharedURLParameters(to: urlStr, withNamespace: "profile")
-        
-        self.callWebService(urlStr: urlStr, method: .get, apiType: .profile) { result in
+    public func getResource<T>(_ resource: T, completion: @escaping (_ result: Result<Data, HTTPError>) -> Void) where T: ResourceLinkable {
+        callWebService(urlStr: resource.link.href, method: .get, apiType: .gameData) { result in
             completion(result)
         }
     }
     
-    
-    /**
-     Returns a Mythic Keystone Profile index for a character.
-     
-     - note: This request returns a 404 for characters that have not completed a Mythic Keystone dungeon.
-     
-     - parameter seasonID: The ID of the Mythic Keystone season
-     - parameter characterName: The lowercase name of the character
-     - parameter realmSlug: The slug of the realm
-     - parameter region: What region the request is being made
-     - parameter completion: Returns a Result with the Data if `success` or an HTTPError if `failure`
-     */
-    func getMythicKeystoneProfileSeason(seasonID: Int, characterName: String, realmSlug: String, completion: @escaping (_ result: Result<Data, HTTPError>) -> Void) {
-        let apiType: APIType = .profile
-        var urlStr = getBaseURL(apiType: apiType) + "/character/\(realmSlug)/\(characterName)/mythic-keystone-profile/season/\(seasonID)"
-        urlStr = appendSharedURLParameters(to: urlStr, withNamespace: "profile")
-        
-        self.callWebService(urlStr: urlStr, method: .get, apiType: .profile) { result in
-            completion(result)
-        }
-    }
     
     
     
     // MARK: - Game Data API
+    
+    // MARK: Achievement API
+    
+    /**
+     This provides data about an individual achievement.
+     
+     - parameter id: The ID of the achievement to retrieve
+     - parameter namespace: The namespace to use to locate this document.
+     - parameter completion: Returns a Result with the Data if `success` or an HTTPError if `failure`
+    */
+    public func getAchievement(id: Int, namespace: APINamespace? = .static, completion: @escaping (_ result: Result<Data, Error>) -> Void) {
+        call(endpoint: API.achievement(id), namespace: namespace) { result in
+            completion(result)
+        }
+    }
+    
+    
+    
+    // MARK: Auction API
+    
+    /**
+     Auction APIs currently provide rolling batches of data about current auctions. Fetching auction dumps is a two step process that involves checking a per-realm index file to determine if a recent dump has been generated and then fetching the most recently generated dump file if necessary.
+     
+     This API resource provides a per-realm list of recently generated auction house data dumps.
+     
+     - parameter realm: The realm being requested
+     - parameter namespace: The namespace to use to locate this document.
+     - parameter completion: Returns a Result with the Data if `success` or an HTTPError if `failure`
+     */
+    public func getAuctions(realm: String, namespace: APINamespace? = .static, completion: @escaping (_ result: Result<Data, Error>) -> Void) {
+        call(endpoint: API.auctions(realm), namespace: namespace) { result in
+            completion(result)
+        }
+    }
+    
+    
     
     // MARK: Connected Realm API
     
     /**
      Get an index of connected-realms
      
-     - parameter region: What region the request is being made
-     - parameter locale: The locale that should be reflected in localized data
+     - parameter namespace: The namespace to use to locate this document.
      - parameter completion: Returns a Result with the Data if `success` or an HTTPError if `failure`
      */
-    func getConnectedRealmIndex(completion: @escaping (_ result: Result<Data, HTTPError>) -> Void) {
-        let apiType: APIType = .gameData
-        var urlStr = getBaseURL(apiType: apiType) + "/connected-realm/"
-        urlStr = appendSharedURLParameters(to: urlStr, withNamespace: "dynamic")
-        
-        self.callWebService(urlStr: urlStr, method: .get, apiType: apiType) { result in
+    public func getConnectedRealmIndex(namespace: APINamespace? = .dynamic, completion: @escaping (_ result: Result<Data, Error>) -> Void) {
+        call(endpoint: API.connectedRealmIndex, namespace: namespace) { result in
             completion(result)
         }
     }
@@ -135,19 +182,61 @@ public struct WS_WorldOfWarcraft: WebService {
      Get a single connected-realm by id
      
      - parameter id: The id of the connected realm
-     - parameter region: What region the request is being made
-     - parameter locale: The locale that should be reflected in localized data
+     - parameter namespace: The namespace to use to locate this document.
      - parameter completion: Returns a Result with the Data if `success` or an HTTPError if `failure`
      */
-    func getConnectedRealm(id: Int, completion: @escaping (_ result: Result<Data, HTTPError>) -> Void) {
-        let apiType: APIType = .gameData
-        var urlStr = getBaseURL(apiType: apiType) + "/connected-realm/\(id)"
-        urlStr = appendSharedURLParameters(to: urlStr, withNamespace: "dynamic")
-        
-        self.callWebService(urlStr: urlStr, method: .get, apiType: apiType) { result in
+    public func getConnectedRealm(id: Int, namespace: APINamespace? = .dynamic, completion: @escaping (_ result: Result<Data, Error>) -> Void) {
+        call(endpoint: API.connectedRealm(id), namespace: namespace) { result in
             completion(result)
         }
     }
+    
+    
+    // MARK: Item API
+    
+    /**
+     The item API provides detailed item information. This includes item set information if this item is part of a set.
+     
+     - parameter id: Unique ID of the item being requested
+     - parameter namespace: The namespace to use to locate this document.
+     - parameter completion: Returns a Result with the Data if `success` or an HTTPError if `failure`
+     */
+    public func getItem(id: Int, namespace: APINamespace? = .static, completion: @escaping (_ result: Result<Data, Error>) -> Void) {
+        call(endpoint: API.item(id), namespace: namespace) { result in
+            completion(result)
+        }
+    }
+    
+    
+    /**
+     The item API provides detailed item information. This includes item set information if this item is part of a set.
+     
+     - parameter setID: Unique ID of the set being requested
+     - parameter namespace: The namespace to use to locate this document.
+     - parameter completion: Returns a Result with the Data if `success` or an HTTPError if `failure`
+     */
+    public func getItemSet(setID: Int, namespace: APINamespace? = .static, completion: @escaping (_ result: Result<Data, Error>) -> Void) {
+        call(endpoint: API.itemSet(setID), namespace: namespace) { result in
+            completion(result)
+        }
+    }
+    
+    
+    
+    // MARK: Mount API
+    
+    /**
+     A list of all supported mounts.
+     
+     - parameter namespace: The namespace to use to locate this document.
+     - parameter completion: Returns a Result with the Data if `success` or an HTTPError if `failure`
+     */
+    public func getMounts(namespace: APINamespace? = .static, completion: @escaping (_ result: Result<Data, Error>) -> Void) {
+        call(endpoint: API.mountIndex, namespace: namespace) { result in
+            completion(result)
+        }
+    }
+    
     
     
     // MARK: Mythic Keystone Affix API
@@ -155,16 +244,11 @@ public struct WS_WorldOfWarcraft: WebService {
     /**
      Returns an index of Keystone affixes.
      
-     - parameter region: What region the request is being made
-     - parameter locale: The locale that should be reflected in localized data
+     - parameter namespace: The namespace to use to locate this document.
      - parameter completion: Returns a Result with the Data if `success` or an HTTPError if `failure`
      */
-    func getMythicKeystoneAffixes(completion: @escaping (_ result: Result<Data, HTTPError>) -> Void) {
-        let apiType: APIType = .gameData
-        var urlStr = getBaseURL(apiType: apiType) + "/keystone-affix/index"
-        urlStr = appendSharedURLParameters(to: urlStr, withNamespace: "static")
-        
-        self.callWebService(urlStr: urlStr, method: .get, apiType: apiType) { result in
+    public func getMythicKeystoneAffixes(namespace: APINamespace? = .static, completion: @escaping (_ result: Result<Data, Error>) -> Void) {
+        call(endpoint: API.mythicKeystoneAffixIndex, namespace: namespace) { result in
             completion(result)
         }
     }
@@ -174,41 +258,15 @@ public struct WS_WorldOfWarcraft: WebService {
      The ID of the Keystone affix.
      
      - parameter id: The ID of the Keystone affix
-     - parameter region: What region the request is being made
-     - parameter locale: The locale that should be reflected in localized data
+     - parameter namespace: The namespace to use to locate this document.
      - parameter completion: Returns a Result with the Data if `success` or an HTTPError if `failure`
      */
-    func getMythicKeystoneAffix(id: Int, completion: @escaping (_ result: Result<Data, HTTPError>) -> Void) {
-        let apiType: APIType = .gameData
-        var urlStr = getBaseURL(apiType: apiType) + "/keystone-affix/\(id)"
-        urlStr = appendSharedURLParameters(to: urlStr, withNamespace: "static")
-        
-        self.callWebService(urlStr: urlStr, method: .get, apiType: apiType) { result in
+    public func getMythicKeystoneAffix(id: Int, namespace: APINamespace? = .static, completion: @escaping (_ result: Result<Data, Error>) -> Void) {
+        call(endpoint: API.mythicKeystoneAffix(id), namespace: namespace) { result in
             completion(result)
         }
     }
     
-    
-    // MARK: Mythic Raid Leaderboard API
-    
-    /**
-     Returns the leaderboard for a given raid and faction.
-     
-     - parameter raid: The raid for a leaderboard
-     - parameter faction: Player faction ('alliance' or 'horde')
-     - parameter region: What region the request is being made
-     - parameter locale: The locale that should be reflected in localized data
-     - parameter completion: Returns a Result with the Data if `success` or an HTTPError if `failure`
-     */
-    func getMythicRaidLeaderboard(raid: String, faction: FactionType, completion: @escaping (_ result: Result<Data, HTTPError>) -> Void) {
-        let apiType: APIType = .gameData
-        var urlStr = getBaseURL(apiType: apiType) + "/leaderboard/hall-of-fame/\(raid)/\(faction.rawValue.lowercased())"
-        urlStr = appendSharedURLParameters(to: urlStr, withNamespace: "dynamic")
-        
-        self.callWebService(urlStr: urlStr, method: .get, apiType: apiType) { result in
-            completion(result)
-        }
-    }
     
     
     // MARK: Mythic Keystone Dungeon API
@@ -222,7 +280,7 @@ public struct WS_WorldOfWarcraft: WebService {
      */
     func getMythicKeystoneDungeons(completion: @escaping (_ result: Result<Data, HTTPError>) -> Void) {
         let apiType: APIType = .gameData
-        var urlStr = getBaseURL(apiType: apiType) + "/mythic-keystone/dungeon/index"
+        var urlStr = getBaseURL(apiType: apiType)!.absoluteString + "/mythic-keystone/dungeon/index"
         urlStr = appendSharedURLParameters(to: urlStr, withNamespace: "dynamic")
         
         self.callWebService(urlStr: urlStr, method: .get, apiType: apiType) { result in
@@ -241,7 +299,7 @@ public struct WS_WorldOfWarcraft: WebService {
      */
     func getMythicKeystoneDungeon(id: Int, completion: @escaping (_ result: Result<Data, HTTPError>) -> Void) {
         let apiType: APIType = .gameData
-        var urlStr = getBaseURL(apiType: apiType) + "/mythic-keystone/dungeon/\(id)"
+        var urlStr = getBaseURL(apiType: apiType)!.absoluteString + "/mythic-keystone/dungeon/\(id)"
         urlStr = appendSharedURLParameters(to: urlStr, withNamespace: "dynamic")
         
         self.callWebService(urlStr: urlStr, method: .get, apiType: apiType) { result in
@@ -259,7 +317,7 @@ public struct WS_WorldOfWarcraft: WebService {
      */
     func getMythicKeystones(completion: @escaping (_ result: Result<Data, HTTPError>) -> Void) {
         let apiType: APIType = .gameData
-        var urlStr = getBaseURL(apiType: apiType) + "/mythic-keystone/index"
+        var urlStr = getBaseURL(apiType: apiType)!.absoluteString + "/mythic-keystone/index"
         urlStr = appendSharedURLParameters(to: urlStr, withNamespace: "dynamic")
         
         self.callWebService(urlStr: urlStr, method: .get, apiType: apiType) { result in
@@ -277,7 +335,7 @@ public struct WS_WorldOfWarcraft: WebService {
      */
     func getMythicKeystonePeriods(completion: @escaping (_ result: Result<Data, HTTPError>) -> Void) {
         let apiType: APIType = .gameData
-        var urlStr = getBaseURL(apiType: apiType) + "/mythic-keystone/period/index"
+        var urlStr = getBaseURL(apiType: apiType)!.absoluteString + "/mythic-keystone/period/index"
         urlStr = appendSharedURLParameters(to: urlStr, withNamespace: "dynamic")
         
         self.callWebService(urlStr: urlStr, method: .get, apiType: apiType) { result in
@@ -296,7 +354,7 @@ public struct WS_WorldOfWarcraft: WebService {
      */
     func getMythicKeystonePeriod(id: Int, completion: @escaping (_ result: Result<Data, HTTPError>) -> Void) {
         let apiType: APIType = .gameData
-        var urlStr = getBaseURL(apiType: apiType) + "/mythic-keystone/period/\(id)"
+        var urlStr = getBaseURL(apiType: apiType)!.absoluteString + "/mythic-keystone/period/\(id)"
         urlStr = appendSharedURLParameters(to: urlStr, withNamespace: "dynamic")
         
         self.callWebService(urlStr: urlStr, method: .get, apiType: apiType) { result in
@@ -314,7 +372,7 @@ public struct WS_WorldOfWarcraft: WebService {
      */
     func getMythicKeystoneSeasons(completion: @escaping (_ result: Result<Data, HTTPError>) -> Void) {
         let apiType: APIType = .gameData
-        var urlStr = getBaseURL(apiType: apiType) + "/mythic-keystone/season/index"
+        var urlStr = getBaseURL(apiType: apiType)!.absoluteString + "/mythic-keystone/season/index"
         urlStr = appendSharedURLParameters(to: urlStr, withNamespace: "dynamic")
         
         self.callWebService(urlStr: urlStr, method: .get, apiType: apiType) { result in
@@ -333,7 +391,7 @@ public struct WS_WorldOfWarcraft: WebService {
      */
     func getMythicKeystoneSeason(id: Int, completion: @escaping (_ result: Result<Data, HTTPError>) -> Void) {
         let apiType: APIType = .gameData
-        var urlStr = getBaseURL(apiType: apiType) + "/mythic-keystone/season/\(id)"
+        var urlStr = getBaseURL(apiType: apiType)!.absoluteString + "/mythic-keystone/season/\(id)"
         urlStr = appendSharedURLParameters(to: urlStr, withNamespace: "dynamic")
         
         self.callWebService(urlStr: urlStr, method: .get, apiType: apiType) { result in
@@ -355,7 +413,7 @@ public struct WS_WorldOfWarcraft: WebService {
      */
     func getMythicLeaderboards(connectedRealmID: Int, completion: @escaping (_ result: Result<Data, HTTPError>) -> Void) {
         let apiType: APIType = .gameData
-        var urlStr = getBaseURL(apiType: apiType) + "/connected-realm/\(connectedRealmID)/mythic-leaderboard/"
+        var urlStr = getBaseURL(apiType: apiType)!.absoluteString + "/connected-realm/\(connectedRealmID)/mythic-leaderboard/"
         urlStr = appendSharedURLParameters(to: urlStr, withNamespace: "dynamic")
         
         self.callWebService(urlStr: urlStr, method: .get, apiType: apiType) { result in
@@ -376,7 +434,30 @@ public struct WS_WorldOfWarcraft: WebService {
      */
     func getMythicLeaderboard(connectedRealmID: Int, dungeonID: Int, period: Int, completion: @escaping (_ result: Result<Data, HTTPError>) -> Void) {
         let apiType: APIType = .gameData
-        var urlStr = getBaseURL(apiType: apiType) + "/connected-realm/\(connectedRealmID)/mythic-leaderboard/\(dungeonID)/period/\(period)"
+        var urlStr = getBaseURL(apiType: apiType)!.absoluteString + "/connected-realm/\(connectedRealmID)/mythic-leaderboard/\(dungeonID)/period/\(period)"
+        urlStr = appendSharedURLParameters(to: urlStr, withNamespace: "dynamic")
+        
+        self.callWebService(urlStr: urlStr, method: .get, apiType: apiType) { result in
+            completion(result)
+        }
+    }
+    
+    
+    
+    // MARK: Mythic Raid Leaderboard API
+    
+    /**
+     Returns the leaderboard for a given raid and faction.
+     
+     - parameter raid: The raid for a leaderboard
+     - parameter faction: Player faction ('alliance' or 'horde')
+     - parameter region: What region the request is being made
+     - parameter locale: The locale that should be reflected in localized data
+     - parameter completion: Returns a Result with the Data if `success` or an HTTPError if `failure`
+     */
+    func getMythicRaidLeaderboard(raid: String, faction: FactionType, completion: @escaping (_ result: Result<Data, HTTPError>) -> Void) {
+        let apiType: APIType = .gameData
+        var urlStr = getBaseURL(apiType: apiType)!.absoluteString + "/leaderboard/hall-of-fame/\(raid)/\(faction.rawValue.lowercased())"
         urlStr = appendSharedURLParameters(to: urlStr, withNamespace: "dynamic")
         
         self.callWebService(urlStr: urlStr, method: .get, apiType: apiType) { result in
@@ -397,7 +478,7 @@ public struct WS_WorldOfWarcraft: WebService {
      */
     func getMythicChallengeMode(completion: @escaping (_ result: Result<Data, HTTPError>) -> Void) {
         let apiType: APIType = .gameData
-        var urlStr = getBaseURL(apiType: apiType) + "/mythic-challenge-mode/"
+        var urlStr = getBaseURL(apiType: apiType)!.absoluteString + "/mythic-challenge-mode/"
         urlStr = appendSharedURLParameters(to: urlStr, withNamespace: "dynamic")
         
         self.callWebService(urlStr: urlStr, method: .get, apiType: apiType) { result in
@@ -418,7 +499,7 @@ public struct WS_WorldOfWarcraft: WebService {
      */
     func getPlayableClasses(completion: @escaping (_ result: Result<Data, HTTPError>) -> Void) {
         let apiType: APIType = .gameData
-        var urlStr = getBaseURL(apiType: apiType) + "/playable-class/index"
+        var urlStr = getBaseURL(apiType: apiType)!.absoluteString + "/playable-class/index"
         urlStr = appendSharedURLParameters(to: urlStr, withNamespace: "static")
         
         self.callWebService(urlStr: urlStr, method: .get, apiType: apiType) { result in
@@ -437,7 +518,7 @@ public struct WS_WorldOfWarcraft: WebService {
      */
     func getPlayableClass(id: Int, completion: @escaping (_ result: Result<Data, HTTPError>) -> Void) {
         let apiType: APIType = .gameData
-        var urlStr = getBaseURL(apiType: apiType) + "/playable-class/\(id)"
+        var urlStr = getBaseURL(apiType: apiType)!.absoluteString + "/playable-class/\(id)"
         urlStr = appendSharedURLParameters(to: urlStr, withNamespace: "static")
         
         self.callWebService(urlStr: urlStr, method: .get, apiType: apiType) { result in
@@ -456,7 +537,7 @@ public struct WS_WorldOfWarcraft: WebService {
      */
     func getPlayableClassPvPTalentSlots(id: Int, completion: @escaping (_ result: Result<Data, HTTPError>) -> Void) {
         let apiType: APIType = .gameData
-        var urlStr = getBaseURL(apiType: apiType) + "/playable-class/\(id)/pvp-talent-slots"
+        var urlStr = getBaseURL(apiType: apiType)!.absoluteString + "/playable-class/\(id)/pvp-talent-slots"
         urlStr = appendSharedURLParameters(to: urlStr, withNamespace: "static")
         
         self.callWebService(urlStr: urlStr, method: .get, apiType: apiType) { result in
@@ -477,7 +558,7 @@ public struct WS_WorldOfWarcraft: WebService {
      */
     func getPlayableSpecializations(completion: @escaping (_ result: Result<Data, HTTPError>) -> Void) {
         let apiType: APIType = .gameData
-        var urlStr = getBaseURL(apiType: apiType) + "/playable-specialization/index"
+        var urlStr = getBaseURL(apiType: apiType)!.absoluteString + "/playable-specialization/index"
         urlStr = appendSharedURLParameters(to: urlStr, withNamespace: "static")
         
         self.callWebService(urlStr: urlStr, method: .get, apiType: apiType) { result in
@@ -496,7 +577,7 @@ public struct WS_WorldOfWarcraft: WebService {
      */
     func getPlayableSpecialization(id: Int, completion: @escaping (_ result: Result<Data, HTTPError>) -> Void) {
         let apiType: APIType = .gameData
-        var urlStr = getBaseURL(apiType: apiType) + "/playable-specialization/\(id)"
+        var urlStr = getBaseURL(apiType: apiType)!.absoluteString + "/playable-specialization/\(id)"
         urlStr = appendSharedURLParameters(to: urlStr, withNamespace: "static")
         
         self.callWebService(urlStr: urlStr, method: .get, apiType: apiType) { result in
@@ -517,7 +598,7 @@ public struct WS_WorldOfWarcraft: WebService {
      */
     func getPowerTypes(completion: @escaping (_ result: Result<Data, HTTPError>) -> Void) {
         let apiType: APIType = .gameData
-        var urlStr = getBaseURL(apiType: apiType) + "/power-type/index"
+        var urlStr = getBaseURL(apiType: apiType)!.absoluteString + "/power-type/index"
         urlStr = appendSharedURLParameters(to: urlStr, withNamespace: "static")
         
         self.callWebService(urlStr: urlStr, method: .get, apiType: apiType) { result in
@@ -536,7 +617,7 @@ public struct WS_WorldOfWarcraft: WebService {
      */
     func getPowerType(id: Int, completion: @escaping (_ result: Result<Data, HTTPError>) -> Void) {
         let apiType: APIType = .gameData
-        var urlStr = getBaseURL(apiType: apiType) + "/power-type/\(id)"
+        var urlStr = getBaseURL(apiType: apiType)!.absoluteString + "/power-type/\(id)"
         urlStr = appendSharedURLParameters(to: urlStr, withNamespace: "static")
         
         self.callWebService(urlStr: urlStr, method: .get, apiType: apiType) { result in
@@ -556,7 +637,7 @@ public struct WS_WorldOfWarcraft: WebService {
      */
     func getPlayableRaces(completion: @escaping (_ result: Result<Data, HTTPError>) -> Void) {
         let apiType: APIType = .gameData
-        var urlStr = getBaseURL(apiType: apiType) + "/race/index"
+        var urlStr = getBaseURL(apiType: apiType)!.absoluteString + "/race/index"
         urlStr = appendSharedURLParameters(to: urlStr, withNamespace: "static")
         
         self.callWebService(urlStr: urlStr, method: .get, apiType: apiType) { result in
@@ -575,7 +656,7 @@ public struct WS_WorldOfWarcraft: WebService {
      */
     func getPlayableRace(id: Int, completion: @escaping (_ result: Result<Data, HTTPError>) -> Void) {
         let apiType: APIType = .gameData
-        var urlStr = getBaseURL(apiType: apiType) + "/race/\(id)"
+        var urlStr = getBaseURL(apiType: apiType)!.absoluteString + "/race/\(id)"
         urlStr = appendSharedURLParameters(to: urlStr, withNamespace: "static")
         
         self.callWebService(urlStr: urlStr, method: .get, apiType: apiType) { result in
@@ -596,7 +677,7 @@ public struct WS_WorldOfWarcraft: WebService {
      */
     func getRealmIndex(completion: @escaping (_ result: Result<Data, HTTPError>) -> Void) {
         let apiType: APIType = .gameData
-        var urlStr = getBaseURL(apiType: apiType) + "/realm/index"
+        var urlStr = getBaseURL(apiType: apiType)!.absoluteString + "/realm/index"
         urlStr = appendSharedURLParameters(to: urlStr, withNamespace: "dynamic")
         
         self.callWebService(urlStr: urlStr, method: .get, apiType: apiType) { result in
@@ -615,7 +696,7 @@ public struct WS_WorldOfWarcraft: WebService {
      */
     func getRealm(_ slug: String, completion: @escaping (_ result: Result<Data, HTTPError>) -> Void) {
         let apiType: APIType = .gameData
-        var urlStr = getBaseURL(apiType: apiType) + "/realm/\(slug)"
+        var urlStr = getBaseURL(apiType: apiType)!.absoluteString + "/realm/\(slug)"
         urlStr = appendSharedURLParameters(to: urlStr, withNamespace: "dynamic")
         
         self.callWebService(urlStr: urlStr, method: .get, apiType: apiType) { result in
@@ -636,7 +717,7 @@ public struct WS_WorldOfWarcraft: WebService {
      */
     func getRegionIndex(completion: @escaping (_ result: Result<Data, HTTPError>) -> Void) {
         let apiType: APIType = .gameData
-        var urlStr = getBaseURL(apiType: apiType) + "/region/index"
+        var urlStr = getBaseURL(apiType: apiType)!.absoluteString + "/region/index"
         urlStr = appendSharedURLParameters(to: urlStr, withNamespace: "dynamic")
         
         self.callWebService(urlStr: urlStr, method: .get, apiType: apiType) { result in
@@ -655,7 +736,7 @@ public struct WS_WorldOfWarcraft: WebService {
      */
     func getRegion(id: Int, completion: @escaping (_ result: Result<Data, HTTPError>) -> Void) {
         let apiType: APIType = .gameData
-        var urlStr = getBaseURL(apiType: apiType) + "/region/\(id)"
+        var urlStr = getBaseURL(apiType: apiType)!.absoluteString + "/region/\(id)"
         urlStr = appendSharedURLParameters(to: urlStr, withNamespace: "dynamic")
         
         self.callWebService(urlStr: urlStr, method: .get, apiType: apiType) { result in
@@ -676,7 +757,7 @@ public struct WS_WorldOfWarcraft: WebService {
      */
     func getTokenIndex(completion: @escaping (_ result: Result<Data, HTTPError>) -> Void) {
         let apiType: APIType = .gameData
-        var urlStr = getBaseURL(apiType: apiType) + "/token/index"
+        var urlStr = getBaseURL(apiType: apiType)!.absoluteString + "/token/index"
         urlStr = appendSharedURLParameters(to: urlStr, withNamespace: "dynamic")
         
         self.callWebService(urlStr: urlStr, method: .get, apiType: apiType) { result in
@@ -686,93 +767,63 @@ public struct WS_WorldOfWarcraft: WebService {
     
     
     
-    // MARK: - Community API
-    
-    // MARK: Achievement API
+    // MARK: - Profile API
     
     /**
-     This provides data about an individual achievement.
+     This provides data about the current logged in OAuth user's WoW profile.
      
-     - parameter id: The ID of the achievement to retrieve
      - parameter region: What region the request is being made
-     - parameter locale: What locale to use in the response
      - parameter completion: Returns a Result with the Data if `success` or an HTTPError if `failure`
     */
-    func getAchievement(id: Int, completion: @escaping (_ result: Result<Data, HTTPError>) -> Void) {
-        let apiType: APIType = .community
-        var urlStr = getBaseURL(apiType: apiType) + "/achievement/\(id)"
-        urlStr = appendSharedURLParameters(to: urlStr)
-        
-        self.callWebService(urlStr: urlStr, method: .get, apiType: apiType) { result in
+    public func getCharacters(region: APIRegion, completion: @escaping (_ result: Result<Data, Error>) -> Void) {
+        call(endpoint: API.characters) { result in
             completion(result)
         }
     }
     
     
-    
-    // MARK: Auction API
-    
-    /**
-     Auction APIs currently provide rolling batches of data about current auctions. Fetching auction dumps is a two step process that involves checking a per-realm index file to determine if a recent dump has been generated and then fetching the most recently generated dump file if necessary.
-     
-     This API resource provides a per-realm list of recently generated auction house data dumps.
-     
-     - parameter realm: The realm being requested
-     - parameter region: What region the request is being made
-     - parameter locale: What locale to use in the response
-     - parameter completion: Returns a Result with the Data if `success` or an HTTPError if `failure`
-     */
-    func getAuctions(realm: String, completion: @escaping (_ result: Result<Data, HTTPError>) -> Void) {
-        let apiType: APIType = .community
-        var urlStr = getBaseURL(apiType: apiType) + "/auction/data/\(realm)"
-        urlStr = appendSharedURLParameters(to: urlStr)
-        
-        self.callWebService(urlStr: urlStr, method: .get, apiType: apiType) { result in
-            completion(result)
-        }
-    }
-    
-    
-    
-    // MARK: Boss API
+    // MARK: WoW Mythic Keystone Character Profile API
     
     /**
-     A list of all supported bosses. A 'boss' in this context should be considered a boss encounter, which may include more than one NPC.
+     Returns a Mythic Keystone Profile index for a character.
      
-     - parameter region: What region the request is being made
-     - parameter locale: What locale to use in the response
+     - note: This request returns a 404 for characters that have not completed a Mythic Keystone dungeon.
+     
+     - parameter characterName: The lowercase name of the character
+     - parameter realmSlug: The slug of the realm
      - parameter completion: Returns a Result with the Data if `success` or an HTTPError if `failure`
      */
-    func getBosses(completion: @escaping (_ result: Result<Data, HTTPError>) -> Void) {
-        let apiType: APIType = .community
-        var urlStr = getBaseURL(apiType: apiType) + "/boss/"
-        urlStr = appendSharedURLParameters(to: urlStr)
-        
-        self.callWebService(urlStr: urlStr, method: .get, apiType: apiType) { result in
+    public func getMythicKeystoneProfile(characterName: String, realmSlug: String, namespace: APINamespace? = nil, completion: @escaping (_ result: Result<Data, Error>) -> Void) {
+        call(endpoint: API.mythicKeystoneProfile(realmSlug: realmSlug, characterName: characterName), namespace: .profile) { result in
             completion(result)
         }
     }
     
     
     /**
-     The boss API provides information about bosses. A 'boss' in this context should be considered a boss encounter, which may include more than one NPC.
+     Returns a Mythic Keystone Profile index for a character.
      
-     - parameter id: The ID of the boss you want to retrieve
+     - note: This request returns a 404 for characters that have not completed a Mythic Keystone dungeon.
+     
+     - parameter seasonID: The ID of the Mythic Keystone season
+     - parameter characterName: The lowercase name of the character
+     - parameter realmSlug: The slug of the realm
      - parameter region: What region the request is being made
-     - parameter locale: What locale to use in the response
      - parameter completion: Returns a Result with the Data if `success` or an HTTPError if `failure`
      */
-    func getBoss(id: Int, completion: @escaping (_ result: Result<Data, HTTPError>) -> Void) {
-        let apiType: APIType = .community
-        var urlStr = getBaseURL(apiType: apiType) + "/boss/\(id)"
-        urlStr = appendSharedURLParameters(to: urlStr)
+    func getMythicKeystoneProfileSeason(seasonID: Int, characterName: String, realmSlug: String, completion: @escaping (_ result: Result<Data, HTTPError>) -> Void) {
+        let apiType: APIType = .profile
+        var urlStr = getBaseURL(apiType: apiType)!.absoluteString + "/character/\(realmSlug)/\(characterName)/mythic-keystone-profile/season/\(seasonID)"
+        urlStr = appendSharedURLParameters(to: urlStr, withNamespace: "profile")
         
-        self.callWebService(urlStr: urlStr, method: .get, apiType: apiType) { result in
+        self.callWebService(urlStr: urlStr, method: .get, apiType: .profile) { result in
             completion(result)
         }
     }
     
     
+    
+    // MARK: - Community API
     
     // MARK: Challenge Mode API
     
@@ -786,7 +837,7 @@ public struct WS_WorldOfWarcraft: WebService {
     */
     func getChallengeLeaderboards(realm: String, completion: @escaping (_ result: Result<Data, HTTPError>) -> Void) {
         let apiType: APIType = .community
-        var urlStr = getBaseURL(apiType: apiType) + "/challenge/\(realm)"
+        var urlStr = getBaseURL(apiType: apiType)!.absoluteString + "/challenge/\(realm)"
         urlStr = appendSharedURLParameters(to: urlStr)
         
         self.callWebService(urlStr: urlStr, method: .get, apiType: apiType) { result in
@@ -804,7 +855,7 @@ public struct WS_WorldOfWarcraft: WebService {
      */
     func getTopChallengeLeaderboards(completion: @escaping (_ result: Result<Data, HTTPError>) -> Void) {
         let apiType: APIType = .community
-        var urlStr = getBaseURL(apiType: apiType) + "/challenge/region"
+        var urlStr = getBaseURL(apiType: apiType)!.absoluteString + "/challenge/region"
         urlStr = appendSharedURLParameters(to: urlStr)
         
         self.callWebService(urlStr: urlStr, method: .get, apiType: apiType) { result in
@@ -828,7 +879,7 @@ public struct WS_WorldOfWarcraft: WebService {
     */
     func getCharacter(_ name: String, realm: String, fields: [String]?, completion: @escaping (_ result: Result<Data, HTTPError>) -> Void) {
         let apiType: APIType = .community
-        var urlStr = getBaseURL(apiType: apiType) + "/character/\(realm)/\(name)"
+        var urlStr = getBaseURL(apiType: apiType)!.absoluteString + "/character/\(realm)/\(name)"
         urlStr = appendSharedURLParameters(to: urlStr)
         
         if var url = URL(string: urlStr),
@@ -857,7 +908,7 @@ public struct WS_WorldOfWarcraft: WebService {
      */
     func getGuild(_ name: String, realm: String, fields: [String]?, completion: @escaping (_ result: Result<Data, HTTPError>) -> Void) {
         let apiType: APIType = .community
-        var urlStr = getBaseURL(apiType: apiType) + "/guild/\(realm)/\(name)"
+        var urlStr = getBaseURL(apiType: apiType)!.absoluteString + "/guild/\(realm)/\(name)"
         urlStr = appendSharedURLParameters(to: urlStr)
         
         if var url = URL(string: urlStr),
@@ -865,68 +916,6 @@ public struct WS_WorldOfWarcraft: WebService {
             url.appendQuery(parameters: ["fields": fields.joined(separator: ",")])
             urlStr = url.absoluteString
         }
-        
-        self.callWebService(urlStr: urlStr, method: .get, apiType: apiType) { result in
-            completion(result)
-        }
-    }
-    
-    
-    
-    // MARK: Item API
-    
-    /**
-     The item API provides detailed item information. This includes item set information if this item is part of a set.
-     
-     - parameter id: Unique ID of the item being requested
-     - parameter region: What region the request is being made
-     - parameter locale: What locale to use in the response
-     - parameter completion: Returns a Result with the Data if `success` or an HTTPError if `failure`
-     */
-    func getItem(id: Int, completion: @escaping (_ result: Result<Data, HTTPError>) -> Void) {
-        let apiType: APIType = .community
-        var urlStr = getBaseURL(apiType: .community) + "/item/\(id)"
-        urlStr = appendSharedURLParameters(to: urlStr)
-        
-        self.callWebService(urlStr: urlStr, method: .get, apiType: apiType) { result in
-            completion(result)
-        }
-    }
-    
-    
-    /**
-     The item API provides detailed item information. This includes item set information if this item is part of a set.
-     
-     - parameter setID: Unique ID of the set being requested
-     - parameter region: What region the request is being made
-     - parameter locale: What locale to use in the response
-     - parameter completion: Returns a Result with the Data if `success` or an HTTPError if `failure`
-     */
-    func getItemSet(setID: Int, completion: @escaping (_ result: Result<Data, HTTPError>) -> Void) {
-        let apiType: APIType = .community
-        var urlStr = getBaseURL(apiType: apiType) + "/item/set/\(setID)"
-        urlStr = appendSharedURLParameters(to: urlStr)
-        
-        self.callWebService(urlStr: urlStr, method: .get, apiType: apiType) { result in
-            completion(result)
-        }
-    }
-    
-    
-    
-    // MARK: Mount API
-    
-    /**
-     A list of all supported mounts.
-     
-     - parameter region: What region the request is being made
-     - parameter locale: What locale to use in the response
-     - parameter completion: Returns a Result with the Data if `success` or an HTTPError if `failure`
-     */
-    func getMounts(completion: @escaping (_ result: Result<Data, HTTPError>) -> Void) {
-        let apiType: APIType = .community
-        var urlStr = getBaseURL(apiType: apiType) + "/mount/"
-        urlStr = appendSharedURLParameters(to: urlStr)
         
         self.callWebService(urlStr: urlStr, method: .get, apiType: apiType) { result in
             completion(result)
@@ -946,7 +935,7 @@ public struct WS_WorldOfWarcraft: WebService {
      */
     func getPets(completion: @escaping (_ result: Result<Data, HTTPError>) -> Void) {
         let apiType: APIType = .community
-        var urlStr = getBaseURL(apiType: apiType) + "/pet/"
+        var urlStr = getBaseURL(apiType: apiType)!.absoluteString + "/pet/"
         urlStr = appendSharedURLParameters(to: urlStr)
         
         self.callWebService(urlStr: urlStr, method: .get, apiType: apiType) { result in
@@ -965,7 +954,7 @@ public struct WS_WorldOfWarcraft: WebService {
      */
     func getPetAbility(abilityID: Int, completion: @escaping (_ result: Result<Data, HTTPError>) -> Void) {
         let apiType: APIType = .community
-        var urlStr = getBaseURL(apiType: apiType) + "/pet/ability/\(abilityID)"
+        var urlStr = getBaseURL(apiType: apiType)!.absoluteString + "/pet/ability/\(abilityID)"
         urlStr = appendSharedURLParameters(to: urlStr)
         
         self.callWebService(urlStr: urlStr, method: .get, apiType: apiType) { result in
@@ -984,7 +973,7 @@ public struct WS_WorldOfWarcraft: WebService {
      */
     func getPetSpecies(speciesID: Int, completion: @escaping (_ result: Result<Data, HTTPError>) -> Void) {
         let apiType: APIType = .community
-        var urlStr = getBaseURL(apiType: apiType) + "/pet/species/\(speciesID)"
+        var urlStr = getBaseURL(apiType: apiType)!.absoluteString + "/pet/species/\(speciesID)"
         urlStr = appendSharedURLParameters(to: urlStr)
         
         self.callWebService(urlStr: urlStr, method: .get, apiType: apiType) { result in
@@ -1006,7 +995,7 @@ public struct WS_WorldOfWarcraft: WebService {
     */
     func getPetStats(speciesID: Int, level: Int = 1, breedID: Int = 3, qualityID: Int = 1, completion: @escaping (_ result: Result<Data, HTTPError>) -> Void) {
         let apiType: APIType = .community
-        var urlStr = getBaseURL(apiType: apiType) + "/pet/stats/\(speciesID)"
+        var urlStr = getBaseURL(apiType: apiType)!.absoluteString + "/pet/stats/\(speciesID)"
         urlStr = appendSharedURLParameters(to: urlStr)
         
         if var url = URL(string: urlStr) {
@@ -1044,7 +1033,7 @@ public struct WS_WorldOfWarcraft: WebService {
         }
         
         let apiType: APIType = .community
-        var urlStr = getBaseURL(apiType: apiType) + "/leaderboard/\(bracket)"
+        var urlStr = getBaseURL(apiType: apiType)!.absoluteString + "/leaderboard/\(bracket)"
         urlStr = appendSharedURLParameters(to: urlStr)
         
         self.callWebService(urlStr: urlStr, method: .get, apiType: apiType) { result in
@@ -1066,7 +1055,7 @@ public struct WS_WorldOfWarcraft: WebService {
     */
     func getQuest(id: Int, completion: @escaping (_ result: Result<Data, HTTPError>) -> Void) {
         let apiType: APIType = .community
-        var urlStr = getBaseURL(apiType: apiType) + "/quest/\(id)"
+        var urlStr = getBaseURL(apiType: apiType)!.absoluteString + "/quest/\(id)"
         urlStr = appendSharedURLParameters(to: urlStr)
         
         self.callWebService(urlStr: urlStr, method: .get, apiType: apiType) { result in
@@ -1107,7 +1096,7 @@ public struct WS_WorldOfWarcraft: WebService {
     */
     func getRealmsStatus(completion: @escaping (_ result: Result<Data, HTTPError>) -> Void) {
         let apiType: APIType = .community
-        var urlStr = getBaseURL(apiType: apiType) + "/realm/status"
+        var urlStr = getBaseURL(apiType: apiType)!.absoluteString + "/realm/status"
         urlStr = appendSharedURLParameters(to: urlStr)
         
         self.callWebService(urlStr: urlStr, method: .get, apiType: apiType) { result in
@@ -1129,7 +1118,7 @@ public struct WS_WorldOfWarcraft: WebService {
      */
     func getRecipe(id: Int, completion: @escaping (_ result: Result<Data, HTTPError>) -> Void) {
         let apiType: APIType = .community
-        var urlStr = getBaseURL(apiType: apiType) + "/recipe/\(id)"
+        var urlStr = getBaseURL(apiType: apiType)!.absoluteString + "/recipe/\(id)"
         urlStr = appendSharedURLParameters(to: urlStr)
         
         self.callWebService(urlStr: urlStr, method: .get, apiType: apiType) { result in
@@ -1151,7 +1140,7 @@ public struct WS_WorldOfWarcraft: WebService {
      */
     func getSpell(id: Int, completion: @escaping (_ result: Result<Data, HTTPError>) -> Void) {
         let apiType: APIType = .community
-        var urlStr = getBaseURL(apiType: apiType) + "/spell/\(id)"
+        var urlStr = getBaseURL(apiType: apiType)!.absoluteString + "/spell/\(id)"
         urlStr = appendSharedURLParameters(to: urlStr)
         
         self.callWebService(urlStr: urlStr, method: .get, apiType: apiType) { result in
@@ -1172,7 +1161,7 @@ public struct WS_WorldOfWarcraft: WebService {
     */
     func getZones(completion: @escaping (_ result: Result<Data, HTTPError>) -> Void) {
         let apiType: APIType = .community
-        var urlStr = getBaseURL(apiType: apiType) + "/zone/"
+        var urlStr = getBaseURL(apiType: apiType)!.absoluteString + "/zone/"
         urlStr = appendSharedURLParameters(to: urlStr)
         
         self.callWebService(urlStr: urlStr, method: .get, apiType: apiType) { result in
@@ -1191,7 +1180,7 @@ public struct WS_WorldOfWarcraft: WebService {
      */
     func getZone(id: Int, completion: @escaping (_ result: Result<Data, HTTPError>) -> Void) {
         let apiType: APIType = .community
-        var urlStr = getBaseURL(apiType: apiType) + "/zone/\(id)"
+        var urlStr = getBaseURL(apiType: apiType)!.absoluteString + "/zone/\(id)"
         urlStr = appendSharedURLParameters(to: urlStr)
         
         self.callWebService(urlStr: urlStr, method: .get, apiType: apiType) { result in
@@ -1212,7 +1201,7 @@ public struct WS_WorldOfWarcraft: WebService {
     */
     func getBattlegroups(completion: @escaping (_ result: Result<Data, HTTPError>) -> Void) {
         let apiType: APIType = .community
-        var urlStr = getBaseURL(apiType: apiType) + "/data/battlegroups/"
+        var urlStr = getBaseURL(apiType: apiType)!.absoluteString + "/data/battlegroups/"
         urlStr = appendSharedURLParameters(to: urlStr)
         
         self.callWebService(urlStr: urlStr, method: .get, apiType: apiType) { result in
@@ -1230,7 +1219,7 @@ public struct WS_WorldOfWarcraft: WebService {
     */
     func getRaces(completion: @escaping (_ result: Result<Data, HTTPError>) -> Void) {
         let apiType: APIType = .community
-        var urlStr = getBaseURL(apiType: apiType) + "/data/character/races"
+        var urlStr = getBaseURL(apiType: apiType)!.absoluteString + "/data/character/races"
         urlStr = appendSharedURLParameters(to: urlStr)
         
         self.callWebService(urlStr: urlStr, method: .get, apiType: apiType) { result in
@@ -1248,7 +1237,7 @@ public struct WS_WorldOfWarcraft: WebService {
     */
     func getClasses(completion: @escaping (_ result: Result<Data, HTTPError>) -> Void) {
         let apiType: APIType = .community
-        var urlStr = getBaseURL(apiType: apiType) + "/data/character/classes"
+        var urlStr = getBaseURL(apiType: apiType)!.absoluteString + "/data/character/classes"
         urlStr = appendSharedURLParameters(to: urlStr)
         
         self.callWebService(urlStr: urlStr, method: .get, apiType: apiType) { result in
@@ -1266,7 +1255,7 @@ public struct WS_WorldOfWarcraft: WebService {
      */
     func getAchievements(completion: @escaping (_ result: Result<Data, HTTPError>) -> Void) {
         let apiType: APIType = .community
-        var urlStr = getBaseURL(apiType: apiType) + "/data/character/achievements"
+        var urlStr = getBaseURL(apiType: apiType)!.absoluteString + "/data/character/achievements"
         urlStr = appendSharedURLParameters(to: urlStr)
         
         self.callWebService(urlStr: urlStr, method: .get, apiType: apiType) { result in
@@ -1284,7 +1273,7 @@ public struct WS_WorldOfWarcraft: WebService {
      */
     func getGuildRewards(completion: @escaping (_ result: Result<Data, HTTPError>) -> Void) {
         let apiType: APIType = .community
-        var urlStr = getBaseURL(apiType: apiType) + "/data/guild/rewards"
+        var urlStr = getBaseURL(apiType: apiType)!.absoluteString + "/data/guild/rewards"
         urlStr = appendSharedURLParameters(to: urlStr)
         
         self.callWebService(urlStr: urlStr, method: .get, apiType: apiType) { result in
@@ -1302,7 +1291,7 @@ public struct WS_WorldOfWarcraft: WebService {
      */
     func getGuildPerks(completion: @escaping (_ result: Result<Data, HTTPError>) -> Void) {
         let apiType: APIType = .community
-        var urlStr = getBaseURL(apiType: apiType) + "/data/guild/perks"
+        var urlStr = getBaseURL(apiType: apiType)!.absoluteString + "/data/guild/perks"
         urlStr = appendSharedURLParameters(to: urlStr)
         
         self.callWebService(urlStr: urlStr, method: .get, apiType: apiType) { result in
@@ -1320,7 +1309,7 @@ public struct WS_WorldOfWarcraft: WebService {
      */
     func getGuildAchievements(completion: @escaping (_ result: Result<Data, HTTPError>) -> Void) {
         let apiType: APIType = .community
-        var urlStr = getBaseURL(apiType: apiType) + "/data/guild/achievements"
+        var urlStr = getBaseURL(apiType: apiType)!.absoluteString + "/data/guild/achievements"
         urlStr = appendSharedURLParameters(to: urlStr)
         
         self.callWebService(urlStr: urlStr, method: .get, apiType: apiType) { result in
@@ -1338,7 +1327,7 @@ public struct WS_WorldOfWarcraft: WebService {
      */
     func getItemClasses(completion: @escaping (_ result: Result<Data, HTTPError>) -> Void) {
         let apiType: APIType = .community
-        var urlStr = getBaseURL(apiType: apiType) + "/data/item/classes"
+        var urlStr = getBaseURL(apiType: apiType)!.absoluteString + "/data/item/classes"
         urlStr = appendSharedURLParameters(to: urlStr)
         
         self.callWebService(urlStr: urlStr, method: .get, apiType: apiType) { result in
@@ -1356,7 +1345,7 @@ public struct WS_WorldOfWarcraft: WebService {
      */
     func getTalents(completion: @escaping (_ result: Result<Data, HTTPError>) -> Void) {
         let apiType: APIType = .community
-        var urlStr = getBaseURL(apiType: apiType) + "/data/talents"
+        var urlStr = getBaseURL(apiType: apiType)!.absoluteString + "/data/talents"
         urlStr = appendSharedURLParameters(to: urlStr)
         
         self.callWebService(urlStr: urlStr, method: .get, apiType: apiType) { result in
@@ -1374,7 +1363,7 @@ public struct WS_WorldOfWarcraft: WebService {
      */
     func getPetTypes(completion: @escaping (_ result: Result<Data, HTTPError>) -> Void) {
         let apiType: APIType = .community
-        var urlStr = getBaseURL(apiType: apiType) + "/data/pet/types"
+        var urlStr = getBaseURL(apiType: apiType)!.absoluteString + "/data/pet/types"
         urlStr = appendSharedURLParameters(to: urlStr)
         
         self.callWebService(urlStr: urlStr, method: .get, apiType: apiType) { result in

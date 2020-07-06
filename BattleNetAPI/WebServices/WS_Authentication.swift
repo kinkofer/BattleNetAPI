@@ -15,9 +15,11 @@ public struct WS_Authentication: WebService {
     var region: APIRegion
     var locale: APILocale?
     
+    var session: URLSession
     
-    func getBaseURL(apiType: APIType?) -> String {
-        return region.oauthURI
+    
+    func getBaseURL(apiType: APIType? = nil) -> URL? {
+        return URL(string: region.oauthURI)
     }
     
     
@@ -177,19 +179,17 @@ public struct WS_Authentication: WebService {
      - important: Blizzard does not allow redirects to app scheme urls. You would be required to receive the redirect on a server, then could open your app from there. Your app must be configured with a URLScheme before it can be opened by a url
      - note: For testing purposes, unsecure redirects can use https://oauth.click, and they also provide their redirect config for use on private, secure servers
      */
-    func getOAuthURL(region: APIRegion, clientID: String, scope: Scope, redirectURL: String) -> String {
+    func getOAuthURL(clientID: String, scope: Scope, redirectURL: URL) -> URL? {
         /// A randomly-generated string used to validate that the auth request made is the same as the auth response (after redirect)
         let state = "BattleNetAPI\(Int(Date().timeIntervalSince1970))"
         UserDefaults.standard.set(state, forKey: "state")
         
-        let baseURL = getBaseURL(apiType: nil) + "/authorize"
-        let urlStr = String(format: "\(baseURL)?client_id=%@&scope=%@&state=%@&redirect_uri=%@&response_type=code", clientID, scope.scopeValue, state, redirectURL)
-        
-        if let encodedURLStr = urlStr.addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed) {
-            return encodedURLStr
-        }
-        else {
-            return urlStr
-        }
+        var url = getBaseURL()?.appendingPathComponent("/authorize")
+        url?.appendQuery(parameters: ["client_id": clientID,
+                                      "scope": scope.scopeValue,
+                                      "state": state,
+                                      "redirect_uri": redirectURL.absoluteString,
+                                      "response_type": "code"])
+        return url
     }
 }

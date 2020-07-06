@@ -22,7 +22,7 @@ public struct Diablo3ModelController {
     }
     
     
-    public func getResource<T: Decodable>(from resourceLink: Link<T>, completion: @escaping (_ result: Result<T, HTTPError>) -> Void) {
+    public func getResource<T: Decodable>(from resourceLink: Link<T>, completion: @escaping (_ result: Result<T, Error>) -> Void) {
         battleNetAPI.d3.getResource(from: resourceLink.href) { result in
             result.decode(completion: completion)
         }
@@ -32,7 +32,7 @@ public struct Diablo3ModelController {
     
     // MARK: - Act API
     
-    public func getActs(completion: @escaping (_ result: Result<[Act], HTTPError>) -> Void) {
+    public func getActs(completion: @escaping (_ result: Result<[Act], Error>) -> Void) {
         battleNetAPI.d3.getActs() { result in
             let customDecode: ((_ data: Data) throws -> [Act]) = { data in
                 return try ActIndex.decode(from: data).acts
@@ -42,7 +42,7 @@ public struct Diablo3ModelController {
     }
     
     
-    public func getAct(_ id: Int, completion: @escaping (_ result: Result<Act, HTTPError>) -> Void) {
+    public func getAct(_ id: Int, completion: @escaping (_ result: Result<Act, Error>) -> Void) {
         battleNetAPI.d3.getAct(id: id) { result in
             result.decode(completion: completion)
         }
@@ -52,14 +52,14 @@ public struct Diablo3ModelController {
     
     // MARK: - Arisan and Recipe API
     
-    public func getArtisan(_ slug: String, completion: @escaping (_ result: Result<Artisan, HTTPError>) -> Void) {
+    public func getArtisan(_ slug: String, completion: @escaping (_ result: Result<Artisan, Error>) -> Void) {
         battleNetAPI.d3.getArtisan(slug: slug) { result in
             result.decode(completion: completion)
         }
     }
     
     
-    public func getRecipe(_ recipeSlug: String, forArtisan artisanSlug: String, completion: @escaping (_ result: Result<D3Recipe, HTTPError>) -> Void) {
+    public func getRecipe(_ recipeSlug: String, forArtisan artisanSlug: String, completion: @escaping (_ result: Result<D3Recipe, Error>) -> Void) {
         battleNetAPI.d3.getRecipe(recipeSlug: recipeSlug, artisanSlug: artisanSlug) { result in
             result.decode(completion: completion)
         }
@@ -69,7 +69,7 @@ public struct Diablo3ModelController {
     
     // MARK: - Follower API
     
-    public func getFollower(_ slug: String, completion: @escaping (_ result: Result<Follower, HTTPError>) -> Void) {
+    public func getFollower(_ slug: String, completion: @escaping (_ result: Result<Follower, Error>) -> Void) {
         battleNetAPI.d3.getFollower(slug: slug) { result in
             result.decode(completion: completion)
         }
@@ -79,14 +79,14 @@ public struct Diablo3ModelController {
     
     // MARK: - Character Class and Skill API
     
-    public func getClass(_ slug: String, completion: @escaping (_ result: Result<D3Class, HTTPError>) -> Void) {
+    public func getClass(_ slug: String, completion: @escaping (_ result: Result<D3Class, Error>) -> Void) {
         battleNetAPI.d3.getClass(slug: slug) { result in
             result.decode(completion: completion)
         }
     }
     
     
-    public func getSkill(_ skillSlug: String, forClass classSlug: String, completion: @escaping (_ result: Result<D3SkillConfiguration, HTTPError>) -> Void) {
+    public func getSkill(_ skillSlug: String, forClass classSlug: String, completion: @escaping (_ result: Result<D3SkillConfiguration, Error>) -> Void) {
         battleNetAPI.d3.getSkill(skillSlug: skillSlug, classSlug: classSlug) { result in
             result.decode(completion: completion)
         }
@@ -96,14 +96,14 @@ public struct Diablo3ModelController {
     
     // MARK: - Item Type API
     
-    public func getItemTypes(completion: @escaping (_ result: Result<[D3ItemType], HTTPError>) -> Void) {
+    public func getItemTypes(completion: @escaping (_ result: Result<[D3ItemType], Error>) -> Void) {
         battleNetAPI.d3.getItemTypes() { result in
             result.decode(completion: completion)
         }
     }
     
     
-    public func getItemsByType(_ typeSlug: String, completion: @escaping (_ result: Result<[D3Item], HTTPError>) -> Void) {
+    public func getItemsByType(_ typeSlug: String, completion: @escaping (_ result: Result<[D3Item], Error>) -> Void) {
         battleNetAPI.d3.getItemsByType(typeSlug: typeSlug) { result in
             result.decode(completion: completion)
         }
@@ -113,7 +113,7 @@ public struct Diablo3ModelController {
     
     // MARK: - Item API
     
-    public func getItem(_ itemSlugAndID: String, completion: @escaping (_ result: Result<D3FullItem, HTTPError>) -> Void) {
+    public func getItem(_ itemSlugAndID: String, completion: @escaping (_ result: Result<D3FullItem, Error>) -> Void) {
         battleNetAPI.d3.getItem(itemSlugAndID: itemSlugAndID) { result in
             result.decode(completion: completion)
         }
@@ -123,28 +123,28 @@ public struct Diablo3ModelController {
     
     // MARK: - Profile API
     
-    public func getProfile(battleTag: String, completion: @escaping (_ result: Result<D3Profile, HTTPError>) -> Void) {
+    public func getProfile(battleTag: String, completion: @escaping (_ result: Result<D3Profile, Error>) -> Void) {
         battleNetAPI.d3.getProfile(battleTag: battleTag) { result in
             result.decode(completion: completion)
         }
     }
     
     
-    public func getHero(_ heroID: Int, for battleTag: String, completion: @escaping (_ result: Result<FullHero, HTTPError>) -> Void) {
+    public func getHero(_ heroID: Int, for battleTag: String, completion: @escaping (_ result: Result<FullHero, Error>) -> Void) {
         battleNetAPI.d3.getHero(heroID: heroID, battleTag: battleTag) { result in
             result.decode(completion: completion)
         }
     }
     
     
-    public func getItems(forHero heroID: Int, forBattleTag battleTag: String, completion: @escaping (_ result: Result<FullEquippedItems, HTTPError>) -> Void) {
+    public func getItems(forHero heroID: Int, forBattleTag battleTag: String, completion: @escaping (_ result: Result<FullEquippedItems, Error>) -> Void) {
         battleNetAPI.d3.getItemsForHero(heroID: heroID, battleTag: battleTag) { result in
             result.decode(completion: completion)
         }
     }
     
     
-    public func getFollowerItems(forHero heroID: Int, forBattleTag battleTag: String, completion: @escaping (_ result: Result<HeroFollowerItems, HTTPError>) -> Void) {
+    public func getFollowerItems(forHero heroID: Int, forBattleTag battleTag: String, completion: @escaping (_ result: Result<HeroFollowerItems, Error>) -> Void) {
         battleNetAPI.d3.getFollowerItemsForHero(heroID: heroID, battleTag: battleTag) { result in
             result.decode(completion: completion)
         }
@@ -154,42 +154,42 @@ public struct Diablo3ModelController {
     
     // MARK: - Game Data API
     
-    public func getSeasons(completion: @escaping (_ result: Result<D3SeasonIndex, HTTPError>) -> Void) {
+    public func getSeasons(completion: @escaping (_ result: Result<D3SeasonIndex, Error>) -> Void) {
         battleNetAPI.d3.getSeasons() { result in
             result.decode(completion: completion)
         }
     }
     
     
-    public func getLeaderboards(forSeason seasonID: Int, completion: @escaping (_ result: Result<D3SeasonLeaderboardIndex, HTTPError>) -> Void) {
+    public func getLeaderboards(forSeason seasonID: Int, completion: @escaping (_ result: Result<D3SeasonLeaderboardIndex, Error>) -> Void) {
         battleNetAPI.d3.getLeaderboards(seasonID: seasonID) { result in
             result.decode(completion: completion)
         }
     }
     
     
-    public func getLeaderboard(_ leaderboard: String, forSeason seasonID: Int, completion: @escaping (_ result: Result<SeasonLeaderboard, HTTPError>) -> Void) {
+    public func getLeaderboard(_ leaderboard: String, forSeason seasonID: Int, completion: @escaping (_ result: Result<SeasonLeaderboard, Error>) -> Void) {
         battleNetAPI.d3.getLeaderboard(leaderboard, seasonID: seasonID) { result in
             result.decode(completion: completion)
         }
     }
     
     
-    public func getEras(completion: @escaping (_ result: Result<EraIndex, HTTPError>) -> Void) {
+    public func getEras(completion: @escaping (_ result: Result<EraIndex, Error>) -> Void) {
         battleNetAPI.d3.getEras() { result in
             result.decode(completion: completion)
         }
     }
     
     
-    public func getLeaderboards(forEra eraID: Int, completion: @escaping (_ result: Result<EraLeaderboardIndex, HTTPError>) -> Void) {
+    public func getLeaderboards(forEra eraID: Int, completion: @escaping (_ result: Result<EraLeaderboardIndex, Error>) -> Void) {
         battleNetAPI.d3.getLeaderboards(eraID: eraID) { result in
             result.decode(completion: completion)
         }
     }
     
     
-    public func getLeaderboard(_ leaderboard: String, forEra eraID: Int, completion: @escaping (_ result: Result<EraLeaderboard, HTTPError>) -> Void) {
+    public func getLeaderboard(_ leaderboard: String, forEra eraID: Int, completion: @escaping (_ result: Result<EraLeaderboard, Error>) -> Void) {
         battleNetAPI.d3.getLeaderboard(leaderboard, eraID: eraID) { result in
             result.decode(completion: completion)
         }

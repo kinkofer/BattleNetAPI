@@ -21,28 +21,28 @@ public struct AuthenticationModelController {
     }
     
     
-    public func getClientAccessToken(clientID: String, clientSecret: String, completion: @escaping (_ result: Result<Access, HTTPError>) -> Void) {
+    public func getClientAccessToken(clientID: String, clientSecret: String, completion: @escaping (_ result: Result<Access, Error>) -> Void) {
         battleNetAPI.authentication.getClientAccessToken(region: region, clientID: clientID, clientSecret: clientSecret) { result in
             result.decode(completion: completion)
         }
     }
     
     
-    public func getUserAccessToken(clientID: String, clientSecret: String, code: String, redirectURL: String, completion: @escaping (_ result: Result<Access, HTTPError>) -> Void) {
+    public func getUserAccessToken(clientID: String, clientSecret: String, code: String, redirectURL: String, completion: @escaping (_ result: Result<Access, Error>) -> Void) {
         battleNetAPI.authentication.getUserAccessToken(region: region, clientID: clientID, clientSecret: clientSecret, code: code, redirectURL: redirectURL) { result in
             result.decode(completion: completion)
         }
     }
     
     
-    public func validateClientAccessToken(_ token: String, completion: @escaping (_ result: Result<ClientToken, HTTPError>) -> Void) {
+    public func validateClientAccessToken(_ token: String, completion: @escaping (_ result: Result<ClientToken, Error>) -> Void) {
         battleNetAPI.authentication.validateClientAccessToken(token, region: region) { result in
             result.decode(completion: completion)
         }
     }
     
     
-    public func validateUserAccessToken(_ token: String, completion: @escaping (_ result: Result<UserToken, HTTPError>) -> Void) {
+    public func validateUserAccessToken(_ token: String, completion: @escaping (_ result: Result<UserToken, Error>) -> Void) {
         battleNetAPI.authentication.validateUserAccessToken(token, region: region) { result in
             result.decode(completion: completion)
         }
@@ -56,14 +56,16 @@ public struct AuthenticationModelController {
      - parameter redirectURL: The redirect url that will be opened after the user has authenticated and will contain the code parameter.
     */
     public func sendToOAuth(clientID: String, scope: Scope, redirectURL: String) {
-        if let url = URL(string: battleNetAPI.authentication.getOAuthURL(region: region, clientID: clientID, scope: scope, redirectURL: redirectURL)),
-            UIApplication.shared.canOpenURL(url) {
+        if let redirectURL = URL(string: redirectURL),
+           let url = battleNetAPI.authentication.getOAuthURL(clientID: clientID, scope: scope, redirectURL: redirectURL),
+           UIApplication.shared.canOpenURL(url) {
             UIApplication.shared.open(url, options: [:])
         }
     }
     
     
     public func getOAuthURL(clientID: String, scope: Scope, redirectURL: String) -> URL? {
-        return URL(string: battleNetAPI.authentication.getOAuthURL(region: region, clientID: clientID, scope: scope, redirectURL: redirectURL))
+        guard let redirectURL = URL(string: redirectURL) else { return nil }
+        return battleNetAPI.authentication.getOAuthURL(clientID: clientID, scope: scope, redirectURL: redirectURL)
     }
 }

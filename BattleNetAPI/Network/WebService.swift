@@ -6,16 +6,23 @@
 //  Copyright © 2018 Prismatic Games. All rights reserved.
 //
 
+import Combine
 import Foundation
+
+
+enum HTTPMethod: String {
+    case get, post, put, delete, patch, head
+}
 
 
 /// A protocol for a class that calls web services
 protocol WebService {
     var region: APIRegion { get }
     var locale: APILocale? { get }
+    var session: URLSession { get }
     
     /// The base url of the web service to call
-    func getBaseURL(apiType: APIType?) -> String
+    func getBaseURL(apiType: APIType?) -> URL?
     /// Web service urls must include certain parameters, like namespace
     func appendSharedURLParameters(to urlStr: String, withNamespace namespace: String) -> String
     /// Starts a web service request
@@ -81,5 +88,61 @@ extension WebService {
         else {
             completion(.failure(HTTPError.unauthorized))
         }
+    }
+}
+
+
+extension WebService {
+    func call(endpoint: APICall, method: HTTPMethod = .get, headers: [HTTPHeader]? = nil, body: Data? = nil, completion: @escaping (_ result: Result<Data, Error>) -> Void) {
+        call(endpoint: endpoint, namespace: nil, method: method, headers: headers, body: body, completion: completion)
+    }
+    
+    
+    func call(endpoint: APICall, namespace: APINamespace? = nil, method: HTTPMethod = .get, headers: [HTTPHeader]? = nil, body: Data? = nil, completion: @escaping (_ result: Result<Data, Error>) -> Void) {
+        guard let baseURL = getBaseURL(apiType: endpoint.apiType),
+              var url = endpoint.createUrl(baseURL: baseURL) else {
+            return completion(.failure(HTTPError.invalidRequest))
+        }
+        
+        if let locale = locale {
+            url.appendQuery(parameters: ["locale": locale.rawValue])
+        }
+        
+        var newHeaders = headers
+        if let namespace = namespace {
+            newHeaders?.append(namespace.getHeader(for: region))
+        }
+        
+        let request = endpoint.createUrlRequest(url: url, method: method, headers: newHeaders, body: body)
+        // Make the request
+        session.startData(request) { result in
+            completion(result)
+        }
+    }
+}
+
+
+
+extension WebService {
+    @available(OSX 10.15, iOS 13, tvOS 13.0, watchOS 6.0, *)
+    func call<Value>(endpoint: APICall, namespace: APINamespace? = nil, method: HTTPMethod = .get, headers: [HTTPHeader]? = nil, body: Data? = nil) -> AnyPublisher<Value, Error> where Value: Decodable {
+        guard let baseURL = getBaseURL(apiType: endpoint.apiType),
+              var url = endpoint.createUrl(baseURL: baseURL) else {
+            return Fail(error: HTTPError.invalidRequest).eraseToAnyPublisher()
+        }
+        
+        if let locale = locale {
+            url.appendQuery(parameters: ["locale": locale.rawValue])
+        }
+        
+        var newHeaders = headers
+        if let namespace = namespace {
+            newHeaders?.append(namespace.getHeader(for: region))
+        }
+        
+        let request = endpoint.createUrlRequest(url: url, method: method, headers: newHeaders, body: body)
+        return session
+            .dataTaskPublisher(for: request)
+            .requestJSON()
     }
 }
