@@ -47,20 +47,18 @@ class ViewController: UIViewController {
     
     @IBOutlet weak var tableView: UITableView!
     
-    let authMC = AuthenticationModelController(region: Current.region, locale: Current.locale)
-    let userMC = UserModelController(region: Current.region, locale: Current.locale)
+    let battleNetAPI = BattleNetAPI(credentials: Current.credentials)
     
-    let d3MC = Diablo3ModelController(region: Current.region, locale: Current.locale)
-    let sc2MC = StarCraft2ModelController(region: Current.region, locale: Current.locale)
-    let wowMC = WorldOfWarcraftModelController(region: Current.region, locale: Current.locale)
+    lazy var authMC = AuthenticationModelController(battleNetAPI: battleNetAPI)
+    lazy var userMC = UserModelController(battleNetAPI: battleNetAPI)
     
+    lazy var authManager = AuthenticationManager(battleNetAPI: battleNetAPI, oauth: Current.oauth, providerContext: self)
     
     let sections: [Section] = [Section(type: .battleNet, rows: [.profile]),
                                Section(type: .diablo3, rows: [.gameData, .community]),
                                Section(type: .starCraft2, rows: [.gameData, .community]),
                                Section(type: .worldOfWarcraft, rows: [.gameData, .profile, .community])]
     
-    let authManager = AuthenticationManager(region: Current.region, locale: Current.locale)
     
     
     
@@ -104,7 +102,7 @@ class ViewController: UIViewController {
     
     
     func authenticateUser(showAPI: (APIType, Game)? = nil) {
-        self.authManager.getUserAccessToken(scope: [.sc2, .wow], on: self, scheme: Current.scheme, redirectUrl: Current.redirectUrl) { result in
+        self.authManager.getUserAccessToken { result in
             switch result {
             case .success(let userAccessToken):
                 Debug.print("userAccessToken: \(userAccessToken)")
@@ -196,7 +194,7 @@ extension ViewController: UITableViewDelegate {
         if apiType == .gameData {
             self.showAPI(type: apiType, for: section.type)
         }
-        else if (apiType == .community || apiType == .profile) && authManager.userAccessToken == nil {
+        else if (apiType == .community || apiType == .profile) && Current.credentials.userAccessToken == nil {
             self.presentConfirmAlert(title: "User Authorization Required",
                                      message: "These APIs require you sign in to your BattleNet account and grant permission to this app.",
                                      buttonTitle: "Sign In",
@@ -205,7 +203,7 @@ extension ViewController: UITableViewDelegate {
             })
         }
         else {
-            authManager.getUserAccessToken(scope: [.wow, .sc2], on: self, scheme: Current.scheme, redirectUrl: Current.redirectUrl) { result in
+            authManager.getUserAccessToken { result in
                 switch result {
                 case .success(_):
                     self.showAPI(type: apiType, for: section.type)

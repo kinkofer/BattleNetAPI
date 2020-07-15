@@ -17,6 +17,7 @@ public struct World {
     public var region = APIRegion.us
     public var locale = APILocale.en_US
     
-    public var scheme = "APP_SCHEME"
-    public var redirectUrl = "REDIRECT_URL"
+    public var oauth: BattleNetOAuth = BattleNetOAuth(scope: [.sc2, .wow], scheme: "BattleNetAPI", redirectUrl: "https://rediret.to/BattleNetAPI")
+    public var credentials = BattleNetCredentials(clientID: "CLIENT_ID", clientSecret: "CLIENT_SECRET",
+                                       clientAccessToken: nil, userAccessToken: nil)
 }

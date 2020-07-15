@@ -10,18 +10,22 @@ import Foundation
 
 
 public enum HTTPHeader {
-    case contentType(MediaType)
     case accept(MediaType)
     case acceptVersion(String)
+    case authorization(AuthorizationType)
+    case contentType(MediaType)
     case ifModifiedSince(Date)
     case namespace(String)
     
+    
     public var key: String {
         switch self {
-        case .contentType:
-            return "Content-Type"
         case .accept, .acceptVersion:
             return "Accept"
+        case .authorization:
+            return "Authorization"
+        case .contentType:
+            return "Content-Type"
         case .ifModifiedSince:
             return "If-Modified-Since"
         case .namespace:
@@ -31,12 +35,19 @@ public enum HTTPHeader {
     
     public var value: String {
         switch self {
-        case .contentType(let mediaType):
-            return mediaType.headerValue
         case .accept(let mediaType):
             return mediaType.headerValue
         case .acceptVersion(let value):
             return value
+        case .authorization(let authType):
+            switch authType {
+            case .basic(let encryptedCredentials):
+                return "Basic \(encryptedCredentials)"
+            case .bearer(let token):
+                return "Bearer \(token)"
+            }
+        case .contentType(let mediaType):
+            return mediaType.headerValue
         case .ifModifiedSince(let date):
             let dateFormatter = DateFormatter()
             dateFormatter.timeZone = TimeZone(abbreviation: "GMT")
@@ -95,4 +106,11 @@ public struct MediaType: OptionSet {
         
         return values.joined(separator: "; ")
     }
+}
+
+
+
+public enum AuthorizationType {
+    case basic(String)
+    case bearer(String)
 }

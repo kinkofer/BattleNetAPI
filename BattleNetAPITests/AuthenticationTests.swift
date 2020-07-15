@@ -10,13 +10,15 @@ import XCTest
 @testable import BattleNetAPI
 
 class AuthenticationTests: XCTestCase {
+    var battleNetAPI: BattleNetAPI!
     
-    override func setUp() {
+    override func setUpWithError() throws {
         super.setUp()
         // Put setup code here. This method is called before the invocation of each test method in the class.
+        battleNetAPI = BattleNetAPI(credentials: credentials)
     }
     
-    override func tearDown() {
+    override func tearDownWithError() throws {
         // Put teardown code here. This method is called after the invocation of each test method in the class.
         super.tearDown()
     }
@@ -26,10 +28,10 @@ class AuthenticationTests: XCTestCase {
     
     // MARK: -
     
-    func testGetClientAccessToken() {
+    func testGetClientAccess() {
         let wsResponseExpectation = expectation(description: "Web Service returned a response")
         
-        BattleNetAPI.authentication.getClientAccessToken(region: .us, clientID: clientID, clientSecret: clientSecret) { result in
+        battleNetAPI.authentication.getClientAccess { result in
             BattleNetAPITests.webServiceClosureTest(result: result, decodable: Access.self, expectation: wsResponseExpectation)
         }
         
@@ -40,14 +42,14 @@ class AuthenticationTests: XCTestCase {
     
     
     func testValidateClientAccessToken() {
-        guard let clientAccessToken = clientAccessToken else {
+        guard let clientAccessToken = credentials.clientAccessToken else {
             XCTFail("clientAccessToken must be set in AuthToken. The token is logged in the console when running ViewController.viewDidLoad().")
             return
         }
         
         let wsResponseExpectation = expectation(description: "Web Service returned a response")
         
-        BattleNetAPI.authentication.validateClientAccessToken(clientAccessToken, region: .us) { result in
+        battleNetAPI.authentication.validateClientAccessToken(clientAccessToken) { result in
             BattleNetAPITests.webServiceClosureTest(result: result, decodable: ClientToken.self, expectation: wsResponseExpectation)
         }
         
@@ -58,14 +60,14 @@ class AuthenticationTests: XCTestCase {
     
     
     func testValidateUserAccessToken() {
-        guard let userAccessToken = userAccessToken else {
+        guard let userAccessToken = credentials.userAccessToken else {
             XCTFail("userAccessToken must be set in AuthToken. The token is logged in the console when running authenticateUser(showAPI:).")
             return
         }
         
         let wsResponseExpectation = expectation(description: "Web Service returned a response")
         
-        BattleNetAPI.authentication.validateUserAccessToken(userAccessToken, region: .us) { result in
+        battleNetAPI.authentication.validateUserAccessToken(userAccessToken) { result in
             BattleNetAPITests.webServiceClosureTest(result: result, decodable: UserToken.self, expectation: wsResponseExpectation)
         }
         

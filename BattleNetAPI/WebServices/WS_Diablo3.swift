@@ -113,6 +113,19 @@ public struct WS_Diablo3: WS_Diablo3Service {
                 return nil
             }
         }
+        
+        
+        var basePath: String? {
+            switch apiType {
+            case .gameData:
+                return "/data/d3"
+            case .community:
+                return "/d3/data"
+            case .profile:
+                return "/d3/profile"
+            default: return nil
+            }
+        }
     }
     
     var region: APIRegion
@@ -120,24 +133,9 @@ public struct WS_Diablo3: WS_Diablo3Service {
     
     var session: URLSession
     
+    var baseURL: URL? { return URL(string: region.apiURI) }
     
-    func getBaseURL(apiType: APIType?) -> URL? {
-        var url = URL(string: region.apiURI)
-        
-        if let apiType = apiType {
-            switch apiType {
-            case .gameData:
-                url?.appendPathComponent("/data/d3")
-            case .community:
-                url?.appendPathComponent("/d3/data")
-            case .profile:
-                url?.appendPathComponent("/d3/profile")
-            }
-        }
-        
-        return url
-    }
-    
+    var authenticationService: AuthenticationWebService?
     
     
     /**
@@ -146,7 +144,7 @@ public struct WS_Diablo3: WS_Diablo3Service {
      - parameter urlStr: The url that will be used to make the web service call
      - parameter completion: Returns a Result with the Data if `success` or an HTTPError if `failure`
      */
-    public func getResource(from urlStr: String, completion: @escaping (_ result: Result<Data, HTTPError>) -> Void) {
+    public func getResource(from urlStr: String, completion: @escaping (_ result: Result<Data, Error>) -> Void) {
         callWebService(urlStr: urlStr, method: .get, apiType: .gameData) { result in
             completion(result)
         }
@@ -159,7 +157,7 @@ public struct WS_Diablo3: WS_Diablo3Service {
      - parameter resource: The resource that will be used to make the web service call
      - parameter completion: Returns a Result with the Data if `success` or an HTTPError if `failure`
      */
-    public func getResource<T>(_ resource: T, completion: @escaping (_ result: Result<Data, HTTPError>) -> Void) where T: ResourceLinkable {
+    public func getResource<T>(_ resource: T, completion: @escaping (_ result: Result<Data, Error>) -> Void) where T: ResourceLinkable {
         callWebService(urlStr: resource.link.href, method: .get, apiType: .gameData) { result in
             completion(result)
         }

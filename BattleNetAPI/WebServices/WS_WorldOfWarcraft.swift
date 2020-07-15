@@ -68,6 +68,16 @@ public struct WS_WorldOfWarcraft: WebService {
                 return .profile
             }
         }
+        
+        
+        var basePath: String? {
+            switch apiType {
+            case .gameData: return "/data/wow"
+            case .community: return "/wow"
+            case .profile: return "/profile/wow"
+            default: return nil
+            }
+        }
     }
     
     
@@ -77,10 +87,10 @@ public struct WS_WorldOfWarcraft: WebService {
     var session: URLSession
     
     
-    
+    var baseURL: URL? { return URL(string: region.apiURI) }
     internal func getBaseURL(apiType: APIType?) -> URL? {
         var url = URL(string: region.apiURI)
-        
+
         if let apiType = apiType {
             switch apiType {
             case .gameData:
@@ -91,9 +101,11 @@ public struct WS_WorldOfWarcraft: WebService {
                 url?.appendPathComponent("/profile/wow")
             }
         }
-        
+
         return url
     }
+    
+    var authenticationService: AuthenticationWebService?
     
     
     
@@ -103,7 +115,7 @@ public struct WS_WorldOfWarcraft: WebService {
      - parameter urlStr: The url that will be used to make the web service call
      - parameter completion: Returns a Result with the Data if `success` or an HTTPError if `failure`
      */
-    public func getResource(from urlStr: String, completion: @escaping (_ result: Result<Data, HTTPError>) -> Void) {
+    public func getResource(from urlStr: String, completion: @escaping (_ result: Result<Data, Error>) -> Void) {
         self.callWebService(urlStr: urlStr, method: .get, apiType: .gameData) { result in
             completion(result)
         }
@@ -116,7 +128,7 @@ public struct WS_WorldOfWarcraft: WebService {
      - parameter resource: The resource that will be used to make the web service call
      - parameter completion: Returns a Result with the Data if `success` or an HTTPError if `failure`
      */
-    public func getResource<T>(_ resource: T, completion: @escaping (_ result: Result<Data, HTTPError>) -> Void) where T: ResourceLinkable {
+    public func getResource<T>(_ resource: T, completion: @escaping (_ result: Result<Data, Error>) -> Void) where T: ResourceLinkable {
         callWebService(urlStr: resource.link.href, method: .get, apiType: .gameData) { result in
             completion(result)
         }
@@ -278,7 +290,7 @@ public struct WS_WorldOfWarcraft: WebService {
      - parameter locale: The locale that should be reflected in localized data
      - parameter completion: Returns a Result with the Data if `success` or an HTTPError if `failure`
      */
-    func getMythicKeystoneDungeons(completion: @escaping (_ result: Result<Data, HTTPError>) -> Void) {
+    func getMythicKeystoneDungeons(completion: @escaping (_ result: Result<Data, Error>) -> Void) {
         let apiType: APIType = .gameData
         var urlStr = getBaseURL(apiType: apiType)!.absoluteString + "/mythic-keystone/dungeon/index"
         urlStr = appendSharedURLParameters(to: urlStr, withNamespace: "dynamic")
@@ -297,7 +309,7 @@ public struct WS_WorldOfWarcraft: WebService {
      - parameter locale: The locale that should be reflected in localized data
      - parameter completion: Returns a Result with the Data if `success` or an HTTPError if `failure`
      */
-    func getMythicKeystoneDungeon(id: Int, completion: @escaping (_ result: Result<Data, HTTPError>) -> Void) {
+    func getMythicKeystoneDungeon(id: Int, completion: @escaping (_ result: Result<Data, Error>) -> Void) {
         let apiType: APIType = .gameData
         var urlStr = getBaseURL(apiType: apiType)!.absoluteString + "/mythic-keystone/dungeon/\(id)"
         urlStr = appendSharedURLParameters(to: urlStr, withNamespace: "dynamic")
@@ -315,7 +327,7 @@ public struct WS_WorldOfWarcraft: WebService {
      - parameter locale: The locale that should be reflected in localized data
      - parameter completion: Returns a Result with the Data if `success` or an HTTPError if `failure`
      */
-    func getMythicKeystones(completion: @escaping (_ result: Result<Data, HTTPError>) -> Void) {
+    func getMythicKeystones(completion: @escaping (_ result: Result<Data, Error>) -> Void) {
         let apiType: APIType = .gameData
         var urlStr = getBaseURL(apiType: apiType)!.absoluteString + "/mythic-keystone/index"
         urlStr = appendSharedURLParameters(to: urlStr, withNamespace: "dynamic")
@@ -333,7 +345,7 @@ public struct WS_WorldOfWarcraft: WebService {
      - parameter locale: The locale that should be reflected in localized data
      - parameter completion: Returns a Result with the Data if `success` or an HTTPError if `failure`
      */
-    func getMythicKeystonePeriods(completion: @escaping (_ result: Result<Data, HTTPError>) -> Void) {
+    func getMythicKeystonePeriods(completion: @escaping (_ result: Result<Data, Error>) -> Void) {
         let apiType: APIType = .gameData
         var urlStr = getBaseURL(apiType: apiType)!.absoluteString + "/mythic-keystone/period/index"
         urlStr = appendSharedURLParameters(to: urlStr, withNamespace: "dynamic")
@@ -352,7 +364,7 @@ public struct WS_WorldOfWarcraft: WebService {
      - parameter locale: The locale that should be reflected in localized data
      - parameter completion: Returns a Result with the Data if `success` or an HTTPError if `failure`
      */
-    func getMythicKeystonePeriod(id: Int, completion: @escaping (_ result: Result<Data, HTTPError>) -> Void) {
+    func getMythicKeystonePeriod(id: Int, completion: @escaping (_ result: Result<Data, Error>) -> Void) {
         let apiType: APIType = .gameData
         var urlStr = getBaseURL(apiType: apiType)!.absoluteString + "/mythic-keystone/period/\(id)"
         urlStr = appendSharedURLParameters(to: urlStr, withNamespace: "dynamic")
@@ -370,7 +382,7 @@ public struct WS_WorldOfWarcraft: WebService {
      - parameter locale: The locale that should be reflected in localized data
      - parameter completion: Returns a Result with the Data if `success` or an HTTPError if `failure`
      */
-    func getMythicKeystoneSeasons(completion: @escaping (_ result: Result<Data, HTTPError>) -> Void) {
+    func getMythicKeystoneSeasons(completion: @escaping (_ result: Result<Data, Error>) -> Void) {
         let apiType: APIType = .gameData
         var urlStr = getBaseURL(apiType: apiType)!.absoluteString + "/mythic-keystone/season/index"
         urlStr = appendSharedURLParameters(to: urlStr, withNamespace: "dynamic")
@@ -389,7 +401,7 @@ public struct WS_WorldOfWarcraft: WebService {
      - parameter locale: The locale that should be reflected in localized data
      - parameter completion: Returns a Result with the Data if `success` or an HTTPError if `failure`
      */
-    func getMythicKeystoneSeason(id: Int, completion: @escaping (_ result: Result<Data, HTTPError>) -> Void) {
+    func getMythicKeystoneSeason(id: Int, completion: @escaping (_ result: Result<Data, Error>) -> Void) {
         let apiType: APIType = .gameData
         var urlStr = getBaseURL(apiType: apiType)!.absoluteString + "/mythic-keystone/season/\(id)"
         urlStr = appendSharedURLParameters(to: urlStr, withNamespace: "dynamic")
@@ -411,7 +423,7 @@ public struct WS_WorldOfWarcraft: WebService {
      - parameter locale: The locale that should be reflected in localized data
      - parameter completion: Returns a Result with the Data if `success` or an HTTPError if `failure`
      */
-    func getMythicLeaderboards(connectedRealmID: Int, completion: @escaping (_ result: Result<Data, HTTPError>) -> Void) {
+    func getMythicLeaderboards(connectedRealmID: Int, completion: @escaping (_ result: Result<Data, Error>) -> Void) {
         let apiType: APIType = .gameData
         var urlStr = getBaseURL(apiType: apiType)!.absoluteString + "/connected-realm/\(connectedRealmID)/mythic-leaderboard/"
         urlStr = appendSharedURLParameters(to: urlStr, withNamespace: "dynamic")
@@ -432,7 +444,7 @@ public struct WS_WorldOfWarcraft: WebService {
      - parameter locale: The locale that should be reflected in localized data
      - parameter completion: Returns a Result with the Data if `success` or an HTTPError if `failure`
      */
-    func getMythicLeaderboard(connectedRealmID: Int, dungeonID: Int, period: Int, completion: @escaping (_ result: Result<Data, HTTPError>) -> Void) {
+    func getMythicLeaderboard(connectedRealmID: Int, dungeonID: Int, period: Int, completion: @escaping (_ result: Result<Data, Error>) -> Void) {
         let apiType: APIType = .gameData
         var urlStr = getBaseURL(apiType: apiType)!.absoluteString + "/connected-realm/\(connectedRealmID)/mythic-leaderboard/\(dungeonID)/period/\(period)"
         urlStr = appendSharedURLParameters(to: urlStr, withNamespace: "dynamic")
@@ -455,7 +467,7 @@ public struct WS_WorldOfWarcraft: WebService {
      - parameter locale: The locale that should be reflected in localized data
      - parameter completion: Returns a Result with the Data if `success` or an HTTPError if `failure`
      */
-    func getMythicRaidLeaderboard(raid: String, faction: FactionType, completion: @escaping (_ result: Result<Data, HTTPError>) -> Void) {
+    func getMythicRaidLeaderboard(raid: String, faction: FactionType, completion: @escaping (_ result: Result<Data, Error>) -> Void) {
         let apiType: APIType = .gameData
         var urlStr = getBaseURL(apiType: apiType)!.absoluteString + "/leaderboard/hall-of-fame/\(raid)/\(faction.rawValue.lowercased())"
         urlStr = appendSharedURLParameters(to: urlStr, withNamespace: "dynamic")
@@ -476,7 +488,7 @@ public struct WS_WorldOfWarcraft: WebService {
      - parameter locale: The locale that should be reflected in localized data
      - parameter completion: Returns a Result with the Data if `success` or an HTTPError if `failure`
      */
-    func getMythicChallengeMode(completion: @escaping (_ result: Result<Data, HTTPError>) -> Void) {
+    func getMythicChallengeMode(completion: @escaping (_ result: Result<Data, Error>) -> Void) {
         let apiType: APIType = .gameData
         var urlStr = getBaseURL(apiType: apiType)!.absoluteString + "/mythic-challenge-mode/"
         urlStr = appendSharedURLParameters(to: urlStr, withNamespace: "dynamic")
@@ -497,7 +509,7 @@ public struct WS_WorldOfWarcraft: WebService {
      - parameter locale: The locale that should be reflected in localized data
      - parameter completion: Returns a Result with the Data if `success` or an HTTPError if `failure`
      */
-    func getPlayableClasses(completion: @escaping (_ result: Result<Data, HTTPError>) -> Void) {
+    func getPlayableClasses(completion: @escaping (_ result: Result<Data, Error>) -> Void) {
         let apiType: APIType = .gameData
         var urlStr = getBaseURL(apiType: apiType)!.absoluteString + "/playable-class/index"
         urlStr = appendSharedURLParameters(to: urlStr, withNamespace: "static")
@@ -516,7 +528,7 @@ public struct WS_WorldOfWarcraft: WebService {
      - parameter locale: The locale that should be reflected in localized data
      - parameter completion: Returns a Result with the Data if `success` or an HTTPError if `failure`
      */
-    func getPlayableClass(id: Int, completion: @escaping (_ result: Result<Data, HTTPError>) -> Void) {
+    func getPlayableClass(id: Int, completion: @escaping (_ result: Result<Data, Error>) -> Void) {
         let apiType: APIType = .gameData
         var urlStr = getBaseURL(apiType: apiType)!.absoluteString + "/playable-class/\(id)"
         urlStr = appendSharedURLParameters(to: urlStr, withNamespace: "static")
@@ -535,7 +547,7 @@ public struct WS_WorldOfWarcraft: WebService {
      - parameter locale: The locale that should be reflected in localized data
      - parameter completion: Returns a Result with the Data if `success` or an HTTPError if `failure`
      */
-    func getPlayableClassPvPTalentSlots(id: Int, completion: @escaping (_ result: Result<Data, HTTPError>) -> Void) {
+    func getPlayableClassPvPTalentSlots(id: Int, completion: @escaping (_ result: Result<Data, Error>) -> Void) {
         let apiType: APIType = .gameData
         var urlStr = getBaseURL(apiType: apiType)!.absoluteString + "/playable-class/\(id)/pvp-talent-slots"
         urlStr = appendSharedURLParameters(to: urlStr, withNamespace: "static")
@@ -556,7 +568,7 @@ public struct WS_WorldOfWarcraft: WebService {
      - parameter locale: The locale that should be reflected in localized data
      - parameter completion: Returns a Result with the Data if `success` or an HTTPError if `failure`
      */
-    func getPlayableSpecializations(completion: @escaping (_ result: Result<Data, HTTPError>) -> Void) {
+    func getPlayableSpecializations(completion: @escaping (_ result: Result<Data, Error>) -> Void) {
         let apiType: APIType = .gameData
         var urlStr = getBaseURL(apiType: apiType)!.absoluteString + "/playable-specialization/index"
         urlStr = appendSharedURLParameters(to: urlStr, withNamespace: "static")
@@ -575,7 +587,7 @@ public struct WS_WorldOfWarcraft: WebService {
      - parameter locale: The locale that should be reflected in localized data
      - parameter completion: Returns a Result with the Data if `success` or an HTTPError if `failure`
      */
-    func getPlayableSpecialization(id: Int, completion: @escaping (_ result: Result<Data, HTTPError>) -> Void) {
+    func getPlayableSpecialization(id: Int, completion: @escaping (_ result: Result<Data, Error>) -> Void) {
         let apiType: APIType = .gameData
         var urlStr = getBaseURL(apiType: apiType)!.absoluteString + "/playable-specialization/\(id)"
         urlStr = appendSharedURLParameters(to: urlStr, withNamespace: "static")
@@ -596,7 +608,7 @@ public struct WS_WorldOfWarcraft: WebService {
      - parameter locale: The locale that should be reflected in localized data
      - parameter completion: Returns a Result with the Data if `success` or an HTTPError if `failure`
      */
-    func getPowerTypes(completion: @escaping (_ result: Result<Data, HTTPError>) -> Void) {
+    func getPowerTypes(completion: @escaping (_ result: Result<Data, Error>) -> Void) {
         let apiType: APIType = .gameData
         var urlStr = getBaseURL(apiType: apiType)!.absoluteString + "/power-type/index"
         urlStr = appendSharedURLParameters(to: urlStr, withNamespace: "static")
@@ -615,7 +627,7 @@ public struct WS_WorldOfWarcraft: WebService {
      - parameter locale: The locale that should be reflected in localized data
      - parameter completion: Returns a Result with the Data if `success` or an HTTPError if `failure`
      */
-    func getPowerType(id: Int, completion: @escaping (_ result: Result<Data, HTTPError>) -> Void) {
+    func getPowerType(id: Int, completion: @escaping (_ result: Result<Data, Error>) -> Void) {
         let apiType: APIType = .gameData
         var urlStr = getBaseURL(apiType: apiType)!.absoluteString + "/power-type/\(id)"
         urlStr = appendSharedURLParameters(to: urlStr, withNamespace: "static")
@@ -635,7 +647,7 @@ public struct WS_WorldOfWarcraft: WebService {
      - parameter locale: The locale that should be reflected in localized data
      - parameter completion: Returns a Result with the Data if `success` or an HTTPError if `failure`
      */
-    func getPlayableRaces(completion: @escaping (_ result: Result<Data, HTTPError>) -> Void) {
+    func getPlayableRaces(completion: @escaping (_ result: Result<Data, Error>) -> Void) {
         let apiType: APIType = .gameData
         var urlStr = getBaseURL(apiType: apiType)!.absoluteString + "/race/index"
         urlStr = appendSharedURLParameters(to: urlStr, withNamespace: "static")
@@ -654,7 +666,7 @@ public struct WS_WorldOfWarcraft: WebService {
      - parameter locale: The locale that should be reflected in localized data
      - parameter completion: Returns a Result with the Data if `success` or an HTTPError if `failure`
      */
-    func getPlayableRace(id: Int, completion: @escaping (_ result: Result<Data, HTTPError>) -> Void) {
+    func getPlayableRace(id: Int, completion: @escaping (_ result: Result<Data, Error>) -> Void) {
         let apiType: APIType = .gameData
         var urlStr = getBaseURL(apiType: apiType)!.absoluteString + "/race/\(id)"
         urlStr = appendSharedURLParameters(to: urlStr, withNamespace: "static")
@@ -675,7 +687,7 @@ public struct WS_WorldOfWarcraft: WebService {
      - parameter locale: The locale that should be reflected in localized data
      - parameter completion: Returns a Result with the Data if `success` or an HTTPError if `failure`
      */
-    func getRealmIndex(completion: @escaping (_ result: Result<Data, HTTPError>) -> Void) {
+    func getRealmIndex(completion: @escaping (_ result: Result<Data, Error>) -> Void) {
         let apiType: APIType = .gameData
         var urlStr = getBaseURL(apiType: apiType)!.absoluteString + "/realm/index"
         urlStr = appendSharedURLParameters(to: urlStr, withNamespace: "dynamic")
@@ -694,7 +706,7 @@ public struct WS_WorldOfWarcraft: WebService {
      - parameter locale: The locale that should be reflected in localized data
      - parameter completion: Returns a Result with the Data if `success` or an HTTPError if `failure`
      */
-    func getRealm(_ slug: String, completion: @escaping (_ result: Result<Data, HTTPError>) -> Void) {
+    func getRealm(_ slug: String, completion: @escaping (_ result: Result<Data, Error>) -> Void) {
         let apiType: APIType = .gameData
         var urlStr = getBaseURL(apiType: apiType)!.absoluteString + "/realm/\(slug)"
         urlStr = appendSharedURLParameters(to: urlStr, withNamespace: "dynamic")
@@ -715,7 +727,7 @@ public struct WS_WorldOfWarcraft: WebService {
      - parameter locale: The locale that should be reflected in localized data
      - parameter completion: Returns a Result with the Data if `success` or an HTTPError if `failure`
      */
-    func getRegionIndex(completion: @escaping (_ result: Result<Data, HTTPError>) -> Void) {
+    func getRegionIndex(completion: @escaping (_ result: Result<Data, Error>) -> Void) {
         let apiType: APIType = .gameData
         var urlStr = getBaseURL(apiType: apiType)!.absoluteString + "/region/index"
         urlStr = appendSharedURLParameters(to: urlStr, withNamespace: "dynamic")
@@ -734,7 +746,7 @@ public struct WS_WorldOfWarcraft: WebService {
      - parameter locale: The locale that should be reflected in localized data
      - parameter completion: Returns a Result with the Data if `success` or an HTTPError if `failure`
      */
-    func getRegion(id: Int, completion: @escaping (_ result: Result<Data, HTTPError>) -> Void) {
+    func getRegion(id: Int, completion: @escaping (_ result: Result<Data, Error>) -> Void) {
         let apiType: APIType = .gameData
         var urlStr = getBaseURL(apiType: apiType)!.absoluteString + "/region/\(id)"
         urlStr = appendSharedURLParameters(to: urlStr, withNamespace: "dynamic")
@@ -755,7 +767,7 @@ public struct WS_WorldOfWarcraft: WebService {
      - parameter locale: The locale that should be reflected in localized data
      - parameter completion: Returns a Result with the Data if `success` or an HTTPError if `failure`
      */
-    func getTokenIndex(completion: @escaping (_ result: Result<Data, HTTPError>) -> Void) {
+    func getTokenIndex(completion: @escaping (_ result: Result<Data, Error>) -> Void) {
         let apiType: APIType = .gameData
         var urlStr = getBaseURL(apiType: apiType)!.absoluteString + "/token/index"
         urlStr = appendSharedURLParameters(to: urlStr, withNamespace: "dynamic")
@@ -775,7 +787,7 @@ public struct WS_WorldOfWarcraft: WebService {
      - parameter region: What region the request is being made
      - parameter completion: Returns a Result with the Data if `success` or an HTTPError if `failure`
     */
-    public func getCharacters(region: APIRegion, completion: @escaping (_ result: Result<Data, Error>) -> Void) {
+    public func getCharacters(completion: @escaping (_ result: Result<Data, Error>) -> Void) {
         call(endpoint: API.characters) { result in
             completion(result)
         }
@@ -811,7 +823,7 @@ public struct WS_WorldOfWarcraft: WebService {
      - parameter region: What region the request is being made
      - parameter completion: Returns a Result with the Data if `success` or an HTTPError if `failure`
      */
-    func getMythicKeystoneProfileSeason(seasonID: Int, characterName: String, realmSlug: String, completion: @escaping (_ result: Result<Data, HTTPError>) -> Void) {
+    func getMythicKeystoneProfileSeason(seasonID: Int, characterName: String, realmSlug: String, completion: @escaping (_ result: Result<Data, Error>) -> Void) {
         let apiType: APIType = .profile
         var urlStr = getBaseURL(apiType: apiType)!.absoluteString + "/character/\(realmSlug)/\(characterName)/mythic-keystone-profile/season/\(seasonID)"
         urlStr = appendSharedURLParameters(to: urlStr, withNamespace: "profile")
@@ -835,7 +847,7 @@ public struct WS_WorldOfWarcraft: WebService {
      - parameter locale: What locale to use in the response
      - parameter completion: Returns a Result with the Data if `success` or an HTTPError if `failure`
     */
-    func getChallengeLeaderboards(realm: String, completion: @escaping (_ result: Result<Data, HTTPError>) -> Void) {
+    func getChallengeLeaderboards(realm: String, completion: @escaping (_ result: Result<Data, Error>) -> Void) {
         let apiType: APIType = .community
         var urlStr = getBaseURL(apiType: apiType)!.absoluteString + "/challenge/\(realm)"
         urlStr = appendSharedURLParameters(to: urlStr)
@@ -853,7 +865,7 @@ public struct WS_WorldOfWarcraft: WebService {
      - parameter locale: What locale to use in the response
      - parameter completion: Returns a Result with the Data if `success` or an HTTPError if `failure`
      */
-    func getTopChallengeLeaderboards(completion: @escaping (_ result: Result<Data, HTTPError>) -> Void) {
+    func getTopChallengeLeaderboards(completion: @escaping (_ result: Result<Data, Error>) -> Void) {
         let apiType: APIType = .community
         var urlStr = getBaseURL(apiType: apiType)!.absoluteString + "/challenge/region"
         urlStr = appendSharedURLParameters(to: urlStr)
@@ -877,7 +889,7 @@ public struct WS_WorldOfWarcraft: WebService {
      - parameter locale: What locale to use in the response
      - parameter completion: Returns a Result with the Data if `success` or an HTTPError if `failure`
     */
-    func getCharacter(_ name: String, realm: String, fields: [String]?, completion: @escaping (_ result: Result<Data, HTTPError>) -> Void) {
+    func getCharacter(_ name: String, realm: String, fields: [String]?, completion: @escaping (_ result: Result<Data, Error>) -> Void) {
         let apiType: APIType = .community
         var urlStr = getBaseURL(apiType: apiType)!.absoluteString + "/character/\(realm)/\(name)"
         urlStr = appendSharedURLParameters(to: urlStr)
@@ -906,7 +918,7 @@ public struct WS_WorldOfWarcraft: WebService {
      - parameter locale: What locale to use in the response
      - parameter completion: Returns a Result with the Data if `success` or an HTTPError if `failure`
      */
-    func getGuild(_ name: String, realm: String, fields: [String]?, completion: @escaping (_ result: Result<Data, HTTPError>) -> Void) {
+    func getGuild(_ name: String, realm: String, fields: [String]?, completion: @escaping (_ result: Result<Data, Error>) -> Void) {
         let apiType: APIType = .community
         var urlStr = getBaseURL(apiType: apiType)!.absoluteString + "/guild/\(realm)/\(name)"
         urlStr = appendSharedURLParameters(to: urlStr)
@@ -933,7 +945,7 @@ public struct WS_WorldOfWarcraft: WebService {
      - parameter locale: What locale to use in the response
      - parameter completion: Returns a Result with the Data if `success` or an HTTPError if `failure`
      */
-    func getPets(completion: @escaping (_ result: Result<Data, HTTPError>) -> Void) {
+    func getPets(completion: @escaping (_ result: Result<Data, Error>) -> Void) {
         let apiType: APIType = .community
         var urlStr = getBaseURL(apiType: apiType)!.absoluteString + "/pet/"
         urlStr = appendSharedURLParameters(to: urlStr)
@@ -952,7 +964,7 @@ public struct WS_WorldOfWarcraft: WebService {
      - parameter locale: What locale to use in the response
      - parameter completion: Returns a Result with the Data if `success` or an HTTPError if `failure`
      */
-    func getPetAbility(abilityID: Int, completion: @escaping (_ result: Result<Data, HTTPError>) -> Void) {
+    func getPetAbility(abilityID: Int, completion: @escaping (_ result: Result<Data, Error>) -> Void) {
         let apiType: APIType = .community
         var urlStr = getBaseURL(apiType: apiType)!.absoluteString + "/pet/ability/\(abilityID)"
         urlStr = appendSharedURLParameters(to: urlStr)
@@ -971,7 +983,7 @@ public struct WS_WorldOfWarcraft: WebService {
      - parameter locale: What locale to use in the response
      - parameter completion: Returns a Result with the Data if `success` or an HTTPError if `failure`
      */
-    func getPetSpecies(speciesID: Int, completion: @escaping (_ result: Result<Data, HTTPError>) -> Void) {
+    func getPetSpecies(speciesID: Int, completion: @escaping (_ result: Result<Data, Error>) -> Void) {
         let apiType: APIType = .community
         var urlStr = getBaseURL(apiType: apiType)!.absoluteString + "/pet/species/\(speciesID)"
         urlStr = appendSharedURLParameters(to: urlStr)
@@ -993,7 +1005,7 @@ public struct WS_WorldOfWarcraft: WebService {
      - parameter locale: What locale to use in the response
      - parameter completion: Returns a Result with the Data if `success` or an HTTPError if `failure`
     */
-    func getPetStats(speciesID: Int, level: Int = 1, breedID: Int = 3, qualityID: Int = 1, completion: @escaping (_ result: Result<Data, HTTPError>) -> Void) {
+    func getPetStats(speciesID: Int, level: Int = 1, breedID: Int = 3, qualityID: Int = 1, completion: @escaping (_ result: Result<Data, Error>) -> Void) {
         let apiType: APIType = .community
         var urlStr = getBaseURL(apiType: apiType)!.absoluteString + "/pet/stats/\(speciesID)"
         urlStr = appendSharedURLParameters(to: urlStr)
@@ -1023,7 +1035,7 @@ public struct WS_WorldOfWarcraft: WebService {
      - parameter locale: What locale to use in the response
      - parameter completion: Returns a Result with the Data if `success` or an HTTPError if `failure`
     */
-    func getLeaderboard(bracket: String, completion: @escaping (_ result: Result<Data, HTTPError>) -> Void) {
+    func getLeaderboard(bracket: String, completion: @escaping (_ result: Result<Data, Error>) -> Void) {
         guard bracket == "2v2" ||
             bracket == "3v3" ||
             bracket == "5v5" ||
@@ -1053,7 +1065,7 @@ public struct WS_WorldOfWarcraft: WebService {
      - parameter locale: What locale to use in the response
      - parameter completion: Returns a Result with the Data if `success` or an HTTPError if `failure`
     */
-    func getQuest(id: Int, completion: @escaping (_ result: Result<Data, HTTPError>) -> Void) {
+    func getQuest(id: Int, completion: @escaping (_ result: Result<Data, Error>) -> Void) {
         let apiType: APIType = .community
         var urlStr = getBaseURL(apiType: apiType)!.absoluteString + "/quest/\(id)"
         urlStr = appendSharedURLParameters(to: urlStr)
@@ -1094,7 +1106,7 @@ public struct WS_WorldOfWarcraft: WebService {
      - parameter locale: What locale to use in the response
      - parameter completion: Returns a Result with the Data if `success` or an HTTPError if `failure`
     */
-    func getRealmsStatus(completion: @escaping (_ result: Result<Data, HTTPError>) -> Void) {
+    func getRealmsStatus(completion: @escaping (_ result: Result<Data, Error>) -> Void) {
         let apiType: APIType = .community
         var urlStr = getBaseURL(apiType: apiType)!.absoluteString + "/realm/status"
         urlStr = appendSharedURLParameters(to: urlStr)
@@ -1116,7 +1128,7 @@ public struct WS_WorldOfWarcraft: WebService {
      - parameter locale: What locale to use in the response
      - parameter completion: Returns a Result with the Data if `success` or an HTTPError if `failure`
      */
-    func getRecipe(id: Int, completion: @escaping (_ result: Result<Data, HTTPError>) -> Void) {
+    func getRecipe(id: Int, completion: @escaping (_ result: Result<Data, Error>) -> Void) {
         let apiType: APIType = .community
         var urlStr = getBaseURL(apiType: apiType)!.absoluteString + "/recipe/\(id)"
         urlStr = appendSharedURLParameters(to: urlStr)
@@ -1138,7 +1150,7 @@ public struct WS_WorldOfWarcraft: WebService {
      - parameter locale: What locale to use in the response
      - parameter completion: Returns a Result with the Data if `success` or an HTTPError if `failure`
      */
-    func getSpell(id: Int, completion: @escaping (_ result: Result<Data, HTTPError>) -> Void) {
+    func getSpell(id: Int, completion: @escaping (_ result: Result<Data, Error>) -> Void) {
         let apiType: APIType = .community
         var urlStr = getBaseURL(apiType: apiType)!.absoluteString + "/spell/\(id)"
         urlStr = appendSharedURLParameters(to: urlStr)
@@ -1159,7 +1171,7 @@ public struct WS_WorldOfWarcraft: WebService {
      - parameter locale: What locale to use in the response
      - parameter completion: Returns a Result with the Data if `success` or an HTTPError if `failure`
     */
-    func getZones(completion: @escaping (_ result: Result<Data, HTTPError>) -> Void) {
+    func getZones(completion: @escaping (_ result: Result<Data, Error>) -> Void) {
         let apiType: APIType = .community
         var urlStr = getBaseURL(apiType: apiType)!.absoluteString + "/zone/"
         urlStr = appendSharedURLParameters(to: urlStr)
@@ -1178,7 +1190,7 @@ public struct WS_WorldOfWarcraft: WebService {
      - parameter locale: What locale to use in the response
      - parameter completion: Returns a Result with the Data if `success` or an HTTPError if `failure`
      */
-    func getZone(id: Int, completion: @escaping (_ result: Result<Data, HTTPError>) -> Void) {
+    func getZone(id: Int, completion: @escaping (_ result: Result<Data, Error>) -> Void) {
         let apiType: APIType = .community
         var urlStr = getBaseURL(apiType: apiType)!.absoluteString + "/zone/\(id)"
         urlStr = appendSharedURLParameters(to: urlStr)
@@ -1199,7 +1211,7 @@ public struct WS_WorldOfWarcraft: WebService {
      - parameter locale: What locale to use in the response
      - parameter completion: Returns a Result with the Data if `success` or an HTTPError if `failure`
     */
-    func getBattlegroups(completion: @escaping (_ result: Result<Data, HTTPError>) -> Void) {
+    func getBattlegroups(completion: @escaping (_ result: Result<Data, Error>) -> Void) {
         let apiType: APIType = .community
         var urlStr = getBaseURL(apiType: apiType)!.absoluteString + "/data/battlegroups/"
         urlStr = appendSharedURLParameters(to: urlStr)
@@ -1217,7 +1229,7 @@ public struct WS_WorldOfWarcraft: WebService {
      - parameter locale: What locale to use in the response
      - parameter completion: Returns a Result with the Data if `success` or an HTTPError if `failure`
     */
-    func getRaces(completion: @escaping (_ result: Result<Data, HTTPError>) -> Void) {
+    func getRaces(completion: @escaping (_ result: Result<Data, Error>) -> Void) {
         let apiType: APIType = .community
         var urlStr = getBaseURL(apiType: apiType)!.absoluteString + "/data/character/races"
         urlStr = appendSharedURLParameters(to: urlStr)
@@ -1235,7 +1247,7 @@ public struct WS_WorldOfWarcraft: WebService {
      - parameter locale: What locale to use in the response
      - parameter completion: Returns a Result with the Data if `success` or an HTTPError if `failure`
     */
-    func getClasses(completion: @escaping (_ result: Result<Data, HTTPError>) -> Void) {
+    func getClasses(completion: @escaping (_ result: Result<Data, Error>) -> Void) {
         let apiType: APIType = .community
         var urlStr = getBaseURL(apiType: apiType)!.absoluteString + "/data/character/classes"
         urlStr = appendSharedURLParameters(to: urlStr)
@@ -1253,7 +1265,7 @@ public struct WS_WorldOfWarcraft: WebService {
      - parameter locale: What locale to use in the response
      - parameter completion: Returns a Result with the Data if `success` or an HTTPError if `failure`
      */
-    func getAchievements(completion: @escaping (_ result: Result<Data, HTTPError>) -> Void) {
+    func getAchievements(completion: @escaping (_ result: Result<Data, Error>) -> Void) {
         let apiType: APIType = .community
         var urlStr = getBaseURL(apiType: apiType)!.absoluteString + "/data/character/achievements"
         urlStr = appendSharedURLParameters(to: urlStr)
@@ -1271,7 +1283,7 @@ public struct WS_WorldOfWarcraft: WebService {
      - parameter locale: What locale to use in the response
      - parameter completion: Returns a Result with the Data if `success` or an HTTPError if `failure`
      */
-    func getGuildRewards(completion: @escaping (_ result: Result<Data, HTTPError>) -> Void) {
+    func getGuildRewards(completion: @escaping (_ result: Result<Data, Error>) -> Void) {
         let apiType: APIType = .community
         var urlStr = getBaseURL(apiType: apiType)!.absoluteString + "/data/guild/rewards"
         urlStr = appendSharedURLParameters(to: urlStr)
@@ -1289,7 +1301,7 @@ public struct WS_WorldOfWarcraft: WebService {
      - parameter locale: What locale to use in the response
      - parameter completion: Returns a Result with the Data if `success` or an HTTPError if `failure`
      */
-    func getGuildPerks(completion: @escaping (_ result: Result<Data, HTTPError>) -> Void) {
+    func getGuildPerks(completion: @escaping (_ result: Result<Data, Error>) -> Void) {
         let apiType: APIType = .community
         var urlStr = getBaseURL(apiType: apiType)!.absoluteString + "/data/guild/perks"
         urlStr = appendSharedURLParameters(to: urlStr)
@@ -1307,7 +1319,7 @@ public struct WS_WorldOfWarcraft: WebService {
      - parameter locale: What locale to use in the response
      - parameter completion: Returns a Result with the Data if `success` or an HTTPError if `failure`
      */
-    func getGuildAchievements(completion: @escaping (_ result: Result<Data, HTTPError>) -> Void) {
+    func getGuildAchievements(completion: @escaping (_ result: Result<Data, Error>) -> Void) {
         let apiType: APIType = .community
         var urlStr = getBaseURL(apiType: apiType)!.absoluteString + "/data/guild/achievements"
         urlStr = appendSharedURLParameters(to: urlStr)
@@ -1325,7 +1337,7 @@ public struct WS_WorldOfWarcraft: WebService {
      - parameter locale: What locale to use in the response
      - parameter completion: Returns a Result with the Data if `success` or an HTTPError if `failure`
      */
-    func getItemClasses(completion: @escaping (_ result: Result<Data, HTTPError>) -> Void) {
+    func getItemClasses(completion: @escaping (_ result: Result<Data, Error>) -> Void) {
         let apiType: APIType = .community
         var urlStr = getBaseURL(apiType: apiType)!.absoluteString + "/data/item/classes"
         urlStr = appendSharedURLParameters(to: urlStr)
@@ -1343,7 +1355,7 @@ public struct WS_WorldOfWarcraft: WebService {
      - parameter locale: What locale to use in the response
      - parameter completion: Returns a Result with the Data if `success` or an HTTPError if `failure`
      */
-    func getTalents(completion: @escaping (_ result: Result<Data, HTTPError>) -> Void) {
+    func getTalents(completion: @escaping (_ result: Result<Data, Error>) -> Void) {
         let apiType: APIType = .community
         var urlStr = getBaseURL(apiType: apiType)!.absoluteString + "/data/talents"
         urlStr = appendSharedURLParameters(to: urlStr)
@@ -1361,7 +1373,7 @@ public struct WS_WorldOfWarcraft: WebService {
      - parameter locale: What locale to use in the response
      - parameter completion: Returns a Result with the Data if `success` or an HTTPError if `failure`
      */
-    func getPetTypes(completion: @escaping (_ result: Result<Data, HTTPError>) -> Void) {
+    func getPetTypes(completion: @escaping (_ result: Result<Data, Error>) -> Void) {
         let apiType: APIType = .community
         var urlStr = getBaseURL(apiType: apiType)!.absoluteString + "/data/pet/types"
         urlStr = appendSharedURLParameters(to: urlStr)

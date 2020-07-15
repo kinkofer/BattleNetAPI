@@ -56,6 +56,15 @@ public struct WS_StarCraft2: WebService {
                 return .community
             }
         }
+        
+        
+        var basePath: String? {
+            switch apiType {
+            case .gameData: return "/data/sc2"
+            case .community, .profile: return "/sc2"
+            default: return nil
+            }
+        }
     }
     
     
@@ -64,21 +73,9 @@ public struct WS_StarCraft2: WebService {
     
     var session: URLSession
     
+    var baseURL: URL? { return URL(string: region.apiURI) }
     
-    internal func getBaseURL(apiType: APIType?) -> URL? {
-        var url = URL(string: region.apiURI)
-        
-        if let apiType = apiType {
-            switch apiType {
-            case .gameData:
-                url?.appendPathComponent("/data/sc2")
-            case .community, .profile:
-                url?.appendPathComponent("/sc2")
-            }
-        }
-        
-        return url
-    }
+    var authenticationService: AuthenticationWebService?
     
     
     

@@ -68,8 +68,8 @@ class StarCraft2ViewController: UITableViewController, APIViewer {
         }
     }
     
-    
-    let sc2MC = StarCraft2ModelController(region: Current.region, locale: Current.locale)
+    let battleNetAPI = BattleNetAPI(credentials: Current.credentials)
+    lazy var sc2MC = StarCraft2ModelController(battleNetAPI: battleNetAPI)
     
     public var apiType: APIType = .gameData
     
@@ -196,7 +196,7 @@ class StarCraft2ViewController: UITableViewController, APIViewer {
         self.sc2MC.getLadder(id: id, profileID: profileID, sc2Region: sc2Region, realmID: realmID) { result in
             switch result {
             case .success(let ladder):
-                Debug.print("Ladder retrieved in \(ladder.league) league with \(ladder.ladderTeams.count) ladder teams(s)")
+                Debug.print("Ladder retrieved in \(ladder.league ?? "unknown") league with \(ladder.ladderTeams.count) ladder teams(s)")
                 DispatchQueue.main.async {
                     let viewController = ViewerTableViewController()
                     viewController.dataSourceObj = ladder

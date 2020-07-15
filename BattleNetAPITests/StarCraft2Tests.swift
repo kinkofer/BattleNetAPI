@@ -11,26 +11,24 @@ import XCTest
 
 
 class StarCraft2Tests: XCTestCase {
-    let region: APIRegion = .us
-    let locale: APILocale = .en_US
+    var battleNetAPI: BattleNetAPI!
     
     
     override func setUp() {
         super.setUp()
         // Put setup code here. This method is called before the invocation of each test method in the class.
         
-        guard let clientAccessToken = clientAccessToken else {
-            XCTFail("clientAccessToken must be set in AuthToken. The token is logged in the console when running ViewController.viewDidLoad().")
+        guard credentials.clientAccessToken != nil else {
+            XCTFail("clientAccessToken must be set in credentials.")
             return
         }
         
-        guard let userAccessToken = userAccessToken else {
-            XCTFail("userAccessToken must be set in AuthToken. The token is logged in the console when running authenticateUser(showAPI:).")
+        guard credentials.userAccessToken != nil else {
+            XCTFail("userAccessToken must be set in credentials.")
             return
         }
         
-        Network.shared.clientAccessToken = clientAccessToken
-        Network.shared.userAccessToken = userAccessToken
+        battleNetAPI = BattleNetAPI(credentials: credentials)
     }
     
     override func tearDown() {
@@ -50,7 +48,7 @@ class StarCraft2Tests: XCTestCase {
         
         let wsResponseExpectation = expectation(description: "Web Service returned a response")
         
-        BattleNetAPI.sc2.getLeagueData(seasonID: seasonID, queue: queue, team: team, league: league, region: Current.region, locale: Current.locale) { result in
+        battleNetAPI.sc2.getLeagueData(seasonID: seasonID, queue: queue, team: team, league: league) { result in
             BattleNetAPITests.webServiceClosureTest(result: result, decodable: League.self, expectation: wsResponseExpectation)
         }
         
@@ -70,7 +68,7 @@ class StarCraft2Tests: XCTestCase {
         
         let wsResponseExpectation = expectation(description: "Web Service returned a response")
         
-        BattleNetAPI.sc2.getProfileData(sc2Region: sc2Region, region: Current.region, locale: Current.locale) { result in
+        battleNetAPI.sc2.getProfileData(sc2Region: sc2Region) { result in
             BattleNetAPITests.webServiceClosureTest(result: result, decodable: SC2ProfileData.self, expectation: wsResponseExpectation)
         }
         
@@ -87,7 +85,7 @@ class StarCraft2Tests: XCTestCase {
         
         let wsResponseExpectation = expectation(description: "Web Service returned a response")
         
-        BattleNetAPI.sc2.getProfileMetadata(id: profileID, sc2Region: sc2Region, realmID: realmID, region: Current.region, locale: Current.locale) { result in
+        battleNetAPI.sc2.getProfileMetadata(id: profileID, sc2Region: sc2Region, realmID: realmID) { result in
             BattleNetAPITests.webServiceClosureTest(result: result, decodable: SC2ProfileMetadata.self, expectation: wsResponseExpectation)
         }
         
@@ -104,7 +102,7 @@ class StarCraft2Tests: XCTestCase {
         
         let wsResponseExpectation = expectation(description: "Web Service returned a response")
         
-        BattleNetAPI.sc2.getProfile(id: profileID, sc2Region: sc2Region, realmID: realmID, region: Current.region, locale: Current.locale) { result in
+        battleNetAPI.sc2.getProfile(id: profileID, sc2Region: sc2Region, realmID: realmID) { result in
             BattleNetAPITests.webServiceClosureTest(result: result, decodable: SC2Profile.self, expectation: wsResponseExpectation)
         }
         
@@ -121,7 +119,7 @@ class StarCraft2Tests: XCTestCase {
         
         let wsResponseExpectation = expectation(description: "Web Service returned a response")
         
-        BattleNetAPI.sc2.getLadderSummary(profileID: profileID, sc2Region: sc2Region, realmID: realmID, region: Current.region, locale: Current.locale) { result in
+        battleNetAPI.sc2.getLadderSummary(profileID: profileID, sc2Region: sc2Region, realmID: realmID) { result in
             BattleNetAPITests.webServiceClosureTest(result: result, decodable: LadderSummary.self, expectation: wsResponseExpectation)
         }
         
@@ -139,7 +137,7 @@ class StarCraft2Tests: XCTestCase {
         
         let wsResponseExpectation = expectation(description: "Web Service returned a response")
         
-        BattleNetAPI.sc2.getLadder(id: ladderID, profileID: profileID, sc2Region: sc2Region, realmID: realmID, region: Current.region, locale: Current.locale) { result in
+        battleNetAPI.sc2.getLadder(id: ladderID, profileID: profileID, sc2Region: sc2Region, realmID: realmID) { result in
             BattleNetAPITests.webServiceClosureTest(result: result, decodable: Ladder.self, expectation: wsResponseExpectation)
         }
         
@@ -156,7 +154,7 @@ class StarCraft2Tests: XCTestCase {
         
         let wsResponseExpectation = expectation(description: "Web Service returned a response")
         
-        BattleNetAPI.sc2.getGrandmasterLeaderboard(sc2Region: sc2Region, region: Current.region, locale: Current.locale) { result in
+        battleNetAPI.sc2.getGrandmasterLeaderboard(sc2Region: sc2Region) { result in
             BattleNetAPITests.webServiceClosureTest(result: result, decodable: GrandmasterLeaderboard.self, expectation: wsResponseExpectation)
         }
         
@@ -171,7 +169,7 @@ class StarCraft2Tests: XCTestCase {
         
         let wsResponseExpectation = expectation(description: "Web Service returned a response")
         
-        BattleNetAPI.sc2.getLadderSeason(sc2Region: sc2Region, region: Current.region, locale: Current.locale) { result in
+        battleNetAPI.sc2.getLadderSeason(sc2Region: sc2Region) { result in
             BattleNetAPITests.webServiceClosureTest(result: result, decodable: SC2Season.self, expectation: wsResponseExpectation)
         }
         
@@ -189,7 +187,7 @@ class StarCraft2Tests: XCTestCase {
         
         let wsResponseExpectation = expectation(description: "Web Service returned a response")
         
-        BattleNetAPI.sc2.getPlayers(userID: userID, region: Current.region) { result in
+        battleNetAPI.sc2.getPlayers(userID: userID) { result in
             BattleNetAPITests.webServiceClosureTest(result: result, decodable: [SC2ProfileMetadata].self, expectation: wsResponseExpectation)
         }
         

@@ -96,7 +96,8 @@ class Diablo3ViewController: UITableViewController, APIViewer {
     }
     
     
-    let d3MC = Diablo3ModelController(region: Current.region, locale: Current.locale)
+    let battleNetAPI = BattleNetAPI(credentials: Current.credentials)
+    lazy var d3MC = Diablo3ModelController(battleNetAPI: battleNetAPI)
     
     public var apiType: APIType = .gameData
     

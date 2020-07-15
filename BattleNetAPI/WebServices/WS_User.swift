@@ -27,6 +27,8 @@ public struct WS_User: WebService {
                 return .profile
             }
         }
+        
+        var basePath: String? { return nil }
     }
     
     
@@ -35,10 +37,9 @@ public struct WS_User: WebService {
     
     var session: URLSession
     
+    var baseURL: URL? { return URL(string: region.oauthURI) }
     
-    func getBaseURL(apiType: APIType?) -> URL? {
-        return URL(string: region.oauthURI)
-    }
+    var authenticationService: AuthenticationWebService?
     
     
     

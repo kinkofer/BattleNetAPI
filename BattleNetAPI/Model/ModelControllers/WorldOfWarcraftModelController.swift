@@ -12,13 +12,9 @@ import Foundation
 public struct WorldOfWarcraftModelController {
     let battleNetAPI: BattleNetAPI
     
-    var region: APIRegion
-    var locale: APILocale?
     
-    public init(region: APIRegion, locale: APILocale?) {
-        self.battleNetAPI = BattleNetAPI(region: .us, locale: .en_US)
-        self.region = region
-        self.locale = locale
+    public init(battleNetAPI: BattleNetAPI) {
+        self.battleNetAPI = battleNetAPI
     }
     
     
@@ -34,7 +30,7 @@ public struct WorldOfWarcraftModelController {
     // MARK: - Profile API
     
     public func getCharacters(completion: @escaping (_ result: Result<[WOWCharacter], Error>) -> Void) {
-        battleNetAPI.wow.getCharacters(region: region) { result in
+        battleNetAPI.wow.getCharacters { result in
             let customDecode: ((_ data: Data) throws -> [WOWCharacter]) = { data in
                 return try WOWCharacterResult.decode(from: data).characters
             }

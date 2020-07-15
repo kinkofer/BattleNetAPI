@@ -6,66 +6,48 @@
 //  Copyright © 2018 Prismatic Games. All rights reserved.
 //
 
-import UIKit
+import Foundation
+
 
 public struct AuthenticationModelController {
     let battleNetAPI: BattleNetAPI
     
-    var region: APIRegion
-    var locale: APILocale?
     
-    public init(region: APIRegion, locale: APILocale?) {
-        self.battleNetAPI = BattleNetAPI(region: .us, locale: .en_US)
-        self.region = region
-        self.locale = locale
+    public init(battleNetAPI: BattleNetAPI) {
+        self.battleNetAPI = battleNetAPI
     }
     
     
+    
     public func getClientAccessToken(clientID: String, clientSecret: String, completion: @escaping (_ result: Result<Access, Error>) -> Void) {
-        battleNetAPI.authentication.getClientAccessToken(region: region, clientID: clientID, clientSecret: clientSecret) { result in
+        battleNetAPI.authentication.getClientAccess { result in
             result.decode(completion: completion)
         }
     }
     
     
     public func getUserAccessToken(clientID: String, clientSecret: String, code: String, redirectURL: String, completion: @escaping (_ result: Result<Access, Error>) -> Void) {
-        battleNetAPI.authentication.getUserAccessToken(region: region, clientID: clientID, clientSecret: clientSecret, code: code, redirectURL: redirectURL) { result in
+        battleNetAPI.authentication.getUserAccess(code: code, redirectURL: redirectURL) { result in
             result.decode(completion: completion)
         }
     }
     
     
     public func validateClientAccessToken(_ token: String, completion: @escaping (_ result: Result<ClientToken, Error>) -> Void) {
-        battleNetAPI.authentication.validateClientAccessToken(token, region: region) { result in
+        battleNetAPI.authentication.validateClientAccessToken(token) { result in
             result.decode(completion: completion)
         }
     }
     
     
     public func validateUserAccessToken(_ token: String, completion: @escaping (_ result: Result<UserToken, Error>) -> Void) {
-        battleNetAPI.authentication.validateUserAccessToken(token, region: region) { result in
+        battleNetAPI.authentication.validateUserAccessToken(token) { result in
             result.decode(completion: completion)
         }
     }
     
     
-    /**
-     - parameter region: The user's current region
-     - parameter clientID: The clientID of your application, provided by Blizzard
-     - parameter scope: The scope of information you're requesting from the user
-     - parameter redirectURL: The redirect url that will be opened after the user has authenticated and will contain the code parameter.
-    */
-    public func sendToOAuth(clientID: String, scope: Scope, redirectURL: String) {
-        if let redirectURL = URL(string: redirectURL),
-           let url = battleNetAPI.authentication.getOAuthURL(clientID: clientID, scope: scope, redirectURL: redirectURL),
-           UIApplication.shared.canOpenURL(url) {
-            UIApplication.shared.open(url, options: [:])
-        }
-    }
-    
-    
-    public func getOAuthURL(clientID: String, scope: Scope, redirectURL: String) -> URL? {
-        guard let redirectURL = URL(string: redirectURL) else { return nil }
-        return battleNetAPI.authentication.getOAuthURL(clientID: clientID, scope: scope, redirectURL: redirectURL)
+    public func getOAuthURL(scope: Scope, redirectURL: URL, state: String) -> URL? {
+        return battleNetAPI.authentication.getOAuthURL(scope: scope, redirectURL: redirectURL, state: state)
     }
 }

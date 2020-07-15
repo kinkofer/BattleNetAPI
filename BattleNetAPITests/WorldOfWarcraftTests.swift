@@ -11,26 +11,24 @@ import XCTest
 
 
 class WorldOfWarcraftTests: XCTestCase {
-    let region: APIRegion = Current.region
-    let locale: APILocale = Current.locale
+    var battleNetAPI: BattleNetAPI!
     
     
     override func setUp() {
         super.setUp()
         // Put setup code here. This method is called before the invocation of each test method in the class.
         
-        guard let clientAccessToken = clientAccessToken else {
-            XCTFail("clientAccessToken must be set in AuthToken. The token is logged in the console when running ViewController.viewDidLoad().")
+        guard credentials.clientAccessToken != nil else {
+            XCTFail("clientAccessToken must be set in credentials.")
             return
         }
         
-        guard let userAccessToken = userAccessToken else {
-            XCTFail("userAccessToken must be set in AuthToken. The token is logged in the console when running authenticateUser(showAPI:).")
+        guard credentials.userAccessToken != nil else {
+            XCTFail("userAccessToken must be set in credentials.")
             return
         }
         
-        Network.shared.clientAccessToken = clientAccessToken
-        Network.shared.userAccessToken = userAccessToken
+        battleNetAPI = BattleNetAPI(credentials: credentials)
     }
     
     override func tearDown() {
@@ -45,7 +43,7 @@ class WorldOfWarcraftTests: XCTestCase {
     func testGetCharacters() {
         let wsResponseExpectation = expectation(description: "Web Service returned a response")
         
-        BattleNetAPI.wow.getCharacters(region: region) { result in
+        battleNetAPI.wow.getCharacters { result in
             BattleNetAPITests.webServiceClosureTest(result: result, decodable: WOWCharacterResult.self, expectation: wsResponseExpectation)
         }
         
@@ -63,7 +61,7 @@ class WorldOfWarcraftTests: XCTestCase {
         
         let wsResponseExpectation = expectation(description: "Web Service returned a response")
         
-        BattleNetAPI.wow.getMythicKeystoneProfile(characterName: characterName, realmSlug: realm, region: region, locale: locale) { result in
+        battleNetAPI.wow.getMythicKeystoneProfile(characterName: characterName, realmSlug: realm) { result in
             BattleNetAPITests.webServiceClosureTest(result: result, decodable: MythicKeystoneProfile.self, expectation: wsResponseExpectation)
         }
         
@@ -80,7 +78,7 @@ class WorldOfWarcraftTests: XCTestCase {
         
         let wsResponseExpectation = expectation(description: "Web Service returned a response")
         
-        BattleNetAPI.wow.getMythicKeystoneProfileSeason(seasonID: seasonID, characterName: characterName, realmSlug: realm, region: region, locale: locale) { result in
+        battleNetAPI.wow.getMythicKeystoneProfileSeason(seasonID: seasonID, characterName: characterName, realmSlug: realm) { result in
             BattleNetAPITests.webServiceClosureTest(result: result, decodable: MythicKeystoneProfileSeason.self, expectation: wsResponseExpectation)
         }
         
@@ -96,7 +94,7 @@ class WorldOfWarcraftTests: XCTestCase {
     func testGetConnectedRealmIndex() {
         let wsResponseExpectation = expectation(description: "Web Service returned a response")
         
-        BattleNetAPI.wow.getConnectedRealmIndex(region: region, locale: locale) { result in
+        battleNetAPI.wow.getConnectedRealmIndex { result in
             BattleNetAPITests.webServiceClosureTest(result: result, decodable: ConnectedRealmIndex.self, expectation: wsResponseExpectation)
         }
         
@@ -111,7 +109,7 @@ class WorldOfWarcraftTests: XCTestCase {
         
         let wsResponseExpectation = expectation(description: "Web Service returned a response")
         
-        BattleNetAPI.wow.getConnectedRealm(id: id, region: region, locale: locale) { result in
+        battleNetAPI.wow.getConnectedRealm(id: id) { result in
             BattleNetAPITests.webServiceClosureTest(result: result, decodable: ConnectedRealm.self, expectation: wsResponseExpectation)
         }
         
@@ -127,7 +125,7 @@ class WorldOfWarcraftTests: XCTestCase {
     func testGetMythicKeystoneAffixes() {
         let wsResponseExpectation = expectation(description: "Web Service returned a response")
         
-        BattleNetAPI.wow.getMythicKeystoneAffixes(region: region, locale: locale) { result in
+        battleNetAPI.wow.getMythicKeystoneAffixes { result in
             BattleNetAPITests.webServiceClosureTest(result: result, decodable: KeystoneAffixIndex.self, expectation: wsResponseExpectation)
         }
         
@@ -142,7 +140,7 @@ class WorldOfWarcraftTests: XCTestCase {
         
         let wsResponseExpectation = expectation(description: "Web Service returned a response")
         
-        BattleNetAPI.wow.getMythicKeystoneAffix(id: id, region: region, locale: locale) { result in
+        battleNetAPI.wow.getMythicKeystoneAffix(id: id) { result in
             BattleNetAPITests.webServiceClosureTest(result: result, decodable: KeystoneAffix.self, expectation: wsResponseExpectation)
         }
         
@@ -161,7 +159,7 @@ class WorldOfWarcraftTests: XCTestCase {
         
         let wsResponseExpectation = expectation(description: "Web Service returned a response")
         
-        BattleNetAPI.wow.getMythicRaidLeaderboard(raid: raid, faction: faction, region: region, locale: locale) { result in
+        battleNetAPI.wow.getMythicRaidLeaderboard(raid: raid, faction: faction) { result in
             BattleNetAPITests.webServiceClosureTest(result: result, decodable: MythicRaidLeaderboard.self, expectation: wsResponseExpectation)
         }
         
@@ -177,7 +175,7 @@ class WorldOfWarcraftTests: XCTestCase {
     func testGetMythicKeystoneDungeons() {
         let wsResponseExpectation = expectation(description: "Web Service returned a response")
         
-        BattleNetAPI.wow.getMythicKeystoneDungeons(region: region, locale: locale) { result in
+        battleNetAPI.wow.getMythicKeystoneDungeons { result in
             BattleNetAPITests.webServiceClosureTest(result: result, decodable: MythicKeystoneDungeonIndex.self, expectation: wsResponseExpectation)
         }
         
@@ -192,7 +190,7 @@ class WorldOfWarcraftTests: XCTestCase {
         
         let wsResponseExpectation = expectation(description: "Web Service returned a response")
         
-        BattleNetAPI.wow.getMythicKeystoneDungeon(id: id, region: region, locale: locale) { result in
+        battleNetAPI.wow.getMythicKeystoneDungeon(id: id) { result in
             BattleNetAPITests.webServiceClosureTest(result: result, decodable: MythicKeystoneDungeon.self, expectation: wsResponseExpectation)
         }
         
@@ -205,7 +203,7 @@ class WorldOfWarcraftTests: XCTestCase {
     func testGetMythicKeystones() {
         let wsResponseExpectation = expectation(description: "Web Service returned a response")
         
-        BattleNetAPI.wow.getMythicKeystones(region: region, locale: locale) { result in
+        battleNetAPI.wow.getMythicKeystones { result in
             BattleNetAPITests.webServiceClosureTest(result: result, decodable: MythicKeystoneIndex.self, expectation: wsResponseExpectation)
         }
         
@@ -218,7 +216,7 @@ class WorldOfWarcraftTests: XCTestCase {
     func testGetMythicPeriods() {
         let wsResponseExpectation = expectation(description: "Web Service returned a response")
         
-        BattleNetAPI.wow.getMythicKeystonePeriods(region: region, locale: locale) { result in
+        battleNetAPI.wow.getMythicKeystonePeriods { result in
             BattleNetAPITests.webServiceClosureTest(result: result, decodable: MythicKeystonePeriodIndex.self, expectation: wsResponseExpectation)
         }
         
@@ -233,7 +231,7 @@ class WorldOfWarcraftTests: XCTestCase {
         
         let wsResponseExpectation = expectation(description: "Web Service returned a response")
         
-        BattleNetAPI.wow.getMythicKeystonePeriod(id: id, region: region, locale: locale) { result in
+        battleNetAPI.wow.getMythicKeystonePeriod(id: id) { result in
             BattleNetAPITests.webServiceClosureTest(result: result, decodable: MythicKeystonePeriod.self, expectation: wsResponseExpectation)
         }
         
@@ -246,7 +244,7 @@ class WorldOfWarcraftTests: XCTestCase {
     func testGetMythicSeasons() {
         let wsResponseExpectation = expectation(description: "Web Service returned a response")
         
-        BattleNetAPI.wow.getMythicKeystoneSeasons(region: region, locale: locale) { result in
+        battleNetAPI.wow.getMythicKeystoneSeasons { result in
             BattleNetAPITests.webServiceClosureTest(result: result, decodable: MythicKeystoneSeasonIndex.self, expectation: wsResponseExpectation)
         }
         
@@ -261,7 +259,7 @@ class WorldOfWarcraftTests: XCTestCase {
         
         let wsResponseExpectation = expectation(description: "Web Service returned a response")
         
-        BattleNetAPI.wow.getMythicKeystoneSeason(id: id, region: region, locale: locale) { result in
+        battleNetAPI.wow.getMythicKeystoneSeason(id: id) { result in
             BattleNetAPITests.webServiceClosureTest(result: result, decodable: MythicKeystoneSeason.self, expectation: wsResponseExpectation)
         }
         
@@ -279,7 +277,7 @@ class WorldOfWarcraftTests: XCTestCase {
         
         let wsResponseExpectation = expectation(description: "Web Service returned a response")
         
-        BattleNetAPI.wow.getMythicLeaderboards(connectedRealmID: connectedRealmID, region: region, locale: locale) { result in
+        battleNetAPI.wow.getMythicLeaderboards(connectedRealmID: connectedRealmID) { result in
             BattleNetAPITests.webServiceClosureTest(result: result, decodable: MythicLeaderboardIndex.self, expectation: wsResponseExpectation)
         }
         
@@ -296,7 +294,7 @@ class WorldOfWarcraftTests: XCTestCase {
         
         let wsResponseExpectation = expectation(description: "Web Service returned a response")
         
-        BattleNetAPI.wow.getMythicLeaderboard(connectedRealmID: connectedRealmID, dungeonID: dungeonID, period: period, region: region, locale: locale) { result in
+        battleNetAPI.wow.getMythicLeaderboard(connectedRealmID: connectedRealmID, dungeonID: dungeonID, period: period) { result in
             BattleNetAPITests.webServiceClosureTest(result: result, decodable: MythicLeaderboard.self, expectation: wsResponseExpectation)
         }
         
@@ -312,7 +310,7 @@ class WorldOfWarcraftTests: XCTestCase {
     func testGetMythicChallengeMode() {
         let wsResponseExpectation = expectation(description: "Web Service returned a response")
         
-        BattleNetAPI.wow.getMythicChallengeMode(region: region, locale: locale) { result in
+        battleNetAPI.wow.getMythicChallengeMode { result in
             BattleNetAPITests.webServiceClosureTest(result: result, decodable: MythicChallengeMode.self, expectation: wsResponseExpectation)
         }
         
@@ -328,7 +326,7 @@ class WorldOfWarcraftTests: XCTestCase {
     func testGetPlayableClasses() {
         let wsResponseExpectation = expectation(description: "Web Service returned a response")
         
-        BattleNetAPI.wow.getPlayableClasses(region: region, locale: locale) { result in
+        battleNetAPI.wow.getPlayableClasses { result in
             BattleNetAPITests.webServiceClosureTest(result: result, decodable: WOWClassIndex.self, expectation: wsResponseExpectation)
         }
         
@@ -343,7 +341,7 @@ class WorldOfWarcraftTests: XCTestCase {
         
         let wsResponseExpectation = expectation(description: "Web Service returned a response")
         
-        BattleNetAPI.wow.getPlayableClass(id: id, region: region, locale: locale) { result in
+        battleNetAPI.wow.getPlayableClass(id: id) { result in
             BattleNetAPITests.webServiceClosureTest(result: result, decodable: WOWClass.self, expectation: wsResponseExpectation)
         }
         
@@ -358,7 +356,7 @@ class WorldOfWarcraftTests: XCTestCase {
         
         let wsResponseExpectation = expectation(description: "Web Service returned a response")
         
-        BattleNetAPI.wow.getPlayableClassPvPTalentSlots(id: id, region: region, locale: locale) { result in
+        battleNetAPI.wow.getPlayableClassPvPTalentSlots(id: id) { result in
             BattleNetAPITests.webServiceClosureTest(result: result, decodable: PVPTalentSlots.self, expectation: wsResponseExpectation)
         }
         
@@ -374,7 +372,7 @@ class WorldOfWarcraftTests: XCTestCase {
     func testGetPlayableSpecializations() {
         let wsResponseExpectation = expectation(description: "Web Service returned a response")
         
-        BattleNetAPI.wow.getPlayableSpecializations(region: region, locale: locale) { result in
+        battleNetAPI.wow.getPlayableSpecializations { result in
             BattleNetAPITests.webServiceClosureTest(result: result, decodable: SpecializationIndex.self, expectation: wsResponseExpectation)
         }
         
@@ -389,7 +387,7 @@ class WorldOfWarcraftTests: XCTestCase {
         
         let wsResponseExpectation = expectation(description: "Web Service returned a response")
         
-        BattleNetAPI.wow.getPlayableSpecialization(id: id, region: region, locale: locale) { result in
+        battleNetAPI.wow.getPlayableSpecialization(id: id) { result in
             BattleNetAPITests.webServiceClosureTest(result: result, decodable: Specialization.self, expectation: wsResponseExpectation)
         }
         
@@ -404,7 +402,7 @@ class WorldOfWarcraftTests: XCTestCase {
     func testGetPowerTypes() {
         let wsResponseExpectation = expectation(description: "Web Service returned a response")
         
-        BattleNetAPI.wow.getPowerTypes(region: region, locale: locale) { result in
+        battleNetAPI.wow.getPowerTypes { result in
             BattleNetAPITests.webServiceClosureTest(result: result, decodable: PowerTypeIndex.self, expectation: wsResponseExpectation)
         }
         
@@ -419,7 +417,7 @@ class WorldOfWarcraftTests: XCTestCase {
         
         let wsResponseExpectation = expectation(description: "Web Service returned a response")
         
-        BattleNetAPI.wow.getPowerType(id: id, region: region, locale: locale) { result in
+        battleNetAPI.wow.getPowerType(id: id) { result in
             BattleNetAPITests.webServiceClosureTest(result: result, decodable: PowerType.self, expectation: wsResponseExpectation)
         }
         
@@ -434,7 +432,7 @@ class WorldOfWarcraftTests: XCTestCase {
     func testGetPlayableRaces() {
         let wsResponseExpectation = expectation(description: "Web Service returned a response")
         
-        BattleNetAPI.wow.getPlayableRaces(region: region, locale: locale) { result in
+        battleNetAPI.wow.getPlayableRaces { result in
             BattleNetAPITests.webServiceClosureTest(result: result, decodable: WOWRaceIndex.self, expectation: wsResponseExpectation)
         }
         
@@ -449,7 +447,7 @@ class WorldOfWarcraftTests: XCTestCase {
         
         let wsResponseExpectation = expectation(description: "Web Service returned a response")
         
-        BattleNetAPI.wow.getPlayableRace(id: id, region: region, locale: locale) { result in
+        battleNetAPI.wow.getPlayableRace(id: id) { result in
             BattleNetAPITests.webServiceClosureTest(result: result, decodable: WOWRace.self, expectation: wsResponseExpectation)
         }
         
@@ -465,7 +463,7 @@ class WorldOfWarcraftTests: XCTestCase {
     func testGetRealmIndex() {
         let wsResponseExpectation = expectation(description: "Web Service returned a response")
         
-        BattleNetAPI.wow.getRealmIndex(region: region, locale: locale) { result in
+        battleNetAPI.wow.getRealmIndex { result in
             BattleNetAPITests.webServiceClosureTest(result: result, decodable: RealmIndexResult.self, expectation: wsResponseExpectation)
         }
         
@@ -480,7 +478,7 @@ class WorldOfWarcraftTests: XCTestCase {
         
         let wsResponseExpectation = expectation(description: "Web Service returned a response")
         
-        BattleNetAPI.wow.getRealm(realmSlug, region: region, locale: locale) { result in
+        battleNetAPI.wow.getRealm(realmSlug) { result in
             BattleNetAPITests.webServiceClosureTest(result: result, decodable: Realm.self, expectation: wsResponseExpectation)
         }
         
@@ -496,7 +494,7 @@ class WorldOfWarcraftTests: XCTestCase {
     func testGetRegionIndex() {
         let wsResponseExpectation = expectation(description: "Web Service returned a response")
         
-        BattleNetAPI.wow.getRegionIndex(region: region, locale: locale) { result in
+        battleNetAPI.wow.getRegionIndex { result in
             BattleNetAPITests.webServiceClosureTest(result: result, decodable: RegionIndexResult.self, expectation: wsResponseExpectation)
         }
         
@@ -511,7 +509,7 @@ class WorldOfWarcraftTests: XCTestCase {
         
         let wsResponseExpectation = expectation(description: "Web Service returned a response")
         
-        BattleNetAPI.wow.getRegion(id: id, region: region, locale: locale) { result in
+        battleNetAPI.wow.getRegion(id: id) { result in
             BattleNetAPITests.webServiceClosureTest(result: result, decodable: Region.self, expectation: wsResponseExpectation)
         }
         
@@ -527,7 +525,7 @@ class WorldOfWarcraftTests: XCTestCase {
     func testGetTokenIndex() {
         let wsResponseExpectation = expectation(description: "Web Service returned a response")
         
-        BattleNetAPI.wow.getTokenIndex(region: region, locale: locale) { result in
+        battleNetAPI.wow.getTokenIndex { result in
             BattleNetAPITests.webServiceClosureTest(result: result, decodable: TokenIndex.self, expectation: wsResponseExpectation)
         }
         
@@ -545,7 +543,7 @@ class WorldOfWarcraftTests: XCTestCase {
         
         let wsResponseExpectation = expectation(description: "Web Service returned a response")
         
-        BattleNetAPI.wow.getAchievement(id: id, region: region, locale: locale) { result in
+        battleNetAPI.wow.getAchievement(id: id) { result in
             BattleNetAPITests.webServiceClosureTest(result: result, decodable: WOWAchievement.self, expectation: wsResponseExpectation)
         }
         
@@ -563,39 +561,8 @@ class WorldOfWarcraftTests: XCTestCase {
         
         let wsResponseExpectation = expectation(description: "Web Service returned a response")
         
-        BattleNetAPI.wow.getAuctions(realm: realm, region: region, locale: locale) { result in
+        battleNetAPI.wow.getAuctions(realm: realm) { result in
             BattleNetAPITests.webServiceClosureTest(result: result, decodable: Auction.self, expectation: wsResponseExpectation)
-        }
-        
-        waitForExpectations(timeout: 20) { error in
-            XCTAssertNil(error, "Exceeded timeout")
-        }
-    }
-    
-    
-    
-    // MARK: - Boss API
-    
-    func testGetBosses() {
-        let wsResponseExpectation = expectation(description: "Web Service returned a response")
-        
-        BattleNetAPI.wow.getBosses(region: region, locale: locale) { result in
-            BattleNetAPITests.webServiceClosureTest(result: result, decodable: BossIndex.self, expectation: wsResponseExpectation)
-        }
-        
-        waitForExpectations(timeout: 20) { error in
-            XCTAssertNil(error, "Exceeded timeout")
-        }
-    }
-    
-    
-    func testGetBoss() {
-        let id = 24723
-        
-        let wsResponseExpectation = expectation(description: "Web Service returned a response")
-        
-        BattleNetAPI.wow.getBoss(id: id, region: region, locale: locale) { result in
-            BattleNetAPITests.webServiceClosureTest(result: result, decodable: Boss.self, expectation: wsResponseExpectation)
         }
         
         waitForExpectations(timeout: 20) { error in
@@ -612,7 +579,7 @@ class WorldOfWarcraftTests: XCTestCase {
         
         let wsResponseExpectation = expectation(description: "Web Service returned a response")
         
-        BattleNetAPI.wow.getChallengeLeaderboards(realm: realm, region: region, locale: locale) { result in
+        battleNetAPI.wow.getChallengeLeaderboards(realm: realm) { result in
             BattleNetAPITests.webServiceClosureTest(result: result, decodable: ChallengeIndex.self, expectation: wsResponseExpectation)
         }
         
@@ -625,7 +592,7 @@ class WorldOfWarcraftTests: XCTestCase {
     func testGetTopChallengeLeaderboards() {
         let wsResponseExpectation = expectation(description: "Web Service returned a response")
         
-        BattleNetAPI.wow.getTopChallengeLeaderboards(region: region, locale: locale) { result in
+        battleNetAPI.wow.getTopChallengeLeaderboards { result in
             BattleNetAPITests.webServiceClosureTest(result: result, decodable: ChallengeIndex.self, expectation: wsResponseExpectation)
         }
         
@@ -648,7 +615,7 @@ class WorldOfWarcraftTests: XCTestCase {
         
         let wsResponseExpectation = expectation(description: "Web Service returned a response")
         
-        BattleNetAPI.wow.getCharacter(name, realm: realm, fields: fields.toArray, region: region, locale: locale) { result in
+        battleNetAPI.wow.getCharacter(name, realm: realm, fields: fields.toArray) { result in
             BattleNetAPITests.webServiceClosureTest(result: result, decodable: WOWCharacterProfile.self, expectation: wsResponseExpectation)
         }
         
@@ -668,7 +635,7 @@ class WorldOfWarcraftTests: XCTestCase {
         
         let wsResponseExpectation = expectation(description: "Web Service returned a response")
         
-        BattleNetAPI.wow.getGuild(name, realm: realm, fields: fields?.toArray, region: region, locale: locale) { result in
+        battleNetAPI.wow.getGuild(name, realm: realm, fields: fields?.toArray) { result in
             BattleNetAPITests.webServiceClosureTest(result: result, decodable: WOWGuildProfile.self, expectation: wsResponseExpectation)
         }
         
@@ -686,7 +653,7 @@ class WorldOfWarcraftTests: XCTestCase {
         
         let wsResponseExpectation = expectation(description: "Web Service returned a response")
         
-        BattleNetAPI.wow.getItem(id: id, region: region, locale: locale) { result in
+        battleNetAPI.wow.getItem(id: id) { result in
             BattleNetAPITests.webServiceClosureTest(result: result, decodable: WOWItem.self, expectation: wsResponseExpectation)
         }
         
@@ -701,7 +668,7 @@ class WorldOfWarcraftTests: XCTestCase {
         
         let wsResponseExpectation = expectation(description: "Web Service returned a response")
         
-        BattleNetAPI.wow.getItemSet(setID: setID, region: region, locale: locale) { result in
+        battleNetAPI.wow.getItemSet(setID: setID) { result in
             BattleNetAPITests.webServiceClosureTest(result: result, decodable: WOWItemSet.self, expectation: wsResponseExpectation)
         }
         
@@ -717,7 +684,7 @@ class WorldOfWarcraftTests: XCTestCase {
     func testGetMounts() {
         let wsResponseExpectation = expectation(description: "Web Service returned a response")
         
-        BattleNetAPI.wow.getMounts(region: region, locale: locale) { result in
+        battleNetAPI.wow.getMounts { result in
             BattleNetAPITests.webServiceClosureTest(result: result, decodable: MountIndex.self, expectation: wsResponseExpectation)
         }
         
@@ -733,7 +700,7 @@ class WorldOfWarcraftTests: XCTestCase {
     func testGetPets() {
         let wsResponseExpectation = expectation(description: "Web Service returned a response")
         
-        BattleNetAPI.wow.getPets(region: region, locale: locale) { result in
+        battleNetAPI.wow.getPets { result in
             BattleNetAPITests.webServiceClosureTest(result: result, decodable: PetIndex.self, expectation: wsResponseExpectation)
         }
         
@@ -748,7 +715,7 @@ class WorldOfWarcraftTests: XCTestCase {
         
         let wsResponseExpectation = expectation(description: "Web Service returned a response")
         
-        BattleNetAPI.wow.getPetAbility(abilityID: abilityID, region: region, locale: locale) { result in
+        battleNetAPI.wow.getPetAbility(abilityID: abilityID) { result in
             BattleNetAPITests.webServiceClosureTest(result: result, decodable: PetAbility.self, expectation: wsResponseExpectation)
         }
         
@@ -763,7 +730,7 @@ class WorldOfWarcraftTests: XCTestCase {
         
         let wsResponseExpectation = expectation(description: "Web Service returned a response")
         
-        BattleNetAPI.wow.getPetSpecies(speciesID: speciesID, region: region, locale: locale) { result in
+        battleNetAPI.wow.getPetSpecies(speciesID: speciesID) { result in
             BattleNetAPITests.webServiceClosureTest(result: result, decodable: PetSpecies.self, expectation: wsResponseExpectation)
         }
         
@@ -781,7 +748,7 @@ class WorldOfWarcraftTests: XCTestCase {
         
         let wsResponseExpectation = expectation(description: "Web Service returned a response")
         
-        BattleNetAPI.wow.getPetStats(speciesID: speciesID, level: level, breedID: breedID, qualityID: qualityID, region: region, locale: locale) { result in
+        battleNetAPI.wow.getPetStats(speciesID: speciesID, level: level, breedID: breedID, qualityID: qualityID) { result in
             BattleNetAPITests.webServiceClosureTest(result: result, decodable: PetStats.self, expectation: wsResponseExpectation)
         }
         
@@ -799,7 +766,7 @@ class WorldOfWarcraftTests: XCTestCase {
         
         let wsResponseExpectation = expectation(description: "Web Service returned a response")
         
-        BattleNetAPI.wow.getLeaderboard(bracket: bracket.rawValue, region: region, locale: locale) { result in
+        battleNetAPI.wow.getLeaderboard(bracket: bracket.rawValue) { result in
             BattleNetAPITests.webServiceClosureTest(result: result, decodable: WOWLeaderboard.self, expectation: wsResponseExpectation)
         }
         
@@ -817,7 +784,7 @@ class WorldOfWarcraftTests: XCTestCase {
         
         let wsResponseExpectation = expectation(description: "Web Service returned a response")
         
-        BattleNetAPI.wow.getQuest(id: id, region: region, locale: locale) { result in
+        battleNetAPI.wow.getQuest(id: id) { result in
             BattleNetAPITests.webServiceClosureTest(result: result, decodable: WOWQuest.self, expectation: wsResponseExpectation)
         }
         
@@ -833,7 +800,7 @@ class WorldOfWarcraftTests: XCTestCase {
     func testGetRealmsStatus() {
         let wsResponseExpectation = expectation(description: "Web Service returned a response")
         
-        BattleNetAPI.wow.getRealmsStatus(region: region, locale: locale) { result in
+        battleNetAPI.wow.getRealmsStatus { result in
             BattleNetAPITests.webServiceClosureTest(result: result, decodable: WOWRealmIndex.self, expectation: wsResponseExpectation)
         }
         
@@ -851,7 +818,7 @@ class WorldOfWarcraftTests: XCTestCase {
         
         let wsResponseExpectation = expectation(description: "Web Service returned a response")
         
-        BattleNetAPI.wow.getRecipe(id: id, region: region, locale: locale) { result in
+        battleNetAPI.wow.getRecipe(id: id) { result in
             BattleNetAPITests.webServiceClosureTest(result: result, decodable: WOWRecipe.self, expectation: wsResponseExpectation)
         }
         
@@ -869,7 +836,7 @@ class WorldOfWarcraftTests: XCTestCase {
         
         let wsResponseExpectation = expectation(description: "Web Service returned a response")
         
-        BattleNetAPI.wow.getSpell(id: id, region: region, locale: locale) { result in
+        battleNetAPI.wow.getSpell(id: id) { result in
             BattleNetAPITests.webServiceClosureTest(result: result, decodable: Spell.self, expectation: wsResponseExpectation)
         }
         
@@ -885,7 +852,7 @@ class WorldOfWarcraftTests: XCTestCase {
     func testGetZones() {
         let wsResponseExpectation = expectation(description: "Web Service returned a response")
         
-        BattleNetAPI.wow.getZones(region: region, locale: locale) { result in
+        battleNetAPI.wow.getZones { result in
             BattleNetAPITests.webServiceClosureTest(result: result, decodable: ZoneIndex.self, expectation: wsResponseExpectation)
         }
         
@@ -900,7 +867,7 @@ class WorldOfWarcraftTests: XCTestCase {
         
         let wsResponseExpectation = expectation(description: "Web Service returned a response")
         
-        BattleNetAPI.wow.getZone(id: id, region: region, locale: locale) { result in
+        battleNetAPI.wow.getZone(id: id) { result in
             BattleNetAPITests.webServiceClosureTest(result: result, decodable: Zone.self, expectation: wsResponseExpectation)
         }
         
@@ -916,7 +883,7 @@ class WorldOfWarcraftTests: XCTestCase {
     func testGetBattlegroups() {
         let wsResponseExpectation = expectation(description: "Web Service returned a response")
         
-        BattleNetAPI.wow.getBattlegroups(region: region, locale: locale) { result in
+        battleNetAPI.wow.getBattlegroups { result in
             BattleNetAPITests.webServiceClosureTest(result: result, decodable: BattlegroupIndex.self, expectation: wsResponseExpectation)
         }
         
@@ -929,7 +896,7 @@ class WorldOfWarcraftTests: XCTestCase {
     func testGetRaces() {
         let wsResponseExpectation = expectation(description: "Web Service returned a response")
         
-        BattleNetAPI.wow.getRaces(region: region, locale: locale) { result in
+        battleNetAPI.wow.getRaces { result in
             BattleNetAPITests.webServiceClosureTest(result: result, decodable: RaceIndex.self, expectation: wsResponseExpectation)
         }
         
@@ -942,7 +909,7 @@ class WorldOfWarcraftTests: XCTestCase {
     func testGetClasses() {
         let wsResponseExpectation = expectation(description: "Web Service returned a response")
         
-        BattleNetAPI.wow.getClasses(region: region, locale: locale) { result in
+        battleNetAPI.wow.getClasses { result in
             BattleNetAPITests.webServiceClosureTest(result: result, decodable: WOWCharacterClassIndex.self, expectation: wsResponseExpectation)
         }
         
@@ -955,7 +922,7 @@ class WorldOfWarcraftTests: XCTestCase {
     func testGetAchievements() {
         let wsResponseExpectation = expectation(description: "Web Service returned a response")
         
-        BattleNetAPI.wow.getAchievements(region: region, locale: locale) { result in
+        battleNetAPI.wow.getAchievements { result in
             BattleNetAPITests.webServiceClosureTest(result: result, decodable: WOWAchievementIndex.self, expectation: wsResponseExpectation)
         }
         
@@ -968,7 +935,7 @@ class WorldOfWarcraftTests: XCTestCase {
     func testGetGuildRewards() {
         let wsResponseExpectation = expectation(description: "Web Service returned a response")
         
-        BattleNetAPI.wow.getGuildRewards(region: region, locale: locale) { result in
+        battleNetAPI.wow.getGuildRewards { result in
             BattleNetAPITests.webServiceClosureTest(result: result, decodable: WOWGuildRewardIndex.self, expectation: wsResponseExpectation)
         }
         
@@ -981,7 +948,7 @@ class WorldOfWarcraftTests: XCTestCase {
     func testGetGuildPerks() {
         let wsResponseExpectation = expectation(description: "Web Service returned a response")
         
-        BattleNetAPI.wow.getGuildPerks(region: region, locale: locale) { result in
+        battleNetAPI.wow.getGuildPerks { result in
             BattleNetAPITests.webServiceClosureTest(result: result, decodable: PerkIndex.self, expectation: wsResponseExpectation)
         }
         
@@ -994,7 +961,7 @@ class WorldOfWarcraftTests: XCTestCase {
     func testGetGuildAchievements() {
         let wsResponseExpectation = expectation(description: "Web Service returned a response")
         
-        BattleNetAPI.wow.getGuildAchievements(region: region, locale: locale) { result in
+        battleNetAPI.wow.getGuildAchievements { result in
             BattleNetAPITests.webServiceClosureTest(result: result, decodable: WOWAchievementIndex.self, expectation: wsResponseExpectation)
         }
         
@@ -1007,7 +974,7 @@ class WorldOfWarcraftTests: XCTestCase {
     func testGetItemClasses() {
         let wsResponseExpectation = expectation(description: "Web Service returned a response")
         
-        BattleNetAPI.wow.getItemClasses(region: region, locale: locale) { result in
+        battleNetAPI.wow.getItemClasses { result in
             BattleNetAPITests.webServiceClosureTest(result: result, decodable: ItemClassIndex.self, expectation: wsResponseExpectation)
         }
         
@@ -1020,7 +987,7 @@ class WorldOfWarcraftTests: XCTestCase {
     func testGetTalents() {
         let wsResponseExpectation = expectation(description: "Web Service returned a response")
         
-        BattleNetAPI.wow.getTalents(region: region, locale: locale) { result in
+        battleNetAPI.wow.getTalents { result in
             BattleNetAPITests.webServiceClosureTest(result: result, decodable: ClassTalentDictionary.self, expectation: wsResponseExpectation)
         }
         
@@ -1033,7 +1000,7 @@ class WorldOfWarcraftTests: XCTestCase {
     func testGetPetTypes() {
         let wsResponseExpectation = expectation(description: "Web Service returned a response")
         
-        BattleNetAPI.wow.getPetTypes(region: region, locale: locale) { result in
+        battleNetAPI.wow.getPetTypes { result in
             BattleNetAPITests.webServiceClosureTest(result: result, decodable: PetTypeIndex.self, expectation: wsResponseExpectation)
         }
         

@@ -236,7 +236,8 @@ class WorldOfWarcraftViewController: UITableViewController, APIViewer {
     }
     
     
-    let wowMC = WorldOfWarcraftModelController(region: Current.region, locale: Current.locale)
+    let battleNetAPI = BattleNetAPI(credentials: Current.credentials)
+    lazy var wowMC = WorldOfWarcraftModelController(battleNetAPI: battleNetAPI)
     
     public var apiType: APIType = .gameData
     

@@ -12,13 +12,9 @@ import Foundation
 public struct UserModelController {
     let battleNetAPI: BattleNetAPI
     
-    var region: APIRegion
-    var locale: APILocale?
     
-    public init(region: APIRegion, locale: APILocale?) {
-        self.battleNetAPI = BattleNetAPI(region: .us, locale: .en_US)
-        self.region = region
-        self.locale = locale
+    public init(battleNetAPI: BattleNetAPI) {
+        self.battleNetAPI = battleNetAPI
     }
     
     

@@ -9,7 +9,7 @@
 import Foundation
 
 
-public enum HTTPError: Error, LocalizedError {
+public enum HTTPError: Error, LocalizedError, Equatable {
     // Request Error cases
     
     /// The request could not be constructed
@@ -134,6 +134,22 @@ public enum HTTPError: Error, LocalizedError {
             return error.code
         default:
             return 499
+        }
+    }
+    
+    
+    public static func == (lhs: HTTPError, rhs: HTTPError) -> Bool {
+        switch (lhs, rhs) {
+        case (.unauthorized, .unauthorized), (.timeout, .timeout), (.unexpectedResponse, .unexpectedResponse),
+             (.invalidRequest, .invalidRequest), (.unexpectedBody, .unexpectedBody), (.forbidden, .forbidden):
+            return true
+        case (.other(_), .other(_)):
+            // Can't compare 2 errors, so just assume equality
+            return true
+        case (.serverResponse(let status1, _), .serverResponse(let status2, _)):
+            return status1 == status2
+        default:
+            return false
         }
     }
 }

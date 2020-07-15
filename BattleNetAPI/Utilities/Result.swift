@@ -22,19 +22,6 @@ extension Result {
 
 
 
-extension Result where Success == Bool, Failure == HTTPError {
-    public init(success: Success) {
-        if success {
-            self = .success(true)
-        }
-        else {
-            self = .failure(HTTPError.httpError)
-        }
-    }
-}
-
-
-
 extension Result where Success == Data {
     /**
      Decode a successful Result to a class specified in your completion. Will return an HTTPError.jsonParsingError if decoding fails, or the original error if the Result was a failure.

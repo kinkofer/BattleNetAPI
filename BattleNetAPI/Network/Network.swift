@@ -60,7 +60,7 @@ class Network {
      - parameter request: The URLRequest
      - parameter completion: Returns the web service response and error
      */
-    func start(_ request: URLRequest, completion: @escaping (_ result: Result<Data, HTTPError>) -> Void) {
+    func start(_ request: URLRequest, completion: @escaping (_ result: Result<Data, Error>) -> Void) {
         URLSession.shared.dataTask(with: request) { data, response, error in
             if let data = data,
                 let response = response as? HTTPURLResponse {

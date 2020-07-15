@@ -11,26 +11,24 @@ import XCTest
 
 
 class Diablo3Tests: XCTestCase {
-    let region: APIRegion = Current.region
-    let locale: APILocale = Current.locale
+    var battleNetAPI: BattleNetAPI!
     
     
     override func setUp() {
         super.setUp()
         // Put setup code here. This method is called before the invocation of each test method in the class.
         
-        guard let clientAccessToken = clientAccessToken else {
-            XCTFail("clientAccessToken must be set in AuthToken. The token is logged in the console when running ViewController.viewDidLoad().")
+        guard credentials.clientAccessToken != nil else {
+            XCTFail("clientAccessToken must be set in credentials.")
             return
         }
         
-        guard let userAccessToken = userAccessToken else {
-            XCTFail("userAccessToken must be set in AuthToken. The token is logged in the console when running authenticateUser(showAPI:).")
+        guard credentials.userAccessToken != nil else {
+            XCTFail("userAccessToken must be set in credentials.")
             return
         }
         
-        Network.shared.clientAccessToken = clientAccessToken
-        Network.shared.userAccessToken = userAccessToken
+        battleNetAPI = BattleNetAPI(credentials: credentials)
     }
     
     override func tearDown() {
@@ -45,7 +43,7 @@ class Diablo3Tests: XCTestCase {
     func testGetActs() {
         let wsResponseExpectation = expectation(description: "Web Service returned a response")
         
-        BattleNetAPI.d3.getActs(region: region, locale: locale) { result in
+        battleNetAPI.d3.getActs { result in
             BattleNetAPITests.webServiceClosureTest(result: result, decodable: ActIndex.self, expectation: wsResponseExpectation)
         }
         
@@ -60,7 +58,7 @@ class Diablo3Tests: XCTestCase {
         
         let wsResponseExpectation = expectation(description: "Web Service returned a response")
         
-        BattleNetAPI.d3.getAct(id: id, region: region, locale: locale) { result in
+        battleNetAPI.d3.getAct(id: id) { result in
             BattleNetAPITests.webServiceClosureTest(result: result, decodable: Act.self, expectation: wsResponseExpectation)
         }
         
@@ -78,7 +76,7 @@ class Diablo3Tests: XCTestCase {
         
         let wsResponseExpectation = expectation(description: "Web Service returned a response")
         
-        BattleNetAPI.d3.getArtisan(slug: slug, region: region, locale: locale) { result in
+        battleNetAPI.d3.getArtisan(slug: slug) { result in
             BattleNetAPITests.webServiceClosureTest(result: result, decodable: Artisan.self, expectation: wsResponseExpectation)
         }
         
@@ -94,7 +92,7 @@ class Diablo3Tests: XCTestCase {
         
         let wsResponseExpectation = expectation(description: "Web Service returned a response")
         
-        BattleNetAPI.d3.getRecipe(recipeSlug: recipeSlug, artisanSlug: artisanSlug, region: region, locale: locale) { result in
+        battleNetAPI.d3.getRecipe(recipeSlug: recipeSlug, artisanSlug: artisanSlug) { result in
             BattleNetAPITests.webServiceClosureTest(result: result, decodable: D3Recipe.self, expectation: wsResponseExpectation)
         }
         
@@ -112,7 +110,7 @@ class Diablo3Tests: XCTestCase {
         
         let wsResponseExpectation = expectation(description: "Web Service returned a response")
         
-        BattleNetAPI.d3.getFollower(slug: slug, region: region, locale: locale) { result in
+        battleNetAPI.d3.getFollower(slug: slug) { result in
             BattleNetAPITests.webServiceClosureTest(result: result, decodable: Follower.self, expectation: wsResponseExpectation)
         }
         
@@ -130,7 +128,7 @@ class Diablo3Tests: XCTestCase {
         
         let wsResponseExpectation = expectation(description: "Web Service returned a response")
         
-        BattleNetAPI.d3.getClass(slug: slug, region: region, locale: locale) { result in
+        battleNetAPI.d3.getClass(slug: slug) { result in
             BattleNetAPITests.webServiceClosureTest(result: result, decodable: D3Class.self, expectation: wsResponseExpectation)
         }
         
@@ -146,7 +144,7 @@ class Diablo3Tests: XCTestCase {
         
         let wsResponseExpectation = expectation(description: "Web Service returned a response")
         
-        BattleNetAPI.d3.getSkill(skillSlug: skillSlug, classSlug: classSlug, region: region, locale: locale) { result in
+        battleNetAPI.d3.getSkill(skillSlug: skillSlug, classSlug: classSlug) { result in
             BattleNetAPITests.webServiceClosureTest(result: result, decodable: D3SkillConfiguration.self, expectation: wsResponseExpectation)
         }
         
@@ -162,7 +160,7 @@ class Diablo3Tests: XCTestCase {
     func testGetItemTypes() {
         let wsResponseExpectation = expectation(description: "Web Service returned a response")
         
-        BattleNetAPI.d3.getItemTypes(region: region, locale: locale) { result in
+        battleNetAPI.d3.getItemTypes() { result in
             BattleNetAPITests.webServiceClosureTest(result: result, decodable: [D3ItemType].self, expectation: wsResponseExpectation)
         }
         
@@ -177,7 +175,7 @@ class Diablo3Tests: XCTestCase {
         
         let wsResponseExpectation = expectation(description: "Web Service returned a response")
         
-        BattleNetAPI.d3.getItemsByType(typeSlug: typeSlug, region: region, locale: locale) { result in
+        battleNetAPI.d3.getItemsByType(typeSlug: typeSlug) { result in
             BattleNetAPITests.webServiceClosureTest(result: result, decodable: [D3Item].self, expectation: wsResponseExpectation)
         }
         
@@ -195,7 +193,7 @@ class Diablo3Tests: XCTestCase {
         
         let wsResponseExpectation = expectation(description: "Web Service returned a response")
         
-        BattleNetAPI.d3.getItem(itemSlugAndID: itemSlugAndID, region: region, locale: locale) { result in
+        battleNetAPI.d3.getItem(itemSlugAndID: itemSlugAndID) { result in
             BattleNetAPITests.webServiceClosureTest(result: result, decodable: D3FullItem.self, expectation: wsResponseExpectation)
         }
         
@@ -213,7 +211,7 @@ class Diablo3Tests: XCTestCase {
         
         let wsResponseExpectation = expectation(description: "Web Service returned a response")
         
-        BattleNetAPI.d3.getProfile(battleTag: battleTag, region: region, locale: locale) { result in
+        battleNetAPI.d3.getProfile(battleTag: battleTag) { result in
             BattleNetAPITests.webServiceClosureTest(result: result, decodable: D3Profile.self, expectation: wsResponseExpectation)
         }
         
@@ -229,7 +227,7 @@ class Diablo3Tests: XCTestCase {
         
         let wsResponseExpectation = expectation(description: "Web Service returned a response")
         
-        BattleNetAPI.d3.getHero(heroID: heroID, battleTag: battleTag, region: region, locale: locale) { result in
+        battleNetAPI.d3.getHero(heroID: heroID, battleTag: battleTag) { result in
             BattleNetAPITests.webServiceClosureTest(result: result, decodable: FullHero.self, expectation: wsResponseExpectation)
         }
         
@@ -245,7 +243,7 @@ class Diablo3Tests: XCTestCase {
         
         let wsResponseExpectation = expectation(description: "Web Service returned a response")
         
-        BattleNetAPI.d3.getItemsForHero(heroID: heroID, battleTag: battleTag, region: region, locale: locale) { result in
+        battleNetAPI.d3.getItemsForHero(heroID: heroID, battleTag: battleTag) { result in
             BattleNetAPITests.webServiceClosureTest(result: result, decodable: FullEquippedItems.self, expectation: wsResponseExpectation)
         }
         
@@ -261,7 +259,7 @@ class Diablo3Tests: XCTestCase {
         
         let wsResponseExpectation = expectation(description: "Web Service returned a response")
         
-        BattleNetAPI.d3.getFollowerItemsForHero(heroID: heroID, battleTag: battleTag, region: region, locale: locale) { result in
+        battleNetAPI.d3.getFollowerItemsForHero(heroID: heroID, battleTag: battleTag) { result in
             BattleNetAPITests.webServiceClosureTest(result: result, decodable: HeroFollowerItems.self, expectation: wsResponseExpectation)
         }
         
@@ -277,7 +275,7 @@ class Diablo3Tests: XCTestCase {
     func testGetSeasons() {
         let wsResponseExpectation = expectation(description: "Web Service returned a response")
         
-        BattleNetAPI.d3.getSeasons(region: region) { result in
+        battleNetAPI.d3.getSeasons { result in
             BattleNetAPITests.webServiceClosureTest(result: result, decodable: D3SeasonIndex.self, expectation: wsResponseExpectation)
         }
         
@@ -292,7 +290,7 @@ class Diablo3Tests: XCTestCase {
         
         let wsResponseExpectation = expectation(description: "Web Service returned a response")
         
-        BattleNetAPI.d3.getLeaderboards(seasonID: seasonID, region: region) { result in
+        battleNetAPI.d3.getLeaderboards(seasonID: seasonID) { result in
             BattleNetAPITests.webServiceClosureTest(result: result, decodable: D3SeasonLeaderboardIndex.self, expectation: wsResponseExpectation)
         }
         
@@ -308,7 +306,7 @@ class Diablo3Tests: XCTestCase {
         
         let wsResponseExpectation = expectation(description: "Web Service returned a response")
         
-        BattleNetAPI.d3.getLeaderboard(leaderboard, seasonID: seasonID, region: region) { result in
+        battleNetAPI.d3.getLeaderboard(leaderboard, seasonID: seasonID) { result in
             BattleNetAPITests.webServiceClosureTest(result: result, decodable: SeasonLeaderboard.self, expectation: wsResponseExpectation)
         }
         
@@ -321,7 +319,7 @@ class Diablo3Tests: XCTestCase {
     func testGetEras() {
         let wsResponseExpectation = expectation(description: "Web Service returned a response")
         
-        BattleNetAPI.d3.getEras(region: region) { result in
+        battleNetAPI.d3.getEras { result in
             BattleNetAPITests.webServiceClosureTest(result: result, decodable: EraIndex.self, expectation: wsResponseExpectation)
         }
         
@@ -336,7 +334,7 @@ class Diablo3Tests: XCTestCase {
         
         let wsResponseExpectation = expectation(description: "Web Service returned a response")
         
-        BattleNetAPI.d3.getLeaderboards(eraID: eraID, region: region) { result in
+        battleNetAPI.d3.getLeaderboards(eraID: eraID) { result in
             BattleNetAPITests.webServiceClosureTest(result: result, decodable: EraLeaderboardIndex.self, expectation: wsResponseExpectation)
         }
         
@@ -352,7 +350,7 @@ class Diablo3Tests: XCTestCase {
         
         let wsResponseExpectation = expectation(description: "Web Service returned a response")
         
-        BattleNetAPI.d3.getLeaderboard(leaderboard, eraID: eraID, region: region) { result in
+        battleNetAPI.d3.getLeaderboard(leaderboard, eraID: eraID) { result in
             BattleNetAPITests.webServiceClosureTest(result: result, decodable: EraLeaderboard.self, expectation: wsResponseExpectation)
         }
         

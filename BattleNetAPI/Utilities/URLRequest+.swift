@@ -10,6 +10,18 @@ import Foundation
 
 
 extension URLRequest {
+    init(url: URL, method: HTTPMethod, headers: [HTTPHeader]? = nil, body: Data? = nil) {
+        self.init(url: url)
+        self.httpMethod = method.rawValue
+        if let headers = headers {
+            self.addHeaders(headers)
+        }
+        self.httpBody = body
+    }
+}
+
+
+extension URLRequest {
     public mutating func addHeaders(_ headers: [String: String?]) {
         for (key, value) in headers {
             self.setValue(value, forHTTPHeaderField: key)
