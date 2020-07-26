@@ -109,34 +109,6 @@ public struct WS_WorldOfWarcraft: WebService {
     
     
     
-    /**
-     Calls a data web service using a pre-constructed url typically found within another web service result.
-     
-     - parameter urlStr: The url that will be used to make the web service call
-     - parameter completion: Returns a Result with the Data if `success` or an HTTPError if `failure`
-     */
-    public func getResource(from urlStr: String, completion: @escaping (_ result: Result<Data, Error>) -> Void) {
-        self.callWebService(urlStr: urlStr, method: .get, apiType: .gameData) { result in
-            completion(result)
-        }
-    }
-    
-    
-    /**
-     Calls a data web service using a pre-constructed url typically found within another web service result.
-     
-     - parameter resource: The resource that will be used to make the web service call
-     - parameter completion: Returns a Result with the Data if `success` or an HTTPError if `failure`
-     */
-    public func getResource<T>(_ resource: T, completion: @escaping (_ result: Result<Data, Error>) -> Void) where T: ResourceLinkable {
-        callWebService(urlStr: resource.link.href, method: .get, apiType: .gameData) { result in
-            completion(result)
-        }
-    }
-    
-    
-    
-    
     // MARK: - Game Data API
     
     // MARK: Achievement API

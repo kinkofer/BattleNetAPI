@@ -90,7 +90,7 @@ public class WS_Authentication: AuthenticationWebService {
      */
     public func validateClientAccessToken(_ token: String, completion: @escaping (_ result: Result<Data, Error>) -> Void) {
         guard !token.isEmpty,
-            let url = URL(string: "\(region.oauthURI)/check_token?token=\(token)") else {
+            let url = URL(string: region.getCheckTokenURI(token: token)) else {
             completion(.failure(HTTPError.invalidRequest))
             return
         }
@@ -156,7 +156,7 @@ public class WS_Authentication: AuthenticationWebService {
      - parameter completion: Returns a Result with the Data if `success` or an HTTPError if `failure`
      */
     public func validateUserAccessToken(_ token: String, completion: @escaping (_ result: Result<Data, Error>) -> Void) {
-        guard let url = URL(string: "\(region.checkTokenURI)?token=\(token)") else {
+        guard let url = URL(string: region.getCheckTokenURI(token: token)) else {
             completion(.failure(HTTPError.invalidRequest))
             return
         }

@@ -10,7 +10,29 @@ import Foundation
 
 
 protocol WS_Diablo3Service: WebService {
-    
+    // Game Data APIs
+    func getSeasons(namespace: APINamespace?, completion: @escaping (_ result: Result<Data, Error>) -> Void)
+    func getLeaderboards(seasonID: Int, namespace: APINamespace?, completion: @escaping (_ result: Result<Data, Error>) -> Void)
+    func getLeaderboard(_ leaderboard: String, seasonID: Int, namespace: APINamespace?, completion: @escaping (_ result: Result<Data, Error>) -> Void)
+    func getEras(namespace: APINamespace?, completion: @escaping (_ result: Result<Data, Error>) -> Void)
+    func getLeaderboards(eraID: Int, namespace: APINamespace?, completion: @escaping (_ result: Result<Data, Error>) -> Void)
+    func getLeaderboard(_ leaderboard: String, eraID: Int, namespace: APINamespace?, completion: @escaping (_ result: Result<Data, Error>) -> Void)
+    // Community APIs
+    func getActs(completion: @escaping (_ result: Result<Data, Error>) -> Void)
+    func getAct(id: Int, completion: @escaping (_ result: Result<Data, Error>) -> Void)
+    func getArtisan(slug: String, completion: @escaping (_ result: Result<Data, Error>) -> Void)
+    func getRecipe(recipeSlug: String, artisanSlug: String, completion: @escaping (_ result: Result<Data, Error>) -> Void)
+    func getFollower(slug: String, completion: @escaping (_ result: Result<Data, Error>) -> Void)
+    func getClass(slug: String, completion: @escaping (_ result: Result<Data, Error>) -> Void)
+    func getSkill(skillSlug: String, classSlug: String, completion: @escaping (_ result: Result<Data, Error>) -> Void)
+    func getItemTypes(completion: @escaping (_ result: Result<Data, Error>) -> Void)
+    func getItemsByType(typeSlug: String, completion: @escaping (_ result: Result<Data, Error>) -> Void)
+    func getItem(itemSlugAndID: String, completion: @escaping (_ result: Result<Data, Error>) -> Void)
+    // Profile APIs
+    func getProfile(battleTag: String, completion: @escaping (_ result: Result<Data, Error>) -> Void)
+    func getHero(heroID: Int, battleTag: String, completion: @escaping (_ result: Result<Data, Error>) -> Void)
+    func getItemsForHero(heroID: Int, battleTag: String, completion: @escaping (_ result: Result<Data, Error>) -> Void)
+    func getFollowerItemsForHero(heroID: Int, battleTag: String, completion: @escaping (_ result: Result<Data, Error>) -> Void)
 }
 
 
@@ -18,7 +40,6 @@ protocol WS_Diablo3Service: WebService {
 public struct WS_Diablo3: WS_Diablo3Service {
     public enum API: APICall {
         // Game Data APIs
-        case resource
         case season
         case leaderboardBySeason(Int)
         case seasonLeaderboard(Int, String)
@@ -45,9 +66,7 @@ public struct WS_Diablo3: WS_Diablo3Service {
         
         var path: String {
             switch self {
-            case .resource:
-                // Resource path is unused
-                return ""
+            // Game Data APIs
             case .season:
                 return "/season"
             case .leaderboardBySeason(let id):
@@ -60,6 +79,7 @@ public struct WS_Diablo3: WS_Diablo3Service {
                 return "/era/\(id)"
             case .eraLeaderboard(let eraID, let leaderboard):
                 return "/era/\(eraID)/leaderboard/\(leaderboard)"
+            // Community APIs
             case .actIndex:
                 return "/act"
             case .act(let id):
@@ -76,10 +96,11 @@ public struct WS_Diablo3: WS_Diablo3Service {
                 return "/hero/\(classSlug)/skill/\(skillSlug)"
             case .itemType:
                 return "/item-type"
-            case .itemTypeBySlug(let typeSlug):
-                return "/item-type/\(typeSlug)"
+            case .itemTypeBySlug(let itemTypeSlug):
+                return "/item-type/\(itemTypeSlug)"
             case .itemSlugAndID(let itemSlugAndID):
                 return "/item/\(itemSlugAndID)"
+            // Profile APIs
             case .profile(let battleTag):
                 return "/\(battleTag)/"
             case .hero(let battleTag, let heroID):
@@ -94,7 +115,7 @@ public struct WS_Diablo3: WS_Diablo3Service {
         
         var apiType: APIType? {
             switch self {
-            case .resource, .season, .leaderboardBySeason, .seasonLeaderboard,
+            case .season, .leaderboardBySeason, .seasonLeaderboard,
                  .eraIndex, .leaderboardByEra, .eraLeaderboard:
                 return .gameData
             case .actIndex, .act, .artisan, .artisanRecipe,
@@ -137,31 +158,6 @@ public struct WS_Diablo3: WS_Diablo3Service {
     
     var authenticationService: AuthenticationWebService?
     
-    
-    /**
-     Calls a data web service using a pre-constructed url typically found within another web service result.
-     
-     - parameter urlStr: The url that will be used to make the web service call
-     - parameter completion: Returns a Result with the Data if `success` or an HTTPError if `failure`
-     */
-    public func getResource(from urlStr: String, completion: @escaping (_ result: Result<Data, Error>) -> Void) {
-        callWebService(urlStr: urlStr, method: .get, apiType: .gameData) { result in
-            completion(result)
-        }
-    }
-    
-    
-    /**
-     Calls a data web service using a pre-constructed url typically found within another web service result.
-     
-     - parameter resource: The resource that will be used to make the web service call
-     - parameter completion: Returns a Result with the Data if `success` or an HTTPError if `failure`
-     */
-    public func getResource<T>(_ resource: T, completion: @escaping (_ result: Result<Data, Error>) -> Void) where T: ResourceLinkable {
-        callWebService(urlStr: resource.link.href, method: .get, apiType: .gameData) { result in
-            completion(result)
-        }
-    }
     
     
     // MARK: - Game Data API

@@ -100,6 +100,7 @@
 		598AC18A24AB13A8002F2ED3 /* Diablo3Tests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 591981F7209AE9C500ADE60F /* Diablo3Tests.swift */; };
 		598AC18B24AB13AA002F2ED3 /* StarCraft2Tests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 591981F9209AF14C00ADE60F /* StarCraft2Tests.swift */; };
 		598AC18C24AB13AB002F2ED3 /* WorldOfWarcraftTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 591981FB209AF17600ADE60F /* WorldOfWarcraftTests.swift */; };
+		59DBC93C24C4C418007603B1 /* WS_Resource.swift in Sources */ = {isa = PBXBuildFile; fileRef = 59DBC93B24C4C418007603B1 /* WS_Resource.swift */; };
 		59FCE4ED24B4200D00EBBA01 /* AuthenticationWebService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 59FCE4EC24B4200D00EBBA01 /* AuthenticationWebService.swift */; };
 /* End PBXBuildFile section */
 
@@ -197,6 +198,7 @@
 		59D09C47208D624A006BB4B7 /* Mount.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Mount.swift; sourceTree = "<group>"; };
 		59D09C49208D75E4006BB4B7 /* Pet.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Pet.swift; sourceTree = "<group>"; };
 		59D09C4B208DA486006BB4B7 /* WOWLeaderboard.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WOWLeaderboard.swift; sourceTree = "<group>"; };
+		59DBC93B24C4C418007603B1 /* WS_Resource.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WS_Resource.swift; sourceTree = "<group>"; };
 		59E425AF207871C50046EB84 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		59E425B8207871C50046EB84 /* BattleNetAPITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BattleNetAPITests.swift; sourceTree = "<group>"; };
 		59E425BA207871C50046EB84 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
@@ -352,6 +354,7 @@
 				59E425CD20787F640046EB84 /* WS_Authentication.swift */,
 				59397CDF207C5FE20077018E /* WS_Diablo3.swift */,
 				59397CD9207C47EB0077018E /* WS_StarCraft2.swift */,
+				59DBC93B24C4C418007603B1 /* WS_Resource.swift */,
 				59397CD1207B50520077018E /* WS_User.swift */,
 				5954B1B9207A9D2900CC36D1 /* WS_WorldOfWarcraft.swift */,
 			);
@@ -609,6 +612,7 @@
 				598AC11E24A9B710002F2ED3 /* Auction.swift in Sources */,
 				598AC10324A9B710002F2ED3 /* TokenIndex.swift in Sources */,
 				5926AD3824BE0E87000CD4BC /* OAuthAuthenticator.swift in Sources */,
+				59DBC93C24C4C418007603B1 /* WS_Resource.swift in Sources */,
 				598AC12624A9B71F002F2ED3 /* WS_User.swift in Sources */,
 				598AC0FA24A9B704002F2ED3 /* SC2Season.swift in Sources */,
 				598AC13224A9B731002F2ED3 /* Publisher+JSON.swift in Sources */,

@@ -92,20 +92,6 @@ public enum APIRegion: String, CaseIterable, Codable {
         }
     }
     
-    /// The url to validate a token
-    var checkTokenURI: String {
-        switch self {
-        case .us, .eu:
-            return "https://\(self.rawValue).battle.net/oauth/check_token"
-        case .kr, .tw:
-            return "https://apac.battle.net/oauth/authorize"
-        case .sea:
-            return "https://us.battle.net/oauth/authorize"
-        case .cn:
-            return "https://www.battlenet.com.cn/oauth/check_token"
-        }
-    }
-    
     /// The base url of the API services
     var apiURI: String {
         switch self {
@@ -148,6 +134,21 @@ public enum APIRegion: String, CaseIterable, Codable {
         case .tw: return "Taiwan"
         case .sea: return "South East Asia"
         case .cn: return "China"
+        }
+    }
+    
+    
+    /// The url to validate a token
+    func getCheckTokenURI(token: String) -> String {
+        switch self {
+        case .us, .eu:
+            return "https://\(self.rawValue).battle.net/oauth/check_token?token=\(token)"
+        case .kr, .tw:
+            return "https://apac.battle.net/oauth/check_token?token=\(token)"
+        case .sea:
+            return "https://us.battle.net/oauth/check_token?token=\(token)"
+        case .cn:
+            return "https://www.battlenet.com.cn/oauth/check_token?token=\(token)"
         }
     }
 }

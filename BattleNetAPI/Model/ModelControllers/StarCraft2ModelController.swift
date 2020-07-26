@@ -87,8 +87,8 @@ public struct StarCraft2ModelController {
     
     // MARK: Account API
     
-    public func getPlayers(userID: Int, completion: @escaping (_ result: Result<[SC2ProfileMetadata], Error>) -> Void) {
-        battleNetAPI.sc2.getPlayers(userID: userID) { result in
+    public func getPlayer(accountID: Int, completion: @escaping (_ result: Result<[SC2ProfileMetadata], Error>) -> Void) {
+        battleNetAPI.sc2.getPlayer(accountID: accountID) { result in
             result.decode(completion: completion)
         }
     }

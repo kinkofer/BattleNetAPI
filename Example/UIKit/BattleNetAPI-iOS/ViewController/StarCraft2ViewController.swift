@@ -247,8 +247,8 @@ class StarCraft2ViewController: UITableViewController, APIViewer {
     
     // MARK: Account API
     
-    func getPlayers(userID: Int) {
-        sc2MC.getPlayers(userID: userID) { result in
+    func getPlayers(accountID: Int) {
+        sc2MC.getPlayer(accountID: accountID) { result in
             switch result {
             case .success(let players):
                 Debug.print("Retrieved \(players.count) player(s) named \(players.map { $0.name }.joined(separator: ", "))")
@@ -336,7 +336,7 @@ class StarCraft2ViewController: UITableViewController, APIViewer {
             case .season:
                 getLadderSeason(sc2Region: .us)
             case .player:
-                getPlayers(userID: 8)
+                getPlayers(accountID: 8)
             }
         case .profile:
             break

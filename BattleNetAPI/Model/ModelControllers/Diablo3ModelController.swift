@@ -20,7 +20,7 @@ public struct Diablo3ModelController {
     
     
     public func getResource<T: Decodable>(from resourceLink: Link<T>, completion: @escaping (_ result: Result<T, Error>) -> Void) {
-        battleNetAPI.d3.getResource(from: resourceLink.href) { result in
+        battleNetAPI.resource.getResource(from: resourceLink.href, apiType: .gameData) { result in
             result.decode(completion: completion)
         }
     }

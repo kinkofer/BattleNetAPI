@@ -27,6 +27,8 @@ public class BattleNetAPI {
     public lazy private(set) var sc2 = WS_StarCraft2(region: region, locale: locale, session: session, authenticationService: authentication)
     /// Diablo 3 web services
     public lazy private(set) var d3 = WS_Diablo3(region: region, locale: locale, session: session, authenticationService: authentication)
+    /// Web services for linked resource urls
+    public lazy private(set) var resource = WS_Resource(region: region, locale: locale, session: session, authenticationService: authentication)
     
     
     

@@ -32,6 +32,17 @@ protocol WebService {
 }
 
 
+extension WebService {
+    /// Makes a call using only the function paramaters to create the request.
+    func call(url: URL, method: HTTPMethod = .get, headers: [HTTPHeader]? = nil, body: Data? = nil, completion: @escaping (_ result: Result<Data, Error>) -> Void) {
+        let request = URLRequest(url: url, method: method, headers: headers, body: body)
+        
+        session.startData(request) { result in
+            completion(result)
+        }
+    }
+}
+
 
 extension WebService {
     /// Makes a web service call, configured for the endpoint
@@ -71,14 +82,28 @@ extension WebService {
     }
     
     
-    /// Makes a call using only the function paramaters to create the request.
-    func call(url: URL, method: HTTPMethod = .get, headers: [HTTPHeader]? = nil, body: Data? = nil, completion: @escaping (_ result: Result<Data, Error>) -> Void) {
-        let request = URLRequest(url: url, method: method, headers: headers, body: body)
-        
-        session.startData(request) { result in
-            completion(result)
+    /// Makes a web service call using the full url provided with authentication from the `APIType`
+    func callResource(url: String, apiType: APIType, method: HTTPMethod = .get, headers: [HTTPHeader]? = nil, body: Data? = nil, completion: @escaping (_ result: Result<Data, Error>) -> Void) {
+        guard var url = URL(string: url) else {
+            return completion(.failure(HTTPError.invalidRequest))
         }
         
+        // Append locale to url because it will not be added automatically
+        if let locale = locale {
+            url.appendQuery(parameters: ["locale": locale.rawValue])
+        }
+        
+        let request = URLRequest(url: url, method: method, headers: headers, body: body)
+        
+        // Make the request
+        if let authenticationService = authenticationService {
+            authenticationService.performAuthenticatedRequest(request, for: apiType, completion: completion)
+        }
+        else {
+            session.startData(request) { result in
+                completion(result)
+            }
+        }
     }
 }
 

@@ -20,7 +20,7 @@ public struct WorldOfWarcraftModelController {
     
     /// Calls a web service identicated by the href in a Link object.
     public func getResource<T: Decodable>(from resourceLink: Link<T>, completion: @escaping (_ result: Result<T, Error>) -> Void) {
-        battleNetAPI.wow.getResource(from: resourceLink.href) { result in
+        battleNetAPI.resource.getResource(from: resourceLink.href, apiType: .gameData) { result in
             result.decode(completion: completion)
         }
     }
