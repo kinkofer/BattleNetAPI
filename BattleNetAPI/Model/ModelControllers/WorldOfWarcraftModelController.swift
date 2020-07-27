@@ -29,8 +29,8 @@ public struct WorldOfWarcraftModelController {
     
     // MARK: - Profile API
     
-    public func getCharacters(completion: @escaping (_ result: Result<[WOWCharacter], Error>) -> Void) {
-        battleNetAPI.wow.getCharacters { result in
+    public func getCharacterCollections(characterName: String, realmSlug: String, namespace: APINamespace? = nil, completion: @escaping (_ result: Result<[WOWCharacter], Error>) -> Void) {
+        battleNetAPI.wow.getCharacterCollections(characterName: characterName, realmSlug: realmSlug, namespace: namespace) { result in
             let customDecode: ((_ data: Data) throws -> [WOWCharacter]) = { data in
                 return try WOWCharacterResult.decode(from: data).characters
             }
@@ -329,8 +329,8 @@ public struct WorldOfWarcraftModelController {
     
     // MARK: - Auction API
     
-    public func getAuctions(realm: String, completion: @escaping (_ result: Result<Auction, Error>) -> Void) {
-        battleNetAPI.wow.getAuctions(realm: realm) { result in
+    public func getAuctions(connectedRealmID: Int, completion: @escaping (_ result: Result<Auction, Error>) -> Void) {
+        battleNetAPI.wow.getAuctions(connectedRealmID: connectedRealmID) { result in
             result.decode(completion: completion)
         }
     }

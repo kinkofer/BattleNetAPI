@@ -166,8 +166,6 @@ class WorldOfWarcraftViewController: UITableViewController, APIViewer {
         case recipe = "Recipe"
         // Spell
         case spell = "Spell"
-        // User
-        case characters = "Characters"
         // Zone
         case zoneMasterList = "Zone Master List"
         case zone = "Zone"
@@ -295,7 +293,6 @@ class WorldOfWarcraftViewController: UITableViewController, APIViewer {
             let realmStatusAPIs: [CommunityService] = [.realmStatus]
             let recipeAPIs: [CommunityService] = [.recipe]
             let spellAPIs: [CommunityService] = [.spell]
-            let userAPIs: [CommunityService] = [.characters]
             let zoneAPIs: [CommunityService] = [.zoneMasterList, .zone]
             let dataResourcesAPIs: [CommunityService] = [.allBattlegroups, .allCharacterRaces, .allCharacterClasses, .allCharacterAchievements,
                                                          .allGuildRewards, .allGuildPerks, .allGuildAchievements,
@@ -314,7 +311,6 @@ class WorldOfWarcraftViewController: UITableViewController, APIViewer {
                         Section(type: .realmStatus, rows: realmStatusAPIs),
                         Section(type: .recipe, rows: recipeAPIs),
                         Section(type: .spell, rows: spellAPIs),
-                        Section(type: .user, rows: userAPIs),
                         Section(type: .zone, rows: zoneAPIs),
                         Section(type: .dataResources, rows: dataResourcesAPIs)]
         case .profile:
@@ -872,8 +868,8 @@ class WorldOfWarcraftViewController: UITableViewController, APIViewer {
     
     // MARK: Auction API
     
-    func getAuctions(realm: String) {
-        wowMC.getAuctions(realm: realm) { result in
+    func getAuctions(connectedRealmID: Int) {
+        wowMC.getAuctions(connectedRealmID: connectedRealmID) { result in
             switch result {
             case .success(let auction):
                 Debug.print("Retrieved \(auction.files.count) Auction(s)")
@@ -1278,25 +1274,6 @@ class WorldOfWarcraftViewController: UITableViewController, APIViewer {
     }
     
     
-    // MARK: User API
-    
-    func getCharacters() {
-        wowMC.getCharacters { result in
-            switch result {
-            case .success(let characters):
-                Debug.print("Retrieved \(characters.count) Character(s)")
-                DispatchQueue.main.async {
-                    let viewController = ViewerTableViewController()
-                    viewController.dataSourceArr = characters
-                    self.navigationController?.pushViewController(viewController, animated: true)
-                }
-            case .failure(let error):
-                self.handleError(error)
-            }
-        }
-    }
-    
-    
     // MARK: Zone API
     
     func getZones() {
@@ -1659,7 +1636,7 @@ class WorldOfWarcraftViewController: UITableViewController, APIViewer {
             case .achievement:
                 getAchievement(id: 2144)
             case .auctionDataStatus:
-                getAuctions(realm: "medivh")
+                getAuctions(connectedRealmID: 4)
             case .realmLeaderboard:
                 getChallengeLeaderboards(realm: "medivh")
             case .regionLeaderboard:
@@ -1738,8 +1715,6 @@ class WorldOfWarcraftViewController: UITableViewController, APIViewer {
                 getWOWRecipe(id: 33994)
             case .spell:
                 getWOWSpell(id: 1)
-            case .characters:
-                getCharacters()
             case .zoneMasterList:
                 getZones()
             case .zone:

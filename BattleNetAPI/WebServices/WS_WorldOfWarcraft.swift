@@ -12,59 +12,608 @@ import Foundation
 public struct WS_WorldOfWarcraft: WebService {
     public enum API: APICall {
         // Game Data APIs
+        case achievementCategoryIndex
+        case achievementCategory(Int)
+        case achievementIndex
         case achievement(Int)
-        case auctions(String)
+        case achievementMedia(Int)
+        
+        case auctions(connectedRealmID: Int)
+        
+        case azeriteEssenceIndex
+        case azeriteEssence(Int)
+        case azeriteEssenceSearch
+        case azeriteEssenceMedia(Int)
+        
         case connectedRealmIndex
         case connectedRealm(Int)
-        case item(Int)
+        case connectedRealmSearch
+        
+        case creatureFamilyIndex
+        case creatureFamily(Int)
+        case creatureTypeIndex
+        case creatureType(Int)
+        case creature(Int)
+        case creatureSearch
+        case creatureDisplayMedia(Int)
+        case creatureFamilyMedia(Int)
+        
+        case guildCrestIndex
+        case guildCrestBorderMedia(Int)
+        case guildCrestEmblemMedia(Int)
+        
+        case itemClassIndex
+        case itemClass(Int)
+        case itemSetIndex
         case itemSet(Int)
+        case itemSubclass(itemClassID: Int, itemSubclassID: Int)
+        case item(Int)
+        case itemMedia(Int)
+        case itemSearch
+        
+        case journalExpansionIndex
+        case journalExpansion(Int)
+        case journalEncounterIndex
+        case journalEncounter(Int)
+        case journalEncounterSearch
+        case journalInstanceIndex
+        case journalInstance(Int)
+        case journalInstanceMedia(Int)
+        
+        case mediaSearch
+        
         case mountIndex
+        case mount(Int)
+        case mountSearch
+        
         case mythicKeystoneAffixIndex
         case mythicKeystoneAffix(Int)
-        // Profile APIs
-        case characters
-        case mythicKeystoneProfile(realmSlug: String, characterName: String)
+        case mythicKeystoneAffixMedia(Int)
         
+        case mythicKeystoneDungeonIndex
+        case mythicKeystoneDungeon(Int)
+        case mythicKeystoneIndex
+        case mythicKeystonePeriodIndex
+        case mythicKeystonePeriod(Int)
+        case mythicKeystoneSeasonIndex
+        case mythicKeystoneSeason(Int)
+        
+        case mythicKeystoneLeaderboardIndex(connectedRealmID: Int)
+        case mythicKeystoneLeaderboard(connectedRealmID: Int, dungeonID: Int, period: Int)
+        
+        case mythicRaidLeaderboard(raid: String, faction: String)
+        
+        case petIndex
+        case pet(Int)
+        case petMedia(Int)
+        case petAbilityIndex
+        case petAbility(Int)
+        case petAbilityMedia(Int)
+        
+        case playableClassIndex
+        case playableClass(Int)
+        case playableClassMedia(Int)
+        case pvpTalentSlots(classID: Int)
+        
+        case playableRaceIndex
+        case playableRace(Int)
+        
+        case playableSpecializationIndex
+        case playableSpecialization(Int)
+        case playableSpecializationMedia(Int)
+        
+        case powerTypeIndex
+        case powerType(Int)
+        
+        case professionIndex
+        case profession(Int)
+        case professionMedia(Int)
+        case professionSkillTier(professionID: Int, skillTierID: Int)
+        case recipe(Int)
+        case recipeMedia(Int)
+        
+        case pvpSeasonIndex
+        case pvpSeason(Int)
+        case pvpLeaderboardIndex(season: Int)
+        case pvpLeaderboard(season: Int, pvpBracket: WOWLeaderboardBracket)
+        case pvpRewardIndex(season: Int)
+        
+        case pvpTierMedia(Int)
+        case pvpTierIndex
+        case pvpTier(Int)
+        
+        case questIndex
+        case quest(Int)
+        case questCategoryIndex
+        case questCategory(Int)
+        case questAreaIndex
+        case questArea(Int)
+        case questTypeIndex
+        case questType(Int)
+        
+        case realmIndex
+        case realm(String)
+        case realmSearch
+        
+        case regionIndex
+        case region(Int)
+        
+        case reputationFactionIndex
+        case reputationFaction(Int)
+        case reputationTierIndex
+        case reputationTier(Int)
+        
+        case spell(Int)
+        case spellMedia(Int)
+        case spellSearch
+        
+        case talentIndex
+        case talent(Int)
+        case pvpTalentIndex
+        case pvpTalent(Int)
+        
+        case titleIndex
+        case title(Int)
+        
+        case tokenIndex
+        
+        // Profile APIs
+        case accountProfileSummary
+        case protectedCharacterProfileSummary(realmID: Int, characterID: Int)
+        case accountCollectionIndex
+        case accountMountsCollectionSummary
+        case accountPetsCollectionSummary
+        
+        case characterAchievementsSummary(realmSlug: String, characterName: String)
+        case characterAchievementStatistics(realmSlug: String, characterName: String)
+        
+        case characterAppearanceSummary(realmSlug: String, characterName: String)
+        
+        case characterCollectionsIndex(realmSlug: String, characterName: String)
+        case characterMountsCollectionSummary(realmSlug: String, characterName: String)
+        case characterPetsCollectionSummary(realmSlug: String, characterName: String)
+        
+        case characterEncountersSummary(realmSlug: String, characterName: String)
+        case characterDungeons(realmSlug: String, characterName: String)
+        case characterRaids(realmSlug: String, characterName: String)
+        
+        case characterEquipmentSummary(realmSlug: String, characterName: String)
+        
+        case characterHunterPetsSummary(realmSlug: String, characterName: String)
+        
+        case characterMediaSummary(realmSlug: String, characterName: String)
+        
+        case characterMythicKeystoneProfile(realmSlug: String, characterName: String)
+        case characterMythicKeystoneSeasonDetails(realmSlug: String, characterName: String, season: Int)
+        
+        case characterProfessionsSummary(realmSlug: String, characterName: String)
+        
+        case characterProfileSummary(realmSlug: String, characterName: String)
+        case characterProfileStatus(realmSlug: String, characterName: String)
+        
+        case characterPVPBracketStatistics(realmSlug: String, characterName: String, pvpBracket: WOWLeaderboardBracket)
+        case characterPVPSummary(realmSlug: String, characterName: String)
+        
+        case characterQuests(realmSlug: String, characterName: String)
+        case characterCompletedQuests(realmSlug: String, characterName: String)
+        
+        case characterReputationsSummary(realmSlug: String, characterName: String)
+        
+        case characterSpecializationsSummary(realmSlug: String, characterName: String)
+        
+        case characterStatisticsSummary(realmSlug: String, characterName: String)
+        
+        case characterTitlesSummary(realmSlug: String, characterName: String)
+        
+        case guild(realmSlug: String, guildSlug: String)
+        case guildActivity(realmSlug: String, guildSlug: String)
+        case guildAchievements(realmSlug: String, guildSlug: String)
+        case guildRoster(realmSlug: String, guildSlug: String)
         
         var path: String {
             switch self {
+            // Game Data APIs
+            case .achievementCategoryIndex:
+                return "/achievement-category/index"
+            case .achievementCategory(let id):
+                return "/achievement-category/\(id)"
+            case .achievementIndex:
+                return "/achievement/index"
             case .achievement(let id):
                 return "/achievement/\(id)"
-            case .auctions(let realm):
-                return "/auction/data/\(realm)"
+            case .achievementMedia(let id):
+                return "/media/achievement/\(id)"
+            
+            case .auctions(connectedRealmID: let connectedRealmID):
+                return "/connected-realm/\(connectedRealmID)/auctions"
+            
+            case .azeriteEssenceIndex:
+                return "/azerite-essence/index"
+            case .azeriteEssence(let id):
+                return "/azerite-essence/\(id)"
+            case .azeriteEssenceSearch:
+                return "/search/azerite-essence"
+            case .azeriteEssenceMedia(let id):
+                return "/media/azerite-essence/\(id)"
+            
             case .connectedRealmIndex:
                 return "/connected-realm/index"
             case .connectedRealm(let id):
                 return "/connected-realm/\(id)"
+            case .connectedRealmSearch:
+                return "/search/connected-realm"
+            
+            case .creatureFamilyIndex:
+                return "/creature-family/index"
+            case .creatureFamily(let id):
+                return "/creature-family/\(id)"
+            case .creatureTypeIndex:
+                return "/creature-type/index"
+            case .creatureType(let id):
+                return "/creature-type/\(id)"
+            case .creature(let id):
+                return "/creature/\(id)"
+            case .creatureSearch:
+                return "/search/creature"
+            case .creatureDisplayMedia(let id):
+                return "/media/creature-display/\(id)"
+            case .creatureFamilyMedia(let id):
+                return "/media/creature-family/\(id)"
+            
+            case .guildCrestIndex:
+                return "/guild-crest/index"
+            case .guildCrestBorderMedia(let id):
+                return "/media/guild-crest/border/\(id)"
+            case .guildCrestEmblemMedia(let id):
+                return "/media/guild-crest/emblem/\(id)"
+            
+            case .itemClassIndex:
+                return "/item-class/index"
+            case .itemClass(let id):
+                return "item-class/\(id)"
+            case .itemSetIndex:
+                return "item-set/index"
+            case .itemSet(let id):
+                return "/item-set/\(id)"
+            case .itemSubclass(itemClassID: let itemClassID, itemSubclassID: let itemSubclassID):
+                return "/item-class/\(itemClassID)/item-subclass/\(itemSubclassID)"
             case .item(let id):
                 return "/item/\(id)"
-            case .itemSet(let setID):
-                return "/item-set/\(setID)"
+            case .itemMedia(let id):
+                return "/media/item/\(id)"
+            case .itemSearch:
+                return "/search/item"
+            
+            case .journalExpansionIndex:
+                return "/journal-expansion/index"
+            case .journalExpansion(let id):
+                return "/journal-expansion/\(id)"
+            case .journalEncounterIndex:
+                return "/journal-encounter/index"
+            case .journalEncounter(let id):
+                return "/journal-encounter/\(id)"
+            case .journalEncounterSearch:
+                return "/search/journal-encounter"
+            case .journalInstanceIndex:
+                return "/journal-instance/index"
+            case .journalInstance(let id):
+                return "/journal-instance/\(id)"
+            case .journalInstanceMedia(let id):
+                return "/media/journal-instance/\(id)"
+            
+            case .mediaSearch:
+                return "/search/media"
+                
             case .mountIndex:
                 return "/mount/index"
+            case .mount(let id):
+                return "/mount/\(id)"
+            case .mountSearch:
+                return "/search/mount"
+                
+                
             case .mythicKeystoneAffixIndex:
                 return "/keystone-affix/index"
             case .mythicKeystoneAffix(let id):
                 return "/keystone-affix/\(id)"
-            case .characters:
-                return "/user/characters"
-            case .mythicKeystoneProfile(let realmSlug, let characterName):
+            case .mythicKeystoneAffixMedia(let id):
+                return "/media/keystone-affix/\(id)"
+            
+            case .mythicKeystoneDungeonIndex:
+                return "/mythic-keystone/dungeon/index"
+            case .mythicKeystoneDungeon(let id):
+                return "/mythic-keystone/dungeon/\(id)"
+            case .mythicKeystoneIndex:
+                return "/mythic-keystone/index"
+            case .mythicKeystonePeriodIndex:
+                return "/mythic-keystone/period/index"
+            case .mythicKeystonePeriod(let id):
+                return "/mythic-keystone/period/\(id)"
+            case .mythicKeystoneSeasonIndex:
+                return "/mythic-keystone/season/index"
+            case .mythicKeystoneSeason(let id):
+                return "/mythic-keystone/season/\(id)"
+            
+            case .mythicKeystoneLeaderboardIndex(connectedRealmID: let connectedRealmID):
+                return "/connected-realm/\(connectedRealmID)/mythic-leaderboard/index"
+            case .mythicKeystoneLeaderboard(connectedRealmID: let connectedRealmID, dungeonID: let dungeonID, period: let period):
+                return "/connected-realm/\(connectedRealmID)/mythic-leaderboard/\(dungeonID)/period/\(period)"
+            
+            case .mythicRaidLeaderboard(raid: let raid, faction: let faction):
+                return "/leaderboard/hall-of-fame/\(raid)/\(faction)"
+            
+            case .petIndex:
+                return "/pet/index"
+            case .pet(let id):
+                return "/pet/\(id)"
+            case .petMedia(let id):
+                return "/media/pet/\(id)"
+            case .petAbilityIndex:
+                return "/pet-ability/index"
+            case .petAbility(let id):
+                return "/pet-ability/\(id)"
+            case .petAbilityMedia(let id):
+                return "/media/pet-ability/\(id)"
+            
+            case .playableClassIndex:
+                return "/playable-class/index"
+            case .playableClass(let id):
+                return "/playable-class/\(id)"
+            case .playableClassMedia(let id):
+                return "/media/playable-class/\(id)"
+            case .pvpTalentSlots(classID: let classID):
+                return "/playable-class/\(classID)/pvp-talent-slots"
+            
+            case .playableRaceIndex:
+                return "/playable-race/index"
+            case .playableRace(let id):
+                return "/playable-race/\(id)"
+            
+            case .playableSpecializationIndex:
+                return "/playable-specialization/index"
+            case .playableSpecialization(let id):
+                return "/playable-specialization/\(id)"
+            case .playableSpecializationMedia(let id):
+                return "/media/playable-specialization/\(id)"
+            
+            case .powerTypeIndex:
+                return "/power-type/index"
+            case .powerType(let id):
+                return "/power-type/\(id)"
+            
+            case .professionIndex:
+                return "/profession/index"
+            case .profession(let id):
+                return "/profession/\(id)"
+            case .professionMedia(let id):
+                return "/media/profession/\(id)"
+            case .professionSkillTier(professionID: let professionID, skillTierID: let skillTierID):
+                return "/profession/\(professionID)/skill-tier/\(skillTierID)"
+            case .recipe(let id):
+                return "/recipe/\(id)"
+            case .recipeMedia(let id):
+                return "/media/recipe/\(id)"
+            
+            case .pvpSeasonIndex:
+                return "/pvp-season/index"
+            case .pvpSeason(let season):
+                return "/pvp-season/\(season)"
+            case .pvpLeaderboardIndex(season: let season):
+                return "/pvp-season/\(season)/pvp-leaderboard/index"
+            case .pvpLeaderboard(season: let season, pvpBracket: let bracket):
+                return "/pvp-season/\(season)/pvp-leaderboard/\(bracket.rawValue)"
+            case .pvpRewardIndex(season: let season):
+                return "/pvp-season/\(season)/pvp-reward/index"
+            
+            case .pvpTierMedia(let id):
+                return "/media/pvp-tier/\(id)"
+            case .pvpTierIndex:
+                return "/pvp-tier/index"
+            case .pvpTier(let id):
+                return "/pvp-tier/\(id)"
+            
+            case .questIndex:
+                return "/quest/index"
+            case .quest(let id):
+                return "/quest/\(id)"
+            case .questCategoryIndex:
+                return "/quest/category/index"
+            case .questCategory(let id):
+                return "/quest/category/\(id)"
+            case .questAreaIndex:
+                return "quest/area/index"
+            case .questArea(let id):
+                return "quest/area/\(id)"
+            case .questTypeIndex:
+                return "/quest/type/index"
+            case .questType(let id):
+                return "/quest/type/\(id)"
+            
+            case .realmIndex:
+                return "/realm/index"
+            case .realm(let slug):
+                return "/realm/\(slug)"
+            case .realmSearch:
+                return "/search/realm"
+            
+            case .regionIndex:
+                return "/region/index"
+            case .region(let id):
+                return "/region/\(id)"
+            
+            case .reputationFactionIndex:
+                return "/reputation-faction/index"
+            case .reputationFaction(let id):
+                return "/reputation-faction/\(id)"
+            case .reputationTierIndex:
+                return "/reputation-tiers/index"
+            case .reputationTier(let id):
+                return "/reputation-tiers/\(id)"
+            
+            case .spell(let id):
+                return "/spell/\(id)"
+            case .spellMedia(let id):
+                return "/media/spell/\(id)"
+            case .spellSearch:
+                return "/search/spell"
+            
+            case .talentIndex:
+                return "/talent/index"
+            case .talent(let id):
+                return "/talent/\(id)"
+            case .pvpTalentIndex:
+                return "/pvp-talent/index"
+            case .pvpTalent(let id):
+                return "/pvp-talent/\(id)"
+            
+            case .titleIndex:
+                return "/title/index"
+            case .title(let id):
+                return "/title/\(id)"
+                
+            case .tokenIndex:
+                return "/token/index"
+            
+            // Profile APIs
+            case .accountProfileSummary:
+                return ""
+            case .protectedCharacterProfileSummary(realmID: let realmID, characterID: let characterID):
+                return "/protected-character/\(realmID)-\(characterID)"
+            case .accountCollectionIndex:
+                return "/collections"
+            case .accountMountsCollectionSummary:
+                return "/collections/mounts"
+            case .accountPetsCollectionSummary:
+                return "/collections/pets"
+            
+            case .characterAchievementsSummary(realmSlug: let realmSlug, characterName: let characterName):
+                return "/character/\(realmSlug)/\(characterName)/achievements"
+            case .characterAchievementStatistics(realmSlug: let realmSlug, characterName: let characterName):
+                return "/character/\(realmSlug)/\(characterName)/achievements/statistics"
+            
+            case .characterAppearanceSummary(realmSlug: let realmSlug, characterName: let characterName):
+                return "/character/\(realmSlug)/\(characterName)/appearance"
+            
+            case .characterCollectionsIndex(realmSlug: let realmSlug, characterName: let characterName):
+                return "/character/\(realmSlug)/\(characterName)/collections"
+            case .characterMountsCollectionSummary(realmSlug: let realmSlug, characterName: let characterName):
+                return "/character/\(realmSlug)/\(characterName)/collections/mounts"
+            case .characterPetsCollectionSummary(realmSlug: let realmSlug, characterName: let characterName):
+                return "/character/\(realmSlug)/\(characterName)/collections/pets"
+            
+            case .characterEncountersSummary(realmSlug: let realmSlug, characterName: let characterName):
+                return "/character/\(realmSlug)/\(characterName)/encounters"
+            case .characterDungeons(realmSlug: let realmSlug, characterName: let characterName):
+                return "/character/\(realmSlug)/\(characterName)/encounters/dungeons"
+            case .characterRaids(realmSlug: let realmSlug, characterName: let characterName):
+                return "/character/\(realmSlug)/\(characterName)/encounters/raids"
+            
+            case .characterEquipmentSummary(realmSlug: let realmSlug, characterName: let characterName):
+                return "/character/\(realmSlug)/\(characterName)/equipment"
+            
+            case .characterHunterPetsSummary(realmSlug: let realmSlug, characterName: let characterName):
+                return "/character/\(realmSlug)/\(characterName)/hunter-pets"
+            
+            case .characterMediaSummary(realmSlug: let realmSlug, characterName: let characterName):
+                return "/character/\(realmSlug)/\(characterName)/character-media"
+                
+            case .characterMythicKeystoneProfile(realmSlug: let realmSlug, characterName: let characterName):
                 return "/character/\(realmSlug)/\(characterName)/mythic-keystone-profile"
+            case .characterMythicKeystoneSeasonDetails(realmSlug: let realmSlug, characterName: let characterName, season: let season):
+                return "/character/\(realmSlug)/\(characterName)/mythic-keystone-profile/season/\(season)"
+            
+            case .characterProfessionsSummary(realmSlug: let realmSlug, characterName: let characterName):
+                return "/character/\(realmSlug)/\(characterName)/professions"
+            
+            case .characterProfileSummary(realmSlug: let realmSlug, characterName: let characterName):
+                return "/character/\(realmSlug)/\(characterName)"
+            case .characterProfileStatus(realmSlug: let realmSlug, characterName: let characterName):
+                return "/character/\(realmSlug)/\(characterName)/status"
+            
+            case .characterPVPBracketStatistics(realmSlug: let realmSlug, characterName: let characterName, pvpBracket: let pvpBracket):
+                return "character/\(realmSlug)/\(characterName)/pvp-bracket/\(pvpBracket.rawValue)"
+            case .characterPVPSummary(realmSlug: let realmSlug, characterName: let characterName):
+                return "character/\(realmSlug)/\(characterName)/pvp-summary"
+            
+            case .characterQuests(realmSlug: let realmSlug, characterName: let characterName):
+                return "/character/\(realmSlug)/\(characterName)/quests"
+            case .characterCompletedQuests(realmSlug: let realmSlug, characterName: let characterName):
+                return "/character/\(realmSlug)/\(characterName)/quests/completed"
+            
+            case .characterReputationsSummary(realmSlug: let realmSlug, characterName: let characterName):
+                return "/character/\(realmSlug)/\(characterName)/reputations"
+                
+            case .characterSpecializationsSummary(realmSlug: let realmSlug, characterName: let characterName):
+                return "/character/\(realmSlug)/\(characterName)/specializations"
+                
+            case .characterStatisticsSummary(realmSlug: let realmSlug, characterName: let characterName):
+                return "/character/\(realmSlug)/\(characterName)/statistics"
+                
+            case .characterTitlesSummary(realmSlug: let realmSlug, characterName: let characterName):
+                return "/character/\(realmSlug)/\(characterName)/titles"
+                
+            case .guild(realmSlug: let realmSlug, guildSlug: let guildSlug):
+                return "/guild/\(realmSlug)/\(guildSlug)"
+            case .guildActivity(realmSlug: let realmSlug, guildSlug: let guildSlug):
+                return "/guild/\(realmSlug)/\(guildSlug)/activity"
+            case .guildAchievements(realmSlug: let realmSlug, guildSlug: let guildSlug):
+                return "/guild/\(realmSlug)/\(guildSlug)/achievements"
+            case .guildRoster(realmSlug: let realmSlug, guildSlug: let guildSlug):
+                return "/guild/\(realmSlug)/\(guildSlug)/roster"
             }
         }
         
         var apiType: APIType? {
             switch self {
-            case .achievement,
+            case .achievementCategoryIndex, .achievementCategory, .achievementIndex, .achievement, .achievementMedia,
                  .auctions,
-                 .connectedRealmIndex, .connectedRealm,
-                 .item, .itemSet,
-                 .mountIndex,
-                 .mythicKeystoneAffixIndex, .mythicKeystoneAffix:
+                 .azeriteEssenceIndex, .azeriteEssence, .azeriteEssenceSearch, .azeriteEssenceMedia,
+                 .connectedRealmIndex, .connectedRealm, .connectedRealmSearch,
+                 .creatureFamilyIndex, .creatureFamily, .creatureTypeIndex, .creatureType, .creature, .creatureSearch, .creatureDisplayMedia, .creatureFamilyMedia,
+                 .guildCrestIndex, .guildCrestBorderMedia, .guildCrestEmblemMedia,
+                 .itemClassIndex, .itemClass, .itemSetIndex, .itemSet, .itemSubclass, .item, .itemMedia, .itemSearch,
+                 .journalExpansionIndex, .journalExpansion, .journalEncounterIndex, .journalEncounter, .journalEncounterSearch, .journalInstanceIndex, .journalInstance, .journalInstanceMedia,
+                 .mediaSearch,
+                 .mountIndex, .mount, .mountSearch,
+                 .mythicKeystoneAffixIndex, .mythicKeystoneAffix, .mythicKeystoneAffixMedia,
+                 .mythicKeystoneDungeonIndex, .mythicKeystoneDungeon, .mythicKeystoneIndex, .mythicKeystonePeriodIndex, .mythicKeystonePeriod, .mythicKeystoneSeasonIndex, .mythicKeystoneSeason,
+                 .mythicKeystoneLeaderboardIndex, .mythicKeystoneLeaderboard,
+                 .mythicRaidLeaderboard,
+                 .petIndex, .pet, .petMedia, .petAbilityIndex, .petAbility, .petAbilityMedia,
+                 .playableClassIndex, .playableClass, .playableClassMedia, .pvpTalentSlots,
+                 .playableRaceIndex, .playableRace,
+                 .playableSpecializationIndex, .playableSpecialization, .playableSpecializationMedia,
+                 .powerTypeIndex, .powerType,
+                 .professionIndex, .profession, .professionMedia, .professionSkillTier, .recipe, .recipeMedia,
+                 .pvpSeasonIndex, .pvpSeason, .pvpLeaderboardIndex, .pvpLeaderboard, .pvpRewardIndex,
+                 .pvpTierMedia, .pvpTierIndex, .pvpTier,
+                 .questIndex, .quest, .questCategoryIndex, .questCategory, .questAreaIndex, .questArea, .questTypeIndex, .questType,
+                 .realmIndex, .realm, .realmSearch,
+                 .regionIndex, .region,
+                 .reputationFactionIndex, .reputationFaction, .reputationTierIndex, .reputationTier,
+                 .spell, .spellMedia, .spellSearch,
+                 .talentIndex, .talent, .pvpTalentIndex, .pvpTalent,
+                 .titleIndex, .title,
+                 .tokenIndex:
                 return .gameData
-            case .characters:
-                return .community
-            case .mythicKeystoneProfile:
+            case .accountProfileSummary, .protectedCharacterProfileSummary, .accountCollectionIndex, .accountMountsCollectionSummary, .accountPetsCollectionSummary,
+                 .characterAchievementsSummary, .characterAchievementStatistics,
+                 .characterAppearanceSummary,
+                 .characterCollectionsIndex, .characterMountsCollectionSummary, .characterPetsCollectionSummary,
+                 .characterEncountersSummary, .characterDungeons, .characterRaids,
+                 .characterEquipmentSummary,
+                 .characterHunterPetsSummary,
+                 .characterMediaSummary,
+                 .characterMythicKeystoneProfile, .characterMythicKeystoneSeasonDetails,
+                 .characterProfessionsSummary,
+                 .characterProfileSummary, .characterProfileStatus,
+                 .characterPVPBracketStatistics, .characterPVPSummary,
+                 .characterQuests, .characterCompletedQuests,
+                 .characterReputationsSummary,
+                 .characterSpecializationsSummary,
+                 .characterStatisticsSummary,
+                 .characterTitlesSummary,
+                 .guild, .guildActivity, .guildAchievements, .guildRoster:
                 return .profile
             }
         }
@@ -74,7 +623,15 @@ public struct WS_WorldOfWarcraft: WebService {
             switch apiType {
             case .gameData: return "/data/wow"
             case .community: return "/wow"
-            case .profile: return "/profile/wow"
+            case .profile:
+                switch self {
+                case .accountProfileSummary, .protectedCharacterProfileSummary, .accountCollectionIndex, .accountMountsCollectionSummary, .accountPetsCollectionSummary:
+                    return "/profile/user/wow"
+                case .guild, .guildActivity, .guildAchievements, .guildRoster:
+                    return "/data/wow"
+                default:
+                    return "/profile/wow"
+                }
             default: return nil
             }
         }
@@ -135,12 +692,12 @@ public struct WS_WorldOfWarcraft: WebService {
      
      This API resource provides a per-realm list of recently generated auction house data dumps.
      
-     - parameter realm: The realm being requested
+     - parameter connectedRealmID: The ID of the connected realm.
      - parameter namespace: The namespace to use to locate this document.
      - parameter completion: Returns a Result with the Data if `success` or an HTTPError if `failure`
      */
-    public func getAuctions(realm: String, namespace: APINamespace? = .static, completion: @escaping (_ result: Result<Data, Error>) -> Void) {
-        call(endpoint: API.auctions(realm), namespace: namespace) { result in
+    public func getAuctions(connectedRealmID: Int, namespace: APINamespace? = .static, completion: @escaping (_ result: Result<Data, Error>) -> Void) {
+        call(endpoint: API.auctions(connectedRealmID: connectedRealmID), namespace: namespace) { result in
             completion(result)
         }
     }
@@ -735,16 +1292,12 @@ public struct WS_WorldOfWarcraft: WebService {
     /**
      Get the WoW Token index
      
-     - parameter region: What region the request is being made
-     - parameter locale: The locale that should be reflected in localized data
+     - parameter namespace: The namespace to use to locate this document.
      - parameter completion: Returns a Result with the Data if `success` or an HTTPError if `failure`
      */
-    func getTokenIndex(completion: @escaping (_ result: Result<Data, Error>) -> Void) {
-        let apiType: APIType = .gameData
-        var urlStr = getBaseURL(apiType: apiType)!.absoluteString + "/token/index"
-        urlStr = appendSharedURLParameters(to: urlStr, withNamespace: "dynamic")
-        
-        self.callWebService(urlStr: urlStr, method: .get, apiType: apiType) { result in
+    func getTokenIndex(namespace: APINamespace? = nil, completion: @escaping (_ result: Result<Data, Error>) -> Void) {
+        let namespace = namespace ?? .dynamic
+        call(endpoint: API.tokenIndex, namespace: namespace) { result in
             completion(result)
         }
     }
@@ -756,11 +1309,14 @@ public struct WS_WorldOfWarcraft: WebService {
     /**
      This provides data about the current logged in OAuth user's WoW profile.
      
-     - parameter region: What region the request is being made
+     - parameter characterName: The lowercase name of the character.
+     - parameter realmSlug: The slug of the realm.
+     - parameter namespace: The namespace to use to locate this document.
      - parameter completion: Returns a Result with the Data if `success` or an HTTPError if `failure`
     */
-    public func getCharacters(completion: @escaping (_ result: Result<Data, Error>) -> Void) {
-        call(endpoint: API.characters) { result in
+    public func getCharacterCollections(characterName: String, realmSlug: String, namespace: APINamespace? = nil, completion: @escaping (_ result: Result<Data, Error>) -> Void) {
+        let namespace = namespace ?? .profile
+        call(endpoint: API.characterCollectionsIndex(realmSlug: realmSlug, characterName: characterName), namespace: namespace) { result in
             completion(result)
         }
     }
@@ -778,7 +1334,7 @@ public struct WS_WorldOfWarcraft: WebService {
      - parameter completion: Returns a Result with the Data if `success` or an HTTPError if `failure`
      */
     public func getMythicKeystoneProfile(characterName: String, realmSlug: String, namespace: APINamespace? = nil, completion: @escaping (_ result: Result<Data, Error>) -> Void) {
-        call(endpoint: API.mythicKeystoneProfile(realmSlug: realmSlug, characterName: characterName), namespace: .profile) { result in
+        call(endpoint: API.characterMythicKeystoneProfile(realmSlug: realmSlug, characterName: characterName), namespace: .profile) { result in
             completion(result)
         }
     }
