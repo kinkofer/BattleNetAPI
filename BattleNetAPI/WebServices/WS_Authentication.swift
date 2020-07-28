@@ -31,8 +31,6 @@ public class WS_Authentication: AuthenticationWebService {
     }
     
     
-    private let network = Network.shared
-    
     var region: APIRegion
     var locale: APILocale?
     

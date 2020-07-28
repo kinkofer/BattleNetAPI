@@ -653,24 +653,7 @@ public struct WS_WorldOfWarcraft: WebService {
     
     var session: URLSession
     
-    
     var baseURL: URL? { return URL(string: region.apiURI) }
-    internal func getBaseURL(apiType: APIType?) -> URL? {
-        var url = URL(string: region.apiURI)
-
-        if let apiType = apiType {
-            switch apiType {
-            case .gameData:
-                url?.appendPathComponent("/data/wow")
-            case .community:
-                url?.appendPathComponent("/wow")
-            case .profile:
-                url?.appendPathComponent("/profile/wow")
-            }
-        }
-
-        return url
-    }
     
     var authenticationService: AuthenticationWebService?
     

@@ -78,7 +78,6 @@
 		598AC12224A9B71F002F2ED3 /* WS_StarCraft2.swift in Sources */ = {isa = PBXBuildFile; fileRef = 59397CD9207C47EB0077018E /* WS_StarCraft2.swift */; };
 		598AC12324A9B71F002F2ED3 /* BattleNetAPI.swift in Sources */ = {isa = PBXBuildFile; fileRef = 59E425D3207884DE0046EB84 /* BattleNetAPI.swift */; };
 		598AC12424A9B71F002F2ED3 /* WebService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 59E425CF20787F990046EB84 /* WebService.swift */; };
-		598AC12524A9B71F002F2ED3 /* Network.swift in Sources */ = {isa = PBXBuildFile; fileRef = 59E425C9207872EC0046EB84 /* Network.swift */; };
 		598AC12624A9B71F002F2ED3 /* WS_User.swift in Sources */ = {isa = PBXBuildFile; fileRef = 59397CD1207B50520077018E /* WS_User.swift */; };
 		598AC12724A9B71F002F2ED3 /* HTTPError.swift in Sources */ = {isa = PBXBuildFile; fileRef = 59E425CB207874450046EB84 /* HTTPError.swift */; };
 		598AC12924A9B71F002F2ED3 /* WS_Diablo3.swift in Sources */ = {isa = PBXBuildFile; fileRef = 59397CDF207C5FE20077018E /* WS_Diablo3.swift */; };
@@ -202,7 +201,6 @@
 		59E425AF207871C50046EB84 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		59E425B8207871C50046EB84 /* BattleNetAPITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BattleNetAPITests.swift; sourceTree = "<group>"; };
 		59E425BA207871C50046EB84 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		59E425C9207872EC0046EB84 /* Network.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Network.swift; sourceTree = "<group>"; };
 		59E425CB207874450046EB84 /* HTTPError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HTTPError.swift; sourceTree = "<group>"; };
 		59E425CD20787F640046EB84 /* WS_Authentication.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WS_Authentication.swift; sourceTree = "<group>"; };
 		59E425CF20787F990046EB84 /* WebService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WebService.swift; sourceTree = "<group>"; };
@@ -423,7 +421,6 @@
 				59E425D3207884DE0046EB84 /* BattleNetAPI.swift */,
 				59E425CB207874450046EB84 /* HTTPError.swift */,
 				59E425D120787FEF0046EB84 /* HTTPHeader.swift */,
-				59E425C9207872EC0046EB84 /* Network.swift */,
 				59E425CF20787F990046EB84 /* WebService.swift */,
 			);
 			path = Network;
@@ -627,7 +624,6 @@
 				598AC11824A9B710002F2ED3 /* WOWClass.swift in Sources */,
 				598AC10D24A9B710002F2ED3 /* Region.swift in Sources */,
 				598AC0E924A9B6F5002F2ED3 /* D3Item.swift in Sources */,
-				598AC12524A9B71F002F2ED3 /* Network.swift in Sources */,
 				598AC11124A9B710002F2ED3 /* Zone.swift in Sources */,
 				598AC11224A9B710002F2ED3 /* Mount.swift in Sources */,
 				598AC0E724A9B6F5002F2ED3 /* D3Profile.swift in Sources */,
