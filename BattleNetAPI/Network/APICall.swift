@@ -17,4 +17,6 @@ protocol APICall {
     var path: String { get }
     /// The apiType
     var apiType: APIType? { get }
+    /// Queries to add to the url
+    var queries: [String: String]? { get }
 }

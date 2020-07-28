@@ -147,6 +147,8 @@ public struct WS_Diablo3: WS_Diablo3Service {
             default: return nil
             }
         }
+        
+        var queries: [String: String]? { return nil }
     }
     
     var region: APIRegion

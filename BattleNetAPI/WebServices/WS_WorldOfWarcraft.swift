@@ -22,19 +22,19 @@ public struct WS_WorldOfWarcraft: WebService {
         
         case azeriteEssenceIndex
         case azeriteEssence(Int)
-        case azeriteEssenceSearch
+        case azeriteEssenceSearch([String: String]?)
         case azeriteEssenceMedia(Int)
         
         case connectedRealmIndex
         case connectedRealm(Int)
-        case connectedRealmSearch
+        case connectedRealmSearch([String: String]?)
         
         case creatureFamilyIndex
         case creatureFamily(Int)
         case creatureTypeIndex
         case creatureType(Int)
         case creature(Int)
-        case creatureSearch
+        case creatureSearch([String: String]?)
         case creatureDisplayMedia(Int)
         case creatureFamilyMedia(Int)
         
@@ -49,22 +49,22 @@ public struct WS_WorldOfWarcraft: WebService {
         case itemSubclass(itemClassID: Int, itemSubclassID: Int)
         case item(Int)
         case itemMedia(Int)
-        case itemSearch
+        case itemSearch([String: String]?)
         
         case journalExpansionIndex
         case journalExpansion(Int)
         case journalEncounterIndex
         case journalEncounter(Int)
-        case journalEncounterSearch
+        case journalEncounterSearch([String: String]?)
         case journalInstanceIndex
         case journalInstance(Int)
         case journalInstanceMedia(Int)
         
-        case mediaSearch
+        case mediaSearch([String: String]?)
         
         case mountIndex
         case mount(Int)
-        case mountSearch
+        case mountSearch([String: String]?)
         
         case mythicKeystoneAffixIndex
         case mythicKeystoneAffix(Int)
@@ -81,7 +81,7 @@ public struct WS_WorldOfWarcraft: WebService {
         case mythicKeystoneLeaderboardIndex(connectedRealmID: Int)
         case mythicKeystoneLeaderboard(connectedRealmID: Int, dungeonID: Int, period: Int)
         
-        case mythicRaidLeaderboard(raid: String, faction: String)
+        case mythicRaidLeaderboard(raid: String, faction: FactionType)
         
         case petIndex
         case pet(Int)
@@ -133,7 +133,7 @@ public struct WS_WorldOfWarcraft: WebService {
         
         case realmIndex
         case realm(String)
-        case realmSearch
+        case realmSearch([String: String]?)
         
         case regionIndex
         case region(Int)
@@ -145,7 +145,7 @@ public struct WS_WorldOfWarcraft: WebService {
         
         case spell(Int)
         case spellMedia(Int)
-        case spellSearch
+        case spellSearch([String: String]?)
         
         case talentIndex
         case talent(Int)
@@ -183,7 +183,7 @@ public struct WS_WorldOfWarcraft: WebService {
         
         case characterMediaSummary(realmSlug: String, characterName: String)
         
-        case characterMythicKeystoneProfile(realmSlug: String, characterName: String)
+        case characterMythicKeystoneProfileIndex(realmSlug: String, characterName: String)
         case characterMythicKeystoneSeasonDetails(realmSlug: String, characterName: String, season: Int)
         
         case characterProfessionsSummary(realmSlug: String, characterName: String)
@@ -192,7 +192,7 @@ public struct WS_WorldOfWarcraft: WebService {
         case characterProfileStatus(realmSlug: String, characterName: String)
         
         case characterPVPBracketStatistics(realmSlug: String, characterName: String, pvpBracket: WOWLeaderboardBracket)
-        case characterPVPSummary(realmSlug: String, characterName: String)
+        case characterPvPSummary(realmSlug: String, characterName: String)
         
         case characterQuests(realmSlug: String, characterName: String)
         case characterCompletedQuests(realmSlug: String, characterName: String)
@@ -340,7 +340,7 @@ public struct WS_WorldOfWarcraft: WebService {
                 return "/connected-realm/\(connectedRealmID)/mythic-leaderboard/\(dungeonID)/period/\(period)"
             
             case .mythicRaidLeaderboard(raid: let raid, faction: let faction):
-                return "/leaderboard/hall-of-fame/\(raid)/\(faction)"
+                return "/leaderboard/hall-of-fame/\(raid)/\(faction.rawValue.lowercased())"
             
             case .petIndex:
                 return "/pet/index"
@@ -517,7 +517,7 @@ public struct WS_WorldOfWarcraft: WebService {
             case .characterMediaSummary(realmSlug: let realmSlug, characterName: let characterName):
                 return "/character/\(realmSlug)/\(characterName)/character-media"
                 
-            case .characterMythicKeystoneProfile(realmSlug: let realmSlug, characterName: let characterName):
+            case .characterMythicKeystoneProfileIndex(realmSlug: let realmSlug, characterName: let characterName):
                 return "/character/\(realmSlug)/\(characterName)/mythic-keystone-profile"
             case .characterMythicKeystoneSeasonDetails(realmSlug: let realmSlug, characterName: let characterName, season: let season):
                 return "/character/\(realmSlug)/\(characterName)/mythic-keystone-profile/season/\(season)"
@@ -532,7 +532,7 @@ public struct WS_WorldOfWarcraft: WebService {
             
             case .characterPVPBracketStatistics(realmSlug: let realmSlug, characterName: let characterName, pvpBracket: let pvpBracket):
                 return "character/\(realmSlug)/\(characterName)/pvp-bracket/\(pvpBracket.rawValue)"
-            case .characterPVPSummary(realmSlug: let realmSlug, characterName: let characterName):
+            case .characterPvPSummary(realmSlug: let realmSlug, characterName: let characterName):
                 return "character/\(realmSlug)/\(characterName)/pvp-summary"
             
             case .characterQuests(realmSlug: let realmSlug, characterName: let characterName):
@@ -604,10 +604,10 @@ public struct WS_WorldOfWarcraft: WebService {
                  .characterEquipmentSummary,
                  .characterHunterPetsSummary,
                  .characterMediaSummary,
-                 .characterMythicKeystoneProfile, .characterMythicKeystoneSeasonDetails,
+                 .characterMythicKeystoneProfileIndex, .characterMythicKeystoneSeasonDetails,
                  .characterProfessionsSummary,
                  .characterProfileSummary, .characterProfileStatus,
-                 .characterPVPBracketStatistics, .characterPVPSummary,
+                 .characterPVPBracketStatistics, .characterPvPSummary,
                  .characterQuests, .characterCompletedQuests,
                  .characterReputationsSummary,
                  .characterSpecializationsSummary,
@@ -632,6 +632,16 @@ public struct WS_WorldOfWarcraft: WebService {
                 default:
                     return "/profile/wow"
                 }
+            default: return nil
+            }
+        }
+        
+        var queries: [String: String]? {
+            switch self {
+            case .azeriteEssenceSearch(let queries), .connectedRealmSearch(let queries), .creatureSearch(let queries),
+                 .itemSearch(let queries), .journalEncounterSearch(let queries), .mediaSearch(let queries),
+                 .mountSearch(let queries), .realmSearch(let queries), .spellSearch(let queries):
+                return queries
             default: return nil
             }
         }
@@ -671,35 +681,131 @@ public struct WS_WorldOfWarcraft: WebService {
     // MARK: Achievement API
     
     /**
-     This provides data about an individual achievement.
+     Returns an index of achievement categories.
      
-     - parameter id: The ID of the achievement to retrieve
+     - parameter namespace: The namespace to use to locate this document.
+     - parameter completion: Returns a Result with the Data if `success` or an HTTPError if `failure`
+    */
+    public func getAchievementCategoryIndex(namespace: APINamespace? = .static, completion: @escaping (_ result: Result<Data, Error>) -> Void) {
+        call(endpoint: API.achievementCategoryIndex, namespace: namespace, completion: { completion($0) })
+    }
+    
+    
+    /**
+     Returns an achievement category by ID.
+     
+     - parameter id: The ID of the achievement category.
+     - parameter namespace: The namespace to use to locate this document.
+     - parameter completion: Returns a Result with the Data if `success` or an HTTPError if `failure`
+    */
+    public func getAchievementCategory(id: Int, namespace: APINamespace? = .static, completion: @escaping (_ result: Result<Data, Error>) -> Void) {
+        call(endpoint: API.achievementCategory(id), namespace: namespace, completion: { completion($0) })
+    }
+    
+    
+    /**
+     Returns an index of achievements.
+     
+     - parameter namespace: The namespace to use to locate this document.
+     - parameter completion: Returns a Result with the Data if `success` or an HTTPError if `failure`
+    */
+    public func getAchievementIndex(namespace: APINamespace? = .static, completion: @escaping (_ result: Result<Data, Error>) -> Void) {
+        call(endpoint: API.achievementIndex, namespace: namespace, completion: { completion($0) })
+    }
+    
+    
+    /**
+     Returns an achievement by ID.
+     
+     - parameter id: The ID of the achievement.
      - parameter namespace: The namespace to use to locate this document.
      - parameter completion: Returns a Result with the Data if `success` or an HTTPError if `failure`
     */
     public func getAchievement(id: Int, namespace: APINamespace? = .static, completion: @escaping (_ result: Result<Data, Error>) -> Void) {
-        call(endpoint: API.achievement(id), namespace: namespace) { result in
-            completion(result)
-        }
+        call(endpoint: API.achievement(id), namespace: namespace, completion: { completion($0) })
+    }
+    
+    
+    /**
+     Returns media for an achievement by ID.
+     
+     - parameter id: The ID of the achievement.
+     - parameter namespace: The namespace to use to locate this document.
+     - parameter completion: Returns a Result with the Data if `success` or an HTTPError if `failure`
+    */
+    public func getAchievementMedia(id: Int, namespace: APINamespace? = .static, completion: @escaping (_ result: Result<Data, Error>) -> Void) {
+        call(endpoint: API.achievementMedia(id), namespace: namespace, completion: { completion($0) })
     }
     
     
     
-    // MARK: Auction API
+    // MARK: Auction House API
     
     /**
-     Auction APIs currently provide rolling batches of data about current auctions. Fetching auction dumps is a two step process that involves checking a per-realm index file to determine if a recent dump has been generated and then fetching the most recently generated dump file if necessary.
+     Returns all active auctions for a connected realm.
      
-     This API resource provides a per-realm list of recently generated auction house data dumps.
+     Auction house data updates at a set interval. The value was initially set at 1 hour; however, it might change over time without notice.
+     
+     Depending on the number of active auctions on the specified connected realm, the response from this endpoint may be rather large, sometimes exceeding 10 MB.
+     
+     - SeeAlso: See the Connected Realm API for information about retrieving a list of connected realm IDs.
      
      - parameter connectedRealmID: The ID of the connected realm.
      - parameter namespace: The namespace to use to locate this document.
      - parameter completion: Returns a Result with the Data if `success` or an HTTPError if `failure`
      */
     public func getAuctions(connectedRealmID: Int, namespace: APINamespace? = .static, completion: @escaping (_ result: Result<Data, Error>) -> Void) {
-        call(endpoint: API.auctions(connectedRealmID: connectedRealmID), namespace: namespace) { result in
-            completion(result)
-        }
+        call(endpoint: API.auctions(connectedRealmID: connectedRealmID), completion: { completion($0) })
+    }
+    
+    
+    
+    // MARK: Azerite Essence API
+    
+    /**
+     Returns an index of azerite essences.
+     
+     - parameter namespace: The namespace to use to locate this document.
+     - parameter completion: Returns a Result with the Data if `success` or an HTTPError if `failure`
+    */
+    public func getAzeriteEssenceIndex(namespace: APINamespace? = .static, completion: @escaping (_ result: Result<Data, Error>) -> Void) {
+        call(endpoint: API.azeriteEssenceIndex, namespace: namespace, completion: { completion($0) })
+    }
+    
+    
+    /**
+     Returns an azerite essence by ID.
+     
+     - parameter id: The ID of the azerite essence.
+     - parameter namespace: The namespace to use to locate this document.
+     - parameter completion: Returns a Result with the Data if `success` or an HTTPError if `failure`
+    */
+    public func getAzeriteEssence(id: Int, namespace: APINamespace? = .static, completion: @escaping (_ result: Result<Data, Error>) -> Void) {
+        call(endpoint: API.azeriteEssence(id), namespace: namespace, completion: { completion($0) })
+    }
+    
+    
+    /**
+     Performs a search of azerite essences.
+     
+     - parameter queries: The query parameters to add to the search.
+     - parameter namespace: The namespace to use to locate this document.
+     - parameter completion: Returns a Result with the Data if `success` or an HTTPError if `failure`
+    */
+    public func searchAzeriteEssence(queries: [String: String], namespace: APINamespace? = .static, completion: @escaping (_ result: Result<Data, Error>) -> Void) {
+        call(endpoint: API.azeriteEssenceSearch(queries), namespace: namespace, completion: { completion($0) })
+    }
+    
+    
+    /**
+     Returns media for an azerite essence by ID.
+     
+     - parameter id: The ID of the azerite essence.
+     - parameter namespace: The namespace to use to locate this document.
+     - parameter completion: Returns a Result with the Data if `success` or an HTTPError if `failure`
+    */
+    public func getAzeriteEssenceMedia(id: Int, namespace: APINamespace? = .static, completion: @escaping (_ result: Result<Data, Error>) -> Void) {
+        call(endpoint: API.azeriteEssenceMedia(id), namespace: namespace, completion: { completion($0) })
     }
     
     
@@ -707,59 +813,380 @@ public struct WS_WorldOfWarcraft: WebService {
     // MARK: Connected Realm API
     
     /**
-     Get an index of connected-realms
+     Returns an index of connected realms.
      
      - parameter namespace: The namespace to use to locate this document.
      - parameter completion: Returns a Result with the Data if `success` or an HTTPError if `failure`
      */
     public func getConnectedRealmIndex(namespace: APINamespace? = .dynamic, completion: @escaping (_ result: Result<Data, Error>) -> Void) {
-        call(endpoint: API.connectedRealmIndex, namespace: namespace) { result in
-            completion(result)
-        }
+        call(endpoint: API.connectedRealmIndex, namespace: namespace, completion: { completion($0) })
     }
     
     
     /**
-     Get a single connected-realm by id
+     Returns a connected realm by ID.
      
-     - parameter id: The id of the connected realm
+     - parameter id: The ID of the connected realm.
      - parameter namespace: The namespace to use to locate this document.
      - parameter completion: Returns a Result with the Data if `success` or an HTTPError if `failure`
      */
     public func getConnectedRealm(id: Int, namespace: APINamespace? = .dynamic, completion: @escaping (_ result: Result<Data, Error>) -> Void) {
-        call(endpoint: API.connectedRealm(id), namespace: namespace) { result in
-            completion(result)
-        }
+        call(endpoint: API.connectedRealm(id), namespace: namespace, completion: { completion($0) })
     }
+    
+    
+    /**
+     Performs a search of connected realms.
+     
+     - parameter namespace: The namespace to use to locate this document.
+     - parameter completion: Returns a Result with the Data if `success` or an HTTPError if `failure`
+     */
+    public func searchConnectedRealms(queries: [String: String], namespace: APINamespace? = .dynamic, completion: @escaping (_ result: Result<Data, Error>) -> Void) {
+        call(endpoint: API.connectedRealmSearch(queries), namespace: namespace, completion: { completion($0) })
+    }
+    
+    
+    
+    // MARK: Creature API
+    
+    /**
+     Returns an index of creature families.
+     
+     - parameter namespace: The namespace to use to locate this document.
+     - parameter completion: Returns a Result with the Data if `success` or an HTTPError if `failure`
+     */
+    public func getCreatureFamilyIndex(namespace: APINamespace? = .static, completion: @escaping (_ result: Result<Data, Error>) -> Void) {
+        call(endpoint: API.creatureFamilyIndex, namespace: namespace, completion: { completion($0) })
+    }
+    
+    
+    /**
+     Returns a creature family by ID.
+     
+     - parameter id: The ID of the creature family.
+     - parameter namespace: The namespace to use to locate this document.
+     - parameter completion: Returns a Result with the Data if `success` or an HTTPError if `failure`
+     */
+    public func getCreatureFamily(id: Int, namespace: APINamespace? = .static, completion: @escaping (_ result: Result<Data, Error>) -> Void) {
+        call(endpoint: API.creatureFamily(id), namespace: namespace, completion: { completion($0) })
+    }
+    
+    
+    /**
+     Returns an index of creature types.
+     
+     - parameter namespace: The namespace to use to locate this document.
+     - parameter completion: Returns a Result with the Data if `success` or an HTTPError if `failure`
+     */
+    public func getCreatureTypeIndex(namespace: APINamespace? = .static, completion: @escaping (_ result: Result<Data, Error>) -> Void) {
+        call(endpoint: API.creatureTypeIndex, namespace: namespace, completion: { completion($0) })
+    }
+    
+    
+    /**
+     Returns a creature type by ID.
+     
+     - parameter id: The ID of the creature type.
+     - parameter namespace: The namespace to use to locate this document.
+     - parameter completion: Returns a Result with the Data if `success` or an HTTPError if `failure`
+     */
+    public func getCreatureType(id: Int, namespace: APINamespace? = .static, completion: @escaping (_ result: Result<Data, Error>) -> Void) {
+        call(endpoint: API.creatureType(id), namespace: namespace, completion: { completion($0) })
+    }
+    
+    
+    /**
+     Returns a creature by ID.
+     
+     - parameter id: The ID of the creature.
+     - parameter namespace: The namespace to use to locate this document.
+     - parameter completion: Returns a Result with the Data if `success` or an HTTPError if `failure`
+     */
+    public func getCreature(id: Int, namespace: APINamespace? = .static, completion: @escaping (_ result: Result<Data, Error>) -> Void) {
+        call(endpoint: API.creature(id), namespace: namespace, completion: { completion($0) })
+    }
+    
+    
+    /**
+     Performs a search of creatures.
+     
+     - parameter queries: The query parameters to add to the search.
+     - parameter namespace: The namespace to use to locate this document.
+     - parameter completion: Returns a Result with the Data if `success` or an HTTPError if `failure`
+    */
+    public func searchCreature(queries: [String: String], namespace: APINamespace? = .static, completion: @escaping (_ result: Result<Data, Error>) -> Void) {
+        call(endpoint: API.creatureSearch(queries), namespace: namespace, completion: { completion($0) })
+    }
+    
+    
+    /**
+     Returns media for a creature display by ID.
+     
+     - parameter id: The ID of the creature display.
+     - parameter namespace: The namespace to use to locate this document.
+     - parameter completion: Returns a Result with the Data if `success` or an HTTPError if `failure`
+     */
+    public func getCreatureDisplayMedia(id: Int, namespace: APINamespace? = .static, completion: @escaping (_ result: Result<Data, Error>) -> Void) {
+        call(endpoint: API.creatureDisplayMedia(id), namespace: namespace, completion: { completion($0) })
+    }
+    
+    
+    /**
+     Returns media for a creature family by ID.
+     
+     - parameter id: The ID of the creature family.
+     - parameter namespace: The namespace to use to locate this document.
+     - parameter completion: Returns a Result with the Data if `success` or an HTTPError if `failure`
+     */
+    public func getCreatureFamilyMedia(id: Int, namespace: APINamespace? = .static, completion: @escaping (_ result: Result<Data, Error>) -> Void) {
+        call(endpoint: API.creatureFamilyMedia(id), namespace: namespace, completion: { completion($0) })
+    }
+    
+    
+    
+    // MARK: Guild Crest API
+    
+    /**
+     Returns an index of guild crest media.
+     
+     - parameter namespace: The namespace to use to locate this document.
+     - parameter completion: Returns a Result with the Data if `success` or an HTTPError if `failure`
+     */
+    public func getGuildCrestIndex(namespace: APINamespace? = .static, completion: @escaping (_ result: Result<Data, Error>) -> Void) {
+        call(endpoint: API.guildCrestIndex, namespace: namespace, completion: { completion($0) })
+    }
+    
+    
+    /**
+     Returns media for a guild crest border by ID.
+     
+     - parameter id: The ID of the guild crest border.
+     - parameter namespace: The namespace to use to locate this document.
+     - parameter completion: Returns a Result with the Data if `success` or an HTTPError if `failure`
+     */
+    public func getGuildCrestBorderMedia(id: Int, namespace: APINamespace? = .static, completion: @escaping (_ result: Result<Data, Error>) -> Void) {
+        call(endpoint: API.guildCrestBorderMedia(id), namespace: namespace, completion: { completion($0) })
+    }
+    
+    
+    /**
+     Returns media for a guild crest emblem by ID.
+     
+     - parameter id: The ID of the guild crest emblem.
+     - parameter namespace: The namespace to use to locate this document.
+     - parameter completion: Returns a Result with the Data if `success` or an HTTPError if `failure`
+     */
+    public func getGuildCrestEmblemMedia(id: Int, namespace: APINamespace? = .static, completion: @escaping (_ result: Result<Data, Error>) -> Void) {
+        call(endpoint: API.guildCrestEmblemMedia(id), namespace: namespace, completion: { completion($0) })
+    }
+    
     
     
     // MARK: Item API
     
     /**
-     The item API provides detailed item information. This includes item set information if this item is part of a set.
+     Returns an index of item classes.
      
-     - parameter id: Unique ID of the item being requested
      - parameter namespace: The namespace to use to locate this document.
      - parameter completion: Returns a Result with the Data if `success` or an HTTPError if `failure`
      */
-    public func getItem(id: Int, namespace: APINamespace? = .static, completion: @escaping (_ result: Result<Data, Error>) -> Void) {
-        call(endpoint: API.item(id), namespace: namespace) { result in
-            completion(result)
-        }
+    public func getItemClassIndex(namespace: APINamespace? = .static, completion: @escaping (_ result: Result<Data, Error>) -> Void) {
+        call(endpoint: API.itemClassIndex, namespace: namespace, completion: { completion($0) })
     }
     
     
     /**
-     The item API provides detailed item information. This includes item set information if this item is part of a set.
+     Returns an item class by ID.
      
-     - parameter setID: Unique ID of the set being requested
+     - parameter id: The ID of the item class.
      - parameter namespace: The namespace to use to locate this document.
      - parameter completion: Returns a Result with the Data if `success` or an HTTPError if `failure`
      */
-    public func getItemSet(setID: Int, namespace: APINamespace? = .static, completion: @escaping (_ result: Result<Data, Error>) -> Void) {
-        call(endpoint: API.itemSet(setID), namespace: namespace) { result in
-            completion(result)
-        }
+    public func getItemClass(id: Int, namespace: APINamespace? = .static, completion: @escaping (_ result: Result<Data, Error>) -> Void) {
+        call(endpoint: API.itemClass(id), namespace: namespace, completion: { completion($0) })
+    }
+    
+    
+    /**
+     Returns an index of item sets.
+     
+     - parameter namespace: The namespace to use to locate this document.
+     - parameter completion: Returns a Result with the Data if `success` or an HTTPError if `failure`
+     */
+    public func getItemSetIndex(namespace: APINamespace? = .static, completion: @escaping (_ result: Result<Data, Error>) -> Void) {
+        call(endpoint: API.itemSetIndex, namespace: namespace, completion: { completion($0) })
+    }
+    
+    
+    /**
+     Returns an item set by ID.
+     
+     - parameter id: The ID of the item set.
+     - parameter namespace: The namespace to use to locate this document.
+     - parameter completion: Returns a Result with the Data if `success` or an HTTPError if `failure`
+     */
+    public func getItemSet(id: Int, namespace: APINamespace? = .static, completion: @escaping (_ result: Result<Data, Error>) -> Void) {
+        call(endpoint: API.itemSet(id), namespace: namespace, completion: { completion($0) })
+    }
+    
+    
+    /**
+     Returns an item subclass by ID.
+     
+     - parameter itemClassID: The ID of the item class.
+     - parameter itemSubclassID: The ID of the item subclass.
+     - parameter namespace: The namespace to use to locate this document.
+     - parameter completion: Returns a Result with the Data if `success` or an HTTPError if `failure`
+     */
+    public func getItemSubclass(itemClassID: Int, itemSubclassID: Int, namespace: APINamespace? = .static, completion: @escaping (_ result: Result<Data, Error>) -> Void) {
+        call(endpoint: API.itemSubclass(itemClassID: itemClassID, itemSubclassID: itemSubclassID), namespace: namespace, completion: { completion($0) })
+    }
+    
+    
+    /**
+     Returns an item by ID.
+     
+     - parameter id: The ID of the item.
+     - parameter namespace: The namespace to use to locate this document.
+     - parameter completion: Returns a Result with the Data if `success` or an HTTPError if `failure`
+     */
+    public func getItem(id: Int, namespace: APINamespace? = .static, completion: @escaping (_ result: Result<Data, Error>) -> Void) {
+        call(endpoint: API.item(id), namespace: namespace, completion: { completion($0) })
+    }
+    
+    
+    /**
+     Returns media for an item by ID.
+     
+     - parameter id: The ID of the item.
+     - parameter namespace: The namespace to use to locate this document.
+     - parameter completion: Returns a Result with the Data if `success` or an HTTPError if `failure`
+     */
+    public func getItemMedia(id: Int, namespace: APINamespace? = .static, completion: @escaping (_ result: Result<Data, Error>) -> Void) {
+        call(endpoint: API.itemMedia(id), namespace: namespace, completion: { completion($0) })
+    }
+    
+    
+    /**
+     Performs a search of items.
+     
+     - parameter queries: The query parameters to add to the search.
+     - parameter namespace: The namespace to use to locate this document.
+     - parameter completion: Returns a Result with the Data if `success` or an HTTPError if `failure`
+    */
+    public func searchItem(queries: [String: String], namespace: APINamespace? = .static, completion: @escaping (_ result: Result<Data, Error>) -> Void) {
+        call(endpoint: API.itemSearch(queries), namespace: namespace, completion: { completion($0) })
+    }
+    
+    
+    
+    // MARK: Journal API
+    
+    /**
+     Returns an index of journal expansions.
+     
+     - parameter namespace: The namespace to use to locate this document.
+     - parameter completion: Returns a Result with the Data if `success` or an HTTPError if `failure`
+     */
+    public func getJournalExpansionIndex(namespace: APINamespace? = .static, completion: @escaping (_ result: Result<Data, Error>) -> Void) {
+        call(endpoint: API.journalExpansionIndex, namespace: namespace, completion: { completion($0) })
+    }
+    
+    
+    /**
+     Returns a journal expansion by ID.
+     
+     - parameter id: The ID of the journal expansion.
+     - parameter namespace: The namespace to use to locate this document.
+     - parameter completion: Returns a Result with the Data if `success` or an HTTPError if `failure`
+     */
+    public func getJournalExpansion(id: Int, namespace: APINamespace? = .static, completion: @escaping (_ result: Result<Data, Error>) -> Void) {
+        call(endpoint: API.journalExpansion(id), namespace: namespace, completion: { completion($0) })
+    }
+    
+    
+    /**
+     Returns an index of journal encounters.
+     
+     - parameter namespace: The namespace to use to locate this document.
+     - parameter completion: Returns a Result with the Data if `success` or an HTTPError if `failure`
+     */
+    public func getJournalEncounterIndex(namespace: APINamespace? = .static, completion: @escaping (_ result: Result<Data, Error>) -> Void) {
+        call(endpoint: API.journalEncounterIndex, namespace: namespace, completion: { completion($0) })
+    }
+    
+    
+    /**
+     Returns a journal encounter by ID.
+     
+     - parameter id: The ID of the journal encounter.
+     - parameter namespace: The namespace to use to locate this document.
+     - parameter completion: Returns a Result with the Data if `success` or an HTTPError if `failure`
+     */
+    public func getJournalEncounter(id: Int, namespace: APINamespace? = .static, completion: @escaping (_ result: Result<Data, Error>) -> Void) {
+        call(endpoint: API.journalEncounter(id), namespace: namespace, completion: { completion($0) })
+    }
+    
+    
+    /**
+     Performs a search of journal encounters.
+     
+     - parameter queries: The query parameters to add to the search.
+     - parameter namespace: The namespace to use to locate this document.
+     - parameter completion: Returns a Result with the Data if `success` or an HTTPError if `failure`
+    */
+    public func searchJournalEncounter(queries: [String: String], namespace: APINamespace? = .static, completion: @escaping (_ result: Result<Data, Error>) -> Void) {
+        call(endpoint: API.journalEncounterSearch(queries), namespace: namespace, completion: { completion($0) })
+    }
+    
+    
+    /**
+     Returns an index of journal instances.
+     
+     - parameter namespace: The namespace to use to locate this document.
+     - parameter completion: Returns a Result with the Data if `success` or an HTTPError if `failure`
+     */
+    public func getJournalInstanceIndex(namespace: APINamespace? = .static, completion: @escaping (_ result: Result<Data, Error>) -> Void) {
+        call(endpoint: API.journalInstanceIndex, namespace: namespace, completion: { completion($0) })
+    }
+    
+    
+    /**
+     Returns a journal instance.
+     
+     - parameter id: The ID of the journal instance.
+     - parameter namespace: The namespace to use to locate this document.
+     - parameter completion: Returns a Result with the Data if `success` or an HTTPError if `failure`
+     */
+    public func getJournalInstance(id: Int, namespace: APINamespace? = .static, completion: @escaping (_ result: Result<Data, Error>) -> Void) {
+        call(endpoint: API.journalInstance(id), namespace: namespace, completion: { completion($0) })
+    }
+    
+    
+    /**
+     Returns media for a journal instance by ID.
+     
+     - parameter id: The ID of the journal instance.
+     - parameter namespace: The namespace to use to locate this document.
+     - parameter completion: Returns a Result with the Data if `success` or an HTTPError if `failure`
+     */
+    public func getJournalInstanceMedia(id: Int, namespace: APINamespace? = .static, completion: @escaping (_ result: Result<Data, Error>) -> Void) {
+        call(endpoint: API.journalInstanceMedia(id), namespace: namespace, completion: { completion($0) })
+    }
+    
+    
+    
+    // MARK: Media Search API
+    
+    /**
+     Performs a search of all types of media documents.
+     
+     - parameter queries: The query parameters to add to the search.
+     - parameter namespace: The namespace to use to locate this document.
+     - parameter completion: Returns a Result with the Data if `success` or an HTTPError if `failure`
+    */
+    public func searchMedia(queries: [String: String], namespace: APINamespace? = .static, completion: @escaping (_ result: Result<Data, Error>) -> Void) {
+        call(endpoint: API.mediaSearch(queries), namespace: namespace, completion: { completion($0) })
     }
     
     
@@ -767,15 +1194,37 @@ public struct WS_WorldOfWarcraft: WebService {
     // MARK: Mount API
     
     /**
-     A list of all supported mounts.
+     Returns an index of mounts.
      
      - parameter namespace: The namespace to use to locate this document.
      - parameter completion: Returns a Result with the Data if `success` or an HTTPError if `failure`
      */
-    public func getMounts(namespace: APINamespace? = .static, completion: @escaping (_ result: Result<Data, Error>) -> Void) {
-        call(endpoint: API.mountIndex, namespace: namespace) { result in
-            completion(result)
-        }
+    public func getMountIndex(namespace: APINamespace? = .static, completion: @escaping (_ result: Result<Data, Error>) -> Void) {
+        call(endpoint: API.mountIndex, namespace: namespace, completion: { completion($0) })
+    }
+    
+    
+    /**
+     Returns a mount by ID.
+     
+     - parameter id: The ID of the mount.
+     - parameter namespace: The namespace to use to locate this document.
+     - parameter completion: Returns a Result with the Data if `success` or an HTTPError if `failure`
+     */
+    public func getMount(id: Int, namespace: APINamespace? = .static, completion: @escaping (_ result: Result<Data, Error>) -> Void) {
+        call(endpoint: API.mount(id), namespace: namespace, completion: { completion($0) })
+    }
+    
+    
+    /**
+     Performs a search of mounts.
+     
+     - parameter queries: The query parameters to add to the search.
+     - parameter namespace: The namespace to use to locate this document.
+     - parameter completion: Returns a Result with the Data if `success` or an HTTPError if `failure`
+    */
+    public func searchMount(queries: [String: String], namespace: APINamespace? = .static, completion: @escaping (_ result: Result<Data, Error>) -> Void) {
+        call(endpoint: API.mountSearch(queries), namespace: namespace, completion: { completion($0) })
     }
     
     
@@ -783,29 +1232,37 @@ public struct WS_WorldOfWarcraft: WebService {
     // MARK: Mythic Keystone Affix API
     
     /**
-     Returns an index of Keystone affixes.
+     Returns an index of mythic keystone affixes.
      
      - parameter namespace: The namespace to use to locate this document.
      - parameter completion: Returns a Result with the Data if `success` or an HTTPError if `failure`
      */
-    public func getMythicKeystoneAffixes(namespace: APINamespace? = .static, completion: @escaping (_ result: Result<Data, Error>) -> Void) {
-        call(endpoint: API.mythicKeystoneAffixIndex, namespace: namespace) { result in
-            completion(result)
-        }
+    public func getMythicKeystoneAffixIndex(namespace: APINamespace? = .static, completion: @escaping (_ result: Result<Data, Error>) -> Void) {
+        call(endpoint: API.mythicKeystoneAffixIndex, namespace: namespace, completion: { completion($0) })
     }
     
     
     /**
-     The ID of the Keystone affix.
+     Returns a mythic keystone affix by ID.
      
-     - parameter id: The ID of the Keystone affix
+     - parameter id: The ID of the mythic keystone affix.
      - parameter namespace: The namespace to use to locate this document.
      - parameter completion: Returns a Result with the Data if `success` or an HTTPError if `failure`
      */
     public func getMythicKeystoneAffix(id: Int, namespace: APINamespace? = .static, completion: @escaping (_ result: Result<Data, Error>) -> Void) {
-        call(endpoint: API.mythicKeystoneAffix(id), namespace: namespace) { result in
-            completion(result)
-        }
+        call(endpoint: API.mythicKeystoneAffix(id), namespace: namespace, completion: { completion($0) })
+    }
+    
+    
+    /**
+     Returns media for a mythic keystone affix by ID.
+     
+     - parameter id: The ID of the mythic keystone affix.
+     - parameter namespace: The namespace to use to locate this document.
+     - parameter completion: Returns a Result with the Data if `success` or an HTTPError if `failure`
+     */
+    public func getMythicKeystoneAffixMedia(id: Int, namespace: APINamespace? = .static, completion: @escaping (_ result: Result<Data, Error>) -> Void) {
+        call(endpoint: API.mythicKeystoneAffixMedia(id), namespace: namespace, completion: { completion($0) })
     }
     
     
@@ -815,129 +1272,80 @@ public struct WS_WorldOfWarcraft: WebService {
     /**
      Returns an index of Mythic Keystone dungeons.
      
-     - parameter region: What region the request is being made
-     - parameter locale: The locale that should be reflected in localized data
+     - parameter namespace: The namespace to use to locate this document.
      - parameter completion: Returns a Result with the Data if `success` or an HTTPError if `failure`
      */
-    func getMythicKeystoneDungeons(completion: @escaping (_ result: Result<Data, Error>) -> Void) {
-        let apiType: APIType = .gameData
-        var urlStr = getBaseURL(apiType: apiType)!.absoluteString + "/mythic-keystone/dungeon/index"
-        urlStr = appendSharedURLParameters(to: urlStr, withNamespace: "dynamic")
-        
-        self.callWebService(urlStr: urlStr, method: .get, apiType: apiType) { result in
-            completion(result)
-        }
+    func getMythicKeystoneDungeonIndex(namespace: APINamespace? = .dynamic, completion: @escaping (_ result: Result<Data, Error>) -> Void) {
+        self.call(endpoint: API.mythicKeystoneDungeonIndex, namespace: namespace, completion: { completion($0) })
     }
     
     
     /**
-     Returns an index of Mythic Keystone dungeons.
+     Returns a Mythic Keystone dungeon by ID.
      
-     - parameter id: The ID of the dungeon
-     - parameter region: What region the request is being made
-     - parameter locale: The locale that should be reflected in localized data
+     - parameter id: The ID of the dungeon.
+     - parameter namespace: The namespace to use to locate this document.
      - parameter completion: Returns a Result with the Data if `success` or an HTTPError if `failure`
      */
-    func getMythicKeystoneDungeon(id: Int, completion: @escaping (_ result: Result<Data, Error>) -> Void) {
-        let apiType: APIType = .gameData
-        var urlStr = getBaseURL(apiType: apiType)!.absoluteString + "/mythic-keystone/dungeon/\(id)"
-        urlStr = appendSharedURLParameters(to: urlStr, withNamespace: "dynamic")
-        
-        self.callWebService(urlStr: urlStr, method: .get, apiType: apiType) { result in
-            completion(result)
-        }
+    func getMythicKeystoneDungeon(id: Int, namespace: APINamespace? = .dynamic, completion: @escaping (_ result: Result<Data, Error>) -> Void) {
+        self.call(endpoint: API.mythicKeystoneDungeon(id), namespace: namespace, completion: { completion($0) })
     }
     
     
     /**
      Returns an index of links to other documents related to Mythic Keystone dungeons.
      
-     - parameter region: What region the request is being made
-     - parameter locale: The locale that should be reflected in localized data
+     - parameter namespace: The namespace to use to locate this document.
      - parameter completion: Returns a Result with the Data if `success` or an HTTPError if `failure`
      */
-    func getMythicKeystones(completion: @escaping (_ result: Result<Data, Error>) -> Void) {
-        let apiType: APIType = .gameData
-        var urlStr = getBaseURL(apiType: apiType)!.absoluteString + "/mythic-keystone/index"
-        urlStr = appendSharedURLParameters(to: urlStr, withNamespace: "dynamic")
-        
-        self.callWebService(urlStr: urlStr, method: .get, apiType: apiType) { result in
-            completion(result)
-        }
+    func getMythicKeystoneIndex(namespace: APINamespace? = .dynamic, completion: @escaping (_ result: Result<Data, Error>) -> Void) {
+        self.call(endpoint: API.mythicKeystoneIndex, namespace: namespace, completion: { completion($0) })
     }
     
     
     /**
      Returns an index of Mythic Keystone periods.
      
-     - parameter region: What region the request is being made
-     - parameter locale: The locale that should be reflected in localized data
+     - parameter namespace: The namespace to use to locate this document.
      - parameter completion: Returns a Result with the Data if `success` or an HTTPError if `failure`
      */
-    func getMythicKeystonePeriods(completion: @escaping (_ result: Result<Data, Error>) -> Void) {
-        let apiType: APIType = .gameData
-        var urlStr = getBaseURL(apiType: apiType)!.absoluteString + "/mythic-keystone/period/index"
-        urlStr = appendSharedURLParameters(to: urlStr, withNamespace: "dynamic")
-        
-        self.callWebService(urlStr: urlStr, method: .get, apiType: apiType) { result in
-            completion(result)
-        }
+    func getMythicKeystonePeriodIndex(namespace: APINamespace? = .dynamic, completion: @escaping (_ result: Result<Data, Error>) -> Void) {
+        self.call(endpoint: API.mythicKeystonePeriodIndex, namespace: namespace, completion: { completion($0) })
     }
     
     
     /**
      Returns a Mythic Keystone period by ID.
      
-     - parameter id: The ID of the Mythic Keystone season period
-     - parameter region: What region the request is being made
-     - parameter locale: The locale that should be reflected in localized data
+     - parameter id: The ID of the Mythic Keystone season period.
+     - parameter namespace: The namespace to use to locate this document.
      - parameter completion: Returns a Result with the Data if `success` or an HTTPError if `failure`
      */
-    func getMythicKeystonePeriod(id: Int, completion: @escaping (_ result: Result<Data, Error>) -> Void) {
-        let apiType: APIType = .gameData
-        var urlStr = getBaseURL(apiType: apiType)!.absoluteString + "/mythic-keystone/period/\(id)"
-        urlStr = appendSharedURLParameters(to: urlStr, withNamespace: "dynamic")
-        
-        self.callWebService(urlStr: urlStr, method: .get, apiType: apiType) { result in
-            completion(result)
-        }
+    func getMythicKeystonePeriod(id: Int, namespace: APINamespace? = .dynamic, completion: @escaping (_ result: Result<Data, Error>) -> Void) {
+        self.call(endpoint: API.mythicKeystonePeriod(id), namespace: namespace, completion: { completion($0) })
     }
     
     
     /**
      Returns an index of Mythic Keystone seasons.
      
-     - parameter region: What region the request is being made
-     - parameter locale: The locale that should be reflected in localized data
+     - parameter namespace: The namespace to use to locate this document.
      - parameter completion: Returns a Result with the Data if `success` or an HTTPError if `failure`
      */
-    func getMythicKeystoneSeasons(completion: @escaping (_ result: Result<Data, Error>) -> Void) {
-        let apiType: APIType = .gameData
-        var urlStr = getBaseURL(apiType: apiType)!.absoluteString + "/mythic-keystone/season/index"
-        urlStr = appendSharedURLParameters(to: urlStr, withNamespace: "dynamic")
-        
-        self.callWebService(urlStr: urlStr, method: .get, apiType: apiType) { result in
-            completion(result)
-        }
+    func getMythicKeystoneSeasonIndex(namespace: APINamespace? = .dynamic, completion: @escaping (_ result: Result<Data, Error>) -> Void) {
+        self.call(endpoint: API.mythicKeystoneSeasonIndex, namespace: namespace, completion: { completion($0) })
     }
     
     
     /**
      Returns a Mythic Keystone season by ID.
      
-     - parameter id: The ID of the Mythic Keystone season
-     - parameter region: What region the request is being made
-     - parameter locale: The locale that should be reflected in localized data
+     - parameter id: The ID of the Mythic Keystone season.
+     - parameter namespace: The namespace to use to locate this document.
      - parameter completion: Returns a Result with the Data if `success` or an HTTPError if `failure`
      */
-    func getMythicKeystoneSeason(id: Int, completion: @escaping (_ result: Result<Data, Error>) -> Void) {
-        let apiType: APIType = .gameData
-        var urlStr = getBaseURL(apiType: apiType)!.absoluteString + "/mythic-keystone/season/\(id)"
-        urlStr = appendSharedURLParameters(to: urlStr, withNamespace: "dynamic")
-        
-        self.callWebService(urlStr: urlStr, method: .get, apiType: apiType) { result in
-            completion(result)
-        }
+    func getMythicKeystoneSeason(id: Int, namespace: APINamespace? = .dynamic, completion: @escaping (_ result: Result<Data, Error>) -> Void) {
+        self.call(endpoint: API.mythicKeystoneSeasonIndex, namespace: namespace, completion: { completion($0) })
     }
     
     
@@ -945,42 +1353,28 @@ public struct WS_WorldOfWarcraft: WebService {
     // MARK: Mythic Keystone Leaderboard API
     
     /**
-     Get an index of Mythic Keystone Leaderboard dungeon instances for a connected-realm
+     Returns an index of Mythic Keystone Leaderboard dungeon instances for a connected realm.
      
      - parameter connectedRealmID: The ID of the connected realm
-     - parameter region: What region the request is being made
-     - parameter locale: The locale that should be reflected in localized data
+     - parameter namespace: The namespace to use to locate this document.
      - parameter completion: Returns a Result with the Data if `success` or an HTTPError if `failure`
      */
-    func getMythicLeaderboards(connectedRealmID: Int, completion: @escaping (_ result: Result<Data, Error>) -> Void) {
-        let apiType: APIType = .gameData
-        var urlStr = getBaseURL(apiType: apiType)!.absoluteString + "/connected-realm/\(connectedRealmID)/mythic-leaderboard/"
-        urlStr = appendSharedURLParameters(to: urlStr, withNamespace: "dynamic")
-        
-        self.callWebService(urlStr: urlStr, method: .get, apiType: apiType) { result in
-            completion(result)
-        }
+    func getMythicLeaderboardIndex(connectedRealmID: Int, namespace: APINamespace? = .dynamic, completion: @escaping (_ result: Result<Data, Error>) -> Void) {
+        self.call(endpoint: API.mythicKeystoneLeaderboardIndex(connectedRealmID: connectedRealmID), namespace: namespace, completion: { completion($0) })
     }
     
     
     /**
-     Get a weekly Mythic Keystone Leaderboard by period
+     Returns a weekly Mythic Keystone Leaderboard by period.
      
      - parameter connectedRealmID: The id of the connected realm
      - parameter dungeonID: The id of the dungeon
      - parameter period: The unique identifier for the leaderboard period
-     - parameter region: What region the request is being made
-     - parameter locale: The locale that should be reflected in localized data
+     - parameter namespace: The namespace to use to locate this document.
      - parameter completion: Returns a Result with the Data if `success` or an HTTPError if `failure`
      */
-    func getMythicLeaderboard(connectedRealmID: Int, dungeonID: Int, period: Int, completion: @escaping (_ result: Result<Data, Error>) -> Void) {
-        let apiType: APIType = .gameData
-        var urlStr = getBaseURL(apiType: apiType)!.absoluteString + "/connected-realm/\(connectedRealmID)/mythic-leaderboard/\(dungeonID)/period/\(period)"
-        urlStr = appendSharedURLParameters(to: urlStr, withNamespace: "dynamic")
-        
-        self.callWebService(urlStr: urlStr, method: .get, apiType: apiType) { result in
-            completion(result)
-        }
+    func getMythicLeaderboard(connectedRealmID: Int, dungeonID: Int, period: Int, namespace: APINamespace? = .dynamic, completion: @escaping (_ result: Result<Data, Error>) -> Void) {
+        self.call(endpoint: API.mythicKeystoneLeaderboard(connectedRealmID: connectedRealmID, dungeonID: dungeonID, period: period), namespace: namespace, completion: { completion($0) })
     }
     
     
@@ -992,39 +1386,84 @@ public struct WS_WorldOfWarcraft: WebService {
      
      - parameter raid: The raid for a leaderboard
      - parameter faction: Player faction ('alliance' or 'horde')
-     - parameter region: What region the request is being made
-     - parameter locale: The locale that should be reflected in localized data
+     - parameter namespace: The namespace to use to locate this document.
      - parameter completion: Returns a Result with the Data if `success` or an HTTPError if `failure`
      */
-    func getMythicRaidLeaderboard(raid: String, faction: FactionType, completion: @escaping (_ result: Result<Data, Error>) -> Void) {
-        let apiType: APIType = .gameData
-        var urlStr = getBaseURL(apiType: apiType)!.absoluteString + "/leaderboard/hall-of-fame/\(raid)/\(faction.rawValue.lowercased())"
-        urlStr = appendSharedURLParameters(to: urlStr, withNamespace: "dynamic")
-        
-        self.callWebService(urlStr: urlStr, method: .get, apiType: apiType) { result in
-            completion(result)
-        }
+    func getMythicRaidLeaderboard(raid: String, faction: FactionType, namespace: APINamespace? = .dynamic, completion: @escaping (_ result: Result<Data, Error>) -> Void) {
+        self.call(endpoint: API.mythicRaidLeaderboard(raid: raid, faction: faction), namespace: namespace, completion: { completion($0) })
     }
     
     
     
-    // MARK: Mythic Challenge Mode API
+    // MARK: Pet API
     
     /**
-     Get current period information about the Mythic Challenge Mode relevant to Mythic Keystone Leaderboards
+     Returns an index of battle pets.
      
-     - parameter region: What region the request is being made
-     - parameter locale: The locale that should be reflected in localized data
+     - parameter namespace: The namespace to use to locate this document.
      - parameter completion: Returns a Result with the Data if `success` or an HTTPError if `failure`
      */
-    func getMythicChallengeMode(completion: @escaping (_ result: Result<Data, Error>) -> Void) {
-        let apiType: APIType = .gameData
-        var urlStr = getBaseURL(apiType: apiType)!.absoluteString + "/mythic-challenge-mode/"
-        urlStr = appendSharedURLParameters(to: urlStr, withNamespace: "dynamic")
-        
-        self.callWebService(urlStr: urlStr, method: .get, apiType: apiType) { result in
-            completion(result)
-        }
+    func getPetIndex(namespace: APINamespace? = .static, completion: @escaping (_ result: Result<Data, Error>) -> Void) {
+        self.call(endpoint: API.petIndex, namespace: namespace, completion: { completion($0) })
+    }
+    
+    
+    /**
+     Returns a battle pets by ID.
+     
+     - parameter id: The ID of the pet.
+     - parameter namespace: The namespace to use to locate this document.
+     - parameter completion: Returns a Result with the Data if `success` or an HTTPError if `failure`
+     */
+    func getPet(id: Int, namespace: APINamespace? = .static, completion: @escaping (_ result: Result<Data, Error>) -> Void) {
+        self.call(endpoint: API.pet(id), namespace: namespace, completion: { completion($0) })
+    }
+    
+    
+    /**
+     Returns media for a battle pet by ID.
+     
+     - parameter id: The ID of the pet.
+     - parameter namespace: The namespace to use to locate this document.
+     - parameter completion: Returns a Result with the Data if `success` or an HTTPError if `failure`
+     */
+    func getPetMedia(id: Int, namespace: APINamespace? = .static, completion: @escaping (_ result: Result<Data, Error>) -> Void) {
+        self.call(endpoint: API.petMedia(id), namespace: namespace, completion: { completion($0) })
+    }
+    
+    
+    /**
+     Returns an index of pet abilities.
+     
+     - parameter namespace: The namespace to use to locate this document.
+     - parameter completion: Returns a Result with the Data if `success` or an HTTPError if `failure`
+     */
+    func getPetAbilityIndex(namespace: APINamespace? = .static, completion: @escaping (_ result: Result<Data, Error>) -> Void) {
+        self.call(endpoint: API.petAbilityIndex, namespace: namespace, completion: { completion($0) })
+    }
+    
+    
+    /**
+     Returns a pet ability by ID.
+     
+     - parameter id: The ID of the pet ability.
+     - parameter namespace: The namespace to use to locate this document.
+     - parameter completion: Returns a Result with the Data if `success` or an HTTPError if `failure`
+     */
+    func getPetAbility(id: Int, namespace: APINamespace? = .static, completion: @escaping (_ result: Result<Data, Error>) -> Void) {
+        self.call(endpoint: API.petAbility(id), namespace: namespace, completion: { completion($0) })
+    }
+    
+    
+    /**
+     Returns media for a pet ability by ID.
+     
+     - parameter id: The ID of the pet ability.
+     - parameter namespace: The namespace to use to locate this document.
+     - parameter completion: Returns a Result with the Data if `success` or an HTTPError if `failure`
+     */
+    func getPetAbilityMedia(id: Int, namespace: APINamespace? = .static, completion: @escaping (_ result: Result<Data, Error>) -> Void) {
+        self.call(endpoint: API.petAbilityMedia(id), namespace: namespace, completion: { completion($0) })
     }
     
     
@@ -1032,58 +1471,75 @@ public struct WS_WorldOfWarcraft: WebService {
     // MARK: Playable Class API
     
     /**
-     Get an index of playable classes
+     Returns an index of playable classes.
      
-     - parameter region: What region the request is being made
-     - parameter locale: The locale that should be reflected in localized data
+     - parameter namespace: The namespace to use to locate this document.
      - parameter completion: Returns a Result with the Data if `success` or an HTTPError if `failure`
      */
-    func getPlayableClasses(completion: @escaping (_ result: Result<Data, Error>) -> Void) {
-        let apiType: APIType = .gameData
-        var urlStr = getBaseURL(apiType: apiType)!.absoluteString + "/playable-class/index"
-        urlStr = appendSharedURLParameters(to: urlStr, withNamespace: "static")
-        
-        self.callWebService(urlStr: urlStr, method: .get, apiType: apiType) { result in
-            completion(result)
-        }
+    func getPlayableClassIndex(namespace: APINamespace? = .static, completion: @escaping (_ result: Result<Data, Error>) -> Void) {
+        self.call(endpoint: API.playableClassIndex, namespace: namespace, completion: { completion($0) })
     }
     
     
     /**
-     Get a playable class by id
+     Returns a playable class by ID.
      
-     - parameter id: The id of a playable class
-     - parameter region: What region the request is being made
-     - parameter locale: The locale that should be reflected in localized data
+     - parameter id: The ID of the playable class.
+     - parameter namespace: The namespace to use to locate this document.
      - parameter completion: Returns a Result with the Data if `success` or an HTTPError if `failure`
      */
-    func getPlayableClass(id: Int, completion: @escaping (_ result: Result<Data, Error>) -> Void) {
-        let apiType: APIType = .gameData
-        var urlStr = getBaseURL(apiType: apiType)!.absoluteString + "/playable-class/\(id)"
-        urlStr = appendSharedURLParameters(to: urlStr, withNamespace: "static")
-        
-        self.callWebService(urlStr: urlStr, method: .get, apiType: apiType) { result in
-            completion(result)
-        }
+    func getPlayableClass(id: Int, namespace: APINamespace? = .static, completion: @escaping (_ result: Result<Data, Error>) -> Void) {
+        self.call(endpoint: API.playableClass(id), namespace: namespace, completion: { completion($0) })
     }
     
     
     /**
-     Returns the PvP talent slots for a playable class by ID.et a playable class by id
+     Returns media for a playable class by ID.
      
-     - parameter id: The id of a playable class
-     - parameter region: What region the request is being made
-     - parameter locale: The locale that should be reflected in localized data
+     - parameter id: The ID of the playable class.
+     - parameter namespace: The namespace to use to locate this document.
      - parameter completion: Returns a Result with the Data if `success` or an HTTPError if `failure`
      */
-    func getPlayableClassPvPTalentSlots(id: Int, completion: @escaping (_ result: Result<Data, Error>) -> Void) {
-        let apiType: APIType = .gameData
-        var urlStr = getBaseURL(apiType: apiType)!.absoluteString + "/playable-class/\(id)/pvp-talent-slots"
-        urlStr = appendSharedURLParameters(to: urlStr, withNamespace: "static")
-        
-        self.callWebService(urlStr: urlStr, method: .get, apiType: apiType) { result in
-            completion(result)
-        }
+    func getPlayableClassMedia(id: Int, namespace: APINamespace? = .static, completion: @escaping (_ result: Result<Data, Error>) -> Void) {
+        self.call(endpoint: API.playableClassMedia(id), namespace: namespace, completion: { completion($0) })
+    }
+    
+    
+    /**
+     Returns the PvP talent slots for a playable class by ID.
+     
+     - parameter classID: The ID of the playable class.
+     - parameter namespace: The namespace to use to locate this document.
+     - parameter completion: Returns a Result with the Data if `success` or an HTTPError if `failure`
+     */
+    func getPlayableClassPvPTalentSlots(classID: Int, namespace: APINamespace? = .static,completion: @escaping (_ result: Result<Data, Error>) -> Void) {
+        self.call(endpoint: API.pvpTalentSlots(classID: classID), namespace: namespace, completion: { completion($0) })
+    }
+    
+    
+    
+    // MARK: Playable Race API
+    
+    /**
+     Returns an index of playable races.
+     
+     - parameter namespace: The namespace to use to locate this document.
+     - parameter completion: Returns a Result with the Data if `success` or an HTTPError if `failure`
+     */
+    func getPlayableRaceIndex(namespace: APINamespace? = .static, completion: @escaping (_ result: Result<Data, Error>) -> Void) {
+        self.call(endpoint: API.playableRaceIndex, namespace: namespace, completion: { completion($0) })
+    }
+    
+    
+    /**
+     Returns a playable race by ID.
+     
+     - parameter id: The ID of the playable race.
+     - parameter namespace: The namespace to use to locate this document.
+     - parameter completion: Returns a Result with the Data if `success` or an HTTPError if `failure`
+     */
+    func getPlayableRace(id: Int, namespace: APINamespace? = .static, completion: @escaping (_ result: Result<Data, Error>) -> Void) {
+        self.call(endpoint: API.playableRace(id), namespace: namespace, completion: { completion($0) })
     }
     
     
@@ -1091,39 +1547,37 @@ public struct WS_WorldOfWarcraft: WebService {
     // MARK: Playable Specialization API
     
     /**
-     Get an index of playable specializations
+     Returns an index of playable specializations.
      
-     - parameter region: What region the request is being made
-     - parameter locale: The locale that should be reflected in localized data
+     - parameter namespace: The namespace to use to locate this document.
      - parameter completion: Returns a Result with the Data if `success` or an HTTPError if `failure`
      */
-    func getPlayableSpecializations(completion: @escaping (_ result: Result<Data, Error>) -> Void) {
-        let apiType: APIType = .gameData
-        var urlStr = getBaseURL(apiType: apiType)!.absoluteString + "/playable-specialization/index"
-        urlStr = appendSharedURLParameters(to: urlStr, withNamespace: "static")
-        
-        self.callWebService(urlStr: urlStr, method: .get, apiType: apiType) { result in
-            completion(result)
-        }
+    func getPlayableSpecializationIndex(namespace: APINamespace? = .static, completion: @escaping (_ result: Result<Data, Error>) -> Void) {
+        self.call(endpoint: API.playableSpecializationIndex, namespace: namespace, completion: { completion($0) })
     }
     
     
     /**
-     Get a playable specialization by id
+     Returns a playable specialization by ID.
      
-     - parameter id: The id of a playable specialization
-     - parameter region: What region the request is being made
-     - parameter locale: The locale that should be reflected in localized data
+     - parameter id: The ID of the playable specialization.
+     - parameter namespace: The namespace to use to locate this document.
      - parameter completion: Returns a Result with the Data if `success` or an HTTPError if `failure`
      */
-    func getPlayableSpecialization(id: Int, completion: @escaping (_ result: Result<Data, Error>) -> Void) {
-        let apiType: APIType = .gameData
-        var urlStr = getBaseURL(apiType: apiType)!.absoluteString + "/playable-specialization/\(id)"
-        urlStr = appendSharedURLParameters(to: urlStr, withNamespace: "static")
-        
-        self.callWebService(urlStr: urlStr, method: .get, apiType: apiType) { result in
-            completion(result)
-        }
+    func getPlayableSpecialization(id: Int, namespace: APINamespace? = .static, completion: @escaping (_ result: Result<Data, Error>) -> Void) {
+        self.call(endpoint: API.playableSpecialization(id), namespace: namespace, completion: { completion($0) })
+    }
+    
+    
+    /**
+     Returns media for a playable specialization by ID.
+     
+     - parameter id: The ID of the playable specialization.
+     - parameter namespace: The namespace to use to locate this document.
+     - parameter completion: Returns a Result with the Data if `success` or an HTTPError if `failure`
+     */
+    func getPlayableSpecializationMedia(id: Int, namespace: APINamespace? = .static, completion: @escaping (_ result: Result<Data, Error>) -> Void) {
+        self.call(endpoint: API.playableSpecializationMedia(id), namespace: namespace, completion: { completion($0) })
     }
     
     
@@ -1131,78 +1585,296 @@ public struct WS_WorldOfWarcraft: WebService {
     // MARK: Power Type API
     
     /**
-     Returns an index of power types
+     Returns an index of power types.
      
-     - parameter region: What region the request is being made
-     - parameter locale: The locale that should be reflected in localized data
+     - parameter namespace: The namespace to use to locate this document.
      - parameter completion: Returns a Result with the Data if `success` or an HTTPError if `failure`
      */
-    func getPowerTypes(completion: @escaping (_ result: Result<Data, Error>) -> Void) {
-        let apiType: APIType = .gameData
-        var urlStr = getBaseURL(apiType: apiType)!.absoluteString + "/power-type/index"
-        urlStr = appendSharedURLParameters(to: urlStr, withNamespace: "static")
-        
-        self.callWebService(urlStr: urlStr, method: .get, apiType: apiType) { result in
-            completion(result)
-        }
+    func getPowerTypeIndex(namespace: APINamespace? = .static, completion: @escaping (_ result: Result<Data, Error>) -> Void) {
+        self.call(endpoint: API.powerTypeIndex, namespace: namespace, completion: { completion($0) })
     }
     
     
     /**
-     Returns a power type by ID
+     Returns a power type by ID.
      
-     - parameter id: The ID of the power type
-     - parameter region: What region the request is being made
-     - parameter locale: The locale that should be reflected in localized data
+     - parameter id: The ID of the power type.
+     - parameter namespace: The namespace to use to locate this document.
      - parameter completion: Returns a Result with the Data if `success` or an HTTPError if `failure`
      */
-    func getPowerType(id: Int, completion: @escaping (_ result: Result<Data, Error>) -> Void) {
-        let apiType: APIType = .gameData
-        var urlStr = getBaseURL(apiType: apiType)!.absoluteString + "/power-type/\(id)"
-        urlStr = appendSharedURLParameters(to: urlStr, withNamespace: "static")
-        
-        self.callWebService(urlStr: urlStr, method: .get, apiType: apiType) { result in
-            completion(result)
-        }
+    func getPowerType(id: Int, namespace: APINamespace? = .static, completion: @escaping (_ result: Result<Data, Error>) -> Void) {
+        self.call(endpoint: API.powerType(id), namespace: namespace, completion: { completion($0) })
     }
     
     
-    // MARK: Playable Race API
+    
+    // MARK: Profession API
     
     /**
-     Returns an index of races
+     Returns an index of professions.
      
-     - parameter region: What region the request is being made
-     - parameter locale: The locale that should be reflected in localized data
+     - parameter namespace: The namespace to use to locate this document.
      - parameter completion: Returns a Result with the Data if `success` or an HTTPError if `failure`
      */
-    func getPlayableRaces(completion: @escaping (_ result: Result<Data, Error>) -> Void) {
-        let apiType: APIType = .gameData
-        var urlStr = getBaseURL(apiType: apiType)!.absoluteString + "/race/index"
-        urlStr = appendSharedURLParameters(to: urlStr, withNamespace: "static")
-        
-        self.callWebService(urlStr: urlStr, method: .get, apiType: apiType) { result in
-            completion(result)
-        }
+    func getProfessionIndex(namespace: APINamespace? = .static, completion: @escaping (_ result: Result<Data, Error>) -> Void) {
+        self.call(endpoint: API.professionIndex, namespace: namespace, completion: { completion($0) })
     }
     
     
     /**
-     Returns a race by ID
+     Returns a profession by ID.
      
-     - parameter id: The ID of the race
-     - parameter region: What region the request is being made
-     - parameter locale: The locale that should be reflected in localized data
+     - parameter id: The ID of the profession.
+     - parameter namespace: The namespace to use to locate this document.
      - parameter completion: Returns a Result with the Data if `success` or an HTTPError if `failure`
      */
-    func getPlayableRace(id: Int, completion: @escaping (_ result: Result<Data, Error>) -> Void) {
-        let apiType: APIType = .gameData
-        var urlStr = getBaseURL(apiType: apiType)!.absoluteString + "/race/\(id)"
-        urlStr = appendSharedURLParameters(to: urlStr, withNamespace: "static")
-        
-        self.callWebService(urlStr: urlStr, method: .get, apiType: apiType) { result in
-            completion(result)
-        }
+    func getProfession(id: Int, namespace: APINamespace? = .static, completion: @escaping (_ result: Result<Data, Error>) -> Void) {
+        self.call(endpoint: API.profession(id), namespace: namespace, completion: { completion($0) })
+    }
+    
+    
+    /**
+     Returns media for a profession by ID.
+     
+     - parameter id: The ID of the profession.
+     - parameter namespace: The namespace to use to locate this document.
+     - parameter completion: Returns a Result with the Data if `success` or an HTTPError if `failure`
+     */
+    func getProfessionMedia(id: Int, namespace: APINamespace? = .static, completion: @escaping (_ result: Result<Data, Error>) -> Void) {
+        self.call(endpoint: API.professionMedia(id), namespace: namespace, completion: { completion($0) })
+    }
+    
+    
+    /**
+     Returns a skill tier for a profession by ID.
+     
+     - parameter professionID: The ID of the profession.
+     - parameter skillTierID: The ID of the skill tier.
+     - parameter namespace: The namespace to use to locate this document.
+     - parameter completion: Returns a Result with the Data if `success` or an HTTPError if `failure`
+     */
+    func getProfessionSkillTier(professionID: Int, skillTierID: Int, namespace: APINamespace? = .static, completion: @escaping (_ result: Result<Data, Error>) -> Void) {
+        self.call(endpoint: API.professionSkillTier(professionID: professionID, skillTierID: skillTierID), namespace: namespace, completion: { completion($0) })
+    }
+    
+    
+    /**
+     Returns a recipe by ID.
+     
+     - parameter id: The ID of the recipe.
+     - parameter namespace: The namespace to use to locate this document.
+     - parameter completion: Returns a Result with the Data if `success` or an HTTPError if `failure`
+     */
+    func getRecipe(id: Int, namespace: APINamespace? = .static, completion: @escaping (_ result: Result<Data, Error>) -> Void) {
+        self.call(endpoint: API.recipe(id), namespace: namespace, completion: { completion($0) })
+    }
+    
+    
+    /**
+     Returns media for a recipe by ID.
+     
+     - parameter id: The ID of the recipe.
+     - parameter namespace: The namespace to use to locate this document.
+     - parameter completion: Returns a Result with the Data if `success` or an HTTPError if `failure`
+     */
+    func getRecipeMedia(id: Int, namespace: APINamespace? = .static, completion: @escaping (_ result: Result<Data, Error>) -> Void) {
+        self.call(endpoint: API.recipeMedia(id), namespace: namespace, completion: { completion($0) })
+    }
+    
+    
+    
+    // MARK: PvP Season API
+    
+    /**
+     Returns an index of PvP seasons.
+     
+     - parameter namespace: The namespace to use to locate this document.
+     - parameter completion: Returns a Result with the Data if `success` or an HTTPError if `failure`
+     */
+    func getPvPSeasonIndex(namespace: APINamespace? = .dynamic, completion: @escaping (_ result: Result<Data, Error>) -> Void) {
+        self.call(endpoint: API.pvpSeasonIndex, namespace: namespace, completion: { completion($0) })
+    }
+    
+    
+    /**
+     Returns a PvP season by ID.
+     
+     - parameter id: The ID of the PvP season.
+     - parameter namespace: The namespace to use to locate this document.
+     - parameter completion: Returns a Result with the Data if `success` or an HTTPError if `failure`
+     */
+    func getPvPSeason(id: Int, namespace: APINamespace? = .dynamic, completion: @escaping (_ result: Result<Data, Error>) -> Void) {
+        self.call(endpoint: API.pvpSeason(id), namespace: namespace, completion: { completion($0) })
+    }
+    
+    
+    /**
+     Returns an index of PvP leaderboards for a PvP season.
+     
+     - parameter pvpSeasonID: The ID of the PvP season.
+     - parameter namespace: The namespace to use to locate this document.
+     - parameter completion: Returns a Result with the Data if `success` or an HTTPError if `failure`
+     */
+    func getPvPLeaderboardIndex(pvpSeasonID: Int, namespace: APINamespace? = .dynamic, completion: @escaping (_ result: Result<Data, Error>) -> Void) {
+        self.call(endpoint: API.pvpLeaderboardIndex(season: pvpSeasonID), namespace: namespace, completion: { completion($0) })
+    }
+    
+    
+    /**
+     Returns the PvP leaderboard of a specific PvP bracket for a PvP season.
+     
+     - parameter pvpSeasonID: The ID of the PvP season.
+     - parameter pvpBracket: The PvP bracket type.
+     - parameter namespace: The namespace to use to locate this document.
+     - parameter completion: Returns a Result with the Data if `success` or an HTTPError if `failure`
+     */
+    func getPvPLeaderboard(pvpSeasonID: Int, pvpBracket: WOWLeaderboardBracket, namespace: APINamespace? = .dynamic, completion: @escaping (_ result: Result<Data, Error>) -> Void) {
+        self.call(endpoint: API.pvpLeaderboard(season: pvpSeasonID, pvpBracket: pvpBracket), namespace: namespace, completion: { completion($0) })
+    }
+    
+    
+    /**
+     Returns an index of PvP rewards for a PvP season.
+     
+     - parameter pvpSeasonID: The ID of the PvP season.
+     - parameter namespace: The namespace to use to locate this document.
+     - parameter completion: Returns a Result with the Data if `success` or an HTTPError if `failure`
+     */
+    func getPvPRewardIndex(pvpSeasonID: Int, namespace: APINamespace? = .dynamic, completion: @escaping (_ result: Result<Data, Error>) -> Void) {
+        self.call(endpoint: API.pvpRewardIndex(season: pvpSeasonID), namespace: namespace, completion: { completion($0) })
+    }
+    
+    
+    
+    // MARK: PvP Tier API
+    
+    /**
+     Returns media for a PvP tier by ID.
+     
+     - parameter id: The ID of the PvP tier.
+     - parameter namespace: The namespace to use to locate this document.
+     - parameter completion: Returns a Result with the Data if `success` or an HTTPError if `failure`
+     */
+    func getPvPTierMedia(id: Int, namespace: APINamespace? = .static, completion: @escaping (_ result: Result<Data, Error>) -> Void) {
+        self.call(endpoint: API.pvpTierMedia(id), namespace: namespace, completion: { completion($0) })
+    }
+    
+    
+    /**
+     Returns an index of PvP tiers.
+     
+     - parameter namespace: The namespace to use to locate this document.
+     - parameter completion: Returns a Result with the Data if `success` or an HTTPError if `failure`
+     */
+    func getPvPTierIndex(namespace: APINamespace? = .static, completion: @escaping (_ result: Result<Data, Error>) -> Void) {
+        self.call(endpoint: API.pvpTierIndex, namespace: namespace, completion: { completion($0) })
+    }
+    
+    
+    /**
+     Returns a PvP tier by ID.
+     
+     - parameter id: The ID of the PvP tier.
+     - parameter namespace: The namespace to use to locate this document.
+     - parameter completion: Returns a Result with the Data if `success` or an HTTPError if `failure`
+     */
+    func getPvPTier(id: Int, namespace: APINamespace? = .static, completion: @escaping (_ result: Result<Data, Error>) -> Void) {
+        self.call(endpoint: API.pvpTier(id), namespace: namespace, completion: { completion($0) })
+    }
+    
+    
+    
+    // MARK: Quest API
+    
+    /**
+     Returns an index of quests.
+     
+     - parameter namespace: The namespace to use to locate this document.
+     - parameter completion: Returns a Result with the Data if `success` or an HTTPError if `failure`
+     */
+    func getQuestIndex(namespace: APINamespace? = .static, completion: @escaping (_ result: Result<Data, Error>) -> Void) {
+        self.call(endpoint: API.questIndex, namespace: namespace, completion: { completion($0) })
+    }
+    
+    
+    /**
+     Returns a quest by ID.
+     
+     - parameter id: The ID of the quest.
+     - parameter namespace: The namespace to use to locate this document.
+     - parameter completion: Returns a Result with the Data if `success` or an HTTPError if `failure`
+    */
+    func getQuest(id: Int, namespace: APINamespace? = .static, completion: @escaping (_ result: Result<Data, Error>) -> Void) {
+        self.call(endpoint: API.quest(id), namespace: namespace, completion: { completion($0) })
+    }
+    
+    
+    /**
+     Returns an index of quest categories (such as quests for a specific class, profession, or storyline).
+     
+     - parameter namespace: The namespace to use to locate this document.
+     - parameter completion: Returns a Result with the Data if `success` or an HTTPError if `failure`
+     */
+    func getQuestCategoryIndex(namespace: APINamespace? = .static, completion: @escaping (_ result: Result<Data, Error>) -> Void) {
+        self.call(endpoint: API.questCategoryIndex, namespace: namespace, completion: { completion($0) })
+    }
+    
+    
+    /**
+     Returns a quest category by ID.
+     
+     - parameter id: The ID of the quest category.
+     - parameter namespace: The namespace to use to locate this document.
+     - parameter completion: Returns a Result with the Data if `success` or an HTTPError if `failure`
+    */
+    func getQuestCategory(id: Int, namespace: APINamespace? = .static, completion: @escaping (_ result: Result<Data, Error>) -> Void) {
+        self.call(endpoint: API.questCategory(id), namespace: namespace, completion: { completion($0) })
+    }
+    
+    
+    /**
+     Returns an index of quest areas.
+     
+     - parameter namespace: The namespace to use to locate this document.
+     - parameter completion: Returns a Result with the Data if `success` or an HTTPError if `failure`
+     */
+    func getQuestAreaIndex(namespace: APINamespace? = .static, completion: @escaping (_ result: Result<Data, Error>) -> Void) {
+        self.call(endpoint: API.questAreaIndex, namespace: namespace, completion: { completion($0) })
+    }
+    
+    
+    /**
+     Returns a quest area by ID.
+     
+     - parameter id: The ID of the quest area.
+     - parameter namespace: The namespace to use to locate this document.
+     - parameter completion: Returns a Result with the Data if `success` or an HTTPError if `failure`
+    */
+    func getQuestArea(id: Int, namespace: APINamespace? = .static, completion: @escaping (_ result: Result<Data, Error>) -> Void) {
+        self.call(endpoint: API.questArea(id), namespace: namespace, completion: { completion($0) })
+    }
+    
+    
+    /**
+     Returns an index of quest types (such as PvP quests, raid quests, or account quests).
+     
+     - parameter namespace: The namespace to use to locate this document.
+     - parameter completion: Returns a Result with the Data if `success` or an HTTPError if `failure`
+     */
+    func getQuestTypeIndex(namespace: APINamespace? = .static, completion: @escaping (_ result: Result<Data, Error>) -> Void) {
+        self.call(endpoint: API.questTypeIndex, namespace: namespace, completion: { completion($0) })
+    }
+    
+    
+    /**
+     Returns a quest type by ID.
+     
+     - parameter id: The ID of the quest type.
+     - parameter namespace: The namespace to use to locate this document.
+     - parameter completion: Returns a Result with the Data if `success` or an HTTPError if `failure`
+    */
+    func getQuestType(id: Int, namespace: APINamespace? = .static, completion: @escaping (_ result: Result<Data, Error>) -> Void) {
+        self.call(endpoint: API.questType(id), namespace: namespace, completion: { completion($0) })
     }
     
     
@@ -1210,39 +1882,37 @@ public struct WS_WorldOfWarcraft: WebService {
     // MARK: Realm API
     
     /**
-     Get an index of realms
+     Returns an index of realms.
      
-     - parameter region: What region the request is being made
-     - parameter locale: The locale that should be reflected in localized data
+     - parameter namespace: The namespace to use to locate this document.
      - parameter completion: Returns a Result with the Data if `success` or an HTTPError if `failure`
      */
-    func getRealmIndex(completion: @escaping (_ result: Result<Data, Error>) -> Void) {
-        let apiType: APIType = .gameData
-        var urlStr = getBaseURL(apiType: apiType)!.absoluteString + "/realm/index"
-        urlStr = appendSharedURLParameters(to: urlStr, withNamespace: "dynamic")
-        
-        self.callWebService(urlStr: urlStr, method: .get, apiType: apiType) { result in
-            completion(result)
-        }
+    func getRealmIndex(namespace: APINamespace? = .dynamic, completion: @escaping (_ result: Result<Data, Error>) -> Void) {
+        self.call(endpoint: API.realmIndex, namespace: namespace, completion: { completion($0) })
     }
     
     
     /**
-     Get a single realm by slug or id
+     Returns a single realm by slug or ID.
      
-     - parameter slug: The slug of the realm
-     - parameter region: What region the request is being made
-     - parameter locale: The locale that should be reflected in localized data
+     - parameter slug: The slug of the realm.
+     - parameter namespace: The namespace to use to locate this document.
      - parameter completion: Returns a Result with the Data if `success` or an HTTPError if `failure`
      */
-    func getRealm(_ slug: String, completion: @escaping (_ result: Result<Data, Error>) -> Void) {
-        let apiType: APIType = .gameData
-        var urlStr = getBaseURL(apiType: apiType)!.absoluteString + "/realm/\(slug)"
-        urlStr = appendSharedURLParameters(to: urlStr, withNamespace: "dynamic")
-        
-        self.callWebService(urlStr: urlStr, method: .get, apiType: apiType) { result in
-            completion(result)
-        }
+    func getRealm(_ slug: String, namespace: APINamespace? = .dynamic, completion: @escaping (_ result: Result<Data, Error>) -> Void) {
+        self.call(endpoint: API.realm(slug), namespace: namespace, completion: { completion($0) })
+    }
+    
+    
+    /**
+     Performs a search of realms.
+     
+     - parameter queries: The query parameters to add to the search.
+     - parameter namespace: The namespace to use to locate this document.
+     - parameter completion: Returns a Result with the Data if `success` or an HTTPError if `failure`
+    */
+    public func searchRealm(queries: [String: String], namespace: APINamespace? = .dynamic, completion: @escaping (_ result: Result<Data, Error>) -> Void) {
+        call(endpoint: API.realmSearch(queries), namespace: namespace, completion: { completion($0) })
     }
     
     
@@ -1250,39 +1920,188 @@ public struct WS_WorldOfWarcraft: WebService {
     // MARK: Region API
     
     /**
-     Get an index of regions
+     Returns an index of regions.
      
-     - parameter region: What region the request is being made
-     - parameter locale: The locale that should be reflected in localized data
+     - parameter namespace: The namespace to use to locate this document.
      - parameter completion: Returns a Result with the Data if `success` or an HTTPError if `failure`
      */
-    func getRegionIndex(completion: @escaping (_ result: Result<Data, Error>) -> Void) {
-        let apiType: APIType = .gameData
-        var urlStr = getBaseURL(apiType: apiType)!.absoluteString + "/region/index"
-        urlStr = appendSharedURLParameters(to: urlStr, withNamespace: "dynamic")
-        
-        self.callWebService(urlStr: urlStr, method: .get, apiType: apiType) { result in
-            completion(result)
-        }
+    func getRegionIndex(namespace: APINamespace? = .dynamic, completion: @escaping (_ result: Result<Data, Error>) -> Void) {
+        call(endpoint: API.regionIndex, namespace: namespace, completion: { completion($0) })
     }
     
     
     /**
-     Get a single region by id
+     Returns a region by ID.
      
-     - parameter id: The id of the region
-     - parameter region: What region the request is being made
-     - parameter locale: The locale that should be reflected in localized data
+     - parameter id: The ID of the region.
+     - parameter namespace: The namespace to use to locate this document.
      - parameter completion: Returns a Result with the Data if `success` or an HTTPError if `failure`
      */
-    func getRegion(id: Int, completion: @escaping (_ result: Result<Data, Error>) -> Void) {
-        let apiType: APIType = .gameData
-        var urlStr = getBaseURL(apiType: apiType)!.absoluteString + "/region/\(id)"
-        urlStr = appendSharedURLParameters(to: urlStr, withNamespace: "dynamic")
-        
-        self.callWebService(urlStr: urlStr, method: .get, apiType: apiType) { result in
-            completion(result)
-        }
+    func getRegion(id: Int, namespace: APINamespace? = .dynamic, completion: @escaping (_ result: Result<Data, Error>) -> Void) {
+        call(endpoint: API.region(id), namespace: namespace, completion: { completion($0) })
+    }
+    
+    
+    
+    // MARK: Reputations API
+    
+    /**
+     Returns an index of reputation factions.
+     
+     - parameter namespace: The namespace to use to locate this document.
+     - parameter completion: Returns a Result with the Data if `success` or an HTTPError if `failure`
+     */
+    func getReputationFactionIndex(namespace: APINamespace? = .static, completion: @escaping (_ result: Result<Data, Error>) -> Void) {
+        call(endpoint: API.reputationFactionIndex, namespace: namespace, completion: { completion($0) })
+    }
+    
+    
+    /**
+     Returns a single reputation faction by ID.
+     
+     - parameter id: The ID of the reputation faction.
+     - parameter namespace: The namespace to use to locate this document.
+     - parameter completion: Returns a Result with the Data if `success` or an HTTPError if `failure`
+     */
+    func getReputationFaction(id: Int, namespace: APINamespace? = .static, completion: @escaping (_ result: Result<Data, Error>) -> Void) {
+        call(endpoint: API.reputationFaction(id), namespace: namespace, completion: { completion($0) })
+    }
+    
+    
+    /**
+     Returns an index of reputation tiers.
+     
+     - parameter namespace: The namespace to use to locate this document.
+     - parameter completion: Returns a Result with the Data if `success` or an HTTPError if `failure`
+     */
+    func getReputationTierIndex(namespace: APINamespace? = .static, completion: @escaping (_ result: Result<Data, Error>) -> Void) {
+        call(endpoint: API.reputationTierIndex, namespace: namespace, completion: { completion($0) })
+    }
+    
+    
+    /**
+     Returns a single set of reputation tiers by ID.
+     
+     - parameter id: The ID of the set of reputation tiers.
+     - parameter namespace: The namespace to use to locate this document.
+     - parameter completion: Returns a Result with the Data if `success` or an HTTPError if `failure`
+     */
+    func getReputationTier(id: Int, namespace: APINamespace? = .static, completion: @escaping (_ result: Result<Data, Error>) -> Void) {
+        call(endpoint: API.reputationTier(id), namespace: namespace, completion: { completion($0) })
+    }
+    
+    
+    
+    // MARK: Spell API
+    
+    /**
+     Returns a spell by ID.
+     
+     - parameter id: The ID of the spell.
+     - parameter namespace: The namespace to use to locate this document.
+     - parameter completion: Returns a Result with the Data if `success` or an HTTPError if `failure`
+     */
+    func getSpell(id: Int, namespace: APINamespace? = .static, completion: @escaping (_ result: Result<Data, Error>) -> Void) {
+        call(endpoint: API.spell(id), namespace: namespace, completion: { completion($0) })
+    }
+    
+    
+    /**
+     Returns media for a spell by ID.
+     
+     - parameter id: The ID of the spell.
+     - parameter namespace: The namespace to use to locate this document.
+     - parameter completion: Returns a Result with the Data if `success` or an HTTPError if `failure`
+     */
+    func getSpellMedia(id: Int, namespace: APINamespace? = .static, completion: @escaping (_ result: Result<Data, Error>) -> Void) {
+        call(endpoint: API.spellMedia(id), namespace: namespace, completion: { completion($0) })
+    }
+    
+    
+    /**
+     Performs a search of spells.
+     
+     - parameter queries: The query parameters to add to the search.
+     - parameter namespace: The namespace to use to locate this document.
+     - parameter completion: Returns a Result with the Data if `success` or an HTTPError if `failure`
+    */
+    public func searchSpell(queries: [String: String], namespace: APINamespace? = .dynamic, completion: @escaping (_ result: Result<Data, Error>) -> Void) {
+        call(endpoint: API.spellSearch(queries), namespace: namespace, completion: { completion($0) })
+    }
+    
+    
+    
+    // MARK: Talent API
+    
+    /**
+     Returns an index of talents.
+     
+     - parameter namespace: The namespace to use to locate this document.
+     - parameter completion: Returns a Result with the Data if `success` or an HTTPError if `failure`
+     */
+    func getTalentIndex(namespace: APINamespace? = .static, completion: @escaping (_ result: Result<Data, Error>) -> Void) {
+        call(endpoint: API.talentIndex, namespace: namespace, completion: { completion($0) })
+    }
+    
+    
+    /**
+     Returns a talent by ID.
+     
+     - parameter id: The ID of the talent.
+     - parameter namespace: The namespace to use to locate this document.
+     - parameter completion: Returns a Result with the Data if `success` or an HTTPError if `failure`
+     */
+    func getTalent(id: Int, namespace: APINamespace? = .static, completion: @escaping (_ result: Result<Data, Error>) -> Void) {
+        call(endpoint: API.talent(id), namespace: namespace, completion: { completion($0) })
+    }
+    
+    
+    /**
+     Returns an index of PvP talents.
+     
+     - parameter namespace: The namespace to use to locate this document.
+     - parameter completion: Returns a Result with the Data if `success` or an HTTPError if `failure`
+     */
+    func getPvPTalentIndex(namespace: APINamespace? = .static, completion: @escaping (_ result: Result<Data, Error>) -> Void) {
+        call(endpoint: API.pvpTalentIndex, namespace: namespace, completion: { completion($0) })
+    }
+    
+    
+    /**
+     Returns a PvP talent by ID.
+     
+     - parameter id: The ID of the PvP talent.
+     - parameter namespace: The namespace to use to locate this document.
+     - parameter completion: Returns a Result with the Data if `success` or an HTTPError if `failure`
+     */
+    func getPvPTalent(id: Int, namespace: APINamespace? = .static, completion: @escaping (_ result: Result<Data, Error>) -> Void) {
+        call(endpoint: API.pvpTalent(id), namespace: namespace, completion: { completion($0) })
+    }
+    
+    
+    
+    // MARK: Title API
+    
+    /**
+     Returns an index of titles.
+     
+     - parameter namespace: The namespace to use to locate this document.
+     - parameter completion: Returns a Result with the Data if `success` or an HTTPError if `failure`
+     */
+    func getTitleIndex(namespace: APINamespace? = .static, completion: @escaping (_ result: Result<Data, Error>) -> Void) {
+        call(endpoint: API.titleIndex, namespace: namespace, completion: { completion($0) })
+    }
+    
+    
+    /**
+     Returns a title by ID.
+     
+     - parameter id: The ID of the title.
+     - parameter namespace: The namespace to use to locate this document.
+     - parameter completion: Returns a Result with the Data if `success` or an HTTPError if `failure`
+     */
+    func getTitle(id: Int, namespace: APINamespace? = .static, completion: @escaping (_ result: Result<Data, Error>) -> Void) {
+        call(endpoint: API.title(id), namespace: namespace, completion: { completion($0) })
     }
     
     
@@ -1290,13 +2109,12 @@ public struct WS_WorldOfWarcraft: WebService {
     // MARK: Token API
     
     /**
-     Get the WoW Token index
+     Returns the WoW Token index.
      
      - parameter namespace: The namespace to use to locate this document.
      - parameter completion: Returns a Result with the Data if `success` or an HTTPError if `failure`
      */
-    func getTokenIndex(namespace: APINamespace? = nil, completion: @escaping (_ result: Result<Data, Error>) -> Void) {
-        let namespace = namespace ?? .dynamic
+    func getTokenIndex(namespace: APINamespace? = .dynamic, completion: @escaping (_ result: Result<Data, Error>) -> Void) {
         call(endpoint: API.tokenIndex, namespace: namespace) { result in
             completion(result)
         }
@@ -1306,101 +2124,269 @@ public struct WS_WorldOfWarcraft: WebService {
     
     // MARK: - Profile API
     
+    // MARK: Account Profile API
+    
+    /**
+     Returns a profile summary for an account.
+     
+     - parameter namespace: The namespace to use to locate this document.
+     */
+    public func getAccountProfile(namespace: APINamespace? = .profile, completion: @escaping (_ result: Result<Data, Error>) -> Void) {
+        call(endpoint: API.accountProfileSummary, namespace: namespace, completion: { completion($0) })
+    }
+    
+    
+    /**
+     Returns a profile summary for an account.
+     
+     - parameter id: The ID of the character.
+     - parameter realmID: The ID of the character's realm.
+     - parameter namespace: The namespace to use to locate this document.
+     */
+    public func getProtectedCharacterProfile(id: Int, realmID: Int, namespace: APINamespace? = .profile, completion: @escaping (_ result: Result<Data, Error>) -> Void) {
+        call(endpoint: API.protectedCharacterProfileSummary(realmID: realmID, characterID: id), namespace: namespace, completion: { completion($0) })
+    }
+    
+    
     /**
      This provides data about the current logged in OAuth user's WoW profile.
+     
+     - parameter namespace: The namespace to use to locate this document.
+     - parameter completion: Returns a Result with the Data if `success` or an HTTPError if `failure`
+    */
+    public func getCharacterCollectionIndex(namespace: APINamespace? = .profile, completion: @escaping (_ result: Result<Data, Error>) -> Void) {
+        call(endpoint: API.accountCollectionIndex, namespace: namespace, completion: { completion($0) })
+    }
+    
+    
+    /**
+     Returns a summary of the mounts an account has obtained.
+     
+     - parameter namespace: The namespace to use to locate this document.
+     - parameter completion: Returns a Result with the Data if `success` or an HTTPError if `failure`
+    */
+    public func getMountsCollectionSummary(namespace: APINamespace? = .profile, completion: @escaping (_ result: Result<Data, Error>) -> Void) {
+        call(endpoint: API.accountMountsCollectionSummary, namespace: namespace, completion: { completion($0) })
+    }
+    
+    
+    /**
+     Returns a summary of the battle pets an account has obtained.
+     
+     - parameter namespace: The namespace to use to locate this document.
+     - parameter completion: Returns a Result with the Data if `success` or an HTTPError if `failure`
+    */
+    public func getPetsCollectionSummary(namespace: APINamespace? = .profile, completion: @escaping (_ result: Result<Data, Error>) -> Void) {
+        call(endpoint: API.accountPetsCollectionSummary, namespace: namespace, completion: { completion($0) })
+    }
+    
+    
+    
+    // MARK: Character Achievements API
+    
+    /**
+     Returns a summary of the achievements a character has completed.
      
      - parameter characterName: The lowercase name of the character.
      - parameter realmSlug: The slug of the realm.
      - parameter namespace: The namespace to use to locate this document.
      - parameter completion: Returns a Result with the Data if `success` or an HTTPError if `failure`
     */
-    public func getCharacterCollections(characterName: String, realmSlug: String, namespace: APINamespace? = nil, completion: @escaping (_ result: Result<Data, Error>) -> Void) {
-        let namespace = namespace ?? .profile
-        call(endpoint: API.characterCollectionsIndex(realmSlug: realmSlug, characterName: characterName), namespace: namespace) { result in
-            completion(result)
-        }
-    }
-    
-    
-    // MARK: WoW Mythic Keystone Character Profile API
-    
-    /**
-     Returns a Mythic Keystone Profile index for a character.
-     
-     - note: This request returns a 404 for characters that have not completed a Mythic Keystone dungeon.
-     
-     - parameter characterName: The lowercase name of the character
-     - parameter realmSlug: The slug of the realm
-     - parameter completion: Returns a Result with the Data if `success` or an HTTPError if `failure`
-     */
-    public func getMythicKeystoneProfile(characterName: String, realmSlug: String, namespace: APINamespace? = nil, completion: @escaping (_ result: Result<Data, Error>) -> Void) {
-        call(endpoint: API.characterMythicKeystoneProfile(realmSlug: realmSlug, characterName: characterName), namespace: .profile) { result in
-            completion(result)
-        }
+    public func getCharacterAchievementsSummary(characterName: String, realmSlug: String, namespace: APINamespace? = .profile, completion: @escaping (_ result: Result<Data, Error>) -> Void) {
+        call(endpoint: API.characterAchievementsSummary(realmSlug: realmSlug, characterName: characterName), namespace: namespace, completion: { completion($0) })
     }
     
     
     /**
-     Returns a Mythic Keystone Profile index for a character.
+     Returns a character's statistics as they pertain to achievements.
      
-     - note: This request returns a 404 for characters that have not completed a Mythic Keystone dungeon.
-     
-     - parameter seasonID: The ID of the Mythic Keystone season
-     - parameter characterName: The lowercase name of the character
-     - parameter realmSlug: The slug of the realm
-     - parameter region: What region the request is being made
-     - parameter completion: Returns a Result with the Data if `success` or an HTTPError if `failure`
-     */
-    func getMythicKeystoneProfileSeason(seasonID: Int, characterName: String, realmSlug: String, completion: @escaping (_ result: Result<Data, Error>) -> Void) {
-        let apiType: APIType = .profile
-        var urlStr = getBaseURL(apiType: apiType)!.absoluteString + "/character/\(realmSlug)/\(characterName)/mythic-keystone-profile/season/\(seasonID)"
-        urlStr = appendSharedURLParameters(to: urlStr, withNamespace: "profile")
-        
-        self.callWebService(urlStr: urlStr, method: .get, apiType: .profile) { result in
-            completion(result)
-        }
-    }
-    
-    
-    
-    // MARK: - Community API
-    
-    // MARK: Challenge Mode API
-    
-    /**
-     The data in this request has data for all 9 challenge mode maps (currently). The map field includes the current medal times for each dungeon. Inside each ladder we provide data about each character that was part of each run. The character data includes the current cached spec of the character while the member field includes the spec of the character during the challenge mode run.
-     
-     - parameter realm: The realm being requested
-     - parameter region: What region the request is being made
-     - parameter locale: What locale to use in the response
+     - parameter characterName: The lowercase name of the character.
+     - parameter realmSlug: The slug of the realm.
+     - parameter namespace: The namespace to use to locate this document.
      - parameter completion: Returns a Result with the Data if `success` or an HTTPError if `failure`
     */
-    func getChallengeLeaderboards(realm: String, completion: @escaping (_ result: Result<Data, Error>) -> Void) {
-        let apiType: APIType = .community
-        var urlStr = getBaseURL(apiType: apiType)!.absoluteString + "/challenge/\(realm)"
-        urlStr = appendSharedURLParameters(to: urlStr)
-        
-        self.callWebService(urlStr: urlStr, method: .get, apiType: apiType) { result in
-            completion(result)
-        }
+    public func getCharacterAchievementStatistics(characterName: String, realmSlug: String, namespace: APINamespace? = .profile, completion: @escaping (_ result: Result<Data, Error>) -> Void) {
+        call(endpoint: API.characterAchievementStatistics(realmSlug: realmSlug, characterName: characterName), namespace: namespace, completion: { completion($0) })
+    }
+    
+    
+    
+    // MARK: Character Collections API
+    
+    /**
+     Returns an index of collection types for a character.
+     
+     - parameter characterName: The lowercase name of the character.
+     - parameter realmSlug: The slug of the realm.
+     - parameter namespace: The namespace to use to locate this document.
+     - parameter completion: Returns a Result with the Data if `success` or an HTTPError if `failure`
+    */
+    public func getCharacterCollectionsIndex(characterName: String, realmSlug: String, namespace: APINamespace? = .profile, completion: @escaping (_ result: Result<Data, Error>) -> Void) {
+        call(endpoint: API.characterCollectionsIndex(realmSlug: realmSlug, characterName: characterName), namespace: namespace, completion: { completion($0) })
     }
     
     
     /**
-     The region leaderboard has the exact same data format as the realm leaderboards except there is no realm field. It is simply the top 100 results gathered for each map for all of the available realm leaderboards in a region.
+     Returns a summary of the mounts a character has obtained.
      
-     - parameter region: What region the request is being made
-     - parameter locale: What locale to use in the response
+     - parameter characterName: The lowercase name of the character.
+     - parameter realmSlug: The slug of the realm.
+     - parameter namespace: The namespace to use to locate this document.
+     - parameter completion: Returns a Result with the Data if `success` or an HTTPError if `failure`
+    */
+    public func getCharacterMountsCollectionSummary(characterName: String, realmSlug: String, namespace: APINamespace? = .profile, completion: @escaping (_ result: Result<Data, Error>) -> Void) {
+        call(endpoint: API.characterMountsCollectionSummary(realmSlug: realmSlug, characterName: characterName), namespace: namespace, completion: { completion($0) })
+    }
+    
+    
+    /**
+     Returns a summary of the battle pets a character has obtained.
+     
+     - parameter characterName: The lowercase name of the character.
+     - parameter realmSlug: The slug of the realm.
+     - parameter namespace: The namespace to use to locate this document.
+     - parameter completion: Returns a Result with the Data if `success` or an HTTPError if `failure`
+    */
+    public func getCharacterPetsCollectionSummary(characterName: String, realmSlug: String, namespace: APINamespace? = .profile, completion: @escaping (_ result: Result<Data, Error>) -> Void) {
+        call(endpoint: API.characterPetsCollectionSummary(realmSlug: realmSlug, characterName: characterName), namespace: namespace, completion: { completion($0) })
+    }
+    
+    
+    
+    // MARK: Character Encounters API
+    
+    /**
+     Returns a summary of a character's encounters.
+     
+     - parameter characterName: The lowercase name of the character.
+     - parameter realmSlug: The slug of the realm.
+     - parameter namespace: The namespace to use to locate this document.
+     - parameter completion: Returns a Result with the Data if `success` or an HTTPError if `failure`
+    */
+    public func getCharacterEncountersSummary(characterName: String, realmSlug: String, namespace: APINamespace? = .profile, completion: @escaping (_ result: Result<Data, Error>) -> Void) {
+        call(endpoint: API.characterEncountersSummary(realmSlug: realmSlug, characterName: characterName), namespace: namespace, completion: { completion($0) })
+    }
+    
+    
+    /**
+     Returns a summary of a character's completed dungeons.
+     
+     - parameter characterName: The lowercase name of the character.
+     - parameter realmSlug: The slug of the realm.
+     - parameter namespace: The namespace to use to locate this document.
+     - parameter completion: Returns a Result with the Data if `success` or an HTTPError if `failure`
+    */
+    public func getCharacterDungeons(characterName: String, realmSlug: String, namespace: APINamespace? = .profile, completion: @escaping (_ result: Result<Data, Error>) -> Void) {
+        call(endpoint: API.characterDungeons(realmSlug: realmSlug, characterName: characterName), namespace: namespace, completion: { completion($0) })
+    }
+    
+    
+    /**
+     Returns a summary of a character's completed raids.
+     
+     - parameter characterName: The lowercase name of the character.
+     - parameter realmSlug: The slug of the realm.
+     - parameter namespace: The namespace to use to locate this document.
+     - parameter completion: Returns a Result with the Data if `success` or an HTTPError if `failure`
+    */
+    public func getCharacterRaids(characterName: String, realmSlug: String, namespace: APINamespace? = .profile, completion: @escaping (_ result: Result<Data, Error>) -> Void) {
+        call(endpoint: API.characterRaids(realmSlug: realmSlug, characterName: characterName), namespace: namespace, completion: { completion($0) })
+    }
+    
+    
+    
+    // MARK: Character Equipment API
+    
+    /**
+     Returns a summary of the items equipped by a character.
+     
+     - parameter characterName: The lowercase name of the character.
+     - parameter realmSlug: The slug of the realm.
+     - parameter namespace: The namespace to use to locate this document.
+     - parameter completion: Returns a Result with the Data if `success` or an HTTPError if `failure`
+    */
+    public func getCharacterEquipmentSummary(characterName: String, realmSlug: String, namespace: APINamespace? = .profile, completion: @escaping (_ result: Result<Data, Error>) -> Void) {
+        call(endpoint: API.characterEquipmentSummary(realmSlug: realmSlug, characterName: characterName), namespace: namespace, completion: { completion($0) })
+    }
+    
+    
+    // MARK: Character Hunter Pets API
+    
+    /**
+     If the character is a hunter, returns a summary of the character's hunter pets. Otherwise, returns an HTTP 404 Not Found error.
+     
+     - parameter characterName: The lowercase name of the character.
+     - parameter realmSlug: The slug of the realm.
+     - parameter namespace: The namespace to use to locate this document.
+     - parameter completion: Returns a Result with the Data if `success` or an HTTPError if `failure`
+    */
+    public func getCharacterHunterPetsSummary(characterName: String, realmSlug: String, namespace: APINamespace? = .profile, completion: @escaping (_ result: Result<Data, Error>) -> Void) {
+        call(endpoint: API.characterHunterPetsSummary(realmSlug: realmSlug, characterName: characterName), namespace: namespace, completion: { completion($0) })
+    }
+    
+    
+    
+    // MARK: Character Media API
+    
+    /**
+     Returns a summary of the media assets available for a character (such as an avatar render).
+     
+     - parameter characterName: The lowercase name of the character.
+     - parameter realmSlug: The slug of the realm.
+     - parameter namespace: The namespace to use to locate this document.
+     - parameter completion: Returns a Result with the Data if `success` or an HTTPError if `failure`
+    */
+    public func getCharacterMediaSummary(characterName: String, realmSlug: String, namespace: APINamespace? = .profile, completion: @escaping (_ result: Result<Data, Error>) -> Void) {
+        call(endpoint: API.characterMediaSummary(realmSlug: realmSlug, characterName: characterName), namespace: namespace, completion: { completion($0) })
+    }
+    
+    
+    
+    
+    // MARK: Character Mythic Keystone Profile API
+    
+    /**
+     Returns a Mythic Keystone Profile index for a character.
+     
+     - parameter characterName: The lowercase name of the character.
+     - parameter realmSlug: The slug of the realm.
+     - parameter namespace: The namespace to use to locate this document.
      - parameter completion: Returns a Result with the Data if `success` or an HTTPError if `failure`
      */
-    func getTopChallengeLeaderboards(completion: @escaping (_ result: Result<Data, Error>) -> Void) {
-        let apiType: APIType = .community
-        var urlStr = getBaseURL(apiType: apiType)!.absoluteString + "/challenge/region"
-        urlStr = appendSharedURLParameters(to: urlStr)
-        
-        self.callWebService(urlStr: urlStr, method: .get, apiType: apiType) { result in
-            completion(result)
-        }
+    public func getCharacterMythicKeystoneProfileIndex(characterName: String, realmSlug: String, namespace: APINamespace? = .profile, completion: @escaping (_ result: Result<Data, Error>) -> Void) {
+        call(endpoint: API.characterMythicKeystoneProfileIndex(realmSlug: realmSlug, characterName: characterName), namespace: namespace, completion: { completion($0) })
+    }
+    
+    
+    /**
+     Returns the Mythic Keystone season details for a character.
+
+     - note: Returns a 404 Not Found for characters that have not yet completed a Mythic Keystone dungeon for the specified season.
+     
+     - parameter seasonID: The ID of the Mythic Keystone season.
+     - parameter characterName: The lowercase name of the character.
+     - parameter realmSlug: The slug of the realm.
+     - parameter namespace: The namespace to use to locate this document.
+     - parameter completion: Returns a Result with the Data if `success` or an HTTPError if `failure`
+     */
+    public func getCharacterMythicKeystoneProfileSeason(seasonID: Int, characterName: String, realmSlug: String, namespace: APINamespace? = .profile, completion: @escaping (_ result: Result<Data, Error>) -> Void) {
+        call(endpoint: API.characterMythicKeystoneSeasonDetails(realmSlug: realmSlug, characterName: characterName, season: seasonID), namespace: namespace, completion: { completion($0) })
+    }
+    
+    
+    
+    // MARK: Character Professions API
+    
+    /**
+     Returns a summary of professions for a character.
+     
+     - parameter characterName: The lowercase name of the character.
+     - parameter realmSlug: The slug of the realm.
+     - parameter namespace: The namespace to use to locate this document.
+     - parameter completion: Returns a Result with the Data if `success` or an HTTPError if `failure`
+     */
+    public func getCharacterProfessionsSummary(characterName: String, realmSlug: String, namespace: APINamespace? = .profile, completion: @escaping (_ result: Result<Data, Error>) -> Void) {
+        call(endpoint: API.characterProfessionsSummary(realmSlug: realmSlug, characterName: characterName), namespace: namespace, completion: { completion($0) })
     }
     
     
@@ -1408,507 +2394,217 @@ public struct WS_WorldOfWarcraft: WebService {
     // MARK: Character Profile API
     
     /**
-     The Character Profile API is the primary way to access character information. By default, a basic dataset will be returned with each request and zero or more additional fields can be retrieved.
+     Returns a profile summary for a character.
      
-     - parameter name: The name of the character you want to retrieve
-     - parameter realm: The character's realm. Can be provided as the proper realm name or the normalized realm name
-     - parameter fields: The dataset you wish to retrieve for the character. Each field value is explained in more detail in the following methods. If no fields are specified the API will only return basic data about the character
-     - parameter region: What region the request is being made
-     - parameter locale: What locale to use in the response
+     - parameter characterName: The lowercase name of the character.
+     - parameter realmSlug: The slug of the realm.
+     - parameter namespace: The namespace to use to locate this document.
      - parameter completion: Returns a Result with the Data if `success` or an HTTPError if `failure`
-    */
-    func getCharacter(_ name: String, realm: String, fields: [String]?, completion: @escaping (_ result: Result<Data, Error>) -> Void) {
-        let apiType: APIType = .community
-        var urlStr = getBaseURL(apiType: apiType)!.absoluteString + "/character/\(realm)/\(name)"
-        urlStr = appendSharedURLParameters(to: urlStr)
-        
-        if var url = URL(string: urlStr),
-            let fields = fields {
-            url.appendQuery(parameters: ["fields": fields.joined(separator: ",")])
-            urlStr = url.absoluteString
-        }
-        
-        self.callWebService(urlStr: urlStr, method: .get, apiType: apiType) { result in
-            completion(result)
-        }
+     */
+    public func getCharacterProfileSummary(characterName: String, realmSlug: String, namespace: APINamespace? = .profile, completion: @escaping (_ result: Result<Data, Error>) -> Void) {
+        call(endpoint: API.characterProfileSummary(realmSlug: realmSlug, characterName: characterName), namespace: namespace, completion: { completion($0) })
     }
+    
+    
+    /**
+    Returns the status and a unique ID for a character.
+     
+     A client should delete information about a character from their application if any of the following conditions occur:
+    - an HTTP 404 Not Found error is returned
+    - the is_valid value is false
+    - the returned character ID doesn't match the previously recorded value for the character
+    
+     The following example illustrates how to use this endpoint:
+     1. A client requests and stores information about a character, including its unique character ID and the timestamp of the request.
+     2. After 30 days, the client makes a request to the status endpoint to verify if the character information is still valid.
+     3. If character cannot be found, is not valid, or the characters IDs do not match, the client removes the information from their application.
+     4. If the character is valid and the character IDs match, the client retains the data for another 30 days.
+     
+    - parameter characterName: The lowercase name of the character.
+    - parameter realmSlug: The slug of the realm.
+    - parameter namespace: The namespace to use to locate this document.
+    - parameter completion: Returns a Result with the Data if `success` or an HTTPError if `failure`
+    */
+    public func getCharacterProfileStatus(characterName: String, realmSlug: String, namespace: APINamespace? = .profile, completion: @escaping (_ result: Result<Data, Error>) -> Void) {
+        call(endpoint: API.characterProfileStatus(realmSlug: realmSlug, characterName: characterName), namespace: namespace, completion: { completion($0) })
+    }
+    
+    
+    
+    // MARK: Character PvP API
+    
+    /**
+     Returns the PvP bracket statistics for a character.
+     
+     - parameter characterName: The lowercase name of the character.
+     - parameter realmSlug: The slug of the realm.
+     - parameter pvpBracket: The PvP bracket type.
+     - parameter namespace: The namespace to use to locate this document.
+     - parameter completion: Returns a Result with the Data if `success` or an HTTPError if `failure`
+     */
+    public func getCharacterPvPBracketStatistics(characterName: String, realmSlug: String, pvpBracket: WOWLeaderboardBracket, namespace: APINamespace? = .profile, completion: @escaping (_ result: Result<Data, Error>) -> Void) {
+        call(endpoint: API.characterPVPBracketStatistics(realmSlug: realmSlug, characterName: characterName, pvpBracket: pvpBracket), namespace: namespace, completion: { completion($0) })
+    }
+    
+    
+    /**
+     Returns a PvP summary for a character.
+     
+     - parameter characterName: The lowercase name of the character.
+     - parameter realmSlug: The slug of the realm.
+     - parameter namespace: The namespace to use to locate this document.
+     - parameter completion: Returns a Result with the Data if `success` or an HTTPError if `failure`
+     */
+    public func getCharacterPvPSummary(characterName: String, realmSlug: String, namespace: APINamespace? = .profile, completion: @escaping (_ result: Result<Data, Error>) -> Void) {
+        call(endpoint: API.characterPvPSummary(realmSlug: realmSlug, characterName: characterName), namespace: namespace, completion: { completion($0) })
+    }
+    
+    
+    
+    // MARK: Character Quests API
+    
+    /**
+     Returns a character's active quests as well as a link to the character's completed quests.
+     
+     - parameter characterName: The lowercase name of the character.
+     - parameter realmSlug: The slug of the realm.
+     - parameter namespace: The namespace to use to locate this document.
+     - parameter completion: Returns a Result with the Data if `success` or an HTTPError if `failure`
+     */
+    public func getCharacterQuests(characterName: String, realmSlug: String, namespace: APINamespace? = .profile, completion: @escaping (_ result: Result<Data, Error>) -> Void) {
+        call(endpoint: API.characterQuests(realmSlug: realmSlug, characterName: characterName), namespace: namespace, completion: { completion($0) })
+    }
+    
+    
+    /**
+     Returns a list of quests that a character has completed.
+     
+     - parameter characterName: The lowercase name of the character.
+     - parameter realmSlug: The slug of the realm.
+     - parameter namespace: The namespace to use to locate this document.
+     - parameter completion: Returns a Result with the Data if `success` or an HTTPError if `failure`
+     */
+    public func getCharacterCompletedQuests(characterName: String, realmSlug: String, namespace: APINamespace? = .profile, completion: @escaping (_ result: Result<Data, Error>) -> Void) {
+        call(endpoint: API.characterCompletedQuests(realmSlug: realmSlug, characterName: characterName), namespace: namespace, completion: { completion($0) })
+    }
+    
+    
+    
+    // MARK: Character Reputations API
+    
+    /**
+     Returns a summary of a character's reputations.
+     
+     - parameter characterName: The lowercase name of the character.
+     - parameter realmSlug: The slug of the realm.
+     - parameter namespace: The namespace to use to locate this document.
+     - parameter completion: Returns a Result with the Data if `success` or an HTTPError if `failure`
+     */
+    public func getCharacterReputationsSummary(characterName: String, realmSlug: String, namespace: APINamespace? = .profile, completion: @escaping (_ result: Result<Data, Error>) -> Void) {
+        call(endpoint: API.characterReputationsSummary(realmSlug: realmSlug, characterName: characterName), namespace: namespace, completion: { completion($0) })
+    }
+    
+    
+    
+    // MARK: Character Specializations API
+    
+    /**
+     Returns a summary of a character's specializations.
+     
+     - parameter characterName: The lowercase name of the character.
+     - parameter realmSlug: The slug of the realm.
+     - parameter namespace: The namespace to use to locate this document.
+     - parameter completion: Returns a Result with the Data if `success` or an HTTPError if `failure`
+     */
+    public func getCharacterSpecializationsSummary(characterName: String, realmSlug: String, namespace: APINamespace? = .profile, completion: @escaping (_ result: Result<Data, Error>) -> Void) {
+        call(endpoint: API.characterSpecializationsSummary(realmSlug: realmSlug, characterName: characterName), namespace: namespace, completion: { completion($0) })
+    }
+    
+    
+    
+    // MARK: Character Statistics API
+    
+    /**
+     Returns a statistics summary for a character.
+     
+     - parameter characterName: The lowercase name of the character.
+     - parameter realmSlug: The slug of the realm.
+     - parameter namespace: The namespace to use to locate this document.
+     - parameter completion: Returns a Result with the Data if `success` or an HTTPError if `failure`
+     */
+    public func getCharacterStatisticsSummary(characterName: String, realmSlug: String, namespace: APINamespace? = .profile, completion: @escaping (_ result: Result<Data, Error>) -> Void) {
+        call(endpoint: API.characterStatisticsSummary(realmSlug: realmSlug, characterName: characterName), namespace: namespace, completion: { completion($0) })
+    }
+    
+    
+    
+    // MARK: Character Titles API
+    
+    /**
+     Returns a summary of titles a character has obtained.
+     
+     - parameter characterName: The lowercase name of the character.
+     - parameter realmSlug: The slug of the realm.
+     - parameter namespace: The namespace to use to locate this document.
+     - parameter completion: Returns a Result with the Data if `success` or an HTTPError if `failure`
+     */
+    public func getCharacterTitlesSummary(characterName: String, realmSlug: String, namespace: APINamespace? = .profile, completion: @escaping (_ result: Result<Data, Error>) -> Void) {
+        call(endpoint: API.characterTitlesSummary(realmSlug: realmSlug, characterName: characterName), namespace: namespace, completion: { completion($0) })
+    }
+    
     
     
     // MARK: Guild Profile API
     
     /**
-     The Character Profile API is the primary way to access character information. By default, a basic dataset will be returned with each request and zero or more additional fields can be retrieved.
+     Returns a single guild by its name and realm.
      
-     - parameter name: Name of the guild being queried
-     - parameter realm: The realm the guild lives on
-     - parameter fields: The optional data you want to retrieve about the guild. If no fields are specified the API will only return basic data about the guild
-     - parameter region: What region the request is being made
-     - parameter locale: What locale to use in the response
+     - parameter slug: The slug of the guild.
+     - parameter realmSlug: The slug of the realm.
+     - parameter namespace: The namespace to use to locate this document.
      - parameter completion: Returns a Result with the Data if `success` or an HTTPError if `failure`
      */
-    func getGuild(_ name: String, realm: String, fields: [String]?, completion: @escaping (_ result: Result<Data, Error>) -> Void) {
-        let apiType: APIType = .community
-        var urlStr = getBaseURL(apiType: apiType)!.absoluteString + "/guild/\(realm)/\(name)"
-        urlStr = appendSharedURLParameters(to: urlStr)
-        
-        if var url = URL(string: urlStr),
-            let fields = fields {
-            url.appendQuery(parameters: ["fields": fields.joined(separator: ",")])
-            urlStr = url.absoluteString
-        }
-        
-        self.callWebService(urlStr: urlStr, method: .get, apiType: apiType) { result in
-            completion(result)
-        }
+    public func getGuild(slug: String, realmSlug: String, namespace: APINamespace? = .profile, completion: @escaping (_ result: Result<Data, Error>) -> Void) {
+        call(endpoint: API.guild(realmSlug: realmSlug, guildSlug: slug), namespace: namespace, completion: { completion($0) })
     }
     
     
-    
-    // MARK: Pet API
-    
     /**
-     A list of all supported battle and vanity pets.
+     Returns a single guild's activity by name and realm.
      
-     - parameter region: What region the request is being made
-     - parameter locale: What locale to use in the response
+     - parameter slug: The slug of the guild.
+     - parameter realmSlug: The slug of the realm.
+     - parameter namespace: The namespace to use to locate this document.
      - parameter completion: Returns a Result with the Data if `success` or an HTTPError if `failure`
      */
-    func getPets(completion: @escaping (_ result: Result<Data, Error>) -> Void) {
-        let apiType: APIType = .community
-        var urlStr = getBaseURL(apiType: apiType)!.absoluteString + "/pet/"
-        urlStr = appendSharedURLParameters(to: urlStr)
-        
-        self.callWebService(urlStr: urlStr, method: .get, apiType: apiType) { result in
-            completion(result)
-        }
+    public func getGuildActivity(slug: String, realmSlug: String, namespace: APINamespace? = .profile, completion: @escaping (_ result: Result<Data, Error>) -> Void) {
+        call(endpoint: API.guildActivity(realmSlug: realmSlug, guildSlug: slug), namespace: namespace, completion: { completion($0) })
     }
     
     
     /**
-     This provides data about a individual battle pet ability ID. We do not provide the tooltip for the ability yet. We are working on a better way to provide this since it depends on your pet's species, level and quality rolls.
+     Returns a single guild's achievements by name and realm.
      
-     - parameter abilityID: The ID of the ability you want to retrieve
-     - parameter region: What region the request is being made
-     - parameter locale: What locale to use in the response
+     - parameter slug: The slug of the guild.
+     - parameter realmSlug: The slug of the realm.
+     - parameter namespace: The namespace to use to locate this document.
      - parameter completion: Returns a Result with the Data if `success` or an HTTPError if `failure`
      */
-    func getPetAbility(abilityID: Int, completion: @escaping (_ result: Result<Data, Error>) -> Void) {
-        let apiType: APIType = .community
-        var urlStr = getBaseURL(apiType: apiType)!.absoluteString + "/pet/ability/\(abilityID)"
-        urlStr = appendSharedURLParameters(to: urlStr)
-        
-        self.callWebService(urlStr: urlStr, method: .get, apiType: apiType) { result in
-            completion(result)
-        }
+    public func getGuildAchievements(slug: String, realmSlug: String, namespace: APINamespace? = .profile, completion: @escaping (_ result: Result<Data, Error>) -> Void) {
+        call(endpoint: API.guildAchievements(realmSlug: realmSlug, guildSlug: slug), namespace: namespace, completion: { completion($0) })
     }
     
     
     /**
-     This provides the data about an individual pet species. The species IDs can be found your character profile using the options pets field. Each species also has data about what it's 6 abilities are.
+     Returns a single guild's roster by its name and realm.
      
-     - parameter speciesID: The species you want to retrieve data on
-     - parameter region: What region the request is being made
-     - parameter locale: What locale to use in the response
+     - parameter slug: The slug of the guild.
+     - parameter realmSlug: The slug of the realm.
+     - parameter namespace: The namespace to use to locate this document.
      - parameter completion: Returns a Result with the Data if `success` or an HTTPError if `failure`
      */
-    func getPetSpecies(speciesID: Int, completion: @escaping (_ result: Result<Data, Error>) -> Void) {
-        let apiType: APIType = .community
-        var urlStr = getBaseURL(apiType: apiType)!.absoluteString + "/pet/species/\(speciesID)"
-        urlStr = appendSharedURLParameters(to: urlStr)
-        
-        self.callWebService(urlStr: urlStr, method: .get, apiType: apiType) { result in
-            completion(result)
-        }
-    }
-    
-    
-    /**
-     Retrieve detailed information about a given species of pet.
-     
-     - parameter speciesID: The pet's species ID. This can be found by querying a users' list of pets via the Character Profile API.
-     - parameter level: The pet's level. Pet levels max out at 25. If omitted the API assumes a default value of 1.
-     - parameter breedID: The pet's breed. Retrievable via the Character Profile API. If omitted the API assumes a default value of 3.
-     - parameter qualityID: The pet's quality. Retrievable via the Character Profile API. Pet quality can range from 0 to 5 (0 is poor quality and 5 is legendary). If omitted the API will assume a default value of 1.
-     - parameter region: What region the request is being made
-     - parameter locale: What locale to use in the response
-     - parameter completion: Returns a Result with the Data if `success` or an HTTPError if `failure`
-    */
-    func getPetStats(speciesID: Int, level: Int = 1, breedID: Int = 3, qualityID: Int = 1, completion: @escaping (_ result: Result<Data, Error>) -> Void) {
-        let apiType: APIType = .community
-        var urlStr = getBaseURL(apiType: apiType)!.absoluteString + "/pet/stats/\(speciesID)"
-        urlStr = appendSharedURLParameters(to: urlStr)
-        
-        if var url = URL(string: urlStr) {
-            url.appendQuery(parameters: ["level": "\(level)",
-                                         "breedId": "\(breedID)",
-                                         "qualityId": "\(qualityID)"])
-            urlStr += url.absoluteString
-        }
-        
-        
-        self.callWebService(urlStr: urlStr, method: .get, apiType: apiType) { result in
-            completion(result)
-        }
-    }
-    
-    
-    
-    // MARK: PVP API
-    
-    /**
-     The Leaderboard API endpoint provides leaderboard information for the 2v2, 3v3, 5v5 and Rated Battleground leaderboards.
-     
-     - parameter bracket: The type of leaderboard you want to retrieve. Valid entries are `2v2`, `3v3`, `5v5`, and `rbg`
-     - parameter region: What region the request is being made
-     - parameter locale: What locale to use in the response
-     - parameter completion: Returns a Result with the Data if `success` or an HTTPError if `failure`
-    */
-    func getLeaderboard(bracket: String, completion: @escaping (_ result: Result<Data, Error>) -> Void) {
-        guard bracket == "2v2" ||
-            bracket == "3v3" ||
-            bracket == "5v5" ||
-            bracket == "rbg" else {
-            completion(.failure(HTTPError.unexpectedBody))
-            return
-        }
-        
-        let apiType: APIType = .community
-        var urlStr = getBaseURL(apiType: apiType)!.absoluteString + "/leaderboard/\(bracket)"
-        urlStr = appendSharedURLParameters(to: urlStr)
-        
-        self.callWebService(urlStr: urlStr, method: .get, apiType: apiType) { result in
-            completion(result)
-        }
-    }
-    
-    
-    
-    // MARK: Quest API
-    
-    /**
-     Retrieve metadata for a given quest.
-     
-     - parameter id: The ID of the desired quest
-     - parameter region: What region the request is being made
-     - parameter locale: What locale to use in the response
-     - parameter completion: Returns a Result with the Data if `success` or an HTTPError if `failure`
-    */
-    func getQuest(id: Int, completion: @escaping (_ result: Result<Data, Error>) -> Void) {
-        let apiType: APIType = .community
-        var urlStr = getBaseURL(apiType: apiType)!.absoluteString + "/quest/\(id)"
-        urlStr = appendSharedURLParameters(to: urlStr)
-        
-        self.callWebService(urlStr: urlStr, method: .get, apiType: apiType) { result in
-            completion(result)
-        }
-    }
-    
-    
-    
-    // MARK: Realm Status API
-    
-    /**
-     The realm status API allows developers to retrieve realm status information. This information is limited to whether or not the realm is up, the type and state of the realm, the current population, and the status of the two world PvP zones.
-     
-     There are no required query string parameters when accessing this resource, although the optional realms parameter can be used to limit the realms returned to a specific set of realms.
-     
-     PvP Area Status Fields
-     
-     `area` - An internal id of this zone.
-     
-     `controlling-faction` - Which faction is controlling the zone at the moment. Possible values are
-     * 0: Alliance
-     * 1: Horde
-     * 2: Neutral
-     
-     `status` - The current status of the zone. The possible values are
-     * -1: Unknown
-     * 0: Idle
-     * 1: Populating
-     * 2: Active
-     * 3: Concluded
-     
-     `next` - A timestamp of when the next battle starts.
-     
-     - parameter region: What region the request is being made
-     - parameter locale: What locale to use in the response
-     - parameter completion: Returns a Result with the Data if `success` or an HTTPError if `failure`
-    */
-    func getRealmsStatus(completion: @escaping (_ result: Result<Data, Error>) -> Void) {
-        let apiType: APIType = .community
-        var urlStr = getBaseURL(apiType: apiType)!.absoluteString + "/realm/status"
-        urlStr = appendSharedURLParameters(to: urlStr)
-        
-        self.callWebService(urlStr: urlStr, method: .get, apiType: apiType) { result in
-            completion(result)
-        }
-    }
-    
-    
-    
-    // MARK: Recipe API
-    
-    /**
-     The recipe API provides basic recipe information.
-     
-     - parameter id: Unique ID for the desired recipe
-     - parameter region: What region the request is being made
-     - parameter locale: What locale to use in the response
-     - parameter completion: Returns a Result with the Data if `success` or an HTTPError if `failure`
-     */
-    func getRecipe(id: Int, completion: @escaping (_ result: Result<Data, Error>) -> Void) {
-        let apiType: APIType = .community
-        var urlStr = getBaseURL(apiType: apiType)!.absoluteString + "/recipe/\(id)"
-        urlStr = appendSharedURLParameters(to: urlStr)
-        
-        self.callWebService(urlStr: urlStr, method: .get, apiType: apiType) { result in
-            completion(result)
-        }
-    }
-    
-    
-    
-    // MARK: Spell API
-    
-    /**
-     The spell API provides some information about spells.
-     
-     - parameter id: The ID of the spell you want to retrieve
-     - parameter region: What region the request is being made
-     - parameter locale: What locale to use in the response
-     - parameter completion: Returns a Result with the Data if `success` or an HTTPError if `failure`
-     */
-    func getSpell(id: Int, completion: @escaping (_ result: Result<Data, Error>) -> Void) {
-        let apiType: APIType = .community
-        var urlStr = getBaseURL(apiType: apiType)!.absoluteString + "/spell/\(id)"
-        urlStr = appendSharedURLParameters(to: urlStr)
-        
-        self.callWebService(urlStr: urlStr, method: .get, apiType: apiType) { result in
-            completion(result)
-        }
-    }
-    
-    
-    
-    // MARK: Zone API
-    
-    /**
-     A list of all supported zones and their bosses. A 'zone' in this context should be considered a dungeon, or a raid, not a zone as in a world zone. A 'boss' in this context should be considered a boss encounter, which may include more than one NPC.
-     
-     - parameter region: What region the request is being made
-     - parameter locale: What locale to use in the response
-     - parameter completion: Returns a Result with the Data if `success` or an HTTPError if `failure`
-    */
-    func getZones(completion: @escaping (_ result: Result<Data, Error>) -> Void) {
-        let apiType: APIType = .community
-        var urlStr = getBaseURL(apiType: apiType)!.absoluteString + "/zone/"
-        urlStr = appendSharedURLParameters(to: urlStr)
-        
-        self.callWebService(urlStr: urlStr, method: .get, apiType: apiType) { result in
-            completion(result)
-        }
-    }
-    
-    
-    /**
-     The Zone API provides some information about zones.
-     
-     - parameter id: The ID of the zone you want to retrieve
-     - parameter region: What region the request is being made
-     - parameter locale: What locale to use in the response
-     - parameter completion: Returns a Result with the Data if `success` or an HTTPError if `failure`
-     */
-    func getZone(id: Int, completion: @escaping (_ result: Result<Data, Error>) -> Void) {
-        let apiType: APIType = .community
-        var urlStr = getBaseURL(apiType: apiType)!.absoluteString + "/zone/\(id)"
-        urlStr = appendSharedURLParameters(to: urlStr)
-        
-        self.callWebService(urlStr: urlStr, method: .get, apiType: apiType) { result in
-            completion(result)
-        }
-    }
-    
-    
-    
-    // MARK: Data Resources
-    
-    /**
-     The battlegroups data API provides the list of battlegroups for this region.
-     
-     - parameter region: What region the request is being made
-     - parameter locale: What locale to use in the response
-     - parameter completion: Returns a Result with the Data if `success` or an HTTPError if `failure`
-    */
-    func getBattlegroups(completion: @escaping (_ result: Result<Data, Error>) -> Void) {
-        let apiType: APIType = .community
-        var urlStr = getBaseURL(apiType: apiType)!.absoluteString + "/data/battlegroups/"
-        urlStr = appendSharedURLParameters(to: urlStr)
-        
-        self.callWebService(urlStr: urlStr, method: .get, apiType: apiType) { result in
-            completion(result)
-        }
-    }
-    
-    
-    /**
-     The character races data API provides a list of each race and their associated faction, name, unique ID, and skin.
-     
-     - parameter region: What region the request is being made
-     - parameter locale: What locale to use in the response
-     - parameter completion: Returns a Result with the Data if `success` or an HTTPError if `failure`
-    */
-    func getRaces(completion: @escaping (_ result: Result<Data, Error>) -> Void) {
-        let apiType: APIType = .community
-        var urlStr = getBaseURL(apiType: apiType)!.absoluteString + "/data/character/races"
-        urlStr = appendSharedURLParameters(to: urlStr)
-        
-        self.callWebService(urlStr: urlStr, method: .get, apiType: apiType) { result in
-            completion(result)
-        }
-    }
-    
-    
-    /**
-     The character classes data API provides a list of character classes.
-     
-     - parameter region: What region the request is being made
-     - parameter locale: What locale to use in the response
-     - parameter completion: Returns a Result with the Data if `success` or an HTTPError if `failure`
-    */
-    func getClasses(completion: @escaping (_ result: Result<Data, Error>) -> Void) {
-        let apiType: APIType = .community
-        var urlStr = getBaseURL(apiType: apiType)!.absoluteString + "/data/character/classes"
-        urlStr = appendSharedURLParameters(to: urlStr)
-        
-        self.callWebService(urlStr: urlStr, method: .get, apiType: apiType) { result in
-            completion(result)
-        }
-    }
-    
-    
-    /**
-     The character achievements data API provides a list of all of the achievements that characters can earn as well as the category structure and hierarchy.
-     
-     - parameter region: What region the request is being made
-     - parameter locale: What locale to use in the response
-     - parameter completion: Returns a Result with the Data if `success` or an HTTPError if `failure`
-     */
-    func getAchievements(completion: @escaping (_ result: Result<Data, Error>) -> Void) {
-        let apiType: APIType = .community
-        var urlStr = getBaseURL(apiType: apiType)!.absoluteString + "/data/character/achievements"
-        urlStr = appendSharedURLParameters(to: urlStr)
-        
-        self.callWebService(urlStr: urlStr, method: .get, apiType: apiType) { result in
-            completion(result)
-        }
-    }
-    
-    
-    /**
-     The guild rewards data API provides a list of all guild rewards.
-     
-     - parameter region: What region the request is being made
-     - parameter locale: What locale to use in the response
-     - parameter completion: Returns a Result with the Data if `success` or an HTTPError if `failure`
-     */
-    func getGuildRewards(completion: @escaping (_ result: Result<Data, Error>) -> Void) {
-        let apiType: APIType = .community
-        var urlStr = getBaseURL(apiType: apiType)!.absoluteString + "/data/guild/rewards"
-        urlStr = appendSharedURLParameters(to: urlStr)
-        
-        self.callWebService(urlStr: urlStr, method: .get, apiType: apiType) { result in
-            completion(result)
-        }
-    }
-    
-    
-    /**
-     The guild perks data API provides a list of all guild perks.
-     
-     - parameter region: What region the request is being made
-     - parameter locale: What locale to use in the response
-     - parameter completion: Returns a Result with the Data if `success` or an HTTPError if `failure`
-     */
-    func getGuildPerks(completion: @escaping (_ result: Result<Data, Error>) -> Void) {
-        let apiType: APIType = .community
-        var urlStr = getBaseURL(apiType: apiType)!.absoluteString + "/data/guild/perks"
-        urlStr = appendSharedURLParameters(to: urlStr)
-        
-        self.callWebService(urlStr: urlStr, method: .get, apiType: apiType) { result in
-            completion(result)
-        }
-    }
-    
-    
-    /**
-     The guild achievements data API provides a list of all of the achievements that guilds can earn as well as the category structure and hierarchy.
-     
-     - parameter region: What region the request is being made
-     - parameter locale: What locale to use in the response
-     - parameter completion: Returns a Result with the Data if `success` or an HTTPError if `failure`
-     */
-    func getGuildAchievements(completion: @escaping (_ result: Result<Data, Error>) -> Void) {
-        let apiType: APIType = .community
-        var urlStr = getBaseURL(apiType: apiType)!.absoluteString + "/data/guild/achievements"
-        urlStr = appendSharedURLParameters(to: urlStr)
-        
-        self.callWebService(urlStr: urlStr, method: .get, apiType: apiType) { result in
-            completion(result)
-        }
-    }
-    
-    
-    /**
-     The item classes data API provides a list of item classes.
-     
-     - parameter region: What region the request is being made
-     - parameter locale: What locale to use in the response
-     - parameter completion: Returns a Result with the Data if `success` or an HTTPError if `failure`
-     */
-    func getItemClasses(completion: @escaping (_ result: Result<Data, Error>) -> Void) {
-        let apiType: APIType = .community
-        var urlStr = getBaseURL(apiType: apiType)!.absoluteString + "/data/item/classes"
-        urlStr = appendSharedURLParameters(to: urlStr)
-        
-        self.callWebService(urlStr: urlStr, method: .get, apiType: apiType) { result in
-            completion(result)
-        }
-    }
-    
-    
-    /**
-     The talents data API provides a list of talents, specs and glyphs for each class.
-     
-     - parameter region: What region the request is being made
-     - parameter locale: What locale to use in the response
-     - parameter completion: Returns a Result with the Data if `success` or an HTTPError if `failure`
-     */
-    func getTalents(completion: @escaping (_ result: Result<Data, Error>) -> Void) {
-        let apiType: APIType = .community
-        var urlStr = getBaseURL(apiType: apiType)!.absoluteString + "/data/talents"
-        urlStr = appendSharedURLParameters(to: urlStr)
-        
-        self.callWebService(urlStr: urlStr, method: .get, apiType: apiType) { result in
-            completion(result)
-        }
-    }
-    
-    
-    /**
-     The different bat pet types (including what they are strong and weak against)
-     
-     - parameter region: What region the request is being made
-     - parameter locale: What locale to use in the response
-     - parameter completion: Returns a Result with the Data if `success` or an HTTPError if `failure`
-     */
-    func getPetTypes(completion: @escaping (_ result: Result<Data, Error>) -> Void) {
-        let apiType: APIType = .community
-        var urlStr = getBaseURL(apiType: apiType)!.absoluteString + "/data/pet/types"
-        urlStr = appendSharedURLParameters(to: urlStr)
-        
-        self.callWebService(urlStr: urlStr, method: .get, apiType: apiType) { result in
-            completion(result)
-        }
+    public func getGuildRoster(slug: String, realmSlug: String, namespace: APINamespace? = .profile, completion: @escaping (_ result: Result<Data, Error>) -> Void) {
+        call(endpoint: API.guildRoster(realmSlug: realmSlug, guildSlug: slug), namespace: namespace, completion: { completion($0) })
     }
 }
 

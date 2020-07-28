@@ -135,6 +135,8 @@ public struct WS_StarCraft2: WS_StarCraft2Service {
             default: return nil
             }
         }
+        
+        var queries: [String: String]? { return nil }
     }
     
     

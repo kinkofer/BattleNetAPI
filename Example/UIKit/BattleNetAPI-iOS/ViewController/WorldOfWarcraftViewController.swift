@@ -76,8 +76,6 @@ class WorldOfWarcraftViewController: UITableViewController, APIViewer {
         // Mythic Keystone Leaderboard
         case getMythicLeaderboardIndex
         case getMythicLeaderboard
-        // Mythic Challenge Leaderboard
-        case getMythicChallengeMode
         // Playable Class
         case getPlayableClassesIndex
         case getPlayableClass
@@ -153,9 +151,6 @@ class WorldOfWarcraftViewController: UITableViewController, APIViewer {
         case mountMasterList = "Mount Master List"
         // Pet
         case petMasterList = "Pet Master List"
-        case abilities = "Abilities"
-        case species = "Species"
-        case petStats = "Pet Stats"
         // PVP
         case leaderboards = "Leaderboards"
         // Quest
@@ -166,17 +161,10 @@ class WorldOfWarcraftViewController: UITableViewController, APIViewer {
         case recipe = "Recipe"
         // Spell
         case spell = "Spell"
-        // Zone
-        case zoneMasterList = "Zone Master List"
-        case zone = "Zone"
         // Data Resources
-        case allBattlegroups = "Battlegroups"
         case allCharacterRaces = "Character Races"
         case allCharacterClasses = "Character Classes"
         case allCharacterAchievements = "All Character Achievements"
-        case allGuildRewards = "Guild Rewards"
-        case allGuildPerks = "Guild Perks"
-        case allGuildAchievements = "All Guild Achievements"
         case allItemClasses = "Item Classes"
         case allTalents = "Telents"
         case allPetTypes = "Pet Types"
@@ -186,14 +174,12 @@ class WorldOfWarcraftViewController: UITableViewController, APIViewer {
             switch self {
             case .characterAchievements, .guildAchievements:
                 return "Achievements"
-            case .mountMasterList, .petMasterList, .zoneMasterList:
+            case .mountMasterList, .petMasterList:
                 return "Master List"
-            case .characterStats, .petStats:
+            case .characterStats:
                 return "Stats"
             case .allCharacterAchievements:
                 return "Character Achievements"
-            case .allGuildAchievements:
-                return "Guild Achievements"
             default:
                 return self.rawValue
             }
@@ -255,7 +241,6 @@ class WorldOfWarcraftViewController: UITableViewController, APIViewer {
                                                             .getMythicKeystoneIndex, .getMythicKeystonePeriodIndex,
                                                             .getMythicKeystonePeriod, .getMythicKeystoneSeasonIndex, .getMythicKeystoneSeason]
             let mythicKeystoneLeaderboardAPIs: [GameDataService] = [.getMythicLeaderboardIndex, .getMythicLeaderboard]
-            let mythicChallengeModeAPIs: [GameDataService] = [.getMythicChallengeMode]
             let playableClassAPIs: [GameDataService] = [.getPlayableClassesIndex, .getPlayableClass, .getPlayableClassPvPTalentSlots]
             let playableSpecializationAPIs: [GameDataService] = [.getPlayableSpecializationIndex, .getPlayableSpecialization]
             let powerTypeAPIs: [GameDataService] = [.getPowerTypesIndex, .getPowerType]
@@ -269,7 +254,6 @@ class WorldOfWarcraftViewController: UITableViewController, APIViewer {
                         Section(type: .mythicRaidLeaderboard, rows: mythicRaidLeaderboardAPIs),
                         Section(type: .mythicKeystoneDungeon, rows: mythicKeystoneDungeonAPIs),
                         Section(type: .mythicKeystoneLeaderboard, rows: mythicKeystoneLeaderboardAPIs),
-                        Section(type: .mythicChallengeMode, rows: mythicChallengeModeAPIs),
                         Section(type: .playableClass, rows: playableClassAPIs),
                         Section(type: .playableSpecialization, rows: playableSpecializationAPIs),
                         Section(type: .powerType, rows: powerTypeAPIs),
@@ -287,15 +271,13 @@ class WorldOfWarcraftViewController: UITableViewController, APIViewer {
             let guildProfileAPIs: [CommunityService] = [.guildProfile, .members, .guildAchievements, .news, .challenge]
             let itemAPIs: [CommunityService] = [.item, .itemSet]
             let mountAPIs: [CommunityService] = [.mountMasterList]
-            let petAPIs: [CommunityService] = [.petMasterList, .abilities, .species, .petStats]
+            let petAPIs: [CommunityService] = [.petMasterList]
             let pvpAPIs: [CommunityService] = [.leaderboards]
             let questAPIs: [CommunityService] = [.quest]
             let realmStatusAPIs: [CommunityService] = [.realmStatus]
             let recipeAPIs: [CommunityService] = [.recipe]
             let spellAPIs: [CommunityService] = [.spell]
-            let zoneAPIs: [CommunityService] = [.zoneMasterList, .zone]
-            let dataResourcesAPIs: [CommunityService] = [.allBattlegroups, .allCharacterRaces, .allCharacterClasses, .allCharacterAchievements,
-                                                         .allGuildRewards, .allGuildPerks, .allGuildAchievements,
+            let dataResourcesAPIs: [CommunityService] = [.allCharacterRaces, .allCharacterClasses, .allCharacterAchievements,
                                                          .allItemClasses, .allTalents, .allPetTypes]
             
             sections = [Section(type: .achievement, rows: achievementAPIs),
@@ -311,7 +293,6 @@ class WorldOfWarcraftViewController: UITableViewController, APIViewer {
                         Section(type: .realmStatus, rows: realmStatusAPIs),
                         Section(type: .recipe, rows: recipeAPIs),
                         Section(type: .spell, rows: spellAPIs),
-                        Section(type: .zone, rows: zoneAPIs),
                         Section(type: .dataResources, rows: dataResourcesAPIs)]
         case .profile:
             let wowMythicKeystoneCharacterProfileAPIs: [ProfileService] = [.getCharacterMythicKeystoneProfile, .getCharacterMythicKeystoneProfileSeason]
@@ -573,24 +554,6 @@ class WorldOfWarcraftViewController: UITableViewController, APIViewer {
     }
     
     
-    func getMythicChallengeMode() {
-        wowMC.getMythicChallengeMode { result in
-            switch result {
-            case .success(let mythicChallengeMode):
-                let keystoneAffixes = mythicChallengeMode.currentKeystoneAffixes.compactMap { $0.keystoneAffix.name }
-                Debug.print("Retrieved Mythic Challenge Mode with Current Period \(mythicChallengeMode.currentPeriod) with Keystone Affixes \(keystoneAffixes.joined(separator: ", "))")
-                DispatchQueue.main.async {
-                    let viewController = ViewerTableViewController()
-                    viewController.dataSourceObj = mythicChallengeMode
-                    self.navigationController?.pushViewController(viewController, animated: true)
-                }
-            case .failure(let error):
-                self.handleError(error)
-            }
-        }
-    }
-    
-    
     // MARK: Playable Class API
     
     func getPlayableClasses() {
@@ -628,8 +591,8 @@ class WorldOfWarcraftViewController: UITableViewController, APIViewer {
     }
     
     
-    func getPlayableClassPvPTalentSlots(id: Int) {
-        wowMC.getPlayableClassPvPTalentSlots(id: id) { result in
+    func getPlayableClassPvPTalentSlots(classID: Int) {
+        wowMC.getPlayableClassPvPTalentSlots(classID: classID) { result in
             switch result {
             case .success(let pvpTalentSlots):
                 Debug.print("Retrieved PvP Talent Slots with \(pvpTalentSlots.talentSlots.count) talent slot(s)")
@@ -924,8 +887,8 @@ class WorldOfWarcraftViewController: UITableViewController, APIViewer {
     
     // MARK: Character Profile API
     
-    func getCharacter(_ name: String, realm: String, fields: WOWCharacterField? = nil) {
-        wowMC.getCharacter(name, realm: realm, fields: fields) { result in
+    func getCharacter(_ name: String, realmSlug: String) {
+        wowMC.getCharacter(characterName: name, realmSlug: realmSlug) { result in
             switch result {
             case .success(let character):
                 Debug.print("Retrieved Character \(character.name) from Realm \(character.realm)")
@@ -1016,8 +979,8 @@ class WorldOfWarcraftViewController: UITableViewController, APIViewer {
     
     // MARK: Guild Profile API
     
-    func getGuild(_ name: String, realm: String, fields: WOWGuildField? = nil) {
-        wowMC.getGuild(name, realm: realm, fields: fields) { result in
+    func getGuild(_ name: String, realmSlug: String) {
+        wowMC.getGuild(slug: name, realmSlug: realmSlug) { result in
             switch result {
             case .success(let guild):
                 Debug.print("Retrieved Guild \(guild.name) from Realm \(guild.realm)")
@@ -1069,8 +1032,8 @@ class WorldOfWarcraftViewController: UITableViewController, APIViewer {
     }
     
     
-    func getWOWItemSet(setID: Int) {
-        wowMC.getItemSet(setID: setID) { result in
+    func getWOWItemSet(id: Int) {
+        wowMC.getItemSet(id: id) { result in
             switch result {
             case .success(let itemSet):
                 Debug.print("Retrieved WOW Item Set \(itemSet.name) with \(itemSet.items.count) Item(s)")
@@ -1128,8 +1091,8 @@ class WorldOfWarcraftViewController: UITableViewController, APIViewer {
     }
     
     
-    func getPetAbility(abilityID: Int) {
-        wowMC.getPetAbility(abilityID: abilityID) { result in
+    func getPetAbility(id: Int) {
+        wowMC.getPetAbility(id: id) { result in
             switch result {
             case .success(let petAbility):
                 Debug.print("Retrieved Pet Ability \(petAbility.name)")
@@ -1145,56 +1108,23 @@ class WorldOfWarcraftViewController: UITableViewController, APIViewer {
     }
     
     
-    func getPetSpecies(speciesID: Int) {
-        wowMC.getPetSpecies(speciesID: speciesID) { result in
-            switch result {
-            case .success(let petSpecies):
-                Debug.print("Retrieved Pet Species \(petSpecies.name)")
-                DispatchQueue.main.async {
-                    let viewController = ViewerTableViewController()
-                    viewController.dataSourceObj = petSpecies
-                    self.navigationController?.pushViewController(viewController, animated: true)
-                }
-            case .failure(let error):
-                self.handleError(error)
-            }
-        }
-    }
-    
-    
-    func getPetStats(speciesID: Int, level: Int = 1, breedID: Int = 3, qualityID: Int = 1) {
-        wowMC.getPetStats(speciesID: speciesID, level: level, breedID: breedID, qualityID: qualityID) { result in
-            switch result {
-            case .success(let petStats):
-                Debug.print("Retrieved Pet Stats: health \(petStats.health), power \(petStats.power), speed \(petStats.speed)")
-                DispatchQueue.main.async {
-                    let viewController = ViewerTableViewController()
-                    viewController.dataSourceObj = petStats
-                    self.navigationController?.pushViewController(viewController, animated: true)
-                }
-            case .failure(let error):
-                self.handleError(error)
-            }
-        }
-    }
-    
     
     // MARK: PVP API
     
     func getWOWLeaderboard(bracket: WOWLeaderboardBracket) {
-        wowMC.getLeaderboard(bracket: bracket) { result in
-            switch result {
-            case .success(let leaderboard):
-                Debug.print("Retrieved WOW Leaderboard with \(leaderboard.rows.count) entry(s)")
-                DispatchQueue.main.async {
-                    let viewController = ViewerTableViewController()
-                    viewController.dataSourceObj = leaderboard
-                    self.navigationController?.pushViewController(viewController, animated: true)
-                }
-            case .failure(let error):
-                self.handleError(error)
-            }
-        }
+//        wowMC.getLeaderboard(bracket: bracket) { result in
+//            switch result {
+//            case .success(let leaderboard):
+//                Debug.print("Retrieved WOW Leaderboard with \(leaderboard.rows.count) entry(s)")
+//                DispatchQueue.main.async {
+//                    let viewController = ViewerTableViewController()
+//                    viewController.dataSourceObj = leaderboard
+//                    self.navigationController?.pushViewController(viewController, animated: true)
+//                }
+//            case .failure(let error):
+//                self.handleError(error)
+//            }
+//        }
     }
     
     
@@ -1274,79 +1204,8 @@ class WorldOfWarcraftViewController: UITableViewController, APIViewer {
     }
     
     
-    // MARK: Zone API
-    
-    func getZones() {
-        wowMC.getZones { result in
-            switch result {
-            case .success(let zones):
-                let raids = zones.filter { $0.isRaid }
-                let dungeons = zones.filter { $0.isDungeon }
-                Debug.print("Retrieved \(zones.count) Zone(s) with \(raids.count) Raid(s) and \(dungeons.count) Dungeon(s)")
-                DispatchQueue.main.async {
-                    let viewController = ViewerTableViewController()
-                    viewController.dataSourceArr = zones
-                    self.navigationController?.pushViewController(viewController, animated: true)
-                }
-            case .failure(let error):
-                self.handleError(error)
-            }
-        }
-    }
-    
     
     // MARK: Data Resources
-    
-    func getZone(id: Int) {
-        wowMC.getZone(id: id) { result in
-            switch result {
-            case .success(let zone):
-                Debug.print("Retrieved Zone \(zone.name) with \(zone.bosses.count) Bosses")
-                DispatchQueue.main.async {
-                    let viewController = ViewerTableViewController()
-                    viewController.dataSourceObj = zone
-                    self.navigationController?.pushViewController(viewController, animated: true)
-                }
-            case .failure(let error):
-                self.handleError(error)
-            }
-        }
-    }
-    
-    
-    func getBattlegroups() {
-        wowMC.getBattlegroups { result in
-            switch result {
-            case .success(let battlegroups):
-                Debug.print("Retrieved \(battlegroups.count) Battlegroup(s)")
-                DispatchQueue.main.async {
-                    let viewController = ViewerTableViewController()
-                    viewController.dataSourceArr = battlegroups
-                    self.navigationController?.pushViewController(viewController, animated: true)
-                }
-            case .failure(let error):
-                self.handleError(error)
-            }
-        }
-    }
-    
-    
-    func getRaces() {
-        wowMC.getRaces { result in
-            switch result {
-            case .success(let races):
-                Debug.print("Retrieved \(races.count) Race(s)")
-                DispatchQueue.main.async {
-                    let viewController = ViewerTableViewController()
-                    viewController.dataSourceArr = races
-                    self.navigationController?.pushViewController(viewController, animated: true)
-                }
-            case .failure(let error):
-                self.handleError(error)
-            }
-        }
-    }
-    
     
     func getWOWClasses() {
         wowMC.getClasses { result in
@@ -1382,42 +1241,8 @@ class WorldOfWarcraftViewController: UITableViewController, APIViewer {
     }
     
     
-    func getWOWGuildRewards() {
-        wowMC.getGuildRewards { result in
-            switch result {
-            case .success(let rewards):
-                Debug.print("Retrieved \(rewards.count) WOW Guild Reward(s)")
-                DispatchQueue.main.async {
-                    let viewController = ViewerTableViewController()
-                    viewController.dataSourceArr = rewards
-                    self.navigationController?.pushViewController(viewController, animated: true)
-                }
-            case .failure(let error):
-                self.handleError(error)
-            }
-        }
-    }
-    
-    
-    func getWOWGuildPerks() {
-        wowMC.getGuildPerks { result in
-            switch result {
-            case .success(let perks):
-                Debug.print("Retrieved \(perks.count) WOW Guild Perk(s)")
-                DispatchQueue.main.async {
-                    let viewController = ViewerTableViewController()
-                    viewController.dataSourceArr = perks
-                    self.navigationController?.pushViewController(viewController, animated: true)
-                }
-            case .failure(let error):
-                self.handleError(error)
-            }
-        }
-    }
-    
-    
-    func getWOWGuildAchievements() {
-        wowMC.getGuildAchievements { result in
+    func getWOWGuildAchievements(_ name: String, realmSlug: String) {
+        wowMC.getGuildAchievements(slug: name, realmSlug: realmSlug) { result in
             switch result {
             case .success(let achievementCategories):
                 Debug.print("Retrieved \(achievementCategories.count) WOW Guild Achievement Category(s)")
@@ -1467,28 +1292,12 @@ class WorldOfWarcraftViewController: UITableViewController, APIViewer {
     }
     
     
-    func getPetTypes() {
-        wowMC.getPetTypes { result in
-            switch result {
-            case .success(let petTypes):
-                Debug.print("Retrieved \(petTypes.count) Pet Type(s)")
-                DispatchQueue.main.async {
-                    let viewController = ViewerTableViewController()
-                    viewController.dataSourceArr = petTypes
-                    self.navigationController?.pushViewController(viewController, animated: true)
-                }
-            case .failure(let error):
-                self.handleError(error)
-            }
-        }
-    }
-    
     
     // MARK: - Profile APIs
     // MARK: WoW Mythic Keystone Character Profile API
     
     func getMythicKeystoneProfile(characterName: String, realmSlug: String) {
-        wowMC.getMythicKeystoneProfile(characterName: characterName, realmSlug: realmSlug) { result in
+        wowMC.getCharacterMythicKeystoneProfile(characterName: characterName, realmSlug: realmSlug) { result in
             switch result {
             case .success(let profile):
                 Debug.print("Retrieved profile \(characterName)")
@@ -1505,7 +1314,7 @@ class WorldOfWarcraftViewController: UITableViewController, APIViewer {
     
     
     func getMythicKeystoneProfileSeason(seasonID: Int, characterName: String, realmSlug: String) {
-        wowMC.getMythicKeystoneProfileSeason(seasonID: seasonID, characterName: characterName, realmSlug: realmSlug) { result in
+        wowMC.getCharacterMythicKeystoneProfileSeason(seasonID: seasonID, characterName: characterName, realmSlug: realmSlug) { result in
             switch result {
             case .success(let season):
                 Debug.print("Retrieved season \(seasonID) with \(season.bestRuns.count) best run(s)")
@@ -1598,14 +1407,12 @@ class WorldOfWarcraftViewController: UITableViewController, APIViewer {
                 getMythicLeaderboards(connectedRealmID: 11)
             case .getMythicLeaderboard:
                 getMythicLeaderboard(connectedRealmID: 11, dungeonID: 197, period: 641)
-            case .getMythicChallengeMode:
-                getMythicChallengeMode()
             case .getPlayableClassesIndex:
                 getPlayableClasses()
             case .getPlayableClass:
                 getPlayableClass(id: 7)
             case .getPlayableClassPvPTalentSlots:
-                getPlayableClassPvPTalentSlots(id: 7)
+                getPlayableClassPvPTalentSlots(classID: 7)
             case .getPlayableSpecializationIndex:
                 getPlayableSpecializations()
             case .getPlayableSpecialization:
@@ -1642,69 +1449,63 @@ class WorldOfWarcraftViewController: UITableViewController, APIViewer {
             case .regionLeaderboard:
                 getTopChallengeLeaderboards()
             case .characterProfile:
-                getCharacter("Aedimus", realm: "Aegwynn", fields: [])
-            case .characterAchievements:
-                getCharacter("Ahote", realm: "Aegwynn", fields: [.hunterPets])
-            case .appearance:
-                getCharacter("Ahote", realm: "Aegwynn", fields: [.appearance])
-            case .feed:
-                getCharacter("Ahote", realm: "Aegwynn", fields: [.feed])
-            case .guild:
-                getCharacter("Ahote", realm: "Aegwynn", fields: [.guild])
-            case .hunterPets:
-                getCharacter("Ahote", realm: "Aegwynn", fields: [.hunterPets])
-            case .items:
-                getCharacter("Ahote", realm: "Aegwynn", fields: [.items])
-            case .mounts:
-                getCharacter("Ahote", realm: "Aegwynn", fields: [.mounts])
-            case .pets:
-                getCharacter("Ahote", realm: "Aegwynn", fields: [.pets])
-            case .petSlots:
-                getCharacter("Ahote", realm: "Aegwynn", fields: [.petSlots])
-            case .professions:
-                getCharacter("Ahote", realm: "Aegwynn", fields: [.professions])
-            case .progression:
-                getCharacter("Ahote", realm: "Aegwynn", fields: [.progression])
-            case .pvp:
-                getCharacter("Ahote", realm: "Aegwynn", fields: [.pvp])
-            case .quests:
-                getCharacter("Ahote", realm: "Aegwynn", fields: [.quests])
-            case .reputation:
-                getCharacter("Ahote", realm: "Aegwynn", fields: [.reputation])
-            case .statistics:
-                getCharacter("Ahote", realm: "Aegwynn", fields: [.statistics])
-            case .characterStats:
-                getCharacter("Ahote", realm: "Aegwynn", fields: [.stats])
-            case .talents:
-                getCharacter("Ahote", realm: "Aegwynn", fields: [.talents])
-            case .titles:
-                getCharacter("Ahote", realm: "Aegwynn", fields: [.titles])
-            case .audit:
-                getCharacter("Ahote", realm: "Aegwynn", fields: [.audit])
-            case .guildProfile:
-                getGuild("Limit", realm: "Illidan", fields: [])
-            case .members:
-                getGuild("Limit", realm: "Illidan", fields: [.members])
-            case .guildAchievements:
-                getGuild("Limit", realm: "Illidan", fields: [.achievements])
-            case .news:
-                getGuild("Limit", realm: "Illidan", fields: [.news])
-            case .challenge:
-                getGuild("Limit", realm: "Illidan", fields: [.challenges])
+                getCharacter("Aedimus", realmSlug: "Aegwynn")
+//            case .characterAchievements:
+//                getCharacter("Ahote", realm: "Aegwynn", fields: [.hunterPets])
+//            case .appearance:
+//                getCharacter("Ahote", realm: "Aegwynn", fields: [.appearance])
+//            case .feed:
+//                getCharacter("Ahote", realm: "Aegwynn", fields: [.feed])
+//            case .guild:
+//                getCharacter("Ahote", realm: "Aegwynn", fields: [.guild])
+//            case .hunterPets:
+//                getCharacter("Ahote", realm: "Aegwynn", fields: [.hunterPets])
+//            case .items:
+//                getCharacter("Ahote", realm: "Aegwynn", fields: [.items])
+//            case .mounts:
+//                getCharacter("Ahote", realm: "Aegwynn", fields: [.mounts])
+//            case .pets:
+//                getCharacter("Ahote", realm: "Aegwynn", fields: [.pets])
+//            case .petSlots:
+//                getCharacter("Ahote", realm: "Aegwynn", fields: [.petSlots])
+//            case .professions:
+//                getCharacter("Ahote", realm: "Aegwynn", fields: [.professions])
+//            case .progression:
+//                getCharacter("Ahote", realm: "Aegwynn", fields: [.progression])
+//            case .pvp:
+//                getCharacter("Ahote", realm: "Aegwynn", fields: [.pvp])
+//            case .quests:
+//                getCharacter("Ahote", realm: "Aegwynn", fields: [.quests])
+//            case .reputation:
+//                getCharacter("Ahote", realm: "Aegwynn", fields: [.reputation])
+//            case .statistics:
+//                getCharacter("Ahote", realm: "Aegwynn", fields: [.statistics])
+//            case .characterStats:
+//                getCharacter("Ahote", realm: "Aegwynn", fields: [.stats])
+//            case .talents:
+//                getCharacter("Ahote", realm: "Aegwynn", fields: [.talents])
+//            case .titles:
+//                getCharacter("Ahote", realm: "Aegwynn", fields: [.titles])
+//            case .audit:
+//                getCharacter("Ahote", realm: "Aegwynn", fields: [.audit])
+//            case .guildProfile:
+//                getGuild("Limit", realm: "Illidan", fields: [])
+//            case .members:
+//                getGuild("Limit", realm: "Illidan", fields: [.members])
+//            case .guildAchievements:
+//                getGuild("Limit", realm: "Illidan", fields: [.achievements])
+//            case .news:
+//                getGuild("Limit", realm: "Illidan", fields: [.news])
+//            case .challenge:
+//                getGuild("Limit", realm: "Illidan", fields: [.challenges])
             case .item:
                 getWOWItem(id: 18803)
             case .itemSet:
-                getWOWItemSet(setID: 1060)
+                getWOWItemSet(id: 1060)
             case .mountMasterList:
                 getMounts()
             case .petMasterList:
                 getPets()
-            case .abilities:
-                getPetAbility(abilityID: 640)
-            case .species:
-                getPetSpecies(speciesID: 258)
-            case .petStats:
-                getPetStats(speciesID: 258, level: 25, breedID: 5, qualityID: 4)
             case .leaderboards:
                 getWOWLeaderboard(bracket: ._2v2)
             case .quest:
@@ -1715,30 +1516,20 @@ class WorldOfWarcraftViewController: UITableViewController, APIViewer {
                 getWOWRecipe(id: 33994)
             case .spell:
                 getWOWSpell(id: 1)
-            case .zoneMasterList:
-                getZones()
-            case .zone:
-                getZone(id: 4131)
-            case .allBattlegroups:
-                getBattlegroups()
             case .allCharacterRaces:
-                getRaces()
+                getPlayableRaces()
             case .allCharacterClasses:
                 getWOWClasses()
             case .allCharacterAchievements:
                 getWOWAchievements()
-            case .allGuildRewards:
-                getWOWGuildRewards()
-            case .allGuildPerks:
-                getWOWGuildPerks()
-            case .allGuildAchievements:
-                getWOWGuildAchievements()
             case .allItemClasses:
                 getItemClasses()
             case .allTalents:
                 getTalents()
             case .allPetTypes:
-                getPetTypes()
+                getPets()
+            default:
+                return
             }
         case .profile:
             let service = sections.getRow(at: indexPath) as! ProfileService

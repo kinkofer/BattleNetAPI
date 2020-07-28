@@ -26,6 +26,8 @@ public class WS_Authentication: AuthenticationWebService {
         
         // The Authentication services have unique URLs
         var basePath: String? { return nil }
+        
+        var queries: [String: String]? { return nil }
     }
     
     

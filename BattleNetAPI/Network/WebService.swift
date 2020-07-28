@@ -62,6 +62,10 @@ extension WebService {
             url.appendQuery(parameters: ["locale": locale.rawValue])
         }
         
+        if let queries = endpoint.queries {
+            url.appendQuery(parameters: queries)
+        }
+        
         var headers = headers
         if let namespace = namespace {
             headers?.append(namespace.getHeader(for: region))

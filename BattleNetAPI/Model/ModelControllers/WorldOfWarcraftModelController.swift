@@ -30,7 +30,7 @@ public struct WorldOfWarcraftModelController {
     // MARK: - Profile API
     
     public func getCharacterCollections(characterName: String, realmSlug: String, namespace: APINamespace? = nil, completion: @escaping (_ result: Result<[WOWCharacter], Error>) -> Void) {
-        battleNetAPI.wow.getCharacterCollections(characterName: characterName, realmSlug: realmSlug, namespace: namespace) { result in
+        battleNetAPI.wow.getCharacterCollectionsIndex(characterName: characterName, realmSlug: realmSlug, namespace: namespace) { result in
             let customDecode: ((_ data: Data) throws -> [WOWCharacter]) = { data in
                 return try WOWCharacterResult.decode(from: data).characters
             }
@@ -41,15 +41,15 @@ public struct WorldOfWarcraftModelController {
     
     // MARK: - WoW Mythic Keystone Character Profile API
     
-    public func getMythicKeystoneProfile(characterName: String, realmSlug: String, completion: @escaping (_ result: Result<MythicKeystoneProfile, Error>) -> Void) {
-        battleNetAPI.wow.getMythicKeystoneProfile(characterName: characterName, realmSlug: realmSlug) { result in
+    public func getCharacterMythicKeystoneProfile(characterName: String, realmSlug: String, completion: @escaping (_ result: Result<MythicKeystoneProfile, Error>) -> Void) {
+        battleNetAPI.wow.getCharacterMythicKeystoneProfileIndex(characterName: characterName, realmSlug: realmSlug) { result in
             result.decode(completion: completion)
         }
     }
     
     
-    public func getMythicKeystoneProfileSeason(seasonID: Int, characterName: String, realmSlug: String, completion: @escaping (_ result: Result<MythicKeystoneProfileSeason, Error>) -> Void) {
-        battleNetAPI.wow.getMythicKeystoneProfileSeason(seasonID: seasonID, characterName: characterName, realmSlug: realmSlug) { result in
+    public func getCharacterMythicKeystoneProfileSeason(seasonID: Int, characterName: String, realmSlug: String, completion: @escaping (_ result: Result<MythicKeystoneProfileSeason, Error>) -> Void) {
+        battleNetAPI.wow.getCharacterMythicKeystoneProfileSeason(seasonID: seasonID, characterName: characterName, realmSlug: realmSlug) { result in
             result.decode(completion: completion)
         }
     }
@@ -79,7 +79,7 @@ public struct WorldOfWarcraftModelController {
     // MARK: - Mythic Keystone Affix API
     
     public func getMythicKeystoneAffixes(completion: @escaping (_ result: Result<KeystoneAffixIndex, Error>) -> Void) {
-        battleNetAPI.wow.getMythicKeystoneAffixes { result in
+        battleNetAPI.wow.getMythicKeystoneAffixIndex { result in
             result.decode(completion: completion)
         }
     }
@@ -104,7 +104,7 @@ public struct WorldOfWarcraftModelController {
     // MARK: - Mythic Keystone Dungeon API
     
     public func getMythicKeystoneDungeons(completion: @escaping (_ result: Result<MythicKeystoneDungeonIndex, Error>) -> Void) {
-        battleNetAPI.wow.getMythicKeystoneDungeons { result in
+        battleNetAPI.wow.getMythicKeystoneDungeonIndex { result in
             result.decode(completion: completion)
         }
     }
@@ -118,14 +118,14 @@ public struct WorldOfWarcraftModelController {
     
     
     public func getMythicKeystones(completion: @escaping (_ result: Result<MythicKeystoneIndex, Error>) -> Void) {
-        battleNetAPI.wow.getMythicKeystones { result in
+        battleNetAPI.wow.getMythicKeystoneIndex { result in
             result.decode(completion: completion)
         }
     }
     
     
     public func getMythicKeystonePeriods(completion: @escaping (_ result: Result<MythicKeystonePeriodIndex, Error>) -> Void) {
-        battleNetAPI.wow.getMythicKeystonePeriods { result in
+        battleNetAPI.wow.getMythicKeystonePeriodIndex { result in
             result.decode(completion: completion)
         }
     }
@@ -139,7 +139,7 @@ public struct WorldOfWarcraftModelController {
     
     
     public func getMythicKeystoneSeasons(completion: @escaping (_ result: Result<MythicKeystoneSeasonIndex, Error>) -> Void) {
-        battleNetAPI.wow.getMythicKeystoneSeasons { result in
+        battleNetAPI.wow.getMythicKeystoneSeasonIndex { result in
             result.decode(completion: completion)
         }
     }
@@ -155,7 +155,7 @@ public struct WorldOfWarcraftModelController {
     // MARK: - Mythic Keystone Leaderboard API
     
     public func getMythicLeaderboards(connectedRealmID: Int, completion: @escaping (_ result: Result<MythicLeaderboardIndex, Error>) -> Void) {
-        battleNetAPI.wow.getMythicLeaderboards(connectedRealmID: connectedRealmID) { result in
+        battleNetAPI.wow.getMythicLeaderboardIndex(connectedRealmID: connectedRealmID) { result in
             result.decode(completion: completion)
         }
     }
@@ -169,20 +169,10 @@ public struct WorldOfWarcraftModelController {
     
     
     
-    // MARK: - Mythic Challenge Mode API
-    
-    public func getMythicChallengeMode(completion: @escaping (_ result: Result<MythicChallengeMode, Error>) -> Void) {
-        battleNetAPI.wow.getMythicChallengeMode { result in
-            result.decode(completion: completion)
-        }
-    }
-    
-    
-    
     // MARK: - Playable Class API
     
     public func getPlayableClasses(completion: @escaping (_ result: Result<WOWClassIndex, Error>) -> Void) {
-        battleNetAPI.wow.getPlayableClasses { result in
+        battleNetAPI.wow.getPlayableClassIndex { result in
             result.decode(completion: completion)
         }
     }
@@ -195,8 +185,8 @@ public struct WorldOfWarcraftModelController {
     }
     
     
-    public func getPlayableClassPvPTalentSlots(id: Int, completion: @escaping (_ result: Result<PVPTalentSlots, Error>) -> Void) {
-        battleNetAPI.wow.getPlayableClassPvPTalentSlots(id: id) { result in
+    public func getPlayableClassPvPTalentSlots(classID: Int, completion: @escaping (_ result: Result<PVPTalentSlots, Error>) -> Void) {
+        battleNetAPI.wow.getPlayableClassPvPTalentSlots(classID: classID) { result in
             result.decode(completion: completion)
         }
     }
@@ -206,7 +196,7 @@ public struct WorldOfWarcraftModelController {
     // MARK: - Playable Specialization API
     
     public func getPlayableSpecializations(completion: @escaping (_ result: Result<SpecializationIndex, Error>) -> Void) {
-        battleNetAPI.wow.getPlayableSpecializations { result in
+        battleNetAPI.wow.getPlayableSpecializationIndex { result in
             result.decode(completion: completion)
         }
     }
@@ -223,7 +213,7 @@ public struct WorldOfWarcraftModelController {
     // MARK: - Power Type API
     
     public func getPowerTypes(completion: @escaping (_ result: Result<PowerTypeIndex, Error>) -> Void) {
-        battleNetAPI.wow.getPowerTypes { result in
+        battleNetAPI.wow.getPowerTypeIndex { result in
             result.decode(completion: completion)
         }
     }
@@ -239,7 +229,7 @@ public struct WorldOfWarcraftModelController {
     // MARK: - Playable Race API
     
     public func getPlayableRaces(completion: @escaping (_ result: Result<WOWRaceIndex, Error>) -> Void) {
-        battleNetAPI.wow.getPlayableRaces { result in
+        battleNetAPI.wow.getPlayableRaceIndex { result in
             result.decode(completion: completion)
         }
     }
@@ -340,30 +330,30 @@ public struct WorldOfWarcraftModelController {
     // MARK: - Challenge Mode API
     
     public func getChallengeLeaderboards(realm: String, completion: @escaping (_ result: Result<[Challenge], Error>) -> Void) {
-        battleNetAPI.wow.getChallengeLeaderboards(realm: realm) { result in
-            let customDecode: ((_ data: Data) throws -> [Challenge]) = { data in
-                return try ChallengeIndex.decode(from: data).challenges
-            }
-            result.decode(customDecode: customDecode, completion: completion)
-        }
+//        battleNetAPI.wow.getChallengeLeaderboards(realm: realm) { result in
+//            let customDecode: ((_ data: Data) throws -> [Challenge]) = { data in
+//                return try ChallengeIndex.decode(from: data).challenges
+//            }
+//            result.decode(customDecode: customDecode, completion: completion)
+//        }
     }
     
     
     public func getTopChallengeLeaderboards(completion: @escaping (_ result: Result<[Challenge], Error>) -> Void) {
-        battleNetAPI.wow.getTopChallengeLeaderboards { result in
-            let customDecode: ((_ data: Data) throws -> [Challenge]) = { data in
-                return try ChallengeIndex.decode(from: data).challenges
-            }
-            result.decode(customDecode: customDecode, completion: completion)
-        }
+//        battleNetAPI.wow.getTopChallengeLeaderboards { result in
+//            let customDecode: ((_ data: Data) throws -> [Challenge]) = { data in
+//                return try ChallengeIndex.decode(from: data).challenges
+//            }
+//            result.decode(customDecode: customDecode, completion: completion)
+//        }
     }
     
     
     
     // MARK: - Character Profile API
     
-    public func getCharacter(_ name: String, realm: String, fields: WOWCharacterField?, completion: @escaping (_ result: Result<WOWCharacterProfile, Error>) -> Void) {
-        battleNetAPI.wow.getCharacter(name, realm: realm, fields: fields?.toArray) { result in
+    public func getCharacter(characterName: String, realmSlug: String, completion: @escaping (_ result: Result<WOWCharacterProfile, Error>) -> Void) {
+        battleNetAPI.wow.getCharacterProfileSummary(characterName: characterName, realmSlug: realmSlug) { result in
             result.decode(completion: completion)
         }
     }
@@ -372,8 +362,8 @@ public struct WorldOfWarcraftModelController {
     
     // MARK: - Guild Profile API
     
-    public func getGuild(_ name: String, realm: String, fields: WOWGuildField?, completion: @escaping (_ result: Result<WOWGuildProfile, Error>) -> Void) {
-        battleNetAPI.wow.getGuild(name, realm: realm, fields: fields?.toArray) { result in
+    public func getGuild(slug: String, realmSlug: String, completion: @escaping (_ result: Result<WOWGuildProfile, Error>) -> Void) {
+        battleNetAPI.wow.getGuild(slug: slug, realmSlug: realmSlug) { result in
             result.decode(completion: completion)
         }
     }
@@ -389,8 +379,8 @@ public struct WorldOfWarcraftModelController {
     }
     
     
-    public func getItemSet(setID: Int, completion: @escaping (_ result: Result<WOWItemSet, Error>) -> Void) {
-        battleNetAPI.wow.getItemSet(setID: setID) { result in
+    public func getItemSet(id: Int, completion: @escaping (_ result: Result<WOWItemSet, Error>) -> Void) {
+        battleNetAPI.wow.getItemSet(id: id) { result in
             result.decode(completion: completion)
         }
     }
@@ -400,7 +390,7 @@ public struct WorldOfWarcraftModelController {
     // MARK: - Mount API
     
     public func getMounts(completion: @escaping (_ result: Result<[Mount], Error>) -> Void) {
-        battleNetAPI.wow.getMounts { result in
+        battleNetAPI.wow.getMountIndex { result in
             let customDecode: ((_ data: Data) throws -> [Mount]) = { data in
                 return try MountIndex.decode(from: data).mounts
             }
@@ -413,7 +403,7 @@ public struct WorldOfWarcraftModelController {
     // MARK: - Pet API
     
     public func getPets(completion: @escaping (_ result: Result<[Pet], Error>) -> Void) {
-        battleNetAPI.wow.getPets { result in
+        battleNetAPI.wow.getPetIndex { result in
             let customDecode: ((_ data: Data) throws -> [Pet]) = { data in
                 return try PetIndex.decode(from: data).pets
             }
@@ -422,32 +412,19 @@ public struct WorldOfWarcraftModelController {
     }
     
     
-    public func getPetAbility(abilityID: Int, completion: @escaping (_ result: Result<PetAbility, Error>) -> Void) {
-        battleNetAPI.wow.getPetAbility(abilityID: abilityID) { result in
-            result.decode(completion: completion)
-        }
-    }
-    
-    
-    public func getPetSpecies(speciesID: Int, completion: @escaping (_ result: Result<PetSpecies, Error>) -> Void) {
-        battleNetAPI.wow.getPetSpecies(speciesID: speciesID) { result in
-            result.decode(completion: completion)
-        }
-    }
-    
-    
-    public func getPetStats(speciesID: Int, level: Int = 1, breedID: Int = 3, qualityID: Int = 1, completion: @escaping (_ result: Result<PetStats, Error>) -> Void) {
-        battleNetAPI.wow.getPetStats(speciesID: speciesID, level: level, breedID: breedID, qualityID: qualityID) { result in
+    public func getPetAbility(id: Int, completion: @escaping (_ result: Result<PetAbility, Error>) -> Void) {
+        battleNetAPI.wow.getPetAbility(id: id) { result in
             result.decode(completion: completion)
         }
     }
     
     
     
-    // MARK: - PVP API
     
-    public func getLeaderboard(bracket: WOWLeaderboardBracket, completion: @escaping (_ result: Result<WOWLeaderboard, Error>) -> Void) {
-        battleNetAPI.wow.getLeaderboard(bracket: bracket.rawValue) { result in
+    // MARK: - PvP API
+    
+    public func getPvPLeaderboard(season: Int, bracket: WOWLeaderboardBracket, completion: @escaping (_ result: Result<WOWLeaderboard, Error>) -> Void) {
+        battleNetAPI.wow.getPvPLeaderboard(pvpSeasonID: season, pvpBracket: bracket) { result in
             result.decode(completion: completion)
         }
     }
@@ -467,12 +444,12 @@ public struct WorldOfWarcraftModelController {
     // MARK: - Realm Status API
     
     public func getRealmsStatus(completion: @escaping (_ result: Result<[WOWRealm], Error>) -> Void) {
-        battleNetAPI.wow.getRealmsStatus { result in
-            let customDecode: ((_ data: Data) throws -> [WOWRealm]) = { data in
-                return try WOWRealmIndex.decode(from: data).realms
-            }
-            result.decode(customDecode: customDecode, completion: completion)
-        }
+//        battleNetAPI.wow.getstatus { result in
+//            let customDecode: ((_ data: Data) throws -> [WOWRealm]) = { data in
+//                return try WOWRealmIndex.decode(from: data).realms
+//            }
+//            result.decode(customDecode: customDecode, completion: completion)
+//        }
     }
     
     
@@ -497,40 +474,10 @@ public struct WorldOfWarcraftModelController {
     
     
     
-    // MARK: - Zone API
-    
-    public func getZones(completion: @escaping (_ result: Result<[Zone], Error>) -> Void) {
-        battleNetAPI.wow.getZones { result in
-            let customDecode: ((_ data: Data) throws -> [Zone]) = { data in
-                return try ZoneIndex.decode(from: data).zones
-            }
-            result.decode(customDecode: customDecode, completion: completion)
-        }
-    }
-    
-    
-    public func getZone(id: Int, completion: @escaping (_ result: Result<Zone, Error>) -> Void) {
-        battleNetAPI.wow.getZone(id: id) { result in
-            result.decode(completion: completion)
-        }
-    }
-    
-    
-    
     // MARK: - Data Resources
     
-    public func getBattlegroups(completion: @escaping (_ result: Result<[Battlegroup], Error>) -> Void) {
-        battleNetAPI.wow.getBattlegroups { result in
-            let customDecode: ((_ data: Data) throws -> [Battlegroup]) = { data in
-                return try BattlegroupIndex.decode(from: data).battlegroups
-            }
-            result.decode(customDecode: customDecode, completion: completion)
-        }
-    }
-    
-    
     public func getRaces(completion: @escaping (_ result: Result<[Race], Error>) -> Void) {
-        battleNetAPI.wow.getRaces { result in
+        battleNetAPI.wow.getPlayableRaceIndex { result in
             let customDecode: ((_ data: Data) throws -> [Race]) = { data in
                 return try RaceIndex.decode(from: data).races
             }
@@ -540,7 +487,7 @@ public struct WorldOfWarcraftModelController {
     
     
     public func getClasses(completion: @escaping (_ result: Result<[WOWCharacterClass], Error>) -> Void) {
-        battleNetAPI.wow.getClasses { result in
+        battleNetAPI.wow.getPlayableClassIndex { result in
             let customDecode: ((_ data: Data) throws -> [WOWCharacterClass]) = { data in
                 return try WOWCharacterClassIndex.decode(from: data).classes
             }
@@ -550,7 +497,7 @@ public struct WorldOfWarcraftModelController {
     
     
     public func getAchievements(completion: @escaping (_ result: Result<[WOWAchievementCategory], Error>) -> Void) {
-        battleNetAPI.wow.getAchievements { result in
+        battleNetAPI.wow.getAchievementIndex { result in
             let customDecode: ((_ data: Data) throws -> [WOWAchievementCategory]) = { data in
                 return try WOWAchievementIndex.decode(from: data).achievements
             }
@@ -559,28 +506,8 @@ public struct WorldOfWarcraftModelController {
     }
     
     
-    public func getGuildRewards(completion: @escaping (_ result: Result<[WOWGuildReward], Error>) -> Void) {
-        battleNetAPI.wow.getGuildRewards { result in
-            let customDecode: ((_ data: Data) throws -> [WOWGuildReward]) = { data in
-                return try WOWGuildRewardIndex.decode(from: data).rewards
-            }
-            result.decode(customDecode: customDecode, completion: completion)
-        }
-    }
-    
-    
-    public func getGuildPerks(completion: @escaping (_ result: Result<[Perk], Error>) -> Void) {
-        battleNetAPI.wow.getGuildPerks { result in
-            let customDecode: ((_ data: Data) throws -> [Perk]) = { data in
-                return try PerkIndex.decode(from: data).perks
-            }
-            result.decode(customDecode: customDecode, completion: completion)
-        }
-    }
-    
-    
-    public func getGuildAchievements(completion: @escaping (_ result: Result<[WOWAchievementCategory], Error>) -> Void) {
-        battleNetAPI.wow.getGuildAchievements { result in
+    public func getGuildAchievements(slug: String, realmSlug: String, completion: @escaping (_ result: Result<[WOWAchievementCategory], Error>) -> Void) {
+        battleNetAPI.wow.getGuildAchievements(slug: slug, realmSlug: realmSlug) { result in
             let customDecode: ((_ data: Data) throws -> [WOWAchievementCategory]) = { data in
                 return try WOWAchievementIndex.decode(from: data).achievements
             }
@@ -590,7 +517,7 @@ public struct WorldOfWarcraftModelController {
     
     
     public func getItemClasses(completion: @escaping (_ result: Result<[ItemClass], Error>) -> Void) {
-        battleNetAPI.wow.getItemClasses { result in
+        battleNetAPI.wow.getItemClassIndex { result in
             let customDecode: ((_ data: Data) throws -> [ItemClass]) = { data in
                 return try ItemClassIndex.decode(from: data).classes
             }
@@ -600,18 +527,8 @@ public struct WorldOfWarcraftModelController {
     
     
     public func getTalents(completion: @escaping (_ result: Result<ClassTalentDictionary, Error>) -> Void) {
-        battleNetAPI.wow.getTalents { result in
+        battleNetAPI.wow.getTalentIndex { result in
             result.decode(completion: completion)
-        }
-    }
-    
-    
-    public func getPetTypes(completion: @escaping (_ result: Result<[PetType], Error>) -> Void) {
-        battleNetAPI.wow.getPetTypes { result in
-            let customDecode: ((_ data: Data) throws -> [PetType]) = { data in
-                return try PetTypeIndex.decode(from: data).petTypes
-            }
-            result.decode(customDecode: customDecode, completion: completion)
         }
     }
 }

@@ -29,6 +29,8 @@ public struct WS_User: WebService {
         }
         
         var basePath: String? { return nil }
+        
+        var queries: [String: String]? { return nil }
     }
     
     
