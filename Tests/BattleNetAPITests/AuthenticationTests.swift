@@ -9,6 +9,8 @@
 import XCTest
 @testable import BattleNetAPI
 
+
+
 class AuthenticationTests: XCTestCase {
     var battleNetAPI: BattleNetAPI!
     

@@ -3,10 +3,12 @@
 	archiveVersion = 1;
 	classes = {
 	};
-	objectVersion = 50;
+	objectVersion = 52;
 	objects = {
 
 /* Begin PBXBuildFile section */
+		5941560B25D0FE950088EBB5 /* BattleNetAPI in Frameworks */ = {isa = PBXBuildFile; productRef = 5941560A25D0FE950088EBB5 /* BattleNetAPI */; };
+		5941560D25D0FE9A0088EBB5 /* BattleNetAPI in Frameworks */ = {isa = PBXBuildFile; productRef = 5941560C25D0FE9A0088EBB5 /* BattleNetAPI */; };
 		598AC0BA24A986E5002F2ED3 /* BattleNetAPI_ExampleApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 598AC0A724A986E3002F2ED3 /* BattleNetAPI_ExampleApp.swift */; };
 		598AC0BB24A986E5002F2ED3 /* BattleNetAPI_ExampleApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 598AC0A724A986E3002F2ED3 /* BattleNetAPI_ExampleApp.swift */; };
 		598AC0BC24A986E5002F2ED3 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 598AC0A824A986E3002F2ED3 /* ContentView.swift */; };
@@ -14,23 +16,6 @@
 		598AC0BE24A986E5002F2ED3 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 598AC0A924A986E4002F2ED3 /* Assets.xcassets */; };
 		598AC0BF24A986E5002F2ED3 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 598AC0A924A986E4002F2ED3 /* Assets.xcassets */; };
 /* End PBXBuildFile section */
-
-/* Begin PBXContainerItemProxy section */
-		598AC19424AC1D0E002F2ED3 /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = 598AC0C824A9958A002F2ED3 /* BattleNetAPI.xcodeproj */;
-			proxyType = 2;
-			remoteGlobalIDString = 598AC0D824A9B6B0002F2ED3;
-			remoteInfo = BattleNetAPI;
-		};
-		598AC19624AC1D0E002F2ED3 /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = 598AC0C824A9958A002F2ED3 /* BattleNetAPI.xcodeproj */;
-			proxyType = 2;
-			remoteGlobalIDString = 598AC17C24AB1350002F2ED3;
-			remoteInfo = BattleNetAPITests;
-		};
-/* End PBXContainerItemProxy section */
 
 /* Begin PBXCopyFilesBuildPhase section */
 		598AC13D24A9B73E002F2ED3 /* Embed Frameworks */ = {
@@ -46,6 +31,7 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
+		5941560825D0FE820088EBB5 /* BattleNetAPI */ = {isa = PBXFileReference; lastKnownFileType = folder; name = BattleNetAPI; path = ../..; sourceTree = "<group>"; };
 		598AC0A724A986E3002F2ED3 /* BattleNetAPI_ExampleApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BattleNetAPI_ExampleApp.swift; sourceTree = "<group>"; };
 		598AC0A824A986E3002F2ED3 /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
 		598AC0A924A986E4002F2ED3 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
@@ -54,7 +40,6 @@
 		598AC0B624A986E5002F2ED3 /* BattleNetAPI-Example.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "BattleNetAPI-Example.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		598AC0B824A986E5002F2ED3 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		598AC0B924A986E5002F2ED3 /* macOS.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = macOS.entitlements; sourceTree = "<group>"; };
-		598AC0C824A9958A002F2ED3 /* BattleNetAPI.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = BattleNetAPI.xcodeproj; path = ../../BattleNetAPI.xcodeproj; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -62,6 +47,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				5941560B25D0FE950088EBB5 /* BattleNetAPI in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -69,6 +55,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				5941560D25D0FE9A0088EBB5 /* BattleNetAPI in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -78,7 +65,6 @@
 		598AC0A124A986E3002F2ED3 = {
 			isa = PBXGroup;
 			children = (
-				598AC0C824A9958A002F2ED3 /* BattleNetAPI.xcodeproj */,
 				598AC0A624A986E3002F2ED3 /* Shared */,
 				598AC0B024A986E4002F2ED3 /* iOS */,
 				598AC0B724A986E5002F2ED3 /* macOS */,
@@ -126,17 +112,9 @@
 		598AC0D124A9AC42002F2ED3 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				5941560825D0FE820088EBB5 /* BattleNetAPI */,
 			);
 			name = Frameworks;
-			sourceTree = "<group>";
-		};
-		598AC19024AC1D0E002F2ED3 /* Products */ = {
-			isa = PBXGroup;
-			children = (
-				598AC19524AC1D0E002F2ED3 /* BattleNetAPI.framework */,
-				598AC19724AC1D0E002F2ED3 /* BattleNetAPITests.xctest */,
-			);
-			name = Products;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -156,6 +134,9 @@
 			dependencies = (
 			);
 			name = iOS;
+			packageProductDependencies = (
+				5941560A25D0FE950088EBB5 /* BattleNetAPI */,
+			);
 			productName = iOS;
 			productReference = 598AC0AE24A986E4002F2ED3 /* BattleNetAPI-Example.app */;
 			productType = "com.apple.product-type.application";
@@ -173,6 +154,9 @@
 			dependencies = (
 			);
 			name = macOS;
+			packageProductDependencies = (
+				5941560C25D0FE9A0088EBB5 /* BattleNetAPI */,
+			);
 			productName = macOS;
 			productReference = 598AC0B624A986E5002F2ED3 /* BattleNetAPI-Example.app */;
 			productType = "com.apple.product-type.application";
@@ -184,7 +168,7 @@
 			isa = PBXProject;
 			attributes = {
 				LastSwiftUpdateCheck = 1200;
-				LastUpgradeCheck = 1200;
+				LastUpgradeCheck = 1240;
 				TargetAttributes = {
 					598AC0AD24A986E4002F2ED3 = {
 						CreatedOnToolsVersion = 12.0;
@@ -205,12 +189,6 @@
 			mainGroup = 598AC0A124A986E3002F2ED3;
 			productRefGroup = 598AC0AF24A986E4002F2ED3 /* Products */;
 			projectDirPath = "";
-			projectReferences = (
-				{
-					ProductGroup = 598AC19024AC1D0E002F2ED3 /* Products */;
-					ProjectRef = 598AC0C824A9958A002F2ED3 /* BattleNetAPI.xcodeproj */;
-				},
-			);
 			projectRoot = "";
 			targets = (
 				598AC0AD24A986E4002F2ED3 /* iOS */,
@@ -218,23 +196,6 @@
 			);
 		};
 /* End PBXProject section */
-
-/* Begin PBXReferenceProxy section */
-		598AC19524AC1D0E002F2ED3 /* BattleNetAPI.framework */ = {
-			isa = PBXReferenceProxy;
-			fileType = wrapper.framework;
-			path = BattleNetAPI.framework;
-			remoteRef = 598AC19424AC1D0E002F2ED3 /* PBXContainerItemProxy */;
-			sourceTree = BUILT_PRODUCTS_DIR;
-		};
-		598AC19724AC1D0E002F2ED3 /* BattleNetAPITests.xctest */ = {
-			isa = PBXReferenceProxy;
-			fileType = wrapper.cfbundle;
-			path = BattleNetAPITests.xctest;
-			remoteRef = 598AC19624AC1D0E002F2ED3 /* PBXContainerItemProxy */;
-			sourceTree = BUILT_PRODUCTS_DIR;
-		};
-/* End PBXReferenceProxy section */
 
 /* Begin PBXResourcesBuildPhase section */
 		598AC0AC24A986E4002F2ED3 /* Resources */ = {
@@ -439,6 +400,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_ENTITLEMENTS = macOS/macOS.entitlements;
+				CODE_SIGN_IDENTITY = "-";
 				CODE_SIGN_STYLE = Automatic;
 				COMBINE_HIDPI_IMAGES = YES;
 				DEVELOPMENT_TEAM = W5SXX2FNDK;
@@ -449,7 +411,7 @@
 					"$(inherited)",
 					"@executable_path/../Frameworks",
 				);
-				MACOSX_DEPLOYMENT_TARGET = 10.16;
+				MACOSX_DEPLOYMENT_TARGET = 11.0;
 				PRODUCT_BUNDLE_IDENTIFIER = "com.prismatic-games.BattleNetAPI-Example";
 				PRODUCT_NAME = "BattleNetAPI-Example";
 				SDKROOT = macosx;
@@ -463,6 +425,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_ENTITLEMENTS = macOS/macOS.entitlements;
+				CODE_SIGN_IDENTITY = "-";
 				CODE_SIGN_STYLE = Automatic;
 				COMBINE_HIDPI_IMAGES = YES;
 				DEVELOPMENT_TEAM = W5SXX2FNDK;
@@ -473,7 +436,7 @@
 					"$(inherited)",
 					"@executable_path/../Frameworks",
 				);
-				MACOSX_DEPLOYMENT_TARGET = 10.16;
+				MACOSX_DEPLOYMENT_TARGET = 11.0;
 				PRODUCT_BUNDLE_IDENTIFIER = "com.prismatic-games.BattleNetAPI-Example";
 				PRODUCT_NAME = "BattleNetAPI-Example";
 				SDKROOT = macosx;
@@ -512,6 +475,17 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
+
+/* Begin XCSwiftPackageProductDependency section */
+		5941560A25D0FE950088EBB5 /* BattleNetAPI */ = {
+			isa = XCSwiftPackageProductDependency;
+			productName = BattleNetAPI;
+		};
+		5941560C25D0FE9A0088EBB5 /* BattleNetAPI */ = {
+			isa = XCSwiftPackageProductDependency;
+			productName = BattleNetAPI;
+		};
+/* End XCSwiftPackageProductDependency section */
 	};
 	rootObject = 598AC0A224A986E3002F2ED3 /* Project object */;
 }

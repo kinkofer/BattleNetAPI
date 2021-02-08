@@ -67,6 +67,16 @@ class ViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        battleNetAPI.d3.getLeaderboards(eraID: 1) { result in
+            let result = Result { try EraLeaderboardIndex.decode(from: try result.get()) }
+            switch result {
+            case .success(let eraLeaderboard):
+                Debug.print("Retrieved \(eraLeaderboard.leaderboard.count) Leaderboards for Era 1")
+            case .failure(let error):
+                self.handleError(error)
+            }
+        }
+        
         authManager.getClientAccessToken { result in
             switch result {
             case .success(let token):

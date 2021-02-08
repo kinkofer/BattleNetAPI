@@ -43,9 +43,9 @@ class WorldOfWarcraftTests: XCTestCase {
     func testGetCharacters() {
         let wsResponseExpectation = expectation(description: "Web Service returned a response")
         
-        battleNetAPI.wow.getCharacters { result in
-            BattleNetAPITests.webServiceClosureTest(result: result, decodable: WOWCharacterResult.self, expectation: wsResponseExpectation)
-        }
+//        battleNetAPI.wow.getCharacters { result in
+//            BattleNetAPITests.webServiceClosureTest(result: result, decodable: WOWCharacterResult.self, expectation: wsResponseExpectation)
+//        }
         
         waitForExpectations(timeout: 20) { error in
             XCTAssertNil(error, "Exceeded timeout")
@@ -61,9 +61,9 @@ class WorldOfWarcraftTests: XCTestCase {
         
         let wsResponseExpectation = expectation(description: "Web Service returned a response")
         
-        battleNetAPI.wow.getMythicKeystoneProfile(characterName: characterName, realmSlug: realm) { result in
-            BattleNetAPITests.webServiceClosureTest(result: result, decodable: MythicKeystoneProfile.self, expectation: wsResponseExpectation)
-        }
+//        battleNetAPI.wow.getMythicKeystoneProfile(characterName: characterName, realmSlug: realm) { result in
+//            BattleNetAPITests.webServiceClosureTest(result: result, decodable: MythicKeystoneProfile.self, expectation: wsResponseExpectation)
+//        }
         
         waitForExpectations(timeout: 20) { error in
             XCTAssertNil(error, "Exceeded timeout")
@@ -78,9 +78,9 @@ class WorldOfWarcraftTests: XCTestCase {
         
         let wsResponseExpectation = expectation(description: "Web Service returned a response")
         
-        battleNetAPI.wow.getMythicKeystoneProfileSeason(seasonID: seasonID, characterName: characterName, realmSlug: realm) { result in
-            BattleNetAPITests.webServiceClosureTest(result: result, decodable: MythicKeystoneProfileSeason.self, expectation: wsResponseExpectation)
-        }
+//        battleNetAPI.wow.getMythicKeystoneProfileSeason(seasonID: seasonID, characterName: characterName, realmSlug: realm) { result in
+//            BattleNetAPITests.webServiceClosureTest(result: result, decodable: MythicKeystoneProfileSeason.self, expectation: wsResponseExpectation)
+//        }
         
         waitForExpectations(timeout: 20) { error in
             XCTAssertNil(error, "Exceeded timeout")
@@ -125,9 +125,9 @@ class WorldOfWarcraftTests: XCTestCase {
     func testGetMythicKeystoneAffixes() {
         let wsResponseExpectation = expectation(description: "Web Service returned a response")
         
-        battleNetAPI.wow.getMythicKeystoneAffixes { result in
-            BattleNetAPITests.webServiceClosureTest(result: result, decodable: KeystoneAffixIndex.self, expectation: wsResponseExpectation)
-        }
+//        battleNetAPI.wow.getMythicKeystoneAffixes { result in
+//            BattleNetAPITests.webServiceClosureTest(result: result, decodable: KeystoneAffixIndex.self, expectation: wsResponseExpectation)
+//        }
         
         waitForExpectations(timeout: 20) { error in
             XCTAssertNil(error, "Exceeded timeout")
@@ -175,9 +175,9 @@ class WorldOfWarcraftTests: XCTestCase {
     func testGetMythicKeystoneDungeons() {
         let wsResponseExpectation = expectation(description: "Web Service returned a response")
         
-        battleNetAPI.wow.getMythicKeystoneDungeons { result in
-            BattleNetAPITests.webServiceClosureTest(result: result, decodable: MythicKeystoneDungeonIndex.self, expectation: wsResponseExpectation)
-        }
+//        battleNetAPI.wow.getMythicKeystoneDungeons { result in
+//            BattleNetAPITests.webServiceClosureTest(result: result, decodable: MythicKeystoneDungeonIndex.self, expectation: wsResponseExpectation)
+//        }
         
         waitForExpectations(timeout: 20) { error in
             XCTAssertNil(error, "Exceeded timeout")
@@ -203,9 +203,9 @@ class WorldOfWarcraftTests: XCTestCase {
     func testGetMythicKeystones() {
         let wsResponseExpectation = expectation(description: "Web Service returned a response")
         
-        battleNetAPI.wow.getMythicKeystones { result in
-            BattleNetAPITests.webServiceClosureTest(result: result, decodable: MythicKeystoneIndex.self, expectation: wsResponseExpectation)
-        }
+//        battleNetAPI.wow.getMythicKeystones { result in
+//            BattleNetAPITests.webServiceClosureTest(result: result, decodable: MythicKeystoneIndex.self, expectation: wsResponseExpectation)
+//        }
         
         waitForExpectations(timeout: 20) { error in
             XCTAssertNil(error, "Exceeded timeout")
@@ -216,9 +216,9 @@ class WorldOfWarcraftTests: XCTestCase {
     func testGetMythicPeriods() {
         let wsResponseExpectation = expectation(description: "Web Service returned a response")
         
-        battleNetAPI.wow.getMythicKeystonePeriods { result in
-            BattleNetAPITests.webServiceClosureTest(result: result, decodable: MythicKeystonePeriodIndex.self, expectation: wsResponseExpectation)
-        }
+//        battleNetAPI.wow.getMythicKeystonePeriods { result in
+//            BattleNetAPITests.webServiceClosureTest(result: result, decodable: MythicKeystonePeriodIndex.self, expectation: wsResponseExpectation)
+//        }
         
         waitForExpectations(timeout: 20) { error in
             XCTAssertNil(error, "Exceeded timeout")
@@ -244,9 +244,9 @@ class WorldOfWarcraftTests: XCTestCase {
     func testGetMythicSeasons() {
         let wsResponseExpectation = expectation(description: "Web Service returned a response")
         
-        battleNetAPI.wow.getMythicKeystoneSeasons { result in
-            BattleNetAPITests.webServiceClosureTest(result: result, decodable: MythicKeystoneSeasonIndex.self, expectation: wsResponseExpectation)
-        }
+//        battleNetAPI.wow.getMythicKeystoneSeasons { result in
+//            BattleNetAPITests.webServiceClosureTest(result: result, decodable: MythicKeystoneSeasonIndex.self, expectation: wsResponseExpectation)
+//        }
         
         waitForExpectations(timeout: 20) { error in
             XCTAssertNil(error, "Exceeded timeout")
@@ -277,9 +277,9 @@ class WorldOfWarcraftTests: XCTestCase {
         
         let wsResponseExpectation = expectation(description: "Web Service returned a response")
         
-        battleNetAPI.wow.getMythicLeaderboards(connectedRealmID: connectedRealmID) { result in
-            BattleNetAPITests.webServiceClosureTest(result: result, decodable: MythicLeaderboardIndex.self, expectation: wsResponseExpectation)
-        }
+//        battleNetAPI.wow.getMythicLeaderboards(connectedRealmID: connectedRealmID) { result in
+//            BattleNetAPITests.webServiceClosureTest(result: result, decodable: MythicLeaderboardIndex.self, expectation: wsResponseExpectation)
+//        }
         
         waitForExpectations(timeout: 20) { error in
             XCTAssertNil(error, "Exceeded timeout")
@@ -310,9 +310,9 @@ class WorldOfWarcraftTests: XCTestCase {
     func testGetMythicChallengeMode() {
         let wsResponseExpectation = expectation(description: "Web Service returned a response")
         
-        battleNetAPI.wow.getMythicChallengeMode { result in
-            BattleNetAPITests.webServiceClosureTest(result: result, decodable: MythicChallengeMode.self, expectation: wsResponseExpectation)
-        }
+//        battleNetAPI.wow.getMythicChallengeMode { result in
+//            BattleNetAPITests.webServiceClosureTest(result: result, decodable: MythicChallengeMode.self, expectation: wsResponseExpectation)
+//        }
         
         waitForExpectations(timeout: 20) { error in
             XCTAssertNil(error, "Exceeded timeout")
@@ -326,9 +326,9 @@ class WorldOfWarcraftTests: XCTestCase {
     func testGetPlayableClasses() {
         let wsResponseExpectation = expectation(description: "Web Service returned a response")
         
-        battleNetAPI.wow.getPlayableClasses { result in
-            BattleNetAPITests.webServiceClosureTest(result: result, decodable: WOWClassIndex.self, expectation: wsResponseExpectation)
-        }
+//        battleNetAPI.wow.getPlayableClasses { result in
+//            BattleNetAPITests.webServiceClosureTest(result: result, decodable: WOWClassIndex.self, expectation: wsResponseExpectation)
+//        }
         
         waitForExpectations(timeout: 20) { error in
             XCTAssertNil(error, "Exceeded timeout")
@@ -356,9 +356,9 @@ class WorldOfWarcraftTests: XCTestCase {
         
         let wsResponseExpectation = expectation(description: "Web Service returned a response")
         
-        battleNetAPI.wow.getPlayableClassPvPTalentSlots(id: id) { result in
-            BattleNetAPITests.webServiceClosureTest(result: result, decodable: PVPTalentSlots.self, expectation: wsResponseExpectation)
-        }
+//        battleNetAPI.wow.getPlayableClassPvPTalentSlots(id: id) { result in
+//            BattleNetAPITests.webServiceClosureTest(result: result, decodable: PVPTalentSlots.self, expectation: wsResponseExpectation)
+//        }
         
         waitForExpectations(timeout: 20) { error in
             XCTAssertNil(error, "Exceeded timeout")
@@ -372,9 +372,9 @@ class WorldOfWarcraftTests: XCTestCase {
     func testGetPlayableSpecializations() {
         let wsResponseExpectation = expectation(description: "Web Service returned a response")
         
-        battleNetAPI.wow.getPlayableSpecializations { result in
-            BattleNetAPITests.webServiceClosureTest(result: result, decodable: SpecializationIndex.self, expectation: wsResponseExpectation)
-        }
+//        battleNetAPI.wow.getPlayableSpecializations { result in
+//            BattleNetAPITests.webServiceClosureTest(result: result, decodable: SpecializationIndex.self, expectation: wsResponseExpectation)
+//        }
         
         waitForExpectations(timeout: 20) { error in
             XCTAssertNil(error, "Exceeded timeout")
@@ -402,9 +402,9 @@ class WorldOfWarcraftTests: XCTestCase {
     func testGetPowerTypes() {
         let wsResponseExpectation = expectation(description: "Web Service returned a response")
         
-        battleNetAPI.wow.getPowerTypes { result in
-            BattleNetAPITests.webServiceClosureTest(result: result, decodable: PowerTypeIndex.self, expectation: wsResponseExpectation)
-        }
+//        battleNetAPI.wow.getPowerTypes { result in
+//            BattleNetAPITests.webServiceClosureTest(result: result, decodable: PowerTypeIndex.self, expectation: wsResponseExpectation)
+//        }
         
         waitForExpectations(timeout: 20) { error in
             XCTAssertNil(error, "Exceeded timeout")
@@ -432,9 +432,9 @@ class WorldOfWarcraftTests: XCTestCase {
     func testGetPlayableRaces() {
         let wsResponseExpectation = expectation(description: "Web Service returned a response")
         
-        battleNetAPI.wow.getPlayableRaces { result in
-            BattleNetAPITests.webServiceClosureTest(result: result, decodable: WOWRaceIndex.self, expectation: wsResponseExpectation)
-        }
+//        battleNetAPI.wow.getPlayableRaces { result in
+//            BattleNetAPITests.webServiceClosureTest(result: result, decodable: WOWRaceIndex.self, expectation: wsResponseExpectation)
+//        }
         
         waitForExpectations(timeout: 20) { error in
             XCTAssertNil(error, "Exceeded timeout")
@@ -561,9 +561,9 @@ class WorldOfWarcraftTests: XCTestCase {
         
         let wsResponseExpectation = expectation(description: "Web Service returned a response")
         
-        battleNetAPI.wow.getAuctions(realm: realm) { result in
-            BattleNetAPITests.webServiceClosureTest(result: result, decodable: Auction.self, expectation: wsResponseExpectation)
-        }
+//        battleNetAPI.wow.getAuctions(realm: realm) { result in
+//            BattleNetAPITests.webServiceClosureTest(result: result, decodable: Auction.self, expectation: wsResponseExpectation)
+//        }
         
         waitForExpectations(timeout: 20) { error in
             XCTAssertNil(error, "Exceeded timeout")
@@ -579,9 +579,9 @@ class WorldOfWarcraftTests: XCTestCase {
         
         let wsResponseExpectation = expectation(description: "Web Service returned a response")
         
-        battleNetAPI.wow.getChallengeLeaderboards(realm: realm) { result in
-            BattleNetAPITests.webServiceClosureTest(result: result, decodable: ChallengeIndex.self, expectation: wsResponseExpectation)
-        }
+//        battleNetAPI.wow.getChallengeLeaderboards(realm: realm) { result in
+//            BattleNetAPITests.webServiceClosureTest(result: result, decodable: ChallengeIndex.self, expectation: wsResponseExpectation)
+//        }
         
         waitForExpectations(timeout: 20) { error in
             XCTAssertNil(error, "Exceeded timeout")
@@ -592,9 +592,9 @@ class WorldOfWarcraftTests: XCTestCase {
     func testGetTopChallengeLeaderboards() {
         let wsResponseExpectation = expectation(description: "Web Service returned a response")
         
-        battleNetAPI.wow.getTopChallengeLeaderboards { result in
-            BattleNetAPITests.webServiceClosureTest(result: result, decodable: ChallengeIndex.self, expectation: wsResponseExpectation)
-        }
+//        battleNetAPI.wow.getTopChallengeLeaderboards { result in
+//            BattleNetAPITests.webServiceClosureTest(result: result, decodable: ChallengeIndex.self, expectation: wsResponseExpectation)
+//        }
         
         waitForExpectations(timeout: 20) { error in
             XCTAssertNil(error, "Exceeded timeout")
@@ -615,9 +615,9 @@ class WorldOfWarcraftTests: XCTestCase {
         
         let wsResponseExpectation = expectation(description: "Web Service returned a response")
         
-        battleNetAPI.wow.getCharacter(name, realm: realm, fields: fields.toArray) { result in
-            BattleNetAPITests.webServiceClosureTest(result: result, decodable: WOWCharacterProfile.self, expectation: wsResponseExpectation)
-        }
+//        battleNetAPI.wow.getCharacter(name, realm: realm, fields: fields.toArray) { result in
+//            BattleNetAPITests.webServiceClosureTest(result: result, decodable: WOWCharacterProfile.self, expectation: wsResponseExpectation)
+//        }
         
         waitForExpectations(timeout: 20) { error in
             XCTAssertNil(error, "Exceeded timeout")
@@ -635,9 +635,9 @@ class WorldOfWarcraftTests: XCTestCase {
         
         let wsResponseExpectation = expectation(description: "Web Service returned a response")
         
-        battleNetAPI.wow.getGuild(name, realm: realm, fields: fields?.toArray) { result in
-            BattleNetAPITests.webServiceClosureTest(result: result, decodable: WOWGuildProfile.self, expectation: wsResponseExpectation)
-        }
+//        battleNetAPI.wow.getGuild(name, realm: realm, fields: fields?.toArray) { result in
+//            BattleNetAPITests.webServiceClosureTest(result: result, decodable: WOWGuildProfile.self, expectation: wsResponseExpectation)
+//        }
         
         waitForExpectations(timeout: 20) { error in
             XCTAssertNil(error, "Exceeded timeout")
@@ -668,9 +668,9 @@ class WorldOfWarcraftTests: XCTestCase {
         
         let wsResponseExpectation = expectation(description: "Web Service returned a response")
         
-        battleNetAPI.wow.getItemSet(setID: setID) { result in
-            BattleNetAPITests.webServiceClosureTest(result: result, decodable: WOWItemSet.self, expectation: wsResponseExpectation)
-        }
+//        battleNetAPI.wow.getItemSet(setID: setID) { result in
+//            BattleNetAPITests.webServiceClosureTest(result: result, decodable: WOWItemSet.self, expectation: wsResponseExpectation)
+//        }
         
         waitForExpectations(timeout: 20) { error in
             XCTAssertNil(error, "Exceeded timeout")
@@ -684,9 +684,9 @@ class WorldOfWarcraftTests: XCTestCase {
     func testGetMounts() {
         let wsResponseExpectation = expectation(description: "Web Service returned a response")
         
-        battleNetAPI.wow.getMounts { result in
-            BattleNetAPITests.webServiceClosureTest(result: result, decodable: MountIndex.self, expectation: wsResponseExpectation)
-        }
+//        battleNetAPI.wow.getMounts { result in
+//            BattleNetAPITests.webServiceClosureTest(result: result, decodable: MountIndex.self, expectation: wsResponseExpectation)
+//        }
         
         waitForExpectations(timeout: 20) { error in
             XCTAssertNil(error, "Exceeded timeout")
@@ -700,9 +700,9 @@ class WorldOfWarcraftTests: XCTestCase {
     func testGetPets() {
         let wsResponseExpectation = expectation(description: "Web Service returned a response")
         
-        battleNetAPI.wow.getPets { result in
-            BattleNetAPITests.webServiceClosureTest(result: result, decodable: PetIndex.self, expectation: wsResponseExpectation)
-        }
+//        battleNetAPI.wow.getPets { result in
+//            BattleNetAPITests.webServiceClosureTest(result: result, decodable: PetIndex.self, expectation: wsResponseExpectation)
+//        }
         
         waitForExpectations(timeout: 20) { error in
             XCTAssertNil(error, "Exceeded timeout")
@@ -715,9 +715,9 @@ class WorldOfWarcraftTests: XCTestCase {
         
         let wsResponseExpectation = expectation(description: "Web Service returned a response")
         
-        battleNetAPI.wow.getPetAbility(abilityID: abilityID) { result in
-            BattleNetAPITests.webServiceClosureTest(result: result, decodable: PetAbility.self, expectation: wsResponseExpectation)
-        }
+//        battleNetAPI.wow.getPetAbility(abilityID: abilityID) { result in
+//            BattleNetAPITests.webServiceClosureTest(result: result, decodable: PetAbility.self, expectation: wsResponseExpectation)
+//        }
         
         waitForExpectations(timeout: 20) { error in
             XCTAssertNil(error, "Exceeded timeout")
@@ -730,9 +730,9 @@ class WorldOfWarcraftTests: XCTestCase {
         
         let wsResponseExpectation = expectation(description: "Web Service returned a response")
         
-        battleNetAPI.wow.getPetSpecies(speciesID: speciesID) { result in
-            BattleNetAPITests.webServiceClosureTest(result: result, decodable: PetSpecies.self, expectation: wsResponseExpectation)
-        }
+//        battleNetAPI.wow.getPetSpecies(speciesID: speciesID) { result in
+//            BattleNetAPITests.webServiceClosureTest(result: result, decodable: PetSpecies.self, expectation: wsResponseExpectation)
+//        }
         
         waitForExpectations(timeout: 20) { error in
             XCTAssertNil(error, "Exceeded timeout")
@@ -748,9 +748,9 @@ class WorldOfWarcraftTests: XCTestCase {
         
         let wsResponseExpectation = expectation(description: "Web Service returned a response")
         
-        battleNetAPI.wow.getPetStats(speciesID: speciesID, level: level, breedID: breedID, qualityID: qualityID) { result in
-            BattleNetAPITests.webServiceClosureTest(result: result, decodable: PetStats.self, expectation: wsResponseExpectation)
-        }
+//        battleNetAPI.wow.getPetStats(speciesID: speciesID, level: level, breedID: breedID, qualityID: qualityID) { result in
+//            BattleNetAPITests.webServiceClosureTest(result: result, decodable: PetStats.self, expectation: wsResponseExpectation)
+//        }
         
         waitForExpectations(timeout: 20) { error in
             XCTAssertNil(error, "Exceeded timeout")
@@ -766,9 +766,9 @@ class WorldOfWarcraftTests: XCTestCase {
         
         let wsResponseExpectation = expectation(description: "Web Service returned a response")
         
-        battleNetAPI.wow.getLeaderboard(bracket: bracket.rawValue) { result in
-            BattleNetAPITests.webServiceClosureTest(result: result, decodable: WOWLeaderboard.self, expectation: wsResponseExpectation)
-        }
+//        battleNetAPI.wow.getLeaderboard(bracket: bracket.rawValue) { result in
+//            BattleNetAPITests.webServiceClosureTest(result: result, decodable: WOWLeaderboard.self, expectation: wsResponseExpectation)
+//        }
         
         waitForExpectations(timeout: 20) { error in
             XCTAssertNil(error, "Exceeded timeout")
@@ -800,9 +800,9 @@ class WorldOfWarcraftTests: XCTestCase {
     func testGetRealmsStatus() {
         let wsResponseExpectation = expectation(description: "Web Service returned a response")
         
-        battleNetAPI.wow.getRealmsStatus { result in
-            BattleNetAPITests.webServiceClosureTest(result: result, decodable: WOWRealmIndex.self, expectation: wsResponseExpectation)
-        }
+//        battleNetAPI.wow.getRealmsStatus { result in
+//            BattleNetAPITests.webServiceClosureTest(result: result, decodable: WOWRealmIndex.self, expectation: wsResponseExpectation)
+//        }
         
         waitForExpectations(timeout: 20) { error in
             XCTAssertNil(error, "Exceeded timeout")
@@ -852,9 +852,9 @@ class WorldOfWarcraftTests: XCTestCase {
     func testGetZones() {
         let wsResponseExpectation = expectation(description: "Web Service returned a response")
         
-        battleNetAPI.wow.getZones { result in
-            BattleNetAPITests.webServiceClosureTest(result: result, decodable: ZoneIndex.self, expectation: wsResponseExpectation)
-        }
+//        battleNetAPI.wow.getZones { result in
+//            BattleNetAPITests.webServiceClosureTest(result: result, decodable: ZoneIndex.self, expectation: wsResponseExpectation)
+//        }
         
         waitForExpectations(timeout: 20) { error in
             XCTAssertNil(error, "Exceeded timeout")
@@ -867,9 +867,9 @@ class WorldOfWarcraftTests: XCTestCase {
         
         let wsResponseExpectation = expectation(description: "Web Service returned a response")
         
-        battleNetAPI.wow.getZone(id: id) { result in
-            BattleNetAPITests.webServiceClosureTest(result: result, decodable: Zone.self, expectation: wsResponseExpectation)
-        }
+//        battleNetAPI.wow.getZone(id: id) { result in
+//            BattleNetAPITests.webServiceClosureTest(result: result, decodable: Zone.self, expectation: wsResponseExpectation)
+//        }
         
         waitForExpectations(timeout: 20) { error in
             XCTAssertNil(error, "Exceeded timeout")
@@ -883,9 +883,9 @@ class WorldOfWarcraftTests: XCTestCase {
     func testGetBattlegroups() {
         let wsResponseExpectation = expectation(description: "Web Service returned a response")
         
-        battleNetAPI.wow.getBattlegroups { result in
-            BattleNetAPITests.webServiceClosureTest(result: result, decodable: BattlegroupIndex.self, expectation: wsResponseExpectation)
-        }
+//        battleNetAPI.wow.getBattlegroups { result in
+//            BattleNetAPITests.webServiceClosureTest(result: result, decodable: BattlegroupIndex.self, expectation: wsResponseExpectation)
+//        }
         
         waitForExpectations(timeout: 20) { error in
             XCTAssertNil(error, "Exceeded timeout")
@@ -896,9 +896,9 @@ class WorldOfWarcraftTests: XCTestCase {
     func testGetRaces() {
         let wsResponseExpectation = expectation(description: "Web Service returned a response")
         
-        battleNetAPI.wow.getRaces { result in
-            BattleNetAPITests.webServiceClosureTest(result: result, decodable: RaceIndex.self, expectation: wsResponseExpectation)
-        }
+//        battleNetAPI.wow.getRaces { result in
+//            BattleNetAPITests.webServiceClosureTest(result: result, decodable: RaceIndex.self, expectation: wsResponseExpectation)
+//        }
         
         waitForExpectations(timeout: 20) { error in
             XCTAssertNil(error, "Exceeded timeout")
@@ -909,9 +909,9 @@ class WorldOfWarcraftTests: XCTestCase {
     func testGetClasses() {
         let wsResponseExpectation = expectation(description: "Web Service returned a response")
         
-        battleNetAPI.wow.getClasses { result in
-            BattleNetAPITests.webServiceClosureTest(result: result, decodable: WOWCharacterClassIndex.self, expectation: wsResponseExpectation)
-        }
+//        battleNetAPI.wow.getClasses { result in
+//            BattleNetAPITests.webServiceClosureTest(result: result, decodable: WOWCharacterClassIndex.self, expectation: wsResponseExpectation)
+//        }
         
         waitForExpectations(timeout: 20) { error in
             XCTAssertNil(error, "Exceeded timeout")
@@ -922,9 +922,9 @@ class WorldOfWarcraftTests: XCTestCase {
     func testGetAchievements() {
         let wsResponseExpectation = expectation(description: "Web Service returned a response")
         
-        battleNetAPI.wow.getAchievements { result in
-            BattleNetAPITests.webServiceClosureTest(result: result, decodable: WOWAchievementIndex.self, expectation: wsResponseExpectation)
-        }
+//        battleNetAPI.wow.getAchievements { result in
+//            BattleNetAPITests.webServiceClosureTest(result: result, decodable: WOWAchievementIndex.self, expectation: wsResponseExpectation)
+//        }
         
         waitForExpectations(timeout: 20) { error in
             XCTAssertNil(error, "Exceeded timeout")
@@ -935,9 +935,9 @@ class WorldOfWarcraftTests: XCTestCase {
     func testGetGuildRewards() {
         let wsResponseExpectation = expectation(description: "Web Service returned a response")
         
-        battleNetAPI.wow.getGuildRewards { result in
-            BattleNetAPITests.webServiceClosureTest(result: result, decodable: WOWGuildRewardIndex.self, expectation: wsResponseExpectation)
-        }
+//        battleNetAPI.wow.getGuildRewards { result in
+//            BattleNetAPITests.webServiceClosureTest(result: result, decodable: WOWGuildRewardIndex.self, expectation: wsResponseExpectation)
+//        }
         
         waitForExpectations(timeout: 20) { error in
             XCTAssertNil(error, "Exceeded timeout")
@@ -948,9 +948,9 @@ class WorldOfWarcraftTests: XCTestCase {
     func testGetGuildPerks() {
         let wsResponseExpectation = expectation(description: "Web Service returned a response")
         
-        battleNetAPI.wow.getGuildPerks { result in
-            BattleNetAPITests.webServiceClosureTest(result: result, decodable: PerkIndex.self, expectation: wsResponseExpectation)
-        }
+//        battleNetAPI.wow.getGuildPerks { result in
+//            BattleNetAPITests.webServiceClosureTest(result: result, decodable: PerkIndex.self, expectation: wsResponseExpectation)
+//        }
         
         waitForExpectations(timeout: 20) { error in
             XCTAssertNil(error, "Exceeded timeout")
@@ -961,9 +961,9 @@ class WorldOfWarcraftTests: XCTestCase {
     func testGetGuildAchievements() {
         let wsResponseExpectation = expectation(description: "Web Service returned a response")
         
-        battleNetAPI.wow.getGuildAchievements { result in
-            BattleNetAPITests.webServiceClosureTest(result: result, decodable: WOWAchievementIndex.self, expectation: wsResponseExpectation)
-        }
+//        battleNetAPI.wow.getGuildAchievements { result in
+//            BattleNetAPITests.webServiceClosureTest(result: result, decodable: WOWAchievementIndex.self, expectation: wsResponseExpectation)
+//        }
         
         waitForExpectations(timeout: 20) { error in
             XCTAssertNil(error, "Exceeded timeout")
@@ -974,9 +974,9 @@ class WorldOfWarcraftTests: XCTestCase {
     func testGetItemClasses() {
         let wsResponseExpectation = expectation(description: "Web Service returned a response")
         
-        battleNetAPI.wow.getItemClasses { result in
-            BattleNetAPITests.webServiceClosureTest(result: result, decodable: ItemClassIndex.self, expectation: wsResponseExpectation)
-        }
+//        battleNetAPI.wow.getItemClasses { result in
+//            BattleNetAPITests.webServiceClosureTest(result: result, decodable: ItemClassIndex.self, expectation: wsResponseExpectation)
+//        }
         
         waitForExpectations(timeout: 20) { error in
             XCTAssertNil(error, "Exceeded timeout")
@@ -987,9 +987,9 @@ class WorldOfWarcraftTests: XCTestCase {
     func testGetTalents() {
         let wsResponseExpectation = expectation(description: "Web Service returned a response")
         
-        battleNetAPI.wow.getTalents { result in
-            BattleNetAPITests.webServiceClosureTest(result: result, decodable: ClassTalentDictionary.self, expectation: wsResponseExpectation)
-        }
+//        battleNetAPI.wow.getTalents { result in
+//            BattleNetAPITests.webServiceClosureTest(result: result, decodable: ClassTalentDictionary.self, expectation: wsResponseExpectation)
+//        }
         
         waitForExpectations(timeout: 20) { error in
             XCTAssertNil(error, "Exceeded timeout")
@@ -1000,9 +1000,9 @@ class WorldOfWarcraftTests: XCTestCase {
     func testGetPetTypes() {
         let wsResponseExpectation = expectation(description: "Web Service returned a response")
         
-        battleNetAPI.wow.getPetTypes { result in
-            BattleNetAPITests.webServiceClosureTest(result: result, decodable: PetTypeIndex.self, expectation: wsResponseExpectation)
-        }
+//        battleNetAPI.wow.getPetTypes { result in
+//            BattleNetAPITests.webServiceClosureTest(result: result, decodable: PetTypeIndex.self, expectation: wsResponseExpectation)
+//        }
         
         waitForExpectations(timeout: 20) { error in
             XCTAssertNil(error, "Exceeded timeout")

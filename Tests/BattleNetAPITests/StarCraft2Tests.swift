@@ -183,11 +183,11 @@ class StarCraft2Tests: XCTestCase {
     // MARK: Account API
     
     func testGetPlayers() {
-        let userID = 8
+        let accountID = 8
         
         let wsResponseExpectation = expectation(description: "Web Service returned a response")
         
-        battleNetAPI.sc2.getPlayers(userID: userID) { result in
+        battleNetAPI.sc2.getPlayer(accountID: accountID) { result in
             BattleNetAPITests.webServiceClosureTest(result: result, decodable: [SC2ProfileMetadata].self, expectation: wsResponseExpectation)
         }
         
