@@ -10,7 +10,9 @@ import XCTest
 @testable import BattleNetAPI
 
 
-let credentials = BattleNetCredentials(clientID: "CLIENT_ID", clientSecret: "CLIENT_SECRET")
+/// Set the credentials that will be used for all tests.
+/// - Note: `clientAccessToken` and `userAccessToken` need to fetched before running tests.
+let credentials = BattleNetCredentials(clientID: "CLIENT_ID", clientSecret: "CLIENT_SECRET", clientAccessToken: nil, userAccessToken: nil)
 
 
 class BattleNetAPITests: XCTestCase {

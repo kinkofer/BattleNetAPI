@@ -27,8 +27,6 @@ public struct WS_Resource: WS_ResourceService {
     
     
     public func getResource(from url: String, apiType: APIType, completion: @escaping (_ result: Result<Data, Error>) -> Void) {
-        callResource(url: url, apiType: apiType) { result in
-            completion(result)
-        }
+        callResource(url: url, apiType: apiType, completion: completion)
     }
 }

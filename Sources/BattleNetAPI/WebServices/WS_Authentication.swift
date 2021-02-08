@@ -76,9 +76,7 @@ public class WS_Authentication: AuthenticationWebService {
             return
         }
         
-        call(url: url, method: .post, headers: [.contentType([.form]), .authorization(.basic(encryptedCredientials))], body: body) { result in
-            completion(result)
-        }
+        call(url: url, method: .post, headers: [.contentType(.form), .authorization(.basic(encryptedCredientials))], body: body, completion: completion)
     }
     
     
@@ -95,9 +93,7 @@ public class WS_Authentication: AuthenticationWebService {
             return
         }
         
-        call(url: url, method: .post) { result in
-            completion(result)
-        }
+        call(url: url, method: .post, completion: completion)
     }
     
     
@@ -118,10 +114,10 @@ public class WS_Authentication: AuthenticationWebService {
         guard let baseURL = URL(string: region.oauthURI) else { return nil }
         var url = baseURL.appendingPathComponent("/authorize")
         url.appendQuery(parameters: ["client_id": credentials.clientID,
-                                      "scope": scope.scopeValue,
-                                      "state": state,
-                                      "redirect_uri": redirectURL.absoluteString,
-                                      "response_type": "code"])
+                                     "scope": scope.scopeValue,
+                                     "state": state,
+                                     "redirect_uri": redirectURL.absoluteString,
+                                     "response_type": "code"])
         return url
     }
     
@@ -143,9 +139,7 @@ public class WS_Authentication: AuthenticationWebService {
         let parameters = String(format: "grant_type=authorization_code&code=%@&redirect_uri=%@", code, redirectURL)
         let body = parameters.data(using: .utf8)
         
-        call(url: url, method: .post, headers: [.contentType([.form]), .authorization(.basic(encryptedCredientials))], body: body) { result in
-            completion(result)
-        }
+        call(url: url, method: .post, headers: [.contentType(.form), .authorization(.basic(encryptedCredientials))], body: body, completion: completion)
     }
     
     
@@ -161,9 +155,7 @@ public class WS_Authentication: AuthenticationWebService {
             return
         }
         
-        call(url: url, method: .post) { result in
-            completion(result)
-        }
+        call(url: url, method: .post, completion: completion)
     }
     
     

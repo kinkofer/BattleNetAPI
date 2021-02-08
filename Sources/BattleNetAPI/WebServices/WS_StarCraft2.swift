@@ -159,9 +159,7 @@ public struct WS_StarCraft2: WS_StarCraft2Service {
      - parameter completion: Returns a Result with the Data if `success` or an HTTPError if `failure`
      */
     public func getLeagueData(seasonID: Int, queue: LeagueQueue, team: LeagueTeam, league: LeagueType, namespace: APINamespace? = nil, completion: @escaping (_ result: Result<Data, Error>) -> Void) {
-        call(endpoint: API.league(seasonID, queue, team, league), namespace: namespace) { result in
-            completion(result)
-        }
+        call(endpoint: API.league(seasonID, queue, team, league), namespace: namespace, completion: completion)
     }
     
     
@@ -177,9 +175,7 @@ public struct WS_StarCraft2: WS_StarCraft2Service {
      - parameter completion: Returns a Result with the Data if `success` or an HTTPError if `failure`
      */
     public func getProfileData(sc2Region: APIRegion, completion: @escaping (_ result: Result<Data, Error>) -> Void) {
-        call(endpoint: API.profileData(sc2Region)) { result in
-            completion(result)
-        }
+        call(endpoint: API.profileData(sc2Region), completion: completion)
     }
     
     
@@ -192,9 +188,7 @@ public struct WS_StarCraft2: WS_StarCraft2Service {
      - parameter completion: Returns a Result with the Data if `success` or an HTTPError if `failure`
      */
     public func getProfileMetadata(id: Int, sc2Region: APIRegion, realmID: Int, completion: @escaping (_ result: Result<Data, Error>) -> Void) {
-        call(endpoint: API.profileMetadata(sc2Region: sc2Region, realmID: realmID, profileID: id)) { result in
-            completion(result)
-        }
+        call(endpoint: API.profileMetadata(sc2Region: sc2Region, realmID: realmID, profileID: id), completion: completion)
     }
     
     
@@ -208,9 +202,7 @@ public struct WS_StarCraft2: WS_StarCraft2Service {
      - note: This function is unavailable for the region of China, see `getCNProfile(id:name:sc2Region:)`
      */
     public func getProfile(id: Int, sc2Region: APIRegion, realmID: Int, completion: @escaping (_ result: Result<Data, Error>) -> Void) {
-        call(endpoint: API.profile(sc2Region: sc2Region, realmID: realmID, profileID: id)) { result in
-            completion(result)
-        }
+        call(endpoint: API.profile(sc2Region: sc2Region, realmID: realmID, profileID: id), completion: completion)
     }
     
     
@@ -224,9 +216,7 @@ public struct WS_StarCraft2: WS_StarCraft2Service {
      - note: This function is unavailable for the region of China, see `getCNLadder(id:)`
      */
     public func getLadderSummary(profileID: Int, sc2Region: APIRegion, realmID: Int, completion: @escaping (_ result: Result<Data, Error>) -> Void) {
-        call(endpoint: API.ladderSummary(sc2Region: sc2Region, realmID: realmID, profileID: profileID)) { result in
-            completion(result)
-        }
+        call(endpoint: API.ladderSummary(sc2Region: sc2Region, realmID: realmID, profileID: profileID), completion: completion)
     }
     
     
@@ -241,9 +231,7 @@ public struct WS_StarCraft2: WS_StarCraft2Service {
      - note: This function is unavailable for the region of China, see `getCNLadders(profileID:profileName:sc2Region:)`
      */
     public func getLadder(id: Int, profileID: Int, sc2Region: APIRegion, realmID: Int, completion: @escaping (_ result: Result<Data, Error>) -> Void) {
-        call(endpoint: API.ladder(sc2Region: sc2Region, realmID: realmID, profileID: profileID, ladderID: id)) { result in
-            completion(result)
-        }
+        call(endpoint: API.ladder(sc2Region: sc2Region, realmID: realmID, profileID: profileID, ladderID: id), completion: completion)
     }
     
     
@@ -256,9 +244,7 @@ public struct WS_StarCraft2: WS_StarCraft2Service {
      - parameter completion: Returns a Result with the Data if `success` or an HTTPError if `failure`
      */
     public func getGrandmasterLeaderboard(sc2Region: APIRegion, completion: @escaping (_ result: Result<Data, Error>) -> Void) {
-        call(endpoint: API.grandmasterLeaderboard(sc2Region)) { result in
-            completion(result)
-        }
+        call(endpoint: API.grandmasterLeaderboard(sc2Region), completion: completion)
     }
     
     
@@ -269,9 +255,7 @@ public struct WS_StarCraft2: WS_StarCraft2Service {
      - parameter completion: Returns a Result with the Data if `success` or an HTTPError if `failure`
      */
     public func getLadderSeason(sc2Region: APIRegion, completion: @escaping (_ result: Result<Data, Error>) -> Void) {
-        call(endpoint: API.ladderSeason(sc2Region)) { result in
-            completion(result)
-        }
+        call(endpoint: API.ladderSeason(sc2Region), completion: completion)
     }
     
     
@@ -285,9 +269,7 @@ public struct WS_StarCraft2: WS_StarCraft2Service {
      - parameter completion: Returns a Result with the Data if `success` or an HTTPError if `failure`
      */
     public func getPlayer(accountID id: Int, completion: @escaping (_ result: Result<Data, Error>) -> Void) {
-        call(endpoint: API.player(id)) { result in
-            completion(result)
-        }
+        call(endpoint: API.player(id), completion: completion)
     }
     
     
@@ -304,9 +286,7 @@ public struct WS_StarCraft2: WS_StarCraft2Service {
      - note: This function is unavailable for the region of China, see `getCNProfile(id:name:sc2Region:)`
      */
     public func getProfile(sc2Region: APIRegion, realmID: Int, profileID: Int, completion: @escaping (_ result: Result<Data, Error>) -> Void) {
-        call(endpoint: API.legacyProfile(sc2Region: sc2Region, realmID: realmID, profileID: profileID)) { result in
-            completion(result)
-        }
+        call(endpoint: API.legacyProfile(sc2Region: sc2Region, realmID: realmID, profileID: profileID), completion: completion)
     }
     
     
@@ -320,9 +300,7 @@ public struct WS_StarCraft2: WS_StarCraft2Service {
      - note: This function is unavailable for the region of China, see `getCNLadders(profileID:profileName:sc2Region:)`
      */
     public func getLadders(sc2Region: APIRegion, realmID: Int, profileID: Int, completion: @escaping (_ result: Result<Data, Error>) -> Void) {
-        call(endpoint: API.legacyLadders(sc2Region: sc2Region, realmID: realmID, profileID: profileID)) { result in
-            completion(result)
-        }
+        call(endpoint: API.legacyLadders(sc2Region: sc2Region, realmID: realmID, profileID: profileID), completion: completion)
     }
     
     
@@ -336,9 +314,7 @@ public struct WS_StarCraft2: WS_StarCraft2Service {
      - note: This function is unavailable for the region of China, see `getCNMatchHistory(profileID:profileName:sc2Region:)`
      */
     public func getMatchHistory(sc2Region: APIRegion, realmID: Int, profileID: Int, completion: @escaping (_ result: Result<Data, Error>) -> Void) {
-        call(endpoint: API.legacyMatchHistory(sc2Region: sc2Region, realmID: realmID, profileID: profileID)) { result in
-            completion(result)
-        }
+        call(endpoint: API.legacyMatchHistory(sc2Region: sc2Region, realmID: realmID, profileID: profileID), completion: completion)
     }
     
     
@@ -350,9 +326,7 @@ public struct WS_StarCraft2: WS_StarCraft2Service {
      - parameter completion: Returns a Result with the Data if `success` or an HTTPError if `failure`
      */
     public func getLadder(sc2Region: APIRegion, ladder: Int, completion: @escaping (_ result: Result<Data, Error>) -> Void) {
-        call(endpoint: API.legacyLadder(sc2Region: sc2Region, ladderID: ladder)) { result in
-            completion(result)
-        }
+        call(endpoint: API.legacyLadder(sc2Region: sc2Region, ladderID: ladder), completion: completion)
     }
     
     
@@ -364,9 +338,7 @@ public struct WS_StarCraft2: WS_StarCraft2Service {
      - note: This function is unavailable for the region of China, see `getCNAchievements()`
      */
     public func getAchievements(sc2Region: APIRegion, completion: @escaping (_ result: Result<Data, Error>) -> Void) {
-        call(endpoint: API.legacyAchievements(sc2Region: sc2Region)) { result in
-            completion(result)
-        }
+        call(endpoint: API.legacyAchievements(sc2Region: sc2Region), completion: completion)
     }
     
     
@@ -378,9 +350,7 @@ public struct WS_StarCraft2: WS_StarCraft2Service {
      - note: This function is unavailable for the region of China, see `getCNRewards()`
      */
     public func getRewards(sc2Region: APIRegion, completion: @escaping (_ result: Result<Data, Error>) -> Void) {
-        call(endpoint: API.legacyReward(sc2Region: sc2Region)) { result in
-            completion(result)
-        }
+        call(endpoint: API.legacyReward(sc2Region: sc2Region), completion: completion)
     }
     
     
@@ -396,9 +366,7 @@ public struct WS_StarCraft2: WS_StarCraft2Service {
      - parameter completion: Returns a Result with the Data if `success` or an HTTPError if `failure`
      */
     public func getCNProfile(id: Int, name: String, sc2Region: APIRegion, completion: @escaping (_ result: Result<Data, Error>) -> Void) {
-        call(endpoint: API.cnProfile(profileID: id, sc2Region: sc2Region, profileName: name)) { result in
-            completion(result)
-        }
+        call(endpoint: API.cnProfile(profileID: id, sc2Region: sc2Region, profileName: name), completion: completion)
     }
     
     
@@ -411,9 +379,7 @@ public struct WS_StarCraft2: WS_StarCraft2Service {
      - parameter completion: Returns a Result with the Data if `success` or an HTTPError if `failure`
      */
     public func getCNLadders(profileID: Int, profileName: String, sc2Region: APIRegion, completion: @escaping (_ result: Result<Data, Error>) -> Void) {
-        call(endpoint: API.cnLadders(profileID: profileID, sc2Region: sc2Region, profileName: profileName)) { result in
-            completion(result)
-        }
+        call(endpoint: API.cnLadders(profileID: profileID, sc2Region: sc2Region, profileName: profileName), completion: completion)
     }
     
     
@@ -426,9 +392,7 @@ public struct WS_StarCraft2: WS_StarCraft2Service {
     - parameter completion: Returns a Result with the Data if `success` or an HTTPError if `failure`
     */
     public func getCNMatchHistory(profileID: Int, profileName: String, sc2Region: APIRegion, completion: @escaping (_ result: Result<Data, Error>) -> Void) {
-        call(endpoint: API.cnMatchHistory(profileID: profileID, sc2Region: sc2Region, profileName: profileName)) { result in
-            completion(result)
-        }
+        call(endpoint: API.cnMatchHistory(profileID: profileID, sc2Region: sc2Region, profileName: profileName), completion: completion)
     }
     
     
@@ -439,9 +403,7 @@ public struct WS_StarCraft2: WS_StarCraft2Service {
     - parameter completion: Returns a Result with the Data if `success` or an HTTPError if `failure`
     */
     public func getCNLadder(id: Int, completion: @escaping (_ result: Result<Data, Error>) -> Void) {
-        call(endpoint: API.cnLadder(id: id)) { result in
-            completion(result)
-        }
+        call(endpoint: API.cnLadder(id: id), completion: completion)
     }
     
     
@@ -451,9 +413,7 @@ public struct WS_StarCraft2: WS_StarCraft2Service {
      - parameter completion: Returns a Result with the Data if `success` or an HTTPError if `failure`
      */
     public func getCNAchievements(completion: @escaping (_ result: Result<Data, Error>) -> Void) {
-        call(endpoint: API.cnAchievements) { result in
-            completion(result)
-        }
+        call(endpoint: API.cnAchievements, completion: completion)
     }
     
     
@@ -463,8 +423,6 @@ public struct WS_StarCraft2: WS_StarCraft2Service {
      - parameter completion: Returns a Result with the Data if `success` or an HTTPError if `failure`
      */
     public func getCNRewards(completion: @escaping (_ result: Result<Data, Error>) -> Void) {
-        call(endpoint: API.cnRewards) { result in
-            completion(result)
-        }
+        call(endpoint: API.cnRewards, completion: completion)
     }
 }

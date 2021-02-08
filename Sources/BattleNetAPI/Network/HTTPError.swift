@@ -125,9 +125,9 @@ public enum HTTPError: Error, LocalizedError, Equatable {
         case .httpError:
             return 599
         case .timeout:
-            return -1001
+            return NSURLErrorTimedOut // -1001
         case .noNetwork:
-            return -1009
+            return NSURLErrorNotConnectedToInternet // -1009
         case .serverResponse(let status, _):
             return status.rawValue
         case .other(let error as NSError):
@@ -141,7 +141,9 @@ public enum HTTPError: Error, LocalizedError, Equatable {
     public static func == (lhs: HTTPError, rhs: HTTPError) -> Bool {
         switch (lhs, rhs) {
         case (.unauthorized, .unauthorized), (.timeout, .timeout), (.unexpectedResponse, .unexpectedResponse),
-             (.invalidRequest, .invalidRequest), (.unexpectedBody, .unexpectedBody), (.forbidden, .forbidden):
+             (.invalidRequest, .invalidRequest), (.unexpectedBody, .unexpectedBody), (.forbidden, .forbidden),
+             (.httpError, .httpError), (.jsonParsingError, .jsonParsingError), (.stringParsingError, .stringParsingError),
+             (.noNetwork, .noNetwork):
             return true
         case (.other(_), .other(_)):
             // Can't compare 2 errors, so just assume equality
@@ -204,7 +206,7 @@ public enum HTTPStatus: Int {
     case unsupportedMediaType = 415
     case rangeNotSatisfiable = 416
     case expectationFailed = 417
-    case teapod = 418
+    case teapot = 418
     case misdirectedRequest = 421
     case unprocessableEntity = 422
     case locked = 423

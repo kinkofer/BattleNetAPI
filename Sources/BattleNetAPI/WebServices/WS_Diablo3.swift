@@ -171,9 +171,7 @@ public struct WS_Diablo3: WS_Diablo3Service {
      - parameter completion: Returns a Result with the Data if `success` or an HTTPError if `failure`
      */
     public func getSeasons(namespace: APINamespace? = nil, completion: @escaping (_ result: Result<Data, Error>) -> Void) {
-        call(endpoint: API.season, namespace: namespace) { result in
-            completion(result)
-        }
+        call(endpoint: API.season, namespace: namespace, completion: completion)
     }
     
     
@@ -185,9 +183,7 @@ public struct WS_Diablo3: WS_Diablo3Service {
      - parameter completion: Returns a Result with the Data if `success` or an HTTPError if `failure`
      */
     public func getLeaderboards(seasonID: Int, namespace: APINamespace? = nil, completion: @escaping (_ result: Result<Data, Error>) -> Void) {
-        call(endpoint: API.leaderboardBySeason(seasonID), namespace: namespace) { result in
-            completion(result)
-        }
+        call(endpoint: API.leaderboardBySeason(seasonID), namespace: namespace, completion: completion)
     }
     
     
@@ -200,9 +196,7 @@ public struct WS_Diablo3: WS_Diablo3Service {
      - parameter completion: Returns a Result with the Data if `success` or an HTTPError if `failure`
      */
     public func getLeaderboard(_ leaderboard: String, seasonID: Int, namespace: APINamespace? = nil, completion: @escaping (_ result: Result<Data, Error>) -> Void) {
-        call(endpoint: API.seasonLeaderboard(seasonID, leaderboard), namespace: namespace) { result in
-            completion(result)
-        }
+        call(endpoint: API.seasonLeaderboard(seasonID, leaderboard), namespace: namespace, completion: completion)
     }
     
     
@@ -213,9 +207,7 @@ public struct WS_Diablo3: WS_Diablo3Service {
      - parameter completion: Returns a Result with the Data if `success` or an HTTPError if `failure`
      */
     public func getEras(namespace: APINamespace? = nil, completion: @escaping (_ result: Result<Data, Error>) -> Void) {
-        call(endpoint: API.eraIndex, namespace: namespace) { result in
-            completion(result)
-        }
+        call(endpoint: API.eraIndex, namespace: namespace, completion: completion)
     }
     
     
@@ -227,9 +219,7 @@ public struct WS_Diablo3: WS_Diablo3Service {
      - parameter completion: Returns a Result with the Data if `success` or an HTTPError if `failure`
      */
     public func getLeaderboards(eraID: Int, namespace: APINamespace? = nil, completion: @escaping (_ result: Result<Data, Error>) -> Void) {
-        call(endpoint: API.leaderboardByEra(eraID), namespace: namespace) { result in
-            completion(result)
-        }
+        call(endpoint: API.leaderboardByEra(eraID), namespace: namespace, completion: completion)
     }
     
     
@@ -242,9 +232,7 @@ public struct WS_Diablo3: WS_Diablo3Service {
      - parameter completion: Returns a Result with the Data if `success` or an HTTPError if `failure`
      */
     public func getLeaderboard(_ leaderboard: String, eraID: Int, namespace: APINamespace? = nil, completion: @escaping (_ result: Result<Data, Error>) -> Void) {
-        call(endpoint: API.eraLeaderboard(eraID, leaderboard), namespace: namespace) { result in
-            completion(result)
-        }
+        call(endpoint: API.eraLeaderboard(eraID, leaderboard), namespace: namespace, completion: completion)
     }
     
     
@@ -259,9 +247,7 @@ public struct WS_Diablo3: WS_Diablo3Service {
      - parameter completion: Returns a Result with the Data if `success` or an HTTPError if `failure`
      */
     public func getActs(completion: @escaping (_ result: Result<Data, Error>) -> Void) {
-        call(endpoint: API.actIndex) { result in
-            completion(result)
-        }
+        call(endpoint: API.actIndex, completion: completion)
     }
     
     
@@ -272,9 +258,7 @@ public struct WS_Diablo3: WS_Diablo3Service {
      - parameter completion: Returns a Result with the Data if `success` or an HTTPError if `failure`
      */
     public func getAct(id: Int, completion: @escaping (_ result: Result<Data, Error>) -> Void) {
-        call(endpoint: API.act(id)) { result in
-            completion(result)
-        }
+        call(endpoint: API.act(id), completion: completion)
     }
     
     
@@ -288,9 +272,7 @@ public struct WS_Diablo3: WS_Diablo3Service {
      - parameter completion: Returns a Result with the Data if `success` or an HTTPError if `failure`
      */
     public func getArtisan(slug: String, completion: @escaping (_ result: Result<Data, Error>) -> Void) {
-        call(endpoint: API.artisan(slug)) { result in
-            completion(result)
-        }
+        call(endpoint: API.artisan(slug), completion: completion)
     }
     
     
@@ -302,9 +284,7 @@ public struct WS_Diablo3: WS_Diablo3Service {
      - parameter completion: Returns a Result with the Data if `success` or an HTTPError if `failure`
      */
     public func getRecipe(recipeSlug: String, artisanSlug: String, completion: @escaping (_ result: Result<Data, Error>) -> Void) {
-        call(endpoint: API.artisanRecipe(artisan: artisanSlug, recipe: recipeSlug)) { result in
-            completion(result)
-        }
+        call(endpoint: API.artisanRecipe(artisan: artisanSlug, recipe: recipeSlug), completion: completion)
     }
     
     
@@ -318,9 +298,7 @@ public struct WS_Diablo3: WS_Diablo3Service {
      - parameter completion: Returns a Result with the Data if `success` or an HTTPError if `failure`
      */
     public func getFollower(slug: String, completion: @escaping (_ result: Result<Data, Error>) -> Void) {
-        call(endpoint: API.follower(slug)) { result in
-            completion(result)
-        }
+        call(endpoint: API.follower(slug), completion: completion)
     }
     
     
@@ -334,9 +312,7 @@ public struct WS_Diablo3: WS_Diablo3Service {
      - parameter completion: Returns a Result with the Data if `success` or an HTTPError if `failure`
      */
     public func getClass(slug: String, completion: @escaping (_ result: Result<Data, Error>) -> Void) {
-        call(endpoint: API.class(slug)) { result in
-            completion(result)
-        }
+        call(endpoint: API.class(slug), completion: completion)
     }
     
     
@@ -348,9 +324,7 @@ public struct WS_Diablo3: WS_Diablo3Service {
      - parameter completion: Returns a Result with the Data if `success` or an HTTPError if `failure`
      */
     public func getSkill(skillSlug: String, classSlug: String, completion: @escaping (_ result: Result<Data, Error>) -> Void) {
-        call(endpoint: API.classSkill(class: classSlug, skill: skillSlug)) { result in
-            completion(result)
-        }
+        call(endpoint: API.classSkill(class: classSlug, skill: skillSlug), completion: completion)
     }
     
     
@@ -365,9 +339,7 @@ public struct WS_Diablo3: WS_Diablo3Service {
      - parameter completion: Returns a Result with the Data if `success` or an HTTPError if `failure`
      */
     public func getItemTypes(completion: @escaping (_ result: Result<Data, Error>) -> Void) {
-        call(endpoint: API.itemType) { result in
-            completion(result)
-        }
+        call(endpoint: API.itemType, completion: completion)
     }
     
     
@@ -378,9 +350,7 @@ public struct WS_Diablo3: WS_Diablo3Service {
      - parameter completion: Returns a Result with the Data if `success` or an HTTPError if `failure`
      */
     public func getItemsByType(typeSlug: String, completion: @escaping (_ result: Result<Data, Error>) -> Void) {
-        call(endpoint: API.itemTypeBySlug(typeSlug)) { result in
-            completion(result)
-        }
+        call(endpoint: API.itemTypeBySlug(typeSlug), completion: completion)
     }
     
     
@@ -394,9 +364,7 @@ public struct WS_Diablo3: WS_Diablo3Service {
      - parameter completion: Returns a Result with the Data if `success` or an HTTPError if `failure`
      */
     public func getItem(itemSlugAndID: String, completion: @escaping (_ result: Result<Data, Error>) -> Void) {
-        call(endpoint: API.itemSlugAndID(itemSlugAndID)) { result in
-            completion(result)
-        }
+        call(endpoint: API.itemSlugAndID(itemSlugAndID), completion: completion)
     }
     
     
@@ -410,9 +378,7 @@ public struct WS_Diablo3: WS_Diablo3Service {
      - parameter completion: Returns a Result with the Data if `success` or an HTTPError if `failure`
     */
     public func getProfile(battleTag: String, completion: @escaping (_ result: Result<Data, Error>) -> Void) {
-        call(endpoint: API.profile(battleTag)) { result in
-            completion(result)
-        }
+        call(endpoint: API.profile(battleTag), completion: completion)
     }
     
     
@@ -424,9 +390,7 @@ public struct WS_Diablo3: WS_Diablo3Service {
      - parameter completion: Returns a Result with the Data if `success` or an HTTPError if `failure`
      */
     public func getHero(heroID: Int, battleTag: String, completion: @escaping (_ result: Result<Data, Error>) -> Void) {
-        call(endpoint: API.hero(battleTag, heroID)) { result in
-            completion(result)
-        }
+        call(endpoint: API.hero(battleTag, heroID), completion: completion)
     }
     
     
@@ -438,9 +402,7 @@ public struct WS_Diablo3: WS_Diablo3Service {
      - parameter completion: Returns a Result with the Data if `success` or an HTTPError if `failure`
      */
     public func getItemsForHero(heroID: Int, battleTag: String, completion: @escaping (_ result: Result<Data, Error>) -> Void) {
-        call(endpoint: API.heroItems(battleTag, heroID)) { result in
-            completion(result)
-        }
+        call(endpoint: API.heroItems(battleTag, heroID), completion: completion)
     }
     
     
@@ -452,8 +414,6 @@ public struct WS_Diablo3: WS_Diablo3Service {
      - parameter completion: Returns a Result with the Data if `success` or an HTTPError if `failure`
      */
     public func getFollowerItemsForHero(heroID: Int, battleTag: String, completion: @escaping (_ result: Result<Data, Error>) -> Void) {
-        call(endpoint: API.heroFollowerItems(battleTag, heroID)) { result in
-            completion(result)
-        }
+        call(endpoint: API.heroFollowerItems(battleTag, heroID), completion: completion)
     }
 }

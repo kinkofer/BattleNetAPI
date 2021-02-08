@@ -25,12 +25,12 @@ public enum APIType: String {
 }
 
 
+
 public enum APINamespace {
     case `static`
     case dynamic
     case profile
     case custom(String)
-    
     
     func getHeader(for region: APIRegion) -> HTTPHeader {
         switch self {

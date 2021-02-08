@@ -20,9 +20,7 @@ public struct WorldOfWarcraftModelController {
     
     /// Calls a web service identicated by the href in a Link object.
     public func getResource<T: Decodable>(from resourceLink: Link<T>, completion: @escaping (_ result: Result<T, Error>) -> Void) {
-        battleNetAPI.resource.getResource(from: resourceLink.href, apiType: .gameData) { result in
-            result.decode(completion: completion)
-        }
+        battleNetAPI.resource.getResource(from: resourceLink.href, apiType: .gameData, completion: { $0.decode(completion: completion) })
     }
     
     
@@ -42,16 +40,12 @@ public struct WorldOfWarcraftModelController {
     // MARK: - WoW Mythic Keystone Character Profile API
     
     public func getCharacterMythicKeystoneProfile(characterName: String, realmSlug: String, completion: @escaping (_ result: Result<MythicKeystoneProfile, Error>) -> Void) {
-        battleNetAPI.wow.getCharacterMythicKeystoneProfileIndex(characterName: characterName, realmSlug: realmSlug) { result in
-            result.decode(completion: completion)
-        }
+        battleNetAPI.wow.getCharacterMythicKeystoneProfileIndex(characterName: characterName, realmSlug: realmSlug, completion: { $0.decode(completion: completion) })
     }
     
     
     public func getCharacterMythicKeystoneProfileSeason(seasonID: Int, characterName: String, realmSlug: String, completion: @escaping (_ result: Result<MythicKeystoneProfileSeason, Error>) -> Void) {
-        battleNetAPI.wow.getCharacterMythicKeystoneProfileSeason(seasonID: seasonID, characterName: characterName, realmSlug: realmSlug) { result in
-            result.decode(completion: completion)
-        }
+        battleNetAPI.wow.getCharacterMythicKeystoneProfileSeason(seasonID: seasonID, characterName: characterName, realmSlug: realmSlug, completion: { $0.decode(completion: completion) })
     }
     
     
@@ -69,9 +63,7 @@ public struct WorldOfWarcraftModelController {
     
     
     public func getConnectedRealm(id: Int, completion: @escaping (_ result: Result<ConnectedRealm, Error>) -> Void) {
-        battleNetAPI.wow.getConnectedRealm(id: id) { result in
-            result.decode(completion: completion)
-        }
+        battleNetAPI.wow.getConnectedRealm(id: id, completion: { $0.decode(completion: completion) })
     }
     
     
@@ -86,18 +78,14 @@ public struct WorldOfWarcraftModelController {
     
     
     public func getMythicKeystoneAffix(id: Int, completion: @escaping (_ result: Result<KeystoneAffix, Error>) -> Void) {
-        battleNetAPI.wow.getMythicKeystoneAffix(id: id) { result in
-            result.decode(completion: completion)
-        }
+        battleNetAPI.wow.getMythicKeystoneAffix(id: id, completion: { $0.decode(completion: completion) })
     }
     
     
     // MARK: - Mythic Raid Leaderboard API
     
     public func getMythicRaidLeaderboard(raid: String, faction: FactionType, completion: @escaping (_ result: Result<MythicRaidLeaderboard, Error>) -> Void) {
-        battleNetAPI.wow.getMythicRaidLeaderboard(raid: raid, faction: faction) { result in
-            result.decode(completion: completion)
-        }
+        battleNetAPI.wow.getMythicRaidLeaderboard(raid: raid, faction: faction, completion: { $0.decode(completion: completion) })
     }
     
     
@@ -111,9 +99,7 @@ public struct WorldOfWarcraftModelController {
     
     
     public func getMythicKeystoneDungeon(id: Int, completion: @escaping (_ result: Result<MythicKeystoneDungeon, Error>) -> Void) {
-        battleNetAPI.wow.getMythicKeystoneDungeon(id: id) { result in
-            result.decode(completion: completion)
-        }
+        battleNetAPI.wow.getMythicKeystoneDungeon(id: id, completion: { $0.decode(completion: completion) })
     }
     
     
@@ -132,9 +118,7 @@ public struct WorldOfWarcraftModelController {
     
     
     public func getMythicKeystonePeriod(id: Int, completion: @escaping (_ result: Result<MythicKeystonePeriod, Error>) -> Void) {
-        battleNetAPI.wow.getMythicKeystonePeriod(id: id) { result in
-            result.decode(completion: completion)
-        }
+        battleNetAPI.wow.getMythicKeystonePeriod(id: id, completion: { $0.decode(completion: completion) })
     }
     
     
@@ -146,25 +130,19 @@ public struct WorldOfWarcraftModelController {
     
     
     public func getMythicKeystoneSeason(id: Int, completion: @escaping (_ result: Result<MythicKeystoneSeason, Error>) -> Void) {
-        battleNetAPI.wow.getMythicKeystoneSeason(id: id) { result in
-            result.decode(completion: completion)
-        }
+        battleNetAPI.wow.getMythicKeystoneSeason(id: id, completion: { $0.decode(completion: completion) })
     }
     
     
     // MARK: - Mythic Keystone Leaderboard API
     
     public func getMythicLeaderboards(connectedRealmID: Int, completion: @escaping (_ result: Result<MythicLeaderboardIndex, Error>) -> Void) {
-        battleNetAPI.wow.getMythicLeaderboardIndex(connectedRealmID: connectedRealmID) { result in
-            result.decode(completion: completion)
-        }
+        battleNetAPI.wow.getMythicLeaderboardIndex(connectedRealmID: connectedRealmID, completion: { $0.decode(completion: completion) })
     }
     
     
     public func getMythicLeaderboard(connectedRealmID: Int, dungeonID: Int, period: Int, completion: @escaping (_ result: Result<MythicLeaderboard, Error>) -> Void) {
-        battleNetAPI.wow.getMythicLeaderboard(connectedRealmID: connectedRealmID, dungeonID: dungeonID, period: period) { result in
-            result.decode(completion: completion)
-        }
+        battleNetAPI.wow.getMythicLeaderboard(connectedRealmID: connectedRealmID, dungeonID: dungeonID, period: period, completion: { $0.decode(completion: completion) })
     }
     
     
@@ -179,16 +157,12 @@ public struct WorldOfWarcraftModelController {
     
     
     public func getPlayableClass(id: Int, completion: @escaping (_ result: Result<WOWClass, Error>) -> Void) {
-        battleNetAPI.wow.getPlayableClass(id: id) { result in
-            result.decode(completion: completion)
-        }
+        battleNetAPI.wow.getPlayableClass(id: id, completion: { $0.decode(completion: completion) })
     }
     
     
     public func getPlayableClassPvPTalentSlots(classID: Int, completion: @escaping (_ result: Result<PVPTalentSlots, Error>) -> Void) {
-        battleNetAPI.wow.getPlayableClassPvPTalentSlots(classID: classID) { result in
-            result.decode(completion: completion)
-        }
+        battleNetAPI.wow.getPlayableClassPvPTalentSlots(classID: classID, completion: { $0.decode(completion: completion) })
     }
     
     
@@ -203,9 +177,7 @@ public struct WorldOfWarcraftModelController {
     
     
     public func getPlayableSpecialization(id: Int, completion: @escaping (_ result: Result<Specialization, Error>) -> Void) {
-        battleNetAPI.wow.getPlayableSpecialization(id: id) { result in
-            result.decode(completion: completion)
-        }
+        battleNetAPI.wow.getPlayableSpecialization(id: id, completion: { $0.decode(completion: completion) })
     }
     
     
@@ -220,9 +192,7 @@ public struct WorldOfWarcraftModelController {
     
     
     public func getPowerType(id: Int, completion: @escaping (_ result: Result<PowerType, Error>) -> Void) {
-        battleNetAPI.wow.getPowerType(id: id) { result in
-            result.decode(completion: completion)
-        }
+        battleNetAPI.wow.getPowerType(id: id, completion: { $0.decode(completion: completion) })
     }
     
     
@@ -236,9 +206,7 @@ public struct WorldOfWarcraftModelController {
     
     
     public func getPlayableRace(id: Int, completion: @escaping (_ result: Result<WOWRace, Error>) -> Void) {
-        battleNetAPI.wow.getPlayableRace(id: id) { result in
-            result.decode(completion: completion)
-        }
+        battleNetAPI.wow.getPlayableRace(id: id, completion: { $0.decode(completion: completion) })
     }
     
     
@@ -270,9 +238,7 @@ public struct WorldOfWarcraftModelController {
             realmSlug = slug!
         }
         
-        battleNetAPI.wow.getRealm(realmSlug) { result in
-            result.decode(completion: completion)
-        }
+        battleNetAPI.wow.getRealm(realmSlug, completion: { $0.decode(completion: completion) })
     }
     
     
@@ -290,9 +256,7 @@ public struct WorldOfWarcraftModelController {
     
     
     public func getRegion(id: Int, completion: @escaping (_ result: Result<Region, Error>) -> Void) {
-        battleNetAPI.wow.getRegion(id: id) { result in
-            result.decode(completion: completion)
-        }
+        battleNetAPI.wow.getRegion(id: id, completion: { $0.decode(completion: completion) })
     }
     
     
@@ -310,9 +274,7 @@ public struct WorldOfWarcraftModelController {
     // MARK: - Achievement API
     
     public func getAchievement(id: Int, completion: @escaping (_ result: Result<WOWAchievement, Error>) -> Void) {
-        battleNetAPI.wow.getAchievement(id: id) { result in
-            result.decode(completion: completion)
-        }
+        battleNetAPI.wow.getAchievement(id: id, completion: { $0.decode(completion: completion) })
     }
     
     
@@ -320,9 +282,7 @@ public struct WorldOfWarcraftModelController {
     // MARK: - Auction API
     
     public func getAuctions(connectedRealmID: Int, completion: @escaping (_ result: Result<Auction, Error>) -> Void) {
-        battleNetAPI.wow.getAuctions(connectedRealmID: connectedRealmID) { result in
-            result.decode(completion: completion)
-        }
+        battleNetAPI.wow.getAuctions(connectedRealmID: connectedRealmID, completion: { $0.decode(completion: completion) })
     }
     
     
@@ -353,9 +313,7 @@ public struct WorldOfWarcraftModelController {
     // MARK: - Character Profile API
     
     public func getCharacter(characterName: String, realmSlug: String, completion: @escaping (_ result: Result<WOWCharacterProfile, Error>) -> Void) {
-        battleNetAPI.wow.getCharacterProfileSummary(characterName: characterName, realmSlug: realmSlug) { result in
-            result.decode(completion: completion)
-        }
+        battleNetAPI.wow.getCharacterProfileSummary(characterName: characterName, realmSlug: realmSlug, completion: { $0.decode(completion: completion) })
     }
     
     
@@ -363,9 +321,7 @@ public struct WorldOfWarcraftModelController {
     // MARK: - Guild Profile API
     
     public func getGuild(slug: String, realmSlug: String, completion: @escaping (_ result: Result<WOWGuildProfile, Error>) -> Void) {
-        battleNetAPI.wow.getGuild(slug: slug, realmSlug: realmSlug) { result in
-            result.decode(completion: completion)
-        }
+        battleNetAPI.wow.getGuild(slug: slug, realmSlug: realmSlug, completion: { $0.decode(completion: completion) })
     }
     
     
@@ -373,16 +329,12 @@ public struct WorldOfWarcraftModelController {
     // MARK: - Item API
     
     public func getItem(id: Int, completion: @escaping (_ result: Result<WOWItem, Error>) -> Void) {
-        battleNetAPI.wow.getItem(id: id) { result in
-            result.decode(completion: completion)
-        }
+        battleNetAPI.wow.getItem(id: id, completion: { $0.decode(completion: completion) })
     }
     
     
     public func getItemSet(id: Int, completion: @escaping (_ result: Result<WOWItemSet, Error>) -> Void) {
-        battleNetAPI.wow.getItemSet(id: id) { result in
-            result.decode(completion: completion)
-        }
+        battleNetAPI.wow.getItemSet(id: id, completion: { $0.decode(completion: completion) })
     }
     
     
@@ -413,9 +365,7 @@ public struct WorldOfWarcraftModelController {
     
     
     public func getPetAbility(id: Int, completion: @escaping (_ result: Result<PetAbility, Error>) -> Void) {
-        battleNetAPI.wow.getPetAbility(id: id) { result in
-            result.decode(completion: completion)
-        }
+        battleNetAPI.wow.getPetAbility(id: id, completion: { $0.decode(completion: completion) })
     }
     
     
@@ -424,9 +374,7 @@ public struct WorldOfWarcraftModelController {
     // MARK: - PvP API
     
     public func getPvPLeaderboard(season: Int, bracket: WOWLeaderboardBracket, completion: @escaping (_ result: Result<WOWLeaderboard, Error>) -> Void) {
-        battleNetAPI.wow.getPvPLeaderboard(pvpSeasonID: season, pvpBracket: bracket) { result in
-            result.decode(completion: completion)
-        }
+        battleNetAPI.wow.getPvPLeaderboard(pvpSeasonID: season, pvpBracket: bracket, completion: { $0.decode(completion: completion) })
     }
     
     
@@ -434,9 +382,7 @@ public struct WorldOfWarcraftModelController {
     // MARK: - Quest API
     
     public func getQuest(id: Int, completion: @escaping (_ result: Result<WOWQuest, Error>) -> Void) {
-        battleNetAPI.wow.getQuest(id: id) { result in
-            result.decode(completion: completion)
-        }
+        battleNetAPI.wow.getQuest(id: id, completion: { $0.decode(completion: completion) })
     }
     
     
@@ -457,9 +403,7 @@ public struct WorldOfWarcraftModelController {
     // MARK: - Recipe API
     
     public func getRecipe(id: Int, completion: @escaping (_ result: Result<WOWRecipe, Error>) -> Void) {
-        battleNetAPI.wow.getRecipe(id: id) { result in
-            result.decode(completion: completion)
-        }
+        battleNetAPI.wow.getRecipe(id: id, completion: { $0.decode(completion: completion) })
     }
     
     
@@ -467,9 +411,7 @@ public struct WorldOfWarcraftModelController {
     // MARK: - Spell API
     
     public func getSpell(id: Int, completion: @escaping (_ result: Result<Spell, Error>) -> Void) {
-        battleNetAPI.wow.getSpell(id: id) { result in
-            result.decode(completion: completion)
-        }
+        battleNetAPI.wow.getSpell(id: id, completion: { $0.decode(completion: completion) })
     }
     
     

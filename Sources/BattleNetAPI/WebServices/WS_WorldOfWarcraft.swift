@@ -670,7 +670,7 @@ public struct WS_WorldOfWarcraft: WebService {
      - parameter completion: Returns a Result with the Data if `success` or an HTTPError if `failure`
     */
     public func getAchievementCategoryIndex(namespace: APINamespace? = .static, completion: @escaping (_ result: Result<Data, Error>) -> Void) {
-        call(endpoint: API.achievementCategoryIndex, namespace: namespace, completion: { completion($0) })
+        call(endpoint: API.achievementCategoryIndex, namespace: namespace, completion: completion)
     }
     
     
@@ -682,7 +682,7 @@ public struct WS_WorldOfWarcraft: WebService {
      - parameter completion: Returns a Result with the Data if `success` or an HTTPError if `failure`
     */
     public func getAchievementCategory(id: Int, namespace: APINamespace? = .static, completion: @escaping (_ result: Result<Data, Error>) -> Void) {
-        call(endpoint: API.achievementCategory(id), namespace: namespace, completion: { completion($0) })
+        call(endpoint: API.achievementCategory(id), namespace: namespace, completion: completion)
     }
     
     
@@ -693,7 +693,7 @@ public struct WS_WorldOfWarcraft: WebService {
      - parameter completion: Returns a Result with the Data if `success` or an HTTPError if `failure`
     */
     public func getAchievementIndex(namespace: APINamespace? = .static, completion: @escaping (_ result: Result<Data, Error>) -> Void) {
-        call(endpoint: API.achievementIndex, namespace: namespace, completion: { completion($0) })
+        call(endpoint: API.achievementIndex, namespace: namespace, completion: completion)
     }
     
     
@@ -705,7 +705,7 @@ public struct WS_WorldOfWarcraft: WebService {
      - parameter completion: Returns a Result with the Data if `success` or an HTTPError if `failure`
     */
     public func getAchievement(id: Int, namespace: APINamespace? = .static, completion: @escaping (_ result: Result<Data, Error>) -> Void) {
-        call(endpoint: API.achievement(id), namespace: namespace, completion: { completion($0) })
+        call(endpoint: API.achievement(id), namespace: namespace, completion: completion)
     }
     
     
@@ -717,7 +717,7 @@ public struct WS_WorldOfWarcraft: WebService {
      - parameter completion: Returns a Result with the Data if `success` or an HTTPError if `failure`
     */
     public func getAchievementMedia(id: Int, namespace: APINamespace? = .static, completion: @escaping (_ result: Result<Data, Error>) -> Void) {
-        call(endpoint: API.achievementMedia(id), namespace: namespace, completion: { completion($0) })
+        call(endpoint: API.achievementMedia(id), namespace: namespace, completion: completion)
     }
     
     
@@ -738,7 +738,7 @@ public struct WS_WorldOfWarcraft: WebService {
      - parameter completion: Returns a Result with the Data if `success` or an HTTPError if `failure`
      */
     public func getAuctions(connectedRealmID: Int, namespace: APINamespace? = .static, completion: @escaping (_ result: Result<Data, Error>) -> Void) {
-        call(endpoint: API.auctions(connectedRealmID: connectedRealmID), completion: { completion($0) })
+        call(endpoint: API.auctions(connectedRealmID: connectedRealmID), completion: completion)
     }
     
     
@@ -752,7 +752,7 @@ public struct WS_WorldOfWarcraft: WebService {
      - parameter completion: Returns a Result with the Data if `success` or an HTTPError if `failure`
     */
     public func getAzeriteEssenceIndex(namespace: APINamespace? = .static, completion: @escaping (_ result: Result<Data, Error>) -> Void) {
-        call(endpoint: API.azeriteEssenceIndex, namespace: namespace, completion: { completion($0) })
+        call(endpoint: API.azeriteEssenceIndex, namespace: namespace, completion: completion)
     }
     
     
@@ -764,7 +764,7 @@ public struct WS_WorldOfWarcraft: WebService {
      - parameter completion: Returns a Result with the Data if `success` or an HTTPError if `failure`
     */
     public func getAzeriteEssence(id: Int, namespace: APINamespace? = .static, completion: @escaping (_ result: Result<Data, Error>) -> Void) {
-        call(endpoint: API.azeriteEssence(id), namespace: namespace, completion: { completion($0) })
+        call(endpoint: API.azeriteEssence(id), namespace: namespace, completion: completion)
     }
     
     
@@ -776,7 +776,7 @@ public struct WS_WorldOfWarcraft: WebService {
      - parameter completion: Returns a Result with the Data if `success` or an HTTPError if `failure`
     */
     public func searchAzeriteEssence(queries: [String: String], namespace: APINamespace? = .static, completion: @escaping (_ result: Result<Data, Error>) -> Void) {
-        call(endpoint: API.azeriteEssenceSearch(queries), namespace: namespace, completion: { completion($0) })
+        call(endpoint: API.azeriteEssenceSearch(queries), namespace: namespace, completion: completion)
     }
     
     
@@ -788,7 +788,7 @@ public struct WS_WorldOfWarcraft: WebService {
      - parameter completion: Returns a Result with the Data if `success` or an HTTPError if `failure`
     */
     public func getAzeriteEssenceMedia(id: Int, namespace: APINamespace? = .static, completion: @escaping (_ result: Result<Data, Error>) -> Void) {
-        call(endpoint: API.azeriteEssenceMedia(id), namespace: namespace, completion: { completion($0) })
+        call(endpoint: API.azeriteEssenceMedia(id), namespace: namespace, completion: completion)
     }
     
     
@@ -802,7 +802,7 @@ public struct WS_WorldOfWarcraft: WebService {
      - parameter completion: Returns a Result with the Data if `success` or an HTTPError if `failure`
      */
     public func getConnectedRealmIndex(namespace: APINamespace? = .dynamic, completion: @escaping (_ result: Result<Data, Error>) -> Void) {
-        call(endpoint: API.connectedRealmIndex, namespace: namespace, completion: { completion($0) })
+        call(endpoint: API.connectedRealmIndex, namespace: namespace, completion: completion)
     }
     
     
@@ -814,7 +814,7 @@ public struct WS_WorldOfWarcraft: WebService {
      - parameter completion: Returns a Result with the Data if `success` or an HTTPError if `failure`
      */
     public func getConnectedRealm(id: Int, namespace: APINamespace? = .dynamic, completion: @escaping (_ result: Result<Data, Error>) -> Void) {
-        call(endpoint: API.connectedRealm(id), namespace: namespace, completion: { completion($0) })
+        call(endpoint: API.connectedRealm(id), namespace: namespace, completion: completion)
     }
     
     
@@ -825,7 +825,7 @@ public struct WS_WorldOfWarcraft: WebService {
      - parameter completion: Returns a Result with the Data if `success` or an HTTPError if `failure`
      */
     public func searchConnectedRealms(queries: [String: String], namespace: APINamespace? = .dynamic, completion: @escaping (_ result: Result<Data, Error>) -> Void) {
-        call(endpoint: API.connectedRealmSearch(queries), namespace: namespace, completion: { completion($0) })
+        call(endpoint: API.connectedRealmSearch(queries), namespace: namespace, completion: completion)
     }
     
     
@@ -839,7 +839,7 @@ public struct WS_WorldOfWarcraft: WebService {
      - parameter completion: Returns a Result with the Data if `success` or an HTTPError if `failure`
      */
     public func getCreatureFamilyIndex(namespace: APINamespace? = .static, completion: @escaping (_ result: Result<Data, Error>) -> Void) {
-        call(endpoint: API.creatureFamilyIndex, namespace: namespace, completion: { completion($0) })
+        call(endpoint: API.creatureFamilyIndex, namespace: namespace, completion: completion)
     }
     
     
@@ -851,7 +851,7 @@ public struct WS_WorldOfWarcraft: WebService {
      - parameter completion: Returns a Result with the Data if `success` or an HTTPError if `failure`
      */
     public func getCreatureFamily(id: Int, namespace: APINamespace? = .static, completion: @escaping (_ result: Result<Data, Error>) -> Void) {
-        call(endpoint: API.creatureFamily(id), namespace: namespace, completion: { completion($0) })
+        call(endpoint: API.creatureFamily(id), namespace: namespace, completion: completion)
     }
     
     
@@ -862,7 +862,7 @@ public struct WS_WorldOfWarcraft: WebService {
      - parameter completion: Returns a Result with the Data if `success` or an HTTPError if `failure`
      */
     public func getCreatureTypeIndex(namespace: APINamespace? = .static, completion: @escaping (_ result: Result<Data, Error>) -> Void) {
-        call(endpoint: API.creatureTypeIndex, namespace: namespace, completion: { completion($0) })
+        call(endpoint: API.creatureTypeIndex, namespace: namespace, completion: completion)
     }
     
     
@@ -874,7 +874,7 @@ public struct WS_WorldOfWarcraft: WebService {
      - parameter completion: Returns a Result with the Data if `success` or an HTTPError if `failure`
      */
     public func getCreatureType(id: Int, namespace: APINamespace? = .static, completion: @escaping (_ result: Result<Data, Error>) -> Void) {
-        call(endpoint: API.creatureType(id), namespace: namespace, completion: { completion($0) })
+        call(endpoint: API.creatureType(id), namespace: namespace, completion: completion)
     }
     
     
@@ -886,7 +886,7 @@ public struct WS_WorldOfWarcraft: WebService {
      - parameter completion: Returns a Result with the Data if `success` or an HTTPError if `failure`
      */
     public func getCreature(id: Int, namespace: APINamespace? = .static, completion: @escaping (_ result: Result<Data, Error>) -> Void) {
-        call(endpoint: API.creature(id), namespace: namespace, completion: { completion($0) })
+        call(endpoint: API.creature(id), namespace: namespace, completion: completion)
     }
     
     
@@ -898,7 +898,7 @@ public struct WS_WorldOfWarcraft: WebService {
      - parameter completion: Returns a Result with the Data if `success` or an HTTPError if `failure`
     */
     public func searchCreature(queries: [String: String], namespace: APINamespace? = .static, completion: @escaping (_ result: Result<Data, Error>) -> Void) {
-        call(endpoint: API.creatureSearch(queries), namespace: namespace, completion: { completion($0) })
+        call(endpoint: API.creatureSearch(queries), namespace: namespace, completion: completion)
     }
     
     
@@ -910,7 +910,7 @@ public struct WS_WorldOfWarcraft: WebService {
      - parameter completion: Returns a Result with the Data if `success` or an HTTPError if `failure`
      */
     public func getCreatureDisplayMedia(id: Int, namespace: APINamespace? = .static, completion: @escaping (_ result: Result<Data, Error>) -> Void) {
-        call(endpoint: API.creatureDisplayMedia(id), namespace: namespace, completion: { completion($0) })
+        call(endpoint: API.creatureDisplayMedia(id), namespace: namespace, completion: completion)
     }
     
     
@@ -922,7 +922,7 @@ public struct WS_WorldOfWarcraft: WebService {
      - parameter completion: Returns a Result with the Data if `success` or an HTTPError if `failure`
      */
     public func getCreatureFamilyMedia(id: Int, namespace: APINamespace? = .static, completion: @escaping (_ result: Result<Data, Error>) -> Void) {
-        call(endpoint: API.creatureFamilyMedia(id), namespace: namespace, completion: { completion($0) })
+        call(endpoint: API.creatureFamilyMedia(id), namespace: namespace, completion: completion)
     }
     
     
@@ -936,7 +936,7 @@ public struct WS_WorldOfWarcraft: WebService {
      - parameter completion: Returns a Result with the Data if `success` or an HTTPError if `failure`
      */
     public func getGuildCrestIndex(namespace: APINamespace? = .static, completion: @escaping (_ result: Result<Data, Error>) -> Void) {
-        call(endpoint: API.guildCrestIndex, namespace: namespace, completion: { completion($0) })
+        call(endpoint: API.guildCrestIndex, namespace: namespace, completion: completion)
     }
     
     
@@ -948,7 +948,7 @@ public struct WS_WorldOfWarcraft: WebService {
      - parameter completion: Returns a Result with the Data if `success` or an HTTPError if `failure`
      */
     public func getGuildCrestBorderMedia(id: Int, namespace: APINamespace? = .static, completion: @escaping (_ result: Result<Data, Error>) -> Void) {
-        call(endpoint: API.guildCrestBorderMedia(id), namespace: namespace, completion: { completion($0) })
+        call(endpoint: API.guildCrestBorderMedia(id), namespace: namespace, completion: completion)
     }
     
     
@@ -960,7 +960,7 @@ public struct WS_WorldOfWarcraft: WebService {
      - parameter completion: Returns a Result with the Data if `success` or an HTTPError if `failure`
      */
     public func getGuildCrestEmblemMedia(id: Int, namespace: APINamespace? = .static, completion: @escaping (_ result: Result<Data, Error>) -> Void) {
-        call(endpoint: API.guildCrestEmblemMedia(id), namespace: namespace, completion: { completion($0) })
+        call(endpoint: API.guildCrestEmblemMedia(id), namespace: namespace, completion: completion)
     }
     
     
@@ -974,7 +974,7 @@ public struct WS_WorldOfWarcraft: WebService {
      - parameter completion: Returns a Result with the Data if `success` or an HTTPError if `failure`
      */
     public func getItemClassIndex(namespace: APINamespace? = .static, completion: @escaping (_ result: Result<Data, Error>) -> Void) {
-        call(endpoint: API.itemClassIndex, namespace: namespace, completion: { completion($0) })
+        call(endpoint: API.itemClassIndex, namespace: namespace, completion: completion)
     }
     
     
@@ -986,7 +986,7 @@ public struct WS_WorldOfWarcraft: WebService {
      - parameter completion: Returns a Result with the Data if `success` or an HTTPError if `failure`
      */
     public func getItemClass(id: Int, namespace: APINamespace? = .static, completion: @escaping (_ result: Result<Data, Error>) -> Void) {
-        call(endpoint: API.itemClass(id), namespace: namespace, completion: { completion($0) })
+        call(endpoint: API.itemClass(id), namespace: namespace, completion: completion)
     }
     
     
@@ -997,7 +997,7 @@ public struct WS_WorldOfWarcraft: WebService {
      - parameter completion: Returns a Result with the Data if `success` or an HTTPError if `failure`
      */
     public func getItemSetIndex(namespace: APINamespace? = .static, completion: @escaping (_ result: Result<Data, Error>) -> Void) {
-        call(endpoint: API.itemSetIndex, namespace: namespace, completion: { completion($0) })
+        call(endpoint: API.itemSetIndex, namespace: namespace, completion: completion)
     }
     
     
@@ -1009,7 +1009,7 @@ public struct WS_WorldOfWarcraft: WebService {
      - parameter completion: Returns a Result with the Data if `success` or an HTTPError if `failure`
      */
     public func getItemSet(id: Int, namespace: APINamespace? = .static, completion: @escaping (_ result: Result<Data, Error>) -> Void) {
-        call(endpoint: API.itemSet(id), namespace: namespace, completion: { completion($0) })
+        call(endpoint: API.itemSet(id), namespace: namespace, completion: completion)
     }
     
     
@@ -1022,7 +1022,7 @@ public struct WS_WorldOfWarcraft: WebService {
      - parameter completion: Returns a Result with the Data if `success` or an HTTPError if `failure`
      */
     public func getItemSubclass(itemClassID: Int, itemSubclassID: Int, namespace: APINamespace? = .static, completion: @escaping (_ result: Result<Data, Error>) -> Void) {
-        call(endpoint: API.itemSubclass(itemClassID: itemClassID, itemSubclassID: itemSubclassID), namespace: namespace, completion: { completion($0) })
+        call(endpoint: API.itemSubclass(itemClassID: itemClassID, itemSubclassID: itemSubclassID), namespace: namespace, completion: completion)
     }
     
     
@@ -1034,7 +1034,7 @@ public struct WS_WorldOfWarcraft: WebService {
      - parameter completion: Returns a Result with the Data if `success` or an HTTPError if `failure`
      */
     public func getItem(id: Int, namespace: APINamespace? = .static, completion: @escaping (_ result: Result<Data, Error>) -> Void) {
-        call(endpoint: API.item(id), namespace: namespace, completion: { completion($0) })
+        call(endpoint: API.item(id), namespace: namespace, completion: completion)
     }
     
     
@@ -1046,7 +1046,7 @@ public struct WS_WorldOfWarcraft: WebService {
      - parameter completion: Returns a Result with the Data if `success` or an HTTPError if `failure`
      */
     public func getItemMedia(id: Int, namespace: APINamespace? = .static, completion: @escaping (_ result: Result<Data, Error>) -> Void) {
-        call(endpoint: API.itemMedia(id), namespace: namespace, completion: { completion($0) })
+        call(endpoint: API.itemMedia(id), namespace: namespace, completion: completion)
     }
     
     
@@ -1058,7 +1058,7 @@ public struct WS_WorldOfWarcraft: WebService {
      - parameter completion: Returns a Result with the Data if `success` or an HTTPError if `failure`
     */
     public func searchItem(queries: [String: String], namespace: APINamespace? = .static, completion: @escaping (_ result: Result<Data, Error>) -> Void) {
-        call(endpoint: API.itemSearch(queries), namespace: namespace, completion: { completion($0) })
+        call(endpoint: API.itemSearch(queries), namespace: namespace, completion: completion)
     }
     
     
@@ -1072,7 +1072,7 @@ public struct WS_WorldOfWarcraft: WebService {
      - parameter completion: Returns a Result with the Data if `success` or an HTTPError if `failure`
      */
     public func getJournalExpansionIndex(namespace: APINamespace? = .static, completion: @escaping (_ result: Result<Data, Error>) -> Void) {
-        call(endpoint: API.journalExpansionIndex, namespace: namespace, completion: { completion($0) })
+        call(endpoint: API.journalExpansionIndex, namespace: namespace, completion: completion)
     }
     
     
@@ -1084,7 +1084,7 @@ public struct WS_WorldOfWarcraft: WebService {
      - parameter completion: Returns a Result with the Data if `success` or an HTTPError if `failure`
      */
     public func getJournalExpansion(id: Int, namespace: APINamespace? = .static, completion: @escaping (_ result: Result<Data, Error>) -> Void) {
-        call(endpoint: API.journalExpansion(id), namespace: namespace, completion: { completion($0) })
+        call(endpoint: API.journalExpansion(id), namespace: namespace, completion: completion)
     }
     
     
@@ -1095,7 +1095,7 @@ public struct WS_WorldOfWarcraft: WebService {
      - parameter completion: Returns a Result with the Data if `success` or an HTTPError if `failure`
      */
     public func getJournalEncounterIndex(namespace: APINamespace? = .static, completion: @escaping (_ result: Result<Data, Error>) -> Void) {
-        call(endpoint: API.journalEncounterIndex, namespace: namespace, completion: { completion($0) })
+        call(endpoint: API.journalEncounterIndex, namespace: namespace, completion: completion)
     }
     
     
@@ -1107,7 +1107,7 @@ public struct WS_WorldOfWarcraft: WebService {
      - parameter completion: Returns a Result with the Data if `success` or an HTTPError if `failure`
      */
     public func getJournalEncounter(id: Int, namespace: APINamespace? = .static, completion: @escaping (_ result: Result<Data, Error>) -> Void) {
-        call(endpoint: API.journalEncounter(id), namespace: namespace, completion: { completion($0) })
+        call(endpoint: API.journalEncounter(id), namespace: namespace, completion: completion)
     }
     
     
@@ -1119,7 +1119,7 @@ public struct WS_WorldOfWarcraft: WebService {
      - parameter completion: Returns a Result with the Data if `success` or an HTTPError if `failure`
     */
     public func searchJournalEncounter(queries: [String: String], namespace: APINamespace? = .static, completion: @escaping (_ result: Result<Data, Error>) -> Void) {
-        call(endpoint: API.journalEncounterSearch(queries), namespace: namespace, completion: { completion($0) })
+        call(endpoint: API.journalEncounterSearch(queries), namespace: namespace, completion: completion)
     }
     
     
@@ -1130,7 +1130,7 @@ public struct WS_WorldOfWarcraft: WebService {
      - parameter completion: Returns a Result with the Data if `success` or an HTTPError if `failure`
      */
     public func getJournalInstanceIndex(namespace: APINamespace? = .static, completion: @escaping (_ result: Result<Data, Error>) -> Void) {
-        call(endpoint: API.journalInstanceIndex, namespace: namespace, completion: { completion($0) })
+        call(endpoint: API.journalInstanceIndex, namespace: namespace, completion: completion)
     }
     
     
@@ -1142,7 +1142,7 @@ public struct WS_WorldOfWarcraft: WebService {
      - parameter completion: Returns a Result with the Data if `success` or an HTTPError if `failure`
      */
     public func getJournalInstance(id: Int, namespace: APINamespace? = .static, completion: @escaping (_ result: Result<Data, Error>) -> Void) {
-        call(endpoint: API.journalInstance(id), namespace: namespace, completion: { completion($0) })
+        call(endpoint: API.journalInstance(id), namespace: namespace, completion: completion)
     }
     
     
@@ -1154,7 +1154,7 @@ public struct WS_WorldOfWarcraft: WebService {
      - parameter completion: Returns a Result with the Data if `success` or an HTTPError if `failure`
      */
     public func getJournalInstanceMedia(id: Int, namespace: APINamespace? = .static, completion: @escaping (_ result: Result<Data, Error>) -> Void) {
-        call(endpoint: API.journalInstanceMedia(id), namespace: namespace, completion: { completion($0) })
+        call(endpoint: API.journalInstanceMedia(id), namespace: namespace, completion: completion)
     }
     
     
@@ -1169,7 +1169,7 @@ public struct WS_WorldOfWarcraft: WebService {
      - parameter completion: Returns a Result with the Data if `success` or an HTTPError if `failure`
     */
     public func searchMedia(queries: [String: String], namespace: APINamespace? = .static, completion: @escaping (_ result: Result<Data, Error>) -> Void) {
-        call(endpoint: API.mediaSearch(queries), namespace: namespace, completion: { completion($0) })
+        call(endpoint: API.mediaSearch(queries), namespace: namespace, completion: completion)
     }
     
     
@@ -1183,7 +1183,7 @@ public struct WS_WorldOfWarcraft: WebService {
      - parameter completion: Returns a Result with the Data if `success` or an HTTPError if `failure`
      */
     public func getMountIndex(namespace: APINamespace? = .static, completion: @escaping (_ result: Result<Data, Error>) -> Void) {
-        call(endpoint: API.mountIndex, namespace: namespace, completion: { completion($0) })
+        call(endpoint: API.mountIndex, namespace: namespace, completion: completion)
     }
     
     
@@ -1195,7 +1195,7 @@ public struct WS_WorldOfWarcraft: WebService {
      - parameter completion: Returns a Result with the Data if `success` or an HTTPError if `failure`
      */
     public func getMount(id: Int, namespace: APINamespace? = .static, completion: @escaping (_ result: Result<Data, Error>) -> Void) {
-        call(endpoint: API.mount(id), namespace: namespace, completion: { completion($0) })
+        call(endpoint: API.mount(id), namespace: namespace, completion: completion)
     }
     
     
@@ -1207,7 +1207,7 @@ public struct WS_WorldOfWarcraft: WebService {
      - parameter completion: Returns a Result with the Data if `success` or an HTTPError if `failure`
     */
     public func searchMount(queries: [String: String], namespace: APINamespace? = .static, completion: @escaping (_ result: Result<Data, Error>) -> Void) {
-        call(endpoint: API.mountSearch(queries), namespace: namespace, completion: { completion($0) })
+        call(endpoint: API.mountSearch(queries), namespace: namespace, completion: completion)
     }
     
     
@@ -1221,7 +1221,7 @@ public struct WS_WorldOfWarcraft: WebService {
      - parameter completion: Returns a Result with the Data if `success` or an HTTPError if `failure`
      */
     public func getMythicKeystoneAffixIndex(namespace: APINamespace? = .static, completion: @escaping (_ result: Result<Data, Error>) -> Void) {
-        call(endpoint: API.mythicKeystoneAffixIndex, namespace: namespace, completion: { completion($0) })
+        call(endpoint: API.mythicKeystoneAffixIndex, namespace: namespace, completion: completion)
     }
     
     
@@ -1233,7 +1233,7 @@ public struct WS_WorldOfWarcraft: WebService {
      - parameter completion: Returns a Result with the Data if `success` or an HTTPError if `failure`
      */
     public func getMythicKeystoneAffix(id: Int, namespace: APINamespace? = .static, completion: @escaping (_ result: Result<Data, Error>) -> Void) {
-        call(endpoint: API.mythicKeystoneAffix(id), namespace: namespace, completion: { completion($0) })
+        call(endpoint: API.mythicKeystoneAffix(id), namespace: namespace, completion: completion)
     }
     
     
@@ -1245,7 +1245,7 @@ public struct WS_WorldOfWarcraft: WebService {
      - parameter completion: Returns a Result with the Data if `success` or an HTTPError if `failure`
      */
     public func getMythicKeystoneAffixMedia(id: Int, namespace: APINamespace? = .static, completion: @escaping (_ result: Result<Data, Error>) -> Void) {
-        call(endpoint: API.mythicKeystoneAffixMedia(id), namespace: namespace, completion: { completion($0) })
+        call(endpoint: API.mythicKeystoneAffixMedia(id), namespace: namespace, completion: completion)
     }
     
     
@@ -1259,7 +1259,7 @@ public struct WS_WorldOfWarcraft: WebService {
      - parameter completion: Returns a Result with the Data if `success` or an HTTPError if `failure`
      */
     func getMythicKeystoneDungeonIndex(namespace: APINamespace? = .dynamic, completion: @escaping (_ result: Result<Data, Error>) -> Void) {
-        self.call(endpoint: API.mythicKeystoneDungeonIndex, namespace: namespace, completion: { completion($0) })
+        self.call(endpoint: API.mythicKeystoneDungeonIndex, namespace: namespace, completion: completion)
     }
     
     
@@ -1271,7 +1271,7 @@ public struct WS_WorldOfWarcraft: WebService {
      - parameter completion: Returns a Result with the Data if `success` or an HTTPError if `failure`
      */
     func getMythicKeystoneDungeon(id: Int, namespace: APINamespace? = .dynamic, completion: @escaping (_ result: Result<Data, Error>) -> Void) {
-        self.call(endpoint: API.mythicKeystoneDungeon(id), namespace: namespace, completion: { completion($0) })
+        self.call(endpoint: API.mythicKeystoneDungeon(id), namespace: namespace, completion: completion)
     }
     
     
@@ -1282,7 +1282,7 @@ public struct WS_WorldOfWarcraft: WebService {
      - parameter completion: Returns a Result with the Data if `success` or an HTTPError if `failure`
      */
     func getMythicKeystoneIndex(namespace: APINamespace? = .dynamic, completion: @escaping (_ result: Result<Data, Error>) -> Void) {
-        self.call(endpoint: API.mythicKeystoneIndex, namespace: namespace, completion: { completion($0) })
+        self.call(endpoint: API.mythicKeystoneIndex, namespace: namespace, completion: completion)
     }
     
     
@@ -1293,7 +1293,7 @@ public struct WS_WorldOfWarcraft: WebService {
      - parameter completion: Returns a Result with the Data if `success` or an HTTPError if `failure`
      */
     func getMythicKeystonePeriodIndex(namespace: APINamespace? = .dynamic, completion: @escaping (_ result: Result<Data, Error>) -> Void) {
-        self.call(endpoint: API.mythicKeystonePeriodIndex, namespace: namespace, completion: { completion($0) })
+        self.call(endpoint: API.mythicKeystonePeriodIndex, namespace: namespace, completion: completion)
     }
     
     
@@ -1305,7 +1305,7 @@ public struct WS_WorldOfWarcraft: WebService {
      - parameter completion: Returns a Result with the Data if `success` or an HTTPError if `failure`
      */
     func getMythicKeystonePeriod(id: Int, namespace: APINamespace? = .dynamic, completion: @escaping (_ result: Result<Data, Error>) -> Void) {
-        self.call(endpoint: API.mythicKeystonePeriod(id), namespace: namespace, completion: { completion($0) })
+        self.call(endpoint: API.mythicKeystonePeriod(id), namespace: namespace, completion: completion)
     }
     
     
@@ -1316,7 +1316,7 @@ public struct WS_WorldOfWarcraft: WebService {
      - parameter completion: Returns a Result with the Data if `success` or an HTTPError if `failure`
      */
     func getMythicKeystoneSeasonIndex(namespace: APINamespace? = .dynamic, completion: @escaping (_ result: Result<Data, Error>) -> Void) {
-        self.call(endpoint: API.mythicKeystoneSeasonIndex, namespace: namespace, completion: { completion($0) })
+        self.call(endpoint: API.mythicKeystoneSeasonIndex, namespace: namespace, completion: completion)
     }
     
     
@@ -1328,7 +1328,7 @@ public struct WS_WorldOfWarcraft: WebService {
      - parameter completion: Returns a Result with the Data if `success` or an HTTPError if `failure`
      */
     func getMythicKeystoneSeason(id: Int, namespace: APINamespace? = .dynamic, completion: @escaping (_ result: Result<Data, Error>) -> Void) {
-        self.call(endpoint: API.mythicKeystoneSeasonIndex, namespace: namespace, completion: { completion($0) })
+        self.call(endpoint: API.mythicKeystoneSeasonIndex, namespace: namespace, completion: completion)
     }
     
     
@@ -1343,7 +1343,7 @@ public struct WS_WorldOfWarcraft: WebService {
      - parameter completion: Returns a Result with the Data if `success` or an HTTPError if `failure`
      */
     func getMythicLeaderboardIndex(connectedRealmID: Int, namespace: APINamespace? = .dynamic, completion: @escaping (_ result: Result<Data, Error>) -> Void) {
-        self.call(endpoint: API.mythicKeystoneLeaderboardIndex(connectedRealmID: connectedRealmID), namespace: namespace, completion: { completion($0) })
+        self.call(endpoint: API.mythicKeystoneLeaderboardIndex(connectedRealmID: connectedRealmID), namespace: namespace, completion: completion)
     }
     
     
@@ -1357,7 +1357,7 @@ public struct WS_WorldOfWarcraft: WebService {
      - parameter completion: Returns a Result with the Data if `success` or an HTTPError if `failure`
      */
     func getMythicLeaderboard(connectedRealmID: Int, dungeonID: Int, period: Int, namespace: APINamespace? = .dynamic, completion: @escaping (_ result: Result<Data, Error>) -> Void) {
-        self.call(endpoint: API.mythicKeystoneLeaderboard(connectedRealmID: connectedRealmID, dungeonID: dungeonID, period: period), namespace: namespace, completion: { completion($0) })
+        self.call(endpoint: API.mythicKeystoneLeaderboard(connectedRealmID: connectedRealmID, dungeonID: dungeonID, period: period), namespace: namespace, completion: completion)
     }
     
     
@@ -1373,7 +1373,7 @@ public struct WS_WorldOfWarcraft: WebService {
      - parameter completion: Returns a Result with the Data if `success` or an HTTPError if `failure`
      */
     func getMythicRaidLeaderboard(raid: String, faction: FactionType, namespace: APINamespace? = .dynamic, completion: @escaping (_ result: Result<Data, Error>) -> Void) {
-        self.call(endpoint: API.mythicRaidLeaderboard(raid: raid, faction: faction), namespace: namespace, completion: { completion($0) })
+        self.call(endpoint: API.mythicRaidLeaderboard(raid: raid, faction: faction), namespace: namespace, completion: completion)
     }
     
     
@@ -1387,7 +1387,7 @@ public struct WS_WorldOfWarcraft: WebService {
      - parameter completion: Returns a Result with the Data if `success` or an HTTPError if `failure`
      */
     func getPetIndex(namespace: APINamespace? = .static, completion: @escaping (_ result: Result<Data, Error>) -> Void) {
-        self.call(endpoint: API.petIndex, namespace: namespace, completion: { completion($0) })
+        self.call(endpoint: API.petIndex, namespace: namespace, completion: completion)
     }
     
     
@@ -1399,7 +1399,7 @@ public struct WS_WorldOfWarcraft: WebService {
      - parameter completion: Returns a Result with the Data if `success` or an HTTPError if `failure`
      */
     func getPet(id: Int, namespace: APINamespace? = .static, completion: @escaping (_ result: Result<Data, Error>) -> Void) {
-        self.call(endpoint: API.pet(id), namespace: namespace, completion: { completion($0) })
+        self.call(endpoint: API.pet(id), namespace: namespace, completion: completion)
     }
     
     
@@ -1411,7 +1411,7 @@ public struct WS_WorldOfWarcraft: WebService {
      - parameter completion: Returns a Result with the Data if `success` or an HTTPError if `failure`
      */
     func getPetMedia(id: Int, namespace: APINamespace? = .static, completion: @escaping (_ result: Result<Data, Error>) -> Void) {
-        self.call(endpoint: API.petMedia(id), namespace: namespace, completion: { completion($0) })
+        self.call(endpoint: API.petMedia(id), namespace: namespace, completion: completion)
     }
     
     
@@ -1422,7 +1422,7 @@ public struct WS_WorldOfWarcraft: WebService {
      - parameter completion: Returns a Result with the Data if `success` or an HTTPError if `failure`
      */
     func getPetAbilityIndex(namespace: APINamespace? = .static, completion: @escaping (_ result: Result<Data, Error>) -> Void) {
-        self.call(endpoint: API.petAbilityIndex, namespace: namespace, completion: { completion($0) })
+        self.call(endpoint: API.petAbilityIndex, namespace: namespace, completion: completion)
     }
     
     
@@ -1434,7 +1434,7 @@ public struct WS_WorldOfWarcraft: WebService {
      - parameter completion: Returns a Result with the Data if `success` or an HTTPError if `failure`
      */
     func getPetAbility(id: Int, namespace: APINamespace? = .static, completion: @escaping (_ result: Result<Data, Error>) -> Void) {
-        self.call(endpoint: API.petAbility(id), namespace: namespace, completion: { completion($0) })
+        self.call(endpoint: API.petAbility(id), namespace: namespace, completion: completion)
     }
     
     
@@ -1446,7 +1446,7 @@ public struct WS_WorldOfWarcraft: WebService {
      - parameter completion: Returns a Result with the Data if `success` or an HTTPError if `failure`
      */
     func getPetAbilityMedia(id: Int, namespace: APINamespace? = .static, completion: @escaping (_ result: Result<Data, Error>) -> Void) {
-        self.call(endpoint: API.petAbilityMedia(id), namespace: namespace, completion: { completion($0) })
+        self.call(endpoint: API.petAbilityMedia(id), namespace: namespace, completion: completion)
     }
     
     
@@ -1460,7 +1460,7 @@ public struct WS_WorldOfWarcraft: WebService {
      - parameter completion: Returns a Result with the Data if `success` or an HTTPError if `failure`
      */
     func getPlayableClassIndex(namespace: APINamespace? = .static, completion: @escaping (_ result: Result<Data, Error>) -> Void) {
-        self.call(endpoint: API.playableClassIndex, namespace: namespace, completion: { completion($0) })
+        self.call(endpoint: API.playableClassIndex, namespace: namespace, completion: completion)
     }
     
     
@@ -1472,7 +1472,7 @@ public struct WS_WorldOfWarcraft: WebService {
      - parameter completion: Returns a Result with the Data if `success` or an HTTPError if `failure`
      */
     func getPlayableClass(id: Int, namespace: APINamespace? = .static, completion: @escaping (_ result: Result<Data, Error>) -> Void) {
-        self.call(endpoint: API.playableClass(id), namespace: namespace, completion: { completion($0) })
+        self.call(endpoint: API.playableClass(id), namespace: namespace, completion: completion)
     }
     
     
@@ -1484,7 +1484,7 @@ public struct WS_WorldOfWarcraft: WebService {
      - parameter completion: Returns a Result with the Data if `success` or an HTTPError if `failure`
      */
     func getPlayableClassMedia(id: Int, namespace: APINamespace? = .static, completion: @escaping (_ result: Result<Data, Error>) -> Void) {
-        self.call(endpoint: API.playableClassMedia(id), namespace: namespace, completion: { completion($0) })
+        self.call(endpoint: API.playableClassMedia(id), namespace: namespace, completion: completion)
     }
     
     
@@ -1496,7 +1496,7 @@ public struct WS_WorldOfWarcraft: WebService {
      - parameter completion: Returns a Result with the Data if `success` or an HTTPError if `failure`
      */
     func getPlayableClassPvPTalentSlots(classID: Int, namespace: APINamespace? = .static,completion: @escaping (_ result: Result<Data, Error>) -> Void) {
-        self.call(endpoint: API.pvpTalentSlots(classID: classID), namespace: namespace, completion: { completion($0) })
+        self.call(endpoint: API.pvpTalentSlots(classID: classID), namespace: namespace, completion: completion)
     }
     
     
@@ -1510,7 +1510,7 @@ public struct WS_WorldOfWarcraft: WebService {
      - parameter completion: Returns a Result with the Data if `success` or an HTTPError if `failure`
      */
     func getPlayableRaceIndex(namespace: APINamespace? = .static, completion: @escaping (_ result: Result<Data, Error>) -> Void) {
-        self.call(endpoint: API.playableRaceIndex, namespace: namespace, completion: { completion($0) })
+        self.call(endpoint: API.playableRaceIndex, namespace: namespace, completion: completion)
     }
     
     
@@ -1522,7 +1522,7 @@ public struct WS_WorldOfWarcraft: WebService {
      - parameter completion: Returns a Result with the Data if `success` or an HTTPError if `failure`
      */
     func getPlayableRace(id: Int, namespace: APINamespace? = .static, completion: @escaping (_ result: Result<Data, Error>) -> Void) {
-        self.call(endpoint: API.playableRace(id), namespace: namespace, completion: { completion($0) })
+        self.call(endpoint: API.playableRace(id), namespace: namespace, completion: completion)
     }
     
     
@@ -1536,7 +1536,7 @@ public struct WS_WorldOfWarcraft: WebService {
      - parameter completion: Returns a Result with the Data if `success` or an HTTPError if `failure`
      */
     func getPlayableSpecializationIndex(namespace: APINamespace? = .static, completion: @escaping (_ result: Result<Data, Error>) -> Void) {
-        self.call(endpoint: API.playableSpecializationIndex, namespace: namespace, completion: { completion($0) })
+        self.call(endpoint: API.playableSpecializationIndex, namespace: namespace, completion: completion)
     }
     
     
@@ -1548,7 +1548,7 @@ public struct WS_WorldOfWarcraft: WebService {
      - parameter completion: Returns a Result with the Data if `success` or an HTTPError if `failure`
      */
     func getPlayableSpecialization(id: Int, namespace: APINamespace? = .static, completion: @escaping (_ result: Result<Data, Error>) -> Void) {
-        self.call(endpoint: API.playableSpecialization(id), namespace: namespace, completion: { completion($0) })
+        self.call(endpoint: API.playableSpecialization(id), namespace: namespace, completion: completion)
     }
     
     
@@ -1560,7 +1560,7 @@ public struct WS_WorldOfWarcraft: WebService {
      - parameter completion: Returns a Result with the Data if `success` or an HTTPError if `failure`
      */
     func getPlayableSpecializationMedia(id: Int, namespace: APINamespace? = .static, completion: @escaping (_ result: Result<Data, Error>) -> Void) {
-        self.call(endpoint: API.playableSpecializationMedia(id), namespace: namespace, completion: { completion($0) })
+        self.call(endpoint: API.playableSpecializationMedia(id), namespace: namespace, completion: completion)
     }
     
     
@@ -1574,7 +1574,7 @@ public struct WS_WorldOfWarcraft: WebService {
      - parameter completion: Returns a Result with the Data if `success` or an HTTPError if `failure`
      */
     func getPowerTypeIndex(namespace: APINamespace? = .static, completion: @escaping (_ result: Result<Data, Error>) -> Void) {
-        self.call(endpoint: API.powerTypeIndex, namespace: namespace, completion: { completion($0) })
+        self.call(endpoint: API.powerTypeIndex, namespace: namespace, completion: completion)
     }
     
     
@@ -1586,7 +1586,7 @@ public struct WS_WorldOfWarcraft: WebService {
      - parameter completion: Returns a Result with the Data if `success` or an HTTPError if `failure`
      */
     func getPowerType(id: Int, namespace: APINamespace? = .static, completion: @escaping (_ result: Result<Data, Error>) -> Void) {
-        self.call(endpoint: API.powerType(id), namespace: namespace, completion: { completion($0) })
+        self.call(endpoint: API.powerType(id), namespace: namespace, completion: completion)
     }
     
     
@@ -1600,7 +1600,7 @@ public struct WS_WorldOfWarcraft: WebService {
      - parameter completion: Returns a Result with the Data if `success` or an HTTPError if `failure`
      */
     func getProfessionIndex(namespace: APINamespace? = .static, completion: @escaping (_ result: Result<Data, Error>) -> Void) {
-        self.call(endpoint: API.professionIndex, namespace: namespace, completion: { completion($0) })
+        self.call(endpoint: API.professionIndex, namespace: namespace, completion: completion)
     }
     
     
@@ -1612,7 +1612,7 @@ public struct WS_WorldOfWarcraft: WebService {
      - parameter completion: Returns a Result with the Data if `success` or an HTTPError if `failure`
      */
     func getProfession(id: Int, namespace: APINamespace? = .static, completion: @escaping (_ result: Result<Data, Error>) -> Void) {
-        self.call(endpoint: API.profession(id), namespace: namespace, completion: { completion($0) })
+        self.call(endpoint: API.profession(id), namespace: namespace, completion: completion)
     }
     
     
@@ -1624,7 +1624,7 @@ public struct WS_WorldOfWarcraft: WebService {
      - parameter completion: Returns a Result with the Data if `success` or an HTTPError if `failure`
      */
     func getProfessionMedia(id: Int, namespace: APINamespace? = .static, completion: @escaping (_ result: Result<Data, Error>) -> Void) {
-        self.call(endpoint: API.professionMedia(id), namespace: namespace, completion: { completion($0) })
+        self.call(endpoint: API.professionMedia(id), namespace: namespace, completion: completion)
     }
     
     
@@ -1637,7 +1637,7 @@ public struct WS_WorldOfWarcraft: WebService {
      - parameter completion: Returns a Result with the Data if `success` or an HTTPError if `failure`
      */
     func getProfessionSkillTier(professionID: Int, skillTierID: Int, namespace: APINamespace? = .static, completion: @escaping (_ result: Result<Data, Error>) -> Void) {
-        self.call(endpoint: API.professionSkillTier(professionID: professionID, skillTierID: skillTierID), namespace: namespace, completion: { completion($0) })
+        self.call(endpoint: API.professionSkillTier(professionID: professionID, skillTierID: skillTierID), namespace: namespace, completion: completion)
     }
     
     
@@ -1649,7 +1649,7 @@ public struct WS_WorldOfWarcraft: WebService {
      - parameter completion: Returns a Result with the Data if `success` or an HTTPError if `failure`
      */
     func getRecipe(id: Int, namespace: APINamespace? = .static, completion: @escaping (_ result: Result<Data, Error>) -> Void) {
-        self.call(endpoint: API.recipe(id), namespace: namespace, completion: { completion($0) })
+        self.call(endpoint: API.recipe(id), namespace: namespace, completion: completion)
     }
     
     
@@ -1661,7 +1661,7 @@ public struct WS_WorldOfWarcraft: WebService {
      - parameter completion: Returns a Result with the Data if `success` or an HTTPError if `failure`
      */
     func getRecipeMedia(id: Int, namespace: APINamespace? = .static, completion: @escaping (_ result: Result<Data, Error>) -> Void) {
-        self.call(endpoint: API.recipeMedia(id), namespace: namespace, completion: { completion($0) })
+        self.call(endpoint: API.recipeMedia(id), namespace: namespace, completion: completion)
     }
     
     
@@ -1675,7 +1675,7 @@ public struct WS_WorldOfWarcraft: WebService {
      - parameter completion: Returns a Result with the Data if `success` or an HTTPError if `failure`
      */
     func getPvPSeasonIndex(namespace: APINamespace? = .dynamic, completion: @escaping (_ result: Result<Data, Error>) -> Void) {
-        self.call(endpoint: API.pvpSeasonIndex, namespace: namespace, completion: { completion($0) })
+        self.call(endpoint: API.pvpSeasonIndex, namespace: namespace, completion: completion)
     }
     
     
@@ -1687,7 +1687,7 @@ public struct WS_WorldOfWarcraft: WebService {
      - parameter completion: Returns a Result with the Data if `success` or an HTTPError if `failure`
      */
     func getPvPSeason(id: Int, namespace: APINamespace? = .dynamic, completion: @escaping (_ result: Result<Data, Error>) -> Void) {
-        self.call(endpoint: API.pvpSeason(id), namespace: namespace, completion: { completion($0) })
+        self.call(endpoint: API.pvpSeason(id), namespace: namespace, completion: completion)
     }
     
     
@@ -1699,7 +1699,7 @@ public struct WS_WorldOfWarcraft: WebService {
      - parameter completion: Returns a Result with the Data if `success` or an HTTPError if `failure`
      */
     func getPvPLeaderboardIndex(pvpSeasonID: Int, namespace: APINamespace? = .dynamic, completion: @escaping (_ result: Result<Data, Error>) -> Void) {
-        self.call(endpoint: API.pvpLeaderboardIndex(season: pvpSeasonID), namespace: namespace, completion: { completion($0) })
+        self.call(endpoint: API.pvpLeaderboardIndex(season: pvpSeasonID), namespace: namespace, completion: completion)
     }
     
     
@@ -1712,7 +1712,7 @@ public struct WS_WorldOfWarcraft: WebService {
      - parameter completion: Returns a Result with the Data if `success` or an HTTPError if `failure`
      */
     func getPvPLeaderboard(pvpSeasonID: Int, pvpBracket: WOWLeaderboardBracket, namespace: APINamespace? = .dynamic, completion: @escaping (_ result: Result<Data, Error>) -> Void) {
-        self.call(endpoint: API.pvpLeaderboard(season: pvpSeasonID, pvpBracket: pvpBracket), namespace: namespace, completion: { completion($0) })
+        self.call(endpoint: API.pvpLeaderboard(season: pvpSeasonID, pvpBracket: pvpBracket), namespace: namespace, completion: completion)
     }
     
     
@@ -1724,7 +1724,7 @@ public struct WS_WorldOfWarcraft: WebService {
      - parameter completion: Returns a Result with the Data if `success` or an HTTPError if `failure`
      */
     func getPvPRewardIndex(pvpSeasonID: Int, namespace: APINamespace? = .dynamic, completion: @escaping (_ result: Result<Data, Error>) -> Void) {
-        self.call(endpoint: API.pvpRewardIndex(season: pvpSeasonID), namespace: namespace, completion: { completion($0) })
+        self.call(endpoint: API.pvpRewardIndex(season: pvpSeasonID), namespace: namespace, completion: completion)
     }
     
     
@@ -1739,7 +1739,7 @@ public struct WS_WorldOfWarcraft: WebService {
      - parameter completion: Returns a Result with the Data if `success` or an HTTPError if `failure`
      */
     func getPvPTierMedia(id: Int, namespace: APINamespace? = .static, completion: @escaping (_ result: Result<Data, Error>) -> Void) {
-        self.call(endpoint: API.pvpTierMedia(id), namespace: namespace, completion: { completion($0) })
+        self.call(endpoint: API.pvpTierMedia(id), namespace: namespace, completion: completion)
     }
     
     
@@ -1750,7 +1750,7 @@ public struct WS_WorldOfWarcraft: WebService {
      - parameter completion: Returns a Result with the Data if `success` or an HTTPError if `failure`
      */
     func getPvPTierIndex(namespace: APINamespace? = .static, completion: @escaping (_ result: Result<Data, Error>) -> Void) {
-        self.call(endpoint: API.pvpTierIndex, namespace: namespace, completion: { completion($0) })
+        self.call(endpoint: API.pvpTierIndex, namespace: namespace, completion: completion)
     }
     
     
@@ -1762,7 +1762,7 @@ public struct WS_WorldOfWarcraft: WebService {
      - parameter completion: Returns a Result with the Data if `success` or an HTTPError if `failure`
      */
     func getPvPTier(id: Int, namespace: APINamespace? = .static, completion: @escaping (_ result: Result<Data, Error>) -> Void) {
-        self.call(endpoint: API.pvpTier(id), namespace: namespace, completion: { completion($0) })
+        self.call(endpoint: API.pvpTier(id), namespace: namespace, completion: completion)
     }
     
     
@@ -1776,7 +1776,7 @@ public struct WS_WorldOfWarcraft: WebService {
      - parameter completion: Returns a Result with the Data if `success` or an HTTPError if `failure`
      */
     func getQuestIndex(namespace: APINamespace? = .static, completion: @escaping (_ result: Result<Data, Error>) -> Void) {
-        self.call(endpoint: API.questIndex, namespace: namespace, completion: { completion($0) })
+        self.call(endpoint: API.questIndex, namespace: namespace, completion: completion)
     }
     
     
@@ -1788,7 +1788,7 @@ public struct WS_WorldOfWarcraft: WebService {
      - parameter completion: Returns a Result with the Data if `success` or an HTTPError if `failure`
     */
     func getQuest(id: Int, namespace: APINamespace? = .static, completion: @escaping (_ result: Result<Data, Error>) -> Void) {
-        self.call(endpoint: API.quest(id), namespace: namespace, completion: { completion($0) })
+        self.call(endpoint: API.quest(id), namespace: namespace, completion: completion)
     }
     
     
@@ -1799,7 +1799,7 @@ public struct WS_WorldOfWarcraft: WebService {
      - parameter completion: Returns a Result with the Data if `success` or an HTTPError if `failure`
      */
     func getQuestCategoryIndex(namespace: APINamespace? = .static, completion: @escaping (_ result: Result<Data, Error>) -> Void) {
-        self.call(endpoint: API.questCategoryIndex, namespace: namespace, completion: { completion($0) })
+        self.call(endpoint: API.questCategoryIndex, namespace: namespace, completion: completion)
     }
     
     
@@ -1811,7 +1811,7 @@ public struct WS_WorldOfWarcraft: WebService {
      - parameter completion: Returns a Result with the Data if `success` or an HTTPError if `failure`
     */
     func getQuestCategory(id: Int, namespace: APINamespace? = .static, completion: @escaping (_ result: Result<Data, Error>) -> Void) {
-        self.call(endpoint: API.questCategory(id), namespace: namespace, completion: { completion($0) })
+        self.call(endpoint: API.questCategory(id), namespace: namespace, completion: completion)
     }
     
     
@@ -1822,7 +1822,7 @@ public struct WS_WorldOfWarcraft: WebService {
      - parameter completion: Returns a Result with the Data if `success` or an HTTPError if `failure`
      */
     func getQuestAreaIndex(namespace: APINamespace? = .static, completion: @escaping (_ result: Result<Data, Error>) -> Void) {
-        self.call(endpoint: API.questAreaIndex, namespace: namespace, completion: { completion($0) })
+        self.call(endpoint: API.questAreaIndex, namespace: namespace, completion: completion)
     }
     
     
@@ -1834,7 +1834,7 @@ public struct WS_WorldOfWarcraft: WebService {
      - parameter completion: Returns a Result with the Data if `success` or an HTTPError if `failure`
     */
     func getQuestArea(id: Int, namespace: APINamespace? = .static, completion: @escaping (_ result: Result<Data, Error>) -> Void) {
-        self.call(endpoint: API.questArea(id), namespace: namespace, completion: { completion($0) })
+        self.call(endpoint: API.questArea(id), namespace: namespace, completion: completion)
     }
     
     
@@ -1845,7 +1845,7 @@ public struct WS_WorldOfWarcraft: WebService {
      - parameter completion: Returns a Result with the Data if `success` or an HTTPError if `failure`
      */
     func getQuestTypeIndex(namespace: APINamespace? = .static, completion: @escaping (_ result: Result<Data, Error>) -> Void) {
-        self.call(endpoint: API.questTypeIndex, namespace: namespace, completion: { completion($0) })
+        self.call(endpoint: API.questTypeIndex, namespace: namespace, completion: completion)
     }
     
     
@@ -1857,7 +1857,7 @@ public struct WS_WorldOfWarcraft: WebService {
      - parameter completion: Returns a Result with the Data if `success` or an HTTPError if `failure`
     */
     func getQuestType(id: Int, namespace: APINamespace? = .static, completion: @escaping (_ result: Result<Data, Error>) -> Void) {
-        self.call(endpoint: API.questType(id), namespace: namespace, completion: { completion($0) })
+        self.call(endpoint: API.questType(id), namespace: namespace, completion: completion)
     }
     
     
@@ -1871,7 +1871,7 @@ public struct WS_WorldOfWarcraft: WebService {
      - parameter completion: Returns a Result with the Data if `success` or an HTTPError if `failure`
      */
     func getRealmIndex(namespace: APINamespace? = .dynamic, completion: @escaping (_ result: Result<Data, Error>) -> Void) {
-        self.call(endpoint: API.realmIndex, namespace: namespace, completion: { completion($0) })
+        self.call(endpoint: API.realmIndex, namespace: namespace, completion: completion)
     }
     
     
@@ -1883,7 +1883,7 @@ public struct WS_WorldOfWarcraft: WebService {
      - parameter completion: Returns a Result with the Data if `success` or an HTTPError if `failure`
      */
     func getRealm(_ slug: String, namespace: APINamespace? = .dynamic, completion: @escaping (_ result: Result<Data, Error>) -> Void) {
-        self.call(endpoint: API.realm(slug), namespace: namespace, completion: { completion($0) })
+        self.call(endpoint: API.realm(slug), namespace: namespace, completion: completion)
     }
     
     
@@ -1895,7 +1895,7 @@ public struct WS_WorldOfWarcraft: WebService {
      - parameter completion: Returns a Result with the Data if `success` or an HTTPError if `failure`
     */
     public func searchRealm(queries: [String: String], namespace: APINamespace? = .dynamic, completion: @escaping (_ result: Result<Data, Error>) -> Void) {
-        call(endpoint: API.realmSearch(queries), namespace: namespace, completion: { completion($0) })
+        call(endpoint: API.realmSearch(queries), namespace: namespace, completion: completion)
     }
     
     
@@ -1909,7 +1909,7 @@ public struct WS_WorldOfWarcraft: WebService {
      - parameter completion: Returns a Result with the Data if `success` or an HTTPError if `failure`
      */
     func getRegionIndex(namespace: APINamespace? = .dynamic, completion: @escaping (_ result: Result<Data, Error>) -> Void) {
-        call(endpoint: API.regionIndex, namespace: namespace, completion: { completion($0) })
+        call(endpoint: API.regionIndex, namespace: namespace, completion: completion)
     }
     
     
@@ -1921,7 +1921,7 @@ public struct WS_WorldOfWarcraft: WebService {
      - parameter completion: Returns a Result with the Data if `success` or an HTTPError if `failure`
      */
     func getRegion(id: Int, namespace: APINamespace? = .dynamic, completion: @escaping (_ result: Result<Data, Error>) -> Void) {
-        call(endpoint: API.region(id), namespace: namespace, completion: { completion($0) })
+        call(endpoint: API.region(id), namespace: namespace, completion: completion)
     }
     
     
@@ -1935,7 +1935,7 @@ public struct WS_WorldOfWarcraft: WebService {
      - parameter completion: Returns a Result with the Data if `success` or an HTTPError if `failure`
      */
     func getReputationFactionIndex(namespace: APINamespace? = .static, completion: @escaping (_ result: Result<Data, Error>) -> Void) {
-        call(endpoint: API.reputationFactionIndex, namespace: namespace, completion: { completion($0) })
+        call(endpoint: API.reputationFactionIndex, namespace: namespace, completion: completion)
     }
     
     
@@ -1947,7 +1947,7 @@ public struct WS_WorldOfWarcraft: WebService {
      - parameter completion: Returns a Result with the Data if `success` or an HTTPError if `failure`
      */
     func getReputationFaction(id: Int, namespace: APINamespace? = .static, completion: @escaping (_ result: Result<Data, Error>) -> Void) {
-        call(endpoint: API.reputationFaction(id), namespace: namespace, completion: { completion($0) })
+        call(endpoint: API.reputationFaction(id), namespace: namespace, completion: completion)
     }
     
     
@@ -1958,7 +1958,7 @@ public struct WS_WorldOfWarcraft: WebService {
      - parameter completion: Returns a Result with the Data if `success` or an HTTPError if `failure`
      */
     func getReputationTierIndex(namespace: APINamespace? = .static, completion: @escaping (_ result: Result<Data, Error>) -> Void) {
-        call(endpoint: API.reputationTierIndex, namespace: namespace, completion: { completion($0) })
+        call(endpoint: API.reputationTierIndex, namespace: namespace, completion: completion)
     }
     
     
@@ -1970,7 +1970,7 @@ public struct WS_WorldOfWarcraft: WebService {
      - parameter completion: Returns a Result with the Data if `success` or an HTTPError if `failure`
      */
     func getReputationTier(id: Int, namespace: APINamespace? = .static, completion: @escaping (_ result: Result<Data, Error>) -> Void) {
-        call(endpoint: API.reputationTier(id), namespace: namespace, completion: { completion($0) })
+        call(endpoint: API.reputationTier(id), namespace: namespace, completion: completion)
     }
     
     
@@ -1985,7 +1985,7 @@ public struct WS_WorldOfWarcraft: WebService {
      - parameter completion: Returns a Result with the Data if `success` or an HTTPError if `failure`
      */
     func getSpell(id: Int, namespace: APINamespace? = .static, completion: @escaping (_ result: Result<Data, Error>) -> Void) {
-        call(endpoint: API.spell(id), namespace: namespace, completion: { completion($0) })
+        call(endpoint: API.spell(id), namespace: namespace, completion: completion)
     }
     
     
@@ -1997,7 +1997,7 @@ public struct WS_WorldOfWarcraft: WebService {
      - parameter completion: Returns a Result with the Data if `success` or an HTTPError if `failure`
      */
     func getSpellMedia(id: Int, namespace: APINamespace? = .static, completion: @escaping (_ result: Result<Data, Error>) -> Void) {
-        call(endpoint: API.spellMedia(id), namespace: namespace, completion: { completion($0) })
+        call(endpoint: API.spellMedia(id), namespace: namespace, completion: completion)
     }
     
     
@@ -2009,7 +2009,7 @@ public struct WS_WorldOfWarcraft: WebService {
      - parameter completion: Returns a Result with the Data if `success` or an HTTPError if `failure`
     */
     public func searchSpell(queries: [String: String], namespace: APINamespace? = .dynamic, completion: @escaping (_ result: Result<Data, Error>) -> Void) {
-        call(endpoint: API.spellSearch(queries), namespace: namespace, completion: { completion($0) })
+        call(endpoint: API.spellSearch(queries), namespace: namespace, completion: completion)
     }
     
     
@@ -2023,7 +2023,7 @@ public struct WS_WorldOfWarcraft: WebService {
      - parameter completion: Returns a Result with the Data if `success` or an HTTPError if `failure`
      */
     func getTalentIndex(namespace: APINamespace? = .static, completion: @escaping (_ result: Result<Data, Error>) -> Void) {
-        call(endpoint: API.talentIndex, namespace: namespace, completion: { completion($0) })
+        call(endpoint: API.talentIndex, namespace: namespace, completion: completion)
     }
     
     
@@ -2035,7 +2035,7 @@ public struct WS_WorldOfWarcraft: WebService {
      - parameter completion: Returns a Result with the Data if `success` or an HTTPError if `failure`
      */
     func getTalent(id: Int, namespace: APINamespace? = .static, completion: @escaping (_ result: Result<Data, Error>) -> Void) {
-        call(endpoint: API.talent(id), namespace: namespace, completion: { completion($0) })
+        call(endpoint: API.talent(id), namespace: namespace, completion: completion)
     }
     
     
@@ -2046,7 +2046,7 @@ public struct WS_WorldOfWarcraft: WebService {
      - parameter completion: Returns a Result with the Data if `success` or an HTTPError if `failure`
      */
     func getPvPTalentIndex(namespace: APINamespace? = .static, completion: @escaping (_ result: Result<Data, Error>) -> Void) {
-        call(endpoint: API.pvpTalentIndex, namespace: namespace, completion: { completion($0) })
+        call(endpoint: API.pvpTalentIndex, namespace: namespace, completion: completion)
     }
     
     
@@ -2058,7 +2058,7 @@ public struct WS_WorldOfWarcraft: WebService {
      - parameter completion: Returns a Result with the Data if `success` or an HTTPError if `failure`
      */
     func getPvPTalent(id: Int, namespace: APINamespace? = .static, completion: @escaping (_ result: Result<Data, Error>) -> Void) {
-        call(endpoint: API.pvpTalent(id), namespace: namespace, completion: { completion($0) })
+        call(endpoint: API.pvpTalent(id), namespace: namespace, completion: completion)
     }
     
     
@@ -2072,7 +2072,7 @@ public struct WS_WorldOfWarcraft: WebService {
      - parameter completion: Returns a Result with the Data if `success` or an HTTPError if `failure`
      */
     func getTitleIndex(namespace: APINamespace? = .static, completion: @escaping (_ result: Result<Data, Error>) -> Void) {
-        call(endpoint: API.titleIndex, namespace: namespace, completion: { completion($0) })
+        call(endpoint: API.titleIndex, namespace: namespace, completion: completion)
     }
     
     
@@ -2084,7 +2084,7 @@ public struct WS_WorldOfWarcraft: WebService {
      - parameter completion: Returns a Result with the Data if `success` or an HTTPError if `failure`
      */
     func getTitle(id: Int, namespace: APINamespace? = .static, completion: @escaping (_ result: Result<Data, Error>) -> Void) {
-        call(endpoint: API.title(id), namespace: namespace, completion: { completion($0) })
+        call(endpoint: API.title(id), namespace: namespace, completion: completion)
     }
     
     
@@ -2115,7 +2115,7 @@ public struct WS_WorldOfWarcraft: WebService {
      - parameter namespace: The namespace to use to locate this document.
      */
     public func getAccountProfile(namespace: APINamespace? = .profile, completion: @escaping (_ result: Result<Data, Error>) -> Void) {
-        call(endpoint: API.accountProfileSummary, namespace: namespace, completion: { completion($0) })
+        call(endpoint: API.accountProfileSummary, namespace: namespace, completion: completion)
     }
     
     
@@ -2127,7 +2127,7 @@ public struct WS_WorldOfWarcraft: WebService {
      - parameter namespace: The namespace to use to locate this document.
      */
     public func getProtectedCharacterProfile(id: Int, realmID: Int, namespace: APINamespace? = .profile, completion: @escaping (_ result: Result<Data, Error>) -> Void) {
-        call(endpoint: API.protectedCharacterProfileSummary(realmID: realmID, characterID: id), namespace: namespace, completion: { completion($0) })
+        call(endpoint: API.protectedCharacterProfileSummary(realmID: realmID, characterID: id), namespace: namespace, completion: completion)
     }
     
     
@@ -2138,7 +2138,7 @@ public struct WS_WorldOfWarcraft: WebService {
      - parameter completion: Returns a Result with the Data if `success` or an HTTPError if `failure`
     */
     public func getCharacterCollectionIndex(namespace: APINamespace? = .profile, completion: @escaping (_ result: Result<Data, Error>) -> Void) {
-        call(endpoint: API.accountCollectionIndex, namespace: namespace, completion: { completion($0) })
+        call(endpoint: API.accountCollectionIndex, namespace: namespace, completion: completion)
     }
     
     
@@ -2149,7 +2149,7 @@ public struct WS_WorldOfWarcraft: WebService {
      - parameter completion: Returns a Result with the Data if `success` or an HTTPError if `failure`
     */
     public func getMountsCollectionSummary(namespace: APINamespace? = .profile, completion: @escaping (_ result: Result<Data, Error>) -> Void) {
-        call(endpoint: API.accountMountsCollectionSummary, namespace: namespace, completion: { completion($0) })
+        call(endpoint: API.accountMountsCollectionSummary, namespace: namespace, completion: completion)
     }
     
     
@@ -2160,7 +2160,7 @@ public struct WS_WorldOfWarcraft: WebService {
      - parameter completion: Returns a Result with the Data if `success` or an HTTPError if `failure`
     */
     public func getPetsCollectionSummary(namespace: APINamespace? = .profile, completion: @escaping (_ result: Result<Data, Error>) -> Void) {
-        call(endpoint: API.accountPetsCollectionSummary, namespace: namespace, completion: { completion($0) })
+        call(endpoint: API.accountPetsCollectionSummary, namespace: namespace, completion: completion)
     }
     
     
@@ -2176,7 +2176,7 @@ public struct WS_WorldOfWarcraft: WebService {
      - parameter completion: Returns a Result with the Data if `success` or an HTTPError if `failure`
     */
     public func getCharacterAchievementsSummary(characterName: String, realmSlug: String, namespace: APINamespace? = .profile, completion: @escaping (_ result: Result<Data, Error>) -> Void) {
-        call(endpoint: API.characterAchievementsSummary(realmSlug: realmSlug, characterName: characterName), namespace: namespace, completion: { completion($0) })
+        call(endpoint: API.characterAchievementsSummary(realmSlug: realmSlug, characterName: characterName), namespace: namespace, completion: completion)
     }
     
     
@@ -2189,7 +2189,7 @@ public struct WS_WorldOfWarcraft: WebService {
      - parameter completion: Returns a Result with the Data if `success` or an HTTPError if `failure`
     */
     public func getCharacterAchievementStatistics(characterName: String, realmSlug: String, namespace: APINamespace? = .profile, completion: @escaping (_ result: Result<Data, Error>) -> Void) {
-        call(endpoint: API.characterAchievementStatistics(realmSlug: realmSlug, characterName: characterName), namespace: namespace, completion: { completion($0) })
+        call(endpoint: API.characterAchievementStatistics(realmSlug: realmSlug, characterName: characterName), namespace: namespace, completion: completion)
     }
     
     
@@ -2205,7 +2205,7 @@ public struct WS_WorldOfWarcraft: WebService {
      - parameter completion: Returns a Result with the Data if `success` or an HTTPError if `failure`
     */
     public func getCharacterCollectionsIndex(characterName: String, realmSlug: String, namespace: APINamespace? = .profile, completion: @escaping (_ result: Result<Data, Error>) -> Void) {
-        call(endpoint: API.characterCollectionsIndex(realmSlug: realmSlug, characterName: characterName), namespace: namespace, completion: { completion($0) })
+        call(endpoint: API.characterCollectionsIndex(realmSlug: realmSlug, characterName: characterName), namespace: namespace, completion: completion)
     }
     
     
@@ -2218,7 +2218,7 @@ public struct WS_WorldOfWarcraft: WebService {
      - parameter completion: Returns a Result with the Data if `success` or an HTTPError if `failure`
     */
     public func getCharacterMountsCollectionSummary(characterName: String, realmSlug: String, namespace: APINamespace? = .profile, completion: @escaping (_ result: Result<Data, Error>) -> Void) {
-        call(endpoint: API.characterMountsCollectionSummary(realmSlug: realmSlug, characterName: characterName), namespace: namespace, completion: { completion($0) })
+        call(endpoint: API.characterMountsCollectionSummary(realmSlug: realmSlug, characterName: characterName), namespace: namespace, completion: completion)
     }
     
     
@@ -2231,7 +2231,7 @@ public struct WS_WorldOfWarcraft: WebService {
      - parameter completion: Returns a Result with the Data if `success` or an HTTPError if `failure`
     */
     public func getCharacterPetsCollectionSummary(characterName: String, realmSlug: String, namespace: APINamespace? = .profile, completion: @escaping (_ result: Result<Data, Error>) -> Void) {
-        call(endpoint: API.characterPetsCollectionSummary(realmSlug: realmSlug, characterName: characterName), namespace: namespace, completion: { completion($0) })
+        call(endpoint: API.characterPetsCollectionSummary(realmSlug: realmSlug, characterName: characterName), namespace: namespace, completion: completion)
     }
     
     
@@ -2247,7 +2247,7 @@ public struct WS_WorldOfWarcraft: WebService {
      - parameter completion: Returns a Result with the Data if `success` or an HTTPError if `failure`
     */
     public func getCharacterEncountersSummary(characterName: String, realmSlug: String, namespace: APINamespace? = .profile, completion: @escaping (_ result: Result<Data, Error>) -> Void) {
-        call(endpoint: API.characterEncountersSummary(realmSlug: realmSlug, characterName: characterName), namespace: namespace, completion: { completion($0) })
+        call(endpoint: API.characterEncountersSummary(realmSlug: realmSlug, characterName: characterName), namespace: namespace, completion: completion)
     }
     
     
@@ -2260,7 +2260,7 @@ public struct WS_WorldOfWarcraft: WebService {
      - parameter completion: Returns a Result with the Data if `success` or an HTTPError if `failure`
     */
     public func getCharacterDungeons(characterName: String, realmSlug: String, namespace: APINamespace? = .profile, completion: @escaping (_ result: Result<Data, Error>) -> Void) {
-        call(endpoint: API.characterDungeons(realmSlug: realmSlug, characterName: characterName), namespace: namespace, completion: { completion($0) })
+        call(endpoint: API.characterDungeons(realmSlug: realmSlug, characterName: characterName), namespace: namespace, completion: completion)
     }
     
     
@@ -2273,7 +2273,7 @@ public struct WS_WorldOfWarcraft: WebService {
      - parameter completion: Returns a Result with the Data if `success` or an HTTPError if `failure`
     */
     public func getCharacterRaids(characterName: String, realmSlug: String, namespace: APINamespace? = .profile, completion: @escaping (_ result: Result<Data, Error>) -> Void) {
-        call(endpoint: API.characterRaids(realmSlug: realmSlug, characterName: characterName), namespace: namespace, completion: { completion($0) })
+        call(endpoint: API.characterRaids(realmSlug: realmSlug, characterName: characterName), namespace: namespace, completion: completion)
     }
     
     
@@ -2289,7 +2289,7 @@ public struct WS_WorldOfWarcraft: WebService {
      - parameter completion: Returns a Result with the Data if `success` or an HTTPError if `failure`
     */
     public func getCharacterEquipmentSummary(characterName: String, realmSlug: String, namespace: APINamespace? = .profile, completion: @escaping (_ result: Result<Data, Error>) -> Void) {
-        call(endpoint: API.characterEquipmentSummary(realmSlug: realmSlug, characterName: characterName), namespace: namespace, completion: { completion($0) })
+        call(endpoint: API.characterEquipmentSummary(realmSlug: realmSlug, characterName: characterName), namespace: namespace, completion: completion)
     }
     
     
@@ -2304,7 +2304,7 @@ public struct WS_WorldOfWarcraft: WebService {
      - parameter completion: Returns a Result with the Data if `success` or an HTTPError if `failure`
     */
     public func getCharacterHunterPetsSummary(characterName: String, realmSlug: String, namespace: APINamespace? = .profile, completion: @escaping (_ result: Result<Data, Error>) -> Void) {
-        call(endpoint: API.characterHunterPetsSummary(realmSlug: realmSlug, characterName: characterName), namespace: namespace, completion: { completion($0) })
+        call(endpoint: API.characterHunterPetsSummary(realmSlug: realmSlug, characterName: characterName), namespace: namespace, completion: completion)
     }
     
     
@@ -2320,7 +2320,7 @@ public struct WS_WorldOfWarcraft: WebService {
      - parameter completion: Returns a Result with the Data if `success` or an HTTPError if `failure`
     */
     public func getCharacterMediaSummary(characterName: String, realmSlug: String, namespace: APINamespace? = .profile, completion: @escaping (_ result: Result<Data, Error>) -> Void) {
-        call(endpoint: API.characterMediaSummary(realmSlug: realmSlug, characterName: characterName), namespace: namespace, completion: { completion($0) })
+        call(endpoint: API.characterMediaSummary(realmSlug: realmSlug, characterName: characterName), namespace: namespace, completion: completion)
     }
     
     
@@ -2337,7 +2337,7 @@ public struct WS_WorldOfWarcraft: WebService {
      - parameter completion: Returns a Result with the Data if `success` or an HTTPError if `failure`
      */
     public func getCharacterMythicKeystoneProfileIndex(characterName: String, realmSlug: String, namespace: APINamespace? = .profile, completion: @escaping (_ result: Result<Data, Error>) -> Void) {
-        call(endpoint: API.characterMythicKeystoneProfileIndex(realmSlug: realmSlug, characterName: characterName), namespace: namespace, completion: { completion($0) })
+        call(endpoint: API.characterMythicKeystoneProfileIndex(realmSlug: realmSlug, characterName: characterName), namespace: namespace, completion: completion)
     }
     
     
@@ -2353,7 +2353,7 @@ public struct WS_WorldOfWarcraft: WebService {
      - parameter completion: Returns a Result with the Data if `success` or an HTTPError if `failure`
      */
     public func getCharacterMythicKeystoneProfileSeason(seasonID: Int, characterName: String, realmSlug: String, namespace: APINamespace? = .profile, completion: @escaping (_ result: Result<Data, Error>) -> Void) {
-        call(endpoint: API.characterMythicKeystoneSeasonDetails(realmSlug: realmSlug, characterName: characterName, season: seasonID), namespace: namespace, completion: { completion($0) })
+        call(endpoint: API.characterMythicKeystoneSeasonDetails(realmSlug: realmSlug, characterName: characterName, season: seasonID), namespace: namespace, completion: completion)
     }
     
     
@@ -2369,7 +2369,7 @@ public struct WS_WorldOfWarcraft: WebService {
      - parameter completion: Returns a Result with the Data if `success` or an HTTPError if `failure`
      */
     public func getCharacterProfessionsSummary(characterName: String, realmSlug: String, namespace: APINamespace? = .profile, completion: @escaping (_ result: Result<Data, Error>) -> Void) {
-        call(endpoint: API.characterProfessionsSummary(realmSlug: realmSlug, characterName: characterName), namespace: namespace, completion: { completion($0) })
+        call(endpoint: API.characterProfessionsSummary(realmSlug: realmSlug, characterName: characterName), namespace: namespace, completion: completion)
     }
     
     
@@ -2385,7 +2385,7 @@ public struct WS_WorldOfWarcraft: WebService {
      - parameter completion: Returns a Result with the Data if `success` or an HTTPError if `failure`
      */
     public func getCharacterProfileSummary(characterName: String, realmSlug: String, namespace: APINamespace? = .profile, completion: @escaping (_ result: Result<Data, Error>) -> Void) {
-        call(endpoint: API.characterProfileSummary(realmSlug: realmSlug, characterName: characterName), namespace: namespace, completion: { completion($0) })
+        call(endpoint: API.characterProfileSummary(realmSlug: realmSlug, characterName: characterName), namespace: namespace, completion: completion)
     }
     
     
@@ -2409,7 +2409,7 @@ public struct WS_WorldOfWarcraft: WebService {
     - parameter completion: Returns a Result with the Data if `success` or an HTTPError if `failure`
     */
     public func getCharacterProfileStatus(characterName: String, realmSlug: String, namespace: APINamespace? = .profile, completion: @escaping (_ result: Result<Data, Error>) -> Void) {
-        call(endpoint: API.characterProfileStatus(realmSlug: realmSlug, characterName: characterName), namespace: namespace, completion: { completion($0) })
+        call(endpoint: API.characterProfileStatus(realmSlug: realmSlug, characterName: characterName), namespace: namespace, completion: completion)
     }
     
     
@@ -2426,7 +2426,7 @@ public struct WS_WorldOfWarcraft: WebService {
      - parameter completion: Returns a Result with the Data if `success` or an HTTPError if `failure`
      */
     public func getCharacterPvPBracketStatistics(characterName: String, realmSlug: String, pvpBracket: WOWLeaderboardBracket, namespace: APINamespace? = .profile, completion: @escaping (_ result: Result<Data, Error>) -> Void) {
-        call(endpoint: API.characterPVPBracketStatistics(realmSlug: realmSlug, characterName: characterName, pvpBracket: pvpBracket), namespace: namespace, completion: { completion($0) })
+        call(endpoint: API.characterPVPBracketStatistics(realmSlug: realmSlug, characterName: characterName, pvpBracket: pvpBracket), namespace: namespace, completion: completion)
     }
     
     
@@ -2439,7 +2439,7 @@ public struct WS_WorldOfWarcraft: WebService {
      - parameter completion: Returns a Result with the Data if `success` or an HTTPError if `failure`
      */
     public func getCharacterPvPSummary(characterName: String, realmSlug: String, namespace: APINamespace? = .profile, completion: @escaping (_ result: Result<Data, Error>) -> Void) {
-        call(endpoint: API.characterPvPSummary(realmSlug: realmSlug, characterName: characterName), namespace: namespace, completion: { completion($0) })
+        call(endpoint: API.characterPvPSummary(realmSlug: realmSlug, characterName: characterName), namespace: namespace, completion: completion)
     }
     
     
@@ -2455,7 +2455,7 @@ public struct WS_WorldOfWarcraft: WebService {
      - parameter completion: Returns a Result with the Data if `success` or an HTTPError if `failure`
      */
     public func getCharacterQuests(characterName: String, realmSlug: String, namespace: APINamespace? = .profile, completion: @escaping (_ result: Result<Data, Error>) -> Void) {
-        call(endpoint: API.characterQuests(realmSlug: realmSlug, characterName: characterName), namespace: namespace, completion: { completion($0) })
+        call(endpoint: API.characterQuests(realmSlug: realmSlug, characterName: characterName), namespace: namespace, completion: completion)
     }
     
     
@@ -2468,7 +2468,7 @@ public struct WS_WorldOfWarcraft: WebService {
      - parameter completion: Returns a Result with the Data if `success` or an HTTPError if `failure`
      */
     public func getCharacterCompletedQuests(characterName: String, realmSlug: String, namespace: APINamespace? = .profile, completion: @escaping (_ result: Result<Data, Error>) -> Void) {
-        call(endpoint: API.characterCompletedQuests(realmSlug: realmSlug, characterName: characterName), namespace: namespace, completion: { completion($0) })
+        call(endpoint: API.characterCompletedQuests(realmSlug: realmSlug, characterName: characterName), namespace: namespace, completion: completion)
     }
     
     
@@ -2484,7 +2484,7 @@ public struct WS_WorldOfWarcraft: WebService {
      - parameter completion: Returns a Result with the Data if `success` or an HTTPError if `failure`
      */
     public func getCharacterReputationsSummary(characterName: String, realmSlug: String, namespace: APINamespace? = .profile, completion: @escaping (_ result: Result<Data, Error>) -> Void) {
-        call(endpoint: API.characterReputationsSummary(realmSlug: realmSlug, characterName: characterName), namespace: namespace, completion: { completion($0) })
+        call(endpoint: API.characterReputationsSummary(realmSlug: realmSlug, characterName: characterName), namespace: namespace, completion: completion)
     }
     
     
@@ -2500,7 +2500,7 @@ public struct WS_WorldOfWarcraft: WebService {
      - parameter completion: Returns a Result with the Data if `success` or an HTTPError if `failure`
      */
     public func getCharacterSpecializationsSummary(characterName: String, realmSlug: String, namespace: APINamespace? = .profile, completion: @escaping (_ result: Result<Data, Error>) -> Void) {
-        call(endpoint: API.characterSpecializationsSummary(realmSlug: realmSlug, characterName: characterName), namespace: namespace, completion: { completion($0) })
+        call(endpoint: API.characterSpecializationsSummary(realmSlug: realmSlug, characterName: characterName), namespace: namespace, completion: completion)
     }
     
     
@@ -2516,7 +2516,7 @@ public struct WS_WorldOfWarcraft: WebService {
      - parameter completion: Returns a Result with the Data if `success` or an HTTPError if `failure`
      */
     public func getCharacterStatisticsSummary(characterName: String, realmSlug: String, namespace: APINamespace? = .profile, completion: @escaping (_ result: Result<Data, Error>) -> Void) {
-        call(endpoint: API.characterStatisticsSummary(realmSlug: realmSlug, characterName: characterName), namespace: namespace, completion: { completion($0) })
+        call(endpoint: API.characterStatisticsSummary(realmSlug: realmSlug, characterName: characterName), namespace: namespace, completion: completion)
     }
     
     
@@ -2532,7 +2532,7 @@ public struct WS_WorldOfWarcraft: WebService {
      - parameter completion: Returns a Result with the Data if `success` or an HTTPError if `failure`
      */
     public func getCharacterTitlesSummary(characterName: String, realmSlug: String, namespace: APINamespace? = .profile, completion: @escaping (_ result: Result<Data, Error>) -> Void) {
-        call(endpoint: API.characterTitlesSummary(realmSlug: realmSlug, characterName: characterName), namespace: namespace, completion: { completion($0) })
+        call(endpoint: API.characterTitlesSummary(realmSlug: realmSlug, characterName: characterName), namespace: namespace, completion: completion)
     }
     
     
@@ -2548,7 +2548,7 @@ public struct WS_WorldOfWarcraft: WebService {
      - parameter completion: Returns a Result with the Data if `success` or an HTTPError if `failure`
      */
     public func getGuild(slug: String, realmSlug: String, namespace: APINamespace? = .profile, completion: @escaping (_ result: Result<Data, Error>) -> Void) {
-        call(endpoint: API.guild(realmSlug: realmSlug, guildSlug: slug), namespace: namespace, completion: { completion($0) })
+        call(endpoint: API.guild(realmSlug: realmSlug, guildSlug: slug), namespace: namespace, completion: completion)
     }
     
     
@@ -2561,7 +2561,7 @@ public struct WS_WorldOfWarcraft: WebService {
      - parameter completion: Returns a Result with the Data if `success` or an HTTPError if `failure`
      */
     public func getGuildActivity(slug: String, realmSlug: String, namespace: APINamespace? = .profile, completion: @escaping (_ result: Result<Data, Error>) -> Void) {
-        call(endpoint: API.guildActivity(realmSlug: realmSlug, guildSlug: slug), namespace: namespace, completion: { completion($0) })
+        call(endpoint: API.guildActivity(realmSlug: realmSlug, guildSlug: slug), namespace: namespace, completion: completion)
     }
     
     
@@ -2574,7 +2574,7 @@ public struct WS_WorldOfWarcraft: WebService {
      - parameter completion: Returns a Result with the Data if `success` or an HTTPError if `failure`
      */
     public func getGuildAchievements(slug: String, realmSlug: String, namespace: APINamespace? = .profile, completion: @escaping (_ result: Result<Data, Error>) -> Void) {
-        call(endpoint: API.guildAchievements(realmSlug: realmSlug, guildSlug: slug), namespace: namespace, completion: { completion($0) })
+        call(endpoint: API.guildAchievements(realmSlug: realmSlug, guildSlug: slug), namespace: namespace, completion: completion)
     }
     
     
@@ -2587,7 +2587,7 @@ public struct WS_WorldOfWarcraft: WebService {
      - parameter completion: Returns a Result with the Data if `success` or an HTTPError if `failure`
      */
     public func getGuildRoster(slug: String, realmSlug: String, namespace: APINamespace? = .profile, completion: @escaping (_ result: Result<Data, Error>) -> Void) {
-        call(endpoint: API.guildRoster(realmSlug: realmSlug, guildSlug: slug), namespace: namespace, completion: { completion($0) })
+        call(endpoint: API.guildRoster(realmSlug: realmSlug, guildSlug: slug), namespace: namespace, completion: completion)
     }
 }
 

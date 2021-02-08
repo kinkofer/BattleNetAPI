@@ -33,6 +33,7 @@ public enum HTTPHeader {
         }
     }
     
+    
     public var value: String {
         switch self {
         case .accept(let mediaType):

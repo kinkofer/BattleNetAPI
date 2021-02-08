@@ -20,30 +20,22 @@ public struct AuthenticationModelController {
     
     
     public func getClientAccessToken(clientID: String, clientSecret: String, completion: @escaping (_ result: Result<Access, Error>) -> Void) {
-        battleNetAPI.authentication.getClientAccess { result in
-            result.decode(completion: completion)
-        }
+        battleNetAPI.authentication.getClientAccess(completion: { $0.decode(completion: completion) })
     }
     
     
     public func getUserAccessToken(clientID: String, clientSecret: String, code: String, redirectURL: String, completion: @escaping (_ result: Result<Access, Error>) -> Void) {
-        battleNetAPI.authentication.getUserAccess(code: code, redirectURL: redirectURL) { result in
-            result.decode(completion: completion)
-        }
+        battleNetAPI.authentication.getUserAccess(code: code, redirectURL: redirectURL, completion: { $0.decode(completion: completion) })
     }
     
     
     public func validateClientAccessToken(_ token: String, completion: @escaping (_ result: Result<ClientToken, Error>) -> Void) {
-        battleNetAPI.authentication.validateClientAccessToken(token) { result in
-            result.decode(completion: completion)
-        }
+        battleNetAPI.authentication.validateClientAccessToken(token, completion: { $0.decode(completion: completion) })
     }
     
     
     public func validateUserAccessToken(_ token: String, completion: @escaping (_ result: Result<UserToken, Error>) -> Void) {
-        battleNetAPI.authentication.validateUserAccessToken(token) { result in
-            result.decode(completion: completion)
-        }
+        battleNetAPI.authentication.validateUserAccessToken(token, completion: { $0.decode(completion: completion) })
     }
     
     

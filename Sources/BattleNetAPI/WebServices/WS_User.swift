@@ -54,8 +54,6 @@ public struct WS_User: WebService {
      - parameter completion: Returns a Result with the Data if `success` or an HTTPError if `failure`
      */
     public func getUserInfo(completion: @escaping (_ result: Result<Data, Error>) -> Void) {
-        call(endpoint: API.userInfo) { result in
-            completion(result)
-        }
+        call(endpoint: API.userInfo, completion: completion)
     }
 }
