@@ -11,7 +11,7 @@ import AuthenticationServices
 
 
 /// A protocol for interfacing with the BattleNet OAuth service
-public protocol OAuthAuthenticator: class {
+protocol OAuthAuthenticator: class {
     var battleNetAPI: BattleNetAPI { get }
     var oauth: BattleNetOAuth { get }
     var providerContext: ASWebAuthenticationPresentationContextProviding { get }

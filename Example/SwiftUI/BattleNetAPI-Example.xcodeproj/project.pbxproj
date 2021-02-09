@@ -9,6 +9,12 @@
 /* Begin PBXBuildFile section */
 		5941560B25D0FE950088EBB5 /* BattleNetAPI in Frameworks */ = {isa = PBXBuildFile; productRef = 5941560A25D0FE950088EBB5 /* BattleNetAPI */; };
 		5941560D25D0FE9A0088EBB5 /* BattleNetAPI in Frameworks */ = {isa = PBXBuildFile; productRef = 5941560C25D0FE9A0088EBB5 /* BattleNetAPI */; };
+		5941561B25D245AB0088EBB5 /* World.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5941561A25D245AB0088EBB5 /* World.swift */; };
+		5941561C25D245AB0088EBB5 /* World.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5941561A25D245AB0088EBB5 /* World.swift */; };
+		5941561F25D247080088EBB5 /* BattleNetAPI+Swift.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5941561E25D247080088EBB5 /* BattleNetAPI+Swift.swift */; };
+		5941562025D247080088EBB5 /* BattleNetAPI+Swift.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5941561E25D247080088EBB5 /* BattleNetAPI+Swift.swift */; };
+		5941562725D248CD0088EBB5 /* AuthenticationViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5941562625D248CD0088EBB5 /* AuthenticationViewModel.swift */; };
+		5941562825D248CD0088EBB5 /* AuthenticationViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5941562625D248CD0088EBB5 /* AuthenticationViewModel.swift */; };
 		598AC0BA24A986E5002F2ED3 /* BattleNetAPI_ExampleApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 598AC0A724A986E3002F2ED3 /* BattleNetAPI_ExampleApp.swift */; };
 		598AC0BB24A986E5002F2ED3 /* BattleNetAPI_ExampleApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 598AC0A724A986E3002F2ED3 /* BattleNetAPI_ExampleApp.swift */; };
 		598AC0BC24A986E5002F2ED3 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 598AC0A824A986E3002F2ED3 /* ContentView.swift */; };
@@ -32,6 +38,9 @@
 
 /* Begin PBXFileReference section */
 		5941560825D0FE820088EBB5 /* BattleNetAPI */ = {isa = PBXFileReference; lastKnownFileType = folder; name = BattleNetAPI; path = ../..; sourceTree = "<group>"; };
+		5941561A25D245AB0088EBB5 /* World.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = World.swift; sourceTree = "<group>"; };
+		5941561E25D247080088EBB5 /* BattleNetAPI+Swift.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "BattleNetAPI+Swift.swift"; sourceTree = "<group>"; };
+		5941562625D248CD0088EBB5 /* AuthenticationViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthenticationViewModel.swift; sourceTree = "<group>"; };
 		598AC0A724A986E3002F2ED3 /* BattleNetAPI_ExampleApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BattleNetAPI_ExampleApp.swift; sourceTree = "<group>"; };
 		598AC0A824A986E3002F2ED3 /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
 		598AC0A924A986E4002F2ED3 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
@@ -62,6 +71,39 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		5941561825D245080088EBB5 /* Scenes */ = {
+			isa = PBXGroup;
+			children = (
+				598AC0A824A986E3002F2ED3 /* ContentView.swift */,
+			);
+			path = Scenes;
+			sourceTree = "<group>";
+		};
+		5941562225D247D50088EBB5 /* Extensions */ = {
+			isa = PBXGroup;
+			children = (
+				5941561E25D247080088EBB5 /* BattleNetAPI+Swift.swift */,
+			);
+			path = Extensions;
+			sourceTree = "<group>";
+		};
+		5941562325D247EA0088EBB5 /* Utilities */ = {
+			isa = PBXGroup;
+			children = (
+				5941562225D247D50088EBB5 /* Extensions */,
+			);
+			path = Utilities;
+			sourceTree = "<group>";
+		};
+		5941562425D247F20088EBB5 /* Model */ = {
+			isa = PBXGroup;
+			children = (
+				5941561A25D245AB0088EBB5 /* World.swift */,
+				5941562625D248CD0088EBB5 /* AuthenticationViewModel.swift */,
+			);
+			path = Model;
+			sourceTree = "<group>";
+		};
 		598AC0A124A986E3002F2ED3 = {
 			isa = PBXGroup;
 			children = (
@@ -78,7 +120,9 @@
 			children = (
 				598AC0A924A986E4002F2ED3 /* Assets.xcassets */,
 				598AC0A724A986E3002F2ED3 /* BattleNetAPI_ExampleApp.swift */,
-				598AC0A824A986E3002F2ED3 /* ContentView.swift */,
+				5941562425D247F20088EBB5 /* Model */,
+				5941561825D245080088EBB5 /* Scenes */,
+				5941562325D247EA0088EBB5 /* Utilities */,
 			);
 			path = Shared;
 			sourceTree = "<group>";
@@ -221,6 +265,9 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				5941561F25D247080088EBB5 /* BattleNetAPI+Swift.swift in Sources */,
+				5941562725D248CD0088EBB5 /* AuthenticationViewModel.swift in Sources */,
+				5941561B25D245AB0088EBB5 /* World.swift in Sources */,
 				598AC0BC24A986E5002F2ED3 /* ContentView.swift in Sources */,
 				598AC0BA24A986E5002F2ED3 /* BattleNetAPI_ExampleApp.swift in Sources */,
 			);
@@ -230,6 +277,9 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				5941562025D247080088EBB5 /* BattleNetAPI+Swift.swift in Sources */,
+				5941562825D248CD0088EBB5 /* AuthenticationViewModel.swift in Sources */,
+				5941561C25D245AB0088EBB5 /* World.swift in Sources */,
 				598AC0BD24A986E5002F2ED3 /* ContentView.swift in Sources */,
 				598AC0BB24A986E5002F2ED3 /* BattleNetAPI_ExampleApp.swift in Sources */,
 			);

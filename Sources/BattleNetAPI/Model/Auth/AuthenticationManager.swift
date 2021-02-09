@@ -12,10 +12,10 @@ import AuthenticationServices
 
 /// A manager for getting the `clientAccessToken` and `userAccessToken` required for calling web services in the BattleNet API.
 public class AuthenticationManager: OAuthAuthenticator {
-    public let battleNetAPI: BattleNetAPI
+    let battleNetAPI: BattleNetAPI
     
-    public let oauth: BattleNetOAuth
-    public let providerContext: ASWebAuthenticationPresentationContextProviding
+    let oauth: BattleNetOAuth
+    let providerContext: ASWebAuthenticationPresentationContextProviding
     
     private let authMC: AuthenticationModelController
     private var webAuthSession: ASWebAuthenticationSession?
@@ -105,7 +105,7 @@ public class AuthenticationManager: OAuthAuthenticator {
      - parameter redirectUrl: A URL with the http or https scheme pointing to the authentication webpage.
      - parameter completion: The result of the user's sign in attempt, containing the user's access token if they successfully authenticated.
      */
-    func authenicateUser(scope: Scope, on providerContext: ASWebAuthenticationPresentationContextProviding,
+    private func authenicateUser(scope: Scope, on providerContext: ASWebAuthenticationPresentationContextProviding,
                                  scheme: String, redirectUrl: String, completion: @escaping (_ result: Result<String, Error>) -> Void) {
         /// A randomly-generated string used to validate that the auth request made is the same as the auth response (after redirect)
         let state = "BattleNetAPI\(Int(Date().timeIntervalSince1970))"
