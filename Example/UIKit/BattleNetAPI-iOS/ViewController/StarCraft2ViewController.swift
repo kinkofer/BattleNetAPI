@@ -38,10 +38,18 @@ class StarCraft2ViewController: UITableViewController, APIViewer {
         
         // Ladder
         case grandmasterLeaderboard = "Grandmaster Leaderboard"
-        case season = "Seaon"
+        case season = "Season"
         
         // Account
         case player = "Player"
+        
+        // Legacy
+//        case profileLegacy = "Profile (Legacy)"
+//        case ladders = "Ladders"
+//        case matchHistory = "Match History"
+//        case ladderLegacy = "Ladder (Legacy)"
+//        case achievements = "Achievements"
+//        case rewards = "Rewards"
     }
     
     

@@ -47,7 +47,7 @@ public class WS_Authentication: AuthenticationWebService {
     
     
     
-    init(region: APIRegion, locale: APILocale, session: URLSession, credentials: BattleNetCredentials) {
+    init(region: APIRegion, locale: APILocale?, session: URLSession, credentials: BattleNetCredentials) {
         self.region = region
         self.locale = locale
         self.session = session

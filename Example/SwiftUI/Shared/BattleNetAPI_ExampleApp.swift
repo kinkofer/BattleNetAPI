@@ -23,7 +23,7 @@ struct BattleNetAPI_ExampleApp: App {
         let authManager = AuthenticationManager(battleNetAPI: battleNetAPI, oauth: Current.oauth, providerContext: AuthenicationViewModel())
         
         WindowGroup {
-            ContentView()
+            MainView()
                 .environmentObject(Current)
                 .environmentObject(battleNetAPI)
                 .environmentObject(authManager)

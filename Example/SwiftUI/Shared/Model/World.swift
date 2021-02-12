@@ -11,7 +11,7 @@ import SwiftUI
 
 public class World: ObservableObject {
     public var region = APIRegion.us
-    public var locale = APILocale.en_US
+    public var locale: APILocale? = nil
     
     public var oauth: BattleNetOAuth = BattleNetOAuth(scope: [.d3, .sc2, .wow, .openID], scheme: "BattleNetAPI", redirectUrl: "https://rediret.to/BattleNetAPI")
     public var credentials = BattleNetCredentials(clientID: "CLIENT_ID", clientSecret: "CLIENT_SECRET",

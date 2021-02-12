@@ -68,7 +68,7 @@ public struct WS_Diablo3: WS_Diablo3Service {
             switch self {
             // Game Data APIs
             case .season:
-                return "/season"
+                return "/season/"
             case .leaderboardBySeason(let id):
                 return "/season/\(id)"
             case .seasonLeaderboard(let seasonID, let leaderboard):
@@ -81,34 +81,34 @@ public struct WS_Diablo3: WS_Diablo3Service {
                 return "/era/\(eraID)/leaderboard/\(leaderboard)"
             // Community APIs
             case .actIndex:
-                return "/act"
+                return "/act/"
             case .act(let id):
-                return "/act/\(id)"
+                return "/act/\(id)/"
             case .artisan(let artisan):
-                return "/artisan/\(artisan)"
+                return "/artisan/\(artisan)/"
             case .artisanRecipe(artisan: let artisan, recipe: let recipe):
-                return "/artisan/\(artisan)/recipe/\(recipe)"
+                return "/artisan/\(artisan)/recipe/\(recipe)/"
             case .follower(let slug):
-                return "/follower/\(slug)"
+                return "/follower/\(slug)/"
             case .class(let slug):
-                return "/hero/\(slug)"
+                return "/hero/\(slug)/"
             case .classSkill(class: let classSlug, skill: let skillSlug):
-                return "/hero/\(classSlug)/skill/\(skillSlug)"
+                return "/hero/\(classSlug)/skill/\(skillSlug)/"
             case .itemType:
-                return "/item-type"
+                return "/item-type/"
             case .itemTypeBySlug(let itemTypeSlug):
-                return "/item-type/\(itemTypeSlug)"
+                return "/item-type/\(itemTypeSlug)/"
             case .itemSlugAndID(let itemSlugAndID):
-                return "/item/\(itemSlugAndID)"
+                return "/item/\(itemSlugAndID)/"
             // Profile APIs
             case .profile(let battleTag):
                 return "/\(battleTag)/"
             case .hero(let battleTag, let heroID):
-                return "/\(battleTag)/hero/\(heroID)"
+                return "/\(battleTag)/hero/\(heroID)/"
             case .heroItems(let battleTag, let heroID):
-                return "/\(battleTag)/hero/\(heroID)/items"
+                return "/\(battleTag)/hero/\(heroID)/items/"
             case .heroFollowerItems(let battleTag, let heroID):
-                return "/\(battleTag)/hero/\(heroID)/follower-items"
+                return "/\(battleTag)/hero/\(heroID)/follower-items/"
             }
         }
         

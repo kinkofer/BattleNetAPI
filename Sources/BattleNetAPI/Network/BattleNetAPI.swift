@@ -11,10 +11,10 @@ import Foundation
 
 /// This class is an interface to all the web services, with separate properties for accessing authentication, user, and specific game web services.
 public class BattleNetAPI {
-    var credentials: BattleNetCredentials
+    public private(set) var credentials: BattleNetCredentials
     let session: URLSession
     let region: APIRegion
-    let locale: APILocale
+    let locale: APILocale?
     
     
     /// Authenication web services
@@ -32,7 +32,7 @@ public class BattleNetAPI {
     
     
     
-    public init(credentials: BattleNetCredentials, session: URLSession = URLSession.shared, region: APIRegion = .us, locale: APILocale = .en_US) {
+    public init(credentials: BattleNetCredentials, session: URLSession = URLSession.shared, region: APIRegion = .us, locale: APILocale? = nil) {
         self.credentials = credentials
         self.session = session
         self.region = region
