@@ -126,10 +126,6 @@ struct MainView: View {
                 NavigationLink(destination: WorldOfWarcraftView(apiType: .profile), tag: GameAPI(.worldOfWarcraft, .profile), selection: requiresUserAuthBinding) {
                     Text(APIType.profile.displayName)
                 }
-                
-                NavigationLink(destination: WorldOfWarcraftView(apiType: .community), tag: GameAPI(.worldOfWarcraft, .community), selection: requiresUserAuthBinding) {
-                    Text(APIType.community.displayName)
-                }
             }
             
             Section(header: Text(Game.battleNet.rawValue)) {

@@ -70,6 +70,12 @@ public struct WS_WorldOfWarcraft: WebService {
         
         case mediaSearch([String: String]?)
         
+        case modifiedCraftingIndex
+        case modifiedCraftingCategoryIndex
+        case modifiedCraftingCategory(Int)
+        case modifiedCraftingReagentSlotTypeIndex
+        case modifiedCraftingReagentSlotType(Int)
+        
         case mountIndex
         case mount(Int)
         case mountSearch([String: String]?)
@@ -160,10 +166,17 @@ public struct WS_WorldOfWarcraft: WebService {
         case pvpTalentIndex
         case pvpTalent(Int)
         
+        case techTalentTreeIndex
+        case techTalentTree(Int)
+        case techTalentIndex
+        case techTalent(Int)
+        case techTalentMedia(Int)
+        
         case titleIndex
         case title(Int)
         
         case tokenIndex
+        
         
         // Profile APIs
         case accountProfileSummary
@@ -217,6 +230,7 @@ public struct WS_WorldOfWarcraft: WebService {
         case guildActivity(realmSlug: String, guildSlug: String)
         case guildAchievements(realmSlug: String, guildSlug: String)
         case guildRoster(realmSlug: String, guildSlug: String)
+        
         
         var path: String {
             switch self {
@@ -293,9 +307,9 @@ public struct WS_WorldOfWarcraft: WebService {
             case .itemClassIndex:
                 return "/item-class/index"
             case .itemClass(let id):
-                return "item-class/\(id)"
+                return "/item-class/\(id)"
             case .itemSetIndex:
-                return "item-set/index"
+                return "/item-set/index"
             case .itemSet(let id):
                 return "/item-set/\(id)"
             case .itemSubclass(itemClassID: let itemClassID, itemSubclassID: let itemSubclassID):
@@ -326,14 +340,24 @@ public struct WS_WorldOfWarcraft: WebService {
             
             case .mediaSearch:
                 return "/search/media"
-                
+            
+            case .modifiedCraftingIndex:
+                return "/modified-crafting/index"
+            case .modifiedCraftingCategoryIndex:
+                return "/modified-crafting/category/index"
+            case .modifiedCraftingCategory(let id):
+                return "/modified-crafting/category/\(id)"
+            case .modifiedCraftingReagentSlotTypeIndex:
+                return "/modified-crafting/reagent-slot-type/index"
+            case .modifiedCraftingReagentSlotType(let id):
+                return "/modified-crafting/reagent-slot-type/\(id)"
+            
             case .mountIndex:
                 return "/mount/index"
             case .mount(let id):
                 return "/mount/\(id)"
             case .mountSearch:
                 return "/search/mount"
-                
                 
             case .mythicKeystoneAffixIndex:
                 return "/keystone-affix/index"
@@ -444,9 +468,9 @@ public struct WS_WorldOfWarcraft: WebService {
             case .questCategory(let id):
                 return "/quest/category/\(id)"
             case .questAreaIndex:
-                return "quest/area/index"
+                return "/quest/area/index"
             case .questArea(let id):
-                return "quest/area/\(id)"
+                return "/quest/area/\(id)"
             case .questTypeIndex:
                 return "/quest/type/index"
             case .questType(let id):
@@ -488,6 +512,17 @@ public struct WS_WorldOfWarcraft: WebService {
                 return "/pvp-talent/index"
             case .pvpTalent(let id):
                 return "/pvp-talent/\(id)"
+                
+            case .techTalentTreeIndex:
+                return "/tech-talent-tree/index"
+            case .techTalentTree(let id):
+                return "/tech-talent-tree/\(id)"
+            case .techTalentIndex:
+                return "/tech-talent/index"
+            case .techTalent(let id):
+                return "/tech-talent/\(id)"
+            case .techTalentMedia(let id):
+                return "/media/tech-talent/\(id)"
             
             case .titleIndex:
                 return "/title/index"
@@ -598,6 +633,7 @@ public struct WS_WorldOfWarcraft: WebService {
                  .itemClassIndex, .itemClass, .itemSetIndex, .itemSet, .itemSubclass, .item, .itemMedia, .itemSearch,
                  .journalExpansionIndex, .journalExpansion, .journalEncounterIndex, .journalEncounter, .journalEncounterSearch, .journalInstanceIndex, .journalInstance, .journalInstanceMedia,
                  .mediaSearch,
+                 .modifiedCraftingIndex, .modifiedCraftingCategoryIndex, .modifiedCraftingCategory, .modifiedCraftingReagentSlotTypeIndex, .modifiedCraftingReagentSlotType,
                  .mountIndex, .mount, .mountSearch,
                  .mythicKeystoneAffixIndex, .mythicKeystoneAffix, .mythicKeystoneAffixMedia,
                  .mythicKeystoneDungeonIndex, .mythicKeystoneDungeon, .mythicKeystoneIndex, .mythicKeystonePeriodIndex, .mythicKeystonePeriod, .mythicKeystoneSeasonIndex, .mythicKeystoneSeason,
@@ -617,6 +653,7 @@ public struct WS_WorldOfWarcraft: WebService {
                  .reputationFactionIndex, .reputationFaction, .reputationTierIndex, .reputationTier,
                  .spell, .spellMedia, .spellSearch,
                  .talentIndex, .talent, .pvpTalentIndex, .pvpTalent,
+                 .techTalentTreeIndex, .techTalentTree, .techTalentIndex, .techTalent, .techTalentMedia,
                  .titleIndex, .title,
                  .tokenIndex:
                 return .gameData
@@ -1282,6 +1319,66 @@ public struct WS_WorldOfWarcraft: WebService {
     
     
     
+    // MARK: Modified Crafting API
+    
+    /**
+     Returns the parent index for Modified Crafting.
+     
+     - parameter namespace: The namespace to use to locate this document.
+     - parameter completion: Returns a Result with the Data if `success` or an HTTPError if `failure`
+     */
+    public func getModifiedCraftingIndex(namespace: APINamespace? = .static, completion: @escaping (_ result: Result<Data, Error>) -> Void) {
+        call(endpoint: API.modifiedCraftingIndex, namespace: namespace, completion: completion)
+    }
+    
+    
+    /**
+     Returns the index of Modified Crafting categories.
+     
+     - parameter namespace: The namespace to use to locate this document.
+     - parameter completion: Returns a Result with the Data if `success` or an HTTPError if `failure`
+     */
+    public func getModifiedCraftingCategoryIndex(namespace: APINamespace? = .static, completion: @escaping (_ result: Result<Data, Error>) -> Void) {
+        call(endpoint: API.modifiedCraftingCategoryIndex, namespace: namespace, completion: completion)
+    }
+    
+    
+    /**
+     Returns a Modified Crafting category by ID.
+     
+     - parameter id: The ID of the Modified Crafting category.
+     - parameter namespace: The namespace to use to locate this document.
+     - parameter completion: Returns a Result with the Data if `success` or an HTTPError if `failure`
+     */
+    public func getModifiedCraftingCategory(id: Int, namespace: APINamespace? = .static, completion: @escaping (_ result: Result<Data, Error>) -> Void) {
+        call(endpoint: API.modifiedCraftingCategory(id), namespace: namespace, completion: completion)
+    }
+    
+    
+    /**
+     Returns the index of Modified Crafting reagent slot types.
+     
+     - parameter namespace: The namespace to use to locate this document.
+     - parameter completion: Returns a Result with the Data if `success` or an HTTPError if `failure`
+     */
+    public func getModifiedCraftingReagentSlotTypeIndex(namespace: APINamespace? = .static, completion: @escaping (_ result: Result<Data, Error>) -> Void) {
+        call(endpoint: API.modifiedCraftingReagentSlotTypeIndex, namespace: namespace, completion: completion)
+    }
+    
+    
+    /**
+     Returns a Modified Crafting reagent slot type by ID.
+     
+     - parameter id: The ID of the Modified Crafting reagent slot type.
+     - parameter namespace: The namespace to use to locate this document.
+     - parameter completion: Returns a Result with the Data if `success` or an HTTPError if `failure`
+     */
+    public func getModifiedCraftingReagentSlotType(id: Int, namespace: APINamespace? = .static, completion: @escaping (_ result: Result<Data, Error>) -> Void) {
+        call(endpoint: API.modifiedCraftingReagentSlotType(id), namespace: namespace, completion: completion)
+    }
+    
+    
+    
     // MARK: Mount API
     
     /**
@@ -1366,7 +1463,7 @@ public struct WS_WorldOfWarcraft: WebService {
      - parameter namespace: The namespace to use to locate this document.
      - parameter completion: Returns a Result with the Data if `success` or an HTTPError if `failure`
      */
-    func getMythicKeystoneDungeonIndex(namespace: APINamespace? = .dynamic, completion: @escaping (_ result: Result<Data, Error>) -> Void) {
+    public func getMythicKeystoneDungeonIndex(namespace: APINamespace? = .dynamic, completion: @escaping (_ result: Result<Data, Error>) -> Void) {
         self.call(endpoint: API.mythicKeystoneDungeonIndex, namespace: namespace, completion: completion)
     }
     
@@ -1378,7 +1475,7 @@ public struct WS_WorldOfWarcraft: WebService {
      - parameter namespace: The namespace to use to locate this document.
      - parameter completion: Returns a Result with the Data if `success` or an HTTPError if `failure`
      */
-    func getMythicKeystoneDungeon(id: Int, namespace: APINamespace? = .dynamic, completion: @escaping (_ result: Result<Data, Error>) -> Void) {
+    public func getMythicKeystoneDungeon(id: Int, namespace: APINamespace? = .dynamic, completion: @escaping (_ result: Result<Data, Error>) -> Void) {
         self.call(endpoint: API.mythicKeystoneDungeon(id), namespace: namespace, completion: completion)
     }
     
@@ -1389,7 +1486,7 @@ public struct WS_WorldOfWarcraft: WebService {
      - parameter namespace: The namespace to use to locate this document.
      - parameter completion: Returns a Result with the Data if `success` or an HTTPError if `failure`
      */
-    func getMythicKeystoneIndex(namespace: APINamespace? = .dynamic, completion: @escaping (_ result: Result<Data, Error>) -> Void) {
+    public func getMythicKeystoneIndex(namespace: APINamespace? = .dynamic, completion: @escaping (_ result: Result<Data, Error>) -> Void) {
         self.call(endpoint: API.mythicKeystoneIndex, namespace: namespace, completion: completion)
     }
     
@@ -1400,7 +1497,7 @@ public struct WS_WorldOfWarcraft: WebService {
      - parameter namespace: The namespace to use to locate this document.
      - parameter completion: Returns a Result with the Data if `success` or an HTTPError if `failure`
      */
-    func getMythicKeystonePeriodIndex(namespace: APINamespace? = .dynamic, completion: @escaping (_ result: Result<Data, Error>) -> Void) {
+    public func getMythicKeystonePeriodIndex(namespace: APINamespace? = .dynamic, completion: @escaping (_ result: Result<Data, Error>) -> Void) {
         self.call(endpoint: API.mythicKeystonePeriodIndex, namespace: namespace, completion: completion)
     }
     
@@ -1412,7 +1509,7 @@ public struct WS_WorldOfWarcraft: WebService {
      - parameter namespace: The namespace to use to locate this document.
      - parameter completion: Returns a Result with the Data if `success` or an HTTPError if `failure`
      */
-    func getMythicKeystonePeriod(id: Int, namespace: APINamespace? = .dynamic, completion: @escaping (_ result: Result<Data, Error>) -> Void) {
+    public func getMythicKeystonePeriod(id: Int, namespace: APINamespace? = .dynamic, completion: @escaping (_ result: Result<Data, Error>) -> Void) {
         self.call(endpoint: API.mythicKeystonePeriod(id), namespace: namespace, completion: completion)
     }
     
@@ -1423,7 +1520,7 @@ public struct WS_WorldOfWarcraft: WebService {
      - parameter namespace: The namespace to use to locate this document.
      - parameter completion: Returns a Result with the Data if `success` or an HTTPError if `failure`
      */
-    func getMythicKeystoneSeasonIndex(namespace: APINamespace? = .dynamic, completion: @escaping (_ result: Result<Data, Error>) -> Void) {
+    public func getMythicKeystoneSeasonIndex(namespace: APINamespace? = .dynamic, completion: @escaping (_ result: Result<Data, Error>) -> Void) {
         self.call(endpoint: API.mythicKeystoneSeasonIndex, namespace: namespace, completion: completion)
     }
     
@@ -1435,7 +1532,7 @@ public struct WS_WorldOfWarcraft: WebService {
      - parameter namespace: The namespace to use to locate this document.
      - parameter completion: Returns a Result with the Data if `success` or an HTTPError if `failure`
      */
-    func getMythicKeystoneSeason(id: Int, namespace: APINamespace? = .dynamic, completion: @escaping (_ result: Result<Data, Error>) -> Void) {
+    public func getMythicKeystoneSeason(id: Int, namespace: APINamespace? = .dynamic, completion: @escaping (_ result: Result<Data, Error>) -> Void) {
         self.call(endpoint: API.mythicKeystoneSeasonIndex, namespace: namespace, completion: completion)
     }
     
@@ -1450,7 +1547,7 @@ public struct WS_WorldOfWarcraft: WebService {
      - parameter namespace: The namespace to use to locate this document.
      - parameter completion: Returns a Result with the Data if `success` or an HTTPError if `failure`
      */
-    func getMythicLeaderboardIndex(connectedRealmID: Int, namespace: APINamespace? = .dynamic, completion: @escaping (_ result: Result<Data, Error>) -> Void) {
+    public func getMythicLeaderboardIndex(connectedRealmID: Int, namespace: APINamespace? = .dynamic, completion: @escaping (_ result: Result<Data, Error>) -> Void) {
         self.call(endpoint: API.mythicKeystoneLeaderboardIndex(connectedRealmID: connectedRealmID), namespace: namespace, completion: completion)
     }
     
@@ -1464,7 +1561,7 @@ public struct WS_WorldOfWarcraft: WebService {
      - parameter namespace: The namespace to use to locate this document.
      - parameter completion: Returns a Result with the Data if `success` or an HTTPError if `failure`
      */
-    func getMythicLeaderboard(connectedRealmID: Int, dungeonID: Int, period: Int, namespace: APINamespace? = .dynamic, completion: @escaping (_ result: Result<Data, Error>) -> Void) {
+    public func getMythicLeaderboard(connectedRealmID: Int, dungeonID: Int, period: Int, namespace: APINamespace? = .dynamic, completion: @escaping (_ result: Result<Data, Error>) -> Void) {
         self.call(endpoint: API.mythicKeystoneLeaderboard(connectedRealmID: connectedRealmID, dungeonID: dungeonID, period: period), namespace: namespace, completion: completion)
     }
     
@@ -1480,7 +1577,7 @@ public struct WS_WorldOfWarcraft: WebService {
      - parameter namespace: The namespace to use to locate this document.
      - parameter completion: Returns a Result with the Data if `success` or an HTTPError if `failure`
      */
-    func getMythicRaidLeaderboard(raid: String, faction: FactionType, namespace: APINamespace? = .dynamic, completion: @escaping (_ result: Result<Data, Error>) -> Void) {
+    public func getMythicRaidLeaderboard(raid: String, faction: FactionType, namespace: APINamespace? = .dynamic, completion: @escaping (_ result: Result<Data, Error>) -> Void) {
         self.call(endpoint: API.mythicRaidLeaderboard(raid: raid, faction: faction), namespace: namespace, completion: completion)
     }
     
@@ -1494,7 +1591,7 @@ public struct WS_WorldOfWarcraft: WebService {
      - parameter namespace: The namespace to use to locate this document.
      - parameter completion: Returns a Result with the Data if `success` or an HTTPError if `failure`
      */
-    func getPetIndex(namespace: APINamespace? = .static, completion: @escaping (_ result: Result<Data, Error>) -> Void) {
+    public func getPetIndex(namespace: APINamespace? = .static, completion: @escaping (_ result: Result<Data, Error>) -> Void) {
         self.call(endpoint: API.petIndex, namespace: namespace, completion: completion)
     }
     
@@ -1506,7 +1603,7 @@ public struct WS_WorldOfWarcraft: WebService {
      - parameter namespace: The namespace to use to locate this document.
      - parameter completion: Returns a Result with the Data if `success` or an HTTPError if `failure`
      */
-    func getPet(id: Int, namespace: APINamespace? = .static, completion: @escaping (_ result: Result<Data, Error>) -> Void) {
+    public func getPet(id: Int, namespace: APINamespace? = .static, completion: @escaping (_ result: Result<Data, Error>) -> Void) {
         self.call(endpoint: API.pet(id), namespace: namespace, completion: completion)
     }
     
@@ -1518,7 +1615,7 @@ public struct WS_WorldOfWarcraft: WebService {
      - parameter namespace: The namespace to use to locate this document.
      - parameter completion: Returns a Result with the Data if `success` or an HTTPError if `failure`
      */
-    func getPetMedia(id: Int, namespace: APINamespace? = .static, completion: @escaping (_ result: Result<Data, Error>) -> Void) {
+    public func getPetMedia(id: Int, namespace: APINamespace? = .static, completion: @escaping (_ result: Result<Data, Error>) -> Void) {
         self.call(endpoint: API.petMedia(id), namespace: namespace, completion: completion)
     }
     
@@ -1529,7 +1626,7 @@ public struct WS_WorldOfWarcraft: WebService {
      - parameter namespace: The namespace to use to locate this document.
      - parameter completion: Returns a Result with the Data if `success` or an HTTPError if `failure`
      */
-    func getPetAbilityIndex(namespace: APINamespace? = .static, completion: @escaping (_ result: Result<Data, Error>) -> Void) {
+    public func getPetAbilityIndex(namespace: APINamespace? = .static, completion: @escaping (_ result: Result<Data, Error>) -> Void) {
         self.call(endpoint: API.petAbilityIndex, namespace: namespace, completion: completion)
     }
     
@@ -1541,7 +1638,7 @@ public struct WS_WorldOfWarcraft: WebService {
      - parameter namespace: The namespace to use to locate this document.
      - parameter completion: Returns a Result with the Data if `success` or an HTTPError if `failure`
      */
-    func getPetAbility(id: Int, namespace: APINamespace? = .static, completion: @escaping (_ result: Result<Data, Error>) -> Void) {
+    public func getPetAbility(id: Int, namespace: APINamespace? = .static, completion: @escaping (_ result: Result<Data, Error>) -> Void) {
         self.call(endpoint: API.petAbility(id), namespace: namespace, completion: completion)
     }
     
@@ -1553,7 +1650,7 @@ public struct WS_WorldOfWarcraft: WebService {
      - parameter namespace: The namespace to use to locate this document.
      - parameter completion: Returns a Result with the Data if `success` or an HTTPError if `failure`
      */
-    func getPetAbilityMedia(id: Int, namespace: APINamespace? = .static, completion: @escaping (_ result: Result<Data, Error>) -> Void) {
+    public func getPetAbilityMedia(id: Int, namespace: APINamespace? = .static, completion: @escaping (_ result: Result<Data, Error>) -> Void) {
         self.call(endpoint: API.petAbilityMedia(id), namespace: namespace, completion: completion)
     }
     
@@ -1567,7 +1664,7 @@ public struct WS_WorldOfWarcraft: WebService {
      - parameter namespace: The namespace to use to locate this document.
      - parameter completion: Returns a Result with the Data if `success` or an HTTPError if `failure`
      */
-    func getPlayableClassIndex(namespace: APINamespace? = .static, completion: @escaping (_ result: Result<Data, Error>) -> Void) {
+    public func getPlayableClassIndex(namespace: APINamespace? = .static, completion: @escaping (_ result: Result<Data, Error>) -> Void) {
         self.call(endpoint: API.playableClassIndex, namespace: namespace, completion: completion)
     }
     
@@ -1579,7 +1676,7 @@ public struct WS_WorldOfWarcraft: WebService {
      - parameter namespace: The namespace to use to locate this document.
      - parameter completion: Returns a Result with the Data if `success` or an HTTPError if `failure`
      */
-    func getPlayableClass(id: Int, namespace: APINamespace? = .static, completion: @escaping (_ result: Result<Data, Error>) -> Void) {
+    public func getPlayableClass(id: Int, namespace: APINamespace? = .static, completion: @escaping (_ result: Result<Data, Error>) -> Void) {
         self.call(endpoint: API.playableClass(id), namespace: namespace, completion: completion)
     }
     
@@ -1591,7 +1688,7 @@ public struct WS_WorldOfWarcraft: WebService {
      - parameter namespace: The namespace to use to locate this document.
      - parameter completion: Returns a Result with the Data if `success` or an HTTPError if `failure`
      */
-    func getPlayableClassMedia(id: Int, namespace: APINamespace? = .static, completion: @escaping (_ result: Result<Data, Error>) -> Void) {
+    public func getPlayableClassMedia(id: Int, namespace: APINamespace? = .static, completion: @escaping (_ result: Result<Data, Error>) -> Void) {
         self.call(endpoint: API.playableClassMedia(id), namespace: namespace, completion: completion)
     }
     
@@ -1603,7 +1700,7 @@ public struct WS_WorldOfWarcraft: WebService {
      - parameter namespace: The namespace to use to locate this document.
      - parameter completion: Returns a Result with the Data if `success` or an HTTPError if `failure`
      */
-    func getPlayableClassPvPTalentSlots(classID: Int, namespace: APINamespace? = .static,completion: @escaping (_ result: Result<Data, Error>) -> Void) {
+    public func getPlayableClassPvPTalentSlots(classID: Int, namespace: APINamespace? = .static,completion: @escaping (_ result: Result<Data, Error>) -> Void) {
         self.call(endpoint: API.pvpTalentSlots(classID: classID), namespace: namespace, completion: completion)
     }
     
@@ -1617,7 +1714,7 @@ public struct WS_WorldOfWarcraft: WebService {
      - parameter namespace: The namespace to use to locate this document.
      - parameter completion: Returns a Result with the Data if `success` or an HTTPError if `failure`
      */
-    func getPlayableRaceIndex(namespace: APINamespace? = .static, completion: @escaping (_ result: Result<Data, Error>) -> Void) {
+    public func getPlayableRaceIndex(namespace: APINamespace? = .static, completion: @escaping (_ result: Result<Data, Error>) -> Void) {
         self.call(endpoint: API.playableRaceIndex, namespace: namespace, completion: completion)
     }
     
@@ -1629,7 +1726,7 @@ public struct WS_WorldOfWarcraft: WebService {
      - parameter namespace: The namespace to use to locate this document.
      - parameter completion: Returns a Result with the Data if `success` or an HTTPError if `failure`
      */
-    func getPlayableRace(id: Int, namespace: APINamespace? = .static, completion: @escaping (_ result: Result<Data, Error>) -> Void) {
+    public func getPlayableRace(id: Int, namespace: APINamespace? = .static, completion: @escaping (_ result: Result<Data, Error>) -> Void) {
         self.call(endpoint: API.playableRace(id), namespace: namespace, completion: completion)
     }
     
@@ -1643,7 +1740,7 @@ public struct WS_WorldOfWarcraft: WebService {
      - parameter namespace: The namespace to use to locate this document.
      - parameter completion: Returns a Result with the Data if `success` or an HTTPError if `failure`
      */
-    func getPlayableSpecializationIndex(namespace: APINamespace? = .static, completion: @escaping (_ result: Result<Data, Error>) -> Void) {
+    public func getPlayableSpecializationIndex(namespace: APINamespace? = .static, completion: @escaping (_ result: Result<Data, Error>) -> Void) {
         self.call(endpoint: API.playableSpecializationIndex, namespace: namespace, completion: completion)
     }
     
@@ -1655,7 +1752,7 @@ public struct WS_WorldOfWarcraft: WebService {
      - parameter namespace: The namespace to use to locate this document.
      - parameter completion: Returns a Result with the Data if `success` or an HTTPError if `failure`
      */
-    func getPlayableSpecialization(id: Int, namespace: APINamespace? = .static, completion: @escaping (_ result: Result<Data, Error>) -> Void) {
+    public func getPlayableSpecialization(id: Int, namespace: APINamespace? = .static, completion: @escaping (_ result: Result<Data, Error>) -> Void) {
         self.call(endpoint: API.playableSpecialization(id), namespace: namespace, completion: completion)
     }
     
@@ -1667,7 +1764,7 @@ public struct WS_WorldOfWarcraft: WebService {
      - parameter namespace: The namespace to use to locate this document.
      - parameter completion: Returns a Result with the Data if `success` or an HTTPError if `failure`
      */
-    func getPlayableSpecializationMedia(id: Int, namespace: APINamespace? = .static, completion: @escaping (_ result: Result<Data, Error>) -> Void) {
+    public func getPlayableSpecializationMedia(id: Int, namespace: APINamespace? = .static, completion: @escaping (_ result: Result<Data, Error>) -> Void) {
         self.call(endpoint: API.playableSpecializationMedia(id), namespace: namespace, completion: completion)
     }
     
@@ -1681,7 +1778,7 @@ public struct WS_WorldOfWarcraft: WebService {
      - parameter namespace: The namespace to use to locate this document.
      - parameter completion: Returns a Result with the Data if `success` or an HTTPError if `failure`
      */
-    func getPowerTypeIndex(namespace: APINamespace? = .static, completion: @escaping (_ result: Result<Data, Error>) -> Void) {
+    public func getPowerTypeIndex(namespace: APINamespace? = .static, completion: @escaping (_ result: Result<Data, Error>) -> Void) {
         self.call(endpoint: API.powerTypeIndex, namespace: namespace, completion: completion)
     }
     
@@ -1693,7 +1790,7 @@ public struct WS_WorldOfWarcraft: WebService {
      - parameter namespace: The namespace to use to locate this document.
      - parameter completion: Returns a Result with the Data if `success` or an HTTPError if `failure`
      */
-    func getPowerType(id: Int, namespace: APINamespace? = .static, completion: @escaping (_ result: Result<Data, Error>) -> Void) {
+    public func getPowerType(id: Int, namespace: APINamespace? = .static, completion: @escaping (_ result: Result<Data, Error>) -> Void) {
         self.call(endpoint: API.powerType(id), namespace: namespace, completion: completion)
     }
     
@@ -1707,7 +1804,7 @@ public struct WS_WorldOfWarcraft: WebService {
      - parameter namespace: The namespace to use to locate this document.
      - parameter completion: Returns a Result with the Data if `success` or an HTTPError if `failure`
      */
-    func getProfessionIndex(namespace: APINamespace? = .static, completion: @escaping (_ result: Result<Data, Error>) -> Void) {
+    public func getProfessionIndex(namespace: APINamespace? = .static, completion: @escaping (_ result: Result<Data, Error>) -> Void) {
         self.call(endpoint: API.professionIndex, namespace: namespace, completion: completion)
     }
     
@@ -1719,7 +1816,7 @@ public struct WS_WorldOfWarcraft: WebService {
      - parameter namespace: The namespace to use to locate this document.
      - parameter completion: Returns a Result with the Data if `success` or an HTTPError if `failure`
      */
-    func getProfession(id: Int, namespace: APINamespace? = .static, completion: @escaping (_ result: Result<Data, Error>) -> Void) {
+    public func getProfession(id: Int, namespace: APINamespace? = .static, completion: @escaping (_ result: Result<Data, Error>) -> Void) {
         self.call(endpoint: API.profession(id), namespace: namespace, completion: completion)
     }
     
@@ -1731,7 +1828,7 @@ public struct WS_WorldOfWarcraft: WebService {
      - parameter namespace: The namespace to use to locate this document.
      - parameter completion: Returns a Result with the Data if `success` or an HTTPError if `failure`
      */
-    func getProfessionMedia(id: Int, namespace: APINamespace? = .static, completion: @escaping (_ result: Result<Data, Error>) -> Void) {
+    public func getProfessionMedia(id: Int, namespace: APINamespace? = .static, completion: @escaping (_ result: Result<Data, Error>) -> Void) {
         self.call(endpoint: API.professionMedia(id), namespace: namespace, completion: completion)
     }
     
@@ -1744,7 +1841,7 @@ public struct WS_WorldOfWarcraft: WebService {
      - parameter namespace: The namespace to use to locate this document.
      - parameter completion: Returns a Result with the Data if `success` or an HTTPError if `failure`
      */
-    func getProfessionSkillTier(professionID: Int, skillTierID: Int, namespace: APINamespace? = .static, completion: @escaping (_ result: Result<Data, Error>) -> Void) {
+    public func getProfessionSkillTier(professionID: Int, skillTierID: Int, namespace: APINamespace? = .static, completion: @escaping (_ result: Result<Data, Error>) -> Void) {
         self.call(endpoint: API.professionSkillTier(professionID: professionID, skillTierID: skillTierID), namespace: namespace, completion: completion)
     }
     
@@ -1756,7 +1853,7 @@ public struct WS_WorldOfWarcraft: WebService {
      - parameter namespace: The namespace to use to locate this document.
      - parameter completion: Returns a Result with the Data if `success` or an HTTPError if `failure`
      */
-    func getRecipe(id: Int, namespace: APINamespace? = .static, completion: @escaping (_ result: Result<Data, Error>) -> Void) {
+    public func getRecipe(id: Int, namespace: APINamespace? = .static, completion: @escaping (_ result: Result<Data, Error>) -> Void) {
         self.call(endpoint: API.recipe(id), namespace: namespace, completion: completion)
     }
     
@@ -1768,7 +1865,7 @@ public struct WS_WorldOfWarcraft: WebService {
      - parameter namespace: The namespace to use to locate this document.
      - parameter completion: Returns a Result with the Data if `success` or an HTTPError if `failure`
      */
-    func getRecipeMedia(id: Int, namespace: APINamespace? = .static, completion: @escaping (_ result: Result<Data, Error>) -> Void) {
+    public func getRecipeMedia(id: Int, namespace: APINamespace? = .static, completion: @escaping (_ result: Result<Data, Error>) -> Void) {
         self.call(endpoint: API.recipeMedia(id), namespace: namespace, completion: completion)
     }
     
@@ -1782,7 +1879,7 @@ public struct WS_WorldOfWarcraft: WebService {
      - parameter namespace: The namespace to use to locate this document.
      - parameter completion: Returns a Result with the Data if `success` or an HTTPError if `failure`
      */
-    func getPvPSeasonIndex(namespace: APINamespace? = .dynamic, completion: @escaping (_ result: Result<Data, Error>) -> Void) {
+    public func getPvPSeasonIndex(namespace: APINamespace? = .dynamic, completion: @escaping (_ result: Result<Data, Error>) -> Void) {
         self.call(endpoint: API.pvpSeasonIndex, namespace: namespace, completion: completion)
     }
     
@@ -1794,7 +1891,7 @@ public struct WS_WorldOfWarcraft: WebService {
      - parameter namespace: The namespace to use to locate this document.
      - parameter completion: Returns a Result with the Data if `success` or an HTTPError if `failure`
      */
-    func getPvPSeason(id: Int, namespace: APINamespace? = .dynamic, completion: @escaping (_ result: Result<Data, Error>) -> Void) {
+    public func getPvPSeason(id: Int, namespace: APINamespace? = .dynamic, completion: @escaping (_ result: Result<Data, Error>) -> Void) {
         self.call(endpoint: API.pvpSeason(id), namespace: namespace, completion: completion)
     }
     
@@ -1806,7 +1903,7 @@ public struct WS_WorldOfWarcraft: WebService {
      - parameter namespace: The namespace to use to locate this document.
      - parameter completion: Returns a Result with the Data if `success` or an HTTPError if `failure`
      */
-    func getPvPLeaderboardIndex(pvpSeasonID: Int, namespace: APINamespace? = .dynamic, completion: @escaping (_ result: Result<Data, Error>) -> Void) {
+    public func getPvPLeaderboardIndex(pvpSeasonID: Int, namespace: APINamespace? = .dynamic, completion: @escaping (_ result: Result<Data, Error>) -> Void) {
         self.call(endpoint: API.pvpLeaderboardIndex(season: pvpSeasonID), namespace: namespace, completion: completion)
     }
     
@@ -1819,7 +1916,7 @@ public struct WS_WorldOfWarcraft: WebService {
      - parameter namespace: The namespace to use to locate this document.
      - parameter completion: Returns a Result with the Data if `success` or an HTTPError if `failure`
      */
-    func getPvPLeaderboard(pvpSeasonID: Int, pvpBracket: WOWLeaderboardBracket, namespace: APINamespace? = .dynamic, completion: @escaping (_ result: Result<Data, Error>) -> Void) {
+    public func getPvPLeaderboard(pvpSeasonID: Int, pvpBracket: WOWLeaderboardBracket, namespace: APINamespace? = .dynamic, completion: @escaping (_ result: Result<Data, Error>) -> Void) {
         self.call(endpoint: API.pvpLeaderboard(season: pvpSeasonID, pvpBracket: pvpBracket), namespace: namespace, completion: completion)
     }
     
@@ -1831,7 +1928,7 @@ public struct WS_WorldOfWarcraft: WebService {
      - parameter namespace: The namespace to use to locate this document.
      - parameter completion: Returns a Result with the Data if `success` or an HTTPError if `failure`
      */
-    func getPvPRewardIndex(pvpSeasonID: Int, namespace: APINamespace? = .dynamic, completion: @escaping (_ result: Result<Data, Error>) -> Void) {
+    public func getPvPRewardIndex(pvpSeasonID: Int, namespace: APINamespace? = .dynamic, completion: @escaping (_ result: Result<Data, Error>) -> Void) {
         self.call(endpoint: API.pvpRewardIndex(season: pvpSeasonID), namespace: namespace, completion: completion)
     }
     
@@ -1846,7 +1943,7 @@ public struct WS_WorldOfWarcraft: WebService {
      - parameter namespace: The namespace to use to locate this document.
      - parameter completion: Returns a Result with the Data if `success` or an HTTPError if `failure`
      */
-    func getPvPTierMedia(id: Int, namespace: APINamespace? = .static, completion: @escaping (_ result: Result<Data, Error>) -> Void) {
+    public func getPvPTierMedia(id: Int, namespace: APINamespace? = .static, completion: @escaping (_ result: Result<Data, Error>) -> Void) {
         self.call(endpoint: API.pvpTierMedia(id), namespace: namespace, completion: completion)
     }
     
@@ -1857,7 +1954,7 @@ public struct WS_WorldOfWarcraft: WebService {
      - parameter namespace: The namespace to use to locate this document.
      - parameter completion: Returns a Result with the Data if `success` or an HTTPError if `failure`
      */
-    func getPvPTierIndex(namespace: APINamespace? = .static, completion: @escaping (_ result: Result<Data, Error>) -> Void) {
+    public func getPvPTierIndex(namespace: APINamespace? = .static, completion: @escaping (_ result: Result<Data, Error>) -> Void) {
         self.call(endpoint: API.pvpTierIndex, namespace: namespace, completion: completion)
     }
     
@@ -1869,7 +1966,7 @@ public struct WS_WorldOfWarcraft: WebService {
      - parameter namespace: The namespace to use to locate this document.
      - parameter completion: Returns a Result with the Data if `success` or an HTTPError if `failure`
      */
-    func getPvPTier(id: Int, namespace: APINamespace? = .static, completion: @escaping (_ result: Result<Data, Error>) -> Void) {
+    public func getPvPTier(id: Int, namespace: APINamespace? = .static, completion: @escaping (_ result: Result<Data, Error>) -> Void) {
         self.call(endpoint: API.pvpTier(id), namespace: namespace, completion: completion)
     }
     
@@ -1883,7 +1980,7 @@ public struct WS_WorldOfWarcraft: WebService {
      - parameter namespace: The namespace to use to locate this document.
      - parameter completion: Returns a Result with the Data if `success` or an HTTPError if `failure`
      */
-    func getQuestIndex(namespace: APINamespace? = .static, completion: @escaping (_ result: Result<Data, Error>) -> Void) {
+    public func getQuestIndex(namespace: APINamespace? = .static, completion: @escaping (_ result: Result<Data, Error>) -> Void) {
         self.call(endpoint: API.questIndex, namespace: namespace, completion: completion)
     }
     
@@ -1895,7 +1992,7 @@ public struct WS_WorldOfWarcraft: WebService {
      - parameter namespace: The namespace to use to locate this document.
      - parameter completion: Returns a Result with the Data if `success` or an HTTPError if `failure`
     */
-    func getQuest(id: Int, namespace: APINamespace? = .static, completion: @escaping (_ result: Result<Data, Error>) -> Void) {
+    public func getQuest(id: Int, namespace: APINamespace? = .static, completion: @escaping (_ result: Result<Data, Error>) -> Void) {
         self.call(endpoint: API.quest(id), namespace: namespace, completion: completion)
     }
     
@@ -1906,7 +2003,7 @@ public struct WS_WorldOfWarcraft: WebService {
      - parameter namespace: The namespace to use to locate this document.
      - parameter completion: Returns a Result with the Data if `success` or an HTTPError if `failure`
      */
-    func getQuestCategoryIndex(namespace: APINamespace? = .static, completion: @escaping (_ result: Result<Data, Error>) -> Void) {
+    public func getQuestCategoryIndex(namespace: APINamespace? = .static, completion: @escaping (_ result: Result<Data, Error>) -> Void) {
         self.call(endpoint: API.questCategoryIndex, namespace: namespace, completion: completion)
     }
     
@@ -1918,7 +2015,7 @@ public struct WS_WorldOfWarcraft: WebService {
      - parameter namespace: The namespace to use to locate this document.
      - parameter completion: Returns a Result with the Data if `success` or an HTTPError if `failure`
     */
-    func getQuestCategory(id: Int, namespace: APINamespace? = .static, completion: @escaping (_ result: Result<Data, Error>) -> Void) {
+    public func getQuestCategory(id: Int, namespace: APINamespace? = .static, completion: @escaping (_ result: Result<Data, Error>) -> Void) {
         self.call(endpoint: API.questCategory(id), namespace: namespace, completion: completion)
     }
     
@@ -1929,7 +2026,7 @@ public struct WS_WorldOfWarcraft: WebService {
      - parameter namespace: The namespace to use to locate this document.
      - parameter completion: Returns a Result with the Data if `success` or an HTTPError if `failure`
      */
-    func getQuestAreaIndex(namespace: APINamespace? = .static, completion: @escaping (_ result: Result<Data, Error>) -> Void) {
+    public func getQuestAreaIndex(namespace: APINamespace? = .static, completion: @escaping (_ result: Result<Data, Error>) -> Void) {
         self.call(endpoint: API.questAreaIndex, namespace: namespace, completion: completion)
     }
     
@@ -1941,7 +2038,7 @@ public struct WS_WorldOfWarcraft: WebService {
      - parameter namespace: The namespace to use to locate this document.
      - parameter completion: Returns a Result with the Data if `success` or an HTTPError if `failure`
     */
-    func getQuestArea(id: Int, namespace: APINamespace? = .static, completion: @escaping (_ result: Result<Data, Error>) -> Void) {
+    public func getQuestArea(id: Int, namespace: APINamespace? = .static, completion: @escaping (_ result: Result<Data, Error>) -> Void) {
         self.call(endpoint: API.questArea(id), namespace: namespace, completion: completion)
     }
     
@@ -1952,7 +2049,7 @@ public struct WS_WorldOfWarcraft: WebService {
      - parameter namespace: The namespace to use to locate this document.
      - parameter completion: Returns a Result with the Data if `success` or an HTTPError if `failure`
      */
-    func getQuestTypeIndex(namespace: APINamespace? = .static, completion: @escaping (_ result: Result<Data, Error>) -> Void) {
+    public func getQuestTypeIndex(namespace: APINamespace? = .static, completion: @escaping (_ result: Result<Data, Error>) -> Void) {
         self.call(endpoint: API.questTypeIndex, namespace: namespace, completion: completion)
     }
     
@@ -1964,7 +2061,7 @@ public struct WS_WorldOfWarcraft: WebService {
      - parameter namespace: The namespace to use to locate this document.
      - parameter completion: Returns a Result with the Data if `success` or an HTTPError if `failure`
     */
-    func getQuestType(id: Int, namespace: APINamespace? = .static, completion: @escaping (_ result: Result<Data, Error>) -> Void) {
+    public func getQuestType(id: Int, namespace: APINamespace? = .static, completion: @escaping (_ result: Result<Data, Error>) -> Void) {
         self.call(endpoint: API.questType(id), namespace: namespace, completion: completion)
     }
     
@@ -1978,7 +2075,7 @@ public struct WS_WorldOfWarcraft: WebService {
      - parameter namespace: The namespace to use to locate this document.
      - parameter completion: Returns a Result with the Data if `success` or an HTTPError if `failure`
      */
-    func getRealmIndex(namespace: APINamespace? = .dynamic, completion: @escaping (_ result: Result<Data, Error>) -> Void) {
+    public func getRealmIndex(namespace: APINamespace? = .dynamic, completion: @escaping (_ result: Result<Data, Error>) -> Void) {
         self.call(endpoint: API.realmIndex, namespace: namespace, completion: completion)
     }
     
@@ -1990,7 +2087,7 @@ public struct WS_WorldOfWarcraft: WebService {
      - parameter namespace: The namespace to use to locate this document.
      - parameter completion: Returns a Result with the Data if `success` or an HTTPError if `failure`
      */
-    func getRealm(_ slug: String, namespace: APINamespace? = .dynamic, completion: @escaping (_ result: Result<Data, Error>) -> Void) {
+    public func getRealm(_ slug: String, namespace: APINamespace? = .dynamic, completion: @escaping (_ result: Result<Data, Error>) -> Void) {
         self.call(endpoint: API.realm(slug), namespace: namespace, completion: completion)
     }
     
@@ -2016,7 +2113,7 @@ public struct WS_WorldOfWarcraft: WebService {
      - parameter namespace: The namespace to use to locate this document.
      - parameter completion: Returns a Result with the Data if `success` or an HTTPError if `failure`
      */
-    func getRegionIndex(namespace: APINamespace? = .dynamic, completion: @escaping (_ result: Result<Data, Error>) -> Void) {
+    public func getRegionIndex(namespace: APINamespace? = .dynamic, completion: @escaping (_ result: Result<Data, Error>) -> Void) {
         call(endpoint: API.regionIndex, namespace: namespace, completion: completion)
     }
     
@@ -2028,7 +2125,7 @@ public struct WS_WorldOfWarcraft: WebService {
      - parameter namespace: The namespace to use to locate this document.
      - parameter completion: Returns a Result with the Data if `success` or an HTTPError if `failure`
      */
-    func getRegion(id: Int, namespace: APINamespace? = .dynamic, completion: @escaping (_ result: Result<Data, Error>) -> Void) {
+    public func getRegion(id: Int, namespace: APINamespace? = .dynamic, completion: @escaping (_ result: Result<Data, Error>) -> Void) {
         call(endpoint: API.region(id), namespace: namespace, completion: completion)
     }
     
@@ -2042,7 +2139,7 @@ public struct WS_WorldOfWarcraft: WebService {
      - parameter namespace: The namespace to use to locate this document.
      - parameter completion: Returns a Result with the Data if `success` or an HTTPError if `failure`
      */
-    func getReputationFactionIndex(namespace: APINamespace? = .static, completion: @escaping (_ result: Result<Data, Error>) -> Void) {
+    public func getReputationFactionIndex(namespace: APINamespace? = .static, completion: @escaping (_ result: Result<Data, Error>) -> Void) {
         call(endpoint: API.reputationFactionIndex, namespace: namespace, completion: completion)
     }
     
@@ -2054,7 +2151,7 @@ public struct WS_WorldOfWarcraft: WebService {
      - parameter namespace: The namespace to use to locate this document.
      - parameter completion: Returns a Result with the Data if `success` or an HTTPError if `failure`
      */
-    func getReputationFaction(id: Int, namespace: APINamespace? = .static, completion: @escaping (_ result: Result<Data, Error>) -> Void) {
+    public func getReputationFaction(id: Int, namespace: APINamespace? = .static, completion: @escaping (_ result: Result<Data, Error>) -> Void) {
         call(endpoint: API.reputationFaction(id), namespace: namespace, completion: completion)
     }
     
@@ -2065,7 +2162,7 @@ public struct WS_WorldOfWarcraft: WebService {
      - parameter namespace: The namespace to use to locate this document.
      - parameter completion: Returns a Result with the Data if `success` or an HTTPError if `failure`
      */
-    func getReputationTierIndex(namespace: APINamespace? = .static, completion: @escaping (_ result: Result<Data, Error>) -> Void) {
+    public func getReputationTierIndex(namespace: APINamespace? = .static, completion: @escaping (_ result: Result<Data, Error>) -> Void) {
         call(endpoint: API.reputationTierIndex, namespace: namespace, completion: completion)
     }
     
@@ -2077,7 +2174,7 @@ public struct WS_WorldOfWarcraft: WebService {
      - parameter namespace: The namespace to use to locate this document.
      - parameter completion: Returns a Result with the Data if `success` or an HTTPError if `failure`
      */
-    func getReputationTier(id: Int, namespace: APINamespace? = .static, completion: @escaping (_ result: Result<Data, Error>) -> Void) {
+    public func getReputationTier(id: Int, namespace: APINamespace? = .static, completion: @escaping (_ result: Result<Data, Error>) -> Void) {
         call(endpoint: API.reputationTier(id), namespace: namespace, completion: completion)
     }
     
@@ -2092,7 +2189,7 @@ public struct WS_WorldOfWarcraft: WebService {
      - parameter namespace: The namespace to use to locate this document.
      - parameter completion: Returns a Result with the Data if `success` or an HTTPError if `failure`
      */
-    func getSpell(id: Int, namespace: APINamespace? = .static, completion: @escaping (_ result: Result<Data, Error>) -> Void) {
+    public func getSpell(id: Int, namespace: APINamespace? = .static, completion: @escaping (_ result: Result<Data, Error>) -> Void) {
         call(endpoint: API.spell(id), namespace: namespace, completion: completion)
     }
     
@@ -2104,7 +2201,7 @@ public struct WS_WorldOfWarcraft: WebService {
      - parameter namespace: The namespace to use to locate this document.
      - parameter completion: Returns a Result with the Data if `success` or an HTTPError if `failure`
      */
-    func getSpellMedia(id: Int, namespace: APINamespace? = .static, completion: @escaping (_ result: Result<Data, Error>) -> Void) {
+    public func getSpellMedia(id: Int, namespace: APINamespace? = .static, completion: @escaping (_ result: Result<Data, Error>) -> Void) {
         call(endpoint: API.spellMedia(id), namespace: namespace, completion: completion)
     }
     
@@ -2116,7 +2213,7 @@ public struct WS_WorldOfWarcraft: WebService {
      - parameter namespace: The namespace to use to locate this document.
      - parameter completion: Returns a Result with the Data if `success` or an HTTPError if `failure`
     */
-    public func searchSpell(queries: [String: String], namespace: APINamespace? = .dynamic, completion: @escaping (_ result: Result<Data, Error>) -> Void) {
+    public func searchSpell(queries: [String: String], namespace: APINamespace? = .static, completion: @escaping (_ result: Result<Data, Error>) -> Void) {
         call(endpoint: API.spellSearch(queries), namespace: namespace, completion: completion)
     }
     
@@ -2130,7 +2227,7 @@ public struct WS_WorldOfWarcraft: WebService {
      - parameter namespace: The namespace to use to locate this document.
      - parameter completion: Returns a Result with the Data if `success` or an HTTPError if `failure`
      */
-    func getTalentIndex(namespace: APINamespace? = .static, completion: @escaping (_ result: Result<Data, Error>) -> Void) {
+    public func getTalentIndex(namespace: APINamespace? = .static, completion: @escaping (_ result: Result<Data, Error>) -> Void) {
         call(endpoint: API.talentIndex, namespace: namespace, completion: completion)
     }
     
@@ -2142,7 +2239,7 @@ public struct WS_WorldOfWarcraft: WebService {
      - parameter namespace: The namespace to use to locate this document.
      - parameter completion: Returns a Result with the Data if `success` or an HTTPError if `failure`
      */
-    func getTalent(id: Int, namespace: APINamespace? = .static, completion: @escaping (_ result: Result<Data, Error>) -> Void) {
+    public func getTalent(id: Int, namespace: APINamespace? = .static, completion: @escaping (_ result: Result<Data, Error>) -> Void) {
         call(endpoint: API.talent(id), namespace: namespace, completion: completion)
     }
     
@@ -2153,7 +2250,7 @@ public struct WS_WorldOfWarcraft: WebService {
      - parameter namespace: The namespace to use to locate this document.
      - parameter completion: Returns a Result with the Data if `success` or an HTTPError if `failure`
      */
-    func getPvPTalentIndex(namespace: APINamespace? = .static, completion: @escaping (_ result: Result<Data, Error>) -> Void) {
+    public func getPvPTalentIndex(namespace: APINamespace? = .static, completion: @escaping (_ result: Result<Data, Error>) -> Void) {
         call(endpoint: API.pvpTalentIndex, namespace: namespace, completion: completion)
     }
     
@@ -2165,8 +2262,69 @@ public struct WS_WorldOfWarcraft: WebService {
      - parameter namespace: The namespace to use to locate this document.
      - parameter completion: Returns a Result with the Data if `success` or an HTTPError if `failure`
      */
-    func getPvPTalent(id: Int, namespace: APINamespace? = .static, completion: @escaping (_ result: Result<Data, Error>) -> Void) {
+    public func getPvPTalent(id: Int, namespace: APINamespace? = .static, completion: @escaping (_ result: Result<Data, Error>) -> Void) {
         call(endpoint: API.pvpTalent(id), namespace: namespace, completion: completion)
+    }
+    
+    
+    
+    // MARK: Tech Talent API
+    
+    /**
+     Returns an index of tech talent trees.
+     
+     - parameter namespace: The namespace to use to locate this document.
+     - parameter completion: Returns a Result with the Data if `success` or an HTTPError if `failure`
+     */
+    public func getTechTalentTreeIndex(namespace: APINamespace? = .static, completion: @escaping (_ result: Result<Data, Error>) -> Void) {
+        call(endpoint: API.techTalentTreeIndex, namespace: namespace, completion: completion)
+    }
+    
+    
+    /**
+     Returns a tech talent tree by ID.
+     
+     - parameter id: The ID of the tech talent tree.
+     - parameter namespace: The namespace to use to locate this document.
+     - parameter completion: Returns a Result with the Data if `success` or an HTTPError if `failure`
+     */
+    public func getTechTalentTree(id: Int, namespace: APINamespace? = .static, completion: @escaping (_ result: Result<Data, Error>) -> Void) {
+        call(endpoint: API.techTalentTree(id), namespace: namespace, completion: completion)
+    }
+    
+    
+    /**
+     Returns an index of tech talents.
+     
+     - parameter namespace: The namespace to use to locate this document.
+     - parameter completion: Returns a Result with the Data if `success` or an HTTPError if `failure`
+     */
+    public func getTechTalentIndex(namespace: APINamespace? = .static, completion: @escaping (_ result: Result<Data, Error>) -> Void) {
+        call(endpoint: API.techTalentIndex, namespace: namespace, completion: completion)
+    }
+    
+    
+    /**
+     Returns a tech talent by ID.
+     
+     - parameter id: The ID of the tech talent.
+     - parameter namespace: The namespace to use to locate this document.
+     - parameter completion: Returns a Result with the Data if `success` or an HTTPError if `failure`
+     */
+    public func getTechTalent(id: Int, namespace: APINamespace? = .static, completion: @escaping (_ result: Result<Data, Error>) -> Void) {
+        call(endpoint: API.techTalent(id), namespace: namespace, completion: completion)
+    }
+    
+    
+    /**
+     Returns media for a tech talent by ID.
+     
+     - parameter id: The ID of the tech talent.
+     - parameter namespace: The namespace to use to locate this document.
+     - parameter completion: Returns a Result with the Data if `success` or an HTTPError if `failure`
+     */
+    public func getTechTalentMedia(id: Int, namespace: APINamespace? = .static, completion: @escaping (_ result: Result<Data, Error>) -> Void) {
+        call(endpoint: API.techTalentMedia(id), namespace: namespace, completion: completion)
     }
     
     
@@ -2179,7 +2337,7 @@ public struct WS_WorldOfWarcraft: WebService {
      - parameter namespace: The namespace to use to locate this document.
      - parameter completion: Returns a Result with the Data if `success` or an HTTPError if `failure`
      */
-    func getTitleIndex(namespace: APINamespace? = .static, completion: @escaping (_ result: Result<Data, Error>) -> Void) {
+    public func getTitleIndex(namespace: APINamespace? = .static, completion: @escaping (_ result: Result<Data, Error>) -> Void) {
         call(endpoint: API.titleIndex, namespace: namespace, completion: completion)
     }
     
@@ -2191,7 +2349,7 @@ public struct WS_WorldOfWarcraft: WebService {
      - parameter namespace: The namespace to use to locate this document.
      - parameter completion: Returns a Result with the Data if `success` or an HTTPError if `failure`
      */
-    func getTitle(id: Int, namespace: APINamespace? = .static, completion: @escaping (_ result: Result<Data, Error>) -> Void) {
+    public func getTitle(id: Int, namespace: APINamespace? = .static, completion: @escaping (_ result: Result<Data, Error>) -> Void) {
         call(endpoint: API.title(id), namespace: namespace, completion: completion)
     }
     
@@ -2205,7 +2363,7 @@ public struct WS_WorldOfWarcraft: WebService {
      - parameter namespace: The namespace to use to locate this document.
      - parameter completion: Returns a Result with the Data if `success` or an HTTPError if `failure`
      */
-    func getTokenIndex(namespace: APINamespace? = .dynamic, completion: @escaping (_ result: Result<Data, Error>) -> Void) {
+    public func getTokenIndex(namespace: APINamespace? = .dynamic, completion: @escaping (_ result: Result<Data, Error>) -> Void) {
         call(endpoint: API.tokenIndex, namespace: namespace) { result in
             completion(result)
         }
