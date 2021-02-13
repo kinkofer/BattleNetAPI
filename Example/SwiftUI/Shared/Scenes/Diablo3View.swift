@@ -51,52 +51,23 @@ struct Diablo3View: View {
     
     var gameDataSection: some View {
         Section(header: Text(APIType.gameData.displayName)) {
-            HStack {
-                let api = Diablo3View.API.seasonIndex
-                Button(api.rawValue) {
-                    battleNetAPI.d3.getSeasons(completion: { parseResult($0, for: api) })
-                }
-                NavigationLink(destination: WebServiceView(title: api.rawValue, data: webServiceData), tag: api, selection: $apiSelection) { }
+            webServiceRow(api: .seasonIndex) {
+                battleNetAPI.d3.getSeasons(completion: { parseResult($0, for: .seasonIndex) })
             }
-            
-            HStack {
-                let api = Diablo3View.API.season
-                Button(api.rawValue) {
-                    battleNetAPI.d3.getLeaderboards(seasonID: 1, completion: { parseResult($0, for: api) })
-                }
-                NavigationLink(destination: WebServiceView(title: api.rawValue, data: webServiceData), tag: api, selection: $apiSelection) { }
+            webServiceRow(api: .season) {
+                battleNetAPI.d3.getLeaderboards(seasonID: 1, completion: { parseResult($0, for: .season) })
             }
-            
-            HStack {
-                let api = Diablo3View.API.seasonLeaderboard
-                Button(api.rawValue) {
-                    battleNetAPI.d3.getLeaderboard("achievement-points", seasonID: 1, completion: { parseResult($0, for: api) })
-                }
-                NavigationLink(destination: WebServiceView(title: api.rawValue, data: webServiceData), tag: api, selection: $apiSelection) { }
+            webServiceRow(api: .seasonLeaderboard) {
+                battleNetAPI.d3.getLeaderboard("achievement-points", seasonID: 1, completion: { parseResult($0, for: .seasonLeaderboard) })
             }
-            
-            HStack {
-                let api = Diablo3View.API.eraIndex
-                Button(api.rawValue) {
-                    battleNetAPI.d3.getEras(completion: { parseResult($0, for: api) })
-                }
-                NavigationLink(destination: WebServiceView(title: api.rawValue, data: webServiceData), tag: api, selection: $apiSelection) { }
+            webServiceRow(api: .eraIndex) {
+                battleNetAPI.d3.getEras(completion: { parseResult($0, for: .eraIndex) })
             }
-            
-            HStack {
-                let api = Diablo3View.API.era
-                Button(api.rawValue) {
-                    battleNetAPI.d3.getLeaderboards(eraID: 1 , completion: { parseResult($0, for: api) })
-                }
-                NavigationLink(destination: WebServiceView(title: api.rawValue, data: webServiceData), tag: api, selection: $apiSelection) { }
+            webServiceRow(api: .era) {
+                battleNetAPI.d3.getLeaderboards(eraID: 1 , completion: { parseResult($0, for: .era) })
             }
-            
-            HStack {
-                let api = Diablo3View.API.eraLeaderboard
-                Button(api.rawValue) {
-                    battleNetAPI.d3.getLeaderboard("rift-barbarian", eraID: 1 , completion: { parseResult($0, for: api) })
-                }
-                NavigationLink(destination: WebServiceView(title: api.rawValue, data: webServiceData), tag: api, selection: $apiSelection) { }
+            webServiceRow(api: .eraLeaderboard) {
+                battleNetAPI.d3.getLeaderboard("rift-barbarian", eraID: 1 , completion: { parseResult($0, for: .eraLeaderboard) })
             }
         }
     }
@@ -105,94 +76,50 @@ struct Diablo3View: View {
     var communitySection: some View {
         Group {
             Section(header: Text("D3 Act API")) {
-                HStack {
-                    let api = Diablo3View.API.getActIndex
-                    Button(api.rawValue) {
-                        battleNetAPI.d3.getActs(completion: { parseResult($0, for: api) })
-                    }
-                    NavigationLink(destination: WebServiceView(title: api.rawValue, data: webServiceData), tag: api, selection: $apiSelection) { }
+                webServiceRow(api: .getActIndex) {
+                    battleNetAPI.d3.getActs(completion: { parseResult($0, for: .getActIndex) })
                 }
-                
-                HStack {
-                    let api = Diablo3View.API.getAct
-                    Button(api.rawValue) {
-                        battleNetAPI.d3.getAct(id: 1, completion: { parseResult($0, for: api) })
-                    }
-                    NavigationLink(destination: WebServiceView(title: api.rawValue, data: webServiceData), tag: api, selection: $apiSelection) { }
+                webServiceRow(api: .getAct) {
+                    battleNetAPI.d3.getAct(id: 1, completion: { parseResult($0, for: .getAct) })
                 }
             }
             
             Section(header: Text("D3 Aristan and Recipe API")) {
-                HStack {
-                    let api = Diablo3View.API.getArtisan
-                    Button(api.rawValue) {
-                        battleNetAPI.d3.getArtisan(slug: "blacksmith", completion: { parseResult($0, for: api) })
-                    }
-                    NavigationLink(destination: WebServiceView(title: api.rawValue, data: webServiceData), tag: api, selection: $apiSelection) { }
+                webServiceRow(api: .getArtisan) {
+                    battleNetAPI.d3.getArtisan(slug: "blacksmith", completion: { parseResult($0, for: .getArtisan) })
                 }
-                
-                HStack {
-                    let api = Diablo3View.API.getRecipe
-                    Button(api.rawValue) {
-                        battleNetAPI.d3.getRecipe(recipeSlug: "apprentice-flamberge", artisanSlug: "blacksmith", completion: { parseResult($0, for: api) })
-                    }
-                    NavigationLink(destination: WebServiceView(title: api.rawValue, data: webServiceData), tag: api, selection: $apiSelection) { }
+                webServiceRow(api: .getRecipe) {
+                    battleNetAPI.d3.getRecipe(recipeSlug: "apprentice-flamberge", artisanSlug: "blacksmith", completion: { parseResult($0, for: .getRecipe) })
                 }
             }
             
             Section(header: Text("D3 Follower API")) {
-                HStack {
-                    let api = Diablo3View.API.getFollower
-                    Button(api.rawValue) {
-                        battleNetAPI.d3.getFollower(slug: "templar", completion: { parseResult($0, for: api) })
-                    }
-                    NavigationLink(destination: WebServiceView(title: api.rawValue, data: webServiceData), tag: api, selection: $apiSelection) { }
+                webServiceRow(api: .getFollower) {
+                    battleNetAPI.d3.getFollower(slug: "templar", completion: { parseResult($0, for: .getFollower) })
                 }
             }
             
             Section(header: Text("D3 Character Class and Skill API")) {
-                HStack {
-                    let api = Diablo3View.API.getCharacterClass
-                    Button(api.rawValue) {
-                        battleNetAPI.d3.getClass(slug: "barbarian", completion: { parseResult($0, for: api) })
-                    }
-                    NavigationLink(destination: WebServiceView(title: api.rawValue, data: webServiceData), tag: api, selection: $apiSelection) { }
+                webServiceRow(api: .getCharacterClass) {
+                    battleNetAPI.d3.getClass(slug: "barbarian", completion: { parseResult($0, for: .getCharacterClass) })
                 }
-                
-                HStack {
-                    let api = Diablo3View.API.getApiSkill
-                    Button(api.rawValue) {
-                        battleNetAPI.d3.getSkill(skillSlug: "bash", classSlug: "barbarian", completion: { parseResult($0, for: api) })
-                    }
-                    NavigationLink(destination: WebServiceView(title: api.rawValue, data: webServiceData), tag: api, selection: $apiSelection) { }
+                webServiceRow(api: .getApiSkill) {
+                    battleNetAPI.d3.getSkill(skillSlug: "bash", classSlug: "barbarian", completion: { parseResult($0, for: .getApiSkill) })
                 }
             }
             
             Section(header: Text("D3 Item Type API")) {
-                HStack {
-                    let api = Diablo3View.API.getItemTypeIndex
-                    Button(api.rawValue) {
-                        battleNetAPI.d3.getItemTypes(completion: { parseResult($0, for: api) })
-                    }
-                    NavigationLink(destination: WebServiceView(title: api.rawValue, data: webServiceData), tag: api, selection: $apiSelection) { }
+                webServiceRow(api: .getItemTypeIndex) {
+                    battleNetAPI.d3.getItemTypes(completion: { parseResult($0, for: .getItemTypeIndex) })
                 }
-                
-                HStack {
-                    let api = Diablo3View.API.getItemType
-                    Button(api.rawValue) {
-                        battleNetAPI.d3.getItemsByType(typeSlug: "sword2h", completion: { parseResult($0, for: api) })
-                    }
-                    NavigationLink(destination: WebServiceView(title: api.rawValue, data: webServiceData), tag: api, selection: $apiSelection) { }
+                webServiceRow(api: .getItemType) {
+                    battleNetAPI.d3.getItemsByType(typeSlug: "sword2h", completion: { parseResult($0, for: .getItemType) })
                 }
             }
             
             Section(header: Text("D3 Item API")) {
-                HStack {
-                    let api = Diablo3View.API.getItem
-                    Button(api.rawValue) {
-                        battleNetAPI.d3.getItem(itemSlugAndID: "corrupted-ashbringer-Unique_Sword_2H_104_x1", completion: { parseResult($0, for: api) })
-                    }
-                    NavigationLink(destination: WebServiceView(title: api.rawValue, data: webServiceData), tag: api, selection: $apiSelection) { }
+                webServiceRow(api: .getItem) {
+                    battleNetAPI.d3.getItem(itemSlugAndID: "corrupted-ashbringer-Unique_Sword_2H_104_x1", completion: { parseResult($0, for: .getItem) })
                 }
             }
         }
@@ -201,40 +128,34 @@ struct Diablo3View: View {
     
     var profileSection: some View {
         Section(header: Text(APIType.profile.displayName)) {
-            HStack {
-                let api = Diablo3View.API.getApiAccount
-                Button(api.rawValue) {
-                    battleNetAPI.d3.getProfile(battleTag: "s2k-1107", completion: { parseResult($0, for: api) })
-                }
-                NavigationLink(destination: WebServiceView(title: api.rawValue, data: webServiceData), tag: api, selection: $apiSelection) { }
+            webServiceRow(api: .getApiAccount) {
+                battleNetAPI.d3.getProfile(battleTag: "s2k-1107", completion: { parseResult($0, for: .getApiAccount) })
             }
-            
-            HStack {
-                let api = Diablo3View.API.getApiHero
-                Button(api.rawValue) {
-                    battleNetAPI.d3.getHero(heroID: 118818000, battleTag: "s2k-1107", completion: { parseResult($0, for: api) })
-                }
-                NavigationLink(destination: WebServiceView(title: api.rawValue, data: webServiceData), tag: api, selection: $apiSelection) { }
+            webServiceRow(api: .getApiHero) {
+                battleNetAPI.d3.getHero(heroID: 118818000, battleTag: "s2k-1107", completion: { parseResult($0, for: .getApiHero) })
             }
-            
-            HStack {
-                let api = Diablo3View.API.getApiDetailedHeroItems
-                Button(api.rawValue) {
-                    battleNetAPI.d3.getItemsForHero(heroID: 118818000, battleTag: "s2k-1107", completion: { parseResult($0, for: api) })
-                }
-                NavigationLink(destination: WebServiceView(title: api.rawValue, data: webServiceData), tag: api, selection: $apiSelection) { }
+            webServiceRow(api: .getApiDetailedHeroItems) {
+                battleNetAPI.d3.getItemsForHero(heroID: 118818000, battleTag: "s2k-1107", completion: { parseResult($0, for: .getApiDetailedHeroItems) })
             }
-            
-            HStack {
-                let api = Diablo3View.API.getApiDetailedFollowerItems
-                Button(api.rawValue) {
-                    battleNetAPI.d3.getFollowerItemsForHero(heroID: 118818000, battleTag: "s2k-1107", completion: { parseResult($0, for: api) })
-                }
-                NavigationLink(destination: WebServiceView(title: api.rawValue, data: webServiceData), tag: api, selection: $apiSelection) { }
+            webServiceRow(api: .getApiDetailedFollowerItems) {
+                battleNetAPI.d3.getFollowerItemsForHero(heroID: 118818000, battleTag: "s2k-1107", completion: { parseResult($0, for: .getApiDetailedFollowerItems) })
             }
         }
     }
     
+    
+    func webServiceRow(api: API, webService: @escaping () -> Void) -> some View {
+        let selectionBinding: Binding<API?> = Binding(
+            get: { return apiSelection },
+            set: { newValue in
+                guard newValue != nil else { self.apiSelection = nil; return }
+                webService()
+            }
+        )
+        return NavigationLink(destination: WebServiceView(title: api.rawValue, data: webServiceData), tag: api, selection: selectionBinding) {
+            Text(api.rawValue)
+        }
+    }
     
     
     

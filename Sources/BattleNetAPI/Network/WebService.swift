@@ -63,6 +63,7 @@ extension WebService {
         
         var headers = headers
         if let namespace = namespace {
+            if headers == nil { headers = [HTTPHeader]() }
             headers?.append(namespace.getHeader(for: region))
         }
         

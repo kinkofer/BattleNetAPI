@@ -29,6 +29,14 @@ public struct WS_WorldOfWarcraft: WebService {
         case connectedRealm(Int)
         case connectedRealmSearch([String: String]?)
         
+        case covenantIndex
+        case covenant(Int)
+        case covenantMedia(Int)
+        case soulbindIndex
+        case soulbind(Int)
+        case conduitIndex
+        case conduit(Int)
+        
         case creatureFamilyIndex
         case creatureFamily(Int)
         case creatureTypeIndex
@@ -242,6 +250,21 @@ public struct WS_WorldOfWarcraft: WebService {
                 return "/connected-realm/\(id)"
             case .connectedRealmSearch:
                 return "/search/connected-realm"
+            
+            case .covenantIndex:
+                return "/covenant/index"
+            case .covenant(let id):
+                return "/covenant/\(id)"
+            case .covenantMedia(let id):
+                return "/media/covenant/\(id)"
+            case .soulbindIndex:
+                return "/covenant/soulbind/index"
+            case .soulbind(let id):
+                return "/covenant/soulbind/\(id)"
+            case .conduitIndex:
+                return "/covenant/conduit/index"
+            case .conduit(let id):
+                return "/covenant/conduit/\(id)"
             
             case .creatureFamilyIndex:
                 return "/creature-family/index"
@@ -569,6 +592,7 @@ public struct WS_WorldOfWarcraft: WebService {
                  .auctions,
                  .azeriteEssenceIndex, .azeriteEssence, .azeriteEssenceSearch, .azeriteEssenceMedia,
                  .connectedRealmIndex, .connectedRealm, .connectedRealmSearch,
+                 .covenantIndex, .covenant, .covenantMedia, .soulbindIndex, .soulbind, .conduitIndex, .conduit,
                  .creatureFamilyIndex, .creatureFamily, .creatureTypeIndex, .creatureType, .creature, .creatureSearch, .creatureDisplayMedia, .creatureFamilyMedia,
                  .guildCrestIndex, .guildCrestBorderMedia, .guildCrestEmblemMedia,
                  .itemClassIndex, .itemClass, .itemSetIndex, .itemSet, .itemSubclass, .item, .itemMedia, .itemSearch,
@@ -737,8 +761,8 @@ public struct WS_WorldOfWarcraft: WebService {
      - parameter namespace: The namespace to use to locate this document.
      - parameter completion: Returns a Result with the Data if `success` or an HTTPError if `failure`
      */
-    public func getAuctions(connectedRealmID: Int, namespace: APINamespace? = .static, completion: @escaping (_ result: Result<Data, Error>) -> Void) {
-        call(endpoint: API.auctions(connectedRealmID: connectedRealmID), completion: completion)
+    public func getAuctions(connectedRealmID: Int, namespace: APINamespace? = .dynamic, completion: @escaping (_ result: Result<Data, Error>) -> Void) {
+        call(endpoint: API.auctions(connectedRealmID: connectedRealmID), namespace: namespace, completion: completion)
     }
     
     
@@ -826,6 +850,90 @@ public struct WS_WorldOfWarcraft: WebService {
      */
     public func searchConnectedRealms(queries: [String: String], namespace: APINamespace? = .dynamic, completion: @escaping (_ result: Result<Data, Error>) -> Void) {
         call(endpoint: API.connectedRealmSearch(queries), namespace: namespace, completion: completion)
+    }
+    
+    
+    
+    // MARK: Covenant API
+    
+    /**
+     Returns an index of covenants.
+     
+     - parameter namespace: The namespace to use to locate this document.
+     - parameter completion: Returns a Result with the Data if `success` or an HTTPError if `failure`
+     */
+    public func getCovenantIndex(namespace: APINamespace? = .static, completion: @escaping (_ result: Result<Data, Error>) -> Void) {
+        call(endpoint: API.covenantIndex, namespace: namespace, completion: completion)
+    }
+    
+    
+    /**
+     Returns a covenant by ID.
+     
+     - parameter id: The ID of the covenant.
+     - parameter namespace: The namespace to use to locate this document.
+     - parameter completion: Returns a Result with the Data if `success` or an HTTPError if `failure`
+     */
+    public func getCovenant(id: Int, namespace: APINamespace? = .static, completion: @escaping (_ result: Result<Data, Error>) -> Void) {
+        call(endpoint: API.covenant(id), namespace: namespace, completion: completion)
+    }
+    
+    
+    /**
+     Returns media for a covenant by ID.
+     
+     - parameter id: The ID of the covenant.
+     - parameter namespace: The namespace to use to locate this document.
+     - parameter completion: Returns a Result with the Data if `success` or an HTTPError if `failure`
+     */
+    public func getCovenantMedia(id: Int, namespace: APINamespace? = .static, completion: @escaping (_ result: Result<Data, Error>) -> Void) {
+        call(endpoint: API.covenantMedia(id), namespace: namespace, completion: completion)
+    }
+    
+    
+    /**
+     Returns an index of soulbinds.
+     
+     - parameter namespace: The namespace to use to locate this document.
+     - parameter completion: Returns a Result with the Data if `success` or an HTTPError if `failure`
+     */
+    public func getSoulbindIndex(namespace: APINamespace? = .static, completion: @escaping (_ result: Result<Data, Error>) -> Void) {
+        call(endpoint: API.soulbindIndex, namespace: namespace, completion: completion)
+    }
+    
+    
+    /**
+     Returns a soulbind by ID.
+     
+     - parameter id: The ID of the soulbind.
+     - parameter namespace: The namespace to use to locate this document.
+     - parameter completion: Returns a Result with the Data if `success` or an HTTPError if `failure`
+     */
+    public func getSoulbind(id: Int, namespace: APINamespace? = .static, completion: @escaping (_ result: Result<Data, Error>) -> Void) {
+        call(endpoint: API.soulbind(id), namespace: namespace, completion: completion)
+    }
+    
+    
+    /**
+     Returns an index of conduits.
+     
+     - parameter namespace: The namespace to use to locate this document.
+     - parameter completion: Returns a Result with the Data if `success` or an HTTPError if `failure`
+     */
+    public func getCondiutIndex(namespace: APINamespace? = .static, completion: @escaping (_ result: Result<Data, Error>) -> Void) {
+        call(endpoint: API.conduitIndex, namespace: namespace, completion: completion)
+    }
+    
+    
+    /**
+     Returns a conduit by ID.
+     
+     - parameter id: The ID of the conduit.
+     - parameter namespace: The namespace to use to locate this document.
+     - parameter completion: Returns a Result with the Data if `success` or an HTTPError if `failure`
+     */
+    public func getConduit(id: Int, namespace: APINamespace? = .static, completion: @escaping (_ result: Result<Data, Error>) -> Void) {
+        call(endpoint: API.conduit(id), namespace: namespace, completion: completion)
     }
     
     

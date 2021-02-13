@@ -22,10 +22,16 @@ struct MainView: View {
         let game: MainView.Game
         let api: APIType
         
+        var requiresUserAuth: Bool {
+            return [.profile, .community].contains(api)
+        }
+        
         init(_ game: MainView.Game, _ api: APIType) {
             self.game = game
             self.api = api
         }
+        
+        
     }
     
     
@@ -74,57 +80,31 @@ struct MainView: View {
     
     var apiList: some View {
         List {
+            let requiresUserAuthBinding = Binding(
+                get: { return self.gameAPISelection },
+                set: { newValue in
+                    guard let gameAPI = newValue else { self.gameAPISelection = nil; return }
+                    
+                    if gameAPI.requiresUserAuth && battleNetAPI.credentials.userAccessToken == nil {
+                        alertType = .authError
+                    }
+                    else {
+                        self.gameAPISelection = newValue
+                    }
+                }
+            )
             Section(header: Text(Game.diablo3.rawValue)) {
                 NavigationLink(destination: Diablo3View(apiType: .gameData)) {
                     Text(APIType.gameData.displayName)
                 }
 //                .isDetailLink(false)
                 
-//                Button(APIType.community.displayName) {
-//                    if battleNetAPI.credentials.userAccessToken == nil {
-//                        alertType = .authError
-//                    }
-//                    else {
-//                        gameAPISelection = GameAPI(.diablo3, .community)
-//                    }
-//                }
-//                .background(
-//                    NavigationLink(destination: Diablo3View(apiType: .community), tag: GameAPI(.diablo3, .community), selection: $gameAPISelection) { }
-//                        .buttonStyle(PlainButtonStyle())
-//                )
-                
-                NavigationLink(destination: Diablo3View(apiType: .community), tag: GameAPI(.diablo3, .community), selection: $gameAPISelection) {
-                    Button(APIType.community.displayName) {
-                        if battleNetAPI.credentials.userAccessToken == nil {
-                            alertType = .authError
-                        }
-                        else {
-                            gameAPISelection = GameAPI(.diablo3, .community)
-                        }
-                    }
+                NavigationLink(destination: Diablo3View(apiType: .community), tag: GameAPI(.diablo3, .community), selection: requiresUserAuthBinding) {
+                    Text(APIType.community.displayName)
                 }
                 
-//                HStack {
-//                    Button(APIType.community.displayName) {
-//                        if battleNetAPI.credentials.userAccessToken == nil {
-//                            alertType = .authError
-//                        }
-//                        else {
-//                            gameAPISelection = GameAPI((.diablo3, .community))
-//                        }
-//                    }
-//                    NavigationLink(destination: Diablo3View(apiType: .community), tag: GameAPI((.diablo3, .community)), selection: $gameAPISelection) { }
-//                }
-                
-                NavigationLink(destination: Diablo3View(apiType: .profile), tag: GameAPI(.diablo3, .profile), selection: $gameAPISelection) {
-                    Button(APIType.profile.displayName) {
-                        if battleNetAPI.credentials.userAccessToken == nil {
-                            alertType = .authError
-                        }
-                        else {
-                            gameAPISelection = GameAPI(.diablo3, .profile)
-                        }
-                    }
+                NavigationLink(destination: Diablo3View(apiType: .profile), tag: GameAPI(.diablo3, .profile), selection: requiresUserAuthBinding) {
+                    Text(APIType.profile.displayName)
                 }
             }
             
@@ -133,15 +113,8 @@ struct MainView: View {
                     Text(APIType.gameData.displayName)
                 }
                 
-                NavigationLink(destination: Starcraft2View(apiType: .community), tag: GameAPI(.starCraft2, .community), selection: $gameAPISelection) {
-                    Button(APIType.community.displayName) {
-                        if battleNetAPI.credentials.userAccessToken == nil {
-                            alertType = .authError
-                        }
-                        else {
-                            gameAPISelection = GameAPI(.starCraft2, .community)
-                        }
-                    }
+                NavigationLink(destination: Starcraft2View(apiType: .community), tag: GameAPI(.starCraft2, .community), selection: requiresUserAuthBinding) {
+                    Text(APIType.community.displayName)
                 }
             }
             
@@ -150,39 +123,18 @@ struct MainView: View {
                     Text(APIType.gameData.displayName)
                 }
                 
-                NavigationLink(destination: WorldOfWarcraftView(apiType: .profile), tag: GameAPI(.worldOfWarcraft, .profile), selection: $gameAPISelection) {
-                    Button(APIType.profile.displayName) {
-                        if battleNetAPI.credentials.userAccessToken == nil {
-                            alertType = .authError
-                        }
-                        else {
-                            gameAPISelection = GameAPI(.worldOfWarcraft, .profile)
-                        }
-                    }
+                NavigationLink(destination: WorldOfWarcraftView(apiType: .profile), tag: GameAPI(.worldOfWarcraft, .profile), selection: requiresUserAuthBinding) {
+                    Text(APIType.profile.displayName)
                 }
                 
-                NavigationLink(destination: WorldOfWarcraftView(apiType: .community), tag: GameAPI(.worldOfWarcraft, .community), selection: $gameAPISelection) {
-                    Button(APIType.community.displayName) {
-                        if battleNetAPI.credentials.userAccessToken == nil {
-                            alertType = .authError
-                        }
-                        else {
-                            gameAPISelection = GameAPI(.worldOfWarcraft, .community)
-                        }
-                    }
+                NavigationLink(destination: WorldOfWarcraftView(apiType: .community), tag: GameAPI(.worldOfWarcraft, .community), selection: requiresUserAuthBinding) {
+                    Text(APIType.community.displayName)
                 }
             }
             
             Section(header: Text(Game.battleNet.rawValue)) {
-                NavigationLink(destination: BattleNetView(apiType: .profile), tag: GameAPI(.battleNet, .profile), selection: $gameAPISelection) {
-                    Button(APIType.profile.displayName) {
-                        if battleNetAPI.credentials.userAccessToken == nil {
-                            alertType = .authError
-                        }
-                        else {
-                            gameAPISelection = GameAPI(.battleNet, .profile)
-                        }
-                    }
+                NavigationLink(destination: BattleNetView(apiType: .profile), tag: GameAPI(.battleNet, .profile), selection: requiresUserAuthBinding) {
+                    Text(APIType.profile.displayName)
                 }
             }
         }

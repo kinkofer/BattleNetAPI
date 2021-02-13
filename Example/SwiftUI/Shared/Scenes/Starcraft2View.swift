@@ -49,12 +49,8 @@ struct Starcraft2View: View {
     
     var gameDataSection: some View {
         Section(header: Text(APIType.gameData.displayName)) {
-            HStack {
-                let api = Starcraft2View.API.getLeagueData
-                Button(api.rawValue) {
-                    battleNetAPI.sc2.getLeagueData(seasonID: 37, queue: .lotV1v1, team: .arranged, league: .grandmaster, completion: { parseResult($0, for: api) })
-                }
-                NavigationLink(destination: WebServiceView(title: api.rawValue, data: webServiceData), tag: api, selection: $apiSelection) { }
+            webServiceRow(api: .getLeagueData) {
+                battleNetAPI.sc2.getLeagueData(seasonID: 37, queue: .lotV1v1, team: .arranged, league: .grandmaster, completion: { parseResult($0, for: .getLeagueData) })
             }
         }
     }
@@ -63,124 +59,72 @@ struct Starcraft2View: View {
     var communitySection: some View {
         Group {
             Section(header: Text("Profile API")) {
-                HStack {
-                    let api = Starcraft2View.API.static
-                    Button(api.rawValue) {
-                        battleNetAPI.sc2.getProfileData(sc2Region: .us, completion: { parseResult($0, for: api) })
-                    }
-                    NavigationLink(destination: WebServiceView(title: api.rawValue, data: webServiceData), tag: api, selection: $apiSelection) { }
+                webServiceRow(api: .static) {
+                    battleNetAPI.sc2.getProfileData(sc2Region: .us, completion: { parseResult($0, for: .static) })
                 }
-                
-                HStack {
-                    let api = Starcraft2View.API.metadata
-                    Button(api.rawValue) {
-                        battleNetAPI.sc2.getProfileMetadata(id: 20807579, sc2Region: .us, realmID: 1, completion: { parseResult($0, for: api) })
-                    }
-                    NavigationLink(destination: WebServiceView(title: api.rawValue, data: webServiceData), tag: api, selection: $apiSelection) { }
+                webServiceRow(api: .metadata) {
+                    battleNetAPI.sc2.getProfileMetadata(id: 20807579, sc2Region: .us, realmID: 1, completion: { parseResult($0, for: .metadata) })
                 }
-                
-                HStack {
-                    let api = Starcraft2View.API.profile
-                    Button(api.rawValue) {
-                        battleNetAPI.sc2.getProfile(id: 20807579, sc2Region: .us, realmID: 1, completion: { parseResult($0, for: api) })
-                    }
-                    NavigationLink(destination: WebServiceView(title: api.rawValue, data: webServiceData), tag: api, selection: $apiSelection) { }
+                webServiceRow(api: .profile) {
+                    battleNetAPI.sc2.getProfile(id: 20807579, sc2Region: .us, realmID: 1, completion: { parseResult($0, for: .profile) })
                 }
-                
-                HStack {
-                    let api = Starcraft2View.API.ladderSummary
-                    Button(api.rawValue) {
-                        battleNetAPI.sc2.getLadderSummary(profileID: 20807579, sc2Region: .us, realmID: 1, completion: { parseResult($0, for: api) })
-                    }
-                    NavigationLink(destination: WebServiceView(title: api.rawValue, data: webServiceData), tag: api, selection: $apiSelection) { }
+                webServiceRow(api: .ladderSummary) {
+                    battleNetAPI.sc2.getLadderSummary(profileID: 20807579, sc2Region: .us, realmID: 1, completion: { parseResult($0, for: .ladderSummary) })
                 }
-                
-                HStack {
-                    let api = Starcraft2View.API.ladder
-                    Button(api.rawValue) {
-                        battleNetAPI.sc2.getLadder(id: 296837, profileID: 20807579, sc2Region: .us, realmID: 1, completion: { parseResult($0, for: api) })
-                    }
-                    NavigationLink(destination: WebServiceView(title: api.rawValue, data: webServiceData), tag: api, selection: $apiSelection) { }
+                webServiceRow(api: .ladder) {
+                    battleNetAPI.sc2.getLadder(id: 296837, profileID: 20807579, sc2Region: .us, realmID: 1, completion: { parseResult($0, for: .ladder) })
                 }
             }
             
             Section(header: Text("Ladder API")) {
-                HStack {
-                    let api = Starcraft2View.API.grandmasterLeaderboard
-                    Button(api.rawValue) {
-                        battleNetAPI.sc2.getGrandmasterLeaderboard(sc2Region: .us, completion: { parseResult($0, for: api) })
-                    }
-                    NavigationLink(destination: WebServiceView(title: api.rawValue, data: webServiceData), tag: api, selection: $apiSelection) { }
+                webServiceRow(api: .grandmasterLeaderboard) {
+                    battleNetAPI.sc2.getGrandmasterLeaderboard(sc2Region: .us, completion: { parseResult($0, for: .grandmasterLeaderboard) })
                 }
-                
-                HStack {
-                    let api = Starcraft2View.API.season
-                    Button(api.rawValue) {
-                        battleNetAPI.sc2.getLadderSeason(sc2Region: .us, completion: { parseResult($0, for: api) })
-                    }
-                    NavigationLink(destination: WebServiceView(title: api.rawValue, data: webServiceData), tag: api, selection: $apiSelection) { }
+                webServiceRow(api: .season) {
+                    battleNetAPI.sc2.getLadderSeason(sc2Region: .us, completion: { parseResult($0, for: .season) })
                 }
             }
             
             Section(header: Text("Account API")) {
-                HStack {
-                    let api = Starcraft2View.API.player
-                    Button(api.rawValue) {
-                        battleNetAPI.sc2.getPlayer(accountID: 20807579, completion: { parseResult($0, for: api) })
-                    }
-                    NavigationLink(destination: WebServiceView(title: api.rawValue, data: webServiceData), tag: api, selection: $apiSelection) { }
+                webServiceRow(api: .player) {
+                    battleNetAPI.sc2.getPlayer(accountID: 20807579, completion: { parseResult($0, for: .player) })
                 }
             }
             
             Section(header: Text("Legacy API")) {
-                HStack {
-                    let api = Starcraft2View.API.profileLegacy
-                    Button(api.rawValue) {
-                        battleNetAPI.sc2.getProfile(sc2Region: .us, realmID: 1, profileID: 20807579, completion: { parseResult($0, for: api) })
-                    }
-                    NavigationLink(destination: WebServiceView(title: api.rawValue, data: webServiceData), tag: api, selection: $apiSelection) { }
+                webServiceRow(api: .profileLegacy) {
+                    battleNetAPI.sc2.getProfile(sc2Region: .us, realmID: 1, profileID: 20807579, completion: { parseResult($0, for: .profileLegacy) })
                 }
-                
-                HStack {
-                    let api = Starcraft2View.API.ladders
-                    Button(api.rawValue) {
-                        battleNetAPI.sc2.getLadders(sc2Region: .us, realmID: 1, profileID: 20807579, completion: { parseResult($0, for: api) })
-                    }
-                    NavigationLink(destination: WebServiceView(title: api.rawValue, data: webServiceData), tag: api, selection: $apiSelection) { }
+                webServiceRow(api: .ladders) {
+                    battleNetAPI.sc2.getLadders(sc2Region: .us, realmID: 1, profileID: 20807579, completion: { parseResult($0, for: .ladders) })
                 }
-                
-                HStack {
-                    let api = Starcraft2View.API.matchHistory
-                    Button(api.rawValue) {
-                        battleNetAPI.sc2.getMatchHistory(sc2Region: .us, realmID: 1, profileID: 20807579, completion: { parseResult($0, for: api) })
-                    }
-                    NavigationLink(destination: WebServiceView(title: api.rawValue, data: webServiceData), tag: api, selection: $apiSelection) { }
+                webServiceRow(api: .matchHistory) {
+                    battleNetAPI.sc2.getMatchHistory(sc2Region: .us, realmID: 1, profileID: 20807579, completion: { parseResult($0, for: .matchHistory) })
                 }
-                
-                HStack {
-                    let api = Starcraft2View.API.ladderLegacy
-                    Button(api.rawValue) {
-                        battleNetAPI.sc2.getLadder(sc2Region: .us, ladder: 296837, completion: { parseResult($0, for: api) })
-                    }
-                    NavigationLink(destination: WebServiceView(title: api.rawValue, data: webServiceData), tag: api, selection: $apiSelection) { }
+                webServiceRow(api: .ladderLegacy) {
+                    battleNetAPI.sc2.getLadder(sc2Region: .us, ladder: 296837, completion: { parseResult($0, for: .ladderLegacy) })
                 }
-                
-                HStack {
-                    let api = Starcraft2View.API.achievements
-                    Button(api.rawValue) {
-                        battleNetAPI.sc2.getAchievements(sc2Region: .us, completion: { parseResult($0, for: api) })
-                    }
-                    NavigationLink(destination: WebServiceView(title: api.rawValue, data: webServiceData), tag: api, selection: $apiSelection) { }
+                webServiceRow(api: .achievements) {
+                    battleNetAPI.sc2.getAchievements(sc2Region: .us, completion: { parseResult($0, for: .achievements) })
                 }
-                
-                HStack {
-                    let api = Starcraft2View.API.rewards
-                    Button(api.rawValue) {
-                        battleNetAPI.sc2.getRewards(sc2Region: .us, completion: { parseResult($0, for: api) })
-                    }
-                    NavigationLink(destination: WebServiceView(title: api.rawValue, data: webServiceData), tag: api, selection: $apiSelection) { }
+                webServiceRow(api: .rewards) {
+                    battleNetAPI.sc2.getRewards(sc2Region: .us, completion: { parseResult($0, for: .rewards) })
                 }
             }
+        }
+    }
+    
+    
+    func webServiceRow(api: API, webService: @escaping () -> Void) -> some View {
+        let selectionBinding: Binding<API?> = Binding(
+            get: { return apiSelection },
+            set: { newValue in
+                guard newValue != nil else { self.apiSelection = nil; return }
+                webService()
+            }
+        )
+        return NavigationLink(destination: WebServiceView(title: api.rawValue, data: webServiceData), tag: api, selection: selectionBinding) {
+            Text(api.rawValue)
         }
     }
     
