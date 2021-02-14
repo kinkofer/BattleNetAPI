@@ -6,10 +6,8 @@
 //
 
 import AuthenticationServices
-import Foundation
 
-
-class AuthenicationViewModel: NSObject, ObservableObject, ASWebAuthenticationPresentationContextProviding {
+class AuthenticationContext: NSObject, ASWebAuthenticationPresentationContextProviding {
     func presentationAnchor(for session: ASWebAuthenticationSession) -> ASPresentationAnchor {
         return ASPresentationAnchor()
     }

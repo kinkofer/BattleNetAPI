@@ -49,8 +49,8 @@ class ViewController: UIViewController {
     
     let battleNetAPI = BattleNetAPI(credentials: Current.credentials)
     
-    lazy var authMC = AuthenticationModelController(battleNetAPI: battleNetAPI)
-    lazy var userMC = UserModelController(battleNetAPI: battleNetAPI)
+    lazy var authRepo = AuthenticationRepository(battleNetAPI: battleNetAPI)
+    lazy var userRepo = UserRepository(battleNetAPI: battleNetAPI)
     
     lazy var authManager = AuthenticationManager(battleNetAPI: battleNetAPI, oauth: Current.oauth, providerContext: self)
     
@@ -131,7 +131,7 @@ class ViewController: UIViewController {
     // MARK: - Profile API
     
     func getUser() {
-        userMC.getUser { result in
+        userRepo.getUser { result in
             switch result {
             case .success(let user):
                 Debug.print("Retrieved User \(user.battletag)")
@@ -229,6 +229,6 @@ extension ViewController: UITableViewDelegate {
 
 extension ViewController: ASWebAuthenticationPresentationContextProviding {
     func presentationAnchor(for session: ASWebAuthenticationSession) -> ASPresentationAnchor {
-        return self.view.window ?? ASPresentationAnchor()
+        return ASPresentationAnchor()
     }
 }

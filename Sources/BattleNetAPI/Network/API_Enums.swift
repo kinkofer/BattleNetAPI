@@ -28,7 +28,9 @@ public enum APIType: String {
 
 public enum APINamespace {
     case `static`
+    case staticClassic
     case dynamic
+    case dynamicClassic
     case profile
     case custom(String)
     
@@ -36,8 +38,12 @@ public enum APINamespace {
         switch self {
         case .static:
             return .namespace("static" + region.namespaceExtension)
+        case .staticClassic:
+            return .namespace("static-classic" + region.namespaceExtension)
         case .dynamic:
             return .namespace("dynamic" + region.namespaceExtension)
+        case .dynamicClassic:
+            return .namespace("dynamic-classic" + region.namespaceExtension)
         case .profile:
             return .namespace("profile" + region.namespaceExtension)
         case .custom(let namespace):

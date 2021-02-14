@@ -1,5 +1,5 @@
 //
-//  AuthenticationModelController.swift
+//  AuthenticationRepository.swift
 //  BattleNetAPI
 //
 //  Created by Christopher Jennewein on 4/6/18.
@@ -9,7 +9,7 @@
 import Foundation
 
 
-public struct AuthenticationModelController {
+public struct AuthenticationRepository {
     let battleNetAPI: BattleNetAPI
     
     

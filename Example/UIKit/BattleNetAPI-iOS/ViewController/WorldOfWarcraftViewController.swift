@@ -35,7 +35,6 @@ class WorldOfWarcraftViewController: UITableViewController, APIViewer {
         // Community
         case achievement = "Achievement API"
         case auction = "Auction API"
-        case challengeMode = "Challenge Mode API"
         case characterProfile = "Character Profile API"
         case guildProfile = "Guild Profile API"
         case item = "Item API"
@@ -114,9 +113,6 @@ class WorldOfWarcraftViewController: UITableViewController, APIViewer {
         case achievement = "Achievement"
         // Auction
         case auctionDataStatus = "Auction Data Status"
-        // Challenge Mode
-        case realmLeaderboard = "Realm Leaderboard"
-        case regionLeaderboard = "Region Leaderboard"
         // Character Profile
         case characterProfile = "Character Profile"
         case characterAchievements = "Character Achievements"
@@ -221,7 +217,7 @@ class WorldOfWarcraftViewController: UITableViewController, APIViewer {
     
     
     let battleNetAPI = BattleNetAPI(credentials: Current.credentials)
-    lazy var wowMC = WorldOfWarcraftModelController(battleNetAPI: battleNetAPI)
+    lazy var wowRepo = WorldOfWarcraftRepository(battleNetAPI: battleNetAPI)
     
     public var apiType: APIType = .gameData
     
@@ -264,7 +260,6 @@ class WorldOfWarcraftViewController: UITableViewController, APIViewer {
         case .community:
             let achievementAPIs: [CommunityService] = [.achievement]
             let auctionAPIs: [CommunityService] = [.auctionDataStatus]
-            let challengeModeAPIs: [CommunityService] = [.realmLeaderboard, .regionLeaderboard]
             let characterProfileAPIs: [CommunityService] = [.characterProfile, .characterAchievements, .appearance, .feed, .guild, .hunterPets,
                                                             .items, .mounts, .pets, .petSlots, .professions, .progression, .pvp, .quests,
                                                             .reputation, .statistics, .characterStats, .talents, .titles, .audit]
@@ -282,7 +277,6 @@ class WorldOfWarcraftViewController: UITableViewController, APIViewer {
             
             sections = [Section(type: .achievement, rows: achievementAPIs),
                         Section(type: .auction, rows: auctionAPIs),
-                        Section(type: .challengeMode, rows: challengeModeAPIs),
                         Section(type: .characterProfile, rows: characterProfileAPIs),
                         Section(type: .guildProfile, rows: guildProfileAPIs),
                         Section(type: .item, rows: itemAPIs),
@@ -308,7 +302,7 @@ class WorldOfWarcraftViewController: UITableViewController, APIViewer {
     // MARK: Connected Realm API
     
     func getConnectedRealmIndex() {
-        wowMC.getConnectedRealmIndex { result in
+        wowRepo.getConnectedRealmIndex { result in
             switch result {
             case .success(let connectedRealms):
                 Debug.print("Retrieved \(connectedRealms.count) conntected Realm(s)")
@@ -325,7 +319,7 @@ class WorldOfWarcraftViewController: UITableViewController, APIViewer {
     
     
     func getConnectedRealm(id: Int) {
-        wowMC.getConnectedRealm(id: id) { result in
+        wowRepo.getConnectedRealm(id: id) { result in
             switch result {
             case .success(let connectedRealm):
                 Debug.print("Retrieved connectedRealm.id \(connectedRealm.id) with \(connectedRealm.realms.count) Realm(s)")
@@ -344,7 +338,7 @@ class WorldOfWarcraftViewController: UITableViewController, APIViewer {
     // MARK: Mythic Keystone Affix API
     
     func getMythicKeystoneAffixes() {
-        wowMC.getMythicKeystoneAffixes { result in
+        wowRepo.getMythicKeystoneAffixes { result in
             switch result {
             case .success(let mythicKeystoneAffixes):
                 Debug.print("Retrieved \(mythicKeystoneAffixes.affixes.count) mythic keystone affix(s)")
@@ -361,7 +355,7 @@ class WorldOfWarcraftViewController: UITableViewController, APIViewer {
     
     
     func getMythicKeystoneAffix(id: Int) {
-        wowMC.getMythicKeystoneAffix(id: id) { result in
+        wowRepo.getMythicKeystoneAffix(id: id) { result in
             switch result {
             case .success(let mythicKeystoneAffix):
                 Debug.print("Retrieved mythic keystone affix \(mythicKeystoneAffix.name)")
@@ -380,7 +374,7 @@ class WorldOfWarcraftViewController: UITableViewController, APIViewer {
     // MARK: Mythic Raid Leaderboard API
     
     func getMythicRaidLeaderboard(raid: String, faction: FactionType) {
-        wowMC.getMythicRaidLeaderboard(raid: raid, faction: faction) { result in
+        wowRepo.getMythicRaidLeaderboard(raid: raid, faction: faction) { result in
             switch result {
             case .success(let mythicRaidLeaderboard):
                 Debug.print("Retrieved mythic raid leaderboard with \(mythicRaidLeaderboard.entries.count) entry(s)")
@@ -399,7 +393,7 @@ class WorldOfWarcraftViewController: UITableViewController, APIViewer {
     // MARK: Mythic Keystone Dungeon API
     
     func getMythicKeystoneDungeons() {
-        wowMC.getMythicKeystoneDungeons { result in
+        wowRepo.getMythicKeystoneDungeons { result in
             switch result {
             case .success(let mythicKeystoneDungeons):
                 Debug.print("Retrieved \(mythicKeystoneDungeons.dungeons.count) mythic keystone dungeon(s)")
@@ -416,7 +410,7 @@ class WorldOfWarcraftViewController: UITableViewController, APIViewer {
     
     
     func getMythicKeystoneDungeon(id: Int) {
-        wowMC.getMythicKeystoneDungeon(id: id) { result in
+        wowRepo.getMythicKeystoneDungeon(id: id) { result in
             switch result {
             case .success(let mythicKeystoneDungeon):
                 Debug.print("Retrieved mythic keystone dungeon \(mythicKeystoneDungeon.name) with \(mythicKeystoneDungeon.keystoneUpgrades.count) keystone upgrade(s)")
@@ -433,7 +427,7 @@ class WorldOfWarcraftViewController: UITableViewController, APIViewer {
     
     
     func getMythicKeystones() {
-        wowMC.getMythicKeystones { result in
+        wowRepo.getMythicKeystones { result in
             switch result {
             case .success(let mythicKeystoneIndex):
                 Debug.print("Retrieved mythic keystone index")
@@ -450,7 +444,7 @@ class WorldOfWarcraftViewController: UITableViewController, APIViewer {
     
     
     func getMythicKeystonePeriods() {
-        wowMC.getMythicKeystonePeriods { result in
+        wowRepo.getMythicKeystonePeriods { result in
             switch result {
             case .success(let mythicKeystonePeriods):
                 Debug.print("Retrieved \(mythicKeystonePeriods.periods.count) mythic keystone period(s)")
@@ -467,7 +461,7 @@ class WorldOfWarcraftViewController: UITableViewController, APIViewer {
     
     
     func getMythicKeystonePeriod(id: Int) {
-        wowMC.getMythicKeystonePeriod(id: id) { result in
+        wowRepo.getMythicKeystonePeriod(id: id) { result in
             switch result {
             case .success(let mythicKeystonePeriod):
                 Debug.print("Retrieved mythic keystone period \(mythicKeystonePeriod.id)")
@@ -484,7 +478,7 @@ class WorldOfWarcraftViewController: UITableViewController, APIViewer {
     
     
     func getMythicKeystoneSeasons() {
-        wowMC.getMythicKeystoneSeasons { result in
+        wowRepo.getMythicKeystoneSeasons { result in
             switch result {
             case .success(let mythicKeystoneSeasons):
                 Debug.print("Retrieved \(mythicKeystoneSeasons.seasons.count) mythic keystone season(s)")
@@ -501,7 +495,7 @@ class WorldOfWarcraftViewController: UITableViewController, APIViewer {
     
     
     func getMythicKeystoneSeason(id: Int) {
-        wowMC.getMythicKeystoneSeason(id: id) { result in
+        wowRepo.getMythicKeystoneSeason(id: id) { result in
             switch result {
             case .success(let mythicKeystoneSeason):
                 Debug.print("Retrieved mythic keystone season \(mythicKeystoneSeason.id) with \(mythicKeystoneSeason.periods.count) keystone period(s)")
@@ -520,7 +514,7 @@ class WorldOfWarcraftViewController: UITableViewController, APIViewer {
     // MARK: Mythic Keystone Leaderboard API
     
     func getMythicLeaderboards(connectedRealmID: Int) {
-        wowMC.getMythicLeaderboards(connectedRealmID: connectedRealmID) { result in
+        wowRepo.getMythicLeaderboards(connectedRealmID: connectedRealmID) { result in
             switch result {
             case .success(let leaderboards):
                 Debug.print("Retrieved \(leaderboards.currentLeaderboards.count) Current Leaderboard(s)")
@@ -537,7 +531,7 @@ class WorldOfWarcraftViewController: UITableViewController, APIViewer {
     
     
     func getMythicLeaderboard(connectedRealmID: Int, dungeonID: Int, period: Int) {
-        wowMC.getMythicLeaderboard(connectedRealmID: connectedRealmID, dungeonID: dungeonID, period: period) { result in
+        wowRepo.getMythicLeaderboard(connectedRealmID: connectedRealmID, dungeonID: dungeonID, period: period) { result in
             switch result {
             case .success(let leaderboard):
                 let keystoneAffixes = leaderboard.keystoneAffixes.compactMap { $0.keystoneAffix.name }
@@ -557,7 +551,7 @@ class WorldOfWarcraftViewController: UITableViewController, APIViewer {
     // MARK: Playable Class API
     
     func getPlayableClasses() {
-        wowMC.getPlayableClasses { result in
+        wowRepo.getPlayableClasses { result in
             switch result {
             case .success(let classIndex):
                 Debug.print("Retrieved \(classIndex.classes.count) WOW Playable Class(s)")
@@ -574,7 +568,7 @@ class WorldOfWarcraftViewController: UITableViewController, APIViewer {
     
     
     func getPlayableClass(id: Int) {
-        wowMC.getPlayableClass(id: id) { result in
+        wowRepo.getPlayableClass(id: id) { result in
             switch result {
             case .success(let wowClass):
                 let specializations = wowClass.specializations.map { $0.name ?? "Unknown" }
@@ -592,7 +586,7 @@ class WorldOfWarcraftViewController: UITableViewController, APIViewer {
     
     
     func getPlayableClassPvPTalentSlots(classID: Int) {
-        wowMC.getPlayableClassPvPTalentSlots(classID: classID) { result in
+        wowRepo.getPlayableClassPvPTalentSlots(classID: classID) { result in
             switch result {
             case .success(let pvpTalentSlots):
                 Debug.print("Retrieved PvP Talent Slots with \(pvpTalentSlots.talentSlots.count) talent slot(s)")
@@ -611,7 +605,7 @@ class WorldOfWarcraftViewController: UITableViewController, APIViewer {
     // MARK: Playable Specialization API
     
     func getPlayableSpecializations() {
-        wowMC.getPlayableSpecializations { result in
+        wowRepo.getPlayableSpecializations { result in
             switch result {
             case .success(let specializations):
                 Debug.print("Retrieved \(specializations.characterSpecializations.count) Character Specialization(s) and \(specializations.petSpecializations.count) Pet Specialization(s)")
@@ -628,7 +622,7 @@ class WorldOfWarcraftViewController: UITableViewController, APIViewer {
     
     
     func getPlayableSpecialization(id: Int) {
-        wowMC.getPlayableSpecialization(id: id) { result in
+        wowRepo.getPlayableSpecialization(id: id) { result in
             switch result {
             case .success(let specialization):
                 Debug.print("Retrieved Specialization \(specialization.name) for Playable Class \(specialization.playableClass.name ?? "Unknown")")
@@ -647,7 +641,7 @@ class WorldOfWarcraftViewController: UITableViewController, APIViewer {
     // MARK: Power Type API
     
     func getPowerTypes() {
-        wowMC.getPowerTypes { result in
+        wowRepo.getPowerTypes { result in
             switch result {
             case .success(let powerTypeIndex):
                 Debug.print("Retrieved \(powerTypeIndex.powerTypes.count) Power Type(s)")
@@ -664,7 +658,7 @@ class WorldOfWarcraftViewController: UITableViewController, APIViewer {
     
     
     func getPowerType(id: Int) {
-        wowMC.getPowerType(id: id) { result in
+        wowRepo.getPowerType(id: id) { result in
             switch result {
             case .success(let powerType):
                 Debug.print("Retrieved Power Type \(powerType.name)")
@@ -683,7 +677,7 @@ class WorldOfWarcraftViewController: UITableViewController, APIViewer {
     // MARK: Playable Race API
     
     func getPlayableRaces() {
-        wowMC.getPlayableRaces { result in
+        wowRepo.getPlayableRaces { result in
             switch result {
             case .success(let racesIndex):
                 Debug.print("Retrieved \(racesIndex.races.count) Playable Character Race(s)")
@@ -700,7 +694,7 @@ class WorldOfWarcraftViewController: UITableViewController, APIViewer {
     
     
     func getPlayableRace(id: Int) {
-        wowMC.getPlayableRace(id: id) { result in
+        wowRepo.getPlayableRace(id: id) { result in
             switch result {
             case .success(let race):
                 Debug.print("Retrieved Race \(race.genderName.femaleName)/\(race.genderName.maleName)")
@@ -719,7 +713,7 @@ class WorldOfWarcraftViewController: UITableViewController, APIViewer {
     // MARK: Realm API
     
     func getRealmIndex() {
-        wowMC.getRealmIndex { result in
+        wowRepo.getRealmIndex { result in
             switch result {
             case .success(let realms):
                 Debug.print("Retrieved \(realms.count) Realm(s)")
@@ -736,7 +730,7 @@ class WorldOfWarcraftViewController: UITableViewController, APIViewer {
     
     
     func getRealm(id: Int? = nil, slug: String? = nil) {
-        wowMC.getRealm(id: id, slug: slug) { result in
+        wowRepo.getRealm(id: id, slug: slug) { result in
             switch result {
             case .success(let realm):
                 Debug.print("Retrieved Realm \(realm.name)")
@@ -755,7 +749,7 @@ class WorldOfWarcraftViewController: UITableViewController, APIViewer {
     // MARK: Region API
     
     func getRegionIndex() {
-        wowMC.getRegionIndex { result in
+        wowRepo.getRegionIndex { result in
             switch result {
             case .success(let regions):
                 Debug.print("Retrieved \(regions.count) Region(s)")
@@ -772,7 +766,7 @@ class WorldOfWarcraftViewController: UITableViewController, APIViewer {
     
     
     func getRegion(id: Int) {
-        wowMC.getRegion(id: id) { result in
+        wowRepo.getRegion(id: id) { result in
             switch result {
             case .success(let region):
                 Debug.print("Retrieved Region \(region.name)")
@@ -791,7 +785,7 @@ class WorldOfWarcraftViewController: UITableViewController, APIViewer {
     // MARK: WOW Token API
     
     func getTokenIndex() {
-        wowMC.getTokenIndex { result in
+        wowRepo.getTokenIndex { result in
             switch result {
             case .success(let tokenIndex):
                 Debug.print("TokenIndex.lastUpdatedTimestamp: \(tokenIndex.lastUpdatedTimestamp)")
@@ -813,7 +807,7 @@ class WorldOfWarcraftViewController: UITableViewController, APIViewer {
     // MARK: Achievement API
     
     func getAchievement(id: Int) {
-        wowMC.getAchievement(id: id) { result in
+        wowRepo.getAchievement(id: id) { result in
             switch result {
             case .success(let achievement):
                 Debug.print("Retrieved Achievement \(achievement.title)")
@@ -832,7 +826,7 @@ class WorldOfWarcraftViewController: UITableViewController, APIViewer {
     // MARK: Auction API
     
     func getAuctions(connectedRealmID: Int) {
-        wowMC.getAuctions(connectedRealmID: connectedRealmID) { result in
+        wowRepo.getAuctions(connectedRealmID: connectedRealmID) { result in
             switch result {
             case .success(let auction):
                 Debug.print("Retrieved \(auction.files.count) Auction(s)")
@@ -849,46 +843,10 @@ class WorldOfWarcraftViewController: UITableViewController, APIViewer {
     
     
     
-    // MARK: Challenge Mode API
-    
-    func getChallengeLeaderboards(realm: String) {
-        wowMC.getChallengeLeaderboards(realm: realm) { result in
-            switch result {
-            case .success(let challenges):
-                Debug.print("Retrieved \(challenges.count) Challenge(s)")
-                DispatchQueue.main.async {
-                    let viewController = ViewerTableViewController()
-                    viewController.dataSourceArr = challenges
-                    self.navigationController?.pushViewController(viewController, animated: true)
-                }
-            case .failure(let error):
-                self.handleError(error)
-            }
-        }
-    }
-    
-    
-    func getTopChallengeLeaderboards() {
-        wowMC.getTopChallengeLeaderboards { result in
-            switch result {
-            case .success(let challenges):
-                Debug.print("Retrieved \(challenges.count) Challenge(s)")
-                DispatchQueue.main.async {
-                    let viewController = ViewerTableViewController()
-                    viewController.dataSourceArr = challenges
-                    self.navigationController?.pushViewController(viewController, animated: true)
-                }
-            case .failure(let error):
-                self.handleError(error)
-            }
-        }
-    }
-    
-    
     // MARK: Character Profile API
     
     func getCharacter(_ name: String, realmSlug: String) {
-        wowMC.getCharacter(characterName: name, realmSlug: realmSlug) { result in
+        wowRepo.getCharacter(characterName: name, realmSlug: realmSlug) { result in
             switch result {
             case .success(let character):
                 Debug.print("Retrieved Character \(character.name) from Realm \(character.realm)")
@@ -980,7 +938,7 @@ class WorldOfWarcraftViewController: UITableViewController, APIViewer {
     // MARK: Guild Profile API
     
     func getGuild(_ name: String, realmSlug: String) {
-        wowMC.getGuild(slug: name, realmSlug: realmSlug) { result in
+        wowRepo.getGuild(slug: name, realmSlug: realmSlug) { result in
             switch result {
             case .success(let guild):
                 Debug.print("Retrieved Guild \(guild.name) from Realm \(guild.realm)")
@@ -1016,7 +974,7 @@ class WorldOfWarcraftViewController: UITableViewController, APIViewer {
     // MARK: Item API
     
     func getWOWItem(id: Int) {
-        wowMC.getItem(id: id) { result in
+        wowRepo.getItem(id: id) { result in
             switch result {
             case .success(let item):
                 Debug.print("Retrieved WOW Item \(item.name)")
@@ -1033,7 +991,7 @@ class WorldOfWarcraftViewController: UITableViewController, APIViewer {
     
     
     func getWOWItemSet(id: Int) {
-        wowMC.getItemSet(id: id) { result in
+        wowRepo.getItemSet(id: id) { result in
             switch result {
             case .success(let itemSet):
                 Debug.print("Retrieved WOW Item Set \(itemSet.name) with \(itemSet.items.count) Item(s)")
@@ -1052,7 +1010,7 @@ class WorldOfWarcraftViewController: UITableViewController, APIViewer {
     // MARK: Mount API
     
     func getMounts() {
-        wowMC.getMounts { result in
+        wowRepo.getMounts { result in
             switch result {
             case .success(let mounts):
                 let groundMounts = mounts.filter { $0.isGround }
@@ -1075,7 +1033,7 @@ class WorldOfWarcraftViewController: UITableViewController, APIViewer {
     // MARK: Pet API
     
     func getPets() {
-        wowMC.getPets { result in
+        wowRepo.getPets { result in
             switch result {
             case .success(let pets):
                 Debug.print("Retrieved \(pets.count) Pet(s)")
@@ -1092,7 +1050,7 @@ class WorldOfWarcraftViewController: UITableViewController, APIViewer {
     
     
     func getPetAbility(id: Int) {
-        wowMC.getPetAbility(id: id) { result in
+        wowRepo.getPetAbility(id: id) { result in
             switch result {
             case .success(let petAbility):
                 Debug.print("Retrieved Pet Ability \(petAbility.name)")
@@ -1131,7 +1089,7 @@ class WorldOfWarcraftViewController: UITableViewController, APIViewer {
     // MARK: Quest API
     
     func getWOWQuest(id: Int) {
-        wowMC.getQuest(id: id) { result in
+        wowRepo.getQuest(id: id) { result in
             switch result {
             case .success(let quest):
                 Debug.print("Retrieved WOW Quest \(quest.title)")
@@ -1150,7 +1108,7 @@ class WorldOfWarcraftViewController: UITableViewController, APIViewer {
     // MARK: Realm Status API
     
     func getWOWRealmsStatus() {
-        wowMC.getRealmsStatus { result in
+        wowRepo.getRealmsStatus { result in
             switch result {
             case .success(let realms):
                 Debug.print("Retrieved Status for \(realms.count) WOW Realm(s)")
@@ -1169,7 +1127,7 @@ class WorldOfWarcraftViewController: UITableViewController, APIViewer {
     // MARK: Recipe API
     
     func getWOWRecipe(id: Int) {
-        wowMC.getRecipe(id: id) { result in
+        wowRepo.getRecipe(id: id) { result in
             switch result {
             case .success(let recipe):
                 Debug.print("Retrieved WOW Recipe \(recipe.name)")
@@ -1188,7 +1146,7 @@ class WorldOfWarcraftViewController: UITableViewController, APIViewer {
     // MARK: Spell API
     
     func getWOWSpell(id: Int) {
-        wowMC.getSpell(id: id) { result in
+        wowRepo.getSpell(id: id) { result in
             switch result {
             case .success(let spell):
                 Debug.print("Retrieved WOW Spell \(spell.name)")
@@ -1208,7 +1166,7 @@ class WorldOfWarcraftViewController: UITableViewController, APIViewer {
     // MARK: Data Resources
     
     func getWOWClasses() {
-        wowMC.getClasses { result in
+        wowRepo.getClasses { result in
             switch result {
             case .success(let classes):
                 Debug.print("Retrieved \(classes.count) WOW Class(s)")
@@ -1225,7 +1183,7 @@ class WorldOfWarcraftViewController: UITableViewController, APIViewer {
     
     
     func getWOWAchievements() {
-        wowMC.getAchievements { result in
+        wowRepo.getAchievements { result in
             switch result {
             case .success(let achievementCategories):
                 Debug.print("Retrieved \(achievementCategories.count) WOW Achievement Category(s)")
@@ -1242,7 +1200,7 @@ class WorldOfWarcraftViewController: UITableViewController, APIViewer {
     
     
     func getWOWGuildAchievements(_ name: String, realmSlug: String) {
-        wowMC.getGuildAchievements(slug: name, realmSlug: realmSlug) { result in
+        wowRepo.getGuildAchievements(slug: name, realmSlug: realmSlug) { result in
             switch result {
             case .success(let achievementCategories):
                 Debug.print("Retrieved \(achievementCategories.count) WOW Guild Achievement Category(s)")
@@ -1259,7 +1217,7 @@ class WorldOfWarcraftViewController: UITableViewController, APIViewer {
     
     
     func getItemClasses() {
-        wowMC.getItemClasses { result in
+        wowRepo.getItemClasses { result in
             switch result {
             case .success(let itemClasses):
                 Debug.print("Retrieved \(itemClasses.count) Item Class(s)")
@@ -1276,7 +1234,7 @@ class WorldOfWarcraftViewController: UITableViewController, APIViewer {
     
     
     func getTalents() {
-        wowMC.getTalents { result in
+        wowRepo.getTalents { result in
             switch result {
             case .success(let talentDictionary):
                 Debug.print("Retrieved Talents for \(talentDictionary.keys.count) Class(s)")
@@ -1297,7 +1255,7 @@ class WorldOfWarcraftViewController: UITableViewController, APIViewer {
     // MARK: WoW Mythic Keystone Character Profile API
     
     func getMythicKeystoneProfile(characterName: String, realmSlug: String) {
-        wowMC.getCharacterMythicKeystoneProfile(characterName: characterName, realmSlug: realmSlug) { result in
+        wowRepo.getCharacterMythicKeystoneProfile(characterName: characterName, realmSlug: realmSlug) { result in
             switch result {
             case .success(let profile):
                 Debug.print("Retrieved profile \(characterName)")
@@ -1314,7 +1272,7 @@ class WorldOfWarcraftViewController: UITableViewController, APIViewer {
     
     
     func getMythicKeystoneProfileSeason(seasonID: Int, characterName: String, realmSlug: String) {
-        wowMC.getCharacterMythicKeystoneProfileSeason(seasonID: seasonID, characterName: characterName, realmSlug: realmSlug) { result in
+        wowRepo.getCharacterMythicKeystoneProfileSeason(seasonID: seasonID, characterName: characterName, realmSlug: realmSlug) { result in
             switch result {
             case .success(let season):
                 Debug.print("Retrieved season \(seasonID) with \(season.bestRuns.count) best run(s)")
@@ -1444,10 +1402,6 @@ class WorldOfWarcraftViewController: UITableViewController, APIViewer {
                 getAchievement(id: 2144)
             case .auctionDataStatus:
                 getAuctions(connectedRealmID: 4)
-            case .realmLeaderboard:
-                getChallengeLeaderboards(realm: "medivh")
-            case .regionLeaderboard:
-                getTopChallengeLeaderboards()
             case .characterProfile:
                 getCharacter("Aedimus", realmSlug: "Aegwynn")
 //            case .characterAchievements:

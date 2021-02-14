@@ -17,7 +17,7 @@ public class AuthenticationManager: OAuthAuthenticator {
     let oauth: BattleNetOAuth
     let providerContext: ASWebAuthenticationPresentationContextProviding
     
-    private let authMC: AuthenticationModelController
+    private let authRepo: AuthenticationRepository
     private var webAuthSession: ASWebAuthenticationSession?
     
     
@@ -28,7 +28,7 @@ public class AuthenticationManager: OAuthAuthenticator {
         self.battleNetAPI = battleNetAPI
         self.oauth = oauth
         self.providerContext = providerContext
-        authMC = AuthenticationModelController(battleNetAPI: battleNetAPI)
+        authRepo = AuthenticationRepository(battleNetAPI: battleNetAPI)
         // TODO: Check if this works by calling a service before storing the userAccessToken
         battleNetAPI.authentication.oauthAuthenticator = self
     }
@@ -40,7 +40,7 @@ public class AuthenticationManager: OAuthAuthenticator {
     /// Returns the `clientAccessToken` if previously stored and valid, or gets a new `clientAccessToken`. A valid token will be saved to the BattleNetAPI credentials.
     public func getClientAccessToken(completion: @escaping (_ result: Result<String, Error>) -> Void) {
         if let accessToken = battleNetAPI.credentials.clientAccessToken {
-            authMC.validateClientAccessToken(accessToken) { result in
+            authRepo.validateClientAccessToken(accessToken) { result in
                 DispatchQueue.main.async {
                     switch result {
                     case .success:
@@ -54,7 +54,7 @@ public class AuthenticationManager: OAuthAuthenticator {
             }
         }
         else {
-            authMC.getClientAccessToken(clientID: battleNetAPI.credentials.clientID, clientSecret: battleNetAPI.credentials.clientSecret) { result in
+            authRepo.getClientAccessToken(clientID: battleNetAPI.credentials.clientID, clientSecret: battleNetAPI.credentials.clientSecret) { result in
                 DispatchQueue.main.async {
                     switch result {
                     case .success(let access):
@@ -77,7 +77,7 @@ public class AuthenticationManager: OAuthAuthenticator {
      */
     public func getUserAccessToken(completion: @escaping (_ result: Result<String, Error>) -> Void) {
         if let userAccessToken = battleNetAPI.credentials.userAccessToken {
-            authMC.validateUserAccessToken(userAccessToken) { result in
+            authRepo.validateUserAccessToken(userAccessToken) { result in
                 DispatchQueue.main.async {
                     switch result {
                     case .success:
@@ -113,7 +113,7 @@ public class AuthenticationManager: OAuthAuthenticator {
         UserDefaults.standard.set(state, forKey: stateKey)
         
         guard let redirectURL = URL(string: redirectUrl),
-            let url = authMC.getOAuthURL(scope: scope, redirectURL: redirectURL, state: state) else {
+            let url = authRepo.getOAuthURL(scope: scope, redirectURL: redirectURL, state: state) else {
                 completion(.failure(HTTPError.invalidRequest))
                 return
         }
@@ -133,7 +133,7 @@ public class AuthenticationManager: OAuthAuthenticator {
                     return
             }
             
-            self.authMC.getUserAccessToken(clientID: self.battleNetAPI.credentials.clientID, clientSecret: self.battleNetAPI.credentials.clientSecret,
+            self.authRepo.getUserAccessToken(clientID: self.battleNetAPI.credentials.clientID, clientSecret: self.battleNetAPI.credentials.clientSecret,
                                            code: code, redirectURL: redirectUrl) { result in
                 DispatchQueue.main.async {
                     switch result {

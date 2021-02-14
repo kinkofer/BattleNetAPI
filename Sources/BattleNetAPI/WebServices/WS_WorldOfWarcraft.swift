@@ -690,7 +690,6 @@ public struct WS_WorldOfWarcraft: WebService {
         var basePath: String? {
             switch apiType {
             case .gameData: return "/data/wow"
-            case .community: return "/wow"
             case .profile:
                 switch self {
                 case .accountProfileSummary, .protectedCharacterProfileSummary, .accountCollectionsIndex, .accountMountsCollectionSummary, .accountPetsCollectionSummary:

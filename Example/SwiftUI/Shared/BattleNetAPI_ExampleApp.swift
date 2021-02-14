@@ -20,7 +20,7 @@ struct BattleNetAPI_ExampleApp: App {
     
     var body: some Scene {
         let battleNetAPI = BattleNetAPI(credentials: Current.credentials, session: .shared, region: Current.region, locale: Current.locale)
-        let authManager = AuthenticationManager(battleNetAPI: battleNetAPI, oauth: Current.oauth, providerContext: AuthenicationViewModel())
+        let authManager = AuthenticationManager(battleNetAPI: battleNetAPI, oauth: Current.oauth, providerContext: AuthenticationContext())
         
         WindowGroup {
             MainView()

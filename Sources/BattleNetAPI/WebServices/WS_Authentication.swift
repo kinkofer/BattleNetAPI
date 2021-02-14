@@ -106,9 +106,8 @@ public class WS_Authentication: AuthenticationWebService {
      - parameter scope: The scope of information you're requesting from the user
      - parameter redirectURL: The redirect url that will be opened after the user has authenticated and will contain the code parameter
      - parameter state: A string used to validate that the auth request made is the same as the auth response (after redirect)
-     - returns: Example URL: https://us.battle.net/oauth/authorize?client_id=x68y75qh6dpzpsthczrdjv9ck57xapms&scope=wow.profile&state=BattleNetAPI1523122301&redirect_url=https://oauth.click/BattleNetAPI/&response_type=code
+     - returns: Example URL: https://us.battle.net/oauth/authorize?client_id=x68y75qh6dpzpsthczrdjv9ck57xapms&scope=wow.profile&state=BattleNetAPI1523122301&redirect_url=https://redirect.to/BattleNetAPI/&response_type=code
      - important: Blizzard does not allow redirects to app scheme urls. You would be required to receive the redirect on a server, then could open your app from there. Your app must be configured with a URLScheme before it can be opened by a url
-     - note: For testing purposes, unsecure redirects can use https://oauth.click, and they also provide their redirect config for use on private, secure servers
      */
     internal func getOAuthURL(scope: Scope, redirectURL: URL, state: String) -> URL? {
         guard let baseURL = URL(string: region.oauthURI) else { return nil }

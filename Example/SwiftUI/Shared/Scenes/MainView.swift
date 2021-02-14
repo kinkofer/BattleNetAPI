@@ -15,6 +15,7 @@ struct MainView: View {
         case diablo3 = "Diablo 3"
         case starCraft2 = "StarCraft 2"
         case worldOfWarcraft = "World of Warcraft"
+        case worldOfWarcraftClassic = "World of Warcraft Classic"
         case battleNet = "BattleNet Profile"
     }
     
@@ -125,6 +126,12 @@ struct MainView: View {
                 
                 NavigationLink(destination: WorldOfWarcraftView(apiType: .profile), tag: GameAPI(.worldOfWarcraft, .profile), selection: requiresUserAuthBinding) {
                     Text(APIType.profile.displayName)
+                }
+            }
+            
+            Section(header: Text(Game.worldOfWarcraftClassic.rawValue)) {
+                NavigationLink(destination: WorldOfWarcraftClassicView(apiType: .gameData)) {
+                    Text(APIType.gameData.displayName)
                 }
             }
             

@@ -33,6 +33,8 @@
 		598AC0BD24A986E5002F2ED3 /* MainView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 598AC0A824A986E3002F2ED3 /* MainView.swift */; };
 		598AC0BE24A986E5002F2ED3 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 598AC0A924A986E4002F2ED3 /* Assets.xcassets */; };
 		598AC0BF24A986E5002F2ED3 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 598AC0A924A986E4002F2ED3 /* Assets.xcassets */; };
+		59A3AEA625D8C93000B44956 /* WorldOfWarcraftClassicView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 59A3AEA525D8C93000B44956 /* WorldOfWarcraftClassicView.swift */; };
+		59A3AEA725D8C93000B44956 /* WorldOfWarcraftClassicView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 59A3AEA525D8C93000B44956 /* WorldOfWarcraftClassicView.swift */; };
 		59F31EEC25D57AE500EBD140 /* JSONHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 59F31EEB25D57AE500EBD140 /* JSONHelper.swift */; };
 		59F31EED25D57AE500EBD140 /* JSONHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 59F31EEB25D57AE500EBD140 /* JSONHelper.swift */; };
 /* End PBXBuildFile section */
@@ -69,6 +71,7 @@
 		598AC0B624A986E5002F2ED3 /* BattleNetAPI-Example.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "BattleNetAPI-Example.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		598AC0B824A986E5002F2ED3 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		598AC0B924A986E5002F2ED3 /* macOS.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = macOS.entitlements; sourceTree = "<group>"; };
+		59A3AEA525D8C93000B44956 /* WorldOfWarcraftClassicView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WorldOfWarcraftClassicView.swift; sourceTree = "<group>"; };
 		59F31EEB25D57AE500EBD140 /* JSONHelper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JSONHelper.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -99,6 +102,7 @@
 				5941562B25D37B7A0088EBB5 /* Diablo3View.swift */,
 				5941562F25D37B8D0088EBB5 /* Starcraft2View.swift */,
 				5941563325D37B9E0088EBB5 /* WorldOfWarcraftView.swift */,
+				59A3AEA525D8C93000B44956 /* WorldOfWarcraftClassicView.swift */,
 				5941563725D37BAA0088EBB5 /* BattleNetView.swift */,
 				5986556125D4DCCD00EDCB03 /* WebServiceView.swift */,
 			);
@@ -321,6 +325,7 @@
 				59F31EEC25D57AE500EBD140 /* JSONHelper.swift in Sources */,
 				5941563825D37BAA0088EBB5 /* BattleNetView.swift in Sources */,
 				5941564325D41B840088EBB5 /* Alert+Error.swift in Sources */,
+				59A3AEA625D8C93000B44956 /* WorldOfWarcraftClassicView.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -340,6 +345,7 @@
 				59F31EED25D57AE500EBD140 /* JSONHelper.swift in Sources */,
 				598AC0BB24A986E5002F2ED3 /* BattleNetAPI_ExampleApp.swift in Sources */,
 				5941563925D37BAA0088EBB5 /* BattleNetView.swift in Sources */,
+				59A3AEA725D8C93000B44956 /* WorldOfWarcraftClassicView.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

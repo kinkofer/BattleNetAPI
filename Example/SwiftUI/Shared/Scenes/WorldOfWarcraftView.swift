@@ -401,7 +401,7 @@ struct WorldOfWarcraftView: View {
             Group {
                 Section(header: Text(WorldOfWarcraftView.APISection.powerType.rawValue)) {
                     webServiceRow(api: .powerTypeIndex) {
-                        battleNetAPI.wow.getPlayableSpecializationIndex(completion: { parseResult($0, for: .powerTypeIndex) })
+                        battleNetAPI.wow.getPowerTypeIndex(completion: { parseResult($0, for: .powerTypeIndex) })
                     }
                     webServiceRow(api: .powerType) {
                         battleNetAPI.wow.getPowerType(id: 0, completion: { parseResult($0, for: .powerType) })

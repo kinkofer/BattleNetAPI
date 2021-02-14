@@ -23,6 +23,8 @@ public class BattleNetAPI {
     public lazy private(set) var user = WS_User(region: region, locale: locale, session: session, authenticationService: authentication)
     /// World of Warcraft web services
     public lazy private(set) var wow = WS_WorldOfWarcraft(region: region, locale: locale, session: session, authenticationService: authentication)
+    /// World of Warcraft Classic web services
+    public lazy private(set) var wowClassic = WS_WorldOfWarcraftClassic(region: region, locale: locale, session: session, authenticationService: authentication)
     /// StarCraft 2 web services
     public lazy private(set) var sc2 = WS_StarCraft2(region: region, locale: locale, session: session, authenticationService: authentication)
     /// Diablo 3 web services

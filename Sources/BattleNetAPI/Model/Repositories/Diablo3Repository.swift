@@ -1,5 +1,5 @@
 //
-//  Diablo3ModelController.swift
+//  Diablo3Repository.swift
 //  BattleNetAPI
 //
 //  Created by Christopher Jennewein on 4/9/18.
@@ -9,7 +9,7 @@
 import Foundation
 
 
-public struct Diablo3ModelController {
+public struct Diablo3Repository {
     let battleNetAPI: BattleNetAPI
     
     

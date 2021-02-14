@@ -1,5 +1,5 @@
 //
-//  StarCraft2ModelController.swift
+//  StarCraft2Repository.swift
 //  BattleNetAPI
 //
 //  Created by Christopher Jennewein on 4/9/18.
@@ -9,7 +9,7 @@
 import Foundation
 
 
-public struct StarCraft2ModelController {
+public struct StarCraft2Repository {
     let battleNetAPI: BattleNetAPI
     
     

@@ -1,5 +1,5 @@
 //
-//  UserModelController.swift
+//  UserRepository.swift
 //  BattleNetAPI
 //
 //  Created by Christopher Jennewein on 4/9/18.
@@ -9,7 +9,7 @@
 import Foundation
 
 
-public struct UserModelController {
+public struct UserRepository {
     let battleNetAPI: BattleNetAPI
     
     
