@@ -143,7 +143,8 @@ struct MainView: View {
     func authenticateUser() {
         authManager.getUserAccessToken { result in
             switch result {
-            case .success:
+            case .success(let userAccessToken):
+                print("User Access Token: \(userAccessToken)")
                 alertType = .notify("Sign in successful")
             case .failure(let error):
                 alertType = .error(error)

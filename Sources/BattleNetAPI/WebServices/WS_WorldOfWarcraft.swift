@@ -181,7 +181,7 @@ public struct WS_WorldOfWarcraft: WebService {
         // Profile APIs
         case accountProfileSummary
         case protectedCharacterProfileSummary(realmID: Int, characterID: Int)
-        case accountCollectionIndex
+        case accountCollectionsIndex
         case accountMountsCollectionSummary
         case accountPetsCollectionSummary
         
@@ -212,13 +212,15 @@ public struct WS_WorldOfWarcraft: WebService {
         case characterProfileSummary(realmSlug: String, characterName: String)
         case characterProfileStatus(realmSlug: String, characterName: String)
         
-        case characterPVPBracketStatistics(realmSlug: String, characterName: String, pvpBracket: WOWLeaderboardBracket)
+        case characterPvPBracketStatistics(realmSlug: String, characterName: String, pvpBracket: WOWLeaderboardBracket)
         case characterPvPSummary(realmSlug: String, characterName: String)
         
         case characterQuests(realmSlug: String, characterName: String)
         case characterCompletedQuests(realmSlug: String, characterName: String)
         
         case characterReputationsSummary(realmSlug: String, characterName: String)
+        
+        case characterSoulbinds(realmSlug: String, characterName: String)
         
         case characterSpecializationsSummary(realmSlug: String, characterName: String)
         
@@ -537,7 +539,7 @@ public struct WS_WorldOfWarcraft: WebService {
                 return ""
             case .protectedCharacterProfileSummary(realmID: let realmID, characterID: let characterID):
                 return "/protected-character/\(realmID)-\(characterID)"
-            case .accountCollectionIndex:
+            case .accountCollectionsIndex:
                 return "/collections"
             case .accountMountsCollectionSummary:
                 return "/collections/mounts"
@@ -588,10 +590,10 @@ public struct WS_WorldOfWarcraft: WebService {
             case .characterProfileStatus(realmSlug: let realmSlug, characterName: let characterName):
                 return "/character/\(realmSlug)/\(characterName)/status"
             
-            case .characterPVPBracketStatistics(realmSlug: let realmSlug, characterName: let characterName, pvpBracket: let pvpBracket):
-                return "character/\(realmSlug)/\(characterName)/pvp-bracket/\(pvpBracket.rawValue)"
+            case .characterPvPBracketStatistics(realmSlug: let realmSlug, characterName: let characterName, pvpBracket: let pvpBracket):
+                return "/character/\(realmSlug)/\(characterName)/pvp-bracket/\(pvpBracket.rawValue)"
             case .characterPvPSummary(realmSlug: let realmSlug, characterName: let characterName):
-                return "character/\(realmSlug)/\(characterName)/pvp-summary"
+                return "/character/\(realmSlug)/\(characterName)/pvp-summary"
             
             case .characterQuests(realmSlug: let realmSlug, characterName: let characterName):
                 return "/character/\(realmSlug)/\(characterName)/quests"
@@ -600,6 +602,9 @@ public struct WS_WorldOfWarcraft: WebService {
             
             case .characterReputationsSummary(realmSlug: let realmSlug, characterName: let characterName):
                 return "/character/\(realmSlug)/\(characterName)/reputations"
+                
+            case .characterSoulbinds(realmSlug: let realmSlug, characterName: let characterName):
+                return "/character/\(realmSlug)/\(characterName)/soulbinds"
                 
             case .characterSpecializationsSummary(realmSlug: let realmSlug, characterName: let characterName):
                 return "/character/\(realmSlug)/\(characterName)/specializations"
@@ -620,6 +625,7 @@ public struct WS_WorldOfWarcraft: WebService {
                 return "/guild/\(realmSlug)/\(guildSlug)/roster"
             }
         }
+        
         
         var apiType: APIType? {
             switch self {
@@ -657,7 +663,7 @@ public struct WS_WorldOfWarcraft: WebService {
                  .titleIndex, .title,
                  .tokenIndex:
                 return .gameData
-            case .accountProfileSummary, .protectedCharacterProfileSummary, .accountCollectionIndex, .accountMountsCollectionSummary, .accountPetsCollectionSummary,
+            case .accountProfileSummary, .protectedCharacterProfileSummary, .accountCollectionsIndex, .accountMountsCollectionSummary, .accountPetsCollectionSummary,
                  .characterAchievementsSummary, .characterAchievementStatistics,
                  .characterAppearanceSummary,
                  .characterCollectionsIndex, .characterMountsCollectionSummary, .characterPetsCollectionSummary,
@@ -668,9 +674,10 @@ public struct WS_WorldOfWarcraft: WebService {
                  .characterMythicKeystoneProfileIndex, .characterMythicKeystoneSeasonDetails,
                  .characterProfessionsSummary,
                  .characterProfileSummary, .characterProfileStatus,
-                 .characterPVPBracketStatistics, .characterPvPSummary,
+                 .characterPvPBracketStatistics, .characterPvPSummary,
                  .characterQuests, .characterCompletedQuests,
                  .characterReputationsSummary,
+                 .characterSoulbinds,
                  .characterSpecializationsSummary,
                  .characterStatisticsSummary,
                  .characterTitlesSummary,
@@ -686,7 +693,7 @@ public struct WS_WorldOfWarcraft: WebService {
             case .community: return "/wow"
             case .profile:
                 switch self {
-                case .accountProfileSummary, .protectedCharacterProfileSummary, .accountCollectionIndex, .accountMountsCollectionSummary, .accountPetsCollectionSummary:
+                case .accountProfileSummary, .protectedCharacterProfileSummary, .accountCollectionsIndex, .accountMountsCollectionSummary, .accountPetsCollectionSummary:
                     return "/profile/user/wow"
                 case .guild, .guildActivity, .guildAchievements, .guildRoster:
                     return "/data/wow"
@@ -696,6 +703,7 @@ public struct WS_WorldOfWarcraft: WebService {
             default: return nil
             }
         }
+        
         
         var queries: [String: String]? {
             switch self {
@@ -2386,7 +2394,7 @@ public struct WS_WorldOfWarcraft: WebService {
     
     
     /**
-     Returns a profile summary for an account.
+     Returns a protected profile summary for a character.
      
      - parameter id: The ID of the character.
      - parameter realmID: The ID of the character's realm.
@@ -2398,13 +2406,13 @@ public struct WS_WorldOfWarcraft: WebService {
     
     
     /**
-     This provides data about the current logged in OAuth user's WoW profile.
+     Returns an index of collection types for an account.
      
      - parameter namespace: The namespace to use to locate this document.
      - parameter completion: Returns a Result with the Data if `success` or an HTTPError if `failure`
     */
-    public func getCharacterCollectionIndex(namespace: APINamespace? = .profile, completion: @escaping (_ result: Result<Data, Error>) -> Void) {
-        call(endpoint: API.accountCollectionIndex, namespace: namespace, completion: completion)
+    public func getAccountCollectionsIndex(namespace: APINamespace? = .profile, completion: @escaping (_ result: Result<Data, Error>) -> Void) {
+        call(endpoint: API.accountCollectionsIndex, namespace: namespace, completion: completion)
     }
     
     
@@ -2456,6 +2464,22 @@ public struct WS_WorldOfWarcraft: WebService {
     */
     public func getCharacterAchievementStatistics(characterName: String, realmSlug: String, namespace: APINamespace? = .profile, completion: @escaping (_ result: Result<Data, Error>) -> Void) {
         call(endpoint: API.characterAchievementStatistics(realmSlug: realmSlug, characterName: characterName), namespace: namespace, completion: completion)
+    }
+    
+    
+    
+    // MARK: Character Appearance API
+    
+    /**
+     Returns a summary of a character's appearance settings.
+     
+     - parameter characterName: The lowercase name of the character.
+     - parameter realmSlug: The slug of the realm.
+     - parameter namespace: The namespace to use to locate this document.
+     - parameter completion: Returns a Result with the Data if `success` or an HTTPError if `failure`
+    */
+    public func getCharacterAppearanceSummary(characterName: String, realmSlug: String, namespace: APINamespace? = .profile, completion: @escaping (_ result: Result<Data, Error>) -> Void) {
+        call(endpoint: API.characterAppearanceSummary(realmSlug: realmSlug, characterName: characterName), namespace: namespace, completion: completion)
     }
     
     
@@ -2692,7 +2716,7 @@ public struct WS_WorldOfWarcraft: WebService {
      - parameter completion: Returns a Result with the Data if `success` or an HTTPError if `failure`
      */
     public func getCharacterPvPBracketStatistics(characterName: String, realmSlug: String, pvpBracket: WOWLeaderboardBracket, namespace: APINamespace? = .profile, completion: @escaping (_ result: Result<Data, Error>) -> Void) {
-        call(endpoint: API.characterPVPBracketStatistics(realmSlug: realmSlug, characterName: characterName, pvpBracket: pvpBracket), namespace: namespace, completion: completion)
+        call(endpoint: API.characterPvPBracketStatistics(realmSlug: realmSlug, characterName: characterName, pvpBracket: pvpBracket), namespace: namespace, completion: completion)
     }
     
     
@@ -2751,6 +2775,22 @@ public struct WS_WorldOfWarcraft: WebService {
      */
     public func getCharacterReputationsSummary(characterName: String, realmSlug: String, namespace: APINamespace? = .profile, completion: @escaping (_ result: Result<Data, Error>) -> Void) {
         call(endpoint: API.characterReputationsSummary(realmSlug: realmSlug, characterName: characterName), namespace: namespace, completion: completion)
+    }
+    
+    
+    
+    // MARK: Character Soulbinds API
+    
+    /**
+     Returns a character's soulbinds.
+     
+     - parameter characterName: The lowercase name of the character.
+     - parameter realmSlug: The slug of the realm.
+     - parameter namespace: The namespace to use to locate this document.
+     - parameter completion: Returns a Result with the Data if `success` or an HTTPError if `failure`
+     */
+    public func getCharacterSoulbinds(characterName: String, realmSlug: String, namespace: APINamespace? = .profile, completion: @escaping (_ result: Result<Data, Error>) -> Void) {
+        call(endpoint: API.characterSoulbinds(realmSlug: realmSlug, characterName: characterName), namespace: namespace, completion: completion)
     }
     
     

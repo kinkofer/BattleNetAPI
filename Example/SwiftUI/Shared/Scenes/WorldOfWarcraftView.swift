@@ -599,7 +599,170 @@ struct WorldOfWarcraftView: View {
     
     var profileSection: some View {
         Group {
-            
+            Group {
+                Section(header: Text(WorldOfWarcraftView.APISection.accountProfile.rawValue)) {
+                    webServiceRow(api: .accountProfileSummary) {
+                        battleNetAPI.wow.getAccountProfile(completion: { parseResult($0, for: .accountProfileSummary) })
+                    }
+                    webServiceRow(api: .protectedCharacterProfileSummary) {
+                        battleNetAPI.wow.getProtectedCharacterProfile(id: 1337, realmID: 69, completion: { parseResult($0, for: .protectedCharacterProfileSummary) })
+                    }
+                    webServiceRow(api: .accountCollectionsIndex) {
+                        battleNetAPI.wow.getAccountCollectionsIndex(completion: { parseResult($0, for: .accountCollectionsIndex) })
+                    }
+                    webServiceRow(api: .accountMountsCollectionSummary) {
+                        battleNetAPI.wow.getMountsCollectionSummary(completion: { parseResult($0, for: .accountMountsCollectionSummary) })
+                    }
+                    webServiceRow(api: .accountPetsCollectionSummary) {
+                        battleNetAPI.wow.getPetsCollectionSummary(completion: { parseResult($0, for: .accountPetsCollectionSummary) })
+                    }
+                }
+                
+                Section(header: Text(WorldOfWarcraftView.APISection.characterAchievement.rawValue)) {
+                    webServiceRow(api: .characterAchievementsSummary) {
+                        battleNetAPI.wow.getCharacterAchievementsSummary(characterName: "doof", realmSlug: "frostmourne", completion: { parseResult($0, for: .characterAchievementsSummary) })
+                    }
+                    webServiceRow(api: .characterAchievementStatistics) {
+                        battleNetAPI.wow.getCharacterAchievementStatistics(characterName: "doof", realmSlug: "frostmourne", completion: { parseResult($0, for: .characterAchievementStatistics) })
+                    }
+                }
+                
+                Section(header: Text(WorldOfWarcraftView.APISection.characterAppearance.rawValue)) {
+                    webServiceRow(api: .characterAppearanceSummary) {
+                        battleNetAPI.wow.getCharacterAppearanceSummary(characterName: "doof", realmSlug: "frostmourne", completion: { parseResult($0, for: .characterAppearanceSummary) })
+                    }
+                }
+                
+                Section(header: Text(WorldOfWarcraftView.APISection.characterCollection.rawValue)) {
+                    webServiceRow(api: .characterCollectionsIndex) {
+                        battleNetAPI.wow.getCharacterCollectionsIndex(characterName: "doof", realmSlug: "frostmourne", completion: { parseResult($0, for: .characterCollectionsIndex) })
+                    }
+                    webServiceRow(api: .characterMountsCollectionSummary) {
+                        battleNetAPI.wow.getCharacterMountsCollectionSummary(characterName: "doof", realmSlug: "frostmourne", completion: { parseResult($0, for: .characterMountsCollectionSummary) })
+                    }
+                    webServiceRow(api: .characterPetsCollectionSummary) {
+                        battleNetAPI.wow.getCharacterPetsCollectionSummary(characterName: "doof", realmSlug: "frostmourne", completion: { parseResult($0, for: .characterPetsCollectionSummary) })
+                    }
+                }
+                
+                Section(header: Text(WorldOfWarcraftView.APISection.characterEncounter.rawValue)) {
+                    webServiceRow(api: .characterEncountersSummary) {
+                        battleNetAPI.wow.getCharacterEncountersSummary(characterName: "doof", realmSlug: "frostmourne", completion: { parseResult($0, for: .characterEncountersSummary) })
+                    }
+                    webServiceRow(api: .characterDungeons) {
+                        battleNetAPI.wow.getCharacterDungeons(characterName: "doof", realmSlug: "frostmourne", completion: { parseResult($0, for: .characterDungeons) })
+                    }
+                    webServiceRow(api: .characterRaids) {
+                        battleNetAPI.wow.getCharacterRaids(characterName: "doof", realmSlug: "frostmourne", completion: { parseResult($0, for: .characterRaids) })
+                    }
+                }
+                
+                Section(header: Text(WorldOfWarcraftView.APISection.characterEquipment.rawValue)) {
+                    webServiceRow(api: .characterEquipmentSummary) {
+                        battleNetAPI.wow.getCharacterEquipmentSummary(characterName: "doof", realmSlug: "frostmourne", completion: { parseResult($0, for: .characterEquipmentSummary) })
+                    }
+                }
+                
+                Section(header: Text(WorldOfWarcraftView.APISection.characterHunterPet.rawValue)) {
+                    webServiceRow(api: .characterHunterPetsSummary) {
+                        battleNetAPI.wow.getCharacterHunterPetsSummary(characterName: "peters", realmSlug: "frostmourne", completion: { parseResult($0, for: .characterHunterPetsSummary) })
+                    }
+                }
+                
+                Section(header: Text(WorldOfWarcraftView.APISection.characterMedia.rawValue)) {
+                    webServiceRow(api: .characterMediaSummary) {
+                        battleNetAPI.wow.getCharacterMediaSummary(characterName: "doof", realmSlug: "frostmourne", completion: { parseResult($0, for: .characterMediaSummary) })
+                    }
+                }
+                
+                Section(header: Text(WorldOfWarcraftView.APISection.characterMythicKeystoneProfile.rawValue)) {
+                    webServiceRow(api: .characterMythicKeystoneProfileIndex) {
+                        battleNetAPI.wow.getCharacterMythicKeystoneProfileIndex(characterName: "doof", realmSlug: "frostmourne", completion: { parseResult($0, for: .characterMythicKeystoneProfileIndex) })
+                    }
+                    webServiceRow(api: .characterMythicKeystoneSeasonDetails) {
+                        battleNetAPI.wow.getCharacterMythicKeystoneProfileSeason(seasonID: 1, characterName: "doof", realmSlug: "frostmourne", completion: { parseResult($0, for: .characterMythicKeystoneSeasonDetails) })
+                    }
+                }
+                
+                Section(header: Text(WorldOfWarcraftView.APISection.characterProfession.rawValue)) {
+                    webServiceRow(api: .characterProfessionsSummary) {
+                        battleNetAPI.wow.getCharacterProfessionsSummary(characterName: "doof", realmSlug: "frostmourne", completion: { parseResult($0, for: .characterProfessionsSummary) })
+                    }
+                }
+            }
+            Group {
+                Section(header: Text(WorldOfWarcraftView.APISection.characterProfile.rawValue)) {
+                    webServiceRow(api: .characterProfileSummary) {
+                        battleNetAPI.wow.getCharacterProfileSummary(characterName: "doof", realmSlug: "frostmourne", completion: { parseResult($0, for: .characterProfileSummary) })
+                    }
+                    webServiceRow(api: .characterProfileStatus) {
+                        battleNetAPI.wow.getCharacterProfileStatus(characterName: "doof", realmSlug: "frostmourne", completion: { parseResult($0, for: .characterProfileStatus) })
+                    }
+                }
+                
+                Section(header: Text(WorldOfWarcraftView.APISection.characterPvP.rawValue)) {
+                    webServiceRow(api: .characterPvPBracketStatistics) {
+                        battleNetAPI.wow.getCharacterPvPBracketStatistics(characterName: "doof", realmSlug: "frostmourne", pvpBracket: ._3v3, completion: { parseResult($0, for: .characterPvPBracketStatistics) })
+                    }
+                    webServiceRow(api: .characterPvPSummary) {
+                        battleNetAPI.wow.getCharacterPvPSummary(characterName: "doof", realmSlug: "frostmourne", completion: { parseResult($0, for: .characterPvPSummary) })
+                    }
+                }
+                
+                Section(header: Text(WorldOfWarcraftView.APISection.characterQuest.rawValue)) {
+                    webServiceRow(api: .characterQuests) {
+                        battleNetAPI.wow.getCharacterQuests(characterName: "doof", realmSlug: "frostmourne", completion: { parseResult($0, for: .characterQuests) })
+                    }
+                    webServiceRow(api: .characterCompletedQuests) {
+                        battleNetAPI.wow.getCharacterCompletedQuests(characterName: "doof", realmSlug: "frostmourne", completion: { parseResult($0, for: .characterCompletedQuests) })
+                    }
+                }
+                
+                Section(header: Text(WorldOfWarcraftView.APISection.characterReputation.rawValue)) {
+                    webServiceRow(api: .characterReputationsSummary) {
+                        battleNetAPI.wow.getCharacterReputationsSummary(characterName: "doof", realmSlug: "frostmourne", completion: { parseResult($0, for: .characterReputationsSummary) })
+                    }
+                }
+                
+                Section(header: Text(WorldOfWarcraftView.APISection.characterSoulbind.rawValue)) {
+                    webServiceRow(api: .characterSoulbinds) {
+                        battleNetAPI.wow.getCharacterSoulbinds(characterName: "doof", realmSlug: "frostmourne", completion: { parseResult($0, for: .characterSoulbinds) })
+                    }
+                }
+                
+                Section(header: Text(WorldOfWarcraftView.APISection.characterSpecialization.rawValue)) {
+                    webServiceRow(api: .characterSpecializationsSummary) {
+                        battleNetAPI.wow.getCharacterSpecializationsSummary(characterName: "doof", realmSlug: "frostmourne", completion: { parseResult($0, for: .characterSpecializationsSummary) })
+                    }
+                }
+                
+                Section(header: Text(WorldOfWarcraftView.APISection.characterStatistic.rawValue)) {
+                    webServiceRow(api: .characterStatisticsSummary) {
+                        battleNetAPI.wow.getCharacterStatisticsSummary(characterName: "doof", realmSlug: "frostmourne", completion: { parseResult($0, for: .characterStatisticsSummary) })
+                    }
+                }
+                
+                Section(header: Text(WorldOfWarcraftView.APISection.characterTitle.rawValue)) {
+                    webServiceRow(api: .characterTitlesSummary) {
+                        battleNetAPI.wow.getCharacterTitlesSummary(characterName: "doof", realmSlug: "frostmourne", completion: { parseResult($0, for: .characterTitlesSummary) })
+                    }
+                }
+                
+                Section(header: Text(WorldOfWarcraftView.APISection.guild.rawValue)) {
+                    webServiceRow(api: .guild) {
+                        battleNetAPI.wow.getGuild(slug: "honestly", realmSlug: "frostmourne", completion: { parseResult($0, for: .guild) })
+                    }
+                    webServiceRow(api: .guildActivity) {
+                        battleNetAPI.wow.getGuildActivity(slug: "honestly", realmSlug: "frostmourne", completion: { parseResult($0, for: .guildActivity) })
+                    }
+                    webServiceRow(api: .guildAchievements) {
+                        battleNetAPI.wow.getGuildAchievements(slug: "honestly", realmSlug: "frostmourne", completion: { parseResult($0, for: .guildAchievements) })
+                    }
+                    webServiceRow(api: .guildRoster) {
+                        battleNetAPI.wow.getGuildRoster(slug: "honestly", realmSlug: "frostmourne", completion: { parseResult($0, for: .guildRoster) })
+                    }
+                }
+            }
         }
     }
     
@@ -850,6 +1013,63 @@ extension WorldOfWarcraftView {
         case tokenIndex
         
         
+        // Profile APIs
+        // Account Profile API
+        case accountProfileSummary
+        case protectedCharacterProfileSummary
+        case accountCollectionsIndex
+        case accountMountsCollectionSummary
+        case accountPetsCollectionSummary
+        // Character Achievement API
+        case characterAchievementsSummary
+        case characterAchievementStatistics
+        // Character Appearance API
+        case characterAppearanceSummary
+        // Character Collections API
+        case characterCollectionsIndex
+        case characterMountsCollectionSummary
+        case characterPetsCollectionSummary
+        // Character Encounters API
+        case characterEncountersSummary
+        case characterDungeons
+        case characterRaids
+        // Character Equipment API
+        case characterEquipmentSummary
+        // Character Hunter Pets API
+        case characterHunterPetsSummary
+        // Character Media API
+        case characterMediaSummary
+        // Character Mythic Keystone Profile API
+        case characterMythicKeystoneProfileIndex
+        case characterMythicKeystoneSeasonDetails
+        // Character Professions API
+        case characterProfessionsSummary
+        // Character Profile API
+        case characterProfileSummary
+        case characterProfileStatus
+        // Character PVP API
+        case characterPvPBracketStatistics
+        case characterPvPSummary
+        // Character Quests API
+        case characterQuests
+        case characterCompletedQuests
+        // Character Reputations API
+        case characterReputationsSummary
+        // Character Soulbinds API
+        case characterSoulbinds
+        // Character Specializations API
+        case characterSpecializationsSummary
+        // Character Statistics API
+        case characterStatisticsSummary
+        // Character Titles API
+        case characterTitlesSummary
+        // Guild API
+        case guild
+        case guildActivity
+        case guildAchievements
+        case guildRoster
+        
+        
         var id: String { return rawValue }
     }
     
@@ -889,6 +1109,27 @@ extension WorldOfWarcraftView {
         case techTalent = "Tech Talent API"
         case title = "Title API"
         case wowToken = "WoW Token API"
+        
+        // Profile
+        case accountProfile = "Account Profile API"
+        case characterAchievement = "Character Achievements API"
+        case characterAppearance = "Character Appearance API"
+        case characterCollection = "Character Collections API"
+        case characterEncounter = "Character Encounters API"
+        case characterEquipment = "Character Equipment API"
+        case characterHunterPet = "Character Hunter Pets API"
+        case characterMedia = "Character Media API"
+        case characterMythicKeystoneProfile = "Character Mythic Keystone Profile API"
+        case characterProfession = "Character Professions API"
+        case characterProfile = "Character Profile API"
+        case characterPvP = "Character PvP API"
+        case characterQuest = "Character Quests API"
+        case characterReputation = "Character Reputations API"
+        case characterSoulbind = "Character Soulbinds API"
+        case characterSpecialization = "Character Specializations API"
+        case characterStatistic = "Character Statistics API"
+        case characterTitle = "Character Titles API"
+        case guild = "Guild API"
     }
 }
 
