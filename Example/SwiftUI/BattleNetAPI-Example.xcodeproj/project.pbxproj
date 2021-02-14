@@ -1,0 +1,605 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 52;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		5941560B25D0FE950088EBB5 /* BattleNetAPI in Frameworks */ = {isa = PBXBuildFile; productRef = 5941560A25D0FE950088EBB5 /* BattleNetAPI */; };
+		5941560D25D0FE9A0088EBB5 /* BattleNetAPI in Frameworks */ = {isa = PBXBuildFile; productRef = 5941560C25D0FE9A0088EBB5 /* BattleNetAPI */; };
+		5941561B25D245AB0088EBB5 /* World.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5941561A25D245AB0088EBB5 /* World.swift */; };
+		5941561C25D245AB0088EBB5 /* World.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5941561A25D245AB0088EBB5 /* World.swift */; };
+		5941561F25D247080088EBB5 /* BattleNetAPI+Swift.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5941561E25D247080088EBB5 /* BattleNetAPI+Swift.swift */; };
+		5941562025D247080088EBB5 /* BattleNetAPI+Swift.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5941561E25D247080088EBB5 /* BattleNetAPI+Swift.swift */; };
+		5941562725D248CD0088EBB5 /* AuthenticationViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5941562625D248CD0088EBB5 /* AuthenticationViewModel.swift */; };
+		5941562825D248CD0088EBB5 /* AuthenticationViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5941562625D248CD0088EBB5 /* AuthenticationViewModel.swift */; };
+		5941562C25D37B7A0088EBB5 /* Diablo3View.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5941562B25D37B7A0088EBB5 /* Diablo3View.swift */; };
+		5941562D25D37B7A0088EBB5 /* Diablo3View.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5941562B25D37B7A0088EBB5 /* Diablo3View.swift */; };
+		5941563025D37B8D0088EBB5 /* Starcraft2View.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5941562F25D37B8D0088EBB5 /* Starcraft2View.swift */; };
+		5941563125D37B8D0088EBB5 /* Starcraft2View.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5941562F25D37B8D0088EBB5 /* Starcraft2View.swift */; };
+		5941563425D37B9E0088EBB5 /* WorldOfWarcraftView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5941563325D37B9E0088EBB5 /* WorldOfWarcraftView.swift */; };
+		5941563525D37B9E0088EBB5 /* WorldOfWarcraftView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5941563325D37B9E0088EBB5 /* WorldOfWarcraftView.swift */; };
+		5941563825D37BAA0088EBB5 /* BattleNetView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5941563725D37BAA0088EBB5 /* BattleNetView.swift */; };
+		5941563925D37BAA0088EBB5 /* BattleNetView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5941563725D37BAA0088EBB5 /* BattleNetView.swift */; };
+		5941564325D41B840088EBB5 /* Alert+Error.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5941564225D41B840088EBB5 /* Alert+Error.swift */; };
+		5941564625D41DC80088EBB5 /* Alert+Error.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5941564225D41B840088EBB5 /* Alert+Error.swift */; };
+		5986556225D4DCCD00EDCB03 /* WebServiceView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5986556125D4DCCD00EDCB03 /* WebServiceView.swift */; };
+		5986556325D4DCCD00EDCB03 /* WebServiceView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5986556125D4DCCD00EDCB03 /* WebServiceView.swift */; };
+		598AC0BA24A986E5002F2ED3 /* BattleNetAPI_ExampleApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 598AC0A724A986E3002F2ED3 /* BattleNetAPI_ExampleApp.swift */; };
+		598AC0BB24A986E5002F2ED3 /* BattleNetAPI_ExampleApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 598AC0A724A986E3002F2ED3 /* BattleNetAPI_ExampleApp.swift */; };
+		598AC0BC24A986E5002F2ED3 /* MainView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 598AC0A824A986E3002F2ED3 /* MainView.swift */; };
+		598AC0BD24A986E5002F2ED3 /* MainView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 598AC0A824A986E3002F2ED3 /* MainView.swift */; };
+		598AC0BE24A986E5002F2ED3 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 598AC0A924A986E4002F2ED3 /* Assets.xcassets */; };
+		598AC0BF24A986E5002F2ED3 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 598AC0A924A986E4002F2ED3 /* Assets.xcassets */; };
+		59A3AEA625D8C93000B44956 /* WorldOfWarcraftClassicView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 59A3AEA525D8C93000B44956 /* WorldOfWarcraftClassicView.swift */; };
+		59A3AEA725D8C93000B44956 /* WorldOfWarcraftClassicView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 59A3AEA525D8C93000B44956 /* WorldOfWarcraftClassicView.swift */; };
+		59F31EEC25D57AE500EBD140 /* JSONHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 59F31EEB25D57AE500EBD140 /* JSONHelper.swift */; };
+		59F31EED25D57AE500EBD140 /* JSONHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 59F31EEB25D57AE500EBD140 /* JSONHelper.swift */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXCopyFilesBuildPhase section */
+		598AC13D24A9B73E002F2ED3 /* Embed Frameworks */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "";
+			dstSubfolderSpec = 10;
+			files = (
+			);
+			name = "Embed Frameworks";
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXCopyFilesBuildPhase section */
+
+/* Begin PBXFileReference section */
+		5941560825D0FE820088EBB5 /* BattleNetAPI */ = {isa = PBXFileReference; lastKnownFileType = folder; name = BattleNetAPI; path = ../..; sourceTree = "<group>"; };
+		5941561A25D245AB0088EBB5 /* World.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = World.swift; sourceTree = "<group>"; };
+		5941561E25D247080088EBB5 /* BattleNetAPI+Swift.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "BattleNetAPI+Swift.swift"; sourceTree = "<group>"; };
+		5941562625D248CD0088EBB5 /* AuthenticationViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthenticationViewModel.swift; sourceTree = "<group>"; };
+		5941562B25D37B7A0088EBB5 /* Diablo3View.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Diablo3View.swift; sourceTree = "<group>"; };
+		5941562F25D37B8D0088EBB5 /* Starcraft2View.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Starcraft2View.swift; sourceTree = "<group>"; };
+		5941563325D37B9E0088EBB5 /* WorldOfWarcraftView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WorldOfWarcraftView.swift; sourceTree = "<group>"; };
+		5941563725D37BAA0088EBB5 /* BattleNetView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BattleNetView.swift; sourceTree = "<group>"; };
+		5941564225D41B840088EBB5 /* Alert+Error.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Alert+Error.swift"; sourceTree = "<group>"; };
+		5986556125D4DCCD00EDCB03 /* WebServiceView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WebServiceView.swift; sourceTree = "<group>"; };
+		598AC0A724A986E3002F2ED3 /* BattleNetAPI_ExampleApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BattleNetAPI_ExampleApp.swift; sourceTree = "<group>"; };
+		598AC0A824A986E3002F2ED3 /* MainView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainView.swift; sourceTree = "<group>"; };
+		598AC0A924A986E4002F2ED3 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
+		598AC0AE24A986E4002F2ED3 /* BattleNetAPI-Example.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "BattleNetAPI-Example.app"; sourceTree = BUILT_PRODUCTS_DIR; };
+		598AC0B124A986E4002F2ED3 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		598AC0B624A986E5002F2ED3 /* BattleNetAPI-Example.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "BattleNetAPI-Example.app"; sourceTree = BUILT_PRODUCTS_DIR; };
+		598AC0B824A986E5002F2ED3 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		598AC0B924A986E5002F2ED3 /* macOS.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = macOS.entitlements; sourceTree = "<group>"; };
+		59A3AEA525D8C93000B44956 /* WorldOfWarcraftClassicView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WorldOfWarcraftClassicView.swift; sourceTree = "<group>"; };
+		59F31EEB25D57AE500EBD140 /* JSONHelper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JSONHelper.swift; sourceTree = "<group>"; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		598AC0AB24A986E4002F2ED3 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				5941560B25D0FE950088EBB5 /* BattleNetAPI in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		598AC0B324A986E5002F2ED3 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				5941560D25D0FE9A0088EBB5 /* BattleNetAPI in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		5941561825D245080088EBB5 /* Scenes */ = {
+			isa = PBXGroup;
+			children = (
+				598AC0A824A986E3002F2ED3 /* MainView.swift */,
+				5941562B25D37B7A0088EBB5 /* Diablo3View.swift */,
+				5941562F25D37B8D0088EBB5 /* Starcraft2View.swift */,
+				5941563325D37B9E0088EBB5 /* WorldOfWarcraftView.swift */,
+				59A3AEA525D8C93000B44956 /* WorldOfWarcraftClassicView.swift */,
+				5941563725D37BAA0088EBB5 /* BattleNetView.swift */,
+				5986556125D4DCCD00EDCB03 /* WebServiceView.swift */,
+			);
+			path = Scenes;
+			sourceTree = "<group>";
+		};
+		5941562225D247D50088EBB5 /* Extensions */ = {
+			isa = PBXGroup;
+			children = (
+				5941564225D41B840088EBB5 /* Alert+Error.swift */,
+				5941561E25D247080088EBB5 /* BattleNetAPI+Swift.swift */,
+				59F31EEB25D57AE500EBD140 /* JSONHelper.swift */,
+			);
+			path = Extensions;
+			sourceTree = "<group>";
+		};
+		5941562325D247EA0088EBB5 /* Utilities */ = {
+			isa = PBXGroup;
+			children = (
+				5941562225D247D50088EBB5 /* Extensions */,
+				5941564025D3AE340088EBB5 /* Modifiers */,
+			);
+			path = Utilities;
+			sourceTree = "<group>";
+		};
+		5941562425D247F20088EBB5 /* Model */ = {
+			isa = PBXGroup;
+			children = (
+				5941561A25D245AB0088EBB5 /* World.swift */,
+				5941562625D248CD0088EBB5 /* AuthenticationViewModel.swift */,
+			);
+			path = Model;
+			sourceTree = "<group>";
+		};
+		5941563B25D3A9740088EBB5 /* View */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = View;
+			sourceTree = "<group>";
+		};
+		5941564025D3AE340088EBB5 /* Modifiers */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = Modifiers;
+			sourceTree = "<group>";
+		};
+		598AC0A124A986E3002F2ED3 = {
+			isa = PBXGroup;
+			children = (
+				598AC0A624A986E3002F2ED3 /* Shared */,
+				598AC0B024A986E4002F2ED3 /* iOS */,
+				598AC0B724A986E5002F2ED3 /* macOS */,
+				598AC0AF24A986E4002F2ED3 /* Products */,
+				598AC0D124A9AC42002F2ED3 /* Frameworks */,
+			);
+			sourceTree = "<group>";
+		};
+		598AC0A624A986E3002F2ED3 /* Shared */ = {
+			isa = PBXGroup;
+			children = (
+				598AC0A924A986E4002F2ED3 /* Assets.xcassets */,
+				598AC0A724A986E3002F2ED3 /* BattleNetAPI_ExampleApp.swift */,
+				5941562425D247F20088EBB5 /* Model */,
+				5941563B25D3A9740088EBB5 /* View */,
+				5941561825D245080088EBB5 /* Scenes */,
+				5941562325D247EA0088EBB5 /* Utilities */,
+			);
+			path = Shared;
+			sourceTree = "<group>";
+		};
+		598AC0AF24A986E4002F2ED3 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				598AC0AE24A986E4002F2ED3 /* BattleNetAPI-Example.app */,
+				598AC0B624A986E5002F2ED3 /* BattleNetAPI-Example.app */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		598AC0B024A986E4002F2ED3 /* iOS */ = {
+			isa = PBXGroup;
+			children = (
+				598AC0B124A986E4002F2ED3 /* Info.plist */,
+			);
+			path = iOS;
+			sourceTree = "<group>";
+		};
+		598AC0B724A986E5002F2ED3 /* macOS */ = {
+			isa = PBXGroup;
+			children = (
+				598AC0B824A986E5002F2ED3 /* Info.plist */,
+				598AC0B924A986E5002F2ED3 /* macOS.entitlements */,
+			);
+			path = macOS;
+			sourceTree = "<group>";
+		};
+		598AC0D124A9AC42002F2ED3 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				5941560825D0FE820088EBB5 /* BattleNetAPI */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXNativeTarget section */
+		598AC0AD24A986E4002F2ED3 /* iOS */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 598AC0C224A986E5002F2ED3 /* Build configuration list for PBXNativeTarget "iOS" */;
+			buildPhases = (
+				598AC0AA24A986E4002F2ED3 /* Sources */,
+				598AC0AB24A986E4002F2ED3 /* Frameworks */,
+				598AC0AC24A986E4002F2ED3 /* Resources */,
+				598AC13D24A9B73E002F2ED3 /* Embed Frameworks */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = iOS;
+			packageProductDependencies = (
+				5941560A25D0FE950088EBB5 /* BattleNetAPI */,
+			);
+			productName = iOS;
+			productReference = 598AC0AE24A986E4002F2ED3 /* BattleNetAPI-Example.app */;
+			productType = "com.apple.product-type.application";
+		};
+		598AC0B524A986E5002F2ED3 /* macOS */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 598AC0C524A986E5002F2ED3 /* Build configuration list for PBXNativeTarget "macOS" */;
+			buildPhases = (
+				598AC0B224A986E5002F2ED3 /* Sources */,
+				598AC0B324A986E5002F2ED3 /* Frameworks */,
+				598AC0B424A986E5002F2ED3 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = macOS;
+			packageProductDependencies = (
+				5941560C25D0FE9A0088EBB5 /* BattleNetAPI */,
+			);
+			productName = macOS;
+			productReference = 598AC0B624A986E5002F2ED3 /* BattleNetAPI-Example.app */;
+			productType = "com.apple.product-type.application";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		598AC0A224A986E3002F2ED3 /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				LastSwiftUpdateCheck = 1200;
+				LastUpgradeCheck = 1240;
+				TargetAttributes = {
+					598AC0AD24A986E4002F2ED3 = {
+						CreatedOnToolsVersion = 12.0;
+					};
+					598AC0B524A986E5002F2ED3 = {
+						CreatedOnToolsVersion = 12.0;
+					};
+				};
+			};
+			buildConfigurationList = 598AC0A524A986E3002F2ED3 /* Build configuration list for PBXProject "BattleNetAPI-Example" */;
+			compatibilityVersion = "Xcode 9.3";
+			developmentRegion = en;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				en,
+				Base,
+			);
+			mainGroup = 598AC0A124A986E3002F2ED3;
+			productRefGroup = 598AC0AF24A986E4002F2ED3 /* Products */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				598AC0AD24A986E4002F2ED3 /* iOS */,
+				598AC0B524A986E5002F2ED3 /* macOS */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXResourcesBuildPhase section */
+		598AC0AC24A986E4002F2ED3 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				598AC0BE24A986E5002F2ED3 /* Assets.xcassets in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		598AC0B424A986E5002F2ED3 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				598AC0BF24A986E5002F2ED3 /* Assets.xcassets in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
+
+/* Begin PBXSourcesBuildPhase section */
+		598AC0AA24A986E4002F2ED3 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				5941561F25D247080088EBB5 /* BattleNetAPI+Swift.swift in Sources */,
+				5941563025D37B8D0088EBB5 /* Starcraft2View.swift in Sources */,
+				5941562725D248CD0088EBB5 /* AuthenticationViewModel.swift in Sources */,
+				5941561B25D245AB0088EBB5 /* World.swift in Sources */,
+				5986556225D4DCCD00EDCB03 /* WebServiceView.swift in Sources */,
+				5941562C25D37B7A0088EBB5 /* Diablo3View.swift in Sources */,
+				598AC0BC24A986E5002F2ED3 /* MainView.swift in Sources */,
+				5941563425D37B9E0088EBB5 /* WorldOfWarcraftView.swift in Sources */,
+				598AC0BA24A986E5002F2ED3 /* BattleNetAPI_ExampleApp.swift in Sources */,
+				59F31EEC25D57AE500EBD140 /* JSONHelper.swift in Sources */,
+				5941563825D37BAA0088EBB5 /* BattleNetView.swift in Sources */,
+				5941564325D41B840088EBB5 /* Alert+Error.swift in Sources */,
+				59A3AEA625D8C93000B44956 /* WorldOfWarcraftClassicView.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		598AC0B224A986E5002F2ED3 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				5941562025D247080088EBB5 /* BattleNetAPI+Swift.swift in Sources */,
+				5941563125D37B8D0088EBB5 /* Starcraft2View.swift in Sources */,
+				5941562825D248CD0088EBB5 /* AuthenticationViewModel.swift in Sources */,
+				5941561C25D245AB0088EBB5 /* World.swift in Sources */,
+				5986556325D4DCCD00EDCB03 /* WebServiceView.swift in Sources */,
+				5941562D25D37B7A0088EBB5 /* Diablo3View.swift in Sources */,
+				598AC0BD24A986E5002F2ED3 /* MainView.swift in Sources */,
+				5941563525D37B9E0088EBB5 /* WorldOfWarcraftView.swift in Sources */,
+				5941564625D41DC80088EBB5 /* Alert+Error.swift in Sources */,
+				59F31EED25D57AE500EBD140 /* JSONHelper.swift in Sources */,
+				598AC0BB24A986E5002F2ED3 /* BattleNetAPI_ExampleApp.swift in Sources */,
+				5941563925D37BAA0088EBB5 /* BattleNetView.swift in Sources */,
+				59A3AEA725D8C93000B44956 /* WorldOfWarcraftClassicView.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin XCBuildConfiguration section */
+		598AC0C024A986E5002F2ED3 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = dwarf;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_TESTABILITY = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu11;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
+				MTL_FAST_MATH = YES;
+				ONLY_ACTIVE_ARCH = YES;
+				SWIFT_ACTIVE_COMPILATION_CONDITIONS = DEBUG;
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+			};
+			name = Debug;
+		};
+		598AC0C124A986E5002F2ED3 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				ENABLE_NS_ASSERTIONS = NO;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu11;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				MTL_ENABLE_DEBUG_INFO = NO;
+				MTL_FAST_MATH = YES;
+				SWIFT_COMPILATION_MODE = wholemodule;
+				SWIFT_OPTIMIZATION_LEVEL = "-O";
+			};
+			name = Release;
+		};
+		598AC0C324A986E5002F2ED3 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = W5SXX2FNDK;
+				ENABLE_PREVIEWS = YES;
+				INFOPLIST_FILE = iOS/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 14.0;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = "com.prismatic-games.BattleNetAPI-Example";
+				PRODUCT_NAME = "BattleNetAPI-Example";
+				SDKROOT = iphoneos;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Debug;
+		};
+		598AC0C424A986E5002F2ED3 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = W5SXX2FNDK;
+				ENABLE_PREVIEWS = YES;
+				INFOPLIST_FILE = iOS/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 14.0;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = "com.prismatic-games.BattleNetAPI-Example";
+				PRODUCT_NAME = "BattleNetAPI-Example";
+				SDKROOT = iphoneos;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				VALIDATE_PRODUCT = YES;
+			};
+			name = Release;
+		};
+		598AC0C624A986E5002F2ED3 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_ENTITLEMENTS = macOS/macOS.entitlements;
+				CODE_SIGN_IDENTITY = "-";
+				CODE_SIGN_STYLE = Automatic;
+				COMBINE_HIDPI_IMAGES = YES;
+				DEVELOPMENT_TEAM = W5SXX2FNDK;
+				ENABLE_HARDENED_RUNTIME = YES;
+				ENABLE_PREVIEWS = YES;
+				INFOPLIST_FILE = macOS/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/../Frameworks",
+				);
+				MACOSX_DEPLOYMENT_TARGET = 11.0;
+				PRODUCT_BUNDLE_IDENTIFIER = "com.prismatic-games.BattleNetAPI-Example";
+				PRODUCT_NAME = "BattleNetAPI-Example";
+				SDKROOT = macosx;
+				SWIFT_VERSION = 5.0;
+			};
+			name = Debug;
+		};
+		598AC0C724A986E5002F2ED3 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_ENTITLEMENTS = macOS/macOS.entitlements;
+				CODE_SIGN_IDENTITY = "-";
+				CODE_SIGN_STYLE = Automatic;
+				COMBINE_HIDPI_IMAGES = YES;
+				DEVELOPMENT_TEAM = W5SXX2FNDK;
+				ENABLE_HARDENED_RUNTIME = YES;
+				ENABLE_PREVIEWS = YES;
+				INFOPLIST_FILE = macOS/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/../Frameworks",
+				);
+				MACOSX_DEPLOYMENT_TARGET = 11.0;
+				PRODUCT_BUNDLE_IDENTIFIER = "com.prismatic-games.BattleNetAPI-Example";
+				PRODUCT_NAME = "BattleNetAPI-Example";
+				SDKROOT = macosx;
+				SWIFT_VERSION = 5.0;
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		598AC0A524A986E3002F2ED3 /* Build configuration list for PBXProject "BattleNetAPI-Example" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				598AC0C024A986E5002F2ED3 /* Debug */,
+				598AC0C124A986E5002F2ED3 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		598AC0C224A986E5002F2ED3 /* Build configuration list for PBXNativeTarget "iOS" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				598AC0C324A986E5002F2ED3 /* Debug */,
+				598AC0C424A986E5002F2ED3 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		598AC0C524A986E5002F2ED3 /* Build configuration list for PBXNativeTarget "macOS" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				598AC0C624A986E5002F2ED3 /* Debug */,
+				598AC0C724A986E5002F2ED3 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+/* End XCConfigurationList section */
+
+/* Begin XCSwiftPackageProductDependency section */
+		5941560A25D0FE950088EBB5 /* BattleNetAPI */ = {
+			isa = XCSwiftPackageProductDependency;
+			productName = BattleNetAPI;
+		};
+		5941560C25D0FE9A0088EBB5 /* BattleNetAPI */ = {
+			isa = XCSwiftPackageProductDependency;
+			productName = BattleNetAPI;
+		};
+/* End XCSwiftPackageProductDependency section */
+	};
+	rootObject = 598AC0A224A986E3002F2ED3 /* Project object */;
+}
