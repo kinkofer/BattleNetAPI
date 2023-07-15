@@ -19,7 +19,7 @@ public enum HTTPError: Error, LocalizedError, Equatable {
     
     // Response Error cases
     
-    /// The web service returned a unknown error, like a 500
+    /// The web service returned a unknown error
     case httpError
     /// The response data did not have the expected format, value, or type
     case unexpectedResponse
@@ -30,7 +30,7 @@ public enum HTTPError: Error, LocalizedError, Equatable {
     /// HTTP error 401
     case unauthorized
     /// HTTP error 403
-    case forbidden
+    case forbidden(Data?)
     /// HTTP error -1001
     case timeout
     
@@ -38,7 +38,7 @@ public enum HTTPError: Error, LocalizedError, Equatable {
     case noNetwork
     
     /// General HTTP Error, including the response and response data, if anything was returned
-    case serverResponse(HTTPStatus, Data?)
+    case serverResponse(URLResponse, Data?)
     /// General Error
     case other(Error)
     
@@ -76,8 +76,9 @@ public enum HTTPError: Error, LocalizedError, Equatable {
             return NSLocalizedString("The request timed out.", comment: "Timeout")
         case .noNetwork:
             return NSLocalizedString("A network connection could not be established.", comment: "No Network")
-        case .serverResponse(let status, _):
-            return NSLocalizedString("The web service returned status code \(status.rawValue)", comment: "Server Response Error")
+        case .serverResponse(let response, _):
+            guard let response = response as? HTTPURLResponse else { return NSLocalizedString("The web service returned an unknown response", comment: "Unknown Response") }
+            return NSLocalizedString("The web service returned status code \(response.statusCode)", comment: "Server Response Error")
         case .other(let error):
             return NSLocalizedString("An error occured: \(error.localizedDescription)", comment: "Other Error")
         }
@@ -107,8 +108,9 @@ public enum HTTPError: Error, LocalizedError, Equatable {
             return NSLocalizedString("DEBUG (timeout): The request timed out.", comment: "DEBUG Timeout")
         case .noNetwork:
             return NSLocalizedString("DEBUG (noNetwork): A network connection could not be established.", comment: "DEBUG No Network")
-        case .serverResponse(let status, _):
-            return NSLocalizedString("DEBUG (serverResponse): The web service returned status code \(status.rawValue)", comment: "DEBUG Server Response Error")
+        case .serverResponse(let response, _):
+            guard let response = response as? HTTPURLResponse else { return NSLocalizedString("DEBUG (serverResponse): The web service returned an unknown response", comment: "DEBUG Unknown Response") }
+            return NSLocalizedString("DEBUG (serverResponse): The web service returned status code \(response.statusCode)", comment: "DEBUG Server Response Error")
         case .other(let error):
             return NSLocalizedString("DEBUG (other): An error occured: \(error.localizedDescription)", comment: "DEBUG Other Error")
         }
@@ -128,8 +130,9 @@ public enum HTTPError: Error, LocalizedError, Equatable {
             return NSURLErrorTimedOut // -1001
         case .noNetwork:
             return NSURLErrorNotConnectedToInternet // -1009
-        case .serverResponse(let status, _):
-            return status.rawValue
+        case .serverResponse(let response, _):
+            guard let response = response as? HTTPURLResponse else { return 999 }
+            return response.statusCode
         case .other(let error as NSError):
             return error.code
         default:
@@ -148,8 +151,8 @@ public enum HTTPError: Error, LocalizedError, Equatable {
         case (.other(_), .other(_)):
             // Can't compare 2 errors, so just assume equality
             return true
-        case (.serverResponse(let status1, _), .serverResponse(let status2, _)):
-            return status1 == status2
+        case (.serverResponse(let response1, _), .serverResponse(let response2, _)):
+            return response1 == response2
         default:
             return false
         }

@@ -122,8 +122,8 @@ authManager.getUserAccessToken { result in
 Once you've saved the tokens, you can include them in the BattleNetCredentials when you initialize the BattleNetAPI client.
 
 ```swift
-var credentials = BattleNetCredentials(clientID: "82094a26fedc4d57ae6ecac5e099d8bc",
-									clientSecret: "twBnKbl5H3QxbWZ4SFhVNV8vvDKCfn5o",
+var credentials = BattleNetCredentials(clientID: "CLIENT_ID",
+									clientSecret: "CLIENT_SECRET",
 									clientAccessToken: UserDefaults.standard.string(forKey: "clientAccessToken"),
 									userAccessToken: UserDefaults.standard.string(forKey: "userAccessToken"))
 ```

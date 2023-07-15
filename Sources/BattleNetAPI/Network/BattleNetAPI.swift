@@ -34,7 +34,7 @@ public class BattleNetAPI {
     
     
     
-    public init(credentials: BattleNetCredentials, session: URLSession = URLSession.shared, region: APIRegion = .us, locale: APILocale? = nil) {
+    public init(credentials: BattleNetCredentials, session: URLSession = .shared, region: APIRegion = .us, locale: APILocale? = nil) {
         self.credentials = credentials
         self.session = session
         self.region = region

@@ -14,7 +14,9 @@ protocol AuthenticationWebService: WebService {
     var credentials: BattleNetCredentials { get set }
     
     func getClientAccessToken(completion: @escaping (_ result: Result<String, Error>) -> Void)
+    func getClientAccessToken() async throws -> String
     func getUserAccessToken(completion: @escaping (_ result: Result<String, Error>) -> Void)
+    func getUserAccessToken() async throws -> String
 }
 
 
@@ -61,6 +63,34 @@ extension AuthenticationWebService {
     }
     
     
+    /// Adds the required authorization header to a web service request based on APIType.
+    /// If the authorization token isn't found, it will request the token from the AuthenticationWebService.
+    func addAuthentication(to request: URLRequest, for apiType: APIType) async throws -> URLRequest {
+        var request = request
+        var token: String
+        
+        switch apiType {
+        case .profile, .community:
+            if let userAccessToken = credentials.userAccessToken {
+                token = userAccessToken
+            }
+            else {
+                token = try await getUserAccessToken()
+            }
+        case .gameData:
+            if let clientAccessToken = credentials.clientAccessToken {
+                token = clientAccessToken
+            }
+            else {
+                token = try await getClientAccessToken()
+            }
+        }
+        
+        request.addHeader(.authorization(.bearer(token)))
+        return request
+    }
+    
+    
     /// Calls the web service request after adding the appropriate authentication headers
     func performAuthenticatedRequest(_ request: URLRequest, for apiType: APIType, numberOfRetryAttempts: Int = 1, completion: @escaping (_ result: Result<Data, Error>) -> Void) {
         addAuthentication(to: request, for: apiType) { result in
@@ -81,6 +111,24 @@ extension AuthenticationWebService {
                 }
             case .failure(let error):
                 completion(.failure(error))
+            }
+        }
+    }
+    
+    
+    /// Calls the web service request after adding the appropriate authentication headers
+    func performAuthenticatedRequest(_ request: URLRequest, for apiType: APIType, numberOfRetryAttempts: Int = 1) async throws -> Data {
+        let request = try await addAuthentication(to: request, for: apiType)
+        
+        do {
+            return try await session.startData(request)
+        }
+        catch {
+            if (error as? HTTPError) == .unauthorized, numberOfRetryAttempts > 0 {
+                invalidateToken(for: apiType)
+                return try await performAuthenticatedRequest(request, for: apiType, numberOfRetryAttempts: numberOfRetryAttempts - 1)
+            } else {
+                throw error
             }
         }
     }

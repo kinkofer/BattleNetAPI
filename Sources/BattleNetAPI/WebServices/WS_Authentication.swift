@@ -81,6 +81,26 @@ public class WS_Authentication: AuthenticationWebService {
     
     
     /**
+     Returns the access dictionary configured for the your application
+     
+     - parameter completion: Returns a Result with the Data if `success` or an HTTPError if `failure`
+     - note: This access token will not return specific user information. If that is needed, you must receive a user access token through OAuth
+     */
+    public func getClientAccess() async throws -> Data {
+        guard let encryptedCredientials = credentials.encryptedCredentials,
+              let url = URL(string: region.tokenURI) else {
+            throw HTTPError.invalidRequest
+        }
+        
+        guard let body = "grant_type=client_credentials".data(using: .utf8) else {
+            throw HTTPError.unexpectedBody
+        }
+        
+        return try await call(url: url, method: .post, headers: [.contentType(.form), .authorization(.basic(encryptedCredientials))], body: body)
+    }
+    
+    
+    /**
      Checks if the client token is valid to be used with web service calls
      
      - parameter token: The client token saved in the app
@@ -94,6 +114,21 @@ public class WS_Authentication: AuthenticationWebService {
         }
         
         call(url: url, method: .post, completion: completion)
+    }
+    
+    
+    /**
+     Checks if the client token is valid to be used with web service calls
+     
+     - parameter token: The client token saved in the app
+     */
+    public func validateClientAccessToken(_ token: String) async throws -> Data {
+        guard !token.isEmpty,
+            let url = URL(string: region.getCheckTokenURI(token: token)) else {
+            throw HTTPError.invalidRequest
+        }
+        
+        return try await call(url: url, method: .post)
     }
     
     
@@ -143,6 +178,25 @@ public class WS_Authentication: AuthenticationWebService {
     
     
     /**
+     Returns the access dictionary configured for the user that logged in through OAuth
+     
+     - parameter code: The code returned to the app when the user logs in through OAuth
+     - parameter redirectURL: The url provided to the OAuth
+    */
+    public func getUserAccess(code: String, redirectURL: String) async throws -> Data {
+        guard let encryptedCredientials = credentials.encryptedCredentials,
+            let url = URL(string: region.tokenURI) else {
+                throw HTTPError.invalidRequest
+        }
+        
+        let parameters = String(format: "grant_type=authorization_code&code=%@&redirect_uri=%@", code, redirectURL)
+        let body = parameters.data(using: .utf8)
+        
+        return try await call(url: url, method: .post, headers: [.contentType(.form), .authorization(.basic(encryptedCredientials))], body: body)
+    }
+    
+    
+    /**
      Checks if the user access token is valid to be used with profile web service calls
      
      - parameter token: The client token saved in the app
@@ -158,6 +212,17 @@ public class WS_Authentication: AuthenticationWebService {
     }
     
     
+    /**
+     Checks if the user access token is valid to be used with profile web service calls
+     
+     - parameter token: The client token saved in the app
+     */
+    public func validateUserAccessToken(_ token: String) async throws -> Data {
+        guard let url = URL(string: region.getCheckTokenURI(token: token)) else { throw HTTPError.invalidRequest }
+        return try await call(url: url, method: .post)
+    }
+    
+    
     
     // MARK: - AuthenticationWebService
     
@@ -168,7 +233,23 @@ public class WS_Authentication: AuthenticationWebService {
     }
     
     
+    internal func getClientAccessToken() async throws -> String {
+        let data =  try await getClientAccess()
+        return try Access.decode(from: data).token
+    }
+    
+    
     internal func getUserAccessToken(completion: @escaping (Result<String, Error>) -> Void) {
         oauthAuthenticator?.getUserAccessToken(completion: completion)
+    }
+    
+    
+    internal func getUserAccessToken() async throws -> String {
+        if let token = try await oauthAuthenticator?.getUserAccessToken() {
+            return token
+        }
+        else {
+            throw HTTPError.unexpectedResponse
+        }
     }
 }

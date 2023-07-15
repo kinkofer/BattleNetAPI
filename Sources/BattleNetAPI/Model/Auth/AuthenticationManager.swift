@@ -29,7 +29,6 @@ public class AuthenticationManager: OAuthAuthenticator {
         self.oauth = oauth
         self.providerContext = providerContext
         authRepo = AuthenticationRepository(battleNetAPI: battleNetAPI)
-        // TODO: Check if this works by calling a service before storing the userAccessToken
         battleNetAPI.authentication.oauthAuthenticator = self
     }
     
@@ -97,6 +96,27 @@ public class AuthenticationManager: OAuthAuthenticator {
     
     
     /**
+     Retrieves the `userAccessToken` if previously stored and valid, or prompts the user to authenicate with BattleNet to get a new `userAccessToken`.
+     A valid token will be saved to the BattleNetAPI credentials.
+     */
+    public func getUserAccessToken() async throws -> String {
+        if let userAccessToken = battleNetAPI.credentials.userAccessToken {
+            do {
+                let _ = try await authRepo.validateUserAccessToken(userAccessToken)
+                return userAccessToken
+            }
+            catch {
+                self.battleNetAPI.credentials.userAccessToken = nil
+                return try await authenicateUser(scope: self.oauth.scope, on: self.providerContext, scheme: self.oauth.scheme, redirectUrl: self.oauth.redirectUrl)
+            }
+        }
+        else {
+            return try await authenicateUser(scope: oauth.scope, on: providerContext, scheme: oauth.scheme, redirectUrl: oauth.redirectUrl)
+        }
+    }
+    
+    
+    /**
      Opens the sign in page for BattleNet to allow the user to authenticate. A valid token will be saved to the BattleNetAPI credentials.
      
      - parameter scope: The games you are requesting the user to give you access to.
@@ -118,36 +138,57 @@ public class AuthenticationManager: OAuthAuthenticator {
                 return
         }
         
-        webAuthSession = ASWebAuthenticationSession(url: url, callbackURLScheme: scheme) { callback, error in
-            guard error == nil,
-                let callbackUrl = callback else {
+        DispatchQueue.main.async {
+            self.webAuthSession = ASWebAuthenticationSession(url: url, callbackURLScheme: scheme) { callback, error in
+                guard error == nil,
+                      let callbackUrl = callback else {
                     completion(.failure(HTTPError.unexpectedResponse))
                     return
-            }
-            
-            guard let code = callbackUrl.queryParameters?.first(where: { $0.name == "code" })?.value,
-                let state = UserDefaults.standard.string(forKey: stateKey),
-                let callbackState = callbackUrl.queryParameters?.first(where: { $0.name == "state" })?.value,
-                state == callbackState else {
+                }
+                
+                guard let code = callbackUrl.queryParameters?.first(where: { $0.name == "code" })?.value,
+                      let state = UserDefaults.standard.string(forKey: stateKey),
+                      let callbackState = callbackUrl.queryParameters?.first(where: { $0.name == "state" })?.value,
+                      state == callbackState else {
                     completion(.failure(HTTPError.unexpectedResponse))
                     return
-            }
-            
-            self.authRepo.getUserAccessToken(clientID: self.battleNetAPI.credentials.clientID, clientSecret: self.battleNetAPI.credentials.clientSecret,
-                                           code: code, redirectURL: redirectUrl) { result in
-                DispatchQueue.main.async {
-                    switch result {
-                    case .success(let access):
-                        self.battleNetAPI.credentials.userAccessToken = access.token
-                        completion(.success(access.token))
-                    case .failure(let error):
-                        completion(.failure(error))
+                }
+                
+                self.authRepo.getUserAccessToken(clientID: self.battleNetAPI.credentials.clientID, clientSecret: self.battleNetAPI.credentials.clientSecret,
+                                                 code: code, redirectURL: redirectUrl) { result in
+                    DispatchQueue.main.async {
+                        switch result {
+                        case .success(let access):
+                            self.battleNetAPI.credentials.userAccessToken = access.token
+                            completion(.success(access.token))
+                        case .failure(let error):
+                            completion(.failure(error))
+                        }
                     }
                 }
             }
+            
+            self.webAuthSession?.presentationContextProvider = providerContext
+            self.webAuthSession?.start()
         }
-        
-        webAuthSession?.presentationContextProvider = providerContext
-        webAuthSession?.start()
+    }
+    
+    
+    /**
+     Opens the sign in page for BattleNet to allow the user to authenticate. A valid token will be saved to the BattleNetAPI credentials.
+     
+     - parameter scope: The games you are requesting the user to give you access to.
+     - parameter providerContext: The view where the sign in page will be presented
+     - parameter scheme: The custom URL scheme that the app expects in the callback URL.
+     - parameter redirectUrl: A URL with the http or https scheme pointing to the authentication webpage.
+     - returns: The user's access token if they successfully authenticated.
+     */
+    private func authenicateUser(scope: Scope, on providerContext: ASWebAuthenticationPresentationContextProviding,
+                                 scheme: String, redirectUrl: String) async throws -> String {
+        try await withCheckedThrowingContinuation { continuation in
+            authenicateUser(scope: scope, on: providerContext, scheme: scheme, redirectUrl: redirectUrl) { result in
+                continuation.resume(with: result)
+            }
+        }
     }
 }
