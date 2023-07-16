@@ -107,9 +107,9 @@
 		59781F302A62F2D900080511 /* Views */ = {
 			isa = PBXGroup;
 			children = (
+				59781F442A62F36400080511 /* MainView.swift */,
 				59781F3F2A62F36400080511 /* BattleNetView.swift */,
 				59781F452A62F36400080511 /* Diablo3View.swift */,
-				59781F442A62F36400080511 /* MainView.swift */,
 				59781F432A62F36400080511 /* Starcraft2View.swift */,
 				59781F412A62F36400080511 /* WebServiceView.swift */,
 				59781F402A62F36400080511 /* WorldOfWarcraftClassicView.swift */,

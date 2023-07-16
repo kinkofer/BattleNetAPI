@@ -11,21 +11,26 @@ import BattleNetAPI
 
 @main
 struct BattleNetAPI_ViewerApp: App {
-    let Current = World()
+    @AppStorage("clientAccessToken") var clientAccessToken: String?
+    @AppStorage("userAccessToken") var userAccessToken: String?
+    
+    
+    
     
     init() {
         // TODO: Restore tokens from a previous session
-        Current.credentials.clientAccessToken = nil
-        Current.credentials.userAccessToken = nil
+//        Current.credentials.clientAccessToken = clientAccessToken
+//        Current.credentials.userAccessToken = userAccessToken
     }
     
     var body: some Scene {
-        let battleNetAPI = BattleNetAPI(credentials: Current.credentials, session: .shared, region: Current.region, locale: Current.locale)
-        let authManager = AuthenticationManager(battleNetAPI: battleNetAPI, oauth: Current.oauth, providerContext: AuthenticationContext())
+        let current = World()
+        let battleNetAPI = BattleNetAPI(credentials: current.credentials, session: .shared, region: current.region, locale: current.locale)
+        let authManager = AuthenticationManager(battleNetAPI: battleNetAPI, oauth: current.oauth, providerContext: AuthenticationContext())
         
         WindowGroup {
             MainView()
-                .environmentObject(Current)
+                .environmentObject(current)
                 .environmentObject(battleNetAPI)
                 .environmentObject(authManager)
         }

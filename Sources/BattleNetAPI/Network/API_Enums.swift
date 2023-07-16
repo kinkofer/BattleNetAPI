@@ -62,12 +62,9 @@ public enum APIRegion: String, CaseIterable, Codable {
     case eu
     /// Korea
     case kr
-    /// South East Asia
-    /// - note: Only has endpoints for SC2 game data and OAuth profiles
-    case sea
     /// Taiwan
     case tw
-    /// United States
+    /// North America
     case us
     
     /// The base url of the authorization service
@@ -77,8 +74,6 @@ public enum APIRegion: String, CaseIterable, Codable {
             return "https://\(self.rawValue).battle.net/oauth"
         case .kr, .tw:
             return "https://apac.battle.net/oauth"
-        case .sea:
-            return "https://us.battle.net/oauth"
         case .cn:
             return "https://www.battlenet.com.cn/oauth"
         }
@@ -91,8 +86,6 @@ public enum APIRegion: String, CaseIterable, Codable {
             return "https://\(self.rawValue).battle.net/oauth/token"
         case .kr, .tw:
             return "https://apac.battle.net/oauth/authorize"
-        case .sea:
-            return "https://us.battle.net/oauth/authorize"
         case .cn:
             return "https://www.battlenet.com.cn/oauth/token"
         }
@@ -119,27 +112,42 @@ public enum APIRegion: String, CaseIterable, Codable {
     }
     
     
-    /// The id associated with the region
-    /// - note: South East Asia (.sea) has been grouped with Korea (kr) and Taiwan (tw)
+    /// The id associated with the region.
     var id: Int {
         switch self {
         case .us: return 1
         case .eu: return 2
-        case .kr, .tw, .sea: return 3
+        case .kr, .tw: return 3
         case .cn: return 5
         }
     }
     
     
     /// The display name of the region
-    var displayName: String {
+    public var displayName: String {
         switch self {
-        case .us: return "United States"
+        case .us: return "North America"
         case .eu: return "Europe"
         case .kr: return "Korea"
         case .tw: return "Taiwan"
-        case .sea: return "South East Asia"
         case .cn: return "China"
+        }
+    }
+    
+    
+    /// The available locales for a region
+    public var supportedLocales: [APILocale] {
+        switch self {
+        case .us:
+            return [.en_US, .es_MX, .pt_BR]
+        case .eu:
+            return [.en_GB, .es_ES, .fr_FR, .ru_RU, .de_DE, .pt_PT, .it_IT]
+        case .kr:
+            return [.ko_KR]
+        case .tw:
+            return [.zh_TW]
+        case .cn:
+            return [.zh_CN]
         }
     }
     
@@ -151,8 +159,6 @@ public enum APIRegion: String, CaseIterable, Codable {
             return "https://\(self.rawValue).battle.net/oauth/check_token?token=\(token)"
         case .kr, .tw:
             return "https://apac.battle.net/oauth/check_token?token=\(token)"
-        case .sea:
-            return "https://us.battle.net/oauth/check_token?token=\(token)"
         case .cn:
             return "https://www.battlenet.com.cn/oauth/check_token?token=\(token)"
         }
@@ -176,4 +182,44 @@ public enum APILocale: String {
     case ru_RU
     case zh_CN
     case zh_TW
+    
+    
+    /// The language name most closely associated with the locale
+    public var language: String {
+        switch self {
+        case .de_DE: return "Deutsch"
+        case .en_US: return "English (US)"
+        case .en_GB: return "English (EU)"
+        case .es_ES: return "Español (EU)"
+        case .es_MX: return "Español (Latino)"
+        case .fr_FR: return "Français"
+        case .it_IT: return "Italiano"
+        case .ko_KR: return "한국어"
+        case .pt_BR: return "Português (Brasil)"
+        case .pt_PT: return "Português (EU)"
+        case .ru_RU: return "Русский"
+        case .zh_CN: return "中文"
+        case .zh_TW: return "繁體中文"
+        }
+    }
+    
+    
+    /// The flag emoji most closely associated with the locale
+    public var flag: String {
+        switch self {
+        case .de_DE: return "🇩🇪"
+        case .en_US: return "🇺🇸"
+        case .en_GB: return "🇬🇧"
+        case .es_ES: return "🇪🇸"
+        case .es_MX: return "🇲🇽"
+        case .fr_FR: return "🇫🇷"
+        case .it_IT: return "🇮🇹"
+        case .ko_KR: return "🇰🇷"
+        case .pt_BR: return "🇧🇷"
+        case .pt_PT: return "🇵🇹"
+        case .ru_RU: return "🇷🇺"
+        case .zh_CN: return "🇨🇳"
+        case .zh_TW: return "🇹🇼"
+        }
+    }
 }

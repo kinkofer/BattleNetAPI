@@ -31,10 +31,7 @@ struct MainView: View {
             self.game = game
             self.api = api
         }
-        
-        
     }
-    
     
     @EnvironmentObject var battleNetAPI: BattleNetAPI
     @EnvironmentObject var authManager: AuthenticationManager
@@ -42,50 +39,26 @@ struct MainView: View {
     @State var gameAPISelection: GameAPI?
     @State var alertType: AlertType?
     
-    let title = "BattleNet API"
+    let title = "BattleNetAPI Viewer"
     
     
     // MARK: - Views
     
     var body: some View {
         NavigationSplitView {
-            #if os(iOS)
             apiList
                 .listStyle(.sidebar)
-                .navigationTitle(Text(title))
-                .toolbar {
-                    ToolbarItem(placement: .navigationBarTrailing) {
-                        Button(action: {
-                            if battleNetAPI.credentials.userAccessToken == nil {
-                                alertType = .authConfirm
-                            }
-                            else {
-                                alertType = .notify("Currently signed in")
-                            }
-                        }) {
-                            Image(systemName: "person.circle")
-                        }
-                    }
-                }
-            #elseif os(macOS)
-            apiList
-                .listStyle(.sidebar)
-                .navigationTitle(Text(title))
+                .navigationTitle(title)
                 .toolbar {
                     ToolbarItem(placement: .primaryAction) {
-                        Button(action: {
-                            if battleNetAPI.credentials.userAccessToken == nil {
-                                alertType = .authConfirm
-                            }
-                            else {
-                                alertType = .notify("Currently signed in")
-                            }
-                        }) {
-                            Image(systemName: "person.circle")
+                        HStack {
+                            RegionMenu()
+
+                            profileButton
+                            
                         }
                     }
                 }
-            #endif
         } content: {
             if let game = gameAPISelection {
                 switch game {
@@ -160,6 +133,21 @@ struct MainView: View {
             Section(header: Text(Game.battleNet.rawValue)) {
                 NavigationLink(APIType.profile.displayName, value: GameAPI(.battleNet, .profile))
             }
+        }
+    }
+    
+    
+    var profileButton: some View {
+        Button(action: {
+            if battleNetAPI.credentials.userAccessToken == nil {
+                alertType = .authConfirm
+            }
+            else {
+                alertType = .notify("Currently signed in")
+            }
+        }) {
+            let imageName = battleNetAPI.credentials.userAccessToken == nil ? "person.circle" : "person.circle.fill"
+            Image(systemName: imageName)
         }
     }
     
@@ -244,10 +232,48 @@ extension MainView {
 
 
 
+struct RegionMenu: View {
+    @EnvironmentObject var current: World
+    
+    var body: some View {
+        Menu {
+            Menu(APIRegion.us.displayName) {
+                ForEach(APIRegion.us.supportedLocales, id: \.self) { locale in
+                    Button("\(locale.flag) \(locale.language)") { current.region = .us; current.locale = locale }
+                }
+            }
+            Menu(APIRegion.eu.displayName) {
+                ForEach(APIRegion.eu.supportedLocales, id: \.self) { locale in
+                    Button("\(locale.flag) \(locale.language)") { current.region = .eu; current.locale = locale }
+                }
+            }
+            
+            Button("\(APILocale.ko_KR.flag) \(APILocale.ko_KR.language)") { current.region = .kr; current.locale = .ko_KR }
+            Button("\(APILocale.zh_TW.flag) \(APILocale.zh_TW.language)") { current.region = .tw; current.locale = .zh_TW }
+            Button("\(APILocale.zh_CN.flag) \(APILocale.zh_CN.language)") {  current.region = .cn; current.locale = .zh_CN }
+        } label: {
+            Text(current.locale.flag)
+        }
+        .menuStyle(.button)
+    }
+}
+
+
+
 // MARK: - Preview
 
 struct ContentView_Previews: PreviewProvider {
     static var previews: some View {
+        let current = World()
+        let battleNetAPI = BattleNetAPI(credentials: current.credentials, session: .shared, region: current.region, locale: current.locale)
+        let authManager = AuthenticationManager(battleNetAPI: battleNetAPI, oauth: current.oauth, providerContext: AuthenticationContext())
+        
         MainView()
+            .environmentObject(current)
+            .environmentObject(battleNetAPI)
+            .environmentObject(authManager)
     }
 }
+
+
+
