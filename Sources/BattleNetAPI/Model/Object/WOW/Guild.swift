@@ -9,7 +9,7 @@
 import Foundation
 
 
-public class WOWGuild: Codable {
+public struct WOWGuild: Codable {
     public let name: String
     public let realm: String
     public let battlegroup: String
@@ -20,7 +20,7 @@ public class WOWGuild: Codable {
 
 
 
-public class Emblem: Codable {
+public struct Emblem: Codable {
     public let icon: Int
     public let iconColor: String
     public let iconColorID: Int
@@ -44,13 +44,13 @@ public class Emblem: Codable {
 
 
 
-public class WOWGuildRewardIndex: Codable {
+public struct WOWGuildRewardIndex: Codable {
     public let rewards: [WOWGuildReward]
 }
 
 
 
-public class WOWGuildReward: Codable {
+public struct WOWGuildReward: Codable {
     public let minGuildLevel: Int
     public let minGuildRepLevel: Int
     public let races: [Int]?
@@ -89,7 +89,7 @@ public struct WOWGuildField: OptionSet {
 
 
 // https://us.api.battle.net/wow/guild/illidan/limit?fields=achievements
-public class WOWGuildProfile: Codable {
+public struct WOWGuildProfile: Codable {
     public let lastModified: Int
     public let name: String
     public let realm: String
@@ -122,14 +122,14 @@ public class WOWGuildProfile: Codable {
 
 
 
-public class GuildMember: Codable {
+public struct GuildMember: Codable {
     public let character: GuildCharacter?
     public let spec: CharacterSpecialization?
 }
 
 
 
-public class GuildCharacter: Codable {
+public struct GuildCharacter: Codable {
     public let name: String
     public let `class`: Int
     public let gender: Int

@@ -9,13 +9,13 @@
 import Foundation
 
 
-public class Auction: Codable {
+public struct Auction: Codable {
     public let files: [AuctionFile]
 }
 
 
 
-public class AuctionFile: Codable {
+public struct AuctionFile: Codable {
     public let url: String
     public let lastModified: Double
 }

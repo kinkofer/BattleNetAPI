@@ -10,7 +10,7 @@ import Foundation
 
 
 
-public class WOWCharacterResult: Codable {
+public struct WOWCharacterResult: Codable {
     public let characters: [WOWCharacter]
 }
 
@@ -72,7 +72,7 @@ public struct WOWCharacterField: OptionSet {
 }
 
 
-public class WOWCharacter: Codable {
+public struct WOWCharacter: Codable {
     public let name: String
     public let level: Int
     public let `class`: Int
@@ -93,7 +93,7 @@ public class WOWCharacter: Codable {
 
 
 
-public class WOWCharacterProfile: Codable {
+public struct WOWCharacterProfile: Codable {
     public let name: String
     public let level: Int
     public let `class`: Int
@@ -140,13 +140,13 @@ public class WOWCharacterProfile: Codable {
 
 
 
-public class RaceIndex: Codable {
+public struct RaceIndex: Codable {
     public let races: [Race]
 }
 
 
 
-public class Race: Codable {
+public struct Race: Codable {
     public let id: Int
     public let mask: Int
     public let side: RaceFaction
@@ -161,13 +161,13 @@ public enum RaceFaction: String, Codable {
 }
 
 
-public class WOWRaceIndex: Codable {
+public struct WOWRaceIndex: Codable {
     public let _links: SelfLink<WOWRaceIndex>
     public let races: [KeyLink<WOWRace>]
 }
 
 
-public class WOWRace: Codable, SelfDecodable {
+public struct WOWRace: Codable, SelfDecodable {
     public let _links: SelfLink<WOWRace>
     public let id: Int
     public let name: String
@@ -183,7 +183,7 @@ public class WOWRace: Codable, SelfDecodable {
 
 
 
-public class WOWCharacterAppearance: Codable {
+public struct WOWCharacterAppearance: Codable {
     public let faceVariation: Int
     public let skinColor: Int
     public let hairVariation: Int
@@ -196,7 +196,7 @@ public class WOWCharacterAppearance: Codable {
 
 
 
-public class Feed: Codable {
+public struct Feed: Codable {
     public let type: String
     public let timestamp: Int
     
@@ -215,14 +215,14 @@ public class Feed: Codable {
 
 
 
-public class Professions: Codable {
+public struct Professions: Codable {
     public let primary: [Profession]
     public let secondary: [Profession]
 }
 
 
 
-public class Profession: Codable {
+public struct Profession: Codable {
     public let id: Int
     public let icon: String?
     public let recipes: [Int]
@@ -233,13 +233,13 @@ public class Profession: Codable {
 
 
 
-public class WOWProgression: Codable {
+public struct WOWProgression: Codable {
     public let raids: [Raid]
 }
 
 
 
-public class Raid: Codable {
+public struct Raid: Codable {
     public let id: Int
     public let name: String
     
@@ -253,7 +253,7 @@ public class Raid: Codable {
 
 
 
-public class Reputation: Codable {
+public struct Reputation: Codable {
     public let id: Int
     public let value: Int
     public let name: String
@@ -263,7 +263,7 @@ public class Reputation: Codable {
 
 
 
-public class StatisticIndex: Codable {
+public struct StatisticIndex: Codable {
     public let id: Int
     public let name: String
     public let subcategories: [StatisticSubcategory]
@@ -277,7 +277,7 @@ public class StatisticIndex: Codable {
 
 
 
-public class StatisticSubcategory: Codable {
+public struct StatisticSubcategory: Codable {
     public let id: Int
     public let statistics: [Statistic]
     public let subcategories: [StatisticSubcategory]?
@@ -293,7 +293,7 @@ public class StatisticSubcategory: Codable {
 
 
 
-public class Statistic: Codable {
+public struct Statistic: Codable {
     public let id: Int
     public let quantity: Int
     public let money: Bool
@@ -304,7 +304,7 @@ public class Statistic: Codable {
 
 
 
-public class WOWCharacterStats: Codable {
+public struct WOWCharacterStats: Codable {
     public let mainHandDmgMin: Int
     public let int: Int
     public let hasteRating: Int
@@ -358,7 +358,7 @@ public class WOWCharacterStats: Codable {
 
 
 
-public class WOWCharacterTitle: Codable {
+public struct WOWCharacterTitle: Codable {
     public let id: Int
     public let name: String
     public let selected: Bool?
@@ -366,7 +366,7 @@ public class WOWCharacterTitle: Codable {
 
 
 
-public class Audit: Codable {
+public struct Audit: Codable {
     public let noSpec: Bool
     public let appropriateArmorType: Int
     public let emptySockets: Int

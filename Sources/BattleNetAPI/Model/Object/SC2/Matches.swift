@@ -9,13 +9,13 @@
 import Foundation
 
 
-public class MatchIndex: Codable {
+public struct MatchIndex: Codable {
     public let matches: [Match]
 }
 
 
 
-public class Match: Codable {
+public struct Match: Codable {
     public let map: String
     public let type: String
     public let decision: String

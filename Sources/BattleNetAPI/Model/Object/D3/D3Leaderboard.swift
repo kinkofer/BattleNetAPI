@@ -9,7 +9,7 @@
 import Foundation
 
 
-public class LeaderboardColumn: Codable {
+public struct LeaderboardColumn: Codable {
     public let id: String
     public let hidden: Bool
     public let order: Int?
@@ -28,7 +28,7 @@ public enum LeaderboardColumnType: String, Codable {
 
 
 
-public class LeaderboardEntry: Codable {
+public struct LeaderboardEntry: Codable {
     public let player: [D3Player]
     public let order: Int
     public let data: [Datum]
@@ -36,7 +36,7 @@ public class LeaderboardEntry: Codable {
 
 
 
-public class Datum: Codable {
+public struct Datum: Codable {
     public let id: String
     public let number: Int?
     public let timestamp: Double?
@@ -45,7 +45,7 @@ public class Datum: Codable {
 
 
 
-public class D3Player: Codable {
+public struct D3Player: Codable {
     public let key: String
     public let accountID: Double
     public let data: [Datum]

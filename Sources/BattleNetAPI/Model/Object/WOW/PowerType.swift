@@ -9,7 +9,7 @@
 import Foundation
 
 
-public class PowerTypeIndex: Codable, SelfDecodable {
+public struct PowerTypeIndex: Codable, SelfDecodable {
     public let _links: SelfLink<PowerTypeIndex>
     public let powerTypes: [KeyLink<PowerType>]
     
@@ -21,7 +21,7 @@ public class PowerTypeIndex: Codable, SelfDecodable {
 }
 
 
-public class PowerType: Codable {
+public struct PowerType: Codable {
     public let _links: SelfLink<PowerType>
     public let id: Int
     public let name: String

@@ -9,7 +9,7 @@
 import Foundation
 
 
-public class Artisan: Codable {
+public struct Artisan: Codable {
     public let slug: String
     public let name: String
     public let portrait: String
@@ -18,18 +18,18 @@ public class Artisan: Codable {
 }
 
 
-public class Training: Codable {
+public struct Training: Codable {
     public let tiers: [Tier]
 }
 
 
-public class Tier: Codable {
+public struct Tier: Codable {
     public let tier: Int
     public let trainedRecipes: [D3Recipe]
 }
 
 
-public class D3Recipe: Codable {
+public struct D3Recipe: Codable {
     public let id: String
     public let slug: String
     public let name: String
@@ -40,7 +40,7 @@ public class D3Recipe: Codable {
 }
 
 
-public class Reagent: Codable {
+public struct Reagent: Codable {
     public let quantity: Int
     public let item: D3Item
 }

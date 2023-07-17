@@ -9,21 +9,21 @@
 import Foundation
 
 
-public class MediaLink: Codable {
+public struct MediaLink: Codable {
     public let key: Link<Media>
     public let id: Int
 }
 
 
 
-public class Media: Codable {
+public struct Media: Codable {
     public let _links: SelfLink<Media>
     public let assets: [MediaAsset]
 }
 
 
 
-public class MediaAsset: Codable {
+public struct MediaAsset: Codable {
     public let key: String
     public let value: String
 }

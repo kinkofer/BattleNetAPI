@@ -9,7 +9,7 @@
 import Foundation
 
 
-public class WOWQuest: Codable {
+public struct WOWQuest: Codable {
     public let id: Int
     public let title: String
     public let reqLevel: Int

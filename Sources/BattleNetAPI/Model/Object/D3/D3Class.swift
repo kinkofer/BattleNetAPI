@@ -9,7 +9,7 @@
 import Foundation
 
 
-public class D3Class: Codable {
+public struct D3Class: Codable {
     public let slug: String
     public let name: String
     public let maleName: String

@@ -9,7 +9,7 @@
 import Foundation
 
 
-public class SpecializationIndex: Codable, SelfDecodable {
+public struct SpecializationIndex: Codable, SelfDecodable {
     public let _links: SelfLink<SpecializationIndex>
     public let characterSpecializations: [KeyLink<Specialization>]
     public let petSpecializations: [KeyLink<Specialization>]
@@ -24,7 +24,7 @@ public class SpecializationIndex: Codable, SelfDecodable {
 
 
 // https://us.api.battle.net/data/wow/playable-specialization/65?namespace=static-7.3.5_25875-us
-public class Specialization: Codable, SelfDecodable {
+public struct Specialization: Codable, SelfDecodable {
     public let _links: SelfLink<Specialization>
     public let id: Int
     public let name: String
@@ -46,19 +46,19 @@ public class Specialization: Codable, SelfDecodable {
 
 
 
-public class Role: Codable {
+public struct Role: Codable {
     public let type: String
     public let name: String
 }
 
 
-public class TalentTier: Codable {
+public struct TalentTier: Codable {
     public let level: Int
     public let talents: [Talent]
 }
 
 
-public class Talent: Codable, SelfDecodable {
+public struct Talent: Codable, SelfDecodable {
     public let talent: KeyLink<WOWClass>
     public let spellTooltip: SpellTooltip
     
@@ -70,7 +70,7 @@ public class Talent: Codable, SelfDecodable {
 }
 
 
-public class SpellTooltip: Codable, SelfDecodable {
+public struct SpellTooltip: Codable, SelfDecodable {
     public let description: String
     public let castTime: CastTime
     public let cooldown: String?
@@ -117,7 +117,7 @@ public enum Range: String, Codable {
 
 
 
-public class CharacterSpecialization: Codable {
+public struct CharacterSpecialization: Codable {
     public let name: String
     public let role: RoleType
     public let backgroundImage: String

@@ -42,17 +42,19 @@ public class WS_Authentication: AuthenticationWebService {
     // The Authenication services configure their own authenication
     var authenticationService: AuthenticationWebService? { return nil }
     weak var oauthAuthenticator: OAuthAuthenticator?
+    weak var authDelegate: BattleNetAuthDelegate?
     
     var credentials: BattleNetCredentials
     
     public lazy var decoded = Decoded(ws: self)
     
     
-    init(region: APIRegion, locale: APILocale?, session: URLSession, credentials: BattleNetCredentials) {
+    init(region: APIRegion, locale: APILocale?, session: URLSession, credentials: BattleNetCredentials, authDelegate: BattleNetAuthDelegate? = nil) {
         self.region = region
         self.locale = locale
         self.session = session
         self.credentials = credentials
+        self.authDelegate = authDelegate
     }
     
     

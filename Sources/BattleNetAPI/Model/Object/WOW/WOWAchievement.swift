@@ -9,13 +9,13 @@
 import Foundation
 
 
-public class WOWAchievementIndex: Codable {
+public struct WOWAchievementIndex: Codable {
     public let achievements: [WOWAchievementCategory]
 }
 
 
 
-public class WOWAchievementCategory: Codable {
+public struct WOWAchievementCategory: Codable {
     public let id: Int
     public let name: String
     public let achievements: [WOWAchievement]?
@@ -24,7 +24,7 @@ public class WOWAchievementCategory: Codable {
 
 
 
-public class WOWAchievement: Codable {
+public struct WOWAchievement: Codable {
     public let id: Int
     public let title: String
     public let points: Int
@@ -52,7 +52,7 @@ public class WOWAchievement: Codable {
 
 
 
-public class WOWAchievementCriterion: Codable {
+public struct WOWAchievementCriterion: Codable {
     public let id: Int
     public let description: String
     public let orderIndex: Int
@@ -61,7 +61,7 @@ public class WOWAchievementCriterion: Codable {
 
 
 
-public class WOWAchievementStatus: Codable {
+public struct WOWAchievementStatus: Codable {
     public let achievementsCompleted: [Int]
     public let achievementsCompletedTimestamp: [Int]
     public let criteria: [Int]

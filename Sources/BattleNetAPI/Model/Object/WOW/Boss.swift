@@ -9,13 +9,13 @@
 import Foundation
 
 
-public class BossIndex: Codable {
+public struct BossIndex: Codable {
     public let bosses: [Boss]
 }
 
 
 
-public class Boss: Codable {
+public struct Boss: Codable {
     public let id: Int
     public let name: String
     public let urlSlug: String
@@ -51,7 +51,7 @@ public class Boss: Codable {
 
 
 
-public class NPC: Codable {
+public struct NPC: Codable {
     public let id: Int
     public let name: String
     public let urlSlug: String
@@ -67,7 +67,7 @@ public class NPC: Codable {
 
 
 
-public class RaidBoss: Codable {
+public struct RaidBoss: Codable {
     public let id: Int
     public let name: String
     public let normalTimestamp: Int?

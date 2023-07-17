@@ -9,13 +9,13 @@
 import Foundation
 
 
-public class WOWClassIndex: Codable {
+public struct WOWClassIndex: Codable {
     public let _links: SelfLink<WOWClassIndex>
     public let classes: [KeyLink<WOWClass>]
 }
 
 
-public class WOWClass: Codable, SelfDecodable {
+public struct WOWClass: Codable, SelfDecodable {
     public let _links: SelfLink<WOWClass>
     public let id: Int
     public let name: String
@@ -33,13 +33,13 @@ public class WOWClass: Codable, SelfDecodable {
 
 
 
-public class GenderName: Codable {
+public struct GenderName: Codable {
     public let male: String
     public let female: String
 }
 
 
-public class GenderName2: Codable, SelfDecodable {
+public struct GenderName2: Codable, SelfDecodable {
     public let maleName: String
     public let femaleName: String
     
@@ -52,14 +52,14 @@ public class GenderName2: Codable, SelfDecodable {
 
 
 
-// MARK: - public class Data Resource
+// MARK: - public struct Data Resource
 
-public class WOWCharacterClassIndex: Codable {
+public struct WOWCharacterClassIndex: Codable {
     public let classes: [WOWCharacterClass]
 }
 
 
-public class WOWCharacterClass: Codable {
+public struct WOWCharacterClass: Codable {
     public let id: Int
     public let mask: Int
     public let powerType: String

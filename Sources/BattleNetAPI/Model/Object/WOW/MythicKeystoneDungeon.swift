@@ -9,20 +9,20 @@
 import Foundation
 
 
-public class MythicKeystoneIndex: Codable {
+public struct MythicKeystoneIndex: Codable {
     public let _links: SelfLink<MythicKeystoneIndex>
     public let seasons: Link<MythicKeystoneSeasonIndex>
     public let dungeons: Link<MythicKeystoneDungeonIndex>
 }
 
 
-public class MythicKeystoneDungeonIndex: Codable {
+public struct MythicKeystoneDungeonIndex: Codable {
     public let _links: SelfLink<MythicKeystoneDungeonIndex>
     public let dungeons: [KeyLink<MythicKeystoneDungeon>]
 }
 
 
-public class MythicKeystoneDungeon: Codable, SelfDecodable {
+public struct MythicKeystoneDungeon: Codable, SelfDecodable {
     public let _links: SelfLink<MythicKeystoneDungeon>
     public let id: Int
     public let name: String
@@ -38,7 +38,7 @@ public class MythicKeystoneDungeon: Codable, SelfDecodable {
 }
 
 
-public class KeystoneUpgrade: Codable, SelfDecodable {
+public struct KeystoneUpgrade: Codable, SelfDecodable {
     public let upgradeLevel: Int
     public let qualifyingDuration: Int
     
@@ -50,14 +50,14 @@ public class KeystoneUpgrade: Codable, SelfDecodable {
 }
 
 
-public class Map: Codable {
+public struct Map: Codable {
     public let name: String
     public let id: Int
 }
 
 
 
-public class MythicKeystonePeriodIndex: Codable, SelfDecodable {
+public struct MythicKeystonePeriodIndex: Codable, SelfDecodable {
     public let _links: SelfLink<MythicKeystonePeriodIndex>
     public let periods: [KeyLink<MythicKeystonePeriod>]
     public let currentPeriod: KeyLink<MythicKeystonePeriod>
@@ -70,7 +70,7 @@ public class MythicKeystonePeriodIndex: Codable, SelfDecodable {
 }
 
 
-public class MythicKeystonePeriod: Codable, SelfDecodable {
+public struct MythicKeystonePeriod: Codable, SelfDecodable {
     public let _links: SelfLink<MythicKeystonePeriod>
     public let id: Int
     public let startTimestamp: Int
@@ -84,7 +84,7 @@ public class MythicKeystonePeriod: Codable, SelfDecodable {
 }
 
 
-public class MythicKeystoneSeasonIndex: Codable, SelfDecodable {
+public struct MythicKeystoneSeasonIndex: Codable, SelfDecodable {
     public let _links: SelfLink<MythicKeystoneSeasonIndex>
     public let seasons: [KeyLink<MythicKeystoneSeason>]
     public let currentSeason: KeyLink<MythicKeystoneSeason>
@@ -98,7 +98,7 @@ public class MythicKeystoneSeasonIndex: Codable, SelfDecodable {
 
 
 
-public class MythicKeystoneSeason: Codable, SelfDecodable {
+public struct MythicKeystoneSeason: Codable, SelfDecodable {
     public let _links: SelfLink<MythicKeystoneSeason>
     public let id: Int
     public let startTimestamp: Int

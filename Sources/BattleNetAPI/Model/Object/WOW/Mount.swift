@@ -9,13 +9,13 @@
 import Foundation
 
 
-public class MountIndex: Codable {
+public struct MountIndex: Codable {
     public let mounts: [Mount]
 }
 
 
 
-public class CollectedMountIndex: Codable {
+public struct CollectedMountIndex: Codable {
     public let collected: [Mount]
     public let numCollected: Int
     public let numNotCollected: Int
@@ -23,7 +23,7 @@ public class CollectedMountIndex: Codable {
 
 
 
-public class Mount: Codable {
+public struct Mount: Codable {
     public let name: String
     public let spellID: Int
     public let creatureID: Int

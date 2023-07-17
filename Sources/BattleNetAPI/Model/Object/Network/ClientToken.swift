@@ -10,7 +10,7 @@ import Foundation
 
 
 
-public class ClientToken: Codable {
+public struct ClientToken: Codable {
     public let clientID: String
     public let expiresIn: Int
     public let authorities: [Authority]
@@ -36,7 +36,7 @@ extension ClientToken: CustomDebugStringConvertible {
 
 
 
-public class Authority: Codable {
+public struct Authority: Codable {
     public let role: String
     
     enum CodingKeys: String, CodingKey {

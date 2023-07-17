@@ -9,7 +9,7 @@
 import Foundation
 
 
-public class Spell: Codable {
+public struct Spell: Codable {
     public let id: Int
     public let name: String
     public let description: String

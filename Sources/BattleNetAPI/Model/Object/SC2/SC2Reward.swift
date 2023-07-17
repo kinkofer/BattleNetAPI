@@ -9,7 +9,7 @@
 import Foundation
 
 
-public class SC2Reward: Codable {
+public struct SC2Reward: Codable {
     public let id: String
     public let achievementID: String?
     public let name: String

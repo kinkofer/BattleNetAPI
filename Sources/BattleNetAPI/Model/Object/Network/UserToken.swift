@@ -9,7 +9,7 @@
 import Foundation
 
 
-public class UserToken: Codable {
+public struct UserToken: Codable {
     public let clientID: String
     public let expiresIn: Int
     public let authorities: [String]

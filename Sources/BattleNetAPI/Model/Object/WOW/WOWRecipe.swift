@@ -9,7 +9,7 @@
 import Foundation
 
 
-public class WOWRecipe: Codable {
+public struct WOWRecipe: Codable {
     public let id: Int
     public let name: String
     public let profession: String

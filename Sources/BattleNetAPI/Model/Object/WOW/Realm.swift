@@ -9,12 +9,12 @@
 import Foundation
 
 
-public class RealmIndexResult: Codable {
+public struct RealmIndexResult: Codable {
     public let realms: [RealmIndex]
 }
 
 
-public class RealmIndex: Codable {
+public struct RealmIndex: Codable {
     public let id: Int
     public let name: String
     public let slug: String
@@ -22,7 +22,7 @@ public class RealmIndex: Codable {
 
 
 // https://us.api.battle.net/data/wow/realm/61?namespace=dynamic-us
-public class Realm: Codable, SelfDecodable {
+public struct Realm: Codable, SelfDecodable {
     public let _links: SelfLink<Realm>?
     public let id: Int
     public let name: String
@@ -47,7 +47,7 @@ public class Realm: Codable, SelfDecodable {
 
 
 
-public class RealmInfo: Codable {
+public struct RealmInfo: Codable {
     public let name: String
     public let type: String
 }
@@ -56,7 +56,7 @@ public class RealmInfo: Codable {
 
 // MARK: - Realm Data Resource
 
-public class WOWRealmIndex: Codable, SelfDecodable {
+public struct WOWRealmIndex: Codable, SelfDecodable {
     public let realms: [WOWRealm]
     
     public static var decoder: JSONDecoder {
@@ -68,7 +68,7 @@ public class WOWRealmIndex: Codable, SelfDecodable {
 
 
 
-public class WOWRealm: Codable, SelfDecodable {
+public struct WOWRealm: Codable, SelfDecodable {
     public let type: RealmType
     public let population: RealmPopulation
     public let queue: Bool
@@ -104,7 +104,7 @@ public enum RealmType: String, Codable {
 
 
 
-public class RealmSummary: Codable {
+public struct RealmSummary: Codable {
     public let name: String
     public let slug: String
     public let battlegroup: String

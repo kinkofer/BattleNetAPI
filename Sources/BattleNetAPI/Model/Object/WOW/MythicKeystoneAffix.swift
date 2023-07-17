@@ -9,13 +9,13 @@
 import Foundation
 
 
-public class KeystoneAffixIndex: Codable {
+public struct KeystoneAffixIndex: Codable {
     public let _links: SelfLink<KeystoneAffixIndex>
     public let affixes: [KeyLink<KeystoneAffix>]
 }
 
 
-public class KeystoneAffix: Codable {
+public struct KeystoneAffix: Codable {
     public let _links: SelfLink<KeystoneAffix>
     public let id: Int
     public let name: String
@@ -24,8 +24,8 @@ public class KeystoneAffix: Codable {
 }
 
 
-/// - note: Property of class that contains camelCase and snake_case keys
-public class KeystoneAffixSummary: Codable {
+/// - note: Property of struct that contains camelCase and snake_case keys
+public struct KeystoneAffixSummary: Codable {
     public let keystoneAffix: KeyLink<KeystoneAffix>
     public let startingLevel: Int
     

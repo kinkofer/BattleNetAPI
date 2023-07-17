@@ -9,7 +9,7 @@
 import Foundation
 
 
-public class Access: Codable {
+public struct Access: Codable {
     public var token: String
     public var type: String
     public var expiresIn: Int

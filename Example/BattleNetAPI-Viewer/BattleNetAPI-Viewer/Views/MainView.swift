@@ -157,8 +157,7 @@ struct MainView: View {
     func authenticateUser() {
         Task {
             do {
-                let userAccessToken = try await battleNetAPI.authenticationManager.getUserAccessToken()
-                print("User Access Token: \(userAccessToken)")
+                let _ = try await battleNetAPI.authenticationManager.getUserAccessToken()
                 alertType = .notify("Sign in successful")
             }
             catch {

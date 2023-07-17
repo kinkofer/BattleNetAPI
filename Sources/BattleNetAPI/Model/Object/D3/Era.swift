@@ -10,7 +10,7 @@ import Foundation
 
 
 // https://us.api.battle.net/data/d3/era/?namespace=2-6-US
-public class EraIndex: Codable, SelfDecodable {
+public struct EraIndex: Codable, SelfDecodable {
     public let _links: SelfLink<EraIndex>
     public let era: [Link<EraLeaderboardIndex>]
     public let currentEra: Int
@@ -27,7 +27,7 @@ public class EraIndex: Codable, SelfDecodable {
 
 
 // https://us.api.battle.net/data/d3/era/1?namespace=2-6-US
-public class EraLeaderboardIndex: Codable {
+public struct EraLeaderboardIndex: Codable {
     public let _links: SelfLink<EraLeaderboardIndex>
     public let leaderboard: [EraLeaderboardLink]
     public let eraID: Int
@@ -47,7 +47,7 @@ public class EraLeaderboardIndex: Codable {
 
 
 
-public class EraLeaderboardLink: Codable, SelfDecodable {
+public struct EraLeaderboardLink: Codable, SelfDecodable {
     public let ladder: Link<EraLeaderboard>
     public let heroClassString: String?
     public let teamSize: Int?
@@ -63,7 +63,7 @@ public class EraLeaderboardLink: Codable, SelfDecodable {
 
 
 // https://us.api.battle.net/data/d3/era/1/leaderboard/rift-barbarian?namespace=2-6-US
-public class EraLeaderboard: Codable, SelfDecodable {
+public struct EraLeaderboard: Codable, SelfDecodable {
     public let _links: SelfLink<EraLeaderboard>
     public let key: String
     public let title: LocaleString
@@ -75,7 +75,7 @@ public class EraLeaderboard: Codable, SelfDecodable {
     public let row: [LeaderboardEntry]
     public let column: [LeaderboardColumn]
     
-    public let greaterRiftSoloClass: String
+    public let greaterRiftSolostruct: String
     public let greaterRift: Bool
     
     

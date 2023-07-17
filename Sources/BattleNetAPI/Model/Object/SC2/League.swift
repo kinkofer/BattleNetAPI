@@ -9,7 +9,7 @@
 import Foundation
 
 
-public class League: Codable {
+public struct League: Codable {
     public let _links: SelfLink<League>
     public let key: LeagueKey
     public let tier: [LeagueTier]
@@ -17,7 +17,7 @@ public class League: Codable {
 
 
 
-public class LeagueKey: Codable {
+public struct LeagueKey: Codable {
     public let leagueID: Int
     public let seasonID: Int
     public let queueID: Int
@@ -33,14 +33,14 @@ public class LeagueKey: Codable {
 
 
 
-public class LeagueTier: Codable {
+public struct LeagueTier: Codable {
     public let id: Int
     public let division: [Division]
 }
 
 
 
-public class Division: Codable {
+public struct Division: Codable {
     public let id: Int
     public let ladderID: Int
     public let memberCount: Int

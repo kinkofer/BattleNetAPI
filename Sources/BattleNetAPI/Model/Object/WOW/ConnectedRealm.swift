@@ -10,7 +10,7 @@ import Foundation
 
 
 // https://us.api.battle.net/data/wow/connected-realm/?namespace=dynamic-us
-public class ConnectedRealmIndex: Codable, SelfDecodable {
+public struct ConnectedRealmIndex: Codable, SelfDecodable {
     public let _links: SelfLink<ConnectedRealmIndex>
     public let connectedRealms: [Link<ConnectedRealm>]
     
@@ -24,7 +24,7 @@ public class ConnectedRealmIndex: Codable, SelfDecodable {
 
 
 // https://us.api.battle.net/data/wow/connected-realm/11?namespace=dynamic-us
-public class ConnectedRealm: Codable, SelfDecodable {
+public struct ConnectedRealm: Codable, SelfDecodable {
     public let _links: SelfLink<ConnectedRealm>
     public let id: Int
     
@@ -45,14 +45,14 @@ public class ConnectedRealm: Codable, SelfDecodable {
 
 
 
-public class ConnectedRealmStatus: Codable {
+public struct ConnectedRealmStatus: Codable {
     public let type: String
     public let name: String
 }
 
 
 
-public class ConnectedRealmPopulation: Codable {
+public struct ConnectedRealmPopulation: Codable {
     public let type: String
     public let name: String
 }

@@ -9,7 +9,7 @@
 import Foundation
 
 
-public class WOWItem: Codable {
+public struct WOWItem: Codable {
     public let id: Int
     public let description: String
     public let name: String
@@ -113,7 +113,7 @@ public class WOWItem: Codable {
 
 
 
-public class BonusSummary: Codable {
+public struct BonusSummary: Codable {
 //    public let defaultBonusLists: []
 //    public let chanceBonusLists: []
 //    public let bonusChances: []
@@ -121,7 +121,7 @@ public class BonusSummary: Codable {
 
 
 
-public class WOWItemSource: Codable {
+public struct WOWItemSource: Codable {
     public let sourceID: Int
     public let sourceType: String
     
@@ -132,7 +132,7 @@ public class WOWItemSource: Codable {
 }
 
 
-public class WOWItemSpell: Codable {
+public struct WOWItemSpell: Codable {
     public let spellID: Int
     public let scaledDescription: String
     public let trigger: String
@@ -151,7 +151,7 @@ public class WOWItemSpell: Codable {
 }
 
 
-public class WeaponInfo: Codable {
+public struct WeaponInfo: Codable {
     public let damage: Damage
     public let weaponSpeed: Double
     public let dps: Double
@@ -159,7 +159,7 @@ public class WeaponInfo: Codable {
 
 
 
-public class Damage: Codable {
+public struct Damage: Codable {
     public let min: Int
     public let max: Int
     public let exactMin: Int
@@ -168,7 +168,7 @@ public class Damage: Codable {
 
 
 
-public class WOWItemSummary: Codable {
+public struct WOWItemSummary: Codable {
     public let id: Int
     public let name: String
     public let icon: String
@@ -212,7 +212,7 @@ public class WOWItemSummary: Codable {
 
 
 
-public class WOWItemAppearance: Codable {
+public struct WOWItemAppearance: Codable {
     public let transmogItemAppearanceModID: Int?
     public let itemAppearanceModID: Int?
     public let itemID: Int?
@@ -221,7 +221,7 @@ public class WOWItemAppearance: Codable {
 
 
 
-public class TooltipParams: Codable {
+public struct TooltipParams: Codable {
     public let timewalkerLevel: Int
     public let azeritePowerLevel: Int
     public let azeritePower0: Int
@@ -233,7 +233,7 @@ public class TooltipParams: Codable {
 
 
 
-public class WOWItemUpgrade: Codable {
+public struct WOWItemUpgrade: Codable {
     public let current: Int
     public let total: Int
     public let itemLevelIncrement: Int
@@ -241,14 +241,14 @@ public class WOWItemUpgrade: Codable {
 
 
 
-public class WOWItemStat: Codable {
+public struct WOWItemStat: Codable {
     public let stat: Int
     public let amount: Int
 }
 
 
 
-public class WOWEquippedItems: Codable {
+public struct WOWEquippedItems: Codable {
     public let mainHand: WOWItemSummary?
     public let head: WOWItemSummary?
     public let neck: WOWItemSummary?
@@ -275,7 +275,7 @@ public class WOWEquippedItems: Codable {
 
 // MARK: - Item Sets
 
-public class WOWItemSet: Codable {
+public struct WOWItemSet: Codable {
     public let id: Int
     public let name: String
     public let setBonuses: [SetBonus]
@@ -284,7 +284,7 @@ public class WOWItemSet: Codable {
 
 
 
-public class SetBonus: Codable {
+public struct SetBonus: Codable {
     public let description: String
     public let threshold: Int
 }
@@ -293,21 +293,21 @@ public class SetBonus: Codable {
 
 // MARK: - Item Classes
 
-public class ItemClassIndex: Codable {
+public struct ItemClassIndex: Codable {
     public let classes: [ItemClass]
 }
 
 
 
-public class ItemClass: Codable {
-    public let `class`: Int
+public struct ItemClass: Codable {
+    public let `struct`: Int
     public let name: String
     public let subclasses: [ItemSubclass]
 }
 
 
 
-public class ItemSubclass: Codable {
+public struct ItemSubclass: Codable {
     public let subclass: Int
     public let name: String
 }

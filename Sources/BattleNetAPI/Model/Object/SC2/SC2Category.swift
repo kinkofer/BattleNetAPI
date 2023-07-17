@@ -9,7 +9,7 @@
 import Foundation
 
 
-public class SC2Category: Codable {
+public struct SC2Category: Codable {
     public let points: Int
     public let uiOrderHint: Int
     public let featuredAchievementID: String

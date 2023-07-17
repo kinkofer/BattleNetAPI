@@ -10,6 +10,12 @@ import Foundation
 import AuthenticationServices
 
 
+public protocol BattleNetAuthDelegate: AnyObject {
+    func battleNetAPI(didChangeClientAccessToken token: String?)
+    func battleNetAPI(didChangeUserAccessToken token: String?)
+}
+
+
 /// A manager for getting the `clientAccessToken` and `userAccessToken` required for calling web services in the BattleNet API.
 public class AuthenticationManager: OAuthAuthenticator {
     unowned let battleNetAPI: BattleNetAPI
@@ -40,7 +46,7 @@ public class AuthenticationManager: OAuthAuthenticator {
                     completion(.success(accessToken))
                 case .failure(let error):
                     self.battleNetAPI.credentials.clientAccessToken = nil
-                    self.battleNetAPI.delegate?.battleNetAPI(self.battleNetAPI, didChangeClientAccessToken: nil)
+                    self.battleNetAPI.delegate?.battleNetAPI(didChangeClientAccessToken: nil)
                     completion(.failure(error))
                 }
             }
@@ -50,7 +56,7 @@ public class AuthenticationManager: OAuthAuthenticator {
                 switch result {
                 case .success(let access):
                     self.battleNetAPI.credentials.clientAccessToken = access.token
-                    self.battleNetAPI.delegate?.battleNetAPI(self.battleNetAPI, didChangeClientAccessToken: access.token)
+                    self.battleNetAPI.delegate?.battleNetAPI(didChangeClientAccessToken: access.token)
                     completion(.success(access.token))
                 case .failure(let error):
                     completion(.failure(error))
@@ -69,14 +75,14 @@ public class AuthenticationManager: OAuthAuthenticator {
             }
             catch {
                 self.battleNetAPI.credentials.clientAccessToken = nil
-                self.battleNetAPI.delegate?.battleNetAPI(self.battleNetAPI, didChangeClientAccessToken: nil)
+                self.battleNetAPI.delegate?.battleNetAPI(didChangeClientAccessToken: nil)
                 throw error
             }
         }
         else {
             let access = try await battleNetAPI.authentication.decoded.getClientAccess()
             self.battleNetAPI.credentials.clientAccessToken = access.token
-            self.battleNetAPI.delegate?.battleNetAPI(self.battleNetAPI, didChangeClientAccessToken: access.token)
+            self.battleNetAPI.delegate?.battleNetAPI(didChangeClientAccessToken: access.token)
             return access.token
         }
     }
@@ -119,7 +125,7 @@ public class AuthenticationManager: OAuthAuthenticator {
             }
             catch {
                 self.battleNetAPI.credentials.userAccessToken = nil
-                self.battleNetAPI.delegate?.battleNetAPI(self.battleNetAPI, didChangeUserAccessToken: nil)
+                self.battleNetAPI.delegate?.battleNetAPI(didChangeUserAccessToken: nil)
                 return try await authenicateUser(scope: self.oauth.scope, on: self.oauth.providerContext, scheme: self.oauth.scheme, redirectUrl: self.oauth.redirectUrl)
             }
         }
@@ -172,11 +178,11 @@ public class AuthenticationManager: OAuthAuthenticator {
                         switch result {
                         case .success(let access):
                             self.battleNetAPI.credentials.userAccessToken = access.token
-                            self.battleNetAPI.delegate?.battleNetAPI(self.battleNetAPI, didChangeUserAccessToken: access.token)
+                            self.battleNetAPI.delegate?.battleNetAPI(didChangeUserAccessToken: access.token)
                             completion(.success(access.token))
                         case .failure(let error):
                             self.battleNetAPI.credentials.userAccessToken = nil
-                            self.battleNetAPI.delegate?.battleNetAPI(self.battleNetAPI, didChangeUserAccessToken: nil)
+                            self.battleNetAPI.delegate?.battleNetAPI(didChangeUserAccessToken: nil)
                             completion(.failure(error))
                         }
                     }

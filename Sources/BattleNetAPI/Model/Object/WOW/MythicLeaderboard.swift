@@ -10,7 +10,7 @@ import Foundation
 
 
 // https://us.api.battle.net/data/wow/connected-realm/11/mythic-leaderboard/?namespace=dynamic-us
-public class MythicLeaderboardIndex: Codable, SelfDecodable {
+public struct MythicLeaderboardIndex: Codable, SelfDecodable {
     public let _links: SelfLink<MythicLeaderboardIndex>
     public let currentLeaderboards: [KeyLink<MythicLeaderboard>]
     
@@ -24,7 +24,7 @@ public class MythicLeaderboardIndex: Codable, SelfDecodable {
 
 // https://us.api.battle.net/data/wow/connected-realm/11/mythic-leaderboard/197/period/642?namespace=dynamic-us
 /// - note: Contains camelCase and snake_case keys (with id)
-public class MythicLeaderboard: Codable {
+public struct MythicLeaderboard: Codable {
     public let _links: SelfLink<MythicLeaderboard>
     public let name: String
     
@@ -55,7 +55,7 @@ public class MythicLeaderboard: Codable {
 
 
 
-public class LeadingGroup: Codable {
+public struct LeadingGroup: Codable {
     public let ranking: Int
     public let duration: Int
     public let completedTimestamp: Int
@@ -74,7 +74,7 @@ public class LeadingGroup: Codable {
 
 
 
-public class PartyMember: Codable {
+public struct PartyMember: Codable {
     public let profile: WOWProfile
     public let faction: Faction
     public let specialization: KeyLink<Specialization>
@@ -82,7 +82,7 @@ public class PartyMember: Codable {
 
 
 
-public class WOWProfile: Codable {
+public struct WOWProfile: Codable {
     public let id: Int
     public let name: String
     public let realm: KeyLink<Realm>
@@ -90,7 +90,7 @@ public class WOWProfile: Codable {
 
 
 
-public class Faction: Codable {
+public struct Faction: Codable {
     public let type: FactionType
 }
 
@@ -100,14 +100,14 @@ public enum FactionType: String, Codable {
 }
 
 
-public class WOWFaction: Codable {
+public struct WOWFaction: Codable {
     public let id: Int
     public let type: String
     public let name: String
 }
 
 
-public class MythicRaidLeaderboard: Codable, SelfDecodable {
+public struct MythicRaidLeaderboard: Codable, SelfDecodable {
     public let _links: SelfLink<MythicRaidLeaderboard>
     public let slug: String
     public let criteriaType: String
@@ -122,7 +122,7 @@ public class MythicRaidLeaderboard: Codable, SelfDecodable {
 }
 
 
-public class Entry: Codable {
+public struct Entry: Codable {
     public let guild: Guild
     public let faction: Faction
     public let timestamp: Int
@@ -131,7 +131,7 @@ public class Entry: Codable {
 }
 
 
-public class Guild: Codable {
+public struct Guild: Codable {
     public let name: String
     public let id: Int
     public let realm: RealmIndex

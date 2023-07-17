@@ -12,6 +12,7 @@ import Foundation
 /// A protocol that identifies a WebService consisting of endpoints that retrieve access tokens
 protocol AuthenticationWebService: WebService {
     var credentials: BattleNetCredentials { get set }
+    var authDelegate: BattleNetAuthDelegate? { get set }
     
     func getClientAccessToken(completion: @escaping (_ result: Result<String, Error>) -> Void)
     func getClientAccessToken() async throws -> String
@@ -76,6 +77,7 @@ extension AuthenticationWebService {
             }
             else {
                 token = try await getUserAccessToken()
+                self.saveToken(token, for: apiType)
             }
         case .gameData:
             if let clientAccessToken = credentials.clientAccessToken {
@@ -83,6 +85,7 @@ extension AuthenticationWebService {
             }
             else {
                 token = try await getClientAccessToken()
+                self.saveToken(token, for: apiType)
             }
         }
         
@@ -137,9 +140,11 @@ extension AuthenticationWebService {
     func invalidateToken(for apiType: APIType) {
         if apiType == .profile || apiType == .community {
             credentials.userAccessToken = nil
+            authDelegate?.battleNetAPI(didChangeUserAccessToken: nil)
         }
         else if apiType == .gameData {
             credentials.clientAccessToken = nil
+            authDelegate?.battleNetAPI(didChangeClientAccessToken: nil)
         }
     }
     
@@ -147,9 +152,11 @@ extension AuthenticationWebService {
     func saveToken(_ token: String, for apiType: APIType) {
         if apiType == .profile || apiType == .community {
             credentials.userAccessToken = token
+            authDelegate?.battleNetAPI(didChangeUserAccessToken: token)
         }
         else if apiType == .gameData {
             credentials.clientAccessToken = token
+            authDelegate?.battleNetAPI(didChangeClientAccessToken: token)
         }
     }
 }

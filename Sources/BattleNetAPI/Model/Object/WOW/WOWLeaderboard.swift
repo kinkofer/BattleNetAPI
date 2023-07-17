@@ -9,7 +9,7 @@
 import Foundation
 
 
-public class WOWLeaderboard: Codable {
+public struct WOWLeaderboard: Codable {
     public let rows: [WOWLeaderboardEntry]
 }
 
@@ -23,7 +23,7 @@ public enum WOWLeaderboardBracket: String {
 
 
 
-public class WOWLeaderboardEntry: Codable {
+public struct WOWLeaderboardEntry: Codable {
     public let ranking: Int
     public let rating: Int
     public let name: String
@@ -61,13 +61,13 @@ public class WOWLeaderboardEntry: Codable {
 
 
 
-public class WOWPVP: Codable {
+public struct WOWPVP: Codable {
     public let brackets: WOWBrackets
 }
 
 
 
-public class WOWBrackets: Codable {
+public struct WOWBrackets: Codable {
     public let arenaBracket2V2: WOWArenaBracket
     public let arenaBracket2V2Skirmish: WOWArenaBracket
     public let arenaBracket3V3: WOWArenaBracket
@@ -85,7 +85,7 @@ public class WOWBrackets: Codable {
 
 
 
-public class WOWArenaBracket: Codable {
+public struct WOWArenaBracket: Codable {
     public let slug: String
     public let rating: Int
     

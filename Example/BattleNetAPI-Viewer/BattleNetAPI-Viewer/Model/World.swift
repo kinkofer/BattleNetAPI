@@ -23,11 +23,13 @@ public class World: ObservableObject {
 
 // Save tokens for subsequent launches
 extension World: BattleNetAuthDelegate {
-    public func battleNetAPI(_ battleNetAPI: BattleNetAPI, didChangeClientAccessToken token: String?) {
+    public func battleNetAPI(didChangeClientAccessToken token: String?) {
+        print("Client Access Token: \(String(describing: token))")
         clientAccessToken = token
     }
     
-    public func battleNetAPI(_ battleNetAPI: BattleNetAPI, didChangeUserAccessToken token: String?) {
+    public func battleNetAPI(didChangeUserAccessToken token: String?) {
+        print("User Access Token: \(String(describing: token))")
         userAccessToken = token
     }
 }
