@@ -1,5 +1,5 @@
 //
-//  UserRepository.swift
+//  WS_User+Decoded.swift
 //  BattleNetAPI
 //
 //  Created by Christopher Jennewein on 4/9/18.

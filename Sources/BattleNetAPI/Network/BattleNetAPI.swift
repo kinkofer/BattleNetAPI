@@ -9,13 +9,21 @@
 import Foundation
 
 
+public protocol BattleNetAuthDelegate {
+    func battleNetAPI(_ battleNetAPI: BattleNetAPI, didChangeClientAccessToken token: String?)
+    func battleNetAPI(_ battleNetAPI: BattleNetAPI, didChangeUserAccessToken token: String?)
+}
+
 /// This class is an interface to all the web services, with separate properties for accessing authentication, user, and specific game web services.
 public class BattleNetAPI {
     public private(set) var credentials: BattleNetCredentials
+    let oauth: BattleNetOAuth
     let session: URLSession
     let region: APIRegion
     let locale: APILocale?
+    public lazy var authenticationManager: AuthenticationManager = AuthenticationManager(battleNetAPI: self, oauth: oauth)
     
+    public var delegate: BattleNetAuthDelegate? = nil
     
     /// Authenication web services
     public lazy private(set) var authentication = WS_Authentication(region: region, locale: locale, session: session, credentials: credentials)
@@ -34,8 +42,9 @@ public class BattleNetAPI {
     
     
     
-    public init(credentials: BattleNetCredentials, session: URLSession = .shared, region: APIRegion = .us, locale: APILocale? = nil) {
+    public init(credentials: BattleNetCredentials, oauth: BattleNetOAuth, session: URLSession = .shared, region: APIRegion = .us, locale: APILocale? = nil) {
         self.credentials = credentials
+        self.oauth = oauth
         self.session = session
         self.region = region
         self.locale = locale

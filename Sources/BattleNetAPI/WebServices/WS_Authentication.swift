@@ -45,6 +45,7 @@ public class WS_Authentication: AuthenticationWebService {
     
     var credentials: BattleNetCredentials
     
+    public lazy var decoded = Decoded(ws: self)
     
     
     init(region: APIRegion, locale: APILocale?, session: URLSession, credentials: BattleNetCredentials) {
@@ -59,7 +60,7 @@ public class WS_Authentication: AuthenticationWebService {
     // MARK: - Client Access
     
     /**
-     Returns the access dictionary configured for the your application
+     Returns the access dictionary configured for your application
      
      - parameter completion: Returns a Result with the Data if `success` or an HTTPError if `failure`
      - note: This access token will not return specific user information. If that is needed, you must receive a user access token through OAuth
@@ -81,9 +82,8 @@ public class WS_Authentication: AuthenticationWebService {
     
     
     /**
-     Returns the access dictionary configured for the your application
+     Returns the access dictionary configured for your application
      
-     - parameter completion: Returns a Result with the Data if `success` or an HTTPError if `failure`
      - note: This access token will not return specific user information. If that is needed, you must receive a user access token through OAuth
      */
     public func getClientAccess() async throws -> Data {
@@ -215,7 +215,7 @@ public class WS_Authentication: AuthenticationWebService {
     /**
      Checks if the user access token is valid to be used with profile web service calls
      
-     - parameter token: The client token saved in the app
+     - parameter token: The user access token saved in the app
      */
     public func validateUserAccessToken(_ token: String) async throws -> Data {
         guard let url = URL(string: region.getCheckTokenURI(token: token)) else { throw HTTPError.invalidRequest }

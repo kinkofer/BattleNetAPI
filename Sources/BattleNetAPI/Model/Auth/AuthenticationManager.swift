@@ -12,23 +12,17 @@ import AuthenticationServices
 
 /// A manager for getting the `clientAccessToken` and `userAccessToken` required for calling web services in the BattleNet API.
 public class AuthenticationManager: OAuthAuthenticator {
-    let battleNetAPI: BattleNetAPI
-    
+    unowned let battleNetAPI: BattleNetAPI
     let oauth: BattleNetOAuth
-    let providerContext: ASWebAuthenticationPresentationContextProviding
     
-    private let authRepo: AuthenticationRepository
     private var webAuthSession: ASWebAuthenticationSession?
-    
     
     
     // MARK: - Init
     
-    public init(battleNetAPI: BattleNetAPI, oauth: BattleNetOAuth, providerContext: ASWebAuthenticationPresentationContextProviding) {
+    public init(battleNetAPI: BattleNetAPI, oauth: BattleNetOAuth) {
         self.battleNetAPI = battleNetAPI
         self.oauth = oauth
-        self.providerContext = providerContext
-        authRepo = AuthenticationRepository(battleNetAPI: battleNetAPI)
         battleNetAPI.authentication.oauthAuthenticator = self
     }
     
@@ -39,22 +33,24 @@ public class AuthenticationManager: OAuthAuthenticator {
     /// Returns the `clientAccessToken` if previously stored and valid, or gets a new `clientAccessToken`. A valid token will be saved to the BattleNetAPI credentials.
     public func getClientAccessToken(completion: @escaping (_ result: Result<String, Error>) -> Void) {
         if let accessToken = battleNetAPI.credentials.clientAccessToken {
-            authRepo.validateClientAccessToken(accessToken) { result in
+            battleNetAPI.authentication.decoded.validateClientAccessToken(accessToken) { result in
                 switch result {
                 case .success:
                     // If the result was a success, send back the valid accessToken
                     completion(.success(accessToken))
                 case .failure(let error):
                     self.battleNetAPI.credentials.clientAccessToken = nil
+                    self.battleNetAPI.delegate?.battleNetAPI(self.battleNetAPI, didChangeClientAccessToken: nil)
                     completion(.failure(error))
                 }
             }
         }
         else {
-            authRepo.getClientAccessToken(clientID: battleNetAPI.credentials.clientID, clientSecret: battleNetAPI.credentials.clientSecret) { result in
+            battleNetAPI.authentication.decoded.getClientAccess { result in
                 switch result {
                 case .success(let access):
                     self.battleNetAPI.credentials.clientAccessToken = access.token
+                    self.battleNetAPI.delegate?.battleNetAPI(self.battleNetAPI, didChangeClientAccessToken: access.token)
                     completion(.success(access.token))
                 case .failure(let error):
                     completion(.failure(error))
@@ -68,17 +64,19 @@ public class AuthenticationManager: OAuthAuthenticator {
     public func getClientAccessToken() async throws -> String {
         if let accessToken = battleNetAPI.credentials.clientAccessToken {
             do {
-                let _ = try await authRepo.validateClientAccessToken(accessToken)
+                let _ = try await battleNetAPI.authentication.decoded.validateClientAccessToken(accessToken)
                 return accessToken
             }
             catch {
                 self.battleNetAPI.credentials.clientAccessToken = nil
+                self.battleNetAPI.delegate?.battleNetAPI(self.battleNetAPI, didChangeClientAccessToken: nil)
                 throw error
             }
         }
         else {
-            let access = try await authRepo.getClientAccessToken(clientID: battleNetAPI.credentials.clientID, clientSecret: battleNetAPI.credentials.clientSecret)
+            let access = try await battleNetAPI.authentication.decoded.getClientAccess()
             self.battleNetAPI.credentials.clientAccessToken = access.token
+            self.battleNetAPI.delegate?.battleNetAPI(self.battleNetAPI, didChangeClientAccessToken: access.token)
             return access.token
         }
     }
@@ -92,19 +90,19 @@ public class AuthenticationManager: OAuthAuthenticator {
      */
     public func getUserAccessToken(completion: @escaping (_ result: Result<String, Error>) -> Void) {
         if let userAccessToken = battleNetAPI.credentials.userAccessToken {
-            authRepo.validateUserAccessToken(userAccessToken) { result in
+            battleNetAPI.authentication.decoded.validateUserAccessToken(userAccessToken) { result in
                 switch result {
                 case .success:
                     // If the result was a success, send back the valid accessToken
                     completion(.success(userAccessToken))
                 case .failure:
                     self.battleNetAPI.credentials.userAccessToken = nil
-                    self.authenicateUser(scope: self.oauth.scope, on: self.providerContext, scheme: self.oauth.scheme, redirectUrl: self.oauth.redirectUrl, completion: completion)
+                    self.authenicateUser(scope: self.oauth.scope, on: self.oauth.providerContext, scheme: self.oauth.scheme, redirectUrl: self.oauth.redirectUrl, completion: completion)
                 }
             }
         }
         else {
-            authenicateUser(scope: oauth.scope, on: providerContext, scheme: oauth.scheme, redirectUrl: oauth.redirectUrl, completion: completion)
+            authenicateUser(scope: oauth.scope, on: oauth.providerContext, scheme: oauth.scheme, redirectUrl: oauth.redirectUrl, completion: completion)
         }
     }
     
@@ -116,16 +114,17 @@ public class AuthenticationManager: OAuthAuthenticator {
     public func getUserAccessToken() async throws -> String {
         if let userAccessToken = battleNetAPI.credentials.userAccessToken {
             do {
-                let _ = try await authRepo.validateUserAccessToken(userAccessToken)
+                let _ = try await battleNetAPI.authentication.decoded.validateUserAccessToken(userAccessToken)
                 return userAccessToken
             }
             catch {
                 self.battleNetAPI.credentials.userAccessToken = nil
-                return try await authenicateUser(scope: self.oauth.scope, on: self.providerContext, scheme: self.oauth.scheme, redirectUrl: self.oauth.redirectUrl)
+                self.battleNetAPI.delegate?.battleNetAPI(self.battleNetAPI, didChangeUserAccessToken: nil)
+                return try await authenicateUser(scope: self.oauth.scope, on: self.oauth.providerContext, scheme: self.oauth.scheme, redirectUrl: self.oauth.redirectUrl)
             }
         }
         else {
-            return try await authenicateUser(scope: oauth.scope, on: providerContext, scheme: oauth.scheme, redirectUrl: oauth.redirectUrl)
+            return try await authenicateUser(scope: oauth.scope, on: oauth.providerContext, scheme: oauth.scheme, redirectUrl: oauth.redirectUrl)
         }
     }
     
@@ -147,7 +146,7 @@ public class AuthenticationManager: OAuthAuthenticator {
         UserDefaults.standard.set(state, forKey: stateKey)
         
         guard let redirectURL = URL(string: redirectUrl),
-            let url = authRepo.getOAuthURL(scope: scope, redirectURL: redirectURL, state: state) else {
+            let url = battleNetAPI.authentication.getOAuthURL(scope: scope, redirectURL: redirectURL, state: state) else {
                 completion(.failure(HTTPError.invalidRequest))
                 return
         }
@@ -168,14 +167,16 @@ public class AuthenticationManager: OAuthAuthenticator {
                     return
                 }
                 
-                self.authRepo.getUserAccessToken(clientID: self.battleNetAPI.credentials.clientID, clientSecret: self.battleNetAPI.credentials.clientSecret,
-                                                 code: code, redirectURL: redirectUrl) { result in
+                self.battleNetAPI.authentication.decoded.getUserAccess(code: code, redirectURL: redirectUrl) { result in
                     DispatchQueue.main.async {
                         switch result {
                         case .success(let access):
                             self.battleNetAPI.credentials.userAccessToken = access.token
+                            self.battleNetAPI.delegate?.battleNetAPI(self.battleNetAPI, didChangeUserAccessToken: access.token)
                             completion(.success(access.token))
                         case .failure(let error):
+                            self.battleNetAPI.credentials.userAccessToken = nil
+                            self.battleNetAPI.delegate?.battleNetAPI(self.battleNetAPI, didChangeUserAccessToken: nil)
                             completion(.failure(error))
                         }
                     }

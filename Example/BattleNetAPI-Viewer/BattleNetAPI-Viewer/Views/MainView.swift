@@ -34,7 +34,6 @@ struct MainView: View {
     }
     
     @EnvironmentObject var battleNetAPI: BattleNetAPI
-    @EnvironmentObject var authManager: AuthenticationManager
     
     @State var gameAPISelection: GameAPI?
     @State var alertType: AlertType?
@@ -158,7 +157,7 @@ struct MainView: View {
     func authenticateUser() {
         Task {
             do {
-                let userAccessToken = try await authManager.getUserAccessToken()
+                let userAccessToken = try await battleNetAPI.authenticationManager.getUserAccessToken()
                 print("User Access Token: \(userAccessToken)")
                 alertType = .notify("Sign in successful")
             }
@@ -265,13 +264,11 @@ struct RegionMenu: View {
 struct ContentView_Previews: PreviewProvider {
     static var previews: some View {
         let current = World()
-        let battleNetAPI = BattleNetAPI(credentials: current.credentials, session: .shared, region: current.region, locale: current.locale)
-        let authManager = AuthenticationManager(battleNetAPI: battleNetAPI, oauth: current.oauth, providerContext: AuthenticationContext())
+        let battleNetAPI = BattleNetAPI(credentials: current.credentials, oauth: current.oauth, session: .shared, region: current.region, locale: current.locale)
         
         MainView()
             .environmentObject(current)
             .environmentObject(battleNetAPI)
-            .environmentObject(authManager)
     }
 }
 

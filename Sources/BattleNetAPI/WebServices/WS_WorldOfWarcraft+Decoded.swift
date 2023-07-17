@@ -1,5 +1,5 @@
 //
-//  WorldOfWarcraftRepository.swift
+//  WS_WorldOfWarcraft+Decoded.swift
 //  BattleNetAPI
 //
 //  Created by Christopher Jennewein on 4/8/18.

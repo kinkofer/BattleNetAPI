@@ -9,12 +9,4 @@ import BattleNetAPI
 import SwiftUI
 
 
-extension BattleNetAPI: ObservableObject {
-    
-}
-
-
-
-extension AuthenticationManager: ObservableObject {
-    
-}
+extension BattleNetAPI: ObservableObject { }

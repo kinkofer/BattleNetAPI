@@ -1,5 +1,5 @@
 //
-//  Diablo3Repository.swift
+//  WS_Diablo3+Decoded.swift
 //  BattleNetAPI
 //
 //  Created by Christopher Jennewein on 4/9/18.

@@ -1,5 +1,5 @@
 //
-//  StarCraft2Repository.swift
+//  WS_StarCraft2+Decoded.swift
 //  BattleNetAPI
 //
 //  Created by Christopher Jennewein on 4/9/18.
