@@ -19,8 +19,8 @@ public class BattleNetAPI {
     public private(set) var credentials: BattleNetCredentials
     let oauth: BattleNetOAuth
     let session: URLSession
-    let region: APIRegion
-    let locale: APILocale?
+    public var region: APIRegion
+    public var locale: APILocale?
     public lazy var authenticationManager: AuthenticationManager = AuthenticationManager(battleNetAPI: self, oauth: oauth)
     
     public var delegate: BattleNetAuthDelegate? = nil

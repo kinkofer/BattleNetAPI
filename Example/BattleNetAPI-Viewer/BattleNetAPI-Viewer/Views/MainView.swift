@@ -233,23 +233,49 @@ extension MainView {
 
 struct RegionMenu: View {
     @EnvironmentObject var current: World
+    @EnvironmentObject var battleNetAPI: BattleNetAPI
     
     var body: some View {
         Menu {
             Menu(APIRegion.us.displayName) {
                 ForEach(APIRegion.us.supportedLocales, id: \.self) { locale in
-                    Button("\(locale.flag) \(locale.language)") { current.region = .us; current.locale = locale }
+                    Button("\(locale.flag) \(locale.language)") {
+                        current.region = .us
+                        current.locale = locale
+                        battleNetAPI.region = .us
+                        battleNetAPI.locale = locale
+                    }
                 }
             }
             Menu(APIRegion.eu.displayName) {
                 ForEach(APIRegion.eu.supportedLocales, id: \.self) { locale in
-                    Button("\(locale.flag) \(locale.language)") { current.region = .eu; current.locale = locale }
+                    Button("\(locale.flag) \(locale.language)") {
+                        current.region = .eu
+                        current.locale = locale
+                        battleNetAPI.region = .eu
+                        battleNetAPI.locale = locale
+                    }
                 }
             }
             
-            Button("\(APILocale.ko_KR.flag) \(APILocale.ko_KR.language)") { current.region = .kr; current.locale = .ko_KR }
-            Button("\(APILocale.zh_TW.flag) \(APILocale.zh_TW.language)") { current.region = .tw; current.locale = .zh_TW }
-            Button("\(APILocale.zh_CN.flag) \(APILocale.zh_CN.language)") {  current.region = .cn; current.locale = .zh_CN }
+            Button("\(APILocale.ko_KR.flag) \(APILocale.ko_KR.language)") {
+                current.region = .kr
+                current.locale = .ko_KR
+                battleNetAPI.region = .kr
+                battleNetAPI.locale = .ko_KR
+            }
+            Button("\(APILocale.zh_TW.flag) \(APILocale.zh_TW.language)") {
+                current.region = .tw
+                current.locale = .zh_TW
+                battleNetAPI.region = .tw
+                battleNetAPI.locale = .zh_TW
+            }
+            Button("\(APILocale.zh_CN.flag) \(APILocale.zh_CN.language)") {
+                current.region = .cn
+                current.locale = .zh_CN
+                battleNetAPI.region = .cn
+                battleNetAPI.locale = .zh_CN
+            }
         } label: {
             Text(current.locale.flag)
         }
