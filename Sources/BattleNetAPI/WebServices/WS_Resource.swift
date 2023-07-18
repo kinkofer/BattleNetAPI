@@ -9,10 +9,7 @@
 import Foundation
 
 
-protocol WS_ResourceService: WebService {
-    
-}
-
+protocol WS_ResourceService: WebService { }
 
 
 public struct WS_Resource: WS_ResourceService {
@@ -26,7 +23,20 @@ public struct WS_Resource: WS_ResourceService {
     var authenticationService: AuthenticationWebService?
     
     
+    @available(*, renamed: "getResource(from:apiType:)")
     public func getResource(from url: String, apiType: APIType, completion: @escaping (_ result: Result<Data, Error>) -> Void) {
-        callResource(url: url, apiType: apiType, completion: completion)
+        Task {
+            do {
+                let result = try await getResource(from: url, apiType: apiType)
+                completion(.success(result))
+            } catch {
+                completion(.failure(error))
+            }
+        }
+    }
+    
+    
+    public func getResource(from url: String, apiType: APIType) async throws -> Data {
+        return try await callResource(url: url, apiType: apiType)
     }
 }

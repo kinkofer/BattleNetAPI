@@ -28,6 +28,23 @@ protocol WebService {
 
 
 extension WebService {
+    /// Property to contain web service functions that return decoded objects
+    var decoded: Decoded<Self> { Decoded(self) }
+}
+
+/// Struct used to hold a reference to a WebService so that methods within the Decoded extension can reference its webService
+public struct Decoded<WebService> {
+    public let webService: WebService
+    
+    public init(_ webService: WebService) {
+        self.webService = webService
+    }
+}
+
+
+
+
+extension WebService {
     /// Makes a call using only the function paramaters to create the request.
     func call(url: URL, method: HTTPMethod = .get, headers: [HTTPHeader]? = nil, body: Data? = nil, completion: @escaping (_ result: Result<Data, Error>) -> Void) {
         let request = URLRequest(url: url, method: method, headers: headers, body: body)

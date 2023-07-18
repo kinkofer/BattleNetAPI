@@ -128,7 +128,7 @@ struct WorldOfWarcraftView: View {
                         battleNetAPI.wow.getSoulbind(id: 1, completion: { parseResult($0, for: .soulbindIndex) })
                     }
                     webServiceRow(api: .conduitIndex) {
-                        battleNetAPI.wow.getCondiutIndex(completion: { parseResult($0, for: .conduitIndex) })
+                        battleNetAPI.wow.getConduitIndex(completion: { parseResult($0, for: .conduitIndex) })
                     }
                     webServiceRow(api: .conduit) {
                         battleNetAPI.wow.getConduit(id: 1, completion: { parseResult($0, for: .conduit) })

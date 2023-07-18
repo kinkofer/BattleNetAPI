@@ -46,8 +46,6 @@ public class WS_Authentication: AuthenticationWebService {
     
     var credentials: BattleNetCredentials
     
-    public lazy var decoded = Decoded(ws: self)
-    
     
     init(region: APIRegion, locale: APILocale?, session: URLSession, credentials: BattleNetCredentials, authDelegate: BattleNetAuthDelegate? = nil) {
         self.region = region
