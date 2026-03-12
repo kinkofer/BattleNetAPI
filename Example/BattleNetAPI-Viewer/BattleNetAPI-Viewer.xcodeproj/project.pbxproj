@@ -3,7 +3,7 @@
 	archiveVersion = 1;
 	classes = {
 	};
-	objectVersion = 60;
+	objectVersion = 70;
 	objects = {
 
 /* Begin PBXBuildFile section */
@@ -25,6 +25,16 @@
 		59781F4C2A62F36400080511 /* Diablo3View.swift in Sources */ = {isa = PBXBuildFile; fileRef = 59781F452A62F36400080511 /* Diablo3View.swift */; };
 /* End PBXBuildFile section */
 
+/* Begin PBXContainerItemProxy section */
+		59BB37BA2F60D89700900B9C /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 592D29862A62EEC9005DFB37 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 592D298D2A62EEC9005DFB37;
+			remoteInfo = "BattleNetAPI-Viewer";
+		};
+/* End PBXContainerItemProxy section */
+
 /* Begin PBXFileReference section */
 		592D298E2A62EEC9005DFB37 /* BattleNetAPI-Viewer.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "BattleNetAPI-Viewer.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		592D29912A62EEC9005DFB37 /* BattleNetAPI_ViewerApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BattleNetAPI_ViewerApp.swift; sourceTree = "<group>"; };
@@ -43,7 +53,13 @@
 		59781F432A62F36400080511 /* Starcraft2View.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Starcraft2View.swift; sourceTree = "<group>"; };
 		59781F442A62F36400080511 /* MainView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MainView.swift; sourceTree = "<group>"; };
 		59781F452A62F36400080511 /* Diablo3View.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Diablo3View.swift; sourceTree = "<group>"; };
+		59BB37B42F60D89700900B9C /* Battle​Net​API​-​Viewer​UITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "Battle​Net​API​-​Viewer​UITests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
+		59BB37C52F62516D00900B9C /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = Info.plist; sourceTree = "<group>"; };
 /* End PBXFileReference section */
+
+/* Begin PBXFileSystemSynchronizedRootGroup section */
+		59BB37B52F60D89700900B9C /* Battle​Net​API​-​Viewer​UITests */ = {isa = PBXFileSystemSynchronizedRootGroup; explicitFileTypes = {}; explicitFolders = (); path = "Battle​Net​API​-​Viewer​UITests"; sourceTree = "<group>"; };
+/* End PBXFileSystemSynchronizedRootGroup section */
 
 /* Begin PBXFrameworksBuildPhase section */
 		592D298B2A62EEC9005DFB37 /* Frameworks */ = {
@@ -54,6 +70,13 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		59BB37B12F60D89700900B9C /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
@@ -61,6 +84,7 @@
 			isa = PBXGroup;
 			children = (
 				592D29902A62EEC9005DFB37 /* BattleNetAPI-Viewer */,
+				59BB37B52F60D89700900B9C /* Battle​Net​API​-​Viewer​UITests */,
 				592D298F2A62EEC9005DFB37 /* Products */,
 			);
 			sourceTree = "<group>";
@@ -69,6 +93,7 @@
 			isa = PBXGroup;
 			children = (
 				592D298E2A62EEC9005DFB37 /* BattleNetAPI-Viewer.app */,
+				59BB37B42F60D89700900B9C /* Battle​Net​API​-​Viewer​UITests.xctest */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -76,6 +101,7 @@
 		592D29902A62EEC9005DFB37 /* BattleNetAPI-Viewer */ = {
 			isa = PBXGroup;
 			children = (
+				59BB37C52F62516D00900B9C /* Info.plist */,
 				592D29912A62EEC9005DFB37 /* BattleNetAPI_ViewerApp.swift */,
 				59781F2F2A62EFC000080511 /* Model */,
 				59781F302A62F2D900080511 /* Views */,
@@ -159,6 +185,29 @@
 			productReference = 592D298E2A62EEC9005DFB37 /* BattleNetAPI-Viewer.app */;
 			productType = "com.apple.product-type.application";
 		};
+		59BB37B32F60D89700900B9C /* Battle​Net​API​-​Viewer​UITests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 59BB37BE2F60D89700900B9C /* Build configuration list for PBXNativeTarget "Battle​Net​API​-​Viewer​UITests" */;
+			buildPhases = (
+				59BB37B02F60D89700900B9C /* Sources */,
+				59BB37B12F60D89700900B9C /* Frameworks */,
+				59BB37B22F60D89700900B9C /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				59BB37BB2F60D89700900B9C /* PBXTargetDependency */,
+			);
+			fileSystemSynchronizedGroups = (
+				59BB37B52F60D89700900B9C /* Battle​Net​API​-​Viewer​UITests */,
+			);
+			name = "Battle​Net​API​-​Viewer​UITests";
+			packageProductDependencies = (
+			);
+			productName = "Battle​Net​API​-​Viewer​UITests";
+			productReference = 59BB37B42F60D89700900B9C /* Battle​Net​API​-​Viewer​UITests.xctest */;
+			productType = "com.apple.product-type.bundle.ui-testing";
+		};
 /* End PBXNativeTarget section */
 
 /* Begin PBXProject section */
@@ -166,11 +215,15 @@
 			isa = PBXProject;
 			attributes = {
 				BuildIndependentTargetsInParallel = 1;
-				LastSwiftUpdateCheck = 1500;
+				LastSwiftUpdateCheck = 2630;
 				LastUpgradeCheck = 1500;
 				TargetAttributes = {
 					592D298D2A62EEC9005DFB37 = {
 						CreatedOnToolsVersion = 15.0;
+					};
+					59BB37B32F60D89700900B9C = {
+						CreatedOnToolsVersion = 26.3;
+						TestTargetID = 592D298D2A62EEC9005DFB37;
 					};
 				};
 			};
@@ -191,6 +244,7 @@
 			projectRoot = "";
 			targets = (
 				592D298D2A62EEC9005DFB37 /* BattleNetAPI-Viewer */,
+				59BB37B32F60D89700900B9C /* Battle​Net​API​-​Viewer​UITests */,
 			);
 		};
 /* End PBXProject section */
@@ -202,6 +256,13 @@
 			files = (
 				592D299A2A62EECC005DFB37 /* Preview Assets.xcassets in Resources */,
 				592D29962A62EECC005DFB37 /* Assets.xcassets in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		59BB37B22F60D89700900B9C /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -228,7 +289,22 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		59BB37B02F60D89700900B9C /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 /* End PBXSourcesBuildPhase section */
+
+/* Begin PBXTargetDependency section */
+		59BB37BB2F60D89700900B9C /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 592D298D2A62EEC9005DFB37 /* BattleNetAPI-Viewer */;
+			targetProxy = 59BB37BA2F60D89700900B9C /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
 
 /* Begin XCBuildConfiguration section */
 		592D299B2A62EECC005DFB37 /* Debug */ = {
@@ -358,6 +434,7 @@
 				ENABLE_HARDENED_RUNTIME = YES;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = "BattleNetAPI-Viewer/Info.plist";
 				"INFOPLIST_KEY_UIApplicationSceneManifest_Generation[sdk=iphoneos*]" = YES;
 				"INFOPLIST_KEY_UIApplicationSceneManifest_Generation[sdk=iphonesimulator*]" = YES;
 				"INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents[sdk=iphoneos*]" = YES;
@@ -396,6 +473,7 @@
 				ENABLE_HARDENED_RUNTIME = YES;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = "BattleNetAPI-Viewer/Info.plist";
 				"INFOPLIST_KEY_UIApplicationSceneManifest_Generation[sdk=iphoneos*]" = YES;
 				"INFOPLIST_KEY_UIApplicationSceneManifest_Generation[sdk=iphonesimulator*]" = YES;
 				"INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents[sdk=iphoneos*]" = YES;
@@ -421,6 +499,52 @@
 			};
 			name = Release;
 		};
+		59BB37BC2F60D89700900B9C /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				GENERATE_INFOPLIST_FILE = YES;
+				MACOSX_DEPLOYMENT_TARGET = 26.2;
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = "com.prismatic-games.Battle-Net-API---Viewer-UITests";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = macosx;
+				STRING_CATALOG_GENERATE_SYMBOLS = NO;
+				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator macosx";
+				SUPPORTS_MACCATALYST = NO;
+				SWIFT_APPROACHABLE_CONCURRENCY = YES;
+				SWIFT_EMIT_LOC_STRINGS = NO;
+				SWIFT_UPCOMING_FEATURE_MEMBER_IMPORT_VISIBILITY = YES;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = 1;
+				TEST_TARGET_NAME = "BattleNetAPI-Viewer";
+			};
+			name = Debug;
+		};
+		59BB37BD2F60D89700900B9C /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				GENERATE_INFOPLIST_FILE = YES;
+				MACOSX_DEPLOYMENT_TARGET = 26.2;
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = "com.prismatic-games.Battle-Net-API---Viewer-UITests";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = macosx;
+				STRING_CATALOG_GENERATE_SYMBOLS = NO;
+				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator macosx";
+				SUPPORTS_MACCATALYST = NO;
+				SWIFT_APPROACHABLE_CONCURRENCY = YES;
+				SWIFT_EMIT_LOC_STRINGS = NO;
+				SWIFT_UPCOMING_FEATURE_MEMBER_IMPORT_VISIBILITY = YES;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = 1;
+				TEST_TARGET_NAME = "BattleNetAPI-Viewer";
+			};
+			name = Release;
+		};
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
@@ -438,6 +562,15 @@
 			buildConfigurations = (
 				592D299E2A62EECC005DFB37 /* Debug */,
 				592D299F2A62EECC005DFB37 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		59BB37BE2F60D89700900B9C /* Build configuration list for PBXNativeTarget "Battle​Net​API​-​Viewer​UITests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				59BB37BC2F60D89700900B9C /* Debug */,
+				59BB37BD2F60D89700900B9C /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;

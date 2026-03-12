@@ -28,7 +28,7 @@ class StarCraft2Tests: XCTestCase {
             return
         }
         
-        battleNetAPI = BattleNetAPI(credentials: credentials)
+        battleNetAPI = BattleNetAPI(credentials: credentials, oauth: oauth)
     }
     
     override func tearDown() {

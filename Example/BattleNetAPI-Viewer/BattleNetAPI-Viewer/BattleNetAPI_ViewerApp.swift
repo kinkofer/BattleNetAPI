@@ -16,6 +16,9 @@ struct BattleNetAPI_ViewerApp: App {
     
     
     init() {
+        if CommandLine.arguments.contains("--resetUserAuth") {
+            current.userAccessToken = nil
+        }
         battleNetAPI = BattleNetAPI(credentials: current.credentials, oauth: current.oauth, session: .shared, region: current.region, locale: current.locale)
         battleNetAPI.delegate = current
     }

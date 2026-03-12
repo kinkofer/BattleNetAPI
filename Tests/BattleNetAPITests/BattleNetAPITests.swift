@@ -7,12 +7,24 @@
 //
 
 import XCTest
+import AuthenticationServices
 @testable import BattleNetAPI
+
+
+class MockPresentationContext: NSObject, ASWebAuthenticationPresentationContextProviding {
+    func presentationAnchor(for session: ASWebAuthenticationSession) -> ASPresentationAnchor {
+        return ASPresentationAnchor()
+    }
+}
 
 
 /// Set the credentials that will be used for all tests.
 /// - Note: `clientAccessToken` and `userAccessToken` need to fetched before running tests.
 let credentials = BattleNetCredentials(clientID: "CLIENT_ID", clientSecret: "CLIENT_SECRET", clientAccessToken: nil, userAccessToken: nil)
+
+/// Set the OAuth configuration that will be used for all tests.
+/// - Note: The `MockPresentationContext` satisfies the `ASWebAuthenticationPresentationContextProviding` requirement without presenting UI.
+let oauth = BattleNetOAuth(scope: [.wow, .sc2, .d3], scheme: "testscheme", redirectUrl: "https://example.com/callback", providerContext: MockPresentationContext())
 
 
 class BattleNetAPITests: XCTestCase {

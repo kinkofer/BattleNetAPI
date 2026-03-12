@@ -13,7 +13,7 @@ import Foundation
 public struct ClientToken: Codable {
     public let clientID: String
     public let expiresIn: Int
-    public let authorities: [Authority]
+    public let authorities: [String]
     
     enum CodingKeys: String, CodingKey {
         case clientID = "client_id"
@@ -30,24 +30,6 @@ extension ClientToken: CustomDebugStringConvertible {
             expiresIn: \(expiresIn),
             authorities: \(authorities)
         }
-        """
-    }
-}
-
-
-
-public struct Authority: Codable {
-    public let role: String
-    
-    enum CodingKeys: String, CodingKey {
-        case role = "authority"
-    }
-}
-
-extension Authority: CustomDebugStringConvertible {
-    public var debugDescription: String {
-        return """
-        {authority: \(role)}
         """
     }
 }

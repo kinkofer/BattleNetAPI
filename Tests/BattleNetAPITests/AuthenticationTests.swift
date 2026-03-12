@@ -17,7 +17,7 @@ class AuthenticationTests: XCTestCase {
     override func setUpWithError() throws {
         super.setUp()
         // Put setup code here. This method is called before the invocation of each test method in the class.
-        battleNetAPI = BattleNetAPI(credentials: credentials)
+        battleNetAPI = BattleNetAPI(credentials: credentials, oauth: oauth)
     }
     
     override func tearDownWithError() throws {
