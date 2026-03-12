@@ -101,8 +101,7 @@ public enum FactionType: String, Codable {
 
 
 public struct WOWFaction: Codable {
-    public let id: Int
-    public let type: String
+    public let type: FactionType
     public let name: String
 }
 
@@ -111,8 +110,8 @@ public struct MythicRaidLeaderboard: Codable, SelfDecodable {
     public let _links: SelfLink<MythicRaidLeaderboard>
     public let slug: String
     public let criteriaType: String
-    public let zone: ZoneInfo
     public let entries: [Entry]
+//    public let journalInstance: KeyLink<JournalInstance>
     
     public static var decoder: JSONDecoder {
         let decoder = JSONDecoder()

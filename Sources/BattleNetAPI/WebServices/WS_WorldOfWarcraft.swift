@@ -2779,7 +2779,7 @@ public struct WS_WorldOfWarcraft: WebService {
      - parameter namespace: The namespace to use to locate this document.
      */
     public func getMythicKeystoneSeason(id: Int, namespace: APINamespace? = .dynamic) async throws -> Data {
-        return try await self.call(endpoint: API.mythicKeystoneSeasonIndex, namespace: namespace)
+        return try await self.call(endpoint: API.mythicKeystoneSeason(id), namespace: namespace)
     }
     
     

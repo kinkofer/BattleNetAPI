@@ -10,6 +10,7 @@ import Foundation
 
 
 public struct WOWRecipe: Codable {
+    public let _links: SelfLink<WOWRecipe>
     public let id: Int
     public let name: String
     public let profession: String

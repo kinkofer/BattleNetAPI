@@ -35,6 +35,7 @@ public struct ConnectedRealm: Codable, SelfDecodable {
     public let population: ConnectedRealmPopulation
     
     public let mythicLeaderboards: Link<MythicLeaderboard>
+    public let auctions: Link<Auction>
     
     public static var decoder: JSONDecoder {
         let decoder = JSONDecoder()

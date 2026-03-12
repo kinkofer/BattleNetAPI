@@ -171,8 +171,13 @@ public struct WOWRace: Codable, SelfDecodable {
     public let _links: SelfLink<WOWRace>
     public let id: Int
     public let name: String
-    public let genderName: GenderName2
-    public let faction: [WOWFaction]
+    public let genderName: GenderName
+    public let faction: WOWFaction
+    public let isSelectable: Bool
+    public let isAlliedRace: Bool
+    public let playableClasses: [KeyLink<WOWClass>]
+    public let racialSpells: [KeyLink<Spell>]
+    
     
     public static var decoder: JSONDecoder {
         let decoder = JSONDecoder()

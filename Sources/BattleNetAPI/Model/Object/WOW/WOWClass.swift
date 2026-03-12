@@ -39,18 +39,6 @@ public struct GenderName: Codable {
 }
 
 
-public struct GenderName2: Codable, SelfDecodable {
-    public let maleName: String
-    public let femaleName: String
-    
-    public static var decoder: JSONDecoder {
-        let decoder = JSONDecoder()
-        decoder.keyDecodingStrategy = .convertFromSnakeCase
-        return decoder
-    }
-}
-
-
 
 // MARK: - public struct Data Resource
 

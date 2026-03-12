@@ -33,7 +33,10 @@ public struct Specialization: Codable, SelfDecodable {
     public let genderDescription: GenderName
     public let role: Role
     public let pvpTalents: [Talent]
-    public let talentTiers: [TalentTier]
+//    public let specTalentTree: KeyLink<SpecTalentTree>
+    public let powerType: KeyLink<PowerType>
+//    public let primaryStatType: WOWStatType
+//    public let heroTalentTrees: [KeyLink<HeroTalenTree>]
     
     public let media: MediaLink
     

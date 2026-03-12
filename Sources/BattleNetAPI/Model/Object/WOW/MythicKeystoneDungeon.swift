@@ -104,6 +104,7 @@ public struct MythicKeystoneSeason: Codable, SelfDecodable {
     public let startTimestamp: Int
     public let endTimestamp: Int
     public let periods: [KeyLink<MythicKeystonePeriod>]
+    public let seasonName: String
     
     public static var decoder: JSONDecoder {
         let decoder = JSONDecoder()

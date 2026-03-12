@@ -75,7 +75,7 @@ public struct EraLeaderboard: Codable, SelfDecodable {
     public let row: [LeaderboardEntry]
     public let column: [LeaderboardColumn]
     
-    public let greaterRiftSolostruct: String
+    public let greaterRiftSoloClass: String
     public let greaterRift: Bool
     
     

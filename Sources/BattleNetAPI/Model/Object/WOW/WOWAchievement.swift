@@ -24,29 +24,23 @@ public struct WOWAchievementCategory: Codable {
 
 
 
-public struct WOWAchievement: Codable {
+public struct WOWAchievement: Codable, SelfDecodable {
     public let id: Int
-    public let title: String
-    public let points: Int
+    public let category: KeyLink<WOWAchievementCategory>
+    public let name: String
     public let description: String
-    public let reward: String?
-    public let rewardItems: [WOWItemSummary]
-    public let icon: String
-    public let criteria: [WOWAchievementCriterion]
-    public let accountWide: Bool
-    public let factionID: Int
+    public let points: Int
+    public let isAccountWide: Bool
+    public let criteria: WOWAchievementCriterion
+    public let nextCriteria: KeyLink<WOWAchievement>?
+    public let media: MediaLink
+    public let displayOrder: Int
     
-    enum CodingKeys: String, CodingKey {
-        case id
-        case title
-        case points
-        case description
-        case reward
-        case rewardItems
-        case icon
-        case criteria
-        case accountWide
-        case factionID = "factionId"
+    
+    public static var decoder: JSONDecoder {
+        let decoder = JSONDecoder()
+        decoder.keyDecodingStrategy = .convertFromSnakeCase
+        return decoder
     }
 }
 
@@ -55,8 +49,7 @@ public struct WOWAchievement: Codable {
 public struct WOWAchievementCriterion: Codable {
     public let id: Int
     public let description: String
-    public let orderIndex: Int
-    public let max: Int
+    public let amount: Int
 }
 
 

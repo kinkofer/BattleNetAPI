@@ -222,8 +222,8 @@ class Diablo3Tests: XCTestCase {
     
     
     func testGetHero() {
-        let heroID = 88095369
-        let battleTag = "hionpotuse-1872"
+        let heroID = 157143411
+        let battleTag = "okappa-11821"
         
         let wsResponseExpectation = expectation(description: "Web Service returned a response")
         
@@ -238,8 +238,8 @@ class Diablo3Tests: XCTestCase {
     
     
     func testGetItems() {
-        let heroID = 99983354
-        let battleTag = "kinkofer-11254"
+        let heroID = 157143411
+        let battleTag = "okappa-11821"
         
         let wsResponseExpectation = expectation(description: "Web Service returned a response")
         

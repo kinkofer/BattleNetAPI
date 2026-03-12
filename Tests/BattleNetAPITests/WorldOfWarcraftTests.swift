@@ -28,7 +28,7 @@ class WorldOfWarcraftTests: XCTestCase {
             return
         }
         
-        battleNetAPI = BattleNetAPI(credentials: credentials, oauth: oauth)
+        battleNetAPI = BattleNetAPI(credentials: credentials, oauth: oauth, locale: .en_US)
     }
     
     override func tearDown() {
@@ -255,7 +255,7 @@ class WorldOfWarcraftTests: XCTestCase {
     
     
     func testGetMythicKeystoneSeason() {
-        let id = 1
+        let id = 8
         
         let wsResponseExpectation = expectation(description: "Web Service returned a response")
         
@@ -539,7 +539,7 @@ class WorldOfWarcraftTests: XCTestCase {
     // MARK: - Achievement API
     
     func testGetAchievement() {
-        let id = 2144
+        let id = 6
         
         let wsResponseExpectation = expectation(description: "Web Service returned a response")
         
@@ -649,7 +649,7 @@ class WorldOfWarcraftTests: XCTestCase {
     // MARK: - Item API
     
     func testGetItem() {
-        let id = 18803
+        let id = 19019
         
         let wsResponseExpectation = expectation(description: "Web Service returned a response")
         
@@ -780,7 +780,7 @@ class WorldOfWarcraftTests: XCTestCase {
     // MARK: - Quest API
     
     func testGetQuest() {
-        let id = 13146
+        let id = 2
         
         let wsResponseExpectation = expectation(description: "Web Service returned a response")
         
@@ -814,7 +814,7 @@ class WorldOfWarcraftTests: XCTestCase {
     // MARK: - Recipe API
     
     func testGetRecipe() {
-        let id = 33994
+        let id = 1631
         
         let wsResponseExpectation = expectation(description: "Web Service returned a response")
         
