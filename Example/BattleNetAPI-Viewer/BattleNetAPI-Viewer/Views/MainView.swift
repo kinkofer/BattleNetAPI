@@ -33,10 +33,11 @@ struct MainView: View {
         }
     }
     
-    @EnvironmentObject var battleNetAPI: BattleNetAPI
+    @Environment(World.self) private var current
+    @Environment(BattleNetAPI.self) private var battleNetAPI
     
-    @State var gameAPISelection: GameAPI?
-    @State var alertType: AlertType?
+    @State private var gameAPISelection: GameAPI?
+    @State private var alertType: AlertType?
     
     let title = "BattleNetAPI Viewer"
     
@@ -45,7 +46,21 @@ struct MainView: View {
     
     var body: some View {
         NavigationSplitView {
-            apiList
+            List(selection: Binding(
+                get: { return gameAPISelection },
+                set: { newValue in
+                    guard let gameAPI = newValue else { self.gameAPISelection = nil; return }
+                    
+                    if gameAPI.requiresUserAuth && battleNetAPI.credentials.userAccessToken == nil {
+                        alertType = .authError
+                    }
+                    else {
+                        gameAPISelection = newValue
+                    }
+                }
+            )) {
+                apiList
+            }
                 .listStyle(.sidebar)
                 .navigationTitle(title)
                 .toolbar {
@@ -88,50 +103,40 @@ struct MainView: View {
         } detail: {
             Text("Select a method")
         }
-        .alert(item: $alertType) {
-            alert(for: $0)
+        .alert(alertTitle, isPresented: showingAlert, presenting: alertType) { alertType in
+            alertActions(for: alertType)
+        } message: { alertType in
+            if let message = alertType.message {
+                Text(message)
+            }
         }
     }
     
     
+    @ViewBuilder
     var apiList: some View {
-        let requiresUserAuthBinding = Binding(
-            get: { return self.gameAPISelection },
-            set: { newValue in
-                guard let gameAPI = newValue else { self.gameAPISelection = nil; return }
-                
-                if gameAPI.requiresUserAuth && battleNetAPI.credentials.userAccessToken == nil {
-                    alertType = .authError
-                }
-                else {
-                    self.gameAPISelection = newValue
-                }
-            }
-        )
-        return List(selection: requiresUserAuthBinding) {
-            Section(header: Text(Game.diablo3.rawValue)) {
-                NavigationLink(APIType.gameData.displayName, value: GameAPI(.diablo3, .gameData))
-                NavigationLink(APIType.community.displayName, value: GameAPI(.diablo3, .community))
-                NavigationLink(APIType.profile.displayName, value: GameAPI(.diablo3, .profile))
-            }
-            
-            Section(header: Text(Game.starCraft2.rawValue)) {
-                NavigationLink(APIType.gameData.displayName, value: GameAPI(.starCraft2, .gameData))
-                NavigationLink(APIType.community.displayName, value: GameAPI(.starCraft2, .community))
-            }
-            
-            Section(header: Text(Game.worldOfWarcraft.rawValue)) {
-                NavigationLink(APIType.gameData.displayName, value: GameAPI(.worldOfWarcraft, .gameData))
-                NavigationLink(APIType.profile.displayName, value: GameAPI(.worldOfWarcraft, .profile))
-            }
-            
-            Section(header: Text(Game.worldOfWarcraftClassic.rawValue)) {
-                NavigationLink(APIType.gameData.displayName, value: GameAPI(.worldOfWarcraftClassic, .gameData))
-            }
-            
-            Section(header: Text(Game.battleNet.rawValue)) {
-                NavigationLink(APIType.profile.displayName, value: GameAPI(.battleNet, .profile))
-            }
+        Section(header: Text(Game.diablo3.rawValue)) {
+            NavigationLink(APIType.gameData.displayName, value: GameAPI(.diablo3, .gameData))
+            NavigationLink(APIType.community.displayName, value: GameAPI(.diablo3, .community))
+            NavigationLink(APIType.profile.displayName, value: GameAPI(.diablo3, .profile))
+        }
+        
+        Section(header: Text(Game.starCraft2.rawValue)) {
+            NavigationLink(APIType.gameData.displayName, value: GameAPI(.starCraft2, .gameData))
+            NavigationLink(APIType.community.displayName, value: GameAPI(.starCraft2, .community))
+        }
+        
+        Section(header: Text(Game.worldOfWarcraft.rawValue)) {
+            NavigationLink(APIType.gameData.displayName, value: GameAPI(.worldOfWarcraft, .gameData))
+            NavigationLink(APIType.profile.displayName, value: GameAPI(.worldOfWarcraft, .profile))
+        }
+        
+        Section(header: Text(Game.worldOfWarcraftClassic.rawValue)) {
+            NavigationLink(APIType.gameData.displayName, value: GameAPI(.worldOfWarcraftClassic, .gameData))
+        }
+        
+        Section(header: Text(Game.battleNet.rawValue)) {
+            NavigationLink(APIType.profile.displayName, value: GameAPI(.battleNet, .profile))
         }
     }
     
@@ -142,12 +147,13 @@ struct MainView: View {
                 alertType = .authConfirm
             }
             else {
-                alertType = .notify("Currently signed in")
+                alertType = .signedIn
             }
         }) {
             let imageName = battleNetAPI.credentials.userAccessToken == nil ? "person.circle" : "person.circle.fill"
             Image(systemName: imageName)
         }
+        .accessibilityIdentifier("profileButton")
     }
     
     
@@ -165,6 +171,12 @@ struct MainView: View {
             }
         }
     }
+    
+    func signOutUser() {
+        battleNetAPI.credentials.userAccessToken = nil
+        current.userAccessToken = nil
+        alertType = .notify("Signed out")
+    }
 }
 
 
@@ -172,21 +184,12 @@ struct MainView: View {
 // MARK: - Alert
 
 extension MainView {
-    enum AlertType: Identifiable {
+    enum AlertType {
         case error(Error)
         case notify(String)
         case authError
         case authConfirm
-        
-        
-        var id: String {
-            switch self {
-            case .error: return "error"
-            case .notify: return "notify"
-            case .authError: return "authError"
-            case .authConfirm: return "authconfirm"
-            }
-        }
+        case signedIn
         
         var title: String {
             switch self {
@@ -194,6 +197,7 @@ extension MainView {
             case .notify(let title): return title
             case .authError: return "User Authorization Required"
             case .authConfirm: return "Sign In?"
+            case .signedIn: return "Currently signed in"
             }
         }
         
@@ -203,27 +207,34 @@ extension MainView {
             case .notify: return nil
             case .authError: return "These APIs require you sign in to your BattleNet account and grant permission to this app. Please sign in above."
             case .authConfirm: return "Some APIs require you sign in to your BattleNet account and grant permission to this app."
+            case .signedIn: return "You are currently signed in to your BattleNet account."
             }
         }
     }
     
     
-    private func alert(for alertType: AlertType) -> Alert {
-        let message = alertType.message.map { Text($0) }
-        
+    private var alertTitle: String {
+        alertType?.title ?? ""
+    }
+    
+    private var showingAlert: Binding<Bool> {
+        Binding(
+            get: { alertType != nil },
+            set: { if !$0 { alertType = nil } }
+        )
+    }
+    
+    @ViewBuilder
+    private func alertActions(for alertType: AlertType) -> some View {
         switch alertType {
-        case .error(let error):
-            return Alert(error: error)
-        case .notify:
-            return Alert(title: Text(alertType.title))
-        case .authError:
-            return Alert(title: Text(alertType.title), message: message)
         case .authConfirm:
-            return Alert(title: Text(alertType.title), message: message,
-                  primaryButton: .cancel(),
-                  secondaryButton: .default(Text("Sign in")) {
-                    authenticateUser()
-                  })
+            Button("Sign in") { authenticateUser() }
+            Button("Cancel", role: .cancel) { }
+        case .signedIn:
+            Button("Sign out", role: .destructive) { signOutUser() }
+            Button("Cancel", role: .cancel) { }
+        default:
+            Button("OK", role: .cancel) { }
         }
     }
 }
@@ -231,54 +242,46 @@ extension MainView {
 
 
 struct RegionMenu: View {
-    @EnvironmentObject var current: World
-    @EnvironmentObject var battleNetAPI: BattleNetAPI
+    @Environment(World.self) private var current
+    @Environment(BattleNetAPI.self) private var battleNetAPI
     
     var body: some View {
         Menu {
             Menu(APIRegion.us.displayName) {
                 ForEach(APIRegion.us.supportedLocales, id: \.self) { locale in
                     Button("\(locale.flag) \(locale.language)") {
-                        current.region = .us
-                        current.locale = locale
-                        battleNetAPI.region = .us
-                        battleNetAPI.locale = locale
+                        setRegion(.us, locale: locale)
                     }
                 }
             }
             Menu(APIRegion.eu.displayName) {
                 ForEach(APIRegion.eu.supportedLocales, id: \.self) { locale in
                     Button("\(locale.flag) \(locale.language)") {
-                        current.region = .eu
-                        current.locale = locale
-                        battleNetAPI.region = .eu
-                        battleNetAPI.locale = locale
+                        setRegion(.eu, locale: locale)
                     }
                 }
             }
             
             Button("\(APILocale.ko_KR.flag) \(APILocale.ko_KR.language)") {
-                current.region = .kr
-                current.locale = .ko_KR
-                battleNetAPI.region = .kr
-                battleNetAPI.locale = .ko_KR
+                setRegion(.kr, locale: .ko_KR)
             }
             Button("\(APILocale.zh_TW.flag) \(APILocale.zh_TW.language)") {
-                current.region = .tw
-                current.locale = .zh_TW
-                battleNetAPI.region = .tw
-                battleNetAPI.locale = .zh_TW
+                setRegion(.tw, locale: .zh_TW)
             }
             Button("\(APILocale.zh_CN.flag) \(APILocale.zh_CN.language)") {
-                current.region = .cn
-                current.locale = .zh_CN
-                battleNetAPI.region = .cn
-                battleNetAPI.locale = .zh_CN
+                setRegion(.cn, locale: .zh_CN)
             }
         } label: {
             Text(current.locale.flag)
         }
         .menuStyle(.button)
+    }
+    
+    private func setRegion(_ region: APIRegion, locale: APILocale) {
+        current.region = region
+        current.locale = locale
+        battleNetAPI.region = region
+        battleNetAPI.locale = locale
     }
 }
 
@@ -286,15 +289,13 @@ struct RegionMenu: View {
 
 // MARK: - Preview
 
-struct ContentView_Previews: PreviewProvider {
-    static var previews: some View {
-        let current = World()
-        let battleNetAPI = BattleNetAPI(credentials: current.credentials, oauth: current.oauth, session: .shared, region: current.region, locale: current.locale)
-        
-        MainView()
-            .environmentObject(current)
-            .environmentObject(battleNetAPI)
-    }
+#Preview {
+    let current = World()
+    let battleNetAPI = BattleNetAPI(credentials: current.credentials, oauth: current.oauth, session: .shared, region: current.region, locale: current.locale)
+    
+    MainView()
+        .environment(current)
+        .environment(battleNetAPI)
 }
 
 

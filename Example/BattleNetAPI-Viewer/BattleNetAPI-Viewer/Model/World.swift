@@ -6,18 +6,34 @@
 //
 
 import BattleNetAPI
-import SwiftUI
+import Foundation
+import Observation
 
 
-public class World: ObservableObject {
-    @AppStorage("region") public var region = APIRegion.us
-    @AppStorage("locale") public var locale = APILocale.en_US
-    @AppStorage("clientAccessToken") var clientAccessToken: String?
-    @AppStorage("userAccessToken") var userAccessToken: String?
+@Observable public class World {
+    public var region: APIRegion {
+        didSet { UserDefaults.standard.set(region.rawValue, forKey: "region") }
+    }
+    public var locale: APILocale {
+        didSet { UserDefaults.standard.set(locale.rawValue, forKey: "locale") }
+    }
+    var clientAccessToken: String? {
+        didSet { UserDefaults.standard.set(clientAccessToken, forKey: "clientAccessToken") }
+    }
+    var userAccessToken: String? {
+        didSet { UserDefaults.standard.set(userAccessToken, forKey: "userAccessToken") }
+    }
     
-    public var oauth: BattleNetOAuth = BattleNetOAuth(scope: [.d3, .sc2, .wow, .openID], scheme: "BattleNetAPI", redirectUrl: "https://redirect.to", providerContext: AuthenticationContext())
-    public lazy var credentials: BattleNetCredentials = BattleNetCredentials(clientID: "CLIENT_ID", clientSecret: "CLIENT_SECRET",
+    @ObservationIgnored public var oauth: BattleNetOAuth = BattleNetOAuth(scope: [.d3, .sc2, .wow, .openID], scheme: "BattleNetAPI", redirectUrl: "https://redirect.to", providerContext: AuthenticationContext())
+    @ObservationIgnored public lazy var credentials: BattleNetCredentials = BattleNetCredentials(clientID: "CLIENT_ID", clientSecret: "CLIENT_SECRET",
                                                                              clientAccessToken: clientAccessToken, userAccessToken: userAccessToken)
+    
+    public init() {
+        self.region = UserDefaults.standard.string(forKey: "region").flatMap(APIRegion.init(rawValue:)) ?? .us
+        self.locale = UserDefaults.standard.string(forKey: "locale").flatMap(APILocale.init(rawValue:)) ?? .en_US
+        self.clientAccessToken = UserDefaults.standard.string(forKey: "clientAccessToken")
+        self.userAccessToken = UserDefaults.standard.string(forKey: "userAccessToken")
+    }
 }
 
 

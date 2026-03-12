@@ -14,7 +14,6 @@
 		59781F372A62F34000080511 /* AuthenticationViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 59781F352A62F34000080511 /* AuthenticationViewModel.swift */; };
 		59781F382A62F34000080511 /* World.swift in Sources */ = {isa = PBXBuildFile; fileRef = 59781F362A62F34000080511 /* World.swift */; };
 		59781F3C2A62F35200080511 /* Alert+Error.swift in Sources */ = {isa = PBXBuildFile; fileRef = 59781F392A62F35200080511 /* Alert+Error.swift */; };
-		59781F3D2A62F35200080511 /* BattleNetAPI+Swift.swift in Sources */ = {isa = PBXBuildFile; fileRef = 59781F3A2A62F35200080511 /* BattleNetAPI+Swift.swift */; };
 		59781F3E2A62F35200080511 /* JSONHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 59781F3B2A62F35200080511 /* JSONHelper.swift */; };
 		59781F462A62F36400080511 /* BattleNetView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 59781F3F2A62F36400080511 /* BattleNetView.swift */; };
 		59781F472A62F36400080511 /* WorldOfWarcraftClassicView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 59781F402A62F36400080511 /* WorldOfWarcraftClassicView.swift */; };
@@ -44,7 +43,6 @@
 		59781F352A62F34000080511 /* AuthenticationViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AuthenticationViewModel.swift; sourceTree = "<group>"; };
 		59781F362A62F34000080511 /* World.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = World.swift; sourceTree = "<group>"; };
 		59781F392A62F35200080511 /* Alert+Error.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Alert+Error.swift"; sourceTree = "<group>"; };
-		59781F3A2A62F35200080511 /* BattleNetAPI+Swift.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "BattleNetAPI+Swift.swift"; sourceTree = "<group>"; };
 		59781F3B2A62F35200080511 /* JSONHelper.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = JSONHelper.swift; sourceTree = "<group>"; };
 		59781F3F2A62F36400080511 /* BattleNetView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BattleNetView.swift; sourceTree = "<group>"; };
 		59781F402A62F36400080511 /* WorldOfWarcraftClassicView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WorldOfWarcraftClassicView.swift; sourceTree = "<group>"; };
@@ -156,7 +154,6 @@
 			isa = PBXGroup;
 			children = (
 				59781F392A62F35200080511 /* Alert+Error.swift */,
-				59781F3A2A62F35200080511 /* BattleNetAPI+Swift.swift */,
 				59781F3B2A62F35200080511 /* JSONHelper.swift */,
 			);
 			path = Extensions;
@@ -276,7 +273,6 @@
 				59781F3E2A62F35200080511 /* JSONHelper.swift in Sources */,
 				59781F4C2A62F36400080511 /* Diablo3View.swift in Sources */,
 				59781F4B2A62F36400080511 /* MainView.swift in Sources */,
-				59781F3D2A62F35200080511 /* BattleNetAPI+Swift.swift in Sources */,
 				59781F372A62F34000080511 /* AuthenticationViewModel.swift in Sources */,
 				59781F462A62F36400080511 /* BattleNetView.swift in Sources */,
 				59781F492A62F36400080511 /* WorldOfWarcraftView.swift in Sources */,

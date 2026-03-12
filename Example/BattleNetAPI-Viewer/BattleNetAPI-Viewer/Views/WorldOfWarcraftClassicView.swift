@@ -10,11 +10,11 @@ import SwiftUI
 
 
 struct WorldOfWarcraftClassicView: View {
-    @EnvironmentObject var battleNetAPI: BattleNetAPI
-    @State var alertType: AlertType?
+    @Environment(BattleNetAPI.self) private var battleNetAPI
+    @State private var alertType: AlertType?
     
-    @State var apiSelection: API?
-    @State var webServiceData: Data = Data()
+    @State private var apiSelection: API?
+    @State private var webServiceData: Data = Data()
     
     let apiType: APIType
     
@@ -27,8 +27,15 @@ struct WorldOfWarcraftClassicView: View {
     var body: some View {
         apiList
             .navigationTitle(Text(title))
-            .alert(item: $alertType) {
-                alert(for: $0)
+            .navigationDestination(item: $apiSelection) { api in
+                WebServiceView(title: api.rawValue, data: webServiceData)
+            }
+            .alert(alertType?.title ?? "", isPresented: showingAlert, presenting: alertType) { _ in
+                Button("OK", role: .cancel) { }
+            } message: { alertType in
+                if let message = alertType.message {
+                    Text(message)
+                }
             }
     }
     
@@ -219,15 +226,8 @@ struct WorldOfWarcraftClassicView: View {
     
     
     func webServiceRow(api: API, webService: @escaping () -> Void) -> some View {
-        let selectionBinding: Binding<API?> = Binding(
-            get: { return apiSelection },
-            set: { newValue in
-                guard newValue != nil else { self.apiSelection = nil; return }
-                webService()
-            }
-        )
-        return NavigationLink(destination: WebServiceView(title: api.rawValue, data: webServiceData), tag: api, selection: selectionBinding) {
-            Text(api.rawValue)
+        Button(api.rawValue) {
+            webService()
         }
     }
     
@@ -252,17 +252,9 @@ struct WorldOfWarcraftClassicView: View {
 // MARK: - Alert
 
 extension WorldOfWarcraftClassicView {
-    enum AlertType: Identifiable {
+    enum AlertType {
         case error(Error)
         case notify(String)
-        
-        
-        var id: String {
-            switch self {
-            case .error: return "error"
-            case .notify: return "notify"
-            }
-        }
         
         var title: String {
             switch self {
@@ -279,14 +271,11 @@ extension WorldOfWarcraftClassicView {
         }
     }
     
-    
-    private func alert(for alertType: AlertType) -> Alert {
-        switch alertType {
-        case .error(let error):
-            return Alert(error: error)
-        case .notify:
-            return Alert(title: Text(alertType.title))
-        }
+    private var showingAlert: Binding<Bool> {
+        Binding(
+            get: { alertType != nil },
+            set: { if !$0 { alertType = nil } }
+        )
     }
 }
 
@@ -390,8 +379,6 @@ extension WorldOfWarcraftClassicView {
 
 
 
-struct WorldOfWarcraftClassicView_Previews: PreviewProvider {
-    static var previews: some View {
-        WorldOfWarcraftClassicView(apiType: .gameData)
-    }
+#Preview {
+    WorldOfWarcraftClassicView(apiType: .gameData)
 }

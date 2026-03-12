@@ -11,23 +11,26 @@ import BattleNetAPI
 
 @main
 struct BattleNetAPI_ViewerApp: App {
-    let current = World()
-    let battleNetAPI: BattleNetAPI
+    @State private var current = World()
+    @State private var battleNetAPI: BattleNetAPI
     
     
     init() {
+        let current = World()
         if CommandLine.arguments.contains("--resetUserAuth") {
             current.userAccessToken = nil
         }
-        battleNetAPI = BattleNetAPI(credentials: current.credentials, oauth: current.oauth, session: .shared, region: current.region, locale: current.locale)
-        battleNetAPI.delegate = current
+        let api = BattleNetAPI(credentials: current.credentials, oauth: current.oauth, session: .shared, region: current.region, locale: current.locale)
+        api.delegate = current
+        _current = State(initialValue: current)
+        _battleNetAPI = State(initialValue: api)
     }
     
     var body: some Scene {
         WindowGroup {
             MainView()
-                .environmentObject(current)
-                .environmentObject(battleNetAPI)
+                .environment(current)
+                .environment(battleNetAPI)
         }
     }
 }

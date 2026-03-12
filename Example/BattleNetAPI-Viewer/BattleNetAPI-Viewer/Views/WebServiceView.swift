@@ -33,12 +33,9 @@ struct WebServiceView: View {
 
 // MARK: - Preview
 
-struct WebServiceView_Previews: PreviewProvider {
-    static var previews: some View {
-        let string = "Test web service response string"
-        let data = string.data(using: .utf8)!
-        NavigationView {
-            WebServiceView(title: "Test Web Service", data: data)
-        }
+#Preview {
+    let data = "Test web service response string".data(using: .utf8)!
+    NavigationStack {
+        WebServiceView(title: "Test Web Service", data: data)
     }
 }
