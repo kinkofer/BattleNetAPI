@@ -14,6 +14,7 @@ struct WorldOfWarcraftView: View {
     @State private var alertType: AlertType?
     
     @State private var apiSelection: API?
+    @State private var loadingAPI: API?
     @State private var webServiceData: Data = Data()
     
     let apiType: APIType
@@ -775,9 +776,19 @@ struct WorldOfWarcraftView: View {
     
     
     func webServiceRow(api: API, webService: @escaping () -> Void) -> some View {
-        Button(api.rawValue) {
+        Button {
+            loadingAPI = api
             webService()
+        } label: {
+            HStack {
+                Text(api.rawValue)
+                if loadingAPI == api {
+                    Spacer()
+                    ProgressView()
+                }
+            }
         }
+        .disabled(loadingAPI != nil)
     }
     
     
@@ -786,6 +797,7 @@ struct WorldOfWarcraftView: View {
     
     /// Parses a web service result, preparing to navigate to WebServiceView is success, or showing an error if failure.
     func parseResult(_ result: Result<Data, Error>, for selection: API) {
+        loadingAPI = nil
         switch result {
         case .success(let data):
             webServiceData = data
