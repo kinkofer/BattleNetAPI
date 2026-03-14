@@ -40,322 +40,166 @@ class Diablo3Tests: XCTestCase {
     
     // MARK: - Act API
     
-    func testGetActs() {
-        let wsResponseExpectation = expectation(description: "Web Service returned a response")
-        
-        battleNetAPI.d3.getActs { result in
-            BattleNetAPITests.webServiceClosureTest(result: result, decodable: ActIndex.self, expectation: wsResponseExpectation)
-        }
-        
-        waitForExpectations(timeout: 20) { error in
-            XCTAssertNil(error, "Exceeded timeout")
-        }
+    func testGetActs() async throws {
+        let data = try await battleNetAPI.d3.getActs()
+        BattleNetAPITests.webServiceAsyncTest(data: data, decodable: ActIndex.self)
     }
     
     
-    func testGetAct() {
+    func testGetAct() async throws {
         let id = 5
-        
-        let wsResponseExpectation = expectation(description: "Web Service returned a response")
-        
-        battleNetAPI.d3.getAct(id: id) { result in
-            BattleNetAPITests.webServiceClosureTest(result: result, decodable: Act.self, expectation: wsResponseExpectation)
-        }
-        
-        waitForExpectations(timeout: 20) { error in
-            XCTAssertNil(error, "Exceeded timeout")
-        }
+        let data = try await battleNetAPI.d3.getAct(id: id)
+        BattleNetAPITests.webServiceAsyncTest(data: data, decodable: Act.self)
     }
     
     
     
     // MARK: - Arisan and Recipe API
     
-    func testGetArtisan() {
+    func testGetArtisan() async throws {
         let slug = "blacksmith"
-        
-        let wsResponseExpectation = expectation(description: "Web Service returned a response")
-        
-        battleNetAPI.d3.getArtisan(slug: slug) { result in
-            BattleNetAPITests.webServiceClosureTest(result: result, decodable: Artisan.self, expectation: wsResponseExpectation)
-        }
-        
-        waitForExpectations(timeout: 20) { error in
-            XCTAssertNil(error, "Exceeded timeout")
-        }
+        let data = try await battleNetAPI.d3.getArtisan(slug: slug)
+        BattleNetAPITests.webServiceAsyncTest(data: data, decodable: Artisan.self)
     }
     
     
-    func testGetRecipe() {
+    func testGetRecipe() async throws {
         let recipeSlug = "apprentice-flamberge"
         let artisanSlug = "blacksmith"
-        
-        let wsResponseExpectation = expectation(description: "Web Service returned a response")
-        
-        battleNetAPI.d3.getRecipe(recipeSlug: recipeSlug, artisanSlug: artisanSlug) { result in
-            BattleNetAPITests.webServiceClosureTest(result: result, decodable: D3Recipe.self, expectation: wsResponseExpectation)
-        }
-        
-        waitForExpectations(timeout: 20) { error in
-            XCTAssertNil(error, "Exceeded timeout")
-        }
+        let data = try await battleNetAPI.d3.getRecipe(recipeSlug: recipeSlug, artisanSlug: artisanSlug)
+        BattleNetAPITests.webServiceAsyncTest(data: data, decodable: D3Recipe.self)
     }
     
     
     
     // MARK: - Follower API
     
-    func testGetFollower() {
+    func testGetFollower() async throws {
         let slug = "templar"
-        
-        let wsResponseExpectation = expectation(description: "Web Service returned a response")
-        
-        battleNetAPI.d3.getFollower(slug: slug) { result in
-            BattleNetAPITests.webServiceClosureTest(result: result, decodable: Follower.self, expectation: wsResponseExpectation)
-        }
-        
-        waitForExpectations(timeout: 20) { error in
-            XCTAssertNil(error, "Exceeded timeout")
-        }
+        let data = try await battleNetAPI.d3.getFollower(slug: slug)
+        BattleNetAPITests.webServiceAsyncTest(data: data, decodable: Follower.self)
     }
     
     
     
     // MARK: - Character Class and Skill API
     
-    func testGetClass() {
+    func testGetClass() async throws {
         let slug = "barbarian"
-        
-        let wsResponseExpectation = expectation(description: "Web Service returned a response")
-        
-        battleNetAPI.d3.getClass(slug: slug) { result in
-            BattleNetAPITests.webServiceClosureTest(result: result, decodable: D3Class.self, expectation: wsResponseExpectation)
-        }
-        
-        waitForExpectations(timeout: 20) { error in
-            XCTAssertNil(error, "Exceeded timeout")
-        }
+        let data = try await battleNetAPI.d3.getClass(slug: slug)
+        BattleNetAPITests.webServiceAsyncTest(data: data, decodable: D3Class.self)
     }
     
     
-    func testGetSkill() {
+    func testGetSkill() async throws {
         let skillSlug = "bash"
         let classSlug = "barbarian"
-        
-        let wsResponseExpectation = expectation(description: "Web Service returned a response")
-        
-        battleNetAPI.d3.getSkill(skillSlug: skillSlug, classSlug: classSlug) { result in
-            BattleNetAPITests.webServiceClosureTest(result: result, decodable: D3SkillConfiguration.self, expectation: wsResponseExpectation)
-        }
-        
-        waitForExpectations(timeout: 20) { error in
-            XCTAssertNil(error, "Exceeded timeout")
-        }
+        let data = try await battleNetAPI.d3.getSkill(skillSlug: skillSlug, classSlug: classSlug)
+        BattleNetAPITests.webServiceAsyncTest(data: data, decodable: D3SkillConfiguration.self)
     }
     
     
     
     // MARK: - Item Type API
     
-    func testGetItemTypes() {
-        let wsResponseExpectation = expectation(description: "Web Service returned a response")
-        
-        battleNetAPI.d3.getItemTypes() { result in
-            BattleNetAPITests.webServiceClosureTest(result: result, decodable: [D3ItemType].self, expectation: wsResponseExpectation)
-        }
-        
-        waitForExpectations(timeout: 20) { error in
-            XCTAssertNil(error, "Exceeded timeout")
-        }
+    func testGetItemTypes() async throws {
+        let data = try await battleNetAPI.d3.getItemTypes()
+        BattleNetAPITests.webServiceAsyncTest(data: data, decodable: [D3ItemType].self)
     }
     
     
-    func testGetItemsByType() {
+    func testGetItemsByType() async throws {
         let typeSlug = "sword2h"
-        
-        let wsResponseExpectation = expectation(description: "Web Service returned a response")
-        
-        battleNetAPI.d3.getItemsByType(typeSlug: typeSlug) { result in
-            BattleNetAPITests.webServiceClosureTest(result: result, decodable: [D3Item].self, expectation: wsResponseExpectation)
-        }
-        
-        waitForExpectations(timeout: 20) { error in
-            XCTAssertNil(error, "Exceeded timeout")
-        }
+        let data = try await battleNetAPI.d3.getItemsByType(typeSlug: typeSlug)
+        BattleNetAPITests.webServiceAsyncTest(data: data, decodable: [D3Item].self)
     }
     
     
     
     // MARK: - Item API
     
-    func testGetItem() {
+    func testGetItem() async throws {
         let itemSlugAndID = "corrupted-ashbringer-Unique_Sword_2H_104_x1"
-        
-        let wsResponseExpectation = expectation(description: "Web Service returned a response")
-        
-        battleNetAPI.d3.getItem(itemSlugAndID: itemSlugAndID) { result in
-            BattleNetAPITests.webServiceClosureTest(result: result, decodable: D3FullItem.self, expectation: wsResponseExpectation)
-        }
-        
-        waitForExpectations(timeout: 20) { error in
-            XCTAssertNil(error, "Exceeded timeout")
-        }
+        let data = try await battleNetAPI.d3.getItem(itemSlugAndID: itemSlugAndID)
+        BattleNetAPITests.webServiceAsyncTest(data: data, decodable: D3FullItem.self)
     }
     
     
     
     // MARK: - Profile API
     
-    func testGetProfile() {
-        let battleTag = "kinkofer-11254"
-        
-        let wsResponseExpectation = expectation(description: "Web Service returned a response")
-        
-        battleNetAPI.d3.getProfile(battleTag: battleTag) { result in
-            BattleNetAPITests.webServiceClosureTest(result: result, decodable: D3Profile.self, expectation: wsResponseExpectation)
-        }
-        
-        waitForExpectations(timeout: 20) { error in
-            XCTAssertNil(error, "Exceeded timeout")
-        }
+    func testGetProfile() async throws {
+        let battleTag = "okappa-11821"
+        let data = try await battleNetAPI.d3.getProfile(battleTag: battleTag)
+        BattleNetAPITests.webServiceAsyncTest(data: data, decodable: D3Profile.self)
     }
     
     
-    func testGetHero() {
+    func testGetHero() async throws {
         let heroID = 157143411
         let battleTag = "okappa-11821"
-        
-        let wsResponseExpectation = expectation(description: "Web Service returned a response")
-        
-        battleNetAPI.d3.getHero(heroID: heroID, battleTag: battleTag) { result in
-            BattleNetAPITests.webServiceClosureTest(result: result, decodable: FullHero.self, expectation: wsResponseExpectation)
-        }
-        
-        waitForExpectations(timeout: 20) { error in
-            XCTAssertNil(error, "Exceeded timeout")
-        }
+        let data = try await battleNetAPI.d3.getHero(heroID: heroID, battleTag: battleTag)
+        BattleNetAPITests.webServiceAsyncTest(data: data, decodable: FullHero.self)
     }
     
     
-    func testGetItems() {
+    func testGetItems() async throws {
         let heroID = 157143411
         let battleTag = "okappa-11821"
-        
-        let wsResponseExpectation = expectation(description: "Web Service returned a response")
-        
-        battleNetAPI.d3.getItemsForHero(heroID: heroID, battleTag: battleTag) { result in
-            BattleNetAPITests.webServiceClosureTest(result: result, decodable: FullEquippedItems.self, expectation: wsResponseExpectation)
-        }
-        
-        waitForExpectations(timeout: 20) { error in
-            XCTAssertNil(error, "Exceeded timeout")
-        }
+        let data = try await battleNetAPI.d3.getItemsForHero(heroID: heroID, battleTag: battleTag)
+        BattleNetAPITests.webServiceAsyncTest(data: data, decodable: FullEquippedItems.self)
     }
     
     
-    func testGetFollowerItems(forHero heroID: Int, forBattleTag battleTag: String, region: APIRegion, locale: APILocale, completion: @escaping (_ result: Result<HeroFollowerItems, HTTPError>) -> Void) {
-        let heroID = 88095369
-        let battleTag = "hionpotuse-1872"
-        
-        let wsResponseExpectation = expectation(description: "Web Service returned a response")
-        
-        battleNetAPI.d3.getFollowerItemsForHero(heroID: heroID, battleTag: battleTag) { result in
-            BattleNetAPITests.webServiceClosureTest(result: result, decodable: HeroFollowerItems.self, expectation: wsResponseExpectation)
-        }
-        
-        waitForExpectations(timeout: 20) { error in
-            XCTAssertNil(error, "Exceeded timeout")
-        }
+    func testGetFollowerItems() async throws {
+        let heroID = 157143411
+        let battleTag = "okappa-11821"
+        let data = try await battleNetAPI.d3.getFollowerItemsForHero(heroID: heroID, battleTag: battleTag)
+        BattleNetAPITests.webServiceAsyncTest(data: data, decodable: HeroFollowerItems.self)
     }
     
     
     
     // MARK: - Game Data API
     
-    func testGetSeasons() {
-        let wsResponseExpectation = expectation(description: "Web Service returned a response")
-        
-        battleNetAPI.d3.getSeasons { result in
-            BattleNetAPITests.webServiceClosureTest(result: result, decodable: D3SeasonIndex.self, expectation: wsResponseExpectation)
-        }
-        
-        waitForExpectations(timeout: 20) { error in
-            XCTAssertNil(error, "Exceeded timeout")
-        }
+    func testGetSeasons() async throws {
+        let data = try await battleNetAPI.d3.getSeasons()
+        BattleNetAPITests.webServiceAsyncTest(data: data, decodable: D3SeasonIndex.self)
     }
     
     
-    func testGetLeaderboardsForSeason() {
+    func testGetLeaderboardsForSeason() async throws {
         let seasonID = 1
-        
-        let wsResponseExpectation = expectation(description: "Web Service returned a response")
-        
-        battleNetAPI.d3.getLeaderboards(seasonID: seasonID) { result in
-            BattleNetAPITests.webServiceClosureTest(result: result, decodable: D3SeasonLeaderboardIndex.self, expectation: wsResponseExpectation)
-        }
-        
-        waitForExpectations(timeout: 20) { error in
-            XCTAssertNil(error, "Exceeded timeout")
-        }
+        let data = try await battleNetAPI.d3.getLeaderboards(seasonID: seasonID)
+        BattleNetAPITests.webServiceAsyncTest(data: data, decodable: D3SeasonLeaderboardIndex.self)
     }
     
     
-    func testGetLeaderboardForSeason() {
+    func testGetLeaderboardForSeason() async throws {
         let leaderboard = "achievement-points"
         let seasonID = 1
-        
-        let wsResponseExpectation = expectation(description: "Web Service returned a response")
-        
-        battleNetAPI.d3.getLeaderboard(leaderboard, seasonID: seasonID) { result in
-            BattleNetAPITests.webServiceClosureTest(result: result, decodable: SeasonLeaderboard.self, expectation: wsResponseExpectation)
-        }
-        
-        waitForExpectations(timeout: 20) { error in
-            XCTAssertNil(error, "Exceeded timeout")
-        }
+        let data = try await battleNetAPI.d3.getLeaderboard(leaderboard, seasonID: seasonID)
+        BattleNetAPITests.webServiceAsyncTest(data: data, decodable: SeasonLeaderboard.self)
     }
     
     
-    func testGetEras() {
-        let wsResponseExpectation = expectation(description: "Web Service returned a response")
-        
-        battleNetAPI.d3.getEras { result in
-            BattleNetAPITests.webServiceClosureTest(result: result, decodable: EraIndex.self, expectation: wsResponseExpectation)
-        }
-        
-        waitForExpectations(timeout: 20) { error in
-            XCTAssertNil(error, "Exceeded timeout")
-        }
+    func testGetEras() async throws {
+        let data = try await battleNetAPI.d3.getEras()
+        BattleNetAPITests.webServiceAsyncTest(data: data, decodable: EraIndex.self)
     }
     
     
-    func testGetLeaderboardsForEra() {
+    func testGetLeaderboardsForEra() async throws {
         let eraID = 1
-        
-        let wsResponseExpectation = expectation(description: "Web Service returned a response")
-        
-        battleNetAPI.d3.getLeaderboards(eraID: eraID) { result in
-            BattleNetAPITests.webServiceClosureTest(result: result, decodable: EraLeaderboardIndex.self, expectation: wsResponseExpectation)
-        }
-        
-        waitForExpectations(timeout: 20) { error in
-            XCTAssertNil(error, "Exceeded timeout")
-        }
+        let data = try await battleNetAPI.d3.getLeaderboards(eraID: eraID)
+        BattleNetAPITests.webServiceAsyncTest(data: data, decodable: EraLeaderboardIndex.self)
     }
     
     
-    func testGetLeaderboardForEra() {
+    func testGetLeaderboardForEra() async throws {
         let leaderboard = "rift-barbarian"
         let eraID = 1
-        
-        let wsResponseExpectation = expectation(description: "Web Service returned a response")
-        
-        battleNetAPI.d3.getLeaderboard(leaderboard, eraID: eraID) { result in
-            BattleNetAPITests.webServiceClosureTest(result: result, decodable: EraLeaderboard.self, expectation: wsResponseExpectation)
-        }
-        
-        waitForExpectations(timeout: 20) { error in
-            XCTAssertNil(error, "Exceeded timeout")
-        }
+        let data = try await battleNetAPI.d3.getLeaderboard(leaderboard, eraID: eraID)
+        BattleNetAPITests.webServiceAsyncTest(data: data, decodable: EraLeaderboard.self)
     }
 }

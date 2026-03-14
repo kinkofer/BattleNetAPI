@@ -15,6 +15,7 @@ struct Diablo3View: View {
     
     @State var apiSelection: API?
     @State var webServiceData: Data = Data()
+    @State var loadingAPI: API?
     
     let apiType: APIType
     
@@ -52,22 +53,22 @@ struct Diablo3View: View {
     var gameDataSection: some View {
         Section(header: Text(APIType.gameData.displayName)) {
             webServiceRow(api: .seasonIndex) {
-                battleNetAPI.d3.getSeasons(completion: { parseResult($0, for: .seasonIndex) })
+                try await battleNetAPI.d3.getSeasons()
             }
             webServiceRow(api: .season) {
-                battleNetAPI.d3.getLeaderboards(seasonID: 1, completion: { parseResult($0, for: .season) })
+                try await battleNetAPI.d3.getLeaderboards(seasonID: 1)
             }
             webServiceRow(api: .seasonLeaderboard) {
-                battleNetAPI.d3.getLeaderboard("achievement-points", seasonID: 1, completion: { parseResult($0, for: .seasonLeaderboard) })
+                try await battleNetAPI.d3.getLeaderboard("achievement-points", seasonID: 1)
             }
             webServiceRow(api: .eraIndex) {
-                battleNetAPI.d3.getEras(completion: { parseResult($0, for: .eraIndex) })
+                try await battleNetAPI.d3.getEras()
             }
             webServiceRow(api: .era) {
-                battleNetAPI.d3.getLeaderboards(eraID: 1 , completion: { parseResult($0, for: .era) })
+                try await battleNetAPI.d3.getLeaderboards(eraID: 1)
             }
             webServiceRow(api: .eraLeaderboard) {
-                battleNetAPI.d3.getLeaderboard("rift-barbarian", eraID: 1 , completion: { parseResult($0, for: .eraLeaderboard) })
+                try await battleNetAPI.d3.getLeaderboard("rift-barbarian", eraID: 1)
             }
         }
     }
@@ -77,49 +78,49 @@ struct Diablo3View: View {
         Group {
             Section(header: Text("D3 Act API")) {
                 webServiceRow(api: .getActIndex) {
-                    battleNetAPI.d3.getActs(completion: { parseResult($0, for: .getActIndex) })
+                    try await battleNetAPI.d3.getActs()
                 }
                 webServiceRow(api: .getAct) {
-                    battleNetAPI.d3.getAct(id: 1, completion: { parseResult($0, for: .getAct) })
+                    try await battleNetAPI.d3.getAct(id: 1)
                 }
             }
             
             Section(header: Text("D3 Aristan and Recipe API")) {
                 webServiceRow(api: .getArtisan) {
-                    battleNetAPI.d3.getArtisan(slug: "blacksmith", completion: { parseResult($0, for: .getArtisan) })
+                    try await battleNetAPI.d3.getArtisan(slug: "blacksmith")
                 }
                 webServiceRow(api: .getRecipe) {
-                    battleNetAPI.d3.getRecipe(recipeSlug: "apprentice-flamberge", artisanSlug: "blacksmith", completion: { parseResult($0, for: .getRecipe) })
+                    try await battleNetAPI.d3.getRecipe(recipeSlug: "apprentice-flamberge", artisanSlug: "blacksmith")
                 }
             }
             
             Section(header: Text("D3 Follower API")) {
                 webServiceRow(api: .getFollower) {
-                    battleNetAPI.d3.getFollower(slug: "templar", completion: { parseResult($0, for: .getFollower) })
+                    try await battleNetAPI.d3.getFollower(slug: "templar")
                 }
             }
             
             Section(header: Text("D3 Character Class and Skill API")) {
                 webServiceRow(api: .getCharacterClass) {
-                    battleNetAPI.d3.getClass(slug: "barbarian", completion: { parseResult($0, for: .getCharacterClass) })
+                    try await battleNetAPI.d3.getClass(slug: "barbarian")
                 }
                 webServiceRow(api: .getApiSkill) {
-                    battleNetAPI.d3.getSkill(skillSlug: "bash", classSlug: "barbarian", completion: { parseResult($0, for: .getApiSkill) })
+                    try await battleNetAPI.d3.getSkill(skillSlug: "bash", classSlug: "barbarian")
                 }
             }
             
             Section(header: Text("D3 Item Type API")) {
                 webServiceRow(api: .getItemTypeIndex) {
-                    battleNetAPI.d3.getItemTypes(completion: { parseResult($0, for: .getItemTypeIndex) })
+                    try await battleNetAPI.d3.getItemTypes()
                 }
                 webServiceRow(api: .getItemType) {
-                    battleNetAPI.d3.getItemsByType(typeSlug: "sword2h", completion: { parseResult($0, for: .getItemType) })
+                    try await battleNetAPI.d3.getItemsByType(typeSlug: "sword2h")
                 }
             }
             
             Section(header: Text("D3 Item API")) {
                 webServiceRow(api: .getItem) {
-                    battleNetAPI.d3.getItem(itemSlugAndID: "corrupted-ashbringer-Unique_Sword_2H_104_x1", completion: { parseResult($0, for: .getItem) })
+                    try await battleNetAPI.d3.getItem(itemSlugAndID: "corrupted-ashbringer-Unique_Sword_2H_104_x1")
                 }
             }
         }
@@ -129,47 +130,49 @@ struct Diablo3View: View {
     var profileSection: some View {
         Section(header: Text(APIType.profile.displayName)) {
             webServiceRow(api: .getApiAccount) {
-                battleNetAPI.d3.getProfile(battleTag: "s2k-1107", completion: { parseResult($0, for: .getApiAccount) })
+                try await battleNetAPI.d3.getProfile(battleTag: "s2k-1107")
             }
             webServiceRow(api: .getApiHero) {
-                battleNetAPI.d3.getHero(heroID: 118818000, battleTag: "s2k-1107", completion: { parseResult($0, for: .getApiHero) })
+                try await battleNetAPI.d3.getHero(heroID: 118818000, battleTag: "s2k-1107")
             }
             webServiceRow(api: .getApiDetailedHeroItems) {
-                battleNetAPI.d3.getItemsForHero(heroID: 118818000, battleTag: "s2k-1107", completion: { parseResult($0, for: .getApiDetailedHeroItems) })
+                try await battleNetAPI.d3.getItemsForHero(heroID: 118818000, battleTag: "s2k-1107")
             }
             webServiceRow(api: .getApiDetailedFollowerItems) {
-                battleNetAPI.d3.getFollowerItemsForHero(heroID: 118818000, battleTag: "s2k-1107", completion: { parseResult($0, for: .getApiDetailedFollowerItems) })
+                try await battleNetAPI.d3.getFollowerItemsForHero(heroID: 118818000, battleTag: "s2k-1107")
             }
         }
     }
     
     
-    func webServiceRow(api: API, webService: @escaping () -> Void) -> some View {
-        let selectionBinding: Binding<API?> = Binding(
-            get: { return apiSelection },
-            set: { newValue in
-                guard newValue != nil else { self.apiSelection = nil; return }
-                webService()
+    func webServiceRow(api: API, webService: @escaping () async throws -> Data) -> some View {
+        Button {
+            loadingAPI = api
+            Task {
+                do {
+                    let data = try await webService()
+                    webServiceData = data
+                    apiSelection = api
+                } catch {
+                    alertType = .error(error)
+                }
+                loadingAPI = nil
             }
+        } label: {
+            HStack {
+                Text(api.rawValue)
+                Spacer()
+                if loadingAPI == api {
+                    ProgressView()
+                }
+            }
+        }
+        .background(
+            NavigationLink(destination: WebServiceView(title: api.rawValue, data: webServiceData), tag: api, selection: $apiSelection) {
+                EmptyView()
+            }
+            .hidden()
         )
-        return NavigationLink(destination: WebServiceView(title: api.rawValue, data: webServiceData), tag: api, selection: selectionBinding) {
-            Text(api.rawValue)
-        }
-    }
-    
-    
-    
-    // MARK: - Web Services
-    
-    /// Parses a web service result, preparing to navigate to WebServiceView is success, or showing an error if failure.
-    func parseResult(_ result: Result<Data, Error>, for selection: API) {
-        switch result {
-        case .success(let data):
-            webServiceData = data
-            apiSelection = selection
-        case .failure(let error):
-            alertType = .error(error)
-        }
     }
 }
 

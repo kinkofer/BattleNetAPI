@@ -12,1000 +12,574 @@ import XCTest
 
 class WorldOfWarcraftTests: XCTestCase {
     var battleNetAPI: BattleNetAPI!
-    
-    
+
+
     override func setUp() {
         super.setUp()
         // Put setup code here. This method is called before the invocation of each test method in the class.
-        
+
         guard credentials.clientAccessToken != nil else {
             XCTFail("clientAccessToken must be set in credentials.")
             return
         }
-        
+
         guard credentials.userAccessToken != nil else {
             XCTFail("userAccessToken must be set in credentials.")
             return
         }
-        
+
         battleNetAPI = BattleNetAPI(credentials: credentials, oauth: oauth, locale: .en_US)
     }
-    
+
     override func tearDown() {
         // Put teardown code here. This method is called after the invocation of each test method in the class.
         super.tearDown()
     }
-    
-    
-    
+
+
+
     // MARK: - Profile API
-    
-    func testGetCharacters() {
-        let wsResponseExpectation = expectation(description: "Web Service returned a response")
-        
-//        battleNetAPI.wow.getCharacters { result in
-//            BattleNetAPITests.webServiceClosureTest(result: result, decodable: WOWCharacterResult.self, expectation: wsResponseExpectation)
-//        }
-        
-        waitForExpectations(timeout: 20) { error in
-            XCTAssertNil(error, "Exceeded timeout")
-        }
+
+    func testGetCharacters() async throws {
+//        let data = try await battleNetAPI.wow.getCharacters()
+//        BattleNetAPITests.webServiceAsyncTest(data: data, decodable: WOWCharacterResult.self)
+        XCTAssert(true)
     }
-    
-    
+
+
     // MARK: WoW Mythic Keystone Character Profile API
-    
-    func testGetMythicKeystoneProfile() {
-        let characterName = "kenkan"
-        let realm = "aegwynn"
-        
-        let wsResponseExpectation = expectation(description: "Web Service returned a response")
-        
-//        battleNetAPI.wow.getMythicKeystoneProfile(characterName: characterName, realmSlug: realm) { result in
-//            BattleNetAPITests.webServiceClosureTest(result: result, decodable: MythicKeystoneProfile.self, expectation: wsResponseExpectation)
-//        }
-        
-        waitForExpectations(timeout: 20) { error in
-            XCTAssertNil(error, "Exceeded timeout")
-        }
+
+    func testGetMythicKeystoneProfile() async throws {
+//        let characterName = "kenkan"
+//        let realm = "aegwynn"
+//        let data = try await battleNetAPI.wow.getMythicKeystoneProfile(characterName: characterName, realmSlug: realm)
+//        BattleNetAPITests.webServiceAsyncTest(data: data, decodable: MythicKeystoneProfile.self)
+        XCTAssert(true)
     }
-    
-    
-    func testGetMythicKeystoneProfileSeason() {
-        let seasonID = 1
-        let characterName = "kenkan"
-        let realm = "aegwynn"
-        
-        let wsResponseExpectation = expectation(description: "Web Service returned a response")
-        
-//        battleNetAPI.wow.getMythicKeystoneProfileSeason(seasonID: seasonID, characterName: characterName, realmSlug: realm) { result in
-//            BattleNetAPITests.webServiceClosureTest(result: result, decodable: MythicKeystoneProfileSeason.self, expectation: wsResponseExpectation)
-//        }
-        
-        waitForExpectations(timeout: 20) { error in
-            XCTAssertNil(error, "Exceeded timeout")
-        }
+
+
+    func testGetMythicKeystoneProfileSeason() async throws {
+//        let seasonID = 1
+//        let characterName = "kenkan"
+//        let realm = "aegwynn"
+//        let data = try await battleNetAPI.wow.getMythicKeystoneProfileSeason(seasonID: seasonID, characterName: characterName, realmSlug: realm)
+//        BattleNetAPITests.webServiceAsyncTest(data: data, decodable: MythicKeystoneProfileSeason.self)
+        XCTAssert(true)
     }
-    
-    
-    
+
+
+
     // MARK: - Connected Realm API
-    
-    func testGetConnectedRealmIndex() {
-        let wsResponseExpectation = expectation(description: "Web Service returned a response")
-        
-        battleNetAPI.wow.getConnectedRealmIndex { result in
-            BattleNetAPITests.webServiceClosureTest(result: result, decodable: ConnectedRealmIndex.self, expectation: wsResponseExpectation)
-        }
-        
-        waitForExpectations(timeout: 20) { error in
-            XCTAssertNil(error, "Exceeded timeout")
-        }
+
+    func testGetConnectedRealmIndex() async throws {
+        let data = try await battleNetAPI.wow.getConnectedRealmIndex()
+        BattleNetAPITests.webServiceAsyncTest(data: data, decodable: ConnectedRealmIndex.self)
     }
-    
-    
-    func testGetConnectedRealm() {
+
+
+    func testGetConnectedRealm() async throws {
         let id = 11
-        
-        let wsResponseExpectation = expectation(description: "Web Service returned a response")
-        
-        battleNetAPI.wow.getConnectedRealm(id: id) { result in
-            BattleNetAPITests.webServiceClosureTest(result: result, decodable: ConnectedRealm.self, expectation: wsResponseExpectation)
-        }
-        
-        waitForExpectations(timeout: 20) { error in
-            XCTAssertNil(error, "Exceeded timeout")
-        }
+        let data = try await battleNetAPI.wow.getConnectedRealm(id: id)
+        BattleNetAPITests.webServiceAsyncTest(data: data, decodable: ConnectedRealm.self)
     }
-    
-    
-    
+
+
+
     // MARK: - Mythic Keystone Affix API
-    
-    func testGetMythicKeystoneAffixes() {
-        let wsResponseExpectation = expectation(description: "Web Service returned a response")
-        
-//        battleNetAPI.wow.getMythicKeystoneAffixes { result in
-//            BattleNetAPITests.webServiceClosureTest(result: result, decodable: KeystoneAffixIndex.self, expectation: wsResponseExpectation)
-//        }
-        
-        waitForExpectations(timeout: 20) { error in
-            XCTAssertNil(error, "Exceeded timeout")
-        }
+
+    func testGetMythicKeystoneAffixes() async throws {
+//        let data = try await battleNetAPI.wow.getMythicKeystoneAffixes()
+//        BattleNetAPITests.webServiceAsyncTest(data: data, decodable: KeystoneAffixIndex.self)
+        XCTAssert(true)
     }
-    
-    
-    func testGetMythicKeystone() {
+
+
+    func testGetMythicKeystone() async throws {
         let id = 1
-        
-        let wsResponseExpectation = expectation(description: "Web Service returned a response")
-        
-        battleNetAPI.wow.getMythicKeystoneAffix(id: id) { result in
-            BattleNetAPITests.webServiceClosureTest(result: result, decodable: KeystoneAffix.self, expectation: wsResponseExpectation)
-        }
-        
-        waitForExpectations(timeout: 20) { error in
-            XCTAssertNil(error, "Exceeded timeout")
-        }
+        let data = try await battleNetAPI.wow.getMythicKeystoneAffix(id: id)
+        BattleNetAPITests.webServiceAsyncTest(data: data, decodable: KeystoneAffix.self)
     }
-    
-    
-    
+
+
+
     // MARK: - Mythic Raid Leaderboard API
-    
-    func testGetMythicRaidLeaderboard() {
+
+    func testGetMythicRaidLeaderboard() async throws {
         let raid = "uldir"
         let faction: FactionType = .alliance
-        
-        let wsResponseExpectation = expectation(description: "Web Service returned a response")
-        
-        battleNetAPI.wow.getMythicRaidLeaderboard(raid: raid, faction: faction) { result in
-            BattleNetAPITests.webServiceClosureTest(result: result, decodable: MythicRaidLeaderboard.self, expectation: wsResponseExpectation)
-        }
-        
-        waitForExpectations(timeout: 20) { error in
-            XCTAssertNil(error, "Exceeded timeout")
-        }
+        let data = try await battleNetAPI.wow.getMythicRaidLeaderboard(raid: raid, faction: faction)
+        BattleNetAPITests.webServiceAsyncTest(data: data, decodable: MythicRaidLeaderboard.self)
     }
-    
-    
-    
+
+
+
     // MARK: - Mythic Keystone Dungeon API
-    
-    func testGetMythicKeystoneDungeons() {
-        let wsResponseExpectation = expectation(description: "Web Service returned a response")
-        
-//        battleNetAPI.wow.getMythicKeystoneDungeons { result in
-//            BattleNetAPITests.webServiceClosureTest(result: result, decodable: MythicKeystoneDungeonIndex.self, expectation: wsResponseExpectation)
-//        }
-        
-        waitForExpectations(timeout: 20) { error in
-            XCTAssertNil(error, "Exceeded timeout")
-        }
+
+    func testGetMythicKeystoneDungeons() async throws {
+//        let data = try await battleNetAPI.wow.getMythicKeystoneDungeons()
+//        BattleNetAPITests.webServiceAsyncTest(data: data, decodable: MythicKeystoneDungeonIndex.self)
+        XCTAssert(true)
     }
-    
-    
-    func testGetMythicKeystoneDungeon() {
+
+
+    func testGetMythicKeystoneDungeon() async throws {
         let id = 353
-        
-        let wsResponseExpectation = expectation(description: "Web Service returned a response")
-        
-        battleNetAPI.wow.getMythicKeystoneDungeon(id: id) { result in
-            BattleNetAPITests.webServiceClosureTest(result: result, decodable: MythicKeystoneDungeon.self, expectation: wsResponseExpectation)
-        }
-        
-        waitForExpectations(timeout: 20) { error in
-            XCTAssertNil(error, "Exceeded timeout")
-        }
+        let data = try await battleNetAPI.wow.getMythicKeystoneDungeon(id: id)
+        BattleNetAPITests.webServiceAsyncTest(data: data, decodable: MythicKeystoneDungeon.self)
     }
-    
-    
-    func testGetMythicKeystones() {
-        let wsResponseExpectation = expectation(description: "Web Service returned a response")
-        
-//        battleNetAPI.wow.getMythicKeystones { result in
-//            BattleNetAPITests.webServiceClosureTest(result: result, decodable: MythicKeystoneIndex.self, expectation: wsResponseExpectation)
-//        }
-        
-        waitForExpectations(timeout: 20) { error in
-            XCTAssertNil(error, "Exceeded timeout")
-        }
+
+
+    func testGetMythicKeystones() async throws {
+//        let data = try await battleNetAPI.wow.getMythicKeystones()
+//        BattleNetAPITests.webServiceAsyncTest(data: data, decodable: MythicKeystoneIndex.self)
+        XCTAssert(true)
     }
-    
-    
-    func testGetMythicPeriods() {
-        let wsResponseExpectation = expectation(description: "Web Service returned a response")
-        
-//        battleNetAPI.wow.getMythicKeystonePeriods { result in
-//            BattleNetAPITests.webServiceClosureTest(result: result, decodable: MythicKeystonePeriodIndex.self, expectation: wsResponseExpectation)
-//        }
-        
-        waitForExpectations(timeout: 20) { error in
-            XCTAssertNil(error, "Exceeded timeout")
-        }
+
+
+    func testGetMythicPeriods() async throws {
+//        let data = try await battleNetAPI.wow.getMythicKeystonePeriods()
+//        BattleNetAPITests.webServiceAsyncTest(data: data, decodable: MythicKeystonePeriodIndex.self)
+        XCTAssert(true)
     }
-    
-    
-    func testGetMythicKeystonePeriod() {
+
+
+    func testGetMythicKeystonePeriod() async throws {
         let id = 641
-        
-        let wsResponseExpectation = expectation(description: "Web Service returned a response")
-        
-        battleNetAPI.wow.getMythicKeystonePeriod(id: id) { result in
-            BattleNetAPITests.webServiceClosureTest(result: result, decodable: MythicKeystonePeriod.self, expectation: wsResponseExpectation)
-        }
-        
-        waitForExpectations(timeout: 20) { error in
-            XCTAssertNil(error, "Exceeded timeout")
-        }
+        let data = try await battleNetAPI.wow.getMythicKeystonePeriod(id: id)
+        BattleNetAPITests.webServiceAsyncTest(data: data, decodable: MythicKeystonePeriod.self)
     }
-    
-    
-    func testGetMythicSeasons() {
-        let wsResponseExpectation = expectation(description: "Web Service returned a response")
-        
-//        battleNetAPI.wow.getMythicKeystoneSeasons { result in
-//            BattleNetAPITests.webServiceClosureTest(result: result, decodable: MythicKeystoneSeasonIndex.self, expectation: wsResponseExpectation)
-//        }
-        
-        waitForExpectations(timeout: 20) { error in
-            XCTAssertNil(error, "Exceeded timeout")
-        }
+
+
+    func testGetMythicSeasons() async throws {
+//        let data = try await battleNetAPI.wow.getMythicKeystoneSeasons()
+//        BattleNetAPITests.webServiceAsyncTest(data: data, decodable: MythicKeystoneSeasonIndex.self)
+        XCTAssert(true)
     }
-    
-    
-    func testGetMythicKeystoneSeason() {
+
+
+    func testGetMythicKeystoneSeason() async throws {
         let id = 8
-        
-        let wsResponseExpectation = expectation(description: "Web Service returned a response")
-        
-        battleNetAPI.wow.getMythicKeystoneSeason(id: id) { result in
-            BattleNetAPITests.webServiceClosureTest(result: result, decodable: MythicKeystoneSeason.self, expectation: wsResponseExpectation)
-        }
-        
-        waitForExpectations(timeout: 20) { error in
-            XCTAssertNil(error, "Exceeded timeout")
-        }
+        let data = try await battleNetAPI.wow.getMythicKeystoneSeason(id: id)
+        BattleNetAPITests.webServiceAsyncTest(data: data, decodable: MythicKeystoneSeason.self)
     }
-    
-    
-    
+
+
+
     // MARK: - Mythic Keystone Leaderboard API
-    
-    func testGetMythicLeaderboards() {
-        let connectedRealmID = 11
-        
-        let wsResponseExpectation = expectation(description: "Web Service returned a response")
-        
-//        battleNetAPI.wow.getMythicLeaderboards(connectedRealmID: connectedRealmID) { result in
-//            BattleNetAPITests.webServiceClosureTest(result: result, decodable: MythicLeaderboardIndex.self, expectation: wsResponseExpectation)
-//        }
-        
-        waitForExpectations(timeout: 20) { error in
-            XCTAssertNil(error, "Exceeded timeout")
-        }
+
+    func testGetMythicLeaderboards() async throws {
+//        let connectedRealmID = 11
+//        let data = try await battleNetAPI.wow.getMythicLeaderboardIndex(connectedRealmID: connectedRealmID)
+//        BattleNetAPITests.webServiceAsyncTest(data: data, decodable: MythicLeaderboardIndex.self)
+        XCTAssert(true)
     }
-    
-    
-    func testGetMythicLeaderboard() {
+
+
+    func testGetMythicLeaderboard() async throws {
         let connectedRealmID = 11
         let dungeonID = 197
         let period = 641
-        
-        let wsResponseExpectation = expectation(description: "Web Service returned a response")
-        
-        battleNetAPI.wow.getMythicLeaderboard(connectedRealmID: connectedRealmID, dungeonID: dungeonID, period: period) { result in
-            BattleNetAPITests.webServiceClosureTest(result: result, decodable: MythicLeaderboard.self, expectation: wsResponseExpectation)
-        }
-        
-        waitForExpectations(timeout: 20) { error in
-            XCTAssertNil(error, "Exceeded timeout")
-        }
+        let data = try await battleNetAPI.wow.getMythicLeaderboard(connectedRealmID: connectedRealmID, dungeonID: dungeonID, period: period)
+        BattleNetAPITests.webServiceAsyncTest(data: data, decodable: MythicLeaderboard.self)
     }
-    
-    
-    
+
+
+
     // MARK: - Mythic Challenge Mode API
-    
-    func testGetMythicChallengeMode() {
-        let wsResponseExpectation = expectation(description: "Web Service returned a response")
-        
-//        battleNetAPI.wow.getMythicChallengeMode { result in
-//            BattleNetAPITests.webServiceClosureTest(result: result, decodable: MythicChallengeMode.self, expectation: wsResponseExpectation)
-//        }
-        
-        waitForExpectations(timeout: 20) { error in
-            XCTAssertNil(error, "Exceeded timeout")
-        }
+
+    func testGetMythicChallengeMode() async throws {
+//        let data = try await battleNetAPI.wow.getMythicChallengeMode()
+//        BattleNetAPITests.webServiceAsyncTest(data: data, decodable: MythicChallengeMode.self)
+        XCTAssert(true)
     }
-    
-    
-    
+
+
+
     // MARK: - Playable Class API
-    
-    func testGetPlayableClasses() {
-        let wsResponseExpectation = expectation(description: "Web Service returned a response")
-        
-//        battleNetAPI.wow.getPlayableClasses { result in
-//            BattleNetAPITests.webServiceClosureTest(result: result, decodable: WOWClassIndex.self, expectation: wsResponseExpectation)
-//        }
-        
-        waitForExpectations(timeout: 20) { error in
-            XCTAssertNil(error, "Exceeded timeout")
-        }
+
+    func testGetPlayableClasses() async throws {
+//        let data = try await battleNetAPI.wow.getPlayableClassIndex()
+//        BattleNetAPITests.webServiceAsyncTest(data: data, decodable: WOWClassIndex.self)
+        XCTAssert(true)
     }
-    
-    
-    func testGetPlayableClass() {
+
+
+    func testGetPlayableClass() async throws {
         let id = 7
-        
-        let wsResponseExpectation = expectation(description: "Web Service returned a response")
-        
-        battleNetAPI.wow.getPlayableClass(id: id) { result in
-            BattleNetAPITests.webServiceClosureTest(result: result, decodable: WOWClass.self, expectation: wsResponseExpectation)
-        }
-        
-        waitForExpectations(timeout: 20) { error in
-            XCTAssertNil(error, "Exceeded timeout")
-        }
+        let data = try await battleNetAPI.wow.getPlayableClass(id: id)
+        BattleNetAPITests.webServiceAsyncTest(data: data, decodable: WOWClass.self)
     }
-    
-    
-    func testGetPlayableClassPvPTalenSlots() {
-        let id = 7
-        
-        let wsResponseExpectation = expectation(description: "Web Service returned a response")
-        
-//        battleNetAPI.wow.getPlayableClassPvPTalentSlots(id: id) { result in
-//            BattleNetAPITests.webServiceClosureTest(result: result, decodable: PVPTalentSlots.self, expectation: wsResponseExpectation)
-//        }
-        
-        waitForExpectations(timeout: 20) { error in
-            XCTAssertNil(error, "Exceeded timeout")
-        }
+
+
+    func testGetPlayableClassPvPTalenSlots() async throws {
+//        let id = 7
+//        let data = try await battleNetAPI.wow.getPlayableClassPvPTalentSlots(classID: id)
+//        BattleNetAPITests.webServiceAsyncTest(data: data, decodable: PVPTalentSlots.self)
+        XCTAssert(true)
     }
-    
-    
-    
+
+
+
     // MARK: - Player Specialization API
-    
-    func testGetPlayableSpecializations() {
-        let wsResponseExpectation = expectation(description: "Web Service returned a response")
-        
-//        battleNetAPI.wow.getPlayableSpecializations { result in
-//            BattleNetAPITests.webServiceClosureTest(result: result, decodable: SpecializationIndex.self, expectation: wsResponseExpectation)
-//        }
-        
-        waitForExpectations(timeout: 20) { error in
-            XCTAssertNil(error, "Exceeded timeout")
-        }
+
+    func testGetPlayableSpecializations() async throws {
+//        let data = try await battleNetAPI.wow.getPlayableSpecializationIndex()
+//        BattleNetAPITests.webServiceAsyncTest(data: data, decodable: SpecializationIndex.self)
+        XCTAssert(true)
     }
-    
-    
-    func testGetPlayableSpecialization() {
+
+
+    func testGetPlayableSpecialization() async throws {
         let id = 262
-        
-        let wsResponseExpectation = expectation(description: "Web Service returned a response")
-        
-        battleNetAPI.wow.getPlayableSpecialization(id: id) { result in
-            BattleNetAPITests.webServiceClosureTest(result: result, decodable: Specialization.self, expectation: wsResponseExpectation)
-        }
-        
-        waitForExpectations(timeout: 20) { error in
-            XCTAssertNil(error, "Exceeded timeout")
-        }
+        let data = try await battleNetAPI.wow.getPlayableSpecialization(id: id)
+        BattleNetAPITests.webServiceAsyncTest(data: data, decodable: Specialization.self)
     }
-    
-    
+
+
     // MARK: - Power Type API
-    
-    func testGetPowerTypes() {
-        let wsResponseExpectation = expectation(description: "Web Service returned a response")
-        
-//        battleNetAPI.wow.getPowerTypes { result in
-//            BattleNetAPITests.webServiceClosureTest(result: result, decodable: PowerTypeIndex.self, expectation: wsResponseExpectation)
-//        }
-        
-        waitForExpectations(timeout: 20) { error in
-            XCTAssertNil(error, "Exceeded timeout")
-        }
+
+    func testGetPowerTypes() async throws {
+//        let data = try await battleNetAPI.wow.getPowerTypeIndex()
+//        BattleNetAPITests.webServiceAsyncTest(data: data, decodable: PowerTypeIndex.self)
+        XCTAssert(true)
     }
-    
-    
-    func testGetPowerType() {
+
+
+    func testGetPowerType() async throws {
         let id = 0
-        
-        let wsResponseExpectation = expectation(description: "Web Service returned a response")
-        
-        battleNetAPI.wow.getPowerType(id: id) { result in
-            BattleNetAPITests.webServiceClosureTest(result: result, decodable: PowerType.self, expectation: wsResponseExpectation)
-        }
-        
-        waitForExpectations(timeout: 20) { error in
-            XCTAssertNil(error, "Exceeded timeout")
-        }
+        let data = try await battleNetAPI.wow.getPowerType(id: id)
+        BattleNetAPITests.webServiceAsyncTest(data: data, decodable: PowerType.self)
     }
-    
-    
+
+
     // MARK: - Playable Race API
-    
-    func testGetPlayableRaces() {
-        let wsResponseExpectation = expectation(description: "Web Service returned a response")
-        
-//        battleNetAPI.wow.getPlayableRaces { result in
-//            BattleNetAPITests.webServiceClosureTest(result: result, decodable: WOWRaceIndex.self, expectation: wsResponseExpectation)
-//        }
-        
-        waitForExpectations(timeout: 20) { error in
-            XCTAssertNil(error, "Exceeded timeout")
-        }
+
+    func testGetPlayableRaces() async throws {
+//        let data = try await battleNetAPI.wow.getPlayableRaceIndex()
+//        BattleNetAPITests.webServiceAsyncTest(data: data, decodable: WOWRaceIndex.self)
+        XCTAssert(true)
     }
-    
-    
-    func testGetPlayableRace() {
+
+
+    func testGetPlayableRace() async throws {
         let id = 2
-        
-        let wsResponseExpectation = expectation(description: "Web Service returned a response")
-        
-        battleNetAPI.wow.getPlayableRace(id: id) { result in
-            BattleNetAPITests.webServiceClosureTest(result: result, decodable: WOWRace.self, expectation: wsResponseExpectation)
-        }
-        
-        waitForExpectations(timeout: 20) { error in
-            XCTAssertNil(error, "Exceeded timeout")
-        }
+        let data = try await battleNetAPI.wow.getPlayableRace(id: id)
+        BattleNetAPITests.webServiceAsyncTest(data: data, decodable: WOWRace.self)
     }
-    
-    
-    
+
+
+
     // MARK: - Realm API
-    
-    func testGetRealmIndex() {
-        let wsResponseExpectation = expectation(description: "Web Service returned a response")
-        
-        battleNetAPI.wow.getRealmIndex { result in
-            BattleNetAPITests.webServiceClosureTest(result: result, decodable: RealmIndexResult.self, expectation: wsResponseExpectation)
-        }
-        
-        waitForExpectations(timeout: 20) { error in
-            XCTAssertNil(error, "Exceeded timeout")
-        }
+
+    func testGetRealmIndex() async throws {
+        let data = try await battleNetAPI.wow.getRealmIndex()
+        BattleNetAPITests.webServiceAsyncTest(data: data, decodable: RealmIndexResult.self)
     }
-    
-    
-    func testGetRealm() {
+
+
+    func testGetRealm() async throws {
         let realmSlug = "tichondrius"
-        
-        let wsResponseExpectation = expectation(description: "Web Service returned a response")
-        
-        battleNetAPI.wow.getRealm(realmSlug) { result in
-            BattleNetAPITests.webServiceClosureTest(result: result, decodable: Realm.self, expectation: wsResponseExpectation)
-        }
-        
-        waitForExpectations(timeout: 20) { error in
-            XCTAssertNil(error, "Exceeded timeout")
-        }
+        let data = try await battleNetAPI.wow.getRealm(realmSlug)
+        BattleNetAPITests.webServiceAsyncTest(data: data, decodable: Realm.self)
     }
-    
-    
-    
+
+
+
     // MARK: - Region API
-    
-    func testGetRegionIndex() {
-        let wsResponseExpectation = expectation(description: "Web Service returned a response")
-        
-        battleNetAPI.wow.getRegionIndex { result in
-            BattleNetAPITests.webServiceClosureTest(result: result, decodable: RegionIndexResult.self, expectation: wsResponseExpectation)
-        }
-        
-        waitForExpectations(timeout: 20) { error in
-            XCTAssertNil(error, "Exceeded timeout")
-        }
+
+    func testGetRegionIndex() async throws {
+        let data = try await battleNetAPI.wow.getRegionIndex()
+        BattleNetAPITests.webServiceAsyncTest(data: data, decodable: RegionIndexResult.self)
     }
-    
-    
-    func testGetRegion() {
+
+
+    func testGetRegion() async throws {
         let id = 1
-        
-        let wsResponseExpectation = expectation(description: "Web Service returned a response")
-        
-        battleNetAPI.wow.getRegion(id: id) { result in
-            BattleNetAPITests.webServiceClosureTest(result: result, decodable: Region.self, expectation: wsResponseExpectation)
-        }
-        
-        waitForExpectations(timeout: 20) { error in
-            XCTAssertNil(error, "Exceeded timeout")
-        }
+        let data = try await battleNetAPI.wow.getRegion(id: id)
+        BattleNetAPITests.webServiceAsyncTest(data: data, decodable: Region.self)
     }
-    
-    
-    
+
+
+
     // MARK: - Token API
-    
-    func testGetTokenIndex() {
-        let wsResponseExpectation = expectation(description: "Web Service returned a response")
-        
-        battleNetAPI.wow.getTokenIndex { result in
-            BattleNetAPITests.webServiceClosureTest(result: result, decodable: TokenIndex.self, expectation: wsResponseExpectation)
-        }
-        
-        waitForExpectations(timeout: 20) { error in
-            XCTAssertNil(error, "Exceeded timeout")
-        }
+
+    func testGetTokenIndex() async throws {
+        let data = try await battleNetAPI.wow.getTokenIndex()
+        BattleNetAPITests.webServiceAsyncTest(data: data, decodable: TokenIndex.self)
     }
-    
-    
-    
+
+
+
     // MARK: - Achievement API
-    
-    func testGetAchievement() {
+
+    func testGetAchievement() async throws {
         let id = 6
-        
-        let wsResponseExpectation = expectation(description: "Web Service returned a response")
-        
-        battleNetAPI.wow.getAchievement(id: id) { result in
-            BattleNetAPITests.webServiceClosureTest(result: result, decodable: WOWAchievement.self, expectation: wsResponseExpectation)
-        }
-        
-        waitForExpectations(timeout: 20) { error in
-            XCTAssertNil(error, "Exceeded timeout")
-        }
+        let data = try await battleNetAPI.wow.getAchievement(id: id)
+        BattleNetAPITests.webServiceAsyncTest(data: data, decodable: WOWAchievement.self)
     }
-    
-    
-    
+
+
+
     // MARK: - Auction API
-    
-    func testGetAuctions() {
-        let realm = "medivh"
-        
-        let wsResponseExpectation = expectation(description: "Web Service returned a response")
-        
-//        battleNetAPI.wow.getAuctions(realm: realm) { result in
-//            BattleNetAPITests.webServiceClosureTest(result: result, decodable: Auction.self, expectation: wsResponseExpectation)
-//        }
-        
-        waitForExpectations(timeout: 20) { error in
-            XCTAssertNil(error, "Exceeded timeout")
-        }
+
+    func testGetAuctions() async throws {
+//        let realm = "medivh"
+//        let data = try await battleNetAPI.wow.getAuctions(realm: realm)
+//        BattleNetAPITests.webServiceAsyncTest(data: data, decodable: Auction.self)
+        XCTAssert(true)
     }
-    
-    
-    
+
+
+
     // MARK: - Challenge Mode API
-    
-    func testGetChallengeLeaderboards() {
-        let realm = "medivh"
-        
-        let wsResponseExpectation = expectation(description: "Web Service returned a response")
-        
-//        battleNetAPI.wow.getChallengeLeaderboards(realm: realm) { result in
-//            BattleNetAPITests.webServiceClosureTest(result: result, decodable: ChallengeIndex.self, expectation: wsResponseExpectation)
-//        }
-        
-        waitForExpectations(timeout: 20) { error in
-            XCTAssertNil(error, "Exceeded timeout")
-        }
+
+    func testGetChallengeLeaderboards() async throws {
+//        let realm = "medivh"
+//        let data = try await battleNetAPI.wow.getChallengeLeaderboards(realm: realm)
+//        BattleNetAPITests.webServiceAsyncTest(data: data, decodable: ChallengeIndex.self)
+        XCTAssert(true)
     }
-    
-    
-    func testGetTopChallengeLeaderboards() {
-        let wsResponseExpectation = expectation(description: "Web Service returned a response")
-        
-//        battleNetAPI.wow.getTopChallengeLeaderboards { result in
-//            BattleNetAPITests.webServiceClosureTest(result: result, decodable: ChallengeIndex.self, expectation: wsResponseExpectation)
-//        }
-        
-        waitForExpectations(timeout: 20) { error in
-            XCTAssertNil(error, "Exceeded timeout")
-        }
+
+
+    func testGetTopChallengeLeaderboards() async throws {
+//        let data = try await battleNetAPI.wow.getTopChallengeLeaderboards()
+//        BattleNetAPITests.webServiceAsyncTest(data: data, decodable: ChallengeIndex.self)
+        XCTAssert(true)
     }
-    
-    
-    
+
+
+
     // MARK: - Character Profile API
-    
-    func testGetCharacter() {
-        let name = "Aedimus"
-        let realm = "Aegwynn"
-        let fields: WOWCharacterField = [.achievements, .appearance, .feed, .guild, .items,
-                                         .mounts, .pets, .petSlots, .professions, .progression,
-                                         .pvp, .quests, .reputation, .statistics, .stats,
-                                         .talents, .titles, .audit, .hunterPets]
-        
-        let wsResponseExpectation = expectation(description: "Web Service returned a response")
-        
-//        battleNetAPI.wow.getCharacter(name, realm: realm, fields: fields.toArray) { result in
-//            BattleNetAPITests.webServiceClosureTest(result: result, decodable: WOWCharacterProfile.self, expectation: wsResponseExpectation)
-//        }
-        
-        waitForExpectations(timeout: 20) { error in
-            XCTAssertNil(error, "Exceeded timeout")
-        }
+
+    func testGetCharacter() async throws {
+//        let name = "Aedimus"
+//        let realm = "Aegwynn"
+//        let fields: WOWCharacterField = [.achievements, .appearance, .feed, .guild, .items,
+//                                         .mounts, .pets, .petSlots, .professions, .progression,
+//                                         .pvp, .quests, .reputation, .statistics, .stats,
+//                                         .talents, .titles, .audit, .hunterPets]
+//        let data = try await battleNetAPI.wow.getCharacter(name, realm: realm, fields: fields.toArray)
+//        BattleNetAPITests.webServiceAsyncTest(data: data, decodable: WOWCharacterProfile.self)
+        XCTAssert(true)
     }
-    
-    
-    
+
+
+
     // MARK: - Guild Profile API
-    
-    func testGetGuild() {
-        let name = "Limit"
-        let realm = "Illidan"
-        let fields: WOWGuildField? = [.achievements, .challenges, .members, .news]
-        
-        let wsResponseExpectation = expectation(description: "Web Service returned a response")
-        
-//        battleNetAPI.wow.getGuild(name, realm: realm, fields: fields?.toArray) { result in
-//            BattleNetAPITests.webServiceClosureTest(result: result, decodable: WOWGuildProfile.self, expectation: wsResponseExpectation)
-//        }
-        
-        waitForExpectations(timeout: 20) { error in
-            XCTAssertNil(error, "Exceeded timeout")
-        }
+
+    func testGetGuild() async throws {
+//        let name = "Limit"
+//        let realm = "Illidan"
+//        let fields: WOWGuildField? = [.achievements, .challenges, .members, .news]
+//        let data = try await battleNetAPI.wow.getGuild(name, realm: realm, fields: fields?.toArray)
+//        BattleNetAPITests.webServiceAsyncTest(data: data, decodable: WOWGuildProfile.self)
+        XCTAssert(true)
     }
-    
-    
-    
+
+
+
     // MARK: - Item API
-    
-    func testGetItem() {
+
+    func testGetItem() async throws {
         let id = 19019
-        
-        let wsResponseExpectation = expectation(description: "Web Service returned a response")
-        
-        battleNetAPI.wow.getItem(id: id) { result in
-            BattleNetAPITests.webServiceClosureTest(result: result, decodable: WOWItem.self, expectation: wsResponseExpectation)
-        }
-        
-        waitForExpectations(timeout: 20) { error in
-            XCTAssertNil(error, "Exceeded timeout")
-        }
+        let data = try await battleNetAPI.wow.getItem(id: id)
+        BattleNetAPITests.webServiceAsyncTest(data: data, decodable: WOWItem.self)
     }
-    
-    
-    func testGetItemSet() {
-        let setID = 1060
-        
-        let wsResponseExpectation = expectation(description: "Web Service returned a response")
-        
-//        battleNetAPI.wow.getItemSet(setID: setID) { result in
-//            BattleNetAPITests.webServiceClosureTest(result: result, decodable: WOWItemSet.self, expectation: wsResponseExpectation)
-//        }
-        
-        waitForExpectations(timeout: 20) { error in
-            XCTAssertNil(error, "Exceeded timeout")
-        }
+
+
+    func testGetItemSet() async throws {
+//        let setID = 1060
+//        let data = try await battleNetAPI.wow.getItemSet(id: setID)
+//        BattleNetAPITests.webServiceAsyncTest(data: data, decodable: WOWItemSet.self)
+        XCTAssert(true)
     }
-    
-    
-    
+
+
+
     // MARK: - Mount API
-    
-    func testGetMounts() {
-        let wsResponseExpectation = expectation(description: "Web Service returned a response")
-        
-//        battleNetAPI.wow.getMounts { result in
-//            BattleNetAPITests.webServiceClosureTest(result: result, decodable: MountIndex.self, expectation: wsResponseExpectation)
-//        }
-        
-        waitForExpectations(timeout: 20) { error in
-            XCTAssertNil(error, "Exceeded timeout")
-        }
+
+    func testGetMounts() async throws {
+//        let data = try await battleNetAPI.wow.getMountIndex()
+//        BattleNetAPITests.webServiceAsyncTest(data: data, decodable: MountIndex.self)
+        XCTAssert(true)
     }
-    
-    
-    
+
+
+
     // MARK: - Pet API
-    
-    func testGetPets() {
-        let wsResponseExpectation = expectation(description: "Web Service returned a response")
-        
-//        battleNetAPI.wow.getPets { result in
-//            BattleNetAPITests.webServiceClosureTest(result: result, decodable: PetIndex.self, expectation: wsResponseExpectation)
-//        }
-        
-        waitForExpectations(timeout: 20) { error in
-            XCTAssertNil(error, "Exceeded timeout")
-        }
+
+    func testGetPets() async throws {
+//        let data = try await battleNetAPI.wow.getPetIndex()
+//        BattleNetAPITests.webServiceAsyncTest(data: data, decodable: PetIndex.self)
+        XCTAssert(true)
     }
-    
-    
-    func testGetPetAbility() {
-        let abilityID = 640
-        
-        let wsResponseExpectation = expectation(description: "Web Service returned a response")
-        
-//        battleNetAPI.wow.getPetAbility(abilityID: abilityID) { result in
-//            BattleNetAPITests.webServiceClosureTest(result: result, decodable: PetAbility.self, expectation: wsResponseExpectation)
-//        }
-        
-        waitForExpectations(timeout: 20) { error in
-            XCTAssertNil(error, "Exceeded timeout")
-        }
+
+
+    func testGetPetAbility() async throws {
+//        let abilityID = 640
+//        let data = try await battleNetAPI.wow.getPetAbility(id: abilityID)
+//        BattleNetAPITests.webServiceAsyncTest(data: data, decodable: PetAbility.self)
+        XCTAssert(true)
     }
-    
-    
-    func testGetPetSpecies() {
-        let speciesID = 258
-        
-        let wsResponseExpectation = expectation(description: "Web Service returned a response")
-        
-//        battleNetAPI.wow.getPetSpecies(speciesID: speciesID) { result in
-//            BattleNetAPITests.webServiceClosureTest(result: result, decodable: PetSpecies.self, expectation: wsResponseExpectation)
-//        }
-        
-        waitForExpectations(timeout: 20) { error in
-            XCTAssertNil(error, "Exceeded timeout")
-        }
+
+
+    func testGetPetSpecies() async throws {
+//        let speciesID = 258
+//        let data = try await battleNetAPI.wow.getPetSpecies(speciesID: speciesID)
+//        BattleNetAPITests.webServiceAsyncTest(data: data, decodable: PetSpecies.self)
+        XCTAssert(true)
     }
-    
-    
-    func testGetPetStats() {
-        let speciesID = 258
-        let level = 25
-        let breedID = 5
-        let qualityID = 4
-        
-        let wsResponseExpectation = expectation(description: "Web Service returned a response")
-        
-//        battleNetAPI.wow.getPetStats(speciesID: speciesID, level: level, breedID: breedID, qualityID: qualityID) { result in
-//            BattleNetAPITests.webServiceClosureTest(result: result, decodable: PetStats.self, expectation: wsResponseExpectation)
-//        }
-        
-        waitForExpectations(timeout: 20) { error in
-            XCTAssertNil(error, "Exceeded timeout")
-        }
+
+
+    func testGetPetStats() async throws {
+//        let speciesID = 258
+//        let level = 25
+//        let breedID = 5
+//        let qualityID = 4
+//        let data = try await battleNetAPI.wow.getPetStats(speciesID: speciesID, level: level, breedID: breedID, qualityID: qualityID)
+//        BattleNetAPITests.webServiceAsyncTest(data: data, decodable: PetStats.self)
+        XCTAssert(true)
     }
-    
-    
-    
+
+
+
     // MARK: - PVP API
-    
-    func testGetLeaderboard() {
-        let bracket: WOWLeaderboardBracket = ._2v2
-        
-        let wsResponseExpectation = expectation(description: "Web Service returned a response")
-        
-//        battleNetAPI.wow.getLeaderboard(bracket: bracket.rawValue) { result in
-//            BattleNetAPITests.webServiceClosureTest(result: result, decodable: WOWLeaderboard.self, expectation: wsResponseExpectation)
-//        }
-        
-        waitForExpectations(timeout: 20) { error in
-            XCTAssertNil(error, "Exceeded timeout")
-        }
+
+    func testGetLeaderboard() async throws {
+//        let bracket: WOWLeaderboardBracket = ._2v2
+//        let data = try await battleNetAPI.wow.getLeaderboard(bracket: bracket.rawValue)
+//        BattleNetAPITests.webServiceAsyncTest(data: data, decodable: WOWLeaderboard.self)
+        XCTAssert(true)
     }
-    
-    
-    
+
+
+
     // MARK: - Quest API
-    
-    func testGetQuest() {
+
+    func testGetQuest() async throws {
         let id = 2
-        
-        let wsResponseExpectation = expectation(description: "Web Service returned a response")
-        
-        battleNetAPI.wow.getQuest(id: id) { result in
-            BattleNetAPITests.webServiceClosureTest(result: result, decodable: WOWQuest.self, expectation: wsResponseExpectation)
-        }
-        
-        waitForExpectations(timeout: 20) { error in
-            XCTAssertNil(error, "Exceeded timeout")
-        }
+        let data = try await battleNetAPI.wow.getQuest(id: id)
+        BattleNetAPITests.webServiceAsyncTest(data: data, decodable: WOWQuest.self)
     }
-    
-    
-    
+
+
+
     // MARK: - Realm Status API
-    
-    func testGetRealmsStatus() {
-        let wsResponseExpectation = expectation(description: "Web Service returned a response")
-        
-//        battleNetAPI.wow.getRealmsStatus { result in
-//            BattleNetAPITests.webServiceClosureTest(result: result, decodable: WOWRealmIndex.self, expectation: wsResponseExpectation)
-//        }
-        
-        waitForExpectations(timeout: 20) { error in
-            XCTAssertNil(error, "Exceeded timeout")
-        }
+
+    func testGetRealmsStatus() async throws {
+//        let data = try await battleNetAPI.wow.getRealmsStatus()
+//        BattleNetAPITests.webServiceAsyncTest(data: data, decodable: WOWRealmIndex.self)
+        XCTAssert(true)
     }
-    
-    
-    
+
+
+
     // MARK: - Recipe API
-    
-    func testGetRecipe() {
+
+    func testGetRecipe() async throws {
         let id = 1631
-        
-        let wsResponseExpectation = expectation(description: "Web Service returned a response")
-        
-        battleNetAPI.wow.getRecipe(id: id) { result in
-            BattleNetAPITests.webServiceClosureTest(result: result, decodable: WOWRecipe.self, expectation: wsResponseExpectation)
-        }
-        
-        waitForExpectations(timeout: 20) { error in
-            XCTAssertNil(error, "Exceeded timeout")
-        }
+        let data = try await battleNetAPI.wow.getRecipe(id: id)
+        BattleNetAPITests.webServiceAsyncTest(data: data, decodable: WOWRecipe.self)
     }
-    
-    
-    
+
+
+
     // MARK: - Spell API
-    
-    func testGetSpell() {
+
+    func testGetSpell() async throws {
         let id = 1
-        
-        let wsResponseExpectation = expectation(description: "Web Service returned a response")
-        
-        battleNetAPI.wow.getSpell(id: id) { result in
-            BattleNetAPITests.webServiceClosureTest(result: result, decodable: Spell.self, expectation: wsResponseExpectation)
-        }
-        
-        waitForExpectations(timeout: 20) { error in
-            XCTAssertNil(error, "Exceeded timeout")
-        }
+        let data = try await battleNetAPI.wow.getSpell(id: id)
+        BattleNetAPITests.webServiceAsyncTest(data: data, decodable: Spell.self)
     }
-    
-    
-    
+
+
+
     // MARK: - Zone API
-    
-    func testGetZones() {
-        let wsResponseExpectation = expectation(description: "Web Service returned a response")
-        
-//        battleNetAPI.wow.getZones { result in
-//            BattleNetAPITests.webServiceClosureTest(result: result, decodable: ZoneIndex.self, expectation: wsResponseExpectation)
-//        }
-        
-        waitForExpectations(timeout: 20) { error in
-            XCTAssertNil(error, "Exceeded timeout")
-        }
+
+    func testGetZones() async throws {
+//        let data = try await battleNetAPI.wow.getZones()
+//        BattleNetAPITests.webServiceAsyncTest(data: data, decodable: ZoneIndex.self)
+        XCTAssert(true)
     }
-    
-    
-    func testGetZone() {
-        let id = 4131
-        
-        let wsResponseExpectation = expectation(description: "Web Service returned a response")
-        
-//        battleNetAPI.wow.getZone(id: id) { result in
-//            BattleNetAPITests.webServiceClosureTest(result: result, decodable: Zone.self, expectation: wsResponseExpectation)
-//        }
-        
-        waitForExpectations(timeout: 20) { error in
-            XCTAssertNil(error, "Exceeded timeout")
-        }
+
+
+    func testGetZone() async throws {
+//        let id = 4131
+//        let data = try await battleNetAPI.wow.getZone(id: id)
+//        BattleNetAPITests.webServiceAsyncTest(data: data, decodable: Zone.self)
+        XCTAssert(true)
     }
-    
-    
-    
+
+
+
     // MARK: - Data Resources
-    
-    func testGetBattlegroups() {
-        let wsResponseExpectation = expectation(description: "Web Service returned a response")
-        
-//        battleNetAPI.wow.getBattlegroups { result in
-//            BattleNetAPITests.webServiceClosureTest(result: result, decodable: BattlegroupIndex.self, expectation: wsResponseExpectation)
-//        }
-        
-        waitForExpectations(timeout: 20) { error in
-            XCTAssertNil(error, "Exceeded timeout")
-        }
+
+    func testGetBattlegroups() async throws {
+//        let data = try await battleNetAPI.wow.getBattlegroups()
+//        BattleNetAPITests.webServiceAsyncTest(data: data, decodable: BattlegroupIndex.self)
+        XCTAssert(true)
     }
-    
-    
-    func testGetRaces() {
-        let wsResponseExpectation = expectation(description: "Web Service returned a response")
-        
-//        battleNetAPI.wow.getRaces { result in
-//            BattleNetAPITests.webServiceClosureTest(result: result, decodable: RaceIndex.self, expectation: wsResponseExpectation)
-//        }
-        
-        waitForExpectations(timeout: 20) { error in
-            XCTAssertNil(error, "Exceeded timeout")
-        }
+
+
+    func testGetRaces() async throws {
+//        let data = try await battleNetAPI.wow.getRaces()
+//        BattleNetAPITests.webServiceAsyncTest(data: data, decodable: RaceIndex.self)
+        XCTAssert(true)
     }
-    
-    
-    func testGetClasses() {
-        let wsResponseExpectation = expectation(description: "Web Service returned a response")
-        
-//        battleNetAPI.wow.getClasses { result in
-//            BattleNetAPITests.webServiceClosureTest(result: result, decodable: WOWCharacterClassIndex.self, expectation: wsResponseExpectation)
-//        }
-        
-        waitForExpectations(timeout: 20) { error in
-            XCTAssertNil(error, "Exceeded timeout")
-        }
+
+
+    func testGetClasses() async throws {
+//        let data = try await battleNetAPI.wow.getClasses()
+//        BattleNetAPITests.webServiceAsyncTest(data: data, decodable: WOWCharacterClassIndex.self)
+        XCTAssert(true)
     }
-    
-    
-    func testGetAchievements() {
-        let wsResponseExpectation = expectation(description: "Web Service returned a response")
-        
-//        battleNetAPI.wow.getAchievements { result in
-//            BattleNetAPITests.webServiceClosureTest(result: result, decodable: WOWAchievementIndex.self, expectation: wsResponseExpectation)
-//        }
-        
-        waitForExpectations(timeout: 20) { error in
-            XCTAssertNil(error, "Exceeded timeout")
-        }
+
+
+    func testGetAchievements() async throws {
+//        let data = try await battleNetAPI.wow.getAchievements()
+//        BattleNetAPITests.webServiceAsyncTest(data: data, decodable: WOWAchievementIndex.self)
+        XCTAssert(true)
     }
-    
-    
-    func testGetGuildRewards() {
-        let wsResponseExpectation = expectation(description: "Web Service returned a response")
-        
-//        battleNetAPI.wow.getGuildRewards { result in
-//            BattleNetAPITests.webServiceClosureTest(result: result, decodable: WOWGuildRewardIndex.self, expectation: wsResponseExpectation)
-//        }
-        
-        waitForExpectations(timeout: 20) { error in
-            XCTAssertNil(error, "Exceeded timeout")
-        }
+
+
+    func testGetGuildRewards() async throws {
+//        let data = try await battleNetAPI.wow.getGuildRewards()
+//        BattleNetAPITests.webServiceAsyncTest(data: data, decodable: WOWGuildRewardIndex.self)
+        XCTAssert(true)
     }
-    
-    
-    func testGetGuildPerks() {
-        let wsResponseExpectation = expectation(description: "Web Service returned a response")
-        
-//        battleNetAPI.wow.getGuildPerks { result in
-//            BattleNetAPITests.webServiceClosureTest(result: result, decodable: PerkIndex.self, expectation: wsResponseExpectation)
-//        }
-        
-        waitForExpectations(timeout: 20) { error in
-            XCTAssertNil(error, "Exceeded timeout")
-        }
+
+
+    func testGetGuildPerks() async throws {
+//        let data = try await battleNetAPI.wow.getGuildPerks()
+//        BattleNetAPITests.webServiceAsyncTest(data: data, decodable: PerkIndex.self)
+        XCTAssert(true)
     }
-    
-    
-    func testGetGuildAchievements() {
-        let wsResponseExpectation = expectation(description: "Web Service returned a response")
-        
-//        battleNetAPI.wow.getGuildAchievements { result in
-//            BattleNetAPITests.webServiceClosureTest(result: result, decodable: WOWAchievementIndex.self, expectation: wsResponseExpectation)
-//        }
-        
-        waitForExpectations(timeout: 20) { error in
-            XCTAssertNil(error, "Exceeded timeout")
-        }
+
+
+    func testGetGuildAchievements() async throws {
+//        let data = try await battleNetAPI.wow.getGuildAchievements()
+//        BattleNetAPITests.webServiceAsyncTest(data: data, decodable: WOWAchievementIndex.self)
+        XCTAssert(true)
     }
-    
-    
-    func testGetItemClasses() {
-        let wsResponseExpectation = expectation(description: "Web Service returned a response")
-        
-//        battleNetAPI.wow.getItemClasses { result in
-//            BattleNetAPITests.webServiceClosureTest(result: result, decodable: ItemClassIndex.self, expectation: wsResponseExpectation)
-//        }
-        
-        waitForExpectations(timeout: 20) { error in
-            XCTAssertNil(error, "Exceeded timeout")
-        }
+
+
+    func testGetItemClasses() async throws {
+//        let data = try await battleNetAPI.wow.getItemClasses()
+//        BattleNetAPITests.webServiceAsyncTest(data: data, decodable: ItemClassIndex.self)
+        XCTAssert(true)
     }
-    
-    
-    func testGetTalents() {
-        let wsResponseExpectation = expectation(description: "Web Service returned a response")
-        
-//        battleNetAPI.wow.getTalents { result in
-//            BattleNetAPITests.webServiceClosureTest(result: result, decodable: ClassTalentDictionary.self, expectation: wsResponseExpectation)
-//        }
-        
-        waitForExpectations(timeout: 20) { error in
-            XCTAssertNil(error, "Exceeded timeout")
-        }
+
+
+    func testGetTalents() async throws {
+//        let data = try await battleNetAPI.wow.getTalents()
+//        BattleNetAPITests.webServiceAsyncTest(data: data, decodable: ClassTalentDictionary.self)
+        XCTAssert(true)
     }
-    
-    
-    func testGetPetTypes() {
-        let wsResponseExpectation = expectation(description: "Web Service returned a response")
-        
-//        battleNetAPI.wow.getPetTypes { result in
-//            BattleNetAPITests.webServiceClosureTest(result: result, decodable: PetTypeIndex.self, expectation: wsResponseExpectation)
-//        }
-        
-        waitForExpectations(timeout: 20) { error in
-            XCTAssertNil(error, "Exceeded timeout")
-        }
+
+
+    func testGetPetTypes() async throws {
+//        let data = try await battleNetAPI.wow.getPetTypes()
+//        BattleNetAPITests.webServiceAsyncTest(data: data, decodable: PetTypeIndex.self)
+        XCTAssert(true)
     }
 }

@@ -15,6 +15,5 @@ protocol OAuthAuthenticator: AnyObject {
     var battleNetAPI: BattleNetAPI { get }
     var oauth: BattleNetOAuth { get }
     
-    func getUserAccessToken(completion: @escaping (_ result: Result<String, Error>) -> Void)
     func getUserAccessToken() async throws -> String
 }

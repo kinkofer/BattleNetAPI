@@ -15,6 +15,7 @@ struct WorldOfWarcraftClassicView: View {
     
     @State var apiSelection: API?
     @State var webServiceData: Data = Data()
+    @State var loadingAPI: API?
     
     let apiType: APIType
     
@@ -48,10 +49,10 @@ struct WorldOfWarcraftClassicView: View {
             Group {
                 Section(header: Text(WorldOfWarcraftClassicView.APISection.connectedRealm.rawValue)) {
                     webServiceRow(api: .connectedRealmIndex) {
-                        battleNetAPI.wowClassic.getConnectedRealmIndex(completion: { parseResult($0, for: .connectedRealmIndex) })
+                        try await battleNetAPI.wowClassic.getConnectedRealmIndex()
                     }
                     webServiceRow(api: .connectedRealm) {
-                        battleNetAPI.wowClassic.getConnectedRealm(id: 4388, completion: { parseResult($0, for: .connectedRealm) })
+                        try await battleNetAPI.wowClassic.getConnectedRealm(id: 4388)
                     }
                     webServiceRow(api: .connectedRealmSearch) {
                         let queries = [
@@ -60,25 +61,25 @@ struct WorldOfWarcraftClassicView: View {
                             "orderby": "id",
                             "_page": "1"
                         ]
-                        battleNetAPI.wowClassic.searchConnectedRealms(queries: queries, completion: { parseResult($0, for: .connectedRealmSearch) })
+                        try await battleNetAPI.wowClassic.searchConnectedRealms(queries: queries)
                     }
                 }
                 
                 Section(header: Text(WorldOfWarcraftClassicView.APISection.creature.rawValue)) {
                     webServiceRow(api: .creatureFamilyIndex) {
-                        battleNetAPI.wowClassic.getCreatureFamilyIndex(completion: { parseResult($0, for: .creatureFamilyIndex) })
+                        try await battleNetAPI.wowClassic.getCreatureFamilyIndex()
                     }
                     webServiceRow(api: .creatureFamily) {
-                        battleNetAPI.wowClassic.getCreatureFamily(id: 1, completion: { parseResult($0, for: .creatureFamily) })
+                        try await battleNetAPI.wowClassic.getCreatureFamily(id: 1)
                     }
                     webServiceRow(api: .creatureTypeIndex) {
-                        battleNetAPI.wowClassic.getCreatureTypeIndex(completion: { parseResult($0, for: .creatureTypeIndex) })
+                        try await battleNetAPI.wowClassic.getCreatureTypeIndex()
                     }
                     webServiceRow(api: .creatureType) {
-                        battleNetAPI.wowClassic.getCreatureType(id: 1, completion: { parseResult($0, for: .creatureType) })
+                        try await battleNetAPI.wowClassic.getCreatureType(id: 1)
                     }
                     webServiceRow(api: .creature) {
-                        battleNetAPI.wowClassic.getCreature(id: 42722, completion: { parseResult($0, for: .creature) })
+                        try await battleNetAPI.wowClassic.getCreature(id: 42722)
                     }
                     webServiceRow(api: .creatureSearch) {
                         let queries = [
@@ -86,49 +87,49 @@ struct WorldOfWarcraftClassicView: View {
                             "orderby": "id",
                             "_page": "1"
                         ]
-                        battleNetAPI.wowClassic.searchCreature(queries: queries, completion: { parseResult($0, for: .creatureSearch) })
+                        try await battleNetAPI.wowClassic.searchCreature(queries: queries)
                     }
                     webServiceRow(api: .creatureDisplayMedia) {
-                        battleNetAPI.wowClassic.getCreatureDisplayMedia(id: 30221, completion: { parseResult($0, for: .creatureDisplayMedia) })
+                        try await battleNetAPI.wowClassic.getCreatureDisplayMedia(id: 30221)
                     }
                     webServiceRow(api: .creatureFamilyMedia) {
-                        battleNetAPI.wowClassic.getCreatureFamilyMedia(id: 1, completion: { parseResult($0, for: .creatureFamilyMedia) })
+                        try await battleNetAPI.wowClassic.getCreatureFamilyMedia(id: 1)
                     }
                 }
                 
                 Section(header: Text(WorldOfWarcraftClassicView.APISection.guildCrest.rawValue)) {
                     webServiceRow(api: .guildCrestIndex) {
-                        battleNetAPI.wowClassic.getGuildCrestIndex(completion: { parseResult($0, for: .guildCrestIndex) })
+                        try await battleNetAPI.wowClassic.getGuildCrestIndex()
                     }
                     webServiceRow(api: .guildCrestBorderMedia) {
-                        battleNetAPI.wowClassic.getGuildCrestBorderMedia(id: 0, completion: { parseResult($0, for: .guildCrestBorderMedia) })
+                        try await battleNetAPI.wowClassic.getGuildCrestBorderMedia(id: 0)
                     }
                     webServiceRow(api: .guildCrestEmblemMedia) {
-                        battleNetAPI.wowClassic.getGuildCrestEmblemMedia(id: 0, completion: { parseResult($0, for: .guildCrestEmblemMedia) })
+                        try await battleNetAPI.wowClassic.getGuildCrestEmblemMedia(id: 0)
                     }
                 }
                 
                 Section(header: Text(WorldOfWarcraftClassicView.APISection.item.rawValue)) {
                     webServiceRow(api: .itemClassIndex) {
-                        battleNetAPI.wowClassic.getItemClassIndex(completion: { parseResult($0, for: .itemClassIndex) })
+                        try await battleNetAPI.wowClassic.getItemClassIndex()
                     }
                     webServiceRow(api: .itemClass) {
-                        battleNetAPI.wowClassic.getItemClass(id: 0, completion: { parseResult($0, for: .itemClass) })
+                        try await battleNetAPI.wowClassic.getItemClass(id: 0)
                     }
                     webServiceRow(api: .itemSetIndex) {
-                        battleNetAPI.wowClassic.getItemSetIndex(completion: { parseResult($0, for: .itemSetIndex) })
+                        try await battleNetAPI.wowClassic.getItemSetIndex()
                     }
                     webServiceRow(api: .itemSet) {
-                        battleNetAPI.wowClassic.getItemSet(id: 1, completion: { parseResult($0, for: .itemSet) })
+                        try await battleNetAPI.wowClassic.getItemSet(id: 1)
                     }
                     webServiceRow(api: .itemSubclass) {
-                        battleNetAPI.wowClassic.getItemSubclass(itemClassID: 0, itemSubclassID: 0, completion: { parseResult($0, for: .itemSubclass) })
+                        try await battleNetAPI.wowClassic.getItemSubclass(itemClassID: 0, itemSubclassID: 0)
                     }
                     webServiceRow(api: .item) {
-                        battleNetAPI.wowClassic.getItem(id: 19019, completion: { parseResult($0, for: .item) })
+                        try await battleNetAPI.wowClassic.getItem(id: 19019)
                     }
                     webServiceRow(api: .itemMedia) {
-                        battleNetAPI.wowClassic.getItemMedia(id: 19019, completion: { parseResult($0, for: .itemMedia) })
+                        try await battleNetAPI.wowClassic.getItemMedia(id: 19019)
                     }
                     webServiceRow(api: .itemSearch) {
                         let queries = [
@@ -136,7 +137,7 @@ struct WorldOfWarcraftClassicView: View {
                             "orderby": "id",
                             "_page": "1"
                         ]
-                        battleNetAPI.wowClassic.searchItem(queries: queries, completion: { parseResult($0, for: .itemSearch) })
+                        try await battleNetAPI.wowClassic.searchItem(queries: queries)
                     }
                 }
                 
@@ -147,46 +148,46 @@ struct WorldOfWarcraftClassicView: View {
                             "orderby": "id",
                             "_page": "1"
                         ]
-                        battleNetAPI.wowClassic.searchMedia(queries: queries, completion: { parseResult($0, for: .mediaSearch) })
+                        try await battleNetAPI.wowClassic.searchMedia(queries: queries)
                     }
                 }
                 
                 Section(header: Text(WorldOfWarcraftClassicView.APISection.playableClass.rawValue)) {
                     webServiceRow(api: .playableClassIndex) {
-                        battleNetAPI.wowClassic.getPlayableClassIndex(completion: { parseResult($0, for: .playableClassIndex) })
+                        try await battleNetAPI.wowClassic.getPlayableClassIndex()
                     }
                     webServiceRow(api: .playableClass) {
-                        battleNetAPI.wowClassic.getPlayableClass(id: 7, completion: { parseResult($0, for: .playableClass) })
+                        try await battleNetAPI.wowClassic.getPlayableClass(id: 7)
                     }
                     webServiceRow(api: .playableClassMedia) {
-                        battleNetAPI.wowClassic.getPlayableClassMedia(id: 7, completion: { parseResult($0, for: .playableClassMedia) })
+                        try await battleNetAPI.wowClassic.getPlayableClassMedia(id: 7)
                     }
                 }
                 
                 Section(header: Text(WorldOfWarcraftClassicView.APISection.playableRace.rawValue)) {
                     webServiceRow(api: .playableRaceIndex) {
-                        battleNetAPI.wowClassic.getPlayableRaceIndex(completion: { parseResult($0, for: .playableRaceIndex) })
+                        try await battleNetAPI.wowClassic.getPlayableRaceIndex()
                     }
                     webServiceRow(api: .playableRace) {
-                        battleNetAPI.wowClassic.getPlayableRace(id: 2, completion: { parseResult($0, for: .playableRace) })
+                        try await battleNetAPI.wowClassic.getPlayableRace(id: 2)
                     }
                 }
                 
                 Section(header: Text(WorldOfWarcraftClassicView.APISection.powerType.rawValue)) {
                     webServiceRow(api: .powerTypeIndex) {
-                        battleNetAPI.wowClassic.getPowerTypeIndex(completion: { parseResult($0, for: .powerTypeIndex) })
+                        try await battleNetAPI.wowClassic.getPowerTypeIndex()
                     }
                     webServiceRow(api: .powerType) {
-                        battleNetAPI.wowClassic.getPowerType(id: 0, completion: { parseResult($0, for: .powerType) })
+                        try await battleNetAPI.wowClassic.getPowerType(id: 0)
                     }
                 }
                 
                 Section(header: Text(WorldOfWarcraftClassicView.APISection.realm.rawValue)) {
                     webServiceRow(api: .realmIndex) {
-                        battleNetAPI.wowClassic.getRealmIndex(completion: { parseResult($0, for: .realmIndex) })
+                        try await battleNetAPI.wowClassic.getRealmIndex()
                     }
                     webServiceRow(api: .realm) {
-                        battleNetAPI.wowClassic.getRealm("tichondrius", completion: { parseResult($0, for: .realm) })
+                        try await battleNetAPI.wowClassic.getRealm("tichondrius")
                     }
                     webServiceRow(api: .realmSearch) {
                         let queries = [
@@ -194,23 +195,23 @@ struct WorldOfWarcraftClassicView: View {
                             "orderby": "id",
                             "_page": "1"
                         ]
-                        battleNetAPI.wowClassic.searchRealm(queries: queries, completion: { parseResult($0, for: .realmSearch) })
+                        try await battleNetAPI.wowClassic.searchRealm(queries: queries)
                     }
                 }
                 
                 Section(header: Text(WorldOfWarcraftClassicView.APISection.region.rawValue)) {
                     webServiceRow(api: .regionIndex) {
-                        battleNetAPI.wowClassic.getRegionIndex(completion: { parseResult($0, for: .regionIndex) })
+                        try await battleNetAPI.wowClassic.getRegionIndex()
                     }
                     webServiceRow(api: .region) {
-                        battleNetAPI.wowClassic.getRegion(id: 41, completion: { parseResult($0, for: .region) })
+                        try await battleNetAPI.wowClassic.getRegion(id: 41)
                     }
                 }
             }
             Group {
                 Section(header: Text(WorldOfWarcraftClassicView.APISection.wowToken.rawValue)) {
                     webServiceRow(api: .tokenIndex) {
-                        battleNetAPI.wowClassic.getTokenIndex(completion: { parseResult($0, for: .tokenIndex) })
+                        try await battleNetAPI.wowClassic.getTokenIndex()
                     }
                 }
             }
@@ -218,33 +219,41 @@ struct WorldOfWarcraftClassicView: View {
     }
     
     
-    func webServiceRow(api: API, webService: @escaping () -> Void) -> some View {
-        let selectionBinding: Binding<API?> = Binding(
-            get: { return apiSelection },
-            set: { newValue in
-                guard newValue != nil else { self.apiSelection = nil; return }
-                webService()
+    func webServiceRow(api: API, webService: @escaping () async throws -> Data) -> some View {
+        Button {
+            loadingAPI = api
+            Task {
+                do {
+                    let data = try await webService()
+                    webServiceData = data
+                    apiSelection = api
+                } catch {
+                    alertType = .error(error)
+                }
+                loadingAPI = nil
             }
-        )
-        return NavigationLink(destination: WebServiceView(title: api.rawValue, data: webServiceData), tag: api, selection: selectionBinding) {
-            Text(api.rawValue)
+        } label: {
+            HStack {
+                Text(api.rawValue)
+                Spacer()
+                if loadingAPI == api {
+                    ProgressView()
+                }
+            }
         }
+        .background(
+            NavigationLink(destination: WebServiceView(title: api.rawValue, data: webServiceData), tag: api, selection: $apiSelection) {
+                EmptyView()
+            }
+            .hidden()
+        )
     }
     
     
     
     // MARK: - Web Services
     
-    /// Parses a web service result, preparing to navigate to WebServiceView is success, or showing an error if failure.
-    func parseResult(_ result: Result<Data, Error>, for selection: API) {
-        switch result {
-        case .success(let data):
-            webServiceData = data
-            apiSelection = selection
-        case .failure(let error):
-            alertType = .error(error)
-        }
-    }
+
 }
 
 

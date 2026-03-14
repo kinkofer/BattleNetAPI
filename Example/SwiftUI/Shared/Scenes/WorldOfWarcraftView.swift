@@ -15,6 +15,7 @@ struct WorldOfWarcraftView: View {
     
     @State var apiSelection: API?
     @State var webServiceData: Data = Data()
+    @State var loadingAPI: API?
     
     let apiType: APIType
     
@@ -51,34 +52,34 @@ struct WorldOfWarcraftView: View {
             Group {
                 Section(header: Text(WorldOfWarcraftView.APISection.achievement.rawValue)) {
                     webServiceRow(api: .achievementCategoryIndex) {
-                        battleNetAPI.wow.getAchievementCategoryIndex(completion: { parseResult($0, for: .achievementCategoryIndex) })
+                        try await battleNetAPI.wow.getAchievementCategoryIndex()
                     }
                     webServiceRow(api: .achievementCategory) {
-                        battleNetAPI.wow.getAchievementCategory(id: 81, completion: { parseResult($0, for: .achievementCategory) })
+                        try await battleNetAPI.wow.getAchievementCategory(id: 81)
                     }
                     webServiceRow(api: .achievementIndex) {
-                        battleNetAPI.wow.getAchievementIndex(completion: { parseResult($0, for: .achievementIndex) })
+                        try await battleNetAPI.wow.getAchievementIndex()
                     }
                     webServiceRow(api: .achievement) {
-                        battleNetAPI.wow.getAchievement(id: 6, completion: { parseResult($0, for: .achievement) })
+                        try await battleNetAPI.wow.getAchievement(id: 6)
                     }
                     webServiceRow(api: .achievementMedia) {
-                        battleNetAPI.wow.getAchievementMedia(id: 6, completion: { parseResult($0, for: .achievementMedia) })
+                        try await battleNetAPI.wow.getAchievementMedia(id: 6)
                     }
                 }
                 
                 Section(header: Text(WorldOfWarcraftView.APISection.auctionHouse.rawValue)) {
                     webServiceRow(api: .auctions) {
-                        battleNetAPI.wow.getAuctions(connectedRealmID: 1146, completion: { parseResult($0, for: .auctions) })
+                        try await battleNetAPI.wow.getAuctions(connectedRealmID: 1146)
                     }
                 }
                 
                 Section(header: Text(WorldOfWarcraftView.APISection.azeriteEssence.rawValue)) {
                     webServiceRow(api: .azeriteEssenceIndex) {
-                        battleNetAPI.wow.getAzeriteEssenceIndex(completion: { parseResult($0, for: .azeriteEssenceIndex) })
+                        try await battleNetAPI.wow.getAzeriteEssenceIndex()
                     }
                     webServiceRow(api: .azeriteEssence) {
-                        battleNetAPI.wow.getAzeriteEssence(id: 2, completion: { parseResult($0, for: .azeriteEssence) })
+                        try await battleNetAPI.wow.getAzeriteEssence(id: 2)
                     }
                     webServiceRow(api: .azeriteEssenceSearch) {
                         let queries = [
@@ -86,19 +87,19 @@ struct WorldOfWarcraftView: View {
                             "orderby": "name",
                             "_page": "1"
                         ]
-                        battleNetAPI.wow.searchAzeriteEssence(queries: queries, completion: { parseResult($0, for: .azeriteEssenceSearch) })
+                        try await battleNetAPI.wow.searchAzeriteEssence(queries: queries)
                     }
                     webServiceRow(api: .azeriteEssenceMedia) {
-                        battleNetAPI.wow.getAzeriteEssence(id: 2, completion: { parseResult($0, for: .azeriteEssenceMedia) })
+                        try await battleNetAPI.wow.getAzeriteEssence(id: 2)
                     }
                 }
                 
                 Section(header: Text(WorldOfWarcraftView.APISection.connectedRealm.rawValue)) {
                     webServiceRow(api: .connectedRealmIndex) {
-                        battleNetAPI.wow.getConnectedRealmIndex(completion: { parseResult($0, for: .connectedRealmIndex) })
+                        try await battleNetAPI.wow.getConnectedRealmIndex()
                     }
                     webServiceRow(api: .connectedRealm) {
-                        battleNetAPI.wow.getConnectedRealm(id: 11, completion: { parseResult($0, for: .connectedRealm) })
+                        try await battleNetAPI.wow.getConnectedRealm(id: 11)
                     }
                     webServiceRow(api: .connectedRealmSearch) {
                         let queries = [
@@ -107,49 +108,49 @@ struct WorldOfWarcraftView: View {
                             "orderby": "id",
                             "_page": "1"
                         ]
-                        battleNetAPI.wow.searchConnectedRealms(queries: queries, completion: { parseResult($0, for: .connectedRealmSearch) })
+                        try await battleNetAPI.wow.searchConnectedRealms(queries: queries)
                     }
                 }
                 
                 Section(header: Text(WorldOfWarcraftView.APISection.covenant.rawValue)) {
                     webServiceRow(api: .covenantIndex) {
-                        battleNetAPI.wow.getCovenantIndex(completion: { parseResult($0, for: .covenantIndex) })
+                        try await battleNetAPI.wow.getCovenantIndex()
                     }
                     webServiceRow(api: .covenant) {
-                        battleNetAPI.wow.getCovenant(id: 1, completion: { parseResult($0, for: .covenant) })
+                        try await battleNetAPI.wow.getCovenant(id: 1)
                     }
                     webServiceRow(api: .covenantMedia) {
-                        battleNetAPI.wow.getCovenantMedia(id: 1, completion: { parseResult($0, for: .covenantMedia) })
+                        try await battleNetAPI.wow.getCovenantMedia(id: 1)
                     }
                     webServiceRow(api: .soulbindIndex) {
-                        battleNetAPI.wow.getSoulbindIndex(completion: { parseResult($0, for: .soulbindIndex) })
+                        try await battleNetAPI.wow.getSoulbindIndex()
                     }
                     webServiceRow(api: .soulbind) {
-                        battleNetAPI.wow.getSoulbind(id: 1, completion: { parseResult($0, for: .soulbindIndex) })
+                        try await battleNetAPI.wow.getSoulbind(id: 1)
                     }
                     webServiceRow(api: .conduitIndex) {
-                        battleNetAPI.wow.getCondiutIndex(completion: { parseResult($0, for: .conduitIndex) })
+                        try await battleNetAPI.wow.getCondiutIndex()
                     }
                     webServiceRow(api: .conduit) {
-                        battleNetAPI.wow.getConduit(id: 1, completion: { parseResult($0, for: .conduit) })
+                        try await battleNetAPI.wow.getConduit(id: 1)
                     }
                 }
                 
                 Section(header: Text(WorldOfWarcraftView.APISection.creature.rawValue)) {
                     webServiceRow(api: .creatureFamilyIndex) {
-                        battleNetAPI.wow.getCreatureFamilyIndex(completion: { parseResult($0, for: .creatureFamilyIndex) })
+                        try await battleNetAPI.wow.getCreatureFamilyIndex()
                     }
                     webServiceRow(api: .creatureFamily) {
-                        battleNetAPI.wow.getCreatureFamily(id: 1, completion: { parseResult($0, for: .creatureFamily) })
+                        try await battleNetAPI.wow.getCreatureFamily(id: 1)
                     }
                     webServiceRow(api: .creatureTypeIndex) {
-                        battleNetAPI.wow.getCreatureTypeIndex(completion: { parseResult($0, for: .creatureTypeIndex) })
+                        try await battleNetAPI.wow.getCreatureTypeIndex()
                     }
                     webServiceRow(api: .creatureType) {
-                        battleNetAPI.wow.getCreatureType(id: 1, completion: { parseResult($0, for: .creatureType) })
+                        try await battleNetAPI.wow.getCreatureType(id: 1)
                     }
                     webServiceRow(api: .creature) {
-                        battleNetAPI.wow.getCreature(id: 42722, completion: { parseResult($0, for: .creature) })
+                        try await battleNetAPI.wow.getCreature(id: 42722)
                     }
                     webServiceRow(api: .creatureSearch) {
                         let queries = [
@@ -157,49 +158,49 @@ struct WorldOfWarcraftView: View {
                             "orderby": "id",
                             "_page": "1"
                         ]
-                        battleNetAPI.wow.searchCreature(queries: queries, completion: { parseResult($0, for: .creatureSearch) })
+                        try await battleNetAPI.wow.searchCreature(queries: queries)
                     }
                     webServiceRow(api: .creatureDisplayMedia) {
-                        battleNetAPI.wow.getCreatureDisplayMedia(id: 30221, completion: { parseResult($0, for: .creatureDisplayMedia) })
+                        try await battleNetAPI.wow.getCreatureDisplayMedia(id: 30221)
                     }
                     webServiceRow(api: .creatureFamilyMedia) {
-                        battleNetAPI.wow.getCreatureFamilyMedia(id: 1, completion: { parseResult($0, for: .creatureFamilyMedia) })
+                        try await battleNetAPI.wow.getCreatureFamilyMedia(id: 1)
                     }
                 }
                 
                 Section(header: Text(WorldOfWarcraftView.APISection.guildCrest.rawValue)) {
                     webServiceRow(api: .guildCrestIndex) {
-                        battleNetAPI.wow.getGuildCrestIndex(completion: { parseResult($0, for: .guildCrestIndex) })
+                        try await battleNetAPI.wow.getGuildCrestIndex()
                     }
                     webServiceRow(api: .guildCrestBorderMedia) {
-                        battleNetAPI.wow.getGuildCrestBorderMedia(id: 0, completion: { parseResult($0, for: .guildCrestBorderMedia) })
+                        try await battleNetAPI.wow.getGuildCrestBorderMedia(id: 0)
                     }
                     webServiceRow(api: .guildCrestEmblemMedia) {
-                        battleNetAPI.wow.getGuildCrestEmblemMedia(id: 0, completion: { parseResult($0, for: .guildCrestEmblemMedia) })
+                        try await battleNetAPI.wow.getGuildCrestEmblemMedia(id: 0)
                     }
                 }
                 
                 Section(header: Text(WorldOfWarcraftView.APISection.item.rawValue)) {
                     webServiceRow(api: .itemClassIndex) {
-                        battleNetAPI.wow.getItemClassIndex(completion: { parseResult($0, for: .itemClassIndex) })
+                        try await battleNetAPI.wow.getItemClassIndex()
                     }
                     webServiceRow(api: .itemClass) {
-                        battleNetAPI.wow.getItemClass(id: 0, completion: { parseResult($0, for: .itemClass) })
+                        try await battleNetAPI.wow.getItemClass(id: 0)
                     }
                     webServiceRow(api: .itemSetIndex) {
-                        battleNetAPI.wow.getItemSetIndex(completion: { parseResult($0, for: .itemSetIndex) })
+                        try await battleNetAPI.wow.getItemSetIndex()
                     }
                     webServiceRow(api: .itemSet) {
-                        battleNetAPI.wow.getItemSet(id: 1, completion: { parseResult($0, for: .itemSet) })
+                        try await battleNetAPI.wow.getItemSet(id: 1)
                     }
                     webServiceRow(api: .itemSubclass) {
-                        battleNetAPI.wow.getItemSubclass(itemClassID: 0, itemSubclassID: 0, completion: { parseResult($0, for: .itemSubclass) })
+                        try await battleNetAPI.wow.getItemSubclass(itemClassID: 0, itemSubclassID: 0)
                     }
                     webServiceRow(api: .item) {
-                        battleNetAPI.wow.getItem(id: 19019, completion: { parseResult($0, for: .item) })
+                        try await battleNetAPI.wow.getItem(id: 19019)
                     }
                     webServiceRow(api: .itemMedia) {
-                        battleNetAPI.wow.getItemMedia(id: 19019, completion: { parseResult($0, for: .itemMedia) })
+                        try await battleNetAPI.wow.getItemMedia(id: 19019)
                     }
                     webServiceRow(api: .itemSearch) {
                         let queries = [
@@ -207,22 +208,22 @@ struct WorldOfWarcraftView: View {
                             "orderby": "id",
                             "_page": "1"
                         ]
-                        battleNetAPI.wow.searchItem(queries: queries, completion: { parseResult($0, for: .itemSearch) })
+                        try await battleNetAPI.wow.searchItem(queries: queries)
                     }
                 }
                 
                 Section(header: Text(WorldOfWarcraftView.APISection.journal.rawValue)) {
                     webServiceRow(api: .journalExpansionIndex) {
-                        battleNetAPI.wow.getJournalExpansionIndex(completion: { parseResult($0, for: .journalExpansionIndex) })
+                        try await battleNetAPI.wow.getJournalExpansionIndex()
                     }
                     webServiceRow(api: .journalExpansion) {
-                        battleNetAPI.wow.getJournalExpansion(id: 68, completion: { parseResult($0, for: .journalExpansion) })
+                        try await battleNetAPI.wow.getJournalExpansion(id: 68)
                     }
                     webServiceRow(api: .journalEncounterIndex) {
-                        battleNetAPI.wow.getJournalEncounterIndex(completion: { parseResult($0, for: .journalEncounterIndex) })
+                        try await battleNetAPI.wow.getJournalEncounterIndex()
                     }
                     webServiceRow(api: .journalEncounter) {
-                        battleNetAPI.wow.getJournalEncounter(id: 89, completion: { parseResult($0, for: .journalEncounter) })
+                        try await battleNetAPI.wow.getJournalEncounter(id: 89)
                     }
                     webServiceRow(api: .journalEncounterSearch) {
                         let queries = [
@@ -230,16 +231,16 @@ struct WorldOfWarcraftView: View {
                             "orderby": "id",
                             "_page": "1"
                         ]
-                        battleNetAPI.wow.searchJournalEncounter(queries: queries, completion: { parseResult($0, for: .journalEncounterSearch) })
+                        try await battleNetAPI.wow.searchJournalEncounter(queries: queries)
                     }
                     webServiceRow(api: .journalInstanceIndex) {
-                        battleNetAPI.wow.getJournalInstanceIndex(completion: { parseResult($0, for: .journalInstanceIndex) })
+                        try await battleNetAPI.wow.getJournalInstanceIndex()
                     }
                     webServiceRow(api: .journalInstance) {
-                        battleNetAPI.wow.getJournalInstance(id: 63, completion: { parseResult($0, for: .journalInstance) })
+                        try await battleNetAPI.wow.getJournalInstance(id: 63)
                     }
                     webServiceRow(api: .journalInstanceMedia) {
-                        battleNetAPI.wow.getJournalInstanceMedia(id: 63, completion: { parseResult($0, for: .journalInstanceMedia) })
+                        try await battleNetAPI.wow.getJournalInstanceMedia(id: 63)
                     }
                 }
                 
@@ -250,35 +251,35 @@ struct WorldOfWarcraftView: View {
                             "orderby": "id",
                             "_page": "1"
                         ]
-                        battleNetAPI.wow.searchMedia(queries: queries, completion: { parseResult($0, for: .mediaSearch) })
+                        try await battleNetAPI.wow.searchMedia(queries: queries)
                     }
                 }
             }
             Group {
                 Section(header: Text(WorldOfWarcraftView.APISection.modifiedCrafting.rawValue)) {
                     webServiceRow(api: .modifiedCraftingIndex) {
-                        battleNetAPI.wow.getModifiedCraftingIndex(completion: { parseResult($0, for: .modifiedCraftingIndex) })
+                        try await battleNetAPI.wow.getModifiedCraftingIndex()
                     }
                     webServiceRow(api: .modifiedCraftingCategoryIndex) {
-                        battleNetAPI.wow.getModifiedCraftingCategoryIndex(completion: { parseResult($0, for: .modifiedCraftingCategoryIndex) })
+                        try await battleNetAPI.wow.getModifiedCraftingCategoryIndex()
                     }
                     webServiceRow(api: .modifiedCraftingCategory) {
-                        battleNetAPI.wow.getModifiedCraftingCategory(id: 1, completion: { parseResult($0, for: .modifiedCraftingCategory) })
+                        try await battleNetAPI.wow.getModifiedCraftingCategory(id: 1)
                     }
                     webServiceRow(api: .modifiedCraftingReagentSlotTypeIndex) {
-                        battleNetAPI.wow.getModifiedCraftingReagentSlotTypeIndex(completion: { parseResult($0, for: .modifiedCraftingReagentSlotTypeIndex) })
+                        try await battleNetAPI.wow.getModifiedCraftingReagentSlotTypeIndex()
                     }
                     webServiceRow(api: .modifiedCraftingReagentSlotType) {
-                        battleNetAPI.wow.getModifiedCraftingReagentSlotType(id: 16, completion: { parseResult($0, for: .modifiedCraftingReagentSlotType) })
+                        try await battleNetAPI.wow.getModifiedCraftingReagentSlotType(id: 16)
                     }
                 }
                 
                 Section(header: Text(WorldOfWarcraftView.APISection.mount.rawValue)) {
                     webServiceRow(api: .mountIndex) {
-                        battleNetAPI.wow.getMountIndex(completion: { parseResult($0, for: .mountIndex) })
+                        try await battleNetAPI.wow.getMountIndex()
                     }
                     webServiceRow(api: .mount) {
-                        battleNetAPI.wow.getMount(id: 6, completion: { parseResult($0, for: .mount) })
+                        try await battleNetAPI.wow.getMount(id: 6)
                     }
                     webServiceRow(api: .mountSearch) {
                         let queries = [
@@ -286,212 +287,212 @@ struct WorldOfWarcraftView: View {
                             "orderby": "id",
                             "_page": "1"
                         ]
-                        battleNetAPI.wow.searchMount(queries: queries, completion: { parseResult($0, for: .mountSearch) })
+                        try await battleNetAPI.wow.searchMount(queries: queries)
                     }
                 }
                 
                 Section(header: Text(WorldOfWarcraftView.APISection.mythicKeystoneAffix.rawValue)) {
                     webServiceRow(api: .mythicKeystoneAffixIndex) {
-                        battleNetAPI.wow.getMythicKeystoneAffixIndex(completion: { parseResult($0, for: .mythicKeystoneAffixIndex) })
+                        try await battleNetAPI.wow.getMythicKeystoneAffixIndex()
                     }
                     webServiceRow(api: .mythicKeystoneAffix) {
-                        battleNetAPI.wow.getMythicKeystoneAffix(id: 1, completion: { parseResult($0, for: .mythicKeystoneAffix) })
+                        try await battleNetAPI.wow.getMythicKeystoneAffix(id: 1)
                     }
                     webServiceRow(api: .mythicKeystoneAffixMedia) {
-                        battleNetAPI.wow.getMythicKeystoneAffixMedia(id: 1, completion: { parseResult($0, for: .mythicKeystoneAffixMedia) })
+                        try await battleNetAPI.wow.getMythicKeystoneAffixMedia(id: 1)
                     }
                 }
                 
                 Section(header: Text(WorldOfWarcraftView.APISection.mythicKeystoneDungeon.rawValue)) {
                     webServiceRow(api: .mythicKeystoneDungeonIndex) {
-                        battleNetAPI.wow.getMythicKeystoneDungeonIndex(completion: { parseResult($0, for: .mythicKeystoneDungeonIndex) })
+                        try await battleNetAPI.wow.getMythicKeystoneDungeonIndex()
                     }
                     webServiceRow(api: .mythicKeystoneDungeon) {
-                        battleNetAPI.wow.getMythicKeystoneDungeon(id: 375, completion: { parseResult($0, for: .mythicKeystoneDungeon) })
+                        try await battleNetAPI.wow.getMythicKeystoneDungeon(id: 375)
                     }
                     webServiceRow(api: .mythicKeystoneIndex) {
-                        battleNetAPI.wow.getMythicKeystoneIndex(completion: { parseResult($0, for: .mythicKeystoneIndex) })
+                        try await battleNetAPI.wow.getMythicKeystoneIndex()
                     }
                     webServiceRow(api: .mythicKeystonePeriodIndex) {
-                        battleNetAPI.wow.getMythicKeystonePeriodIndex(completion: { parseResult($0, for: .mythicKeystonePeriodIndex) })
+                        try await battleNetAPI.wow.getMythicKeystonePeriodIndex()
                     }
                     webServiceRow(api: .mythicKeystonePeriod) {
-                        battleNetAPI.wow.getMythicKeystonePeriod(id: 641, completion: { parseResult($0, for: .mythicKeystonePeriod) })
+                        try await battleNetAPI.wow.getMythicKeystonePeriod(id: 641)
                     }
                     webServiceRow(api: .mythicKeystoneSeasonIndex) {
-                        battleNetAPI.wow.getMythicKeystoneSeasonIndex(completion: { parseResult($0, for: .mythicKeystoneSeasonIndex) })
+                        try await battleNetAPI.wow.getMythicKeystoneSeasonIndex()
                     }
                     webServiceRow(api: .mythicKeystoneSeason) {
-                        battleNetAPI.wow.getMythicKeystoneSeason(id: 1, completion: { parseResult($0, for: .mythicKeystoneSeason) })
+                        try await battleNetAPI.wow.getMythicKeystoneSeason(id: 1)
                     }
                 }
                 
                 Section(header: Text(WorldOfWarcraftView.APISection.mythicKeystoneLeaderboard.rawValue)) {
                     webServiceRow(api: .mythicKeystoneLeaderboardIndex) {
-                        battleNetAPI.wow.getMythicLeaderboardIndex(connectedRealmID: 11, completion: { parseResult($0, for: .mythicKeystoneLeaderboardIndex) })
+                        try await battleNetAPI.wow.getMythicLeaderboardIndex(connectedRealmID: 11)
                     }
                     webServiceRow(api: .mythicKeystoneLeaderboard) {
-                        battleNetAPI.wow.getMythicLeaderboard(connectedRealmID: 11, dungeonID: 197, period: 641, completion: { parseResult($0, for: .mythicKeystoneLeaderboard) })
+                        try await battleNetAPI.wow.getMythicLeaderboard(connectedRealmID: 11, dungeonID: 197, period: 641)
                     }
                 }
                 
                 Section(header: Text(WorldOfWarcraftView.APISection.mythicRaidLeaderboard.rawValue)) {
                     webServiceRow(api: .mythicRaidLeaderboard) {
-                        battleNetAPI.wow.getMythicRaidLeaderboard(raid: "uldir", faction: .alliance, completion: { parseResult($0, for: .mythicRaidLeaderboard) })
+                        try await battleNetAPI.wow.getMythicRaidLeaderboard(raid: "uldir", faction: .alliance)
                     }
                 }
                 
                 Section(header: Text(WorldOfWarcraftView.APISection.pet.rawValue)) {
                     webServiceRow(api: .petIndex) {
-                        battleNetAPI.wow.getPetIndex(completion: { parseResult($0, for: .petIndex) })
+                        try await battleNetAPI.wow.getPetIndex()
                     }
                     webServiceRow(api: .pet) {
-                        battleNetAPI.wow.getPet(id: 39, completion: { parseResult($0, for: .pet) })
+                        try await battleNetAPI.wow.getPet(id: 39)
                     }
                     webServiceRow(api: .petMedia) {
-                        battleNetAPI.wow.getPetMedia(id: 39, completion: { parseResult($0, for: .petMedia) })
+                        try await battleNetAPI.wow.getPetMedia(id: 39)
                     }
                     webServiceRow(api: .petAbilityIndex) {
-                        battleNetAPI.wow.getPetAbilityIndex(completion: { parseResult($0, for: .petAbilityIndex) })
+                        try await battleNetAPI.wow.getPetAbilityIndex()
                     }
                     webServiceRow(api: .petAbility) {
-                        battleNetAPI.wow.getPetAbility(id: 110, completion: { parseResult($0, for: .petAbility) })
+                        try await battleNetAPI.wow.getPetAbility(id: 110)
                     }
                     webServiceRow(api: .petAbilityMedia) {
-                        battleNetAPI.wow.getPetAbilityMedia(id: 110, completion: { parseResult($0, for: .petAbilityMedia) })
+                        try await battleNetAPI.wow.getPetAbilityMedia(id: 110)
                     }
                 }
                 
                 Section(header: Text(WorldOfWarcraftView.APISection.playableClass.rawValue)) {
                     webServiceRow(api: .playableClassIndex) {
-                        battleNetAPI.wow.getPlayableClassIndex(completion: { parseResult($0, for: .playableClassIndex) })
+                        try await battleNetAPI.wow.getPlayableClassIndex()
                     }
                     webServiceRow(api: .playableClass) {
-                        battleNetAPI.wow.getPlayableClass(id: 7, completion: { parseResult($0, for: .playableClass) })
+                        try await battleNetAPI.wow.getPlayableClass(id: 7)
                     }
                     webServiceRow(api: .playableClassMedia) {
-                        battleNetAPI.wow.getPlayableClassMedia(id: 7, completion: { parseResult($0, for: .playableClassMedia) })
+                        try await battleNetAPI.wow.getPlayableClassMedia(id: 7)
                     }
                     webServiceRow(api: .pvpTalentSlots) {
-                        battleNetAPI.wow.getPlayableClassPvPTalentSlots(classID: 7, completion: { parseResult($0, for: .pvpTalentSlots) })
+                        try await battleNetAPI.wow.getPlayableClassPvPTalentSlots(classID: 7)
                     }
                 }
                 
                 Section(header: Text(WorldOfWarcraftView.APISection.playableRace.rawValue)) {
                     webServiceRow(api: .playableRaceIndex) {
-                        battleNetAPI.wow.getPlayableRaceIndex(completion: { parseResult($0, for: .playableRaceIndex) })
+                        try await battleNetAPI.wow.getPlayableRaceIndex()
                     }
                     webServiceRow(api: .playableRace) {
-                        battleNetAPI.wow.getPlayableRace(id: 2, completion: { parseResult($0, for: .playableRace) })
+                        try await battleNetAPI.wow.getPlayableRace(id: 2)
                     }
                 }
                 
                 Section(header: Text(WorldOfWarcraftView.APISection.playableSpecialization.rawValue)) {
                     webServiceRow(api: .playableSpecializationIndex) {
-                        battleNetAPI.wow.getPlayableSpecializationIndex(completion: { parseResult($0, for: .playableSpecializationIndex) })
+                        try await battleNetAPI.wow.getPlayableSpecializationIndex()
                     }
                     webServiceRow(api: .playableSpecialization) {
-                        battleNetAPI.wow.getPlayableSpecialization(id: 262, completion: { parseResult($0, for: .playableSpecialization) })
+                        try await battleNetAPI.wow.getPlayableSpecialization(id: 262)
                     }
                     webServiceRow(api: .playableSpecializationMedia) {
-                        battleNetAPI.wow.getPlayableSpecializationMedia(id: 262, completion: { parseResult($0, for: .playableSpecializationMedia) })
+                        try await battleNetAPI.wow.getPlayableSpecializationMedia(id: 262)
                     }
                 }
             }
             Group {
                 Section(header: Text(WorldOfWarcraftView.APISection.powerType.rawValue)) {
                     webServiceRow(api: .powerTypeIndex) {
-                        battleNetAPI.wow.getPowerTypeIndex(completion: { parseResult($0, for: .powerTypeIndex) })
+                        try await battleNetAPI.wow.getPowerTypeIndex()
                     }
                     webServiceRow(api: .powerType) {
-                        battleNetAPI.wow.getPowerType(id: 0, completion: { parseResult($0, for: .powerType) })
+                        try await battleNetAPI.wow.getPowerType(id: 0)
                     }
                 }
                 
                 Section(header: Text(WorldOfWarcraftView.APISection.profession.rawValue)) {
                     webServiceRow(api: .professionIndex) {
-                        battleNetAPI.wow.getProfessionIndex(completion: { parseResult($0, for: .professionIndex) })
+                        try await battleNetAPI.wow.getProfessionIndex()
                     }
                     webServiceRow(api: .profession) {
-                        battleNetAPI.wow.getProfession(id: 164, completion: { parseResult($0, for: .profession) })
+                        try await battleNetAPI.wow.getProfession(id: 164)
                     }
                     webServiceRow(api: .professionMedia) {
-                        battleNetAPI.wow.getProfessionMedia(id: 164, completion: { parseResult($0, for: .professionMedia) })
+                        try await battleNetAPI.wow.getProfessionMedia(id: 164)
                     }
                     webServiceRow(api: .professionSkillTier) {
-                        battleNetAPI.wow.getProfessionSkillTier(professionID: 164, skillTierID: 2477, completion: { parseResult($0, for: .professionSkillTier) })
+                        try await battleNetAPI.wow.getProfessionSkillTier(professionID: 164, skillTierID: 2477)
                     }
                     webServiceRow(api: .recipe) {
-                        battleNetAPI.wow.getRecipe(id: 1631, completion: { parseResult($0, for: .recipe) })
+                        try await battleNetAPI.wow.getRecipe(id: 1631)
                     }
                     webServiceRow(api: .recipeMedia) {
-                        battleNetAPI.wow.getRecipeMedia(id: 1631, completion: { parseResult($0, for: .recipeMedia) })
+                        try await battleNetAPI.wow.getRecipeMedia(id: 1631)
                     }
                 }
                 
                 Section(header: Text(WorldOfWarcraftView.APISection.pvpSeason.rawValue)) {
                     webServiceRow(api: .pvpSeasonIndex) {
-                        battleNetAPI.wow.getPvPSeasonIndex(completion: { parseResult($0, for: .pvpSeasonIndex) })
+                        try await battleNetAPI.wow.getPvPSeasonIndex()
                     }
                     webServiceRow(api: .pvpSeason) {
-                        battleNetAPI.wow.getPvPSeason(id: 27, completion: { parseResult($0, for: .pvpSeason) })
+                        try await battleNetAPI.wow.getPvPSeason(id: 27)
                     }
                     webServiceRow(api: .pvpLeaderboardIndex) {
-                        battleNetAPI.wow.getPvPLeaderboardIndex(pvpSeasonID: 27, completion: { parseResult($0, for: .pvpLeaderboardIndex) })
+                        try await battleNetAPI.wow.getPvPLeaderboardIndex(pvpSeasonID: 27)
                     }
                     webServiceRow(api: .pvpLeaderboard) {
-                        battleNetAPI.wow.getPvPLeaderboard(pvpSeasonID: 27, pvpBracket: ._3v3, completion: { parseResult($0, for: .pvpLeaderboard) })
+                        try await battleNetAPI.wow.getPvPLeaderboard(pvpSeasonID: 27, pvpBracket: ._3v3)
                     }
                     webServiceRow(api: .pvpRewardIndex) {
-                        battleNetAPI.wow.getPvPRewardIndex(pvpSeasonID: 27, completion: { parseResult($0, for: .pvpRewardIndex) })
+                        try await battleNetAPI.wow.getPvPRewardIndex(pvpSeasonID: 27)
                     }
                 }
                 
                 Section(header: Text(WorldOfWarcraftView.APISection.pvpTier.rawValue)) {
                     webServiceRow(api: .pvpTierMedia) {
-                        battleNetAPI.wow.getPvPTierMedia(id: 1, completion: { parseResult($0, for: .pvpTierMedia) })
+                        try await battleNetAPI.wow.getPvPTierMedia(id: 1)
                     }
                     webServiceRow(api: .pvpTierIndex) {
-                        battleNetAPI.wow.getPvPTierIndex(completion: { parseResult($0, for: .pvpTierIndex) })
+                        try await battleNetAPI.wow.getPvPTierIndex()
                     }
                     webServiceRow(api: .pvpTier) {
-                        battleNetAPI.wow.getPvPTier(id: 1, completion: { parseResult($0, for: .pvpTier) })
+                        try await battleNetAPI.wow.getPvPTier(id: 1)
                     }
                 }
                 
                 Section(header: Text(WorldOfWarcraftView.APISection.quest.rawValue)) {
                     webServiceRow(api: .questIndex) {
-                        battleNetAPI.wow.getQuestIndex(completion: { parseResult($0, for: .questIndex) })
+                        try await battleNetAPI.wow.getQuestIndex()
                     }
                     webServiceRow(api: .quest) {
-                        battleNetAPI.wow.getQuest(id: 2, completion: { parseResult($0, for: .quest) })
+                        try await battleNetAPI.wow.getQuest(id: 2)
                     }
                     webServiceRow(api: .questCategoryIndex) {
-                        battleNetAPI.wow.getQuestCategoryIndex(completion: { parseResult($0, for: .questCategoryIndex) })
+                        try await battleNetAPI.wow.getQuestCategoryIndex()
                     }
                     webServiceRow(api: .questCategory) {
-                        battleNetAPI.wow.getQuestCategory(id: 1, completion: { parseResult($0, for: .questCategory) })
+                        try await battleNetAPI.wow.getQuestCategory(id: 1)
                     }
                     webServiceRow(api: .questAreaIndex) {
-                        battleNetAPI.wow.getQuestAreaIndex(completion: { parseResult($0, for: .questAreaIndex) })
+                        try await battleNetAPI.wow.getQuestAreaIndex()
                     }
                     webServiceRow(api: .questArea) {
-                        battleNetAPI.wow.getQuestArea(id: 1, completion: { parseResult($0, for: .questArea) })
+                        try await battleNetAPI.wow.getQuestArea(id: 1)
                     }
                     webServiceRow(api: .questTypeIndex) {
-                        battleNetAPI.wow.getQuestTypeIndex(completion: { parseResult($0, for: .questTypeIndex) })
+                        try await battleNetAPI.wow.getQuestTypeIndex()
                     }
                     webServiceRow(api: .questType) {
-                        battleNetAPI.wow.getQuestType(id: 1, completion: { parseResult($0, for: .questType) })
+                        try await battleNetAPI.wow.getQuestType(id: 1)
                     }
                 }
                 
                 Section(header: Text(WorldOfWarcraftView.APISection.realm.rawValue)) {
                     webServiceRow(api: .realmIndex) {
-                        battleNetAPI.wow.getRealmIndex(completion: { parseResult($0, for: .realmIndex) })
+                        try await battleNetAPI.wow.getRealmIndex()
                     }
                     webServiceRow(api: .realm) {
-                        battleNetAPI.wow.getRealm("tichondrius", completion: { parseResult($0, for: .realm) })
+                        try await battleNetAPI.wow.getRealm("tichondrius")
                     }
                     webServiceRow(api: .realmSearch) {
                         let queries = [
@@ -499,40 +500,40 @@ struct WorldOfWarcraftView: View {
                             "orderby": "id",
                             "_page": "1"
                         ]
-                        battleNetAPI.wow.searchRealm(queries: queries, completion: { parseResult($0, for: .realmSearch) })
+                        try await battleNetAPI.wow.searchRealm(queries: queries)
                     }
                 }
                 
                 Section(header: Text(WorldOfWarcraftView.APISection.region.rawValue)) {
                     webServiceRow(api: .regionIndex) {
-                        battleNetAPI.wow.getRegionIndex(completion: { parseResult($0, for: .regionIndex) })
+                        try await battleNetAPI.wow.getRegionIndex()
                     }
                     webServiceRow(api: .region) {
-                        battleNetAPI.wow.getRegion(id: 1, completion: { parseResult($0, for: .region) })
+                        try await battleNetAPI.wow.getRegion(id: 1)
                     }
                 }
                 
                 Section(header: Text(WorldOfWarcraftView.APISection.reputation.rawValue)) {
                     webServiceRow(api: .reputationFactionIndex) {
-                        battleNetAPI.wow.getReputationFactionIndex(completion: { parseResult($0, for: .reputationFactionIndex) })
+                        try await battleNetAPI.wow.getReputationFactionIndex()
                     }
                     webServiceRow(api: .reputationFaction) {
-                        battleNetAPI.wow.getReputationFaction(id: 21, completion: { parseResult($0, for: .reputationFaction) })
+                        try await battleNetAPI.wow.getReputationFaction(id: 21)
                     }
                     webServiceRow(api: .reputationTierIndex) {
-                        battleNetAPI.wow.getReputationTierIndex(completion: { parseResult($0, for: .reputationTierIndex) })
+                        try await battleNetAPI.wow.getReputationTierIndex()
                     }
                     webServiceRow(api: .reputationTier) {
-                        battleNetAPI.wow.getReputationTier(id: 2, completion: { parseResult($0, for: .reputationTier) })
+                        try await battleNetAPI.wow.getReputationTier(id: 2)
                     }
                 }
                 
                 Section(header: Text(WorldOfWarcraftView.APISection.spell.rawValue)) {
                     webServiceRow(api: .spell) {
-                        battleNetAPI.wow.getSpell(id: 196607, completion: { parseResult($0, for: .spell) })
+                        try await battleNetAPI.wow.getSpell(id: 196607)
                     }
                     webServiceRow(api: .spellMedia) {
-                        battleNetAPI.wow.getSpellMedia(id: 196607, completion: { parseResult($0, for: .spellMedia) })
+                        try await battleNetAPI.wow.getSpellMedia(id: 196607)
                     }
                     webServiceRow(api: .spellSearch) {
                         let queries = [
@@ -540,56 +541,56 @@ struct WorldOfWarcraftView: View {
                             "orderby": "id",
                             "_page": "1"
                         ]
-                        battleNetAPI.wow.searchSpell(queries: queries, completion: { parseResult($0, for: .spellSearch) })
+                        try await battleNetAPI.wow.searchSpell(queries: queries)
                     }
                 }
                 
                 Section(header: Text(WorldOfWarcraftView.APISection.talent.rawValue)) {
                     webServiceRow(api: .talentIndex) {
-                        battleNetAPI.wow.getTalentIndex(completion: { parseResult($0, for: .talentIndex) })
+                        try await battleNetAPI.wow.getTalentIndex()
                     }
                     webServiceRow(api: .talent) {
-                        battleNetAPI.wow.getTalent(id: 23106, completion: { parseResult($0, for: .talent) })
+                        try await battleNetAPI.wow.getTalent(id: 23106)
                     }
                     webServiceRow(api: .pvpTalentIndex) {
-                        battleNetAPI.wow.getPvPTalentIndex(completion: { parseResult($0, for: .pvpTalentIndex) })
+                        try await battleNetAPI.wow.getPvPTalentIndex()
                     }
                     webServiceRow(api: .pvpTalent) {
-                        battleNetAPI.wow.getPvPTalent(id: 11, completion: { parseResult($0, for: .pvpTalent) })
+                        try await battleNetAPI.wow.getPvPTalent(id: 11)
                     }
                 }
             }
             Group {
                 Section(header: Text(WorldOfWarcraftView.APISection.techTalent.rawValue)) {
                     webServiceRow(api: .techTalentTreeIndex) {
-                        battleNetAPI.wow.getTechTalentTreeIndex(completion: { parseResult($0, for: .techTalentTreeIndex) })
+                        try await battleNetAPI.wow.getTechTalentTreeIndex()
                     }
                     webServiceRow(api: .techTalentTree) {
-                        battleNetAPI.wow.getTechTalentTree(id: 272, completion: { parseResult($0, for: .techTalentTree) })
+                        try await battleNetAPI.wow.getTechTalentTree(id: 272)
                     }
                     webServiceRow(api: .techTalentIndex) {
-                        battleNetAPI.wow.getTechTalentIndex(completion: { parseResult($0, for: .techTalentIndex) })
+                        try await battleNetAPI.wow.getTechTalentIndex()
                     }
                     webServiceRow(api: .techTalent) {
-                        battleNetAPI.wow.getTechTalent(id: 863, completion: { parseResult($0, for: .techTalent) })
+                        try await battleNetAPI.wow.getTechTalent(id: 863)
                     }
                     webServiceRow(api: .techTalentMedia) {
-                        battleNetAPI.wow.getTechTalentMedia(id: 863, completion: { parseResult($0, for: .techTalent) })
+                        try await battleNetAPI.wow.getTechTalentMedia(id: 863)
                     }
                 }
                 
                 Section(header: Text(WorldOfWarcraftView.APISection.title.rawValue)) {
                     webServiceRow(api: .titleIndex) {
-                        battleNetAPI.wow.getTitleIndex(completion: { parseResult($0, for: .titleIndex) })
+                        try await battleNetAPI.wow.getTitleIndex()
                     }
                     webServiceRow(api: .title) {
-                        battleNetAPI.wow.getTitle(id: 1, completion: { parseResult($0, for: .title) })
+                        try await battleNetAPI.wow.getTitle(id: 1)
                     }
                 }
                 
                 Section(header: Text(WorldOfWarcraftView.APISection.wowToken.rawValue)) {
                     webServiceRow(api: .tokenIndex) {
-                        battleNetAPI.wow.getTokenIndex(completion: { parseResult($0, for: .tokenIndex) })
+                        try await battleNetAPI.wow.getTokenIndex()
                     }
                 }
             }
@@ -602,164 +603,164 @@ struct WorldOfWarcraftView: View {
             Group {
                 Section(header: Text(WorldOfWarcraftView.APISection.accountProfile.rawValue)) {
                     webServiceRow(api: .accountProfileSummary) {
-                        battleNetAPI.wow.getAccountProfile(completion: { parseResult($0, for: .accountProfileSummary) })
+                        try await battleNetAPI.wow.getAccountProfile()
                     }
                     webServiceRow(api: .protectedCharacterProfileSummary) {
-                        battleNetAPI.wow.getProtectedCharacterProfile(id: 1337, realmID: 69, completion: { parseResult($0, for: .protectedCharacterProfileSummary) })
+                        try await battleNetAPI.wow.getProtectedCharacterProfile(id: 1337, realmID: 69)
                     }
                     webServiceRow(api: .accountCollectionsIndex) {
-                        battleNetAPI.wow.getAccountCollectionsIndex(completion: { parseResult($0, for: .accountCollectionsIndex) })
+                        try await battleNetAPI.wow.getAccountCollectionsIndex()
                     }
                     webServiceRow(api: .accountMountsCollectionSummary) {
-                        battleNetAPI.wow.getMountsCollectionSummary(completion: { parseResult($0, for: .accountMountsCollectionSummary) })
+                        try await battleNetAPI.wow.getMountsCollectionSummary()
                     }
                     webServiceRow(api: .accountPetsCollectionSummary) {
-                        battleNetAPI.wow.getPetsCollectionSummary(completion: { parseResult($0, for: .accountPetsCollectionSummary) })
+                        try await battleNetAPI.wow.getPetsCollectionSummary()
                     }
                 }
                 
                 Section(header: Text(WorldOfWarcraftView.APISection.characterAchievement.rawValue)) {
                     webServiceRow(api: .characterAchievementsSummary) {
-                        battleNetAPI.wow.getCharacterAchievementsSummary(characterName: "doof", realmSlug: "frostmourne", completion: { parseResult($0, for: .characterAchievementsSummary) })
+                        try await battleNetAPI.wow.getCharacterAchievementsSummary(characterName: "doof", realmSlug: "frostmourne")
                     }
                     webServiceRow(api: .characterAchievementStatistics) {
-                        battleNetAPI.wow.getCharacterAchievementStatistics(characterName: "doof", realmSlug: "frostmourne", completion: { parseResult($0, for: .characterAchievementStatistics) })
+                        try await battleNetAPI.wow.getCharacterAchievementStatistics(characterName: "doof", realmSlug: "frostmourne")
                     }
                 }
                 
                 Section(header: Text(WorldOfWarcraftView.APISection.characterAppearance.rawValue)) {
                     webServiceRow(api: .characterAppearanceSummary) {
-                        battleNetAPI.wow.getCharacterAppearanceSummary(characterName: "doof", realmSlug: "frostmourne", completion: { parseResult($0, for: .characterAppearanceSummary) })
+                        try await battleNetAPI.wow.getCharacterAppearanceSummary(characterName: "doof", realmSlug: "frostmourne")
                     }
                 }
                 
                 Section(header: Text(WorldOfWarcraftView.APISection.characterCollection.rawValue)) {
                     webServiceRow(api: .characterCollectionsIndex) {
-                        battleNetAPI.wow.getCharacterCollectionsIndex(characterName: "doof", realmSlug: "frostmourne", completion: { parseResult($0, for: .characterCollectionsIndex) })
+                        try await battleNetAPI.wow.getCharacterCollectionsIndex(characterName: "doof", realmSlug: "frostmourne")
                     }
                     webServiceRow(api: .characterMountsCollectionSummary) {
-                        battleNetAPI.wow.getCharacterMountsCollectionSummary(characterName: "doof", realmSlug: "frostmourne", completion: { parseResult($0, for: .characterMountsCollectionSummary) })
+                        try await battleNetAPI.wow.getCharacterMountsCollectionSummary(characterName: "doof", realmSlug: "frostmourne")
                     }
                     webServiceRow(api: .characterPetsCollectionSummary) {
-                        battleNetAPI.wow.getCharacterPetsCollectionSummary(characterName: "doof", realmSlug: "frostmourne", completion: { parseResult($0, for: .characterPetsCollectionSummary) })
+                        try await battleNetAPI.wow.getCharacterPetsCollectionSummary(characterName: "doof", realmSlug: "frostmourne")
                     }
                 }
                 
                 Section(header: Text(WorldOfWarcraftView.APISection.characterEncounter.rawValue)) {
                     webServiceRow(api: .characterEncountersSummary) {
-                        battleNetAPI.wow.getCharacterEncountersSummary(characterName: "doof", realmSlug: "frostmourne", completion: { parseResult($0, for: .characterEncountersSummary) })
+                        try await battleNetAPI.wow.getCharacterEncountersSummary(characterName: "doof", realmSlug: "frostmourne")
                     }
                     webServiceRow(api: .characterDungeons) {
-                        battleNetAPI.wow.getCharacterDungeons(characterName: "doof", realmSlug: "frostmourne", completion: { parseResult($0, for: .characterDungeons) })
+                        try await battleNetAPI.wow.getCharacterDungeons(characterName: "doof", realmSlug: "frostmourne")
                     }
                     webServiceRow(api: .characterRaids) {
-                        battleNetAPI.wow.getCharacterRaids(characterName: "doof", realmSlug: "frostmourne", completion: { parseResult($0, for: .characterRaids) })
+                        try await battleNetAPI.wow.getCharacterRaids(characterName: "doof", realmSlug: "frostmourne")
                     }
                 }
                 
                 Section(header: Text(WorldOfWarcraftView.APISection.characterEquipment.rawValue)) {
                     webServiceRow(api: .characterEquipmentSummary) {
-                        battleNetAPI.wow.getCharacterEquipmentSummary(characterName: "doof", realmSlug: "frostmourne", completion: { parseResult($0, for: .characterEquipmentSummary) })
+                        try await battleNetAPI.wow.getCharacterEquipmentSummary(characterName: "doof", realmSlug: "frostmourne")
                     }
                 }
                 
                 Section(header: Text(WorldOfWarcraftView.APISection.characterHunterPet.rawValue)) {
                     webServiceRow(api: .characterHunterPetsSummary) {
-                        battleNetAPI.wow.getCharacterHunterPetsSummary(characterName: "peters", realmSlug: "frostmourne", completion: { parseResult($0, for: .characterHunterPetsSummary) })
+                        try await battleNetAPI.wow.getCharacterHunterPetsSummary(characterName: "peters", realmSlug: "frostmourne")
                     }
                 }
                 
                 Section(header: Text(WorldOfWarcraftView.APISection.characterMedia.rawValue)) {
                     webServiceRow(api: .characterMediaSummary) {
-                        battleNetAPI.wow.getCharacterMediaSummary(characterName: "doof", realmSlug: "frostmourne", completion: { parseResult($0, for: .characterMediaSummary) })
+                        try await battleNetAPI.wow.getCharacterMediaSummary(characterName: "doof", realmSlug: "frostmourne")
                     }
                 }
                 
                 Section(header: Text(WorldOfWarcraftView.APISection.characterMythicKeystoneProfile.rawValue)) {
                     webServiceRow(api: .characterMythicKeystoneProfileIndex) {
-                        battleNetAPI.wow.getCharacterMythicKeystoneProfileIndex(characterName: "doof", realmSlug: "frostmourne", completion: { parseResult($0, for: .characterMythicKeystoneProfileIndex) })
+                        try await battleNetAPI.wow.getCharacterMythicKeystoneProfileIndex(characterName: "doof", realmSlug: "frostmourne")
                     }
                     webServiceRow(api: .characterMythicKeystoneSeasonDetails) {
-                        battleNetAPI.wow.getCharacterMythicKeystoneProfileSeason(seasonID: 1, characterName: "doof", realmSlug: "frostmourne", completion: { parseResult($0, for: .characterMythicKeystoneSeasonDetails) })
+                        try await battleNetAPI.wow.getCharacterMythicKeystoneProfileSeason(seasonID: 1, characterName: "doof", realmSlug: "frostmourne")
                     }
                 }
                 
                 Section(header: Text(WorldOfWarcraftView.APISection.characterProfession.rawValue)) {
                     webServiceRow(api: .characterProfessionsSummary) {
-                        battleNetAPI.wow.getCharacterProfessionsSummary(characterName: "doof", realmSlug: "frostmourne", completion: { parseResult($0, for: .characterProfessionsSummary) })
+                        try await battleNetAPI.wow.getCharacterProfessionsSummary(characterName: "doof", realmSlug: "frostmourne")
                     }
                 }
             }
             Group {
                 Section(header: Text(WorldOfWarcraftView.APISection.characterProfile.rawValue)) {
                     webServiceRow(api: .characterProfileSummary) {
-                        battleNetAPI.wow.getCharacterProfileSummary(characterName: "doof", realmSlug: "frostmourne", completion: { parseResult($0, for: .characterProfileSummary) })
+                        try await battleNetAPI.wow.getCharacterProfileSummary(characterName: "doof", realmSlug: "frostmourne")
                     }
                     webServiceRow(api: .characterProfileStatus) {
-                        battleNetAPI.wow.getCharacterProfileStatus(characterName: "doof", realmSlug: "frostmourne", completion: { parseResult($0, for: .characterProfileStatus) })
+                        try await battleNetAPI.wow.getCharacterProfileStatus(characterName: "doof", realmSlug: "frostmourne")
                     }
                 }
                 
                 Section(header: Text(WorldOfWarcraftView.APISection.characterPvP.rawValue)) {
                     webServiceRow(api: .characterPvPBracketStatistics) {
-                        battleNetAPI.wow.getCharacterPvPBracketStatistics(characterName: "doof", realmSlug: "frostmourne", pvpBracket: ._3v3, completion: { parseResult($0, for: .characterPvPBracketStatistics) })
+                        try await battleNetAPI.wow.getCharacterPvPBracketStatistics(characterName: "doof", realmSlug: "frostmourne", pvpBracket: ._3v3)
                     }
                     webServiceRow(api: .characterPvPSummary) {
-                        battleNetAPI.wow.getCharacterPvPSummary(characterName: "doof", realmSlug: "frostmourne", completion: { parseResult($0, for: .characterPvPSummary) })
+                        try await battleNetAPI.wow.getCharacterPvPSummary(characterName: "doof", realmSlug: "frostmourne")
                     }
                 }
                 
                 Section(header: Text(WorldOfWarcraftView.APISection.characterQuest.rawValue)) {
                     webServiceRow(api: .characterQuests) {
-                        battleNetAPI.wow.getCharacterQuests(characterName: "doof", realmSlug: "frostmourne", completion: { parseResult($0, for: .characterQuests) })
+                        try await battleNetAPI.wow.getCharacterQuests(characterName: "doof", realmSlug: "frostmourne")
                     }
                     webServiceRow(api: .characterCompletedQuests) {
-                        battleNetAPI.wow.getCharacterCompletedQuests(characterName: "doof", realmSlug: "frostmourne", completion: { parseResult($0, for: .characterCompletedQuests) })
+                        try await battleNetAPI.wow.getCharacterCompletedQuests(characterName: "doof", realmSlug: "frostmourne")
                     }
                 }
                 
                 Section(header: Text(WorldOfWarcraftView.APISection.characterReputation.rawValue)) {
                     webServiceRow(api: .characterReputationsSummary) {
-                        battleNetAPI.wow.getCharacterReputationsSummary(characterName: "doof", realmSlug: "frostmourne", completion: { parseResult($0, for: .characterReputationsSummary) })
+                        try await battleNetAPI.wow.getCharacterReputationsSummary(characterName: "doof", realmSlug: "frostmourne")
                     }
                 }
                 
                 Section(header: Text(WorldOfWarcraftView.APISection.characterSoulbind.rawValue)) {
                     webServiceRow(api: .characterSoulbinds) {
-                        battleNetAPI.wow.getCharacterSoulbinds(characterName: "doof", realmSlug: "frostmourne", completion: { parseResult($0, for: .characterSoulbinds) })
+                        try await battleNetAPI.wow.getCharacterSoulbinds(characterName: "doof", realmSlug: "frostmourne")
                     }
                 }
                 
                 Section(header: Text(WorldOfWarcraftView.APISection.characterSpecialization.rawValue)) {
                     webServiceRow(api: .characterSpecializationsSummary) {
-                        battleNetAPI.wow.getCharacterSpecializationsSummary(characterName: "doof", realmSlug: "frostmourne", completion: { parseResult($0, for: .characterSpecializationsSummary) })
+                        try await battleNetAPI.wow.getCharacterSpecializationsSummary(characterName: "doof", realmSlug: "frostmourne")
                     }
                 }
                 
                 Section(header: Text(WorldOfWarcraftView.APISection.characterStatistic.rawValue)) {
                     webServiceRow(api: .characterStatisticsSummary) {
-                        battleNetAPI.wow.getCharacterStatisticsSummary(characterName: "doof", realmSlug: "frostmourne", completion: { parseResult($0, for: .characterStatisticsSummary) })
+                        try await battleNetAPI.wow.getCharacterStatisticsSummary(characterName: "doof", realmSlug: "frostmourne")
                     }
                 }
                 
                 Section(header: Text(WorldOfWarcraftView.APISection.characterTitle.rawValue)) {
                     webServiceRow(api: .characterTitlesSummary) {
-                        battleNetAPI.wow.getCharacterTitlesSummary(characterName: "doof", realmSlug: "frostmourne", completion: { parseResult($0, for: .characterTitlesSummary) })
+                        try await battleNetAPI.wow.getCharacterTitlesSummary(characterName: "doof", realmSlug: "frostmourne")
                     }
                 }
                 
                 Section(header: Text(WorldOfWarcraftView.APISection.guild.rawValue)) {
                     webServiceRow(api: .guild) {
-                        battleNetAPI.wow.getGuild(slug: "honestly", realmSlug: "frostmourne", completion: { parseResult($0, for: .guild) })
+                        try await battleNetAPI.wow.getGuild(slug: "honestly", realmSlug: "frostmourne")
                     }
                     webServiceRow(api: .guildActivity) {
-                        battleNetAPI.wow.getGuildActivity(slug: "honestly", realmSlug: "frostmourne", completion: { parseResult($0, for: .guildActivity) })
+                        try await battleNetAPI.wow.getGuildActivity(slug: "honestly", realmSlug: "frostmourne")
                     }
                     webServiceRow(api: .guildAchievements) {
-                        battleNetAPI.wow.getGuildAchievements(slug: "honestly", realmSlug: "frostmourne", completion: { parseResult($0, for: .guildAchievements) })
+                        try await battleNetAPI.wow.getGuildAchievements(slug: "honestly", realmSlug: "frostmourne")
                     }
                     webServiceRow(api: .guildRoster) {
-                        battleNetAPI.wow.getGuildRoster(slug: "honestly", realmSlug: "frostmourne", completion: { parseResult($0, for: .guildRoster) })
+                        try await battleNetAPI.wow.getGuildRoster(slug: "honestly", realmSlug: "frostmourne")
                     }
                 }
             }
@@ -767,33 +768,41 @@ struct WorldOfWarcraftView: View {
     }
     
     
-    func webServiceRow(api: API, webService: @escaping () -> Void) -> some View {
-        let selectionBinding: Binding<API?> = Binding(
-            get: { return apiSelection },
-            set: { newValue in
-                guard newValue != nil else { self.apiSelection = nil; return }
-                webService()
+    func webServiceRow(api: API, webService: @escaping () async throws -> Data) -> some View {
+        Button {
+            loadingAPI = api
+            Task {
+                do {
+                    let data = try await webService()
+                    webServiceData = data
+                    apiSelection = api
+                } catch {
+                    alertType = .error(error)
+                }
+                loadingAPI = nil
             }
-        )
-        return NavigationLink(destination: WebServiceView(title: api.rawValue, data: webServiceData), tag: api, selection: selectionBinding) {
-            Text(api.rawValue)
+        } label: {
+            HStack {
+                Text(api.rawValue)
+                Spacer()
+                if loadingAPI == api {
+                    ProgressView()
+                }
+            }
         }
+        .background(
+            NavigationLink(destination: WebServiceView(title: api.rawValue, data: webServiceData), tag: api, selection: $apiSelection) {
+                EmptyView()
+            }
+            .hidden()
+        )
     }
     
     
     
     // MARK: - Web Services
     
-    /// Parses a web service result, preparing to navigate to WebServiceView is success, or showing an error if failure.
-    func parseResult(_ result: Result<Data, Error>, for selection: API) {
-        switch result {
-        case .success(let data):
-            webServiceData = data
-            apiSelection = selection
-        case .failure(let error):
-            alertType = .error(error)
-        }
-    }
+
 }
 
 

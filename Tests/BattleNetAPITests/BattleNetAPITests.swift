@@ -43,34 +43,7 @@ class BattleNetAPITests: XCTestCase {
     
     // MARK: -
     
-    static func webServiceClosureTest<T: Decodable>(result: Result<Data, Error>, decodable: T.Type, expectation: XCTestExpectation) {
-        switch result {
-        case .success(let data):
-            do {
-                let decode = try T.decode(from: data)
-                XCTAssertNotNil(decode, "Nil object decoded")
-            }
-            catch let decodingError as DecodingError {
-                switch decodingError {
-                case .keyNotFound(let key, let context):
-                    XCTFail("Key '\(key.stringValue)' not found: \(context.debugDescription)\ncodingPath: \(context.codingPath.map(\.stringValue).joined(separator: "."))")
-                case .valueNotFound(let type, let context):
-                    XCTFail("Value of type '\(type)' not found: \(context.debugDescription)\ncodingPath: \(context.codingPath.map(\.stringValue).joined(separator: "."))")
-                case .typeMismatch(let type, let context):
-                    XCTFail("Type mismatch for type '\(type)': \(context.debugDescription)\ncodingPath: \(context.codingPath.map(\.stringValue).joined(separator: "."))")
-                case .dataCorrupted(let context):
-                    XCTFail("Data corrupted: \(context.debugDescription)\ncodingPath: \(context.codingPath.map(\.stringValue).joined(separator: "."))")
-                @unknown default:
-                    XCTFail("Unknown decoding error: \(decodingError)")
-                }
-            }
-            catch {
-                XCTFail("Could not decode: \(error)")
-            }
-        case .failure(let error):
-            XCTAssertNil(error, "Web service error: \(error.localizedDescription)")
-        }
-        
-        expectation.fulfill()
+    static func webServiceAsyncTest<T: Decodable>(data: Data, decodable: T.Type) {
+        XCTAssertNoThrow(try T.decode(from: data))
     }
 }

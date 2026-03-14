@@ -15,6 +15,7 @@ struct BattleNetView: View {
     
     @State var apiSelection: API?
     @State var webServiceData: Data = Data()
+    @State var loadingAPI: API?
     
     let apiType: APIType
     
@@ -34,7 +35,7 @@ struct BattleNetView: View {
         List {
             Section(header: Text(APIType.profile.displayName)) {
                 webServiceRow(api: .userInfo) {
-                    battleNetAPI.user.getUserInfo(completion: { parseResult($0, for: .userInfo) })
+                    try await battleNetAPI.user.getUserInfo()
                 }
             }
         }
@@ -42,32 +43,34 @@ struct BattleNetView: View {
     }
     
     
-    func webServiceRow(api: API, webService: @escaping () -> Void) -> some View {
-        let selectionBinding: Binding<API?> = Binding(
-            get: { return apiSelection },
-            set: { newValue in
-                guard newValue != nil else { self.apiSelection = nil; return }
-                webService()
+    func webServiceRow(api: API, webService: @escaping () async throws -> Data) -> some View {
+        Button {
+            loadingAPI = api
+            Task {
+                do {
+                    let data = try await webService()
+                    webServiceData = data
+                    apiSelection = api
+                } catch {
+                    alertType = .error(error)
+                }
+                loadingAPI = nil
             }
+        } label: {
+            HStack {
+                Text(api.rawValue)
+                Spacer()
+                if loadingAPI == api {
+                    ProgressView()
+                }
+            }
+        }
+        .background(
+            NavigationLink(destination: WebServiceView(title: api.rawValue, data: webServiceData), tag: api, selection: $apiSelection) {
+                EmptyView()
+            }
+            .hidden()
         )
-        return NavigationLink(destination: WebServiceView(title: api.rawValue, data: webServiceData), tag: api, selection: selectionBinding) {
-            Text(api.rawValue)
-        }
-    }
-    
-    
-    
-    // MARK: - Web Services
-    
-    /// Parses a web service result, preparing to navigate to WebServiceView is success, or showing an error if failure.
-    func parseResult(_ result: Result<Data, Error>, for selection: API) {
-        switch result {
-        case .success(let data):
-            webServiceData = data
-            apiSelection = selection
-        case .failure(let error):
-            alertType = .error(error)
-        }
     }
 }
 

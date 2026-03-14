@@ -62,28 +62,6 @@ public class WS_Authentication: AuthenticationWebService {
     /**
      Returns the access dictionary configured for your application
      
-     - parameter completion: Returns a Result with the Data if `success` or an HTTPError if `failure`
-     - note: This access token will not return specific user information. If that is needed, you must receive a user access token through OAuth
-     */
-    public func getClientAccess(completion: @escaping (_ result: Result<Data, Error>) -> Void) {
-        guard let encryptedCredientials = credentials.encryptedCredentials,
-            let url = URL(string: region.tokenURI) else {
-                completion(.failure(HTTPError.invalidRequest))
-                return
-        }
-        
-        guard let body = "grant_type=client_credentials".data(using: .utf8) else {
-            completion(.failure(HTTPError.unexpectedBody))
-            return
-        }
-        
-        call(url: url, method: .post, headers: [.contentType(.form), .authorization(.basic(encryptedCredientials))], body: body, completion: completion)
-    }
-    
-    
-    /**
-     Returns the access dictionary configured for your application
-     
      - note: This access token will not return specific user information. If that is needed, you must receive a user access token through OAuth
      */
     public func getClientAccess() async throws -> Data {
@@ -97,23 +75,6 @@ public class WS_Authentication: AuthenticationWebService {
         }
         
         return try await call(url: url, method: .post, headers: [.contentType(.form), .authorization(.basic(encryptedCredientials))], body: body)
-    }
-    
-    
-    /**
-     Checks if the client token is valid to be used with web service calls
-     
-     - parameter token: The client token saved in the app
-     - parameter completion: Returns a Result with the Data if `success` or an HTTPError if `failure`
-     */
-    public func validateClientAccessToken(_ token: String, completion: @escaping (_ result: Result<Data, Error>) -> Void) {
-        guard !token.isEmpty,
-            let url = URL(string: region.getCheckTokenURI(token: token)) else {
-            completion(.failure(HTTPError.invalidRequest))
-            return
-        }
-        
-        call(url: url, method: .post, completion: completion)
     }
     
     
@@ -161,27 +122,6 @@ public class WS_Authentication: AuthenticationWebService {
      
      - parameter code: The code returned to the app when the user logs in through OAuth
      - parameter redirectURL: The url provided to the OAuth
-     - parameter completion: Returns a Result with the Data if `success` or an HTTPError if `failure`
-    */
-    public func getUserAccess(code: String, redirectURL: String, completion: @escaping (_ result: Result<Data, Error>) -> Void) {
-        guard let encryptedCredientials = credentials.encryptedCredentials,
-            let url = URL(string: region.tokenURI) else {
-                completion(.failure(HTTPError.invalidRequest))
-                return
-        }
-        
-        let parameters = String(format: "grant_type=authorization_code&code=%@&redirect_uri=%@", code, redirectURL)
-        let body = parameters.data(using: .utf8)
-        
-        call(url: url, method: .post, headers: [.contentType(.form), .authorization(.basic(encryptedCredientials))], body: body, completion: completion)
-    }
-    
-    
-    /**
-     Returns the access dictionary configured for the user that logged in through OAuth
-     
-     - parameter code: The code returned to the app when the user logs in through OAuth
-     - parameter redirectURL: The url provided to the OAuth
     */
     public func getUserAccess(code: String, redirectURL: String) async throws -> Data {
         guard let encryptedCredientials = credentials.encryptedCredentials,
@@ -199,22 +139,6 @@ public class WS_Authentication: AuthenticationWebService {
     /**
      Checks if the user access token is valid to be used with profile web service calls
      
-     - parameter token: The client token saved in the app
-     - parameter completion: Returns a Result with the Data if `success` or an HTTPError if `failure`
-     */
-    public func validateUserAccessToken(_ token: String, completion: @escaping (_ result: Result<Data, Error>) -> Void) {
-        guard let url = URL(string: region.getCheckTokenURI(token: token)) else {
-            completion(.failure(HTTPError.invalidRequest))
-            return
-        }
-        
-        call(url: url, method: .post, completion: completion)
-    }
-    
-    
-    /**
-     Checks if the user access token is valid to be used with profile web service calls
-     
      - parameter token: The user access token saved in the app
      */
     public func validateUserAccessToken(_ token: String) async throws -> Data {
@@ -226,21 +150,9 @@ public class WS_Authentication: AuthenticationWebService {
     
     // MARK: - AuthenticationWebService
     
-    internal func getClientAccessToken(completion: @escaping (Result<String, Error>) -> Void) {
-        getClientAccess { result in
-            completion(Result { (try Access.decode(from: try result.get() )).token })
-        }
-    }
-    
-    
     internal func getClientAccessToken() async throws -> String {
         let data =  try await getClientAccess()
         return try Access.decode(from: data).token
-    }
-    
-    
-    internal func getUserAccessToken(completion: @escaping (Result<String, Error>) -> Void) {
-        oauthAuthenticator?.getUserAccessToken(completion: completion)
     }
     
     

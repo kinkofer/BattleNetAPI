@@ -148,12 +148,12 @@ struct MainView: View {
     // MARK: -
     
     func authenticateUser() {
-        authManager.getUserAccessToken { result in
-            switch result {
-            case .success(let userAccessToken):
+        Task {
+            do {
+                let userAccessToken = try await authManager.getUserAccessToken()
                 print("User Access Token: \(userAccessToken)")
                 alertType = .notify("Sign in successful")
-            case .failure(let error):
+            } catch {
                 alertType = .error(error)
             }
         }
