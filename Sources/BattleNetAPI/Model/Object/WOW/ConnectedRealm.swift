@@ -31,8 +31,8 @@ public struct ConnectedRealm: Codable, SelfDecodable {
     public let realms: [Realm]
     
     public let hasQueue: Bool
-    public let status: ConnectedRealmStatus
-    public let population: ConnectedRealmPopulation
+    public let status: EnumType
+    public let population: EnumType
     
     public let mythicLeaderboards: Link<MythicLeaderboard>
     public let auctions: Link<Auction>
@@ -42,18 +42,4 @@ public struct ConnectedRealm: Codable, SelfDecodable {
         decoder.keyDecodingStrategy = .convertFromSnakeCase
         return decoder
     }
-}
-
-
-
-public struct ConnectedRealmStatus: Codable {
-    public let type: String
-    public let name: String
-}
-
-
-
-public struct ConnectedRealmPopulation: Codable {
-    public let type: String
-    public let name: String
 }

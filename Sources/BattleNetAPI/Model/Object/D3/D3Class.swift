@@ -16,6 +16,6 @@ public struct D3Class: Codable {
     public let femaleName: String
     public let icon: String
     
-    public let skillCategories: [D3SkillCategory]
+    public let skillCategories: [EnumSlug]
     public let skills: D3SkillSet
 }

@@ -36,12 +36,6 @@ extension BattlegroupIndex: Viewable {
 }
 
 
-extension Battlegroup: Viewable {
-    var cell: CellContents {
-        return CellContents(title: "Battlegroup", subtitle: name, type: .object(self))
-    }
-}
-
 
 
 // MARK: - Boss
@@ -140,19 +134,6 @@ extension ConnectedRealm: Viewable {
     }
 }
 
-
-extension ConnectedRealmStatus: Viewable {
-    var cell: CellContents {
-        return CellContents(title: "Connected Realm Status", subtitle: name, type: .object(self))
-    }
-}
-
-
-extension ConnectedRealmPopulation: Viewable {
-    var cell: CellContents {
-        return CellContents(title: "Connected Realm Population", subtitle: name, type: .object(self))
-    }
-}
 
 
 
@@ -611,13 +592,6 @@ extension Realm: Viewable {
 }
 
 
-extension RealmInfo: Viewable {
-    var cell: CellContents {
-        return CellContents(title: "Realm", subtitle: name, type: .object(self))
-    }
-}
-
-
 extension WOWRealmIndex: Viewable {
     var cell: CellContents {
         return CellContents(title: "Realm", subtitle: "\(realms.count) Realm(s)", type: .object(self))
@@ -679,13 +653,6 @@ extension SpecializationIndex: Viewable {
 extension Specialization: Viewable {
     var cell: CellContents {
         return CellContents(title: "Specialization", subtitle: name, type: .object(self))
-    }
-}
-
-
-extension Role: Viewable {
-    var cell: CellContents {
-        return CellContents(title: "Role", subtitle: name, type: .object(self))
     }
 }
 

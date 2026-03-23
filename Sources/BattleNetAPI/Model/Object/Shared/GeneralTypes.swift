@@ -14,6 +14,12 @@ public struct EnumType: Codable {
 }
 
 
+public struct EnumSlug: Codable {
+    public let slug: String
+    public let name: String?
+}
+
+
 public struct ValueForDisplay: Codable, SelfDecodable {
     public let value: Double
     public let displayString: String

@@ -324,13 +324,6 @@ extension D3Skill: Viewable {
 }
 
 
-extension D3SkillCategory: Viewable {
-    var cell: CellContents {
-        return CellContents(title: "Skill Category", subtitle: name, type: .object(self))
-    }
-}
-
-
 extension D3SkillSet: Viewable {
     var cell: CellContents {
         return CellContents(title: "Skill Set", subtitle: "\(active.count) active(s), \(passive.count) passive(s)", type: .object(self))

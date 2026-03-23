@@ -39,6 +39,20 @@ extension MediaLink: Viewable {
 
 
 
+extension EnumType: Viewable {
+    var cell: CellContents {
+        return CellContents(title: type, subtitle: name ?? "", type: .object(self))
+    }
+}
+
+
+extension EnumSlug: Viewable {
+    var cell: CellContents {
+        return CellContents(title: slug, subtitle: name ?? "", type: .object(self))
+    }
+}
+
+
 extension LocaleString: Viewable {
     var cell: CellContents {
         var subtitle = ""

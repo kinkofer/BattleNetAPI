@@ -21,12 +21,6 @@ public struct D3Skill: Codable {
 }
 
 
-public struct D3SkillCategory: Codable {
-    public let slug: String
-    public let name: String
-}
-
-
 public struct D3SkillSet: Codable {
     public let active: [D3Skill]
     public let passive: [D3Skill]

@@ -30,7 +30,7 @@ public struct Realm: Codable, SelfDecodable {
     
     public let isTournament: Bool
     
-    public let type: RealmInfo
+    public let type: EnumType
     public let category: String
     public let locale: String
     public let timezone: String
@@ -43,13 +43,6 @@ public struct Realm: Codable, SelfDecodable {
         decoder.keyDecodingStrategy = .convertFromSnakeCase
         return decoder
     }
-}
-
-
-
-public struct RealmInfo: Codable {
-    public let name: String
-    public let type: String
 }
 
 

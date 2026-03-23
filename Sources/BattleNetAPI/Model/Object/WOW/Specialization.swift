@@ -31,7 +31,7 @@ public struct Specialization: Codable, SelfDecodable {
 
     public let playableClass: KeyLink<WOWClass>
     public let genderDescription: GenderName
-    public let role: Role
+    public let role: EnumType
     public let pvpTalents: [Talent]
 //    public let specTalentTree: KeyLink<SpecTalentTree>
     public let powerType: KeyLink<PowerType>
@@ -47,12 +47,6 @@ public struct Specialization: Codable, SelfDecodable {
     }
 }
 
-
-
-public struct Role: Codable {
-    public let type: String
-    public let name: String
-}
 
 
 public struct TalentTier: Codable {
