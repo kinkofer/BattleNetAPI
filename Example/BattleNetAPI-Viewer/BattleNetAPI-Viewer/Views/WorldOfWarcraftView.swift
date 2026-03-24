@@ -77,7 +77,7 @@ struct WorldOfWarcraftView: View {
                 
                 Section(header: Text(WorldOfWarcraftView.APISection.auctionHouse.rawValue)) {
                     webServiceRow(api: .auctions) {
-                        try await battleNetAPI.wow.getAuctions(connectedRealmID: 1146)
+                        try await battleNetAPI.wow.getAuctions(connectedRealmID: 121)
                     }
                 }
                 
