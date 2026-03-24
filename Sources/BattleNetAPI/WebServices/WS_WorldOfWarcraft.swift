@@ -12,11 +12,11 @@ import Foundation
 public struct WS_WorldOfWarcraft: WebService {
     public enum API: APICall {
         // Game Data APIs
-        case achievementCategoryIndex
-        case achievementCategory(Int)
         case achievementIndex
         case achievement(Int)
         case achievementMedia(Int)
+        case achievementCategoryIndex
+        case achievementCategory(Int)
 
         case auctions(connectedRealmID: Int)
 

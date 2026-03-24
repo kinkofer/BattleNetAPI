@@ -20,6 +20,11 @@ public struct EnumSlug: Codable {
 }
 
 
+public struct Quantity: Codable {
+    public let value: Int
+}
+
+
 public struct ValueForDisplay: Codable, SelfDecodable {
     public let value: Double
     public let displayString: String

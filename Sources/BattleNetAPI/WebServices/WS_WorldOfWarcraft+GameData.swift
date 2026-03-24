@@ -15,27 +15,6 @@ extension WS_WorldOfWarcraft {
     // MARK: Achievement API
     
     /**
-     Returns an index of achievement categories.
-     
-     - parameter namespace: The namespace to use to locate this document.
-    */
-    public func getAchievementCategoryIndex(namespace: APINamespace? = .static) async throws -> Data {
-        return try await call(endpoint: API.achievementCategoryIndex, namespace: namespace)
-    }
-    
-    
-    /**
-     Returns an achievement category by ID.
-     
-     - parameter id: The ID of the achievement category.
-     - parameter namespace: The namespace to use to locate this document.
-    */
-    public func getAchievementCategory(id: Int, namespace: APINamespace? = .static) async throws -> Data {
-        return try await call(endpoint: API.achievementCategory(id), namespace: namespace)
-    }
-    
-    
-    /**
      Returns an index of achievements.
      
      - parameter namespace: The namespace to use to locate this document.
@@ -64,6 +43,27 @@ extension WS_WorldOfWarcraft {
     */
     public func getAchievementMedia(id: Int, namespace: APINamespace? = .static) async throws -> Data {
         return try await call(endpoint: API.achievementMedia(id), namespace: namespace)
+    }
+    
+    
+    /**
+     Returns an index of achievement categories.
+     
+     - parameter namespace: The namespace to use to locate this document.
+    */
+    public func getAchievementCategoryIndex(namespace: APINamespace? = .static) async throws -> Data {
+        return try await call(endpoint: API.achievementCategoryIndex, namespace: namespace)
+    }
+    
+    
+    /**
+     Returns an achievement category by ID.
+     
+     - parameter id: The ID of the achievement category.
+     - parameter namespace: The namespace to use to locate this document.
+    */
+    public func getAchievementCategory(id: Int, namespace: APINamespace? = .static) async throws -> Data {
+        return try await call(endpoint: API.achievementCategory(id), namespace: namespace)
     }
     
     

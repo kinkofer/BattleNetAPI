@@ -16,11 +16,14 @@ extension WorldOfWarcraftTests {
     // MARK: Achievement API
 
     func testGetAchievementCategoryIndex() async throws {
-        XCTAssert(true)
+        let data = try await battleNetAPI.wow.getAchievementCategoryIndex()
+        BattleNetAPITests.webServiceAsyncTest(data: data, decodable: WOWAchievementCategoryIndex.self)
     }
 
     func testGetAchievementCategory() async throws {
-        XCTAssert(true)
+        let id = 81
+        let data = try await battleNetAPI.wow.getAchievementCategory(id: id)
+        BattleNetAPITests.webServiceAsyncTest(data: data, decodable: WOWAchievementCategory.self)
     }
 
     func testGetAchievementIndex() async throws {
@@ -576,7 +579,7 @@ extension WorldOfWarcraftTests {
     // MARK: Spell API
 
     func testGetSpell() async throws {
-        let id = 1
+        let id = 196607
         let data = try await battleNetAPI.wow.getSpell(id: id)
         BattleNetAPITests.webServiceAsyncTest(data: data, decodable: Spell.self)
     }

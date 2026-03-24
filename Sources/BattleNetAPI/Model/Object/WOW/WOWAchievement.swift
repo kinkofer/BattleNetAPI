@@ -9,19 +9,55 @@
 import Foundation
 
 
+public struct WOWAchievementCategoryIndex: Codable, SelfDecodable {
+    public let _links: SelfLink<WOWAchievementCategoryIndex>?
+    public let categories: [KeyLink<WOWAchievementCategory>]
+    public let rootCategories: [KeyLink<WOWAchievementCategory>]
+    public let guildCategories: [KeyLink<WOWAchievementCategory>]
+    
+    
+    public static var decoder: JSONDecoder {
+        let decoder = JSONDecoder()
+        decoder.keyDecodingStrategy = .convertFromSnakeCase
+        return decoder
+    }
+}
+
+
 public struct WOWAchievementIndex: Codable {
     public let achievements: [WOWAchievementCategory]
 }
 
 
-
-public struct WOWAchievementCategory: Codable {
+public struct WOWAchievementCategory: Codable, SelfDecodable {
+    public let _links: SelfLink<WOWAchievementCategory>?
     public let id: Int
     public let name: String
-    public let achievements: [WOWAchievement]?
-    public let categories: [WOWAchievementCategory]?
+    public let achievements: [KeyLink<WOWAchievement>]?
+    public let subcategories: [KeyLink<WOWAchievementCategory>]?
+    public let isGuildCategory: Bool?
+    public let aggregatesByFaction: AggregatesByFaction?
+    public let displayOrder: Int?
+    
+    
+    public static var decoder: JSONDecoder {
+        let decoder = JSONDecoder()
+        decoder.keyDecodingStrategy = .convertFromSnakeCase
+        return decoder
+    }
 }
 
+
+public struct AggregatesByFaction: Codable {
+    public let alliance: FactionAggregate
+    public let horde: FactionAggregate
+}
+
+
+public struct FactionAggregate: Codable {
+    public let quantity: Int
+    public let points: Int
+}
 
 
 public struct WOWAchievement: Codable, SelfDecodable {
@@ -45,13 +81,11 @@ public struct WOWAchievement: Codable, SelfDecodable {
 }
 
 
-
 public struct WOWAchievementCriterion: Codable {
     public let id: Int
     public let description: String
     public let amount: Int
 }
-
 
 
 public struct WOWAchievementStatus: Codable {

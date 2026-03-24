@@ -10,14 +10,9 @@ import Foundation
 
 
 public struct Spell: Codable {
+    public let _links: SelfLink<Spell>?
     public let id: Int
     public let name: String
     public let description: String
-    public let icon: String
-    
-    public let castTime: String
-    
-    public let subtext: String?
-    public let powerCost: String?
-    public let cooldown: String?
+    public let media: MediaLink
 }

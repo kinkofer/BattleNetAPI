@@ -44,6 +44,10 @@ class BattleNetAPITests: XCTestCase {
     // MARK: -
     
     static func webServiceAsyncTest<T: Decodable>(data: Data, decodable: T.Type) {
-        XCTAssertNoThrow(try T.decode(from: data))
+        do {
+            _ = try T.decode(from: data)
+        } catch {
+            XCTFail("Failed to decode \(T.self): \(error)")
+        }
     }
 }
