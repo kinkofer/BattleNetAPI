@@ -9,7 +9,7 @@
 import Foundation
 
 
-public class Hero: Codable {
+public struct Hero: Codable {
     public let id: Int
     public let name: String
     public let `class`: String
@@ -44,7 +44,7 @@ public class Hero: Codable {
 
 
 
-public class FullHero: Codable {
+public struct FullHero: Codable {
     public let id: Int
     public let name: String
     public let `class`: String
@@ -73,7 +73,7 @@ public class FullHero: Codable {
 
 
 
-public class HeroFollowers: Codable {
+public struct HeroFollowers: Codable {
     public let enchantress: FollowerHero
     public let scoundrel: FollowerHero
     public let templar: FollowerHero
@@ -81,7 +81,7 @@ public class HeroFollowers: Codable {
 
 
 
-public class HeroFollowerItems: Codable {
+public struct HeroFollowerItems: Codable {
     public let enchantress: FullEquippedItems
     public let scoundrel: FullEquippedItems
     public let templar: FullEquippedItems
@@ -89,14 +89,14 @@ public class HeroFollowerItems: Codable {
 
 
 
-public class HeroSkillSet: Codable {
+public struct HeroSkillSet: Codable {
     public let active: [D3SkillConfiguration]
     public let passive: [D3SkillConfiguration]
 }
 
 
 
-public class D3Progression: Codable {
+public struct D3Progression: Codable {
     public let act1: CompletedAct
     public let act2: CompletedAct
     public let act3: CompletedAct
@@ -106,14 +106,14 @@ public class D3Progression: Codable {
 
 
 
-public class CompletedAct: Codable {
+public struct CompletedAct: Codable {
     public let completed: Bool
     public let completedQuests: [D3Quest]
 }
 
 
 
-public class D3StatBlock: Codable {
+public struct D3StatBlock: Codable {
     public let life: Double
     public let damage: Double
     public let toughness: Double

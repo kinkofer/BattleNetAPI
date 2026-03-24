@@ -51,9 +51,8 @@ public struct WS_User: WebService {
      Returns the account information of a user
      
      - parameter region: What region the request is being made
-     - parameter completion: Returns a Result with the Data if `success` or an HTTPError if `failure`
      */
-    public func getUserInfo(completion: @escaping (_ result: Result<Data, Error>) -> Void) {
-        call(endpoint: API.userInfo, completion: completion)
+    public func getUserInfo() async throws -> Data {
+        return try await call(endpoint: API.userInfo)
     }
 }

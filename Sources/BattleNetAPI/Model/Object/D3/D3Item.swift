@@ -9,7 +9,7 @@
 import Foundation
 
 
-public class D3Item: Codable {
+public struct D3Item: Codable {
     public let id: String
     public let slug: String
     public let name: String
@@ -24,7 +24,7 @@ public class D3Item: Codable {
 
 
 
-public class D3ItemType: Codable {
+public struct D3ItemType: Codable {
     public let id: String
     public let name: String
     public let path: String
@@ -47,7 +47,7 @@ public class D3EquippedItem: Codable {
 
 
 
-public class D3FullItem: Codable {
+public struct D3FullItem: Codable {
     public let id: String
     public let slug: String
     public let name: String
@@ -128,7 +128,7 @@ public class D3FullEquippedItem: Codable {
 
 
 
-public class D3TwoHandedItemType: Codable {
+public struct D3TwoHandedItemType: Codable {
     public let id: String
     public let twoHanded: Bool
 }
@@ -137,7 +137,7 @@ public class D3TwoHandedItemType: Codable {
 
 // MARK: Attribute
 
-public class AttributeSet: Codable {
+public struct AttributeSet: Codable {
     public let primary: [Attribute]
     public let secondary: [Attribute]?
     public let other: [Attribute]?
@@ -145,7 +145,7 @@ public class AttributeSet: Codable {
 
 
 
-public class Attribute: Codable {
+public struct Attribute: Codable {
     public let text: String
     public let textHtml: String
 }
@@ -154,7 +154,7 @@ public class Attribute: Codable {
 
 // MARK: Equipped Attribute
 
-public class EquippedAttributeSet: Codable {
+public struct EquippedAttributeSet: Codable {
     public let primary: [String]
     public let secondary: [String]?
 }
@@ -163,13 +163,13 @@ public class EquippedAttributeSet: Codable {
 
 // MARK:
 
-public class RandomAffix: Codable {
+public struct RandomAffix: Codable {
     public let oneOf: [Attribute]
 }
 
 
 
-public class EquippedItems: Codable {
+public struct EquippedItems: Codable {
     public let head: D3EquippedItem?
     public let neck: D3EquippedItem?
     public let torso: D3EquippedItem?
@@ -187,7 +187,7 @@ public class EquippedItems: Codable {
 
 
 
-public class FullEquippedItems: Codable {
+public struct FullEquippedItems: Codable {
     public let head: D3FullEquippedItem?
     public let neck: D3FullEquippedItem?
     public let torso: D3FullEquippedItem?
@@ -205,7 +205,7 @@ public class FullEquippedItems: Codable {
 
 
 
-public class Gem: Codable {
+public struct Gem: Codable {
     public let item: D3Item
     public let attributes: [String]
     public let isGem: Bool
@@ -217,7 +217,7 @@ public class Gem: Codable {
 
 
 
-public class D3ItemSet: Codable {
+public struct D3ItemSet: Codable {
     public let name: String
     public let slug: String
     public let description: String
@@ -226,7 +226,7 @@ public class D3ItemSet: Codable {
 
 
 
-public class Dye: Codable {
+public struct Dye: Codable {
     public let id: String
     public let name: String
     public let icon: String

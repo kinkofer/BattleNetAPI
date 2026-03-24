@@ -9,111 +9,139 @@
 import Foundation
 
 
-public class WOWItem: Codable {
+public struct WOWItem: Codable, SelfDecodable {
+    public let _links: SelfLink<WOWItem>
     public let id: Int
-    public let description: String
     public let name: String
-    public let icon: String
     
-    public let artifactID: Int
-    public let quality: Int
+    public let quality: EnumType
     
-    public let equippable: Bool
-    public let isAuctionable: Bool
-    public let stackable: Int
+    public let isEquippable: Bool
+    public let isStackable: Bool
     public let maxCount: Int
-    public let containerSlots: Int
-    public let itemBind: Int
     
-    public let bonusStats: [WOWItemStat]
-    public let itemSpells: [WOWItemSpell]
-    
-    public let buyPrice: Int
+    public let purchasePrice: Int
     public let sellPrice: Int
-    public let itemClass: Int
-    public let itemSubClass: Int
+    public let purchaseQuantity: Int
     
-    public let inventoryType: Int
-    public let itemLevel: Int
-    public let maxDurability: Int
-    public let minFactionID: Int
-    public let minReputation: Int
+    public let itemClass: KeyLink<ItemClass>
+    public let itemSubclass: KeyLink<ItemSubclass>
     
-    public let requiredSkill: Int
+    public let inventoryType: EnumType
+    public let level: Int
     public let requiredLevel: Int
-    public let requiredSkillRank: Int
     
-    public let itemSource: WOWItemSource
-    public let hasSockets: Bool
+    public let media: MediaLink
+    public let appearances: [MediaLink]
     
-    public let weaponInfo: WeaponInfo?
-    public let armor: Int
-    public let baseArmor: Int
+    public let previewItem: PreviewItem
     
-    public let displayInfoID: Int
-    public let nameDescription: String
-    public let nameDescriptionColor: String
-    
-    public let heroicTooltip: Bool
-    
-    public let upgradable: Bool
-    public let context: String
-    public let availableContexts: [String]
-    
-    public let bonusLists: [Int]
-    public let bonusSummary: BonusSummary
-    
-    public let disenchantingSkillRank: Int?
+    public static var decoder: JSONDecoder {
+        let decoder = JSONDecoder()
+        decoder.keyDecodingStrategy = .convertFromSnakeCase
+        return decoder
+    }
+}
 
 
-    enum CodingKeys: String, CodingKey {
-        case id
-        case disenchantingSkillRank
-        case description
-        case name
-        case icon
-        case stackable
-        case itemBind
-        case bonusStats
-        case itemSpells
-        case buyPrice
-        case itemClass
-        case itemSubClass
-        case containerSlots
-        case weaponInfo
-        case inventoryType
-        case equippable
-        case itemLevel
-        case maxCount
-        case maxDurability
-        case minFactionID = "minFactionId"
-        case minReputation
-        case quality
-        case sellPrice
-        case requiredSkill
-        case requiredLevel
-        case requiredSkillRank
-        case itemSource
-        case baseArmor
-        case hasSockets
-        case isAuctionable
-        case armor
-        case displayInfoID = "displayInfoId"
-        case nameDescription
-        case nameDescriptionColor
-        case upgradable
-        case heroicTooltip
-        case context
-        case bonusLists
-        case availableContexts
-        case bonusSummary
-        case artifactID = "artifactId"
+public struct PreviewItem: Codable, SelfDecodable {
+    public let item: MediaLink
+    public let context: Int
+    public let bonusList: [Int]
+    public let quality: EnumType
+    public let name: String
+    public let media: MediaLink
+    public let itemClass: KeyLink<ItemClass>
+    public let itemSubclass: KeyLink<ItemSubclass>
+    public let inventoryType: EnumType
+    public let binding: EnumType
+    public let uniqueEquipped: String
+    public let weapon: Weapon
+    public let stats: [Stat]
+    public let spells: [WOWSpell]
+    public let requirements: Requirements
+    public let level: ValueForDisplay
+    public let durability: ValueForDisplay
+
+    public static var decoder: JSONDecoder {
+        let decoder = JSONDecoder()
+        decoder.keyDecodingStrategy = .convertFromSnakeCase
+        return decoder
+    }
+}
+
+
+public struct Requirements: Codable {
+    public let level: ValueForDisplay
+}
+
+
+public struct WOWSpell: Codable {
+    public let spell: KeyLink<ItemClass>
+    public let description: String
+}
+
+
+public struct Stat: Codable, SelfDecodable {
+    public let type: EnumType
+    public let value: Int
+    public let isNegated: Bool?
+    public let display: Display
+
+    public static var decoder: JSONDecoder {
+        let decoder = JSONDecoder()
+        decoder.keyDecodingStrategy = .convertFromSnakeCase
+        return decoder
+    }
+}
+
+
+public struct Display: Codable, SelfDecodable {
+    public let displayString: String
+    public let color: Color
+
+    public static var decoder: JSONDecoder {
+        let decoder = JSONDecoder()
+        decoder.keyDecodingStrategy = .convertFromSnakeCase
+        return decoder
+    }
+}
+
+
+public struct Color: Codable {
+    public let r, g, b, a: Int
+}
+
+
+public struct Weapon: Codable, SelfDecodable {
+    public let damage: Damage
+    public let attackSpeed: ValueForDisplay
+    public let dps: ValueForDisplay
+
+    public static var decoder: JSONDecoder {
+        let decoder = JSONDecoder()
+        decoder.keyDecodingStrategy = .convertFromSnakeCase
+        return decoder
+    }
+}
+
+
+public struct Damage: Codable, SelfDecodable {
+    public let minValue: Int
+    public let maxValue: Int
+    public let displayString: String
+    public let damageClass: EnumType
+
+    public static var decoder: JSONDecoder {
+        let decoder = JSONDecoder()
+        decoder.keyDecodingStrategy = .convertFromSnakeCase
+        return decoder
     }
 }
 
 
 
-public class BonusSummary: Codable {
+public struct BonusSummary: Codable {
 //    public let defaultBonusLists: []
 //    public let chanceBonusLists: []
 //    public let bonusChances: []
@@ -121,7 +149,7 @@ public class BonusSummary: Codable {
 
 
 
-public class WOWItemSource: Codable {
+public struct WOWItemSource: Codable {
     public let sourceID: Int
     public let sourceType: String
     
@@ -132,7 +160,7 @@ public class WOWItemSource: Codable {
 }
 
 
-public class WOWItemSpell: Codable {
+public struct WOWItemSpell: Codable {
     public let spellID: Int
     public let scaledDescription: String
     public let trigger: String
@@ -151,7 +179,7 @@ public class WOWItemSpell: Codable {
 }
 
 
-public class WeaponInfo: Codable {
+public struct WeaponInfo: Codable {
     public let damage: Damage
     public let weaponSpeed: Double
     public let dps: Double
@@ -159,16 +187,7 @@ public class WeaponInfo: Codable {
 
 
 
-public class Damage: Codable {
-    public let min: Int
-    public let max: Int
-    public let exactMin: Int
-    public let exactMax: Int
-}
-
-
-
-public class WOWItemSummary: Codable {
+public struct WOWItemSummary: Codable {
     public let id: Int
     public let name: String
     public let icon: String
@@ -212,7 +231,7 @@ public class WOWItemSummary: Codable {
 
 
 
-public class WOWItemAppearance: Codable {
+public struct WOWItemAppearance: Codable {
     public let transmogItemAppearanceModID: Int?
     public let itemAppearanceModID: Int?
     public let itemID: Int?
@@ -221,7 +240,7 @@ public class WOWItemAppearance: Codable {
 
 
 
-public class TooltipParams: Codable {
+public struct TooltipParams: Codable {
     public let timewalkerLevel: Int
     public let azeritePowerLevel: Int
     public let azeritePower0: Int
@@ -233,7 +252,7 @@ public class TooltipParams: Codable {
 
 
 
-public class WOWItemUpgrade: Codable {
+public struct WOWItemUpgrade: Codable {
     public let current: Int
     public let total: Int
     public let itemLevelIncrement: Int
@@ -241,14 +260,14 @@ public class WOWItemUpgrade: Codable {
 
 
 
-public class WOWItemStat: Codable {
+public struct WOWItemStat: Codable {
     public let stat: Int
     public let amount: Int
 }
 
 
 
-public class WOWEquippedItems: Codable {
+public struct WOWEquippedItems: Codable {
     public let mainHand: WOWItemSummary?
     public let head: WOWItemSummary?
     public let neck: WOWItemSummary?
@@ -275,39 +294,52 @@ public class WOWEquippedItems: Codable {
 
 // MARK: - Item Sets
 
-public class WOWItemSet: Codable {
+public struct WOWItemSet: Codable, SelfDecodable {
+    public let _links: SelfLink<WOWItemSet>?
     public let id: Int
     public let name: String
-    public let setBonuses: [SetBonus]
-    public let items: [Int]
+    public let items: [KeyLink<WOWItem>]
+    public let effects: [ItemSetEffect]
+    public let isEffectActive: Bool?
+
+    public static var decoder: JSONDecoder {
+        let decoder = JSONDecoder()
+        decoder.keyDecodingStrategy = .convertFromSnakeCase
+        return decoder
+    }
 }
 
 
+public struct ItemSetEffect: Codable, SelfDecodable {
+    public let displayString: String
+    public let requiredCount: Int
 
-public class SetBonus: Codable {
-    public let description: String
-    public let threshold: Int
+    public static var decoder: JSONDecoder {
+        let decoder = JSONDecoder()
+        decoder.keyDecodingStrategy = .convertFromSnakeCase
+        return decoder
+    }
 }
 
 
 
 // MARK: - Item Classes
 
-public class ItemClassIndex: Codable {
+public struct ItemClassIndex: Codable {
     public let classes: [ItemClass]
 }
 
 
 
-public class ItemClass: Codable {
-    public let `class`: Int
+public struct ItemClass: Codable {
+    public let `struct`: Int
     public let name: String
     public let subclasses: [ItemSubclass]
 }
 
 
 
-public class ItemSubclass: Codable {
+public struct ItemSubclass: Codable {
     public let subclass: Int
     public let name: String
 }

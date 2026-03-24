@@ -17,7 +17,7 @@ class AuthenticationTests: XCTestCase {
     override func setUpWithError() throws {
         super.setUp()
         // Put setup code here. This method is called before the invocation of each test method in the class.
-        battleNetAPI = BattleNetAPI(credentials: credentials)
+        battleNetAPI = BattleNetAPI(credentials: credentials, oauth: oauth)
     }
     
     override func tearDownWithError() throws {
@@ -30,51 +30,30 @@ class AuthenticationTests: XCTestCase {
     
     // MARK: -
     
-    func testGetClientAccess() {
-        let wsResponseExpectation = expectation(description: "Web Service returned a response")
-        
-        battleNetAPI.authentication.getClientAccess { result in
-            BattleNetAPITests.webServiceClosureTest(result: result, decodable: Access.self, expectation: wsResponseExpectation)
-        }
-        
-        waitForExpectations(timeout: 10) { error in
-            XCTAssertNil(error, "Exceeded timeout")
-        }
+    func testGetClientAccess() async throws {
+        let data = try await battleNetAPI.authentication.getClientAccess()
+        BattleNetAPITests.webServiceAsyncTest(data: data, decodable: Access.self)
     }
     
     
-    func testValidateClientAccessToken() {
+    func testValidateClientAccessToken() async throws {
         guard let clientAccessToken = credentials.clientAccessToken else {
             XCTFail("clientAccessToken must be set in AuthToken. The token is logged in the console when running ViewController.viewDidLoad().")
             return
         }
         
-        let wsResponseExpectation = expectation(description: "Web Service returned a response")
-        
-        battleNetAPI.authentication.validateClientAccessToken(clientAccessToken) { result in
-            BattleNetAPITests.webServiceClosureTest(result: result, decodable: ClientToken.self, expectation: wsResponseExpectation)
-        }
-        
-        waitForExpectations(timeout: 10) { error in
-            XCTAssertNil(error, "Exceeded timeout")
-        }
+        let data = try await battleNetAPI.authentication.validateClientAccessToken(clientAccessToken)
+        BattleNetAPITests.webServiceAsyncTest(data: data, decodable: ClientToken.self)
     }
     
     
-    func testValidateUserAccessToken() {
+    func testValidateUserAccessToken() async throws {
         guard let userAccessToken = credentials.userAccessToken else {
             XCTFail("userAccessToken must be set in AuthToken. The token is logged in the console when running authenticateUser(showAPI:).")
             return
         }
         
-        let wsResponseExpectation = expectation(description: "Web Service returned a response")
-        
-        battleNetAPI.authentication.validateUserAccessToken(userAccessToken) { result in
-            BattleNetAPITests.webServiceClosureTest(result: result, decodable: UserToken.self, expectation: wsResponseExpectation)
-        }
-        
-        waitForExpectations(timeout: 10) { error in
-            XCTAssertNil(error, "Exceeded timeout")
-        }
+        let data = try await battleNetAPI.authentication.validateUserAccessToken(userAccessToken)
+        BattleNetAPITests.webServiceAsyncTest(data: data, decodable: UserToken.self)
     }
 }

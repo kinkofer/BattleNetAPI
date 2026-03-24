@@ -9,7 +9,7 @@
 import Foundation
 
 
-public class D3Season: Codable {
+public struct D3Season: Codable {
     public let seasonId: Int
     public let paragonLevel: Int
     public let paragonLevelHardcore: Int
@@ -22,7 +22,7 @@ public class D3Season: Codable {
 
 
 // https://us.api.battle.net/data/d3/season/?namespace=2-6-US
-public class D3SeasonIndex: Codable, SelfDecodable {
+public struct D3SeasonIndex: Codable, SelfDecodable {
     public let _links: SelfLink<D3SeasonIndex>
     public let season: [Link<D3Season>]
     
@@ -42,7 +42,7 @@ public class D3SeasonIndex: Codable, SelfDecodable {
 
 
 // https://us.api.battle.net/data/d3/season/1?namespace=2-6-US
-public class D3SeasonLeaderboardIndex: Codable {
+public struct D3SeasonLeaderboardIndex: Codable {
     public let _links: SelfLink<D3SeasonLeaderboardIndex>
     public let leaderboard: [SeasonLeaderboardLink]
     public let seasonID: Int
@@ -60,7 +60,7 @@ public class D3SeasonLeaderboardIndex: Codable {
 
 
 
-public class SeasonLeaderboardLink: Codable, SelfDecodable {
+public struct SeasonLeaderboardLink: Codable, SelfDecodable {
     public let ladder: Link<SeasonLeaderboard>
     public let heroClassString: String?
     public let teamSize: Int?
@@ -76,7 +76,7 @@ public class SeasonLeaderboardLink: Codable, SelfDecodable {
 
 
 // https://us.api.battle.net/data/d3/season/1/leaderboard/achievement-points?namespace=2-6-US
-public class SeasonLeaderboard: Codable, SelfDecodable {
+public struct SeasonLeaderboard: Codable, SelfDecodable {
     public let _links: SelfLink<SeasonLeaderboard>
     public let key: String
     public let title: LocaleString

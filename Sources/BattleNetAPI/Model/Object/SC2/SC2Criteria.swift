@@ -9,7 +9,7 @@
 import Foundation
 
 
-public class SC2Criteria: Codable {
+public struct SC2Criteria: Codable {
     public let id: String
     public let achievementID: String
     public let uiOrderHint: Int

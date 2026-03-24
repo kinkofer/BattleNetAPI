@@ -10,8 +10,8 @@ import Foundation
 
 
 // https://us.api.battle.net/data/wow/mythic-challenge-mode/?namespace=dynamic-us
-/// - note: KeystoneAffixSummary is a property of another class that contains camelCase and snake_case keys
-public class MythicChallengeMode: Codable {
+/// - note: KeystoneAffixSummary is a property of another struct that contains camelCase and snake_case keys
+public struct MythicChallengeMode: Codable {
     public let _links: SelfLink<MythicChallengeMode>
     public let currentPeriod: Int
     public let currentPeriodStartTimestamp: Int

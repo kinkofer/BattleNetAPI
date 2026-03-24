@@ -16,7 +16,7 @@ public protocol ResourceLinkable {
 }
 
 
-public class SelfLink<Resource>: Codable, ResourceLinkable {
+public struct SelfLink<Resource>: Codable, ResourceLinkable {
     public let link: Link<Resource>
     
     enum CodingKeys: String, CodingKey {
@@ -26,7 +26,7 @@ public class SelfLink<Resource>: Codable, ResourceLinkable {
 
 
 
-public class KeyLink<Resource>: Codable, ResourceLinkable {
+public struct KeyLink<Resource>: Codable, ResourceLinkable {
     public let key: Link<Resource>
     public let id: Int?
     public let name: String?
@@ -36,6 +36,6 @@ public class KeyLink<Resource>: Codable, ResourceLinkable {
 
 
 
-public class Link<Resouce>: Codable {
+public struct Link<Resouce>: Codable {
     public let href: String
 }

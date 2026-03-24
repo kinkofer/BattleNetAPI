@@ -9,7 +9,7 @@
 import Foundation
 
 
-public class SC2ProfileData: Codable {
+public struct SC2ProfileData: Codable {
     public let rewards: [SC2Reward]
     public let achievements: [SC2Achievement]
     public let criteria: [SC2Criteria]
@@ -17,7 +17,7 @@ public class SC2ProfileData: Codable {
 }
 
 
-public class SC2ProfileMetadata: Codable {
+public struct SC2ProfileMetadata: Codable {
     public let profileID: String
     public let profileUrl: String
     public let name: String
@@ -36,7 +36,7 @@ public class SC2ProfileMetadata: Codable {
 }
 
 
-public class SC2Profile: Codable {
+public struct SC2Profile: Codable {
     public let summary: SC2ProfileSummary
     public let snapshot: SC2ProfileSnapshot
     public let career: SC2ProfileCareer
@@ -49,7 +49,7 @@ public class SC2Profile: Codable {
 }
 
 
-public class SC2ProfileSummary: Codable {
+public struct SC2ProfileSummary: Codable {
     public let id: String
     public let realm: Int
     public let displayName: String
@@ -62,13 +62,13 @@ public class SC2ProfileSummary: Codable {
 }
 
 
-public class SC2ProfileSnapshot: Codable {
+public struct SC2ProfileSnapshot: Codable {
     public let seasonSnapshot: [String: SeasonSnapshot]
     public let totalRankedSeasonGamesPlayed: Int
 }
 
 
-public class SeasonSnapshot: Codable {
+public struct SeasonSnapshot: Codable {
     public let rank: Int
     public let leagueName: String?
     public let totalGames: Int
@@ -76,7 +76,7 @@ public class SeasonSnapshot: Codable {
 }
 
 
-public class SC2ProfileCareer: Codable {
+public struct SC2ProfileCareer: Codable {
     public let terranWins: Int
     public let zergWins: Int
     public let protossWins: Int
@@ -89,22 +89,22 @@ public class SC2ProfileCareer: Codable {
 }
 
 
-public class BestFinish: Codable {
+public struct BestFinish: Codable {
     public let leagueName: String?
     public let timesAchieved: Int
 }
 
 
-public class SC2ProfileCampaign: Codable {
+public struct SC2ProfileCampaign: Codable {
     public let difficultyCompleted: DifficultyCompleted
 }
 
 
-public class DifficultyCompleted: Codable {
+public struct DifficultyCompleted: Codable {
 }
 
 
-public class SC2ProfileSwarmLevel: Codable {
+public struct SC2ProfileSwarmLevel: Codable {
     public let level: Int
     public let terran: RaceLevelPoints
     public let zerg: RaceLevelPoints
@@ -112,14 +112,14 @@ public class SC2ProfileSwarmLevel: Codable {
 }
 
 
-public class RaceLevelPoints: Codable {
+public struct RaceLevelPoints: Codable {
     public let level: Int
     public let maxLevelPoints: Int
     public let currentLevelPoints: Int
 }
 
 
-public class CategoryPointProgress: Codable {
+public struct CategoryPointProgress: Codable {
     public let categoryID: String
     public let pointsEarned: Int
     
@@ -130,7 +130,7 @@ public class CategoryPointProgress: Codable {
 }
 
 
-public class EarnedAchievement: Codable {
+public struct EarnedAchievement: Codable {
     public let achievementID: String
     public let completionDate: Double
     public let numCompletedAchievementsInSeries: Int
@@ -148,7 +148,7 @@ public class EarnedAchievement: Codable {
 }
 
 
-public class SC2AchievementCriterion: Codable {
+public struct SC2AchievementCriterion: Codable {
     public let criterionID: String
     public let earned: SC2AchievementEarned?
     
@@ -159,13 +159,13 @@ public class SC2AchievementCriterion: Codable {
 }
 
 
-public class SC2AchievementEarned: Codable {
+public struct SC2AchievementEarned: Codable {
     public let quantity: Int
     public let startTime: Int
 }
 
 
-public class EarnedReward: Codable {
+public struct EarnedReward: Codable {
     public let rewardID: String
     public let selected: Bool
     public let achievementID: String?

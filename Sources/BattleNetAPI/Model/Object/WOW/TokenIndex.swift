@@ -9,7 +9,7 @@
 import Foundation
 
 
-public class TokenIndex: Codable, SelfDecodable {
+public struct TokenIndex: Codable, SelfDecodable {
     public let lastUpdatedTimestamp: Int
     public let price: Int
     

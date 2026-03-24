@@ -11,29 +11,49 @@ import Foundation
 
 protocol WS_StarCraft2Service: WebService {
     // Game Data APIs
-    func getLeagueData(seasonID: Int, queue: LeagueQueue, team: LeagueTeam, league: LeagueType, namespace: APINamespace?, completion: @escaping (_ result: Result<Data, Error>) -> Void)
+    func getLeagueData(seasonID: Int, queue: LeagueQueue, team: LeagueTeam, league: LeagueType, namespace: APINamespace?) async throws -> Data
+    
     // Community APIs
-    func getProfileData(sc2Region: APIRegion, completion: @escaping (_ result: Result<Data, Error>) -> Void)
-    func getProfileMetadata(id: Int, sc2Region: APIRegion, realmID: Int, completion: @escaping (_ result: Result<Data, Error>) -> Void)
-    func getProfile(id: Int, sc2Region: APIRegion, realmID: Int, completion: @escaping (_ result: Result<Data, Error>) -> Void)
-    func getLadderSummary(profileID: Int, sc2Region: APIRegion, realmID: Int, completion: @escaping (_ result: Result<Data, Error>) -> Void)
-    func getLadder(id: Int, profileID: Int, sc2Region: APIRegion, realmID: Int, completion: @escaping (_ result: Result<Data, Error>) -> Void)
-    func getGrandmasterLeaderboard(sc2Region: APIRegion, completion: @escaping (_ result: Result<Data, Error>) -> Void)
-    func getLadderSeason(sc2Region: APIRegion, completion: @escaping (_ result: Result<Data, Error>) -> Void)
-    func getPlayer(accountID id: Int, completion: @escaping (_ result: Result<Data, Error>) -> Void)
-    func getProfile(sc2Region: APIRegion, realmID: Int, profileID: Int, completion: @escaping (_ result: Result<Data, Error>) -> Void)
-    func getLadders(sc2Region: APIRegion, realmID: Int, profileID: Int, completion: @escaping (_ result: Result<Data, Error>) -> Void)
-    func getMatchHistory(sc2Region: APIRegion, realmID: Int, profileID: Int, completion: @escaping (_ result: Result<Data, Error>) -> Void)
-    func getLadder(sc2Region: APIRegion, ladder: Int, completion: @escaping (_ result: Result<Data, Error>) -> Void)
-    func getAchievements(sc2Region: APIRegion, completion: @escaping (_ result: Result<Data, Error>) -> Void)
-    func getRewards(sc2Region: APIRegion, completion: @escaping (_ result: Result<Data, Error>) -> Void)
+    func getProfileData(sc2Region: APIRegion) async throws -> Data
+    
+    func getProfileMetadata(id: Int, sc2Region: APIRegion, realmID: Int) async throws -> Data
+    
+    func getProfile(id: Int, sc2Region: APIRegion, realmID: Int) async throws -> Data
+    
+    func getLadderSummary(profileID: Int, sc2Region: APIRegion, realmID: Int) async throws -> Data
+    
+    func getLadder(id: Int, profileID: Int, sc2Region: APIRegion, realmID: Int) async throws -> Data
+    
+    func getGrandmasterLeaderboard(sc2Region: APIRegion) async throws -> Data
+    
+    func getLadderSeason(sc2Region: APIRegion) async throws -> Data
+    
+    func getPlayer(accountID id: Int) async throws -> Data
+    
+    func getProfile(sc2Region: APIRegion, realmID: Int, profileID: Int) async throws -> Data
+    
+    func getLadders(sc2Region: APIRegion, realmID: Int, profileID: Int) async throws -> Data
+    
+    func getMatchHistory(sc2Region: APIRegion, realmID: Int, profileID: Int) async throws -> Data
+    
+    func getLadder(sc2Region: APIRegion, ladder: Int) async throws -> Data
+    
+    func getAchievements(sc2Region: APIRegion) async throws -> Data
+    
+    func getRewards(sc2Region: APIRegion) async throws -> Data
+    
     // CN Community APIs
-    func getCNProfile(id: Int, name: String, sc2Region: APIRegion, completion: @escaping (_ result: Result<Data, Error>) -> Void)
-    func getCNLadders(profileID: Int, profileName: String, sc2Region: APIRegion, completion: @escaping (_ result: Result<Data, Error>) -> Void)
-    func getCNMatchHistory(profileID: Int, profileName: String, sc2Region: APIRegion, completion: @escaping (_ result: Result<Data, Error>) -> Void)
-    func getCNLadder(id: Int, completion: @escaping (_ result: Result<Data, Error>) -> Void)
-    func getCNAchievements(completion: @escaping (_ result: Result<Data, Error>) -> Void)
-    func getCNRewards(completion: @escaping (_ result: Result<Data, Error>) -> Void)
+    func getCNProfile(id: Int, name: String, sc2Region: APIRegion) async throws -> Data
+    
+    func getCNLadders(profileID: Int, profileName: String, sc2Region: APIRegion) async throws -> Data
+    
+    func getCNMatchHistory(profileID: Int, profileName: String, sc2Region: APIRegion) async throws -> Data
+    
+    func getCNLadder(id: Int) async throws -> Data
+    
+    func getCNAchievements() async throws -> Data
+    
+    func getCNRewards() async throws -> Data
 }
 
 
@@ -155,11 +175,9 @@ public struct WS_StarCraft2: WS_StarCraft2Service {
     
     /**
      Returns league data.
-     
-     - parameter completion: Returns a Result with the Data if `success` or an HTTPError if `failure`
      */
-    public func getLeagueData(seasonID: Int, queue: LeagueQueue, team: LeagueTeam, league: LeagueType, namespace: APINamespace? = nil, completion: @escaping (_ result: Result<Data, Error>) -> Void) {
-        call(endpoint: API.league(seasonID, queue, team, league), namespace: namespace, completion: completion)
+    public func getLeagueData(seasonID: Int, queue: LeagueQueue, team: LeagueTeam, league: LeagueType, namespace: APINamespace? = nil) async throws -> Data {
+        return try await call(endpoint: API.league(seasonID, queue, team, league), namespace: namespace)
     }
     
     
@@ -172,10 +190,9 @@ public struct WS_StarCraft2: WS_StarCraft2Service {
      Returns all static SC2 profile data (achievements, categories, criteria, and rewards).
      
      - parameter sc2Region: The region for the profile (1=US, 2=EU, 3=KO and TW, 5=CN)
-     - parameter completion: Returns a Result with the Data if `success` or an HTTPError if `failure`
      */
-    public func getProfileData(sc2Region: APIRegion, completion: @escaping (_ result: Result<Data, Error>) -> Void) {
-        call(endpoint: API.profileData(sc2Region), completion: completion)
+    public func getProfileData(sc2Region: APIRegion) async throws -> Data {
+        return try await call(endpoint: API.profileData(sc2Region))
     }
     
     
@@ -185,10 +202,9 @@ public struct WS_StarCraft2: WS_StarCraft2Service {
      - parameter id: The ID of the profile to retrieve
      - parameter sc2Region: The region for the profile
      - parameter realmID: The realm of the profile (1 or 2)
-     - parameter completion: Returns a Result with the Data if `success` or an HTTPError if `failure`
      */
-    public func getProfileMetadata(id: Int, sc2Region: APIRegion, realmID: Int, completion: @escaping (_ result: Result<Data, Error>) -> Void) {
-        call(endpoint: API.profileMetadata(sc2Region: sc2Region, realmID: realmID, profileID: id), completion: completion)
+    public func getProfileMetadata(id: Int, sc2Region: APIRegion, realmID: Int) async throws -> Data {
+        return try await call(endpoint: API.profileMetadata(sc2Region: sc2Region, realmID: realmID, profileID: id))
     }
     
     
@@ -198,11 +214,10 @@ public struct WS_StarCraft2: WS_StarCraft2Service {
      - parameter id: The ID of the profile to retrieve.
      - parameter sc2Region: The region of the profile to retrieve.
      - parameter realmID: The realm of the profile (1 or 2).
-     - parameter completion: Returns a Result with the Data if `success` or an HTTPError if `failure`
      - note: This function is unavailable for the region of China, see `getCNProfile(id:name:sc2Region:)`
      */
-    public func getProfile(id: Int, sc2Region: APIRegion, realmID: Int, completion: @escaping (_ result: Result<Data, Error>) -> Void) {
-        call(endpoint: API.profile(sc2Region: sc2Region, realmID: realmID, profileID: id), completion: completion)
+    public func getProfile(id: Int, sc2Region: APIRegion, realmID: Int) async throws -> Data {
+        return try await call(endpoint: API.profile(sc2Region: sc2Region, realmID: realmID, profileID: id))
     }
     
     
@@ -212,11 +227,10 @@ public struct WS_StarCraft2: WS_StarCraft2Service {
      - parameter id: The ID of the profile to retrieve.
      - parameter sc2Region: The region of the profile to retrieve.
      - parameter realmID: The realm of the profile (1 or 2).
-     - parameter completion: Returns a Result with the Data if `success` or an HTTPError if `failure`
      - note: This function is unavailable for the region of China, see `getCNLadder(id:)`
      */
-    public func getLadderSummary(profileID: Int, sc2Region: APIRegion, realmID: Int, completion: @escaping (_ result: Result<Data, Error>) -> Void) {
-        call(endpoint: API.ladderSummary(sc2Region: sc2Region, realmID: realmID, profileID: profileID), completion: completion)
+    public func getLadderSummary(profileID: Int, sc2Region: APIRegion, realmID: Int) async throws -> Data {
+        return try await call(endpoint: API.ladderSummary(sc2Region: sc2Region, realmID: realmID, profileID: profileID))
     }
     
     
@@ -227,11 +241,10 @@ public struct WS_StarCraft2: WS_StarCraft2Service {
      - parameter profileID: The ID of the profile to retrieve.
      - parameter sc2Region: The region of the profile to retrieve.
      - parameter realmID: The realm of the profile (1 or 2).
-     - parameter completion: Returns a Result with the Data if `success` or an HTTPError if `failure`
      - note: This function is unavailable for the region of China, see `getCNLadders(profileID:profileName:sc2Region:)`
      */
-    public func getLadder(id: Int, profileID: Int, sc2Region: APIRegion, realmID: Int, completion: @escaping (_ result: Result<Data, Error>) -> Void) {
-        call(endpoint: API.ladder(sc2Region: sc2Region, realmID: realmID, profileID: profileID, ladderID: id), completion: completion)
+    public func getLadder(id: Int, profileID: Int, sc2Region: APIRegion, realmID: Int) async throws -> Data {
+        return try await call(endpoint: API.ladder(sc2Region: sc2Region, realmID: realmID, profileID: profileID, ladderID: id))
     }
     
     
@@ -241,10 +254,9 @@ public struct WS_StarCraft2: WS_StarCraft2Service {
      Returns ladder data for the current season's grandmaster leaderboard.
      
      - parameter sc2Region: The region of the profile to retrieve.
-     - parameter completion: Returns a Result with the Data if `success` or an HTTPError if `failure`
      */
-    public func getGrandmasterLeaderboard(sc2Region: APIRegion, completion: @escaping (_ result: Result<Data, Error>) -> Void) {
-        call(endpoint: API.grandmasterLeaderboard(sc2Region), completion: completion)
+    public func getGrandmasterLeaderboard(sc2Region: APIRegion) async throws -> Data {
+        return try await call(endpoint: API.grandmasterLeaderboard(sc2Region))
     }
     
     
@@ -252,10 +264,9 @@ public struct WS_StarCraft2: WS_StarCraft2Service {
      Returns data about the current season.
      
      - parameter sc2Region: The region of the profile to retrieve.
-     - parameter completion: Returns a Result with the Data if `success` or an HTTPError if `failure`
      */
-    public func getLadderSeason(sc2Region: APIRegion, completion: @escaping (_ result: Result<Data, Error>) -> Void) {
-        call(endpoint: API.ladderSeason(sc2Region), completion: completion)
+    public func getLadderSeason(sc2Region: APIRegion) async throws -> Data {
+        return try await call(endpoint: API.ladderSeason(sc2Region))
     }
     
     
@@ -266,10 +277,9 @@ public struct WS_StarCraft2: WS_StarCraft2Service {
      Returns metadata for an individual's account.
      
      - parameter userID: The userID retrieved from the getUserInfo service
-     - parameter completion: Returns a Result with the Data if `success` or an HTTPError if `failure`
      */
-    public func getPlayer(accountID id: Int, completion: @escaping (_ result: Result<Data, Error>) -> Void) {
-        call(endpoint: API.player(id), completion: completion)
+    public func getPlayer(accountID id: Int) async throws -> Data {
+        return try await call(endpoint: API.player(id))
     }
     
     
@@ -282,11 +292,10 @@ public struct WS_StarCraft2: WS_StarCraft2Service {
      - parameter sc2Region: The region of the profile to retrieve.
      - parameter realmID: The realm of the profile (1 or 2).
      - parameter profileID: The ID of the profile to retrieve.
-     - parameter completion: Returns a Result with the Data if `success` or an HTTPError if `failure`
      - note: This function is unavailable for the region of China, see `getCNProfile(id:name:sc2Region:)`
      */
-    public func getProfile(sc2Region: APIRegion, realmID: Int, profileID: Int, completion: @escaping (_ result: Result<Data, Error>) -> Void) {
-        call(endpoint: API.legacyProfile(sc2Region: sc2Region, realmID: realmID, profileID: profileID), completion: completion)
+    public func getProfile(sc2Region: APIRegion, realmID: Int, profileID: Int) async throws -> Data {
+        return try await call(endpoint: API.legacyProfile(sc2Region: sc2Region, realmID: realmID, profileID: profileID))
     }
     
     
@@ -296,11 +305,10 @@ public struct WS_StarCraft2: WS_StarCraft2Service {
      - parameter sc2Region: The region of the profile to retrieve.
      - parameter realmID: The realm of the profile (1 or 2).
      - parameter profileID: The ID of the profile to retrieve.
-     - parameter completion: Returns a Result with the Data if `success` or an HTTPError if `failure`
      - note: This function is unavailable for the region of China, see `getCNLadders(profileID:profileName:sc2Region:)`
      */
-    public func getLadders(sc2Region: APIRegion, realmID: Int, profileID: Int, completion: @escaping (_ result: Result<Data, Error>) -> Void) {
-        call(endpoint: API.legacyLadders(sc2Region: sc2Region, realmID: realmID, profileID: profileID), completion: completion)
+    public func getLadders(sc2Region: APIRegion, realmID: Int, profileID: Int) async throws -> Data {
+        return try await call(endpoint: API.legacyLadders(sc2Region: sc2Region, realmID: realmID, profileID: profileID))
     }
     
     
@@ -310,11 +318,10 @@ public struct WS_StarCraft2: WS_StarCraft2Service {
      - parameter sc2Region: The region of the profile to retrieve.
      - parameter realmID: The realm of the profile (1 or 2).
      - parameter profileID: The ID of the profile to retrieve.
-     - parameter completion: Returns a Result with the Data if `success` or an HTTPError if `failure`
      - note: This function is unavailable for the region of China, see `getCNMatchHistory(profileID:profileName:sc2Region:)`
      */
-    public func getMatchHistory(sc2Region: APIRegion, realmID: Int, profileID: Int, completion: @escaping (_ result: Result<Data, Error>) -> Void) {
-        call(endpoint: API.legacyMatchHistory(sc2Region: sc2Region, realmID: realmID, profileID: profileID), completion: completion)
+    public func getMatchHistory(sc2Region: APIRegion, realmID: Int, profileID: Int) async throws -> Data {
+        return try await call(endpoint: API.legacyMatchHistory(sc2Region: sc2Region, realmID: realmID, profileID: profileID))
     }
     
     
@@ -323,10 +330,9 @@ public struct WS_StarCraft2: WS_StarCraft2Service {
      
      - parameter sc2Region: The region of the profile to retrieve.
      - parameter id: The ID of the ladder to retrieve.
-     - parameter completion: Returns a Result with the Data if `success` or an HTTPError if `failure`
      */
-    public func getLadder(sc2Region: APIRegion, ladder: Int, completion: @escaping (_ result: Result<Data, Error>) -> Void) {
-        call(endpoint: API.legacyLadder(sc2Region: sc2Region, ladderID: ladder), completion: completion)
+    public func getLadder(sc2Region: APIRegion, ladder: Int) async throws -> Data {
+        return try await call(endpoint: API.legacyLadder(sc2Region: sc2Region, ladderID: ladder))
     }
     
     
@@ -334,11 +340,10 @@ public struct WS_StarCraft2: WS_StarCraft2Service {
      Returns data about the achievements available in SC2.
      
      - parameter sc2Region: The region of the profile to retrieve.
-     - parameter completion: Returns a Result with the Data if `success` or an HTTPError if `failure`
      - note: This function is unavailable for the region of China, see `getCNAchievements()`
      */
-    public func getAchievements(sc2Region: APIRegion, completion: @escaping (_ result: Result<Data, Error>) -> Void) {
-        call(endpoint: API.legacyAchievements(sc2Region: sc2Region), completion: completion)
+    public func getAchievements(sc2Region: APIRegion) async throws -> Data {
+        return try await call(endpoint: API.legacyAchievements(sc2Region: sc2Region))
     }
     
     
@@ -346,11 +351,10 @@ public struct WS_StarCraft2: WS_StarCraft2Service {
      Returns data about the rewards available in SC2.
      
      - parameter sc2Region: The region of the profile to retrieve.
-     - parameter completion: Returns a Result with the Data if `success` or an HTTPError if `failure`
      - note: This function is unavailable for the region of China, see `getCNRewards()`
      */
-    public func getRewards(sc2Region: APIRegion, completion: @escaping (_ result: Result<Data, Error>) -> Void) {
-        call(endpoint: API.legacyReward(sc2Region: sc2Region), completion: completion)
+    public func getRewards(sc2Region: APIRegion) async throws -> Data {
+        return try await call(endpoint: API.legacyReward(sc2Region: sc2Region))
     }
     
     
@@ -363,10 +367,9 @@ public struct WS_StarCraft2: WS_StarCraft2Service {
      - parameter id: The ID of the profile to retrieve.
      - parameter profileName: The name of the profile to retrieve.
      - parameter sc2Region: The region of the profile to retrieve.
-     - parameter completion: Returns a Result with the Data if `success` or an HTTPError if `failure`
      */
-    public func getCNProfile(id: Int, name: String, sc2Region: APIRegion, completion: @escaping (_ result: Result<Data, Error>) -> Void) {
-        call(endpoint: API.cnProfile(profileID: id, sc2Region: sc2Region, profileName: name), completion: completion)
+    public func getCNProfile(id: Int, name: String, sc2Region: APIRegion) async throws -> Data {
+        return try await call(endpoint: API.cnProfile(profileID: id, sc2Region: sc2Region, profileName: name))
     }
     
     
@@ -376,10 +379,9 @@ public struct WS_StarCraft2: WS_StarCraft2Service {
      - parameter profileID: The ID of the profile to retrieve.
      - parameter profileName: The name of the profile to retrieve.
      - parameter sc2Region: The region of the profile to retrieve.
-     - parameter completion: Returns a Result with the Data if `success` or an HTTPError if `failure`
      */
-    public func getCNLadders(profileID: Int, profileName: String, sc2Region: APIRegion, completion: @escaping (_ result: Result<Data, Error>) -> Void) {
-        call(endpoint: API.cnLadders(profileID: profileID, sc2Region: sc2Region, profileName: profileName), completion: completion)
+    public func getCNLadders(profileID: Int, profileName: String, sc2Region: APIRegion) async throws -> Data {
+        return try await call(endpoint: API.cnLadders(profileID: profileID, sc2Region: sc2Region, profileName: profileName))
     }
     
     
@@ -389,10 +391,9 @@ public struct WS_StarCraft2: WS_StarCraft2Service {
     - parameter sc2Region: The region of the profile to retrieve.
     - parameter realmID: The realm of the profile (1 or 2).
     - parameter profileID: The ID of the profile to retrieve.
-    - parameter completion: Returns a Result with the Data if `success` or an HTTPError if `failure`
     */
-    public func getCNMatchHistory(profileID: Int, profileName: String, sc2Region: APIRegion, completion: @escaping (_ result: Result<Data, Error>) -> Void) {
-        call(endpoint: API.cnMatchHistory(profileID: profileID, sc2Region: sc2Region, profileName: profileName), completion: completion)
+    public func getCNMatchHistory(profileID: Int, profileName: String, sc2Region: APIRegion) async throws -> Data {
+        return try await call(endpoint: API.cnMatchHistory(profileID: profileID, sc2Region: sc2Region, profileName: profileName))
     }
     
     
@@ -400,29 +401,24 @@ public struct WS_StarCraft2: WS_StarCraft2Service {
     Returns data about an SC2 ladder.
     
     - parameter id: The ID of the ladder to retrieve.
-    - parameter completion: Returns a Result with the Data if `success` or an HTTPError if `failure`
     */
-    public func getCNLadder(id: Int, completion: @escaping (_ result: Result<Data, Error>) -> Void) {
-        call(endpoint: API.cnLadder(id: id), completion: completion)
+    public func getCNLadder(id: Int) async throws -> Data {
+        return try await call(endpoint: API.cnLadder(id: id))
     }
     
     
     /**
      Returns data about the achievements available in SC2.
-     
-     - parameter completion: Returns a Result with the Data if `success` or an HTTPError if `failure`
      */
-    public func getCNAchievements(completion: @escaping (_ result: Result<Data, Error>) -> Void) {
-        call(endpoint: API.cnAchievements, completion: completion)
+    public func getCNAchievements() async throws -> Data {
+        return try await call(endpoint: API.cnAchievements)
     }
     
     
     /**
      Returns data about the rewards available in SC2.
-     
-     - parameter completion: Returns a Result with the Data if `success` or an HTTPError if `failure`
      */
-    public func getCNRewards(completion: @escaping (_ result: Result<Data, Error>) -> Void) {
-        call(endpoint: API.cnRewards, completion: completion)
+    public func getCNRewards() async throws -> Data {
+        return try await call(endpoint: API.cnRewards)
     }
 }

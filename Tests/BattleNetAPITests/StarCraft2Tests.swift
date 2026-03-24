@@ -12,188 +12,116 @@ import XCTest
 
 class StarCraft2Tests: XCTestCase {
     var battleNetAPI: BattleNetAPI!
-    
-    
+
+
     override func setUp() {
         super.setUp()
         // Put setup code here. This method is called before the invocation of each test method in the class.
-        
+
         guard credentials.clientAccessToken != nil else {
             XCTFail("clientAccessToken must be set in credentials.")
             return
         }
-        
+
         guard credentials.userAccessToken != nil else {
             XCTFail("userAccessToken must be set in credentials.")
             return
         }
-        
-        battleNetAPI = BattleNetAPI(credentials: credentials)
+
+        battleNetAPI = BattleNetAPI(credentials: credentials, oauth: oauth)
     }
-    
+
     override func tearDown() {
         // Put teardown code here. This method is called after the invocation of each test method in the class.
         super.tearDown()
     }
-    
-    
-    
+
+
+
     // MARK: - Game Data APIs
-    
-    func testGetLeague() {
+
+    func testGetLeague() async throws {
         let seasonID = 37
         let queue: LeagueQueue = .lotV1v1
         let team: LeagueTeam = .arranged
         let league: LeagueType = .grandmaster
-        
-        let wsResponseExpectation = expectation(description: "Web Service returned a response")
-        
-        battleNetAPI.sc2.getLeagueData(seasonID: seasonID, queue: queue, team: team, league: league) { result in
-            BattleNetAPITests.webServiceClosureTest(result: result, decodable: League.self, expectation: wsResponseExpectation)
-        }
-        
-        waitForExpectations(timeout: 20) { error in
-            XCTAssertNil(error, "Exceeded timeout")
-        }
+        let data = try await battleNetAPI.sc2.getLeagueData(seasonID: seasonID, queue: queue, team: team, league: league)
+        BattleNetAPITests.webServiceAsyncTest(data: data, decodable: League.self)
     }
-    
-    
-    
+
+
+
     // MARK: - Community APIs
-    
+
     // MARK: Profile API
-    
-    func testGetProfileData() {
+
+    func testGetProfileData() async throws {
         let sc2Region: APIRegion = .us
-        
-        let wsResponseExpectation = expectation(description: "Web Service returned a response")
-        
-        battleNetAPI.sc2.getProfileData(sc2Region: sc2Region) { result in
-            BattleNetAPITests.webServiceClosureTest(result: result, decodable: SC2ProfileData.self, expectation: wsResponseExpectation)
-        }
-        
-        waitForExpectations(timeout: 20) { error in
-            XCTAssertNil(error, "Exceeded timeout")
-        }
+        let data = try await battleNetAPI.sc2.getProfileData(sc2Region: sc2Region)
+        BattleNetAPITests.webServiceAsyncTest(data: data, decodable: SC2ProfileData.self)
     }
-    
-    
-    func testGetProfileMetadata() {
+
+
+    func testGetProfileMetadata() async throws {
         let profileID = 266515
         let sc2Region: APIRegion = .us
         let realmID = 1
-        
-        let wsResponseExpectation = expectation(description: "Web Service returned a response")
-        
-        battleNetAPI.sc2.getProfileMetadata(id: profileID, sc2Region: sc2Region, realmID: realmID) { result in
-            BattleNetAPITests.webServiceClosureTest(result: result, decodable: SC2ProfileMetadata.self, expectation: wsResponseExpectation)
-        }
-        
-        waitForExpectations(timeout: 20) { error in
-            XCTAssertNil(error, "Exceeded timeout")
-        }
+        let data = try await battleNetAPI.sc2.getProfileMetadata(id: profileID, sc2Region: sc2Region, realmID: realmID)
+        BattleNetAPITests.webServiceAsyncTest(data: data, decodable: SC2ProfileMetadata.self)
     }
-    
-    
-    func testGetProfile() {
+
+
+    func testGetProfile() async throws {
         let profileID = 266515
         let sc2Region: APIRegion = .us
         let realmID = 1
-        
-        let wsResponseExpectation = expectation(description: "Web Service returned a response")
-        
-        battleNetAPI.sc2.getProfile(id: profileID, sc2Region: sc2Region, realmID: realmID) { result in
-            BattleNetAPITests.webServiceClosureTest(result: result, decodable: SC2Profile.self, expectation: wsResponseExpectation)
-        }
-        
-        waitForExpectations(timeout: 20) { error in
-            XCTAssertNil(error, "Exceeded timeout")
-        }
+        let data = try await battleNetAPI.sc2.getProfile(id: profileID, sc2Region: sc2Region, realmID: realmID)
+        BattleNetAPITests.webServiceAsyncTest(data: data, decodable: SC2Profile.self)
     }
-    
-    
-    func testGetLadderSummary() {
+
+
+    func testGetLadderSummary() async throws {
         let profileID = 7895938
         let sc2Region: APIRegion = .us
         let realmID = 1
-        
-        let wsResponseExpectation = expectation(description: "Web Service returned a response")
-        
-        battleNetAPI.sc2.getLadderSummary(profileID: profileID, sc2Region: sc2Region, realmID: realmID) { result in
-            BattleNetAPITests.webServiceClosureTest(result: result, decodable: LadderSummary.self, expectation: wsResponseExpectation)
-        }
-        
-        waitForExpectations(timeout: 20) { error in
-            XCTAssertNil(error, "Exceeded timeout")
-        }
+        let data = try await battleNetAPI.sc2.getLadderSummary(profileID: profileID, sc2Region: sc2Region, realmID: realmID)
+        BattleNetAPITests.webServiceAsyncTest(data: data, decodable: LadderSummary.self)
     }
-    
-    
-    func testGetLadder() {
+
+
+    func testGetLadder() async throws {
         let ladderID = 277454
         let profileID = 2060165
         let sc2Region: APIRegion = .us
         let realmID = 1
-        
-        let wsResponseExpectation = expectation(description: "Web Service returned a response")
-        
-        battleNetAPI.sc2.getLadder(id: ladderID, profileID: profileID, sc2Region: sc2Region, realmID: realmID) { result in
-            BattleNetAPITests.webServiceClosureTest(result: result, decodable: Ladder.self, expectation: wsResponseExpectation)
-        }
-        
-        waitForExpectations(timeout: 20) { error in
-            XCTAssertNil(error, "Exceeded timeout")
-        }
+        let data = try await battleNetAPI.sc2.getLadder(id: ladderID, profileID: profileID, sc2Region: sc2Region, realmID: realmID)
+        BattleNetAPITests.webServiceAsyncTest(data: data, decodable: Ladder.self)
     }
-    
-    
+
+
     // MARK: Ladder API
-    
-    func testGetGrandmasterLeaderboard() {
+
+    func testGetGrandmasterLeaderboard() async throws {
         let sc2Region: APIRegion = .us
-        
-        let wsResponseExpectation = expectation(description: "Web Service returned a response")
-        
-        battleNetAPI.sc2.getGrandmasterLeaderboard(sc2Region: sc2Region) { result in
-            BattleNetAPITests.webServiceClosureTest(result: result, decodable: GrandmasterLeaderboard.self, expectation: wsResponseExpectation)
-        }
-        
-        waitForExpectations(timeout: 20) { error in
-            XCTAssertNil(error, "Exceeded timeout")
-        }
+        let data = try await battleNetAPI.sc2.getGrandmasterLeaderboard(sc2Region: sc2Region)
+        BattleNetAPITests.webServiceAsyncTest(data: data, decodable: GrandmasterLeaderboard.self)
     }
-    
-    
-    func testGetLadderSeason() {
+
+
+    func testGetLadderSeason() async throws {
         let sc2Region: APIRegion = .us
-        
-        let wsResponseExpectation = expectation(description: "Web Service returned a response")
-        
-        battleNetAPI.sc2.getLadderSeason(sc2Region: sc2Region) { result in
-            BattleNetAPITests.webServiceClosureTest(result: result, decodable: SC2Season.self, expectation: wsResponseExpectation)
-        }
-        
-        waitForExpectations(timeout: 20) { error in
-            XCTAssertNil(error, "Exceeded timeout")
-        }
+        let data = try await battleNetAPI.sc2.getLadderSeason(sc2Region: sc2Region)
+        BattleNetAPITests.webServiceAsyncTest(data: data, decodable: SC2Season.self)
     }
-    
-    
-    
+
+
+
     // MARK: Account API
-    
-    func testGetPlayers() {
+
+    func testGetPlayers() async throws {
         let accountID = 8
-        
-        let wsResponseExpectation = expectation(description: "Web Service returned a response")
-        
-        battleNetAPI.sc2.getPlayer(accountID: accountID) { result in
-            BattleNetAPITests.webServiceClosureTest(result: result, decodable: [SC2ProfileMetadata].self, expectation: wsResponseExpectation)
-        }
-        
-        waitForExpectations(timeout: 20) { error in
-            XCTAssertNil(error, "Exceeded timeout")
-        }
+        let data = try await battleNetAPI.sc2.getPlayer(accountID: accountID)
+        BattleNetAPITests.webServiceAsyncTest(data: data, decodable: [SC2ProfileMetadata].self)
     }
-    
+
 }

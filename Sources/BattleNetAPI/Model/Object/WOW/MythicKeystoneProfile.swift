@@ -9,7 +9,7 @@
 import Foundation
 
 
-public class MythicKeystoneProfile: Codable, SelfDecodable {
+public struct MythicKeystoneProfile: Codable, SelfDecodable {
     public let _links: SelfLink<MythicKeystoneProfile>
     public let character: Link<WOWCharacterProfile>
     public let currentPeriod: CurrentPeriod
@@ -23,7 +23,7 @@ public class MythicKeystoneProfile: Codable, SelfDecodable {
 }
 
 
-public class CurrentPeriod: Codable, SelfDecodable {
+public struct CurrentPeriod: Codable, SelfDecodable {
     public let period: KeyLink<MythicKeystoneProfileSeason>
     public let bestRuns: [BestRun]?
     
@@ -35,7 +35,7 @@ public class CurrentPeriod: Codable, SelfDecodable {
 }
 
 
-public class BestRun: Codable, SelfDecodable {
+public struct BestRun: Codable, SelfDecodable {
     public let completedTimestamp: Int
     public let duration: Int
     public let keystoneLevel: Int
@@ -52,7 +52,7 @@ public class BestRun: Codable, SelfDecodable {
 }
 
 
-public class Member: Codable, SelfDecodable {
+public struct Member: Codable, SelfDecodable {
     public let character: MemberCharacter
     public let specialization: KeyLink<Specialization>
     public let race: KeyLink<WOWRace>
@@ -66,21 +66,21 @@ public class Member: Codable, SelfDecodable {
 }
 
 
-public class MemberCharacter: Codable {
+public struct MemberCharacter: Codable {
     public let name: String
     public let id: Int
     public let realm: MythicKeystoneRealm
 }
 
 
-public class MythicKeystoneRealm: Codable {
+public struct MythicKeystoneRealm: Codable {
     public let key: Link<WOWRealm>
     public let id: Int
     public let slug: String
 }
 
 
-public class MythicKeystoneProfileSeason: Codable, SelfDecodable {
+public struct MythicKeystoneProfileSeason: Codable, SelfDecodable {
     public let _links: SelfLink<MythicKeystoneProfileSeason>
     public let season: KeyLink<MythicKeystoneSeason>
     public let bestRuns: [BestRun]

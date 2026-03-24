@@ -10,7 +10,7 @@ import Foundation
 
 
 // https://us.api.battle.net/data/wow/connected-realm/?namespace=dynamic-us
-public class ConnectedRealmIndex: Codable, SelfDecodable {
+public struct ConnectedRealmIndex: Codable, SelfDecodable {
     public let _links: SelfLink<ConnectedRealmIndex>
     public let connectedRealms: [Link<ConnectedRealm>]
     
@@ -24,35 +24,22 @@ public class ConnectedRealmIndex: Codable, SelfDecodable {
 
 
 // https://us.api.battle.net/data/wow/connected-realm/11?namespace=dynamic-us
-public class ConnectedRealm: Codable, SelfDecodable {
+public struct ConnectedRealm: Codable, SelfDecodable {
     public let _links: SelfLink<ConnectedRealm>
     public let id: Int
     
     public let realms: [Realm]
     
     public let hasQueue: Bool
-    public let status: ConnectedRealmStatus
-    public let population: ConnectedRealmPopulation
+    public let status: EnumType
+    public let population: EnumType
     
     public let mythicLeaderboards: Link<MythicLeaderboard>
+    public let auctions: Link<AuctionIndex>
     
     public static var decoder: JSONDecoder {
         let decoder = JSONDecoder()
         decoder.keyDecodingStrategy = .convertFromSnakeCase
         return decoder
     }
-}
-
-
-
-public class ConnectedRealmStatus: Codable {
-    public let type: String
-    public let name: String
-}
-
-
-
-public class ConnectedRealmPopulation: Codable {
-    public let type: String
-    public let name: String
 }

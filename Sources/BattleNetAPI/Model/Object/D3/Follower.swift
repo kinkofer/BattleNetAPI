@@ -9,7 +9,7 @@
 import Foundation
 
 
-public class Follower: Codable {
+public struct Follower: Codable {
     public let slug: String
     public let name: String
     public let realName: String
@@ -20,7 +20,7 @@ public class Follower: Codable {
 
 
 
-public class FollowerHero: Codable {
+public struct FollowerHero: Codable {
     public let slug: String
     public let level: Int
     
@@ -31,7 +31,7 @@ public class FollowerHero: Codable {
 
 
 
-public class FollowerStats: Codable {
+public struct FollowerStats: Codable {
     public let goldFind: Double
     public let magicFind: Double
     public let experienceBonus: Double

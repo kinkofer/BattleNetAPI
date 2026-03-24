@@ -9,12 +9,13 @@
 import Foundation
 
 
-public class PetIndex: Codable {
-    public let pets: [Pet]
+public struct PetIndex: Codable {
+    public let _links: SelfLink<PetIndex>?
+    public let pets: [KeyLink<Pet>]
 }
 
 
-public class Pet: Codable {
+public struct Pet: Codable {
     public let canBattle: Bool
     public let creatureID: Int
     public let name: String
@@ -56,7 +57,7 @@ public enum PetFamily: String, Codable {
 
 
 
-public class PetStats: Codable {
+public struct PetStats: Codable {
     public let speciesID: Int
     public let breedID: Int
     public let petQualityID: Int
@@ -78,7 +79,7 @@ public class PetStats: Codable {
 
 
 
-public class PetSpecies: Codable {
+public struct PetSpecies: Codable {
     public let speciesID: Int
     public let petTypeID: Int
     public let creatureID: Int
@@ -104,7 +105,7 @@ public class PetSpecies: Codable {
 
 
 
-public class PetSpeciesAbility: Codable {
+public struct PetSpeciesAbility: Codable {
     public let slot: Int
     public let order: Int
     public let requiredLevel: Int
@@ -134,37 +135,37 @@ public class PetSpeciesAbility: Codable {
 
 
 
-public class PetAbility: Codable {
+public struct PetAbility: Codable, SelfDecodable {
+    public let _links: SelfLink<PetAbility>?
     public let id: Int
     public let name: String
-    public let icon: String
-    public let cooldown: Int
+    public let battlePetType: BattlePetType
     public let rounds: Int
-    public let petTypeID: Int
-    public let isPassive: Bool
-    public let hideHints: Bool
-    
-    enum CodingKeys: String, CodingKey {
-        case id
-        case name
-        case icon
-        case cooldown
-        case rounds
-        case petTypeID = "petTypeId"
-        case isPassive
-        case hideHints
+    public let media: MediaLink
+
+    public static var decoder: JSONDecoder {
+        let decoder = JSONDecoder()
+        decoder.keyDecodingStrategy = .convertFromSnakeCase
+        return decoder
     }
 }
 
 
+public struct BattlePetType: Codable {
+    public let id: Int
+    public let type: String
+    public let name: String
+}
 
-public class PetTypeIndex: Codable {
+
+
+public struct PetTypeIndex: Codable {
     public let petTypes: [PetType]
 }
 
 
 
-public class PetType: Codable {
+public struct PetType: Codable {
     public let id: Int
     public let key: String
     public let name: String
@@ -184,7 +185,7 @@ public class PetType: Codable {
 
 
 
-public class HunterPet: Codable {
+public struct HunterPet: Codable {
     public let name: String
     public let creature: Int
     public let slot: Int
@@ -206,7 +207,7 @@ public class HunterPet: Codable {
 
 
 
-public class CollectedPetIndex: Codable {
+public struct CollectedPetIndex: Codable {
     public let collected: [CollectedPet]
     public let numCollected: Int
     public let numNotCollected: Int
@@ -214,7 +215,7 @@ public class CollectedPetIndex: Codable {
 
 
 
-public class CollectedPet: Codable {
+public struct CollectedPet: Codable {
     public let spellID: Int
     public let qualityID: Int
     public let stats: PetStats
@@ -250,7 +251,7 @@ public class CollectedPet: Codable {
 
 
 
-public class PetSlot: Codable {
+public struct PetSlot: Codable {
     public let slot: Int
     public let isLocked: Bool
     public let abilities: [Int]

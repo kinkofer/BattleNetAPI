@@ -9,7 +9,7 @@
 import Foundation
 
 
-public class User: Codable {
+public struct User: Codable {
     public let id: Int
     public let battletag: String
     public let sub: String
