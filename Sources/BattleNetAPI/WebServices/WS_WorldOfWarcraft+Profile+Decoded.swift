@@ -86,4 +86,10 @@ extension Decoded where WebService == WS_WorldOfWarcraft {
         let data = try await webService.getGuild(slug: slug, realmSlug: realmSlug)
         return try WOWGuildProfile.decode(from: data)
     }
+    
+    
+    public func getGuildAchievements(slug: String, realmSlug: String) async throws -> WOWAchievementIndex {
+        let data = try await webService.getGuildAchievements(slug: slug, realmSlug: realmSlug)
+        return try WOWAchievementIndex.decode(from: data)
+    }
 }

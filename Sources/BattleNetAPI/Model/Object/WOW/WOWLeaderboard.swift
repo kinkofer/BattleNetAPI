@@ -9,8 +9,24 @@
 import Foundation
 
 
-public struct WOWLeaderboard: Codable {
-    public let rows: [WOWLeaderboardEntry]
+public struct WOWLeaderboard: Codable, SelfDecodable {
+    public let _links: SelfLink<WOWLeaderboard>?
+    public let season: KeyLink<MythicKeystoneSeason>?
+    public let name: String
+    public let bracket: WOWLeaderboardBracketInfo
+    public let entries: [WOWLeaderboardEntry]
+
+    public static var decoder: JSONDecoder {
+        let decoder = JSONDecoder()
+        decoder.keyDecodingStrategy = .convertFromSnakeCase
+        return decoder
+    }
+}
+
+
+public struct WOWLeaderboardBracketInfo: Codable {
+    public let id: Int
+    public let type: String
 }
 
 
@@ -22,41 +38,40 @@ public enum WOWLeaderboardBracket: String {
 }
 
 
-
-public struct WOWLeaderboardEntry: Codable {
-    public let ranking: Int
+public struct WOWLeaderboardEntry: Codable, SelfDecodable {
+    public let character: WOWLeaderboardCharacter
+    public let faction: Faction
+    public let rank: Int
     public let rating: Int
-    public let name: String
-    public let realmID: Int
-    public let realmName: String
-    public let realmSlug: String
-    public let raceID: Int
-    public let classID: Int
-    public let specID: Int
-    public let factionID: Int
-    public let genderID: Int
-    public let seasonWins: Int
-    public let seasonLosses: Int
-    public let weeklyWins: Int
-    public let weeklyLosses: Int
-    
-    enum CodingKeys: String, CodingKey {
-        case ranking
-        case rating
-        case name
-        case realmID = "realmId"
-        case realmName
-        case realmSlug
-        case raceID = "raceId"
-        case classID = "classId"
-        case specID = "specId"
-        case factionID = "factionId"
-        case genderID = "genderId"
-        case seasonWins
-        case seasonLosses
-        case weeklyWins
-        case weeklyLosses
+    public let seasonMatchStatistics: MatchStatistics
+    public let tier: KeyLink<PowerType>?
+
+    public static var decoder: JSONDecoder {
+        let decoder = JSONDecoder()
+        decoder.keyDecodingStrategy = .convertFromSnakeCase
+        return decoder
     }
+}
+
+
+public struct WOWLeaderboardCharacter: Codable {
+    public let name: String
+    public let id: Int
+    public let realm: WOWLeaderboardRealm
+}
+
+
+public struct WOWLeaderboardRealm: Codable {
+    public let key: Link<Realm>
+    public let id: Int
+    public let slug: String
+}
+
+
+public struct MatchStatistics: Codable {
+    public let played: Int
+    public let won: Int
+    public let lost: Int
 }
 
 

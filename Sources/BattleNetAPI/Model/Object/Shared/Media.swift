@@ -16,9 +16,16 @@ public struct MediaLink: Codable {
 
 
 
-public struct Media: Codable {
+public struct Media: Codable, SelfDecodable {
     public let _links: SelfLink<Media>
     public let assets: [MediaAsset]
+    public let id: Int?
+
+    public static var decoder: JSONDecoder {
+        let decoder = JSONDecoder()
+        decoder.keyDecodingStrategy = .convertFromSnakeCase
+        return decoder
+    }
 }
 
 
@@ -26,4 +33,5 @@ public struct Media: Codable {
 public struct MediaAsset: Codable {
     public let key: String
     public let value: String
+    public let fileDataId: Int?
 }

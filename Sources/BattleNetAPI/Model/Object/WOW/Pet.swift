@@ -10,7 +10,8 @@ import Foundation
 
 
 public struct PetIndex: Codable {
-    public let pets: [Pet]
+    public let _links: SelfLink<PetIndex>?
+    public let pets: [KeyLink<Pet>]
 }
 
 
@@ -134,26 +135,26 @@ public struct PetSpeciesAbility: Codable {
 
 
 
-public struct PetAbility: Codable {
+public struct PetAbility: Codable, SelfDecodable {
+    public let _links: SelfLink<PetAbility>?
     public let id: Int
     public let name: String
-    public let icon: String
-    public let cooldown: Int
+    public let battlePetType: BattlePetType
     public let rounds: Int
-    public let petTypeID: Int
-    public let isPassive: Bool
-    public let hideHints: Bool
-    
-    enum CodingKeys: String, CodingKey {
-        case id
-        case name
-        case icon
-        case cooldown
-        case rounds
-        case petTypeID = "petTypeId"
-        case isPassive
-        case hideHints
+    public let media: MediaLink
+
+    public static var decoder: JSONDecoder {
+        let decoder = JSONDecoder()
+        decoder.keyDecodingStrategy = .convertFromSnakeCase
+        return decoder
     }
+}
+
+
+public struct BattlePetType: Codable {
+    public let id: Int
+    public let type: String
+    public let name: String
 }
 
 

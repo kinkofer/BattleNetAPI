@@ -24,8 +24,44 @@ public struct WOWAchievementCategoryIndex: Codable, SelfDecodable {
 }
 
 
+/// Game Data API achievement index - returns flat list of achievements
 public struct WOWAchievementIndex: Codable {
-    public let achievements: [WOWAchievementCategory]
+    public let _links: SelfLink<WOWAchievementIndex>?
+    public let achievements: [KeyLink<WOWAchievement>]
+}
+
+
+public struct WOWAchievement: Codable, SelfDecodable {
+    public let id: Int
+    public let category: KeyLink<WOWAchievementCategory>
+    public let name: String
+    public let description: String
+    public let points: Int
+    public let isAccountWide: Bool
+    public let criteria: WOWAchievementCriterion
+    public let nextCriteria: KeyLink<WOWAchievement>?
+    public let media: MediaLink
+    public let displayOrder: Int
+    
+    
+    public static var decoder: JSONDecoder {
+        let decoder = JSONDecoder()
+        decoder.keyDecodingStrategy = .convertFromSnakeCase
+        return decoder
+    }
+}
+
+
+public struct WOWAchievementCriterion: Codable {
+    public let id: Int
+    public let description: String
+    public let amount: Int
+}
+
+
+public struct WOWAchievementCatgoryIndex: Codable {
+    public let _links: SelfLink<WOWAchievementCatgoryIndex>?
+    public let achievements: [KeyLink<WOWAchievementCategory>]
 }
 
 
@@ -60,34 +96,6 @@ public struct FactionAggregate: Codable {
 }
 
 
-public struct WOWAchievement: Codable, SelfDecodable {
-    public let id: Int
-    public let category: KeyLink<WOWAchievementCategory>
-    public let name: String
-    public let description: String
-    public let points: Int
-    public let isAccountWide: Bool
-    public let criteria: WOWAchievementCriterion
-    public let nextCriteria: KeyLink<WOWAchievement>?
-    public let media: MediaLink
-    public let displayOrder: Int
-    
-    
-    public static var decoder: JSONDecoder {
-        let decoder = JSONDecoder()
-        decoder.keyDecodingStrategy = .convertFromSnakeCase
-        return decoder
-    }
-}
-
-
-public struct WOWAchievementCriterion: Codable {
-    public let id: Int
-    public let description: String
-    public let amount: Int
-}
-
-
 public struct WOWAchievementStatus: Codable {
     public let achievementsCompleted: [Int]
     public let achievementsCompletedTimestamp: [Int]
@@ -96,4 +104,3 @@ public struct WOWAchievementStatus: Codable {
     public let criteriaTimestamp: [Int]
     public let criteriaCreated: [Int]
 }
-

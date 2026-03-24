@@ -139,28 +139,6 @@ public struct WOWCharacterProfile: Codable {
 }
 
 
-
-public struct RaceIndex: Codable {
-    public let races: [Race]
-}
-
-
-
-public struct Race: Codable {
-    public let id: Int
-    public let mask: Int
-    public let side: RaceFaction
-    public let name: String
-}
-
-
-public enum RaceFaction: String, Codable {
-    case alliance = "alliance"
-    case horde = "horde"
-    case neutral = "neutral"
-}
-
-
 public struct WOWRaceIndex: Codable {
     public let _links: SelfLink<WOWRaceIndex>
     public let races: [KeyLink<WOWRace>]

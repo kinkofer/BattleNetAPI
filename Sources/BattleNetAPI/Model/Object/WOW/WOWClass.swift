@@ -37,19 +37,3 @@ public struct GenderName: Codable {
     public let male: String
     public let female: String
 }
-
-
-
-// MARK: - public struct Data Resource
-
-public struct WOWCharacterClassIndex: Codable {
-    public let classes: [WOWCharacterClass]
-}
-
-
-public struct WOWCharacterClass: Codable {
-    public let id: Int
-    public let mask: Int
-    public let powerType: String
-    public let name: String
-}

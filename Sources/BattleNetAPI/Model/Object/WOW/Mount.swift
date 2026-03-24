@@ -10,7 +10,8 @@ import Foundation
 
 
 public struct MountIndex: Codable {
-    public let mounts: [Mount]
+    public let _links: SelfLink<MountIndex>?
+    public let mounts: [KeyLink<Mount>]
 }
 
 

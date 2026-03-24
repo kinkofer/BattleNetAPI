@@ -294,18 +294,31 @@ public struct WOWEquippedItems: Codable {
 
 // MARK: - Item Sets
 
-public struct WOWItemSet: Codable {
+public struct WOWItemSet: Codable, SelfDecodable {
+    public let _links: SelfLink<WOWItemSet>?
     public let id: Int
     public let name: String
-    public let setBonuses: [SetBonus]
-    public let items: [Int]
+    public let items: [KeyLink<WOWItem>]
+    public let effects: [ItemSetEffect]
+    public let isEffectActive: Bool?
+
+    public static var decoder: JSONDecoder {
+        let decoder = JSONDecoder()
+        decoder.keyDecodingStrategy = .convertFromSnakeCase
+        return decoder
+    }
 }
 
 
+public struct ItemSetEffect: Codable, SelfDecodable {
+    public let displayString: String
+    public let requiredCount: Int
 
-public struct SetBonus: Codable {
-    public let description: String
-    public let threshold: Int
+    public static var decoder: JSONDecoder {
+        let decoder = JSONDecoder()
+        decoder.keyDecodingStrategy = .convertFromSnakeCase
+        return decoder
+    }
 }
 
 

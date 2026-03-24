@@ -14,11 +14,16 @@ extension Decoded where WebService == WS_WorldOfWarcraft {
     
     // MARK: Achievement API
     
+    public func getAchievements() async throws -> WOWAchievementIndex {
+        let data = try await webService.getAchievementIndex()
+        return try WOWAchievementIndex.decode(from: data)
+    }
+
     public func getAchievement(id: Int) async throws -> WOWAchievement {
         let data = try await webService.getAchievement(id: id)
         return try WOWAchievement.decode(from: data)
     }
-    
+
     public func getAchievementCategoryIndex() async throws -> WOWAchievementCategoryIndex {
         let data = try await webService.getAchievementCategoryIndex()
         return try WOWAchievementCategoryIndex.decode(from: data)
@@ -28,13 +33,18 @@ extension Decoded where WebService == WS_WorldOfWarcraft {
         let data = try await webService.getAchievementCategory(id: id)
         return try WOWAchievementCategory.decode(from: data)
     }
-    
-    
+
+    public func getAchievementMedia(id: Int) async throws -> Media {
+        let data = try await webService.getAchievementMedia(id: id)
+        return try Media.decode(from: data)
+    }
+
+
     // MARK: Auction House API
     
-    public func getAuctions(connectedRealmID: Int) async throws -> Auction {
+    public func getAuctions(connectedRealmID: Int) async throws -> AuctionIndex {
         let data = try await webService.getAuctions(connectedRealmID: connectedRealmID)
-        return try Auction.decode(from: data)
+        return try AuctionIndex.decode(from: data)
     }
     
     
@@ -59,6 +69,13 @@ extension Decoded where WebService == WS_WorldOfWarcraft {
         return try WOWItem.decode(from: data)
     }
     
+    
+    public func getItemClasses() async throws -> [ItemClass] {
+        let data = try await webService.getItemClassIndex()
+        return try ItemClassIndex.decode(from: data).classes
+    }
+    
+    
     public func getItemSet(id: Int) async throws -> WOWItemSet {
         let data = try await webService.getItemSet(id: id)
         return try WOWItemSet.decode(from: data)
@@ -67,9 +84,9 @@ extension Decoded where WebService == WS_WorldOfWarcraft {
     
     // MARK: Mount API
     
-    public func getMounts() async throws -> [Mount] {
+    public func getMountIndex() async throws -> MountIndex {
         let data = try await webService.getMountIndex()
-        return try MountIndex.decode(from: data).mounts
+        return try MountIndex.decode(from: data)
     }
     
     
@@ -86,15 +103,12 @@ extension Decoded where WebService == WS_WorldOfWarcraft {
     }
     
     
-    // MARK: Mythic Raid Leaderboard API
-    
-    public func getMythicRaidLeaderboard(raid: String, faction: FactionType) async throws -> MythicRaidLeaderboard {
-        let data = try await webService.getMythicRaidLeaderboard(raid: raid, faction: faction)
-        return try MythicRaidLeaderboard.decode(from: data)
-    }
-    
-    
     // MARK: Mythic Keystone Dungeon API
+    
+    public func getMythicKeystones() async throws -> MythicKeystoneIndex {
+        let data = try await webService.getMythicKeystoneIndex()
+        return try MythicKeystoneIndex.decode(from: data)
+    }
     
     public func getMythicKeystoneDungeons() async throws -> MythicKeystoneDungeonIndex {
         let data = try await webService.getMythicKeystoneDungeonIndex()
@@ -104,11 +118,6 @@ extension Decoded where WebService == WS_WorldOfWarcraft {
     public func getMythicKeystoneDungeon(id: Int) async throws -> MythicKeystoneDungeon {
         let data = try await webService.getMythicKeystoneDungeon(id: id)
         return try MythicKeystoneDungeon.decode(from: data)
-    }
-    
-    public func getMythicKeystones() async throws -> MythicKeystoneIndex {
-        let data = try await webService.getMythicKeystoneIndex()
-        return try MythicKeystoneIndex.decode(from: data)
     }
     
     public func getMythicKeystonePeriods() async throws -> MythicKeystonePeriodIndex {
@@ -145,11 +154,19 @@ extension Decoded where WebService == WS_WorldOfWarcraft {
     }
     
     
+    // MARK: Mythic Raid Leaderboard API
+    
+    public func getMythicRaidLeaderboard(raid: String, faction: FactionType) async throws -> MythicRaidLeaderboard {
+        let data = try await webService.getMythicRaidLeaderboard(raid: raid, faction: faction)
+        return try MythicRaidLeaderboard.decode(from: data)
+    }
+    
+    
     // MARK: Pet API
     
-    public func getPets() async throws -> [Pet] {
+    public func getPetIndex() async throws -> PetIndex {
         let data = try await webService.getPetIndex()
-        return try PetIndex.decode(from: data).pets
+        return try PetIndex.decode(from: data)
     }
     
     public func getPetAbility(id: Int) async throws -> PetAbility {
@@ -277,43 +294,18 @@ extension Decoded where WebService == WS_WorldOfWarcraft {
     }
     
     
+    // MARK: Talent API
+    
+    public func getTalents() async throws -> ClassTalentDictionary {
+        let data = try await webService.getTalentIndex()
+        return try ClassTalentDictionary.decode(from: data)
+    }
+    
+    
     // MARK: Token API
     
     public func getTokens() async throws -> TokenIndex {
         let data = try await webService.getTokenIndex()
         return try TokenIndex.decode(from: data)
-    }
-    
-    
-    // MARK: Data Resources
-    
-    public func getRaces() async throws -> [Race] {
-        let data = try await webService.getPlayableRaceIndex()
-        return try RaceIndex.decode(from: data).races
-    }
-    
-    public func getClasses() async throws -> [WOWCharacterClass] {
-        let data = try await webService.getPlayableClassIndex()
-        return try WOWCharacterClassIndex.decode(from: data).classes
-    }
-    
-    public func getAchievements() async throws -> [WOWAchievementCategory] {
-        let data = try await webService.getAchievementIndex()
-        return try WOWAchievementIndex.decode(from: data).achievements
-    }
-    
-    public func getGuildAchievements(slug: String, realmSlug: String) async throws -> [WOWAchievementCategory] {
-        let data = try await webService.getGuildAchievements(slug: slug, realmSlug: realmSlug)
-        return try WOWAchievementIndex.decode(from: data).achievements
-    }
-    
-    public func getItemClasses() async throws -> [ItemClass] {
-        let data = try await webService.getItemClassIndex()
-        return try ItemClassIndex.decode(from: data).classes
-    }
-    
-    public func getTalents() async throws -> ClassTalentDictionary {
-        let data = try await webService.getTalentIndex()
-        return try ClassTalentDictionary.decode(from: data)
     }
 }

@@ -35,7 +35,7 @@ public struct ConnectedRealm: Codable, SelfDecodable {
     public let population: EnumType
     
     public let mythicLeaderboards: Link<MythicLeaderboard>
-    public let auctions: Link<Auction>
+    public let auctions: Link<AuctionIndex>
     
     public static var decoder: JSONDecoder {
         let decoder = JSONDecoder()
