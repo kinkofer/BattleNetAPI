@@ -9,7 +9,7 @@
 import Foundation
 
 
-public class SC2Season: Codable {
+public struct SC2Season: Codable {
     public let seasonID: Int
     public let number: Int
     public let year: Int

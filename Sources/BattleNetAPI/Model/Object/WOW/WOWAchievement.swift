@@ -9,59 +9,94 @@
 import Foundation
 
 
-public class WOWAchievementIndex: Codable {
-    public let achievements: [WOWAchievementCategory]
-}
-
-
-
-public class WOWAchievementCategory: Codable {
-    public let id: Int
-    public let name: String
-    public let achievements: [WOWAchievement]?
-    public let categories: [WOWAchievementCategory]?
-}
-
-
-
-public class WOWAchievement: Codable {
-    public let id: Int
-    public let title: String
-    public let points: Int
-    public let description: String
-    public let reward: String?
-    public let rewardItems: [WOWItemSummary]
-    public let icon: String
-    public let criteria: [WOWAchievementCriterion]
-    public let accountWide: Bool
-    public let factionID: Int
+public struct WOWAchievementCategoryIndex: Codable, SelfDecodable {
+    public let _links: SelfLink<WOWAchievementCategoryIndex>?
+    public let categories: [KeyLink<WOWAchievementCategory>]
+    public let rootCategories: [KeyLink<WOWAchievementCategory>]
+    public let guildCategories: [KeyLink<WOWAchievementCategory>]
     
-    enum CodingKeys: String, CodingKey {
-        case id
-        case title
-        case points
-        case description
-        case reward
-        case rewardItems
-        case icon
-        case criteria
-        case accountWide
-        case factionID = "factionId"
+    
+    public static var decoder: JSONDecoder {
+        let decoder = JSONDecoder()
+        decoder.keyDecodingStrategy = .convertFromSnakeCase
+        return decoder
     }
 }
 
 
-
-public class WOWAchievementCriterion: Codable {
-    public let id: Int
-    public let description: String
-    public let orderIndex: Int
-    public let max: Int
+/// Game Data API achievement index - returns flat list of achievements
+public struct WOWAchievementIndex: Codable {
+    public let _links: SelfLink<WOWAchievementIndex>?
+    public let achievements: [KeyLink<WOWAchievement>]
 }
 
 
+public struct WOWAchievement: Codable, SelfDecodable {
+    public let id: Int
+    public let category: KeyLink<WOWAchievementCategory>
+    public let name: String
+    public let description: String
+    public let points: Int
+    public let isAccountWide: Bool
+    public let criteria: WOWAchievementCriterion
+    public let nextCriteria: KeyLink<WOWAchievement>?
+    public let media: MediaLink
+    public let displayOrder: Int
+    
+    
+    public static var decoder: JSONDecoder {
+        let decoder = JSONDecoder()
+        decoder.keyDecodingStrategy = .convertFromSnakeCase
+        return decoder
+    }
+}
 
-public class WOWAchievementStatus: Codable {
+
+public struct WOWAchievementCriterion: Codable {
+    public let id: Int
+    public let description: String
+    public let amount: Int
+}
+
+
+public struct WOWAchievementCatgoryIndex: Codable {
+    public let _links: SelfLink<WOWAchievementCatgoryIndex>?
+    public let achievements: [KeyLink<WOWAchievementCategory>]
+}
+
+
+public struct WOWAchievementCategory: Codable, SelfDecodable {
+    public let _links: SelfLink<WOWAchievementCategory>?
+    public let id: Int
+    public let name: String
+    public let achievements: [KeyLink<WOWAchievement>]?
+    public let subcategories: [KeyLink<WOWAchievementCategory>]?
+    public let isGuildCategory: Bool?
+    public let aggregatesByFaction: AggregatesByFaction?
+    public let displayOrder: Int?
+    
+    
+    public static var decoder: JSONDecoder {
+        let decoder = JSONDecoder()
+        decoder.keyDecodingStrategy = .convertFromSnakeCase
+        return decoder
+    }
+}
+
+
+public struct AggregatesByFaction: Codable {
+    public let alliance: FactionAggregate
+    public let horde: FactionAggregate
+}
+
+
+public struct FactionAggregate: Codable {
+    public let quantity: Int
+    public let points: Int
+}
+
+
+public struct WOWAchievementStatus: Codable {
     public let achievementsCompleted: [Int]
     public let achievementsCompletedTimestamp: [Int]
     public let criteria: [Int]
@@ -69,4 +104,3 @@ public class WOWAchievementStatus: Codable {
     public let criteriaTimestamp: [Int]
     public let criteriaCreated: [Int]
 }
-

@@ -9,18 +9,18 @@
 import Foundation
 
 
-public class ZoneIndex: Codable {
+public struct ZoneIndex: Codable {
     public let zones: [Zone]
 }
 
 
-public class ZoneInfo: Codable {
+public struct ZoneInfo: Codable {
     public let key: Link<ZoneInfo>
     public let name: String
 }
 
 
-public class Zone: Codable {
+public struct Zone: Codable {
     public let id: Int
     public let name: String
     public let urlSlug: String
@@ -82,12 +82,12 @@ public enum ZoneMode: String, Codable {
 }
 
 
-public class ZoneSlug: Codable {
+public struct ZoneSlug: Codable {
     public let slug: String
 }
 
 
-public class Location: Codable {
+public struct Location: Codable {
     public let id: Int
     public let name: String
 }

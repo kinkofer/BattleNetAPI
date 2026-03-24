@@ -9,14 +9,14 @@
 import Foundation
 
 
-public class LadderSummary: Codable {
+public struct LadderSummary: Codable {
     public let showCaseEntries: [ShowCaseEntry]
     public let placementMatches: [PlacementMatch]
     public let allLadderMemberships: [LadderMembership]
 }
 
 
-public class ShowCaseEntry: Codable {
+public struct ShowCaseEntry: Codable {
     public let ladderID: String
     public let team: Team
     public let leagueName: String
@@ -32,14 +32,14 @@ public class ShowCaseEntry: Codable {
 }
 
 
-public class PlacementMatch: Codable {
+public struct PlacementMatch: Codable {
     public let localizedGameMode: String
     public let members: [TeamMember]
     public let gamesRemaining: Int
 }
 
 
-public class LadderMembership: Codable {
+public struct LadderMembership: Codable {
     public let ladderID: String
     public let localizedGameMode: String
     public let rank: Int?
@@ -51,13 +51,13 @@ public class LadderMembership: Codable {
 }
 
 
-public class Team: Codable {
+public struct Team: Codable {
     public let localizedGameMode: String
     public let members: [TeamMember]
 }
 
 
-public class TeamMember: Codable {
+public struct TeamMember: Codable {
     public let favoriteRace: FavoriteRace?
     public let name: String
     public let playerID: String
@@ -74,7 +74,7 @@ public class TeamMember: Codable {
 }
 
 
-public class Ladder: Codable {
+public struct Ladder: Codable {
     public let ladderTeams: [LadderTeam]
     public let allLadderMemberships: [LadderMembership]
     public let localizedDivision: String?
@@ -84,7 +84,7 @@ public class Ladder: Codable {
 }
 
 
-public class LadderTeam: Codable {
+public struct LadderTeam: Codable {
     public let teamMembers: [LadderTeamMember]
     public let previousRank: Int
     public let points: Int
@@ -95,7 +95,7 @@ public class LadderTeam: Codable {
 }
 
 
-public class LadderTeamMember: Codable {
+public struct LadderTeamMember: Codable {
     public let id: String
     public let realm: Int
     public let region: Int
@@ -113,13 +113,13 @@ public enum FavoriteRace: String, Codable {
 }
 
 
-public class RanksAndPool: Codable {
+public struct RanksAndPool: Codable {
     public let rank: Int
     public let mmr: Int
     public let bonusPool: Int
 }
 
 
-public class GrandmasterLeaderboard: Codable {
+public struct GrandmasterLeaderboard: Codable {
     public let ladderTeams: [LadderTeam]
 }

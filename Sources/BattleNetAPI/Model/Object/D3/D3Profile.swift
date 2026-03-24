@@ -9,7 +9,7 @@
 import Foundation
 
 
-public class D3Profile: Codable {
+public struct D3Profile: Codable {
     public let battleTag: String
     
     public let paragonLevel: Int
@@ -49,7 +49,7 @@ public class D3Profile: Codable {
 
 
 
-public class Kills: Codable {
+public struct Kills: Codable {
     public let elites: Int?
     public let monsters: Int?
     public let hardcoreMonsters: Int?
@@ -57,7 +57,7 @@ public class Kills: Codable {
 
 
 
-public class TimePlayed: Codable {
+public struct TimePlayed: Codable {
     public let barbarian: Double
     public let crusader: Double
     public let demonHunter: Double
@@ -79,7 +79,7 @@ public class TimePlayed: Codable {
 
 
 
-public class D3ProgressionCompletion: Codable {
+public struct D3ProgressionCompletion: Codable {
     public let act1: Bool
     public let act2: Bool
     public let act3: Bool
@@ -89,7 +89,7 @@ public class D3ProgressionCompletion: Codable {
 
 
 
-public class ArtisanLevel: Codable {
+public struct ArtisanLevel: Codable {
     public let slug: String
     public let level: Int
 }

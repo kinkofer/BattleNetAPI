@@ -11,7 +11,7 @@ import Foundation
 
 public typealias ClassTalentDictionary = [String: ClassTalent]
 
-public class ClassTalent: Codable {
+public struct ClassTalent: Codable {
     public let specs: [CharacterSpecialization]
     public let talents: [[[TalentElement]]]
     public let `class`: String
@@ -28,7 +28,7 @@ public enum RoleType: String, Codable {
 
 
 
-public class TalentElement: Codable {
+public struct TalentElement: Codable {
     public let tier: Int
     public let column: Int
     public let spell: CharacterSpell
@@ -37,7 +37,7 @@ public class TalentElement: Codable {
 
 
 
-public class CharacterSpell: Codable {
+public struct CharacterSpell: Codable {
     public let id: Int
     public let name: String
     public let icon: String
@@ -51,7 +51,7 @@ public class CharacterSpell: Codable {
 
 
 
-public class CharacterTalent: Codable {
+public struct CharacterTalent: Codable {
     public let talents: [TalentElement]
     public let spec: CharacterSpecialization?
     public let selected: Bool?
@@ -61,7 +61,7 @@ public class CharacterTalent: Codable {
 
 
 
-public class PVPTalentSlots: Codable, SelfDecodable {
+public struct PVPTalentSlots: Codable, SelfDecodable {
     public let _links: SelfLink<PVPTalentSlots>
     public let talentSlots: [TalentSlot]
     
@@ -73,7 +73,7 @@ public class PVPTalentSlots: Codable, SelfDecodable {
 }
 
 
-public class TalentSlot: Codable, SelfDecodable {
+public struct TalentSlot: Codable, SelfDecodable {
     public let slotNumber: Int
     public let unlockPlayerLevel: Int
     

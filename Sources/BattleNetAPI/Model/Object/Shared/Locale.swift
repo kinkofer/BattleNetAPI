@@ -9,7 +9,7 @@
 import Foundation
 
 
-public class LocaleString: Codable {
+public struct LocaleString: Codable {
     public let de_DE: String?
     public let en_US: String?
     public let en_GB: String?

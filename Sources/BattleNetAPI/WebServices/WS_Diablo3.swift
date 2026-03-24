@@ -11,28 +11,47 @@ import Foundation
 
 protocol WS_Diablo3Service: WebService {
     // Game Data APIs
-    func getSeasons(namespace: APINamespace?, completion: @escaping (_ result: Result<Data, Error>) -> Void)
-    func getLeaderboards(seasonID: Int, namespace: APINamespace?, completion: @escaping (_ result: Result<Data, Error>) -> Void)
-    func getLeaderboard(_ leaderboard: String, seasonID: Int, namespace: APINamespace?, completion: @escaping (_ result: Result<Data, Error>) -> Void)
-    func getEras(namespace: APINamespace?, completion: @escaping (_ result: Result<Data, Error>) -> Void)
-    func getLeaderboards(eraID: Int, namespace: APINamespace?, completion: @escaping (_ result: Result<Data, Error>) -> Void)
-    func getLeaderboard(_ leaderboard: String, eraID: Int, namespace: APINamespace?, completion: @escaping (_ result: Result<Data, Error>) -> Void)
+    func getSeasons(namespace: APINamespace?) async throws -> Data
+    
+    func getLeaderboards(seasonID: Int, namespace: APINamespace?) async throws -> Data
+    
+    func getLeaderboard(_ leaderboard: String, seasonID: Int, namespace: APINamespace?) async throws -> Data
+    
+    func getEras(namespace: APINamespace?) async throws -> Data
+    
+    func getLeaderboards(eraID: Int, namespace: APINamespace?) async throws -> Data
+    
+    func getLeaderboard(_ leaderboard: String, eraID: Int, namespace: APINamespace?) async throws -> Data
+    
     // Community APIs
-    func getActs(completion: @escaping (_ result: Result<Data, Error>) -> Void)
-    func getAct(id: Int, completion: @escaping (_ result: Result<Data, Error>) -> Void)
-    func getArtisan(slug: String, completion: @escaping (_ result: Result<Data, Error>) -> Void)
-    func getRecipe(recipeSlug: String, artisanSlug: String, completion: @escaping (_ result: Result<Data, Error>) -> Void)
-    func getFollower(slug: String, completion: @escaping (_ result: Result<Data, Error>) -> Void)
-    func getClass(slug: String, completion: @escaping (_ result: Result<Data, Error>) -> Void)
-    func getSkill(skillSlug: String, classSlug: String, completion: @escaping (_ result: Result<Data, Error>) -> Void)
-    func getItemTypes(completion: @escaping (_ result: Result<Data, Error>) -> Void)
-    func getItemsByType(typeSlug: String, completion: @escaping (_ result: Result<Data, Error>) -> Void)
-    func getItem(itemSlugAndID: String, completion: @escaping (_ result: Result<Data, Error>) -> Void)
+    func getActs() async throws -> Data
+    
+    func getAct(id: Int) async throws -> Data
+    
+    func getArtisan(slug: String) async throws -> Data
+    
+    func getRecipe(recipeSlug: String, artisanSlug: String) async throws -> Data
+    
+    func getFollower(slug: String) async throws -> Data
+    
+    func getClass(slug: String) async throws -> Data
+    
+    func getSkill(skillSlug: String, classSlug: String) async throws -> Data
+    
+    func getItemTypes() async throws -> Data
+    
+    func getItemsByType(typeSlug: String) async throws -> Data
+    
+    func getItem(itemSlugAndID: String) async throws -> Data
+    
     // Profile APIs
-    func getProfile(battleTag: String, completion: @escaping (_ result: Result<Data, Error>) -> Void)
-    func getHero(heroID: Int, battleTag: String, completion: @escaping (_ result: Result<Data, Error>) -> Void)
-    func getItemsForHero(heroID: Int, battleTag: String, completion: @escaping (_ result: Result<Data, Error>) -> Void)
-    func getFollowerItemsForHero(heroID: Int, battleTag: String, completion: @escaping (_ result: Result<Data, Error>) -> Void)
+    func getProfile(battleTag: String) async throws -> Data
+    
+    func getHero(heroID: Int, battleTag: String) async throws -> Data
+    
+    func getItemsForHero(heroID: Int, battleTag: String) async throws -> Data
+    
+    func getFollowerItemsForHero(heroID: Int, battleTag: String) async throws -> Data
 }
 
 
@@ -168,10 +187,9 @@ public struct WS_Diablo3: WS_Diablo3Service {
      Returns an index of available seasons
      
      - parameter namespace: The response data's namespace
-     - parameter completion: Returns a Result with the Data if `success` or an HTTPError if `failure`
      */
-    public func getSeasons(namespace: APINamespace? = nil, completion: @escaping (_ result: Result<Data, Error>) -> Void) {
-        call(endpoint: API.season, namespace: namespace, completion: completion)
+    public func getSeasons(namespace: APINamespace? = nil) async throws -> Data {
+        return try await call(endpoint: API.season, namespace: namespace)
     }
     
     
@@ -180,10 +198,9 @@ public struct WS_Diablo3: WS_Diablo3Service {
      
      - parameter seasonID: The season for the leaderboard list
      - parameter namespace: The response data's namespace
-     - parameter completion: Returns a Result with the Data if `success` or an HTTPError if `failure`
      */
-    public func getLeaderboards(seasonID: Int, namespace: APINamespace? = nil, completion: @escaping (_ result: Result<Data, Error>) -> Void) {
-        call(endpoint: API.leaderboardBySeason(seasonID), namespace: namespace, completion: completion)
+    public func getLeaderboards(seasonID: Int, namespace: APINamespace? = nil) async throws -> Data {
+        return try await call(endpoint: API.leaderboardBySeason(seasonID), namespace: namespace)
     }
     
     
@@ -193,10 +210,9 @@ public struct WS_Diablo3: WS_Diablo3Service {
      - parameter leaderboard: The leaderboard to retrieve
      - parameter seasonID: The season for the leaderboard
      - parameter namespace: The response data's namespace
-     - parameter completion: Returns a Result with the Data if `success` or an HTTPError if `failure`
      */
-    public func getLeaderboard(_ leaderboard: String, seasonID: Int, namespace: APINamespace? = nil, completion: @escaping (_ result: Result<Data, Error>) -> Void) {
-        call(endpoint: API.seasonLeaderboard(seasonID, leaderboard), namespace: namespace, completion: completion)
+    public func getLeaderboard(_ leaderboard: String, seasonID: Int, namespace: APINamespace? = nil) async throws -> Data {
+        return try await call(endpoint: API.seasonLeaderboard(seasonID, leaderboard), namespace: namespace)
     }
     
     
@@ -204,10 +220,9 @@ public struct WS_Diablo3: WS_Diablo3Service {
      Returns an index of available eras
      
      - parameter namespace: The response data's namespace
-     - parameter completion: Returns a Result with the Data if `success` or an HTTPError if `failure`
      */
-    public func getEras(namespace: APINamespace? = nil, completion: @escaping (_ result: Result<Data, Error>) -> Void) {
-        call(endpoint: API.eraIndex, namespace: namespace, completion: completion)
+    public func getEras(namespace: APINamespace? = nil) async throws -> Data {
+        return try await call(endpoint: API.eraIndex, namespace: namespace)
     }
     
     
@@ -216,10 +231,9 @@ public struct WS_Diablo3: WS_Diablo3Service {
      
      - parameter eraID: The era for the leaderboard
      - parameter namespace: The response data's namespace
-     - parameter completion: Returns a Result with the Data if `success` or an HTTPError if `failure`
      */
-    public func getLeaderboards(eraID: Int, namespace: APINamespace? = nil, completion: @escaping (_ result: Result<Data, Error>) -> Void) {
-        call(endpoint: API.leaderboardByEra(eraID), namespace: namespace, completion: completion)
+    public func getLeaderboards(eraID: Int, namespace: APINamespace? = nil) async throws -> Data {
+        return try await call(endpoint: API.leaderboardByEra(eraID), namespace: namespace)
     }
     
     
@@ -229,10 +243,9 @@ public struct WS_Diablo3: WS_Diablo3Service {
      - parameter leaderboard: The leaderboard to lookup, you can find these strings in the Era API call
      - parameter eraID: The era for the leaderboard
      - parameter namespace: The response data's namespace
-     - parameter completion: Returns a Result with the Data if `success` or an HTTPError if `failure`
      */
-    public func getLeaderboard(_ leaderboard: String, eraID: Int, namespace: APINamespace? = nil, completion: @escaping (_ result: Result<Data, Error>) -> Void) {
-        call(endpoint: API.eraLeaderboard(eraID, leaderboard), namespace: namespace, completion: completion)
+    public func getLeaderboard(_ leaderboard: String, eraID: Int, namespace: APINamespace? = nil) async throws -> Data {
+        return try await call(endpoint: API.eraLeaderboard(eraID, leaderboard), namespace: namespace)
     }
     
     
@@ -243,11 +256,9 @@ public struct WS_Diablo3: WS_Diablo3Service {
     
     /**
      Get an index of acts
-     
-     - parameter completion: Returns a Result with the Data if `success` or an HTTPError if `failure`
      */
-    public func getActs(completion: @escaping (_ result: Result<Data, Error>) -> Void) {
-        call(endpoint: API.actIndex, completion: completion)
+    public func getActs() async throws -> Data {
+        return try await call(endpoint: API.actIndex)
     }
     
     
@@ -255,10 +266,9 @@ public struct WS_Diablo3: WS_Diablo3Service {
      Get a single act by id
      
      - parameter id: The id of the act
-     - parameter completion: Returns a Result with the Data if `success` or an HTTPError if `failure`
      */
-    public func getAct(id: Int, completion: @escaping (_ result: Result<Data, Error>) -> Void) {
-        call(endpoint: API.act(id), completion: completion)
+    public func getAct(id: Int) async throws -> Data {
+        return try await call(endpoint: API.act(id))
     }
     
     
@@ -269,10 +279,9 @@ public struct WS_Diablo3: WS_Diablo3Service {
      Get a single artisan by slug
      
      - parameter slug: The slug of the artisan
-     - parameter completion: Returns a Result with the Data if `success` or an HTTPError if `failure`
      */
-    public func getArtisan(slug: String, completion: @escaping (_ result: Result<Data, Error>) -> Void) {
-        call(endpoint: API.artisan(slug), completion: completion)
+    public func getArtisan(slug: String) async throws -> Data {
+        return try await call(endpoint: API.artisan(slug))
     }
     
     
@@ -281,10 +290,9 @@ public struct WS_Diablo3: WS_Diablo3Service {
      
      - parameter recipeSlug: The slug of the recipe
      - parameter artisanSlug: The slug of the artisan
-     - parameter completion: Returns a Result with the Data if `success` or an HTTPError if `failure`
      */
-    public func getRecipe(recipeSlug: String, artisanSlug: String, completion: @escaping (_ result: Result<Data, Error>) -> Void) {
-        call(endpoint: API.artisanRecipe(artisan: artisanSlug, recipe: recipeSlug), completion: completion)
+    public func getRecipe(recipeSlug: String, artisanSlug: String) async throws -> Data {
+        return try await call(endpoint: API.artisanRecipe(artisan: artisanSlug, recipe: recipeSlug))
     }
     
     
@@ -295,10 +303,9 @@ public struct WS_Diablo3: WS_Diablo3Service {
      Get a single follower by slug
      
      - parameter slug: The slug of the follower
-     - parameter completion: Returns a Result with the Data if `success` or an HTTPError if `failure`
      */
-    public func getFollower(slug: String, completion: @escaping (_ result: Result<Data, Error>) -> Void) {
-        call(endpoint: API.follower(slug), completion: completion)
+    public func getFollower(slug: String) async throws -> Data {
+        return try await call(endpoint: API.follower(slug))
     }
     
     
@@ -309,10 +316,9 @@ public struct WS_Diablo3: WS_Diablo3Service {
      Get a single character class by slug
      
      - parameter slug: The slug of the character class
-     - parameter completion: Returns a Result with the Data if `success` or an HTTPError if `failure`
      */
-    public func getClass(slug: String, completion: @escaping (_ result: Result<Data, Error>) -> Void) {
-        call(endpoint: API.class(slug), completion: completion)
+    public func getClass(slug: String) async throws -> Data {
+        return try await call(endpoint: API.class(slug))
     }
     
     
@@ -321,10 +327,9 @@ public struct WS_Diablo3: WS_Diablo3Service {
      
      - parameter skillSlug: The slug of the skill
      - parameter classSlug: The slug of the character class
-     - parameter completion: Returns a Result with the Data if `success` or an HTTPError if `failure`
      */
-    public func getSkill(skillSlug: String, classSlug: String, completion: @escaping (_ result: Result<Data, Error>) -> Void) {
-        call(endpoint: API.classSkill(class: classSlug, skill: skillSlug), completion: completion)
+    public func getSkill(skillSlug: String, classSlug: String) async throws -> Data {
+        return try await call(endpoint: API.classSkill(class: classSlug, skill: skillSlug))
     }
     
     
@@ -336,10 +341,9 @@ public struct WS_Diablo3: WS_Diablo3Service {
      
      - parameter region: What region the request is being made
      - parameter locale: The locale that should be reflected in localized data
-     - parameter completion: Returns a Result with the Data if `success` or an HTTPError if `failure`
      */
-    public func getItemTypes(completion: @escaping (_ result: Result<Data, Error>) -> Void) {
-        call(endpoint: API.itemType, completion: completion)
+    public func getItemTypes() async throws -> Data {
+        return try await call(endpoint: API.itemType)
     }
     
     
@@ -347,10 +351,9 @@ public struct WS_Diablo3: WS_Diablo3Service {
      Get a single item type by slug
      
      - parameter typeSlug: The slug of the item type
-     - parameter completion: Returns a Result with the Data if `success` or an HTTPError if `failure`
      */
-    public func getItemsByType(typeSlug: String, completion: @escaping (_ result: Result<Data, Error>) -> Void) {
-        call(endpoint: API.itemTypeBySlug(typeSlug), completion: completion)
+    public func getItemsByType(typeSlug: String) async throws -> Data {
+        return try await call(endpoint: API.itemTypeBySlug(typeSlug))
     }
     
     
@@ -361,10 +364,9 @@ public struct WS_Diablo3: WS_Diablo3Service {
      Get a single item by item slug and ID
      
      - parameter itemSlugAndID: The slug and ID of the item
-     - parameter completion: Returns a Result with the Data if `success` or an HTTPError if `failure`
      */
-    public func getItem(itemSlugAndID: String, completion: @escaping (_ result: Result<Data, Error>) -> Void) {
-        call(endpoint: API.itemSlugAndID(itemSlugAndID), completion: completion)
+    public func getItem(itemSlugAndID: String) async throws -> Data {
+        return try await call(endpoint: API.itemSlugAndID(itemSlugAndID))
     }
     
     
@@ -375,10 +377,9 @@ public struct WS_Diablo3: WS_Diablo3Service {
      Retrieves the profile of the user with the given Battle Tag
      
      - parameter battleTag: The hyphen-separated value of the username and number
-     - parameter completion: Returns a Result with the Data if `success` or an HTTPError if `failure`
     */
-    public func getProfile(battleTag: String, completion: @escaping (_ result: Result<Data, Error>) -> Void) {
-        call(endpoint: API.profile(battleTag), completion: completion)
+    public func getProfile(battleTag: String) async throws -> Data {
+        return try await call(endpoint: API.profile(battleTag))
     }
     
     
@@ -387,10 +388,9 @@ public struct WS_Diablo3: WS_Diablo3Service {
      
      - parameter heroID: The id of the hero
      - parameter battleTag: The hyphen-separated value of the username and number
-     - parameter completion: Returns a Result with the Data if `success` or an HTTPError if `failure`
      */
-    public func getHero(heroID: Int, battleTag: String, completion: @escaping (_ result: Result<Data, Error>) -> Void) {
-        call(endpoint: API.hero(battleTag, heroID), completion: completion)
+    public func getHero(heroID: Int, battleTag: String) async throws -> Data {
+        return try await call(endpoint: API.hero(battleTag, heroID))
     }
     
     
@@ -399,10 +399,9 @@ public struct WS_Diablo3: WS_Diablo3Service {
      
      - parameter heroID: The id of the hero
      - parameter battleTag: The hyphen-separated value of the username and number
-     - parameter completion: Returns a Result with the Data if `success` or an HTTPError if `failure`
      */
-    public func getItemsForHero(heroID: Int, battleTag: String, completion: @escaping (_ result: Result<Data, Error>) -> Void) {
-        call(endpoint: API.heroItems(battleTag, heroID), completion: completion)
+    public func getItemsForHero(heroID: Int, battleTag: String) async throws -> Data {
+        return try await call(endpoint: API.heroItems(battleTag, heroID))
     }
     
     
@@ -411,9 +410,8 @@ public struct WS_Diablo3: WS_Diablo3Service {
      
      - parameter heroID: The id of the hero
      - parameter battleTag: The hyphen-separated value of the username and number
-     - parameter completion: Returns a Result with the Data if `success` or an HTTPError if `failure`
      */
-    public func getFollowerItemsForHero(heroID: Int, battleTag: String, completion: @escaping (_ result: Result<Data, Error>) -> Void) {
-        call(endpoint: API.heroFollowerItems(battleTag, heroID), completion: completion)
+    public func getFollowerItemsForHero(heroID: Int, battleTag: String) async throws -> Data {
+        return try await call(endpoint: API.heroFollowerItems(battleTag, heroID))
     }
 }

@@ -9,13 +9,13 @@
 import Foundation
 
 
-public class ActIndex: Codable {
+public struct ActIndex: Codable {
     public let acts: [Act]
 }
 
 
 
-public class Act: Codable {
+public struct Act: Codable {
     public let number: Int
     public let name: String
     public let slug: String
@@ -24,7 +24,7 @@ public class Act: Codable {
 
 
 
-public class D3Quest: Codable {
+public struct D3Quest: Codable {
     public let id: Int?
     public let name: String
     public let slug: String

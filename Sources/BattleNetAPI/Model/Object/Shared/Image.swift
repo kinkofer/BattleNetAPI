@@ -9,7 +9,7 @@
 import Foundation
 
 
-public class Image: Codable {
+public struct Image: Codable {
     public var x: Int
     public var y: Int
     public var w: Int

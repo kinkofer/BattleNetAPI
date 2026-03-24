@@ -9,12 +9,6 @@
 import Foundation
 
 
-public class BattlegroupIndex: Codable {
-    public let battlegroups: [Battlegroup]
-}
-
-
-public class Battlegroup: Codable {
-    public let name: String
-    public let slug: String
+public struct BattlegroupIndex: Codable {
+    public let battlegroups: [EnumSlug]
 }

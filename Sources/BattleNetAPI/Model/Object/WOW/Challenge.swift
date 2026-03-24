@@ -9,7 +9,7 @@
 import Foundation
 
 
-public class ChallengeIndex: Codable {
+public struct ChallengeIndex: Codable {
     public let challenges: [Challenge]
     
     enum CodingKeys: String, CodingKey {
@@ -20,7 +20,7 @@ public class ChallengeIndex: Codable {
 
 
 /// - note: Contains camelCase and snake_case keys
-public class Challenge: Codable {
+public struct Challenge: Codable {
     public let realm: RealmSummary?
     public let map: ChallengeModeMap?
     public let groups: [ChallengeModeGroup]
@@ -28,7 +28,7 @@ public class Challenge: Codable {
 
 
 
-public class ChallengeModeGroup: Codable {
+public struct ChallengeModeGroup: Codable {
     public let ranking: Int
     public let time: ChallengeCriteria
     public let date: String
@@ -48,7 +48,7 @@ public enum ChallengeFactionType: String, Codable {
 
 
 
-public class ChallengeModeMember: Codable {
+public struct ChallengeModeMember: Codable {
     public let character: WOWCharacter?
     public let spec: CharacterSpecialization
 }
@@ -56,7 +56,7 @@ public class ChallengeModeMember: Codable {
 
 
 
-public class ChallengeCriteria: Codable {
+public struct ChallengeCriteria: Codable {
     public let time: Int
     public let hours: Int
     public let minutes: Int
@@ -67,7 +67,7 @@ public class ChallengeCriteria: Codable {
 
 
 
-public class ChallengeModeMap: Codable {
+public struct ChallengeModeMap: Codable {
     public let id: Int
     public let name: String
     public let slug: String

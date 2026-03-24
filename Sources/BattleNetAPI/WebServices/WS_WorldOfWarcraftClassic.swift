@@ -204,10 +204,9 @@ public struct WS_WorldOfWarcraftClassic: WebService {
      Returns an index of connected realms.
      
      - parameter namespace: The namespace to use to locate this document.
-     - parameter completion: Returns a Result with the Data if `success` or an HTTPError if `failure`
      */
-    public func getConnectedRealmIndex(namespace: APINamespace? = .dynamicClassic, completion: @escaping (_ result: Result<Data, Error>) -> Void) {
-        call(endpoint: API.connectedRealmIndex, namespace: namespace, completion: completion)
+    public func getConnectedRealmIndex(namespace: APINamespace? = .dynamicClassic) async throws -> Data {
+        return try await call(endpoint: API.connectedRealmIndex, namespace: namespace)
     }
     
     
@@ -216,10 +215,9 @@ public struct WS_WorldOfWarcraftClassic: WebService {
      
      - parameter id: The ID of the connected realm.
      - parameter namespace: The namespace to use to locate this document.
-     - parameter completion: Returns a Result with the Data if `success` or an HTTPError if `failure`
      */
-    public func getConnectedRealm(id: Int, namespace: APINamespace? = .dynamicClassic, completion: @escaping (_ result: Result<Data, Error>) -> Void) {
-        call(endpoint: API.connectedRealm(id), namespace: namespace, completion: completion)
+    public func getConnectedRealm(id: Int, namespace: APINamespace? = .dynamicClassic) async throws -> Data {
+        return try await call(endpoint: API.connectedRealm(id), namespace: namespace)
     }
     
     
@@ -227,10 +225,9 @@ public struct WS_WorldOfWarcraftClassic: WebService {
      Performs a search of connected realms.
      
      - parameter namespace: The namespace to use to locate this document.
-     - parameter completion: Returns a Result with the Data if `success` or an HTTPError if `failure`
      */
-    public func searchConnectedRealms(queries: [String: String], namespace: APINamespace? = .dynamicClassic, completion: @escaping (_ result: Result<Data, Error>) -> Void) {
-        call(endpoint: API.connectedRealmSearch(queries), namespace: namespace, completion: completion)
+    public func searchConnectedRealms(queries: [String: String], namespace: APINamespace? = .dynamicClassic) async throws -> Data {
+        return try await call(endpoint: API.connectedRealmSearch(queries), namespace: namespace)
     }
     
     
@@ -241,10 +238,9 @@ public struct WS_WorldOfWarcraftClassic: WebService {
      Returns an index of creature families.
      
      - parameter namespace: The namespace to use to locate this document.
-     - parameter completion: Returns a Result with the Data if `success` or an HTTPError if `failure`
      */
-    public func getCreatureFamilyIndex(namespace: APINamespace? = .staticClassic, completion: @escaping (_ result: Result<Data, Error>) -> Void) {
-        call(endpoint: API.creatureFamilyIndex, namespace: namespace, completion: completion)
+    public func getCreatureFamilyIndex(namespace: APINamespace? = .staticClassic) async throws -> Data {
+        return try await call(endpoint: API.creatureFamilyIndex, namespace: namespace)
     }
     
     
@@ -253,10 +249,9 @@ public struct WS_WorldOfWarcraftClassic: WebService {
      
      - parameter id: The ID of the creature family.
      - parameter namespace: The namespace to use to locate this document.
-     - parameter completion: Returns a Result with the Data if `success` or an HTTPError if `failure`
      */
-    public func getCreatureFamily(id: Int, namespace: APINamespace? = .staticClassic, completion: @escaping (_ result: Result<Data, Error>) -> Void) {
-        call(endpoint: API.creatureFamily(id), namespace: namespace, completion: completion)
+    public func getCreatureFamily(id: Int, namespace: APINamespace? = .staticClassic) async throws -> Data {
+        return try await call(endpoint: API.creatureFamily(id), namespace: namespace)
     }
     
     
@@ -264,10 +259,9 @@ public struct WS_WorldOfWarcraftClassic: WebService {
      Returns an index of creature types.
      
      - parameter namespace: The namespace to use to locate this document.
-     - parameter completion: Returns a Result with the Data if `success` or an HTTPError if `failure`
      */
-    public func getCreatureTypeIndex(namespace: APINamespace? = .staticClassic, completion: @escaping (_ result: Result<Data, Error>) -> Void) {
-        call(endpoint: API.creatureTypeIndex, namespace: namespace, completion: completion)
+    public func getCreatureTypeIndex(namespace: APINamespace? = .staticClassic) async throws -> Data {
+        return try await call(endpoint: API.creatureTypeIndex, namespace: namespace)
     }
     
     
@@ -276,10 +270,9 @@ public struct WS_WorldOfWarcraftClassic: WebService {
      
      - parameter id: The ID of the creature type.
      - parameter namespace: The namespace to use to locate this document.
-     - parameter completion: Returns a Result with the Data if `success` or an HTTPError if `failure`
      */
-    public func getCreatureType(id: Int, namespace: APINamespace? = .staticClassic, completion: @escaping (_ result: Result<Data, Error>) -> Void) {
-        call(endpoint: API.creatureType(id), namespace: namespace, completion: completion)
+    public func getCreatureType(id: Int, namespace: APINamespace? = .staticClassic) async throws -> Data {
+        return try await call(endpoint: API.creatureType(id), namespace: namespace)
     }
     
     
@@ -288,10 +281,9 @@ public struct WS_WorldOfWarcraftClassic: WebService {
      
      - parameter id: The ID of the creature.
      - parameter namespace: The namespace to use to locate this document.
-     - parameter completion: Returns a Result with the Data if `success` or an HTTPError if `failure`
      */
-    public func getCreature(id: Int, namespace: APINamespace? = .staticClassic, completion: @escaping (_ result: Result<Data, Error>) -> Void) {
-        call(endpoint: API.creature(id), namespace: namespace, completion: completion)
+    public func getCreature(id: Int, namespace: APINamespace? = .staticClassic) async throws -> Data {
+        return try await call(endpoint: API.creature(id), namespace: namespace)
     }
     
     
@@ -300,10 +292,9 @@ public struct WS_WorldOfWarcraftClassic: WebService {
      
      - parameter queries: The query parameters to add to the search.
      - parameter namespace: The namespace to use to locate this document.
-     - parameter completion: Returns a Result with the Data if `success` or an HTTPError if `failure`
     */
-    public func searchCreature(queries: [String: String], namespace: APINamespace? = .staticClassic, completion: @escaping (_ result: Result<Data, Error>) -> Void) {
-        call(endpoint: API.creatureSearch(queries), namespace: namespace, completion: completion)
+    public func searchCreature(queries: [String: String], namespace: APINamespace? = .staticClassic) async throws -> Data {
+        return try await call(endpoint: API.creatureSearch(queries), namespace: namespace)
     }
     
     
@@ -312,10 +303,9 @@ public struct WS_WorldOfWarcraftClassic: WebService {
      
      - parameter id: The ID of the creature display.
      - parameter namespace: The namespace to use to locate this document.
-     - parameter completion: Returns a Result with the Data if `success` or an HTTPError if `failure`
      */
-    public func getCreatureDisplayMedia(id: Int, namespace: APINamespace? = .staticClassic, completion: @escaping (_ result: Result<Data, Error>) -> Void) {
-        call(endpoint: API.creatureDisplayMedia(id), namespace: namespace, completion: completion)
+    public func getCreatureDisplayMedia(id: Int, namespace: APINamespace? = .staticClassic) async throws -> Data {
+        return try await call(endpoint: API.creatureDisplayMedia(id), namespace: namespace)
     }
     
     
@@ -324,10 +314,9 @@ public struct WS_WorldOfWarcraftClassic: WebService {
      
      - parameter id: The ID of the creature family.
      - parameter namespace: The namespace to use to locate this document.
-     - parameter completion: Returns a Result with the Data if `success` or an HTTPError if `failure`
      */
-    public func getCreatureFamilyMedia(id: Int, namespace: APINamespace? = .staticClassic, completion: @escaping (_ result: Result<Data, Error>) -> Void) {
-        call(endpoint: API.creatureFamilyMedia(id), namespace: namespace, completion: completion)
+    public func getCreatureFamilyMedia(id: Int, namespace: APINamespace? = .staticClassic) async throws -> Data {
+        return try await call(endpoint: API.creatureFamilyMedia(id), namespace: namespace)
     }
     
     
@@ -338,10 +327,9 @@ public struct WS_WorldOfWarcraftClassic: WebService {
      Returns an index of guild crest media.
      
      - parameter namespace: The namespace to use to locate this document.
-     - parameter completion: Returns a Result with the Data if `success` or an HTTPError if `failure`
      */
-    public func getGuildCrestIndex(namespace: APINamespace? = .staticClassic, completion: @escaping (_ result: Result<Data, Error>) -> Void) {
-        call(endpoint: API.guildCrestIndex, namespace: namespace, completion: completion)
+    public func getGuildCrestIndex(namespace: APINamespace? = .staticClassic) async throws -> Data {
+        return try await call(endpoint: API.guildCrestIndex, namespace: namespace)
     }
     
     
@@ -350,10 +338,9 @@ public struct WS_WorldOfWarcraftClassic: WebService {
      
      - parameter id: The ID of the guild crest border.
      - parameter namespace: The namespace to use to locate this document.
-     - parameter completion: Returns a Result with the Data if `success` or an HTTPError if `failure`
      */
-    public func getGuildCrestBorderMedia(id: Int, namespace: APINamespace? = .staticClassic, completion: @escaping (_ result: Result<Data, Error>) -> Void) {
-        call(endpoint: API.guildCrestBorderMedia(id), namespace: namespace, completion: completion)
+    public func getGuildCrestBorderMedia(id: Int, namespace: APINamespace? = .staticClassic) async throws -> Data {
+        return try await call(endpoint: API.guildCrestBorderMedia(id), namespace: namespace)
     }
     
     
@@ -362,10 +349,9 @@ public struct WS_WorldOfWarcraftClassic: WebService {
      
      - parameter id: The ID of the guild crest emblem.
      - parameter namespace: The namespace to use to locate this document.
-     - parameter completion: Returns a Result with the Data if `success` or an HTTPError if `failure`
      */
-    public func getGuildCrestEmblemMedia(id: Int, namespace: APINamespace? = .staticClassic, completion: @escaping (_ result: Result<Data, Error>) -> Void) {
-        call(endpoint: API.guildCrestEmblemMedia(id), namespace: namespace, completion: completion)
+    public func getGuildCrestEmblemMedia(id: Int, namespace: APINamespace? = .staticClassic) async throws -> Data {
+        return try await call(endpoint: API.guildCrestEmblemMedia(id), namespace: namespace)
     }
     
     
@@ -376,10 +362,9 @@ public struct WS_WorldOfWarcraftClassic: WebService {
      Returns an index of item classes.
      
      - parameter namespace: The namespace to use to locate this document.
-     - parameter completion: Returns a Result with the Data if `success` or an HTTPError if `failure`
      */
-    public func getItemClassIndex(namespace: APINamespace? = .staticClassic, completion: @escaping (_ result: Result<Data, Error>) -> Void) {
-        call(endpoint: API.itemClassIndex, namespace: namespace, completion: completion)
+    public func getItemClassIndex(namespace: APINamespace? = .staticClassic) async throws -> Data {
+        return try await call(endpoint: API.itemClassIndex, namespace: namespace)
     }
     
     
@@ -388,10 +373,9 @@ public struct WS_WorldOfWarcraftClassic: WebService {
      
      - parameter id: The ID of the item class.
      - parameter namespace: The namespace to use to locate this document.
-     - parameter completion: Returns a Result with the Data if `success` or an HTTPError if `failure`
      */
-    public func getItemClass(id: Int, namespace: APINamespace? = .staticClassic, completion: @escaping (_ result: Result<Data, Error>) -> Void) {
-        call(endpoint: API.itemClass(id), namespace: namespace, completion: completion)
+    public func getItemClass(id: Int, namespace: APINamespace? = .staticClassic) async throws -> Data {
+        return try await call(endpoint: API.itemClass(id), namespace: namespace)
     }
     
     
@@ -399,10 +383,9 @@ public struct WS_WorldOfWarcraftClassic: WebService {
      Returns an index of item sets.
      
      - parameter namespace: The namespace to use to locate this document.
-     - parameter completion: Returns a Result with the Data if `success` or an HTTPError if `failure`
      */
-    public func getItemSetIndex(namespace: APINamespace? = .staticClassic, completion: @escaping (_ result: Result<Data, Error>) -> Void) {
-        call(endpoint: API.itemSetIndex, namespace: namespace, completion: completion)
+    public func getItemSetIndex(namespace: APINamespace? = .staticClassic) async throws -> Data {
+        return try await call(endpoint: API.itemSetIndex, namespace: namespace)
     }
     
     
@@ -411,10 +394,9 @@ public struct WS_WorldOfWarcraftClassic: WebService {
      
      - parameter id: The ID of the item set.
      - parameter namespace: The namespace to use to locate this document.
-     - parameter completion: Returns a Result with the Data if `success` or an HTTPError if `failure`
      */
-    public func getItemSet(id: Int, namespace: APINamespace? = .staticClassic, completion: @escaping (_ result: Result<Data, Error>) -> Void) {
-        call(endpoint: API.itemSet(id), namespace: namespace, completion: completion)
+    public func getItemSet(id: Int, namespace: APINamespace? = .staticClassic) async throws -> Data {
+        return try await call(endpoint: API.itemSet(id), namespace: namespace)
     }
     
     
@@ -424,10 +406,9 @@ public struct WS_WorldOfWarcraftClassic: WebService {
      - parameter itemClassID: The ID of the item class.
      - parameter itemSubclassID: The ID of the item subclass.
      - parameter namespace: The namespace to use to locate this document.
-     - parameter completion: Returns a Result with the Data if `success` or an HTTPError if `failure`
      */
-    public func getItemSubclass(itemClassID: Int, itemSubclassID: Int, namespace: APINamespace? = .staticClassic, completion: @escaping (_ result: Result<Data, Error>) -> Void) {
-        call(endpoint: API.itemSubclass(itemClassID: itemClassID, itemSubclassID: itemSubclassID), namespace: namespace, completion: completion)
+    public func getItemSubclass(itemClassID: Int, itemSubclassID: Int, namespace: APINamespace? = .staticClassic) async throws -> Data {
+        return try await call(endpoint: API.itemSubclass(itemClassID: itemClassID, itemSubclassID: itemSubclassID), namespace: namespace)
     }
     
     
@@ -436,10 +417,9 @@ public struct WS_WorldOfWarcraftClassic: WebService {
      
      - parameter id: The ID of the item.
      - parameter namespace: The namespace to use to locate this document.
-     - parameter completion: Returns a Result with the Data if `success` or an HTTPError if `failure`
      */
-    public func getItem(id: Int, namespace: APINamespace? = .staticClassic, completion: @escaping (_ result: Result<Data, Error>) -> Void) {
-        call(endpoint: API.item(id), namespace: namespace, completion: completion)
+    public func getItem(id: Int, namespace: APINamespace? = .staticClassic) async throws -> Data {
+        return try await call(endpoint: API.item(id), namespace: namespace)
     }
     
     
@@ -448,10 +428,9 @@ public struct WS_WorldOfWarcraftClassic: WebService {
      
      - parameter id: The ID of the item.
      - parameter namespace: The namespace to use to locate this document.
-     - parameter completion: Returns a Result with the Data if `success` or an HTTPError if `failure`
      */
-    public func getItemMedia(id: Int, namespace: APINamespace? = .staticClassic, completion: @escaping (_ result: Result<Data, Error>) -> Void) {
-        call(endpoint: API.itemMedia(id), namespace: namespace, completion: completion)
+    public func getItemMedia(id: Int, namespace: APINamespace? = .staticClassic) async throws -> Data {
+        return try await call(endpoint: API.itemMedia(id), namespace: namespace)
     }
     
     
@@ -460,10 +439,9 @@ public struct WS_WorldOfWarcraftClassic: WebService {
      
      - parameter queries: The query parameters to add to the search.
      - parameter namespace: The namespace to use to locate this document.
-     - parameter completion: Returns a Result with the Data if `success` or an HTTPError if `failure`
     */
-    public func searchItem(queries: [String: String], namespace: APINamespace? = .staticClassic, completion: @escaping (_ result: Result<Data, Error>) -> Void) {
-        call(endpoint: API.itemSearch(queries), namespace: namespace, completion: completion)
+    public func searchItem(queries: [String: String], namespace: APINamespace? = .staticClassic) async throws -> Data {
+        return try await call(endpoint: API.itemSearch(queries), namespace: namespace)
     }
     
     
@@ -475,10 +453,9 @@ public struct WS_WorldOfWarcraftClassic: WebService {
      
      - parameter queries: The query parameters to add to the search.
      - parameter namespace: The namespace to use to locate this document.
-     - parameter completion: Returns a Result with the Data if `success` or an HTTPError if `failure`
     */
-    public func searchMedia(queries: [String: String], namespace: APINamespace? = .staticClassic, completion: @escaping (_ result: Result<Data, Error>) -> Void) {
-        call(endpoint: API.mediaSearch(queries), namespace: namespace, completion: completion)
+    public func searchMedia(queries: [String: String], namespace: APINamespace? = .staticClassic) async throws -> Data {
+        return try await call(endpoint: API.mediaSearch(queries), namespace: namespace)
     }
     
     
@@ -489,10 +466,9 @@ public struct WS_WorldOfWarcraftClassic: WebService {
      Returns an index of playable classes.
      
      - parameter namespace: The namespace to use to locate this document.
-     - parameter completion: Returns a Result with the Data if `success` or an HTTPError if `failure`
      */
-    public func getPlayableClassIndex(namespace: APINamespace? = .staticClassic, completion: @escaping (_ result: Result<Data, Error>) -> Void) {
-        self.call(endpoint: API.playableClassIndex, namespace: namespace, completion: completion)
+    public func getPlayableClassIndex(namespace: APINamespace? = .staticClassic) async throws -> Data {
+        return try await call(endpoint: API.playableClassIndex, namespace: namespace)
     }
     
     
@@ -501,10 +477,9 @@ public struct WS_WorldOfWarcraftClassic: WebService {
      
      - parameter id: The ID of the playable class.
      - parameter namespace: The namespace to use to locate this document.
-     - parameter completion: Returns a Result with the Data if `success` or an HTTPError if `failure`
      */
-    public func getPlayableClass(id: Int, namespace: APINamespace? = .staticClassic, completion: @escaping (_ result: Result<Data, Error>) -> Void) {
-        self.call(endpoint: API.playableClass(id), namespace: namespace, completion: completion)
+    public func getPlayableClass(id: Int, namespace: APINamespace? = .staticClassic) async throws -> Data {
+        return try await call(endpoint: API.playableClass(id), namespace: namespace)
     }
     
     
@@ -513,10 +488,9 @@ public struct WS_WorldOfWarcraftClassic: WebService {
      
      - parameter id: The ID of the playable class.
      - parameter namespace: The namespace to use to locate this document.
-     - parameter completion: Returns a Result with the Data if `success` or an HTTPError if `failure`
      */
-    public func getPlayableClassMedia(id: Int, namespace: APINamespace? = .staticClassic, completion: @escaping (_ result: Result<Data, Error>) -> Void) {
-        self.call(endpoint: API.playableClassMedia(id), namespace: namespace, completion: completion)
+    public func getPlayableClassMedia(id: Int, namespace: APINamespace? = .staticClassic) async throws -> Data {
+        return try await call(endpoint: API.playableClassMedia(id), namespace: namespace)
     }
     
     
@@ -527,10 +501,9 @@ public struct WS_WorldOfWarcraftClassic: WebService {
      Returns an index of playable races.
      
      - parameter namespace: The namespace to use to locate this document.
-     - parameter completion: Returns a Result with the Data if `success` or an HTTPError if `failure`
      */
-    public func getPlayableRaceIndex(namespace: APINamespace? = .staticClassic, completion: @escaping (_ result: Result<Data, Error>) -> Void) {
-        self.call(endpoint: API.playableRaceIndex, namespace: namespace, completion: completion)
+    public func getPlayableRaceIndex(namespace: APINamespace? = .staticClassic) async throws -> Data {
+        return try await call(endpoint: API.playableRaceIndex, namespace: namespace)
     }
     
     
@@ -539,10 +512,9 @@ public struct WS_WorldOfWarcraftClassic: WebService {
      
      - parameter id: The ID of the playable race.
      - parameter namespace: The namespace to use to locate this document.
-     - parameter completion: Returns a Result with the Data if `success` or an HTTPError if `failure`
      */
-    public func getPlayableRace(id: Int, namespace: APINamespace? = .staticClassic, completion: @escaping (_ result: Result<Data, Error>) -> Void) {
-        self.call(endpoint: API.playableRace(id), namespace: namespace, completion: completion)
+    public func getPlayableRace(id: Int, namespace: APINamespace? = .staticClassic) async throws -> Data {
+        return try await call(endpoint: API.playableRace(id), namespace: namespace)
     }
     
     
@@ -553,10 +525,9 @@ public struct WS_WorldOfWarcraftClassic: WebService {
      Returns an index of power types.
      
      - parameter namespace: The namespace to use to locate this document.
-     - parameter completion: Returns a Result with the Data if `success` or an HTTPError if `failure`
      */
-    public func getPowerTypeIndex(namespace: APINamespace? = .staticClassic, completion: @escaping (_ result: Result<Data, Error>) -> Void) {
-        self.call(endpoint: API.powerTypeIndex, namespace: namespace, completion: completion)
+    public func getPowerTypeIndex(namespace: APINamespace? = .staticClassic) async throws -> Data {
+        return try await call(endpoint: API.powerTypeIndex, namespace: namespace)
     }
     
     
@@ -565,10 +536,9 @@ public struct WS_WorldOfWarcraftClassic: WebService {
      
      - parameter id: The ID of the power type.
      - parameter namespace: The namespace to use to locate this document.
-     - parameter completion: Returns a Result with the Data if `success` or an HTTPError if `failure`
      */
-    public func getPowerType(id: Int, namespace: APINamespace? = .staticClassic, completion: @escaping (_ result: Result<Data, Error>) -> Void) {
-        self.call(endpoint: API.powerType(id), namespace: namespace, completion: completion)
+    public func getPowerType(id: Int, namespace: APINamespace? = .staticClassic) async throws -> Data {
+        return try await call(endpoint: API.powerType(id), namespace: namespace)
     }
     
     
@@ -579,10 +549,9 @@ public struct WS_WorldOfWarcraftClassic: WebService {
      Returns an index of realms.
      
      - parameter namespace: The namespace to use to locate this document.
-     - parameter completion: Returns a Result with the Data if `success` or an HTTPError if `failure`
      */
-    public func getRealmIndex(namespace: APINamespace? = .dynamicClassic, completion: @escaping (_ result: Result<Data, Error>) -> Void) {
-        self.call(endpoint: API.realmIndex, namespace: namespace, completion: completion)
+    public func getRealmIndex(namespace: APINamespace? = .dynamicClassic) async throws -> Data {
+        return try await call(endpoint: API.realmIndex, namespace: namespace)
     }
     
     
@@ -591,10 +560,9 @@ public struct WS_WorldOfWarcraftClassic: WebService {
      
      - parameter slug: The slug of the realm.
      - parameter namespace: The namespace to use to locate this document.
-     - parameter completion: Returns a Result with the Data if `success` or an HTTPError if `failure`
      */
-    public func getRealm(_ slug: String, namespace: APINamespace? = .dynamicClassic, completion: @escaping (_ result: Result<Data, Error>) -> Void) {
-        self.call(endpoint: API.realm(slug), namespace: namespace, completion: completion)
+    public func getRealm(_ slug: String, namespace: APINamespace? = .dynamicClassic) async throws -> Data {
+        return try await call(endpoint: API.realm(slug), namespace: namespace)
     }
     
     
@@ -603,10 +571,9 @@ public struct WS_WorldOfWarcraftClassic: WebService {
      
      - parameter queries: The query parameters to add to the search.
      - parameter namespace: The namespace to use to locate this document.
-     - parameter completion: Returns a Result with the Data if `success` or an HTTPError if `failure`
     */
-    public func searchRealm(queries: [String: String], namespace: APINamespace? = .dynamicClassic, completion: @escaping (_ result: Result<Data, Error>) -> Void) {
-        call(endpoint: API.realmSearch(queries), namespace: namespace, completion: completion)
+    public func searchRealm(queries: [String: String], namespace: APINamespace? = .dynamicClassic) async throws -> Data {
+        return try await call(endpoint: API.realmSearch(queries), namespace: namespace)
     }
     
     
@@ -617,10 +584,9 @@ public struct WS_WorldOfWarcraftClassic: WebService {
      Returns an index of regions.
      
      - parameter namespace: The namespace to use to locate this document.
-     - parameter completion: Returns a Result with the Data if `success` or an HTTPError if `failure`
      */
-    public func getRegionIndex(namespace: APINamespace? = .dynamicClassic, completion: @escaping (_ result: Result<Data, Error>) -> Void) {
-        call(endpoint: API.regionIndex, namespace: namespace, completion: completion)
+    public func getRegionIndex(namespace: APINamespace? = .dynamicClassic) async throws -> Data {
+        return try await call(endpoint: API.regionIndex, namespace: namespace)
     }
     
     
@@ -629,10 +595,9 @@ public struct WS_WorldOfWarcraftClassic: WebService {
      
      - parameter id: The ID of the region.
      - parameter namespace: The namespace to use to locate this document.
-     - parameter completion: Returns a Result with the Data if `success` or an HTTPError if `failure`
      */
-    public func getRegion(id: Int, namespace: APINamespace? = .dynamicClassic, completion: @escaping (_ result: Result<Data, Error>) -> Void) {
-        call(endpoint: API.region(id), namespace: namespace, completion: completion)
+    public func getRegion(id: Int, namespace: APINamespace? = .dynamicClassic) async throws -> Data {
+        return try await call(endpoint: API.region(id), namespace: namespace)
     }
     
     
@@ -643,11 +608,8 @@ public struct WS_WorldOfWarcraftClassic: WebService {
      Returns the WoW Token index.
      
      - parameter namespace: The namespace to use to locate this document.
-     - parameter completion: Returns a Result with the Data if `success` or an HTTPError if `failure`
      */
-    public func getTokenIndex(namespace: APINamespace? = .dynamicClassic, completion: @escaping (_ result: Result<Data, Error>) -> Void) {
-        call(endpoint: API.tokenIndex, namespace: namespace) { result in
-            completion(result)
-        }
+    public func getTokenIndex(namespace: APINamespace? = .dynamicClassic) async throws -> Data {
+        return try await call(endpoint: API.tokenIndex, namespace: namespace)
     }
 }
