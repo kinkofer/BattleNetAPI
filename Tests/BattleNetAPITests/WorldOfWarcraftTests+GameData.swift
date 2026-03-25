@@ -16,31 +16,26 @@ extension WorldOfWarcraftTests {
     // MARK: Achievement API
 
     func testGetAchievementCategoryIndex() async throws {
-        let data = try await battleNetAPI.wow.getAchievementCategoryIndex()
-        BattleNetAPITests.webServiceAsyncTest(data: data, decodable: WOWAchievementCategoryIndex.self)
+        _ = try await battleNetAPI.wow.decoded.getAchievementCategoryIndex()
     }
 
     func testGetAchievementCategory() async throws {
         let id = 81
-        let data = try await battleNetAPI.wow.getAchievementCategory(id: id)
-        BattleNetAPITests.webServiceAsyncTest(data: data, decodable: WOWAchievementCategory.self)
+        _ = try await battleNetAPI.wow.decoded.getAchievementCategory(id: id)
     }
 
     func testGetAchievementIndex() async throws {
-        let data = try await battleNetAPI.wow.getAchievementIndex()
-        BattleNetAPITests.webServiceAsyncTest(data: data, decodable: WOWAchievementIndex.self)
+        _ = try await battleNetAPI.wow.decoded.getAchievements()
     }
 
     func testGetAchievement() async throws {
         let id = 6
-        let data = try await battleNetAPI.wow.getAchievement(id: id)
-        BattleNetAPITests.webServiceAsyncTest(data: data, decodable: WOWAchievement.self)
+        _ = try await battleNetAPI.wow.decoded.getAchievement(id: id)
     }
 
     func testGetAchievementMedia() async throws {
         let id = 6
-        let data = try await battleNetAPI.wow.getAchievementMedia(id: id)
-        BattleNetAPITests.webServiceAsyncTest(data: data, decodable: Media.self)
+        _ = try await battleNetAPI.wow.decoded.getAchievementMedia(id: id)
     }
 
 
@@ -48,8 +43,7 @@ extension WorldOfWarcraftTests {
 
     func testGetAuctions() async throws {
         let connectedRealmID = 121
-        let data = try await battleNetAPI.wow.getAuctions(connectedRealmID: connectedRealmID)
-        BattleNetAPITests.webServiceAsyncTest(data: data, decodable: AuctionIndex.self)
+        _ = try await battleNetAPI.wow.decoded.getAuctions(connectedRealmID: connectedRealmID)
     }
 
 
@@ -75,14 +69,12 @@ extension WorldOfWarcraftTests {
     // MARK: Connected Realm API
 
     func testGetConnectedRealmIndex() async throws {
-        let data = try await battleNetAPI.wow.getConnectedRealmIndex()
-        BattleNetAPITests.webServiceAsyncTest(data: data, decodable: ConnectedRealmIndex.self)
+        _ = try await battleNetAPI.wow.decoded.getConnectedRealmIndex()
     }
 
     func testGetConnectedRealm() async throws {
         let id = 11
-        let data = try await battleNetAPI.wow.getConnectedRealm(id: id)
-        BattleNetAPITests.webServiceAsyncTest(data: data, decodable: ConnectedRealm.self)
+        _ = try await battleNetAPI.wow.decoded.getConnectedRealm(id: id)
     }
 
     func testSearchConnectedRealms() async throws {
@@ -187,8 +179,7 @@ extension WorldOfWarcraftTests {
 
     func testGetItemSet() async throws {
         let setID = 1
-        let data = try await battleNetAPI.wow.getItemSet(id: setID)
-        BattleNetAPITests.webServiceAsyncTest(data: data, decodable: WOWItemSet.self)
+        _ = try await battleNetAPI.wow.decoded.getItemSet(id: setID)
     }
 
     func testGetItemSubclass() async throws {
@@ -197,8 +188,7 @@ extension WorldOfWarcraftTests {
 
     func testGetItem() async throws {
         let id = 19019
-        let data = try await battleNetAPI.wow.getItem(id: id)
-        BattleNetAPITests.webServiceAsyncTest(data: data, decodable: WOWItem.self)
+        _ = try await battleNetAPI.wow.decoded.getItem(id: id)
     }
 
     func testGetItemMedia() async throws {
@@ -278,8 +268,7 @@ extension WorldOfWarcraftTests {
     // MARK: Mount API
 
     func testGetMountIndex() async throws {
-        let data = try await battleNetAPI.wow.getMountIndex()
-        BattleNetAPITests.webServiceAsyncTest(data: data, decodable: MountIndex.self)
+        _ = try await battleNetAPI.wow.decoded.getMountIndex()
     }
 
     func testGetMount() async throws {
@@ -294,14 +283,12 @@ extension WorldOfWarcraftTests {
     // MARK: Mythic Keystone Affix API
 
     func testGetMythicKeystoneAffixIndex() async throws {
-        let data = try await battleNetAPI.wow.getMythicKeystoneAffixIndex()
-        BattleNetAPITests.webServiceAsyncTest(data: data, decodable: KeystoneAffixIndex.self)
+        _ = try await battleNetAPI.wow.decoded.getMythicKeystoneAffixes()
     }
 
     func testGetMythicKeystoneAffix() async throws {
         let id = 1
-        let data = try await battleNetAPI.wow.getMythicKeystoneAffix(id: id)
-        BattleNetAPITests.webServiceAsyncTest(data: data, decodable: KeystoneAffix.self)
+        _ = try await battleNetAPI.wow.decoded.getMythicKeystoneAffix(id: id)
     }
 
     func testGetMythicKeystoneAffixMedia() async throws {
@@ -312,61 +299,52 @@ extension WorldOfWarcraftTests {
     // MARK: Mythic Keystone Dungeon API
 
     func testGetMythicKeystoneDungeonIndex() async throws {
-        let data = try await battleNetAPI.wow.getMythicKeystoneDungeonIndex()
-        BattleNetAPITests.webServiceAsyncTest(data: data, decodable: MythicKeystoneDungeonIndex.self)
+        _ = try await battleNetAPI.wow.decoded.getMythicKeystoneDungeons()
     }
 
     func testGetMythicKeystoneDungeon() async throws {
         let id = 197
-        let data = try await battleNetAPI.wow.getMythicKeystoneDungeon(id: id)
-        BattleNetAPITests.webServiceAsyncTest(data: data, decodable: MythicKeystoneDungeon.self)
+        _ = try await battleNetAPI.wow.decoded.getMythicKeystoneDungeon(id: id)
     }
 
 
-    // MARK: Mythic Keystone Dungeon API
+    // MARK: Mythic Keystone Index API
 
     func testGetMythicKeystoneIndex() async throws {
-        let data = try await battleNetAPI.wow.getMythicKeystoneIndex()
-        BattleNetAPITests.webServiceAsyncTest(data: data, decodable: MythicKeystoneIndex.self)
+        _ = try await battleNetAPI.wow.decoded.getMythicKeystones()
     }
 
     func testGetMythicKeystonePeriodIndex() async throws {
-        let data = try await battleNetAPI.wow.getMythicKeystonePeriodIndex()
-        BattleNetAPITests.webServiceAsyncTest(data: data, decodable: MythicKeystonePeriodIndex.self)
+        _ = try await battleNetAPI.wow.decoded.getMythicKeystonePeriods()
     }
 
     func testGetMythicKeystonePeriod() async throws {
         let id = 880
-        let data = try await battleNetAPI.wow.getMythicKeystonePeriod(id: id)
-        BattleNetAPITests.webServiceAsyncTest(data: data, decodable: MythicKeystonePeriod.self)
+        _ = try await battleNetAPI.wow.decoded.getMythicKeystonePeriod(id: id)
     }
 
     func testGetMythicKeystoneSeasonIndex() async throws {
-        let data = try await battleNetAPI.wow.getMythicKeystoneSeasonIndex()
-        BattleNetAPITests.webServiceAsyncTest(data: data, decodable: MythicKeystoneSeasonIndex.self)
+        _ = try await battleNetAPI.wow.decoded.getMythicKeystoneSeasons()
     }
 
     func testGetMythicKeystoneSeason() async throws {
         let id = 8
-        let data = try await battleNetAPI.wow.getMythicKeystoneSeason(id: id)
-        BattleNetAPITests.webServiceAsyncTest(data: data, decodable: MythicKeystoneSeason.self)
+        _ = try await battleNetAPI.wow.decoded.getMythicKeystoneSeason(id: id)
     }
 
     func testGetMythicLeaderboardIndex() async throws {
         let connectedRealmID = 11
-        let data = try await battleNetAPI.wow.getMythicLeaderboardIndex(connectedRealmID: connectedRealmID)
-        BattleNetAPITests.webServiceAsyncTest(data: data, decodable: MythicLeaderboardIndex.self)
+        _ = try await battleNetAPI.wow.decoded.getMythicLeaderboards(connectedRealmID: connectedRealmID)
     }
-    
-    
+
+
     // MARK: Mythic Keystone Leaderboard API
 
     func testGetMythicLeaderboard() async throws {
         let connectedRealmID = 11
         let dungeonID = 197
         let period = 641
-        let data = try await battleNetAPI.wow.getMythicLeaderboard(connectedRealmID: connectedRealmID, dungeonID: dungeonID, period: period)
-        BattleNetAPITests.webServiceAsyncTest(data: data, decodable: MythicLeaderboard.self)
+        _ = try await battleNetAPI.wow.decoded.getMythicLeaderboard(connectedRealmID: connectedRealmID, dungeonID: dungeonID, period: period)
     }
 
 
@@ -375,16 +353,14 @@ extension WorldOfWarcraftTests {
     func testGetMythicRaidLeaderboard() async throws {
         let raid = "uldir"
         let faction: FactionType = .alliance
-        let data = try await battleNetAPI.wow.getMythicRaidLeaderboard(raid: raid, faction: faction)
-        BattleNetAPITests.webServiceAsyncTest(data: data, decodable: MythicRaidLeaderboard.self)
+        _ = try await battleNetAPI.wow.decoded.getMythicRaidLeaderboard(raid: raid, faction: faction)
     }
 
 
     // MARK: Pet API
 
     func testGetPetIndex() async throws {
-        let data = try await battleNetAPI.wow.getPetIndex()
-        BattleNetAPITests.webServiceAsyncTest(data: data, decodable: PetIndex.self)
+        _ = try await battleNetAPI.wow.decoded.getPetIndex()
     }
 
     func testGetPet() async throws {
@@ -401,8 +377,7 @@ extension WorldOfWarcraftTests {
 
     func testGetPetAbility() async throws {
         let abilityID = 110
-        let data = try await battleNetAPI.wow.getPetAbility(id: abilityID)
-        BattleNetAPITests.webServiceAsyncTest(data: data, decodable: PetAbility.self)
+        _ = try await battleNetAPI.wow.decoded.getPetAbility(id: abilityID)
     }
 
     func testGetPetAbilityMedia() async throws {
@@ -413,14 +388,12 @@ extension WorldOfWarcraftTests {
     // MARK: Playable Class API
 
     func testGetPlayableClassIndex() async throws {
-        let data = try await battleNetAPI.wow.getPlayableClassIndex()
-        BattleNetAPITests.webServiceAsyncTest(data: data, decodable: WOWClassIndex.self)
+        _ = try await battleNetAPI.wow.decoded.getPlayableClasses()
     }
 
     func testGetPlayableClass() async throws {
         let id = 7
-        let data = try await battleNetAPI.wow.getPlayableClass(id: id)
-        BattleNetAPITests.webServiceAsyncTest(data: data, decodable: WOWClass.self)
+        _ = try await battleNetAPI.wow.decoded.getPlayableClass(id: id)
     }
 
     func testGetPlayableClassMedia() async throws {
@@ -429,36 +402,31 @@ extension WorldOfWarcraftTests {
 
     func testGetPlayableClassPvPTalentSlots() async throws {
         let id = 7
-        let data = try await battleNetAPI.wow.getPlayableClassPvPTalentSlots(classID: id)
-        BattleNetAPITests.webServiceAsyncTest(data: data, decodable: PVPTalentSlots.self)
+        _ = try await battleNetAPI.wow.decoded.getPlayableClassPvPTalentSlots(classID: id)
     }
 
 
     // MARK: Playable Race API
 
     func testGetPlayableRaceIndex() async throws {
-        let data = try await battleNetAPI.wow.getPlayableRaceIndex()
-        BattleNetAPITests.webServiceAsyncTest(data: data, decodable: WOWRaceIndex.self)
+        _ = try await battleNetAPI.wow.decoded.getPlayableRaces()
     }
 
     func testGetPlayableRace() async throws {
         let id = 2
-        let data = try await battleNetAPI.wow.getPlayableRace(id: id)
-        BattleNetAPITests.webServiceAsyncTest(data: data, decodable: WOWRace.self)
+        _ = try await battleNetAPI.wow.decoded.getPlayableRace(id: id)
     }
 
 
     // MARK: Playable Specialization API
 
     func testGetPlayableSpecializationIndex() async throws {
-        let data = try await battleNetAPI.wow.getPlayableSpecializationIndex()
-        BattleNetAPITests.webServiceAsyncTest(data: data, decodable: SpecializationIndex.self)
+        _ = try await battleNetAPI.wow.decoded.getPlayableSpecializations()
     }
 
     func testGetPlayableSpecialization() async throws {
         let id = 262
-        let data = try await battleNetAPI.wow.getPlayableSpecialization(id: id)
-        BattleNetAPITests.webServiceAsyncTest(data: data, decodable: Specialization.self)
+        _ = try await battleNetAPI.wow.decoded.getPlayableSpecialization(id: id)
     }
 
     func testGetPlayableSpecializationMedia() async throws { XCTAssert(true) }
@@ -467,14 +435,12 @@ extension WorldOfWarcraftTests {
     // MARK: Power Type API
 
     func testGetPowerTypeIndex() async throws {
-        let data = try await battleNetAPI.wow.getPowerTypeIndex()
-        BattleNetAPITests.webServiceAsyncTest(data: data, decodable: PowerTypeIndex.self)
+        _ = try await battleNetAPI.wow.decoded.getPowerTypes()
     }
 
     func testGetPowerType() async throws {
         let id = 0
-        let data = try await battleNetAPI.wow.getPowerType(id: id)
-        BattleNetAPITests.webServiceAsyncTest(data: data, decodable: PowerType.self)
+        _ = try await battleNetAPI.wow.decoded.getPowerType(id: id)
     }
 
 
@@ -487,8 +453,7 @@ extension WorldOfWarcraftTests {
 
     func testGetRecipe() async throws {
         let id = 1631
-        let data = try await battleNetAPI.wow.getRecipe(id: id)
-        BattleNetAPITests.webServiceAsyncTest(data: data, decodable: WOWRecipe.self)
+        _ = try await battleNetAPI.wow.decoded.getRecipe(id: id)
     }
 
     func testGetRecipeMedia() async throws { XCTAssert(true) }
@@ -499,13 +464,12 @@ extension WorldOfWarcraftTests {
     func testGetPvPSeasonIndex() async throws { XCTAssert(true) }
     func testGetPvPSeason() async throws { XCTAssert(true) }
     func testGetPvPLeaderboardIndex() async throws { XCTAssert(true) }
-    
+
     func testGetPvPLeaderboard() async throws {
         let season = 33
-        let data = try await battleNetAPI.wow.getPvPLeaderboard(pvpSeasonID: season, pvpBracket: ._3v3)
-        BattleNetAPITests.webServiceAsyncTest(data: data, decodable: WOWLeaderboard.self)
+        _ = try await battleNetAPI.wow.decoded.getPvPLeaderboard(season: season, bracket: ._3v3)
     }
-    
+
     func testGetPvPRewardIndex() async throws { XCTAssert(true) }
 
 
@@ -522,8 +486,7 @@ extension WorldOfWarcraftTests {
 
     func testGetQuest() async throws {
         let id = 2
-        let data = try await battleNetAPI.wow.getQuest(id: id)
-        BattleNetAPITests.webServiceAsyncTest(data: data, decodable: WOWQuest.self)
+        _ = try await battleNetAPI.wow.decoded.getQuest(id: id)
     }
 
     func testGetQuestCategoryIndex() async throws { XCTAssert(true) }
@@ -537,14 +500,12 @@ extension WorldOfWarcraftTests {
     // MARK: Realm API
 
     func testGetRealmIndex() async throws {
-        let data = try await battleNetAPI.wow.getRealmIndex()
-        BattleNetAPITests.webServiceAsyncTest(data: data, decodable: RealmIndexResult.self)
+        _ = try await battleNetAPI.wow.decoded.getRealmIndex()
     }
 
     func testGetRealm() async throws {
         let realmSlug = "tichondrius"
-        let data = try await battleNetAPI.wow.getRealm(realmSlug)
-        BattleNetAPITests.webServiceAsyncTest(data: data, decodable: Realm.self)
+        _ = try await battleNetAPI.wow.decoded.getRealm(slug: realmSlug)
     }
 
     func testSearchRealm() async throws { XCTAssert(true) }
@@ -553,14 +514,12 @@ extension WorldOfWarcraftTests {
     // MARK: Region API
 
     func testGetRegionIndex() async throws {
-        let data = try await battleNetAPI.wow.getRegionIndex()
-        BattleNetAPITests.webServiceAsyncTest(data: data, decodable: RegionIndexResult.self)
+        _ = try await battleNetAPI.wow.decoded.getRegions()
     }
 
     func testGetRegion() async throws {
         let id = 1
-        let data = try await battleNetAPI.wow.getRegion(id: id)
-        BattleNetAPITests.webServiceAsyncTest(data: data, decodable: Region.self)
+        _ = try await battleNetAPI.wow.decoded.getRegion(id: id)
     }
 
 
@@ -576,8 +535,7 @@ extension WorldOfWarcraftTests {
 
     func testGetSpell() async throws {
         let id = 196607
-        let data = try await battleNetAPI.wow.getSpell(id: id)
-        BattleNetAPITests.webServiceAsyncTest(data: data, decodable: Spell.self)
+        _ = try await battleNetAPI.wow.decoded.getSpell(id: id)
     }
 
     func testGetSpellMedia() async throws { XCTAssert(true) }
@@ -610,7 +568,6 @@ extension WorldOfWarcraftTests {
     // MARK: Token API
 
     func testGetTokenIndex() async throws {
-        let data = try await battleNetAPI.wow.getTokenIndex()
-        BattleNetAPITests.webServiceAsyncTest(data: data, decodable: TokenIndex.self)
+        _ = try await battleNetAPI.wow.decoded.getTokens()
     }
 }

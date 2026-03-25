@@ -45,8 +45,7 @@ class StarCraft2Tests: XCTestCase {
         let queue: LeagueQueue = .lotV1v1
         let team: LeagueTeam = .arranged
         let league: LeagueType = .grandmaster
-        let data = try await battleNetAPI.sc2.getLeagueData(seasonID: seasonID, queue: queue, team: team, league: league)
-        BattleNetAPITests.webServiceAsyncTest(data: data, decodable: League.self)
+        _ = try await battleNetAPI.sc2.decoded.getLeagueData(seasonID: seasonID, queue: queue, team: team, league: league)
     }
 
 
@@ -57,8 +56,7 @@ class StarCraft2Tests: XCTestCase {
 
     func testGetProfileData() async throws {
         let sc2Region: APIRegion = .us
-        let data = try await battleNetAPI.sc2.getProfileData(sc2Region: sc2Region)
-        BattleNetAPITests.webServiceAsyncTest(data: data, decodable: SC2ProfileData.self)
+        _ = try await battleNetAPI.sc2.decoded.getProfileData(sc2Region: sc2Region)
     }
 
 
@@ -66,8 +64,7 @@ class StarCraft2Tests: XCTestCase {
         let profileID = 266515
         let sc2Region: APIRegion = .us
         let realmID = 1
-        let data = try await battleNetAPI.sc2.getProfileMetadata(id: profileID, sc2Region: sc2Region, realmID: realmID)
-        BattleNetAPITests.webServiceAsyncTest(data: data, decodable: SC2ProfileMetadata.self)
+        _ = try await battleNetAPI.sc2.decoded.getProfileMetadata(id: profileID, sc2Region: sc2Region, realmID: realmID)
     }
 
 
@@ -75,8 +72,7 @@ class StarCraft2Tests: XCTestCase {
         let profileID = 266515
         let sc2Region: APIRegion = .us
         let realmID = 1
-        let data = try await battleNetAPI.sc2.getProfile(id: profileID, sc2Region: sc2Region, realmID: realmID)
-        BattleNetAPITests.webServiceAsyncTest(data: data, decodable: SC2Profile.self)
+        _ = try await battleNetAPI.sc2.decoded.getProfile(id: profileID, sc2Region: sc2Region, realmID: realmID)
     }
 
 
@@ -84,8 +80,7 @@ class StarCraft2Tests: XCTestCase {
         let profileID = 7895938
         let sc2Region: APIRegion = .us
         let realmID = 1
-        let data = try await battleNetAPI.sc2.getLadderSummary(profileID: profileID, sc2Region: sc2Region, realmID: realmID)
-        BattleNetAPITests.webServiceAsyncTest(data: data, decodable: LadderSummary.self)
+        _ = try await battleNetAPI.sc2.decoded.getLadderSummary(profileID: profileID, sc2Region: sc2Region, realmID: realmID)
     }
 
 
@@ -94,8 +89,7 @@ class StarCraft2Tests: XCTestCase {
         let profileID = 2060165
         let sc2Region: APIRegion = .us
         let realmID = 1
-        let data = try await battleNetAPI.sc2.getLadder(id: ladderID, profileID: profileID, sc2Region: sc2Region, realmID: realmID)
-        BattleNetAPITests.webServiceAsyncTest(data: data, decodable: Ladder.self)
+        _ = try await battleNetAPI.sc2.decoded.getLadder(id: ladderID, profileID: profileID, sc2Region: sc2Region, realmID: realmID)
     }
 
 
@@ -103,15 +97,13 @@ class StarCraft2Tests: XCTestCase {
 
     func testGetGrandmasterLeaderboard() async throws {
         let sc2Region: APIRegion = .us
-        let data = try await battleNetAPI.sc2.getGrandmasterLeaderboard(sc2Region: sc2Region)
-        BattleNetAPITests.webServiceAsyncTest(data: data, decodable: GrandmasterLeaderboard.self)
+        _ = try await battleNetAPI.sc2.decoded.getGrandmasterLeaderboard(sc2Region: sc2Region)
     }
 
 
     func testGetLadderSeason() async throws {
         let sc2Region: APIRegion = .us
-        let data = try await battleNetAPI.sc2.getLadderSeason(sc2Region: sc2Region)
-        BattleNetAPITests.webServiceAsyncTest(data: data, decodable: SC2Season.self)
+        _ = try await battleNetAPI.sc2.decoded.getLadderSeason(sc2Region: sc2Region)
     }
 
 
@@ -120,8 +112,6 @@ class StarCraft2Tests: XCTestCase {
 
     func testGetPlayers() async throws {
         let accountID = 8
-        let data = try await battleNetAPI.sc2.getPlayer(accountID: accountID)
-        BattleNetAPITests.webServiceAsyncTest(data: data, decodable: [SC2ProfileMetadata].self)
+        _ = try await battleNetAPI.sc2.decoded.getPlayer(accountID: accountID)
     }
-
 }

@@ -50,9 +50,9 @@ extension Decoded where WebService == WS_WorldOfWarcraft {
     
     // MARK: Connected Realm API
     
-    public func getConnectedRealmIndex() async throws -> [Link<ConnectedRealm>] {
+    public func getConnectedRealmIndex() async throws -> ConnectedRealmIndex {
         let data = try await webService.getConnectedRealmIndex()
-        return try ConnectedRealmIndex.decode(from: data).connectedRealms
+        return try ConnectedRealmIndex.decode(from: data)
     }
     
     public func getConnectedRealm(id: Int) async throws -> ConnectedRealm {
