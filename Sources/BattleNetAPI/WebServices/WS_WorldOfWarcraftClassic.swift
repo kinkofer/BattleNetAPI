@@ -1,6 +1,6 @@
 //
-//  File.swift
-//  
+//  WS_WorldOfWarcraftClassic.swift
+//
 //
 //  Created by Christopher Jennewein on 2/13/21.
 //
@@ -11,6 +11,9 @@ import Foundation
 public struct WS_WorldOfWarcraftClassic: WebService {
     public enum API: APICall {
         // Game Data APIs
+        case auctionHouseIndex(connectedRealmID: Int)
+        case auctionHouse(connectedRealmID: Int, auctionHouseID: Int)
+        
         case connectedRealmIndex
         case connectedRealm(Int)
         case connectedRealmSearch([String: String]?)
@@ -58,17 +61,29 @@ public struct WS_WorldOfWarcraftClassic: WebService {
         
         case tokenIndex
         
+        case pvpRegionIndex
+        case pvpRegionSeasonIndex(pvpRegionID: Int)
+        case pvpRegionSeason(pvpRegionID: Int, pvpSeasonID: Int)
+        case pvpRegionSeasonLeaderboardIndex(pvpRegionID: Int, pvpSeasonID: Int)
+        case pvpRegionSeasonLeaderboard(pvpRegionID: Int, pvpSeasonID: Int, pvpBracket: WOWLeaderboardBracket)
+        case pvpRegionSeasonRewardIndex(pvpRegionID: Int, pvpSeasonID: Int)
+        
         
         var path: String {
             switch self {
             // Game Data APIs
+            case .auctionHouseIndex(connectedRealmID: let connectedRealmID):
+                return "/connected-realm/\(connectedRealmID)/auctions/index"
+            case .auctionHouse(connectedRealmID: let connectedRealmID, auctionHouseID: let auctionHouseID):
+                return "/connected-realm/\(connectedRealmID)/auctions/\(auctionHouseID)"
+                
             case .connectedRealmIndex:
                 return "/connected-realm/index"
             case .connectedRealm(let id):
                 return "/connected-realm/\(id)"
             case .connectedRealmSearch:
                 return "/search/connected-realm"
-            
+                
             case .creatureFamilyIndex:
                 return "/creature-family/index"
             case .creatureFamily(let id):
@@ -85,14 +100,14 @@ public struct WS_WorldOfWarcraftClassic: WebService {
                 return "/media/creature-display/\(id)"
             case .creatureFamilyMedia(let id):
                 return "/media/creature-family/\(id)"
-            
+                
             case .guildCrestIndex:
                 return "/guild-crest/index"
             case .guildCrestBorderMedia(let id):
                 return "/media/guild-crest/border/\(id)"
             case .guildCrestEmblemMedia(let id):
                 return "/media/guild-crest/emblem/\(id)"
-            
+                
             case .itemClassIndex:
                 return "/item-class/index"
             case .itemClass(let id):
@@ -109,58 +124,74 @@ public struct WS_WorldOfWarcraftClassic: WebService {
                 return "/media/item/\(id)"
             case .itemSearch:
                 return "/search/item"
-            
+                
             case .mediaSearch:
                 return "/search/media"
-            
+                
             case .playableClassIndex:
                 return "/playable-class/index"
             case .playableClass(let id):
                 return "/playable-class/\(id)"
             case .playableClassMedia(let id):
                 return "/media/playable-class/\(id)"
-            
+                
             case .playableRaceIndex:
                 return "/playable-race/index"
             case .playableRace(let id):
                 return "/playable-race/\(id)"
-            
+                
             case .powerTypeIndex:
                 return "/power-type/index"
             case .powerType(let id):
                 return "/power-type/\(id)"
-            
+                
             case .realmIndex:
                 return "/realm/index"
             case .realm(let slug):
                 return "/realm/\(slug)"
             case .realmSearch:
                 return "/search/realm"
-            
+                
             case .regionIndex:
                 return "/region/index"
             case .region(let id):
                 return "/region/\(id)"
-            
+                
             case .tokenIndex:
                 return "/token/index"
+                
+            case .pvpRegionIndex:
+                return "/pvp-region/index"
+            case .pvpRegionSeasonIndex(pvpRegionID: let pvpRegionID):
+                return "/pvp-region/\(pvpRegionID)/pvp-season/index"
+            case .pvpRegionSeason(pvpRegionID: let pvpRegionID, pvpSeasonID: let pvpSeasonID):
+                return "/pvp-region/\(pvpRegionID)/pvp-season/\(pvpSeasonID)"
+            case .pvpRegionSeasonLeaderboardIndex(pvpRegionID: let pvpRegionID, pvpSeasonID: let pvpSeasonID):
+                return "/pvp-region/\(pvpRegionID)/pvp-season/\(pvpSeasonID)/pvp-leaderboard/index"
+            case .pvpRegionSeasonLeaderboard(pvpRegionID: let pvpRegionID, pvpSeasonID: let pvpSeasonID, pvpBracket: let pvpBracket):
+                return "/pvp-region/\(pvpRegionID)/pvp-season/\(pvpSeasonID)/pvp-leaderboard/\(pvpBracket.rawValue)"
+            case .pvpRegionSeasonRewardIndex(pvpRegionID: let pvpRegionID, pvpSeasonID: let pvpSeasonID):
+                return "/pvp-region/\(pvpRegionID)/pvp-season/\(pvpSeasonID)/pvp-reward/index"
             }
         }
         
         
         var apiType: APIType? {
             switch self {
-            case .connectedRealmIndex, .connectedRealm, .connectedRealmSearch,
-                 .creatureFamilyIndex, .creatureFamily, .creatureTypeIndex, .creatureType, .creature, .creatureSearch, .creatureDisplayMedia, .creatureFamilyMedia,
-                 .guildCrestIndex, .guildCrestBorderMedia, .guildCrestEmblemMedia,
-                 .itemClassIndex, .itemClass, .itemSetIndex, .itemSet, .itemSubclass, .item, .itemMedia, .itemSearch,
-                 .mediaSearch,
-                 .playableClassIndex, .playableClass, .playableClassMedia,
-                 .playableRaceIndex, .playableRace,
-                 .powerTypeIndex, .powerType,
-                 .realmIndex, .realm, .realmSearch,
-                 .regionIndex, .region,
-                 .tokenIndex:
+            case .auctionHouseIndex, .auctionHouse,
+                    .connectedRealmIndex, .connectedRealm, .connectedRealmSearch,
+                    .creatureFamilyIndex, .creatureFamily, .creatureTypeIndex, .creatureType, .creature, .creatureSearch, .creatureDisplayMedia, .creatureFamilyMedia,
+                    .guildCrestIndex, .guildCrestBorderMedia, .guildCrestEmblemMedia,
+                    .itemClassIndex, .itemClass, .itemSetIndex, .itemSet, .itemSubclass, .item, .itemMedia, .itemSearch,
+                    .mediaSearch,
+                    .playableClassIndex, .playableClass, .playableClassMedia,
+                    .playableRaceIndex, .playableRace,
+                    .powerTypeIndex, .powerType,
+                    .realmIndex, .realm, .realmSearch,
+                    .regionIndex, .region,
+                    .tokenIndex,
+                    .pvpRegionIndex, .pvpRegionSeasonIndex, .pvpRegionSeason,
+                    .pvpRegionSeasonLeaderboardIndex, .pvpRegionSeasonLeaderboard, .pvpRegionSeasonRewardIndex:
                 return .gameData
             }
         }
@@ -177,7 +208,7 @@ public struct WS_WorldOfWarcraftClassic: WebService {
         var queries: [String: String]? {
             switch self {
             case .connectedRealmSearch(let queries), .creatureSearch(let queries), .itemSearch(let queries),
-                 .mediaSearch(let queries), .realmSearch(let queries):
+                    .mediaSearch(let queries), .realmSearch(let queries):
                 return queries
             default: return nil
             }
@@ -197,6 +228,32 @@ public struct WS_WorldOfWarcraftClassic: WebService {
     
     
     // MARK: - Game Data API
+    
+    // MARK: Auction House API
+    
+    /**
+     Returns an index of auction houses for a connected realm.
+     
+     - parameter connectedRealmID: The ID of the connected realm.
+     - parameter namespace: The namespace to use to locate this document.
+     */
+    public func getAuctionHouseIndex(connectedRealmID: Int, namespace: APINamespace? = .dynamicClassic) async throws -> Data {
+        return try await call(endpoint: API.auctionHouseIndex(connectedRealmID: connectedRealmID), namespace: namespace)
+    }
+    
+    
+    /**
+     Returns a single auction house by auction house ID.
+     
+     - parameter connectedRealmID: The ID of the connected realm.
+     - parameter auctionHouseID: The ID of the auction house.
+     - parameter namespace: The namespace to use to locate this document.
+     */
+    public func getAuctionHouse(connectedRealmID: Int, auctionHouseID: Int, namespace: APINamespace? = .dynamicClassic) async throws -> Data {
+        return try await call(endpoint: API.auctionHouse(connectedRealmID: connectedRealmID, auctionHouseID: auctionHouseID), namespace: namespace)
+    }
+    
+    
     
     // MARK: Connected Realm API
     
@@ -292,7 +349,7 @@ public struct WS_WorldOfWarcraftClassic: WebService {
      
      - parameter queries: The query parameters to add to the search.
      - parameter namespace: The namespace to use to locate this document.
-    */
+     */
     public func searchCreature(queries: [String: String], namespace: APINamespace? = .staticClassic) async throws -> Data {
         return try await call(endpoint: API.creatureSearch(queries), namespace: namespace)
     }
@@ -439,7 +496,7 @@ public struct WS_WorldOfWarcraftClassic: WebService {
      
      - parameter queries: The query parameters to add to the search.
      - parameter namespace: The namespace to use to locate this document.
-    */
+     */
     public func searchItem(queries: [String: String], namespace: APINamespace? = .staticClassic) async throws -> Data {
         return try await call(endpoint: API.itemSearch(queries), namespace: namespace)
     }
@@ -453,7 +510,7 @@ public struct WS_WorldOfWarcraftClassic: WebService {
      
      - parameter queries: The query parameters to add to the search.
      - parameter namespace: The namespace to use to locate this document.
-    */
+     */
     public func searchMedia(queries: [String: String], namespace: APINamespace? = .staticClassic) async throws -> Data {
         return try await call(endpoint: API.mediaSearch(queries), namespace: namespace)
     }
@@ -571,7 +628,7 @@ public struct WS_WorldOfWarcraftClassic: WebService {
      
      - parameter queries: The query parameters to add to the search.
      - parameter namespace: The namespace to use to locate this document.
-    */
+     */
     public func searchRealm(queries: [String: String], namespace: APINamespace? = .dynamicClassic) async throws -> Data {
         return try await call(endpoint: API.realmSearch(queries), namespace: namespace)
     }
@@ -611,5 +668,78 @@ public struct WS_WorldOfWarcraftClassic: WebService {
      */
     public func getTokenIndex(namespace: APINamespace? = .dynamicClassic) async throws -> Data {
         return try await call(endpoint: API.tokenIndex, namespace: namespace)
+    }
+    
+    
+    
+    // MARK: PvP Season API
+    
+    /**
+     Returns an index of PvP regions.
+     
+     - parameter namespace: The namespace to use to locate this document.
+     */
+    public func getPvPRegionIndex(namespace: APINamespace? = .dynamicClassic) async throws -> Data {
+        return try await call(endpoint: API.pvpRegionIndex, namespace: namespace)
+    }
+    
+    
+    /**
+     Returns an index of PvP seasons for a given PvP region.
+     
+     - parameter pvpRegionID: The ID of the PvP region.
+     - parameter namespace: The namespace to use to locate this document.
+     */
+    public func getPvPRegionSeasonIndex(pvpRegionID: Int, namespace: APINamespace? = .dynamicClassic) async throws -> Data {
+        return try await call(endpoint: API.pvpRegionSeasonIndex(pvpRegionID: pvpRegionID), namespace: namespace)
+    }
+    
+    
+    /**
+     Returns a PvP season by region and season ID.
+     
+     - parameter pvpRegionID: The ID of the PvP region.
+     - parameter pvpSeasonID: The ID of the PvP season.
+     - parameter namespace: The namespace to use to locate this document.
+     */
+    public func getPvPRegionSeason(pvpRegionID: Int, pvpSeasonID: Int, namespace: APINamespace? = .dynamicClassic) async throws -> Data {
+        return try await call(endpoint: API.pvpRegionSeason(pvpRegionID: pvpRegionID, pvpSeasonID: pvpSeasonID), namespace: namespace)
+    }
+    
+    
+    /**
+     Returns an index of PvP leaderboards for a region and season.
+     
+     - parameter pvpRegionID: The ID of the PvP region.
+     - parameter pvpSeasonID: The ID of the PvP season.
+     - parameter namespace: The namespace to use to locate this document.
+     */
+    public func getPvPRegionSeasonLeaderboardIndex(pvpRegionID: Int, pvpSeasonID: Int, namespace: APINamespace? = .dynamicClassic) async throws -> Data {
+        return try await call(endpoint: API.pvpRegionSeasonLeaderboardIndex(pvpRegionID: pvpRegionID, pvpSeasonID: pvpSeasonID), namespace: namespace)
+    }
+    
+    
+    /**
+     Returns the PvP leaderboard for a given bracket in a region and season.
+     
+     - parameter pvpRegionID: The ID of the PvP region.
+     - parameter pvpSeasonID: The ID of the PvP season.
+     - parameter pvpBracket: The PvP bracket.
+     - parameter namespace: The namespace to use to locate this document.
+     */
+    public func getPvPRegionSeasonLeaderboard(pvpRegionID: Int, pvpSeasonID: Int, pvpBracket: WOWLeaderboardBracket, namespace: APINamespace? = .dynamicClassic) async throws -> Data {
+        return try await call(endpoint: API.pvpRegionSeasonLeaderboard(pvpRegionID: pvpRegionID, pvpSeasonID: pvpSeasonID, pvpBracket: pvpBracket), namespace: namespace)
+    }
+    
+    
+    /**
+     Returns an index of PvP rewards for a region and season.
+     
+     - parameter pvpRegionID: The ID of the PvP region.
+     - parameter pvpSeasonID: The ID of the PvP season.
+     - parameter namespace: The namespace to use to locate this document.
+     */
+    public func getPvPRegionSeasonRewardIndex(pvpRegionID: Int, pvpSeasonID: Int, namespace: APINamespace? = .dynamicClassic) async throws -> Data {
+        return try await call(endpoint: API.pvpRegionSeasonRewardIndex(pvpRegionID: pvpRegionID, pvpSeasonID: pvpSeasonID), namespace: namespace)
     }
 }

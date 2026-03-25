@@ -18,7 +18,7 @@ extension WS_WorldOfWarcraft {
      Returns an index of achievements.
      
      - parameter namespace: The namespace to use to locate this document.
-    */
+     */
     public func getAchievementIndex(namespace: APINamespace? = .static) async throws -> Data {
         return try await call(endpoint: API.achievementIndex, namespace: namespace)
     }
@@ -29,7 +29,7 @@ extension WS_WorldOfWarcraft {
      
      - parameter id: The ID of the achievement.
      - parameter namespace: The namespace to use to locate this document.
-    */
+     */
     public func getAchievement(id: Int, namespace: APINamespace? = .static) async throws -> Data {
         return try await call(endpoint: API.achievement(id), namespace: namespace)
     }
@@ -40,7 +40,7 @@ extension WS_WorldOfWarcraft {
      
      - parameter id: The ID of the achievement.
      - parameter namespace: The namespace to use to locate this document.
-    */
+     */
     public func getAchievementMedia(id: Int, namespace: APINamespace? = .static) async throws -> Data {
         return try await call(endpoint: API.achievementMedia(id), namespace: namespace)
     }
@@ -50,7 +50,7 @@ extension WS_WorldOfWarcraft {
      Returns an index of achievement categories.
      
      - parameter namespace: The namespace to use to locate this document.
-    */
+     */
     public func getAchievementCategoryIndex(namespace: APINamespace? = .static) async throws -> Data {
         return try await call(endpoint: API.achievementCategoryIndex, namespace: namespace)
     }
@@ -61,7 +61,7 @@ extension WS_WorldOfWarcraft {
      
      - parameter id: The ID of the achievement category.
      - parameter namespace: The namespace to use to locate this document.
-    */
+     */
     public func getAchievementCategory(id: Int, namespace: APINamespace? = .static) async throws -> Data {
         return try await call(endpoint: API.achievementCategory(id), namespace: namespace)
     }
@@ -87,6 +87,16 @@ extension WS_WorldOfWarcraft {
     }
     
     
+    /**
+     Returns all active auctions for commodity items for the entire game region.
+     
+     - parameter namespace: The namespace to use to locate this document.
+     */
+    public func getAuctionCommodities(namespace: APINamespace? = .dynamic) async throws -> Data {
+        return try await call(endpoint: API.auctionCommodities, namespace: namespace)
+    }
+    
+    
     
     // MARK: Azerite Essence API
     
@@ -94,7 +104,7 @@ extension WS_WorldOfWarcraft {
      Returns an index of azerite essences.
      
      - parameter namespace: The namespace to use to locate this document.
-    */
+     */
     public func getAzeriteEssenceIndex(namespace: APINamespace? = .static) async throws -> Data {
         return try await call(endpoint: API.azeriteEssenceIndex, namespace: namespace)
     }
@@ -105,7 +115,7 @@ extension WS_WorldOfWarcraft {
      
      - parameter id: The ID of the azerite essence.
      - parameter namespace: The namespace to use to locate this document.
-    */
+     */
     public func getAzeriteEssence(id: Int, namespace: APINamespace? = .static) async throws -> Data {
         return try await call(endpoint: API.azeriteEssence(id), namespace: namespace)
     }
@@ -116,7 +126,7 @@ extension WS_WorldOfWarcraft {
      
      - parameter queries: The fields and values to search.
      - parameter namespace: The namespace to use to locate this document.
-    */
+     */
     public func searchAzeriteEssence(queries: [String: String], namespace: APINamespace? = .static) async throws -> Data {
         return try await call(endpoint: API.azeriteEssenceSearch(queries), namespace: namespace)
     }
@@ -127,7 +137,7 @@ extension WS_WorldOfWarcraft {
      
      - parameter id: The ID of the azerite essence.
      - parameter namespace: The namespace to use to locate this document.
-    */
+     */
     public func getAzeriteEssenceMedia(id: Int, namespace: APINamespace? = .static) async throws -> Data {
         return try await call(endpoint: API.azeriteEssenceMedia(id), namespace: namespace)
     }
@@ -370,6 +380,30 @@ extension WS_WorldOfWarcraft {
     
     
     
+    // MARK: Heirloom API
+    
+    /**
+     Returns an index of heirlooms.
+     
+     - parameter namespace: The namespace to use to locate this document.
+     */
+    public func getHeirloomIndex(namespace: APINamespace? = .static) async throws -> Data {
+        return try await call(endpoint: API.heirloomIndex, namespace: namespace)
+    }
+    
+    
+    /**
+     Returns an heirloom by ID.
+     
+     - parameter id: The ID of the heirloom.
+     - parameter namespace: The namespace to use to locate this document.
+     */
+    public func getHeirloom(id: Int, namespace: APINamespace? = .static) async throws -> Data {
+        return try await call(endpoint: API.heirloom(id), namespace: namespace)
+    }
+    
+    
+    
     // MARK: Item API
     
     public func getItemClassIndex(namespace: APINamespace? = .static) async throws -> Data {
@@ -402,6 +436,83 @@ extension WS_WorldOfWarcraft {
     
     public func searchItem(queries: [String: String], namespace: APINamespace? = .static) async throws -> Data {
         return try await call(endpoint: API.itemSearch(queries), namespace: namespace)
+    }
+    
+    
+    
+    // MARK: Item Appearance API
+    
+    /**
+     Returns an index of item appearances.
+     
+     - parameter namespace: The namespace to use to locate this document.
+     */
+    public func getItemAppearanceIndex(namespace: APINamespace? = .static) async throws -> Data {
+        return try await call(endpoint: API.itemAppearanceIndex, namespace: namespace)
+    }
+    
+    
+    /**
+     Returns an item appearance by ID.
+     
+     - parameter id: The ID of the item appearance.
+     - parameter namespace: The namespace to use to locate this document.
+     */
+    public func getItemAppearance(id: Int, namespace: APINamespace? = .static) async throws -> Data {
+        return try await call(endpoint: API.itemAppearance(id), namespace: namespace)
+    }
+    
+    
+    /**
+     Returns an index of item appearance sets.
+     
+     - parameter namespace: The namespace to use to locate this document.
+     */
+    public func getItemAppearanceSetIndex(namespace: APINamespace? = .static) async throws -> Data {
+        return try await call(endpoint: API.itemAppearanceSetIndex, namespace: namespace)
+    }
+    
+    
+    /**
+     Returns an item appearance set by ID.
+     
+     - parameter id: The ID of the item appearance set.
+     - parameter namespace: The namespace to use to locate this document.
+     */
+    public func getItemAppearanceSet(id: Int, namespace: APINamespace? = .static) async throws -> Data {
+        return try await call(endpoint: API.itemAppearanceSet(id), namespace: namespace)
+    }
+    
+    
+    /**
+     Returns an index of item appearance slots.
+     
+     - parameter namespace: The namespace to use to locate this document.
+     */
+    public func getItemAppearanceSlotIndex(namespace: APINamespace? = .static) async throws -> Data {
+        return try await call(endpoint: API.itemAppearanceSlotIndex, namespace: namespace)
+    }
+    
+    
+    /**
+     Returns an item appearance by slot type.
+     
+     - parameter slotType: The slot type string.
+     - parameter namespace: The namespace to use to locate this document.
+     */
+    public func getItemAppearanceBySlot(slotType: String, namespace: APINamespace? = .static) async throws -> Data {
+        return try await call(endpoint: API.itemAppearanceBySlot(slotType), namespace: namespace)
+    }
+    
+    
+    /**
+     Performs a search of item appearances.
+     
+     - parameter queries: The fields and values to search.
+     - parameter namespace: The namespace to use to locate this document.
+     */
+    public func searchItemAppearance(queries: [String: String], namespace: APINamespace? = .static) async throws -> Data {
+        return try await call(endpoint: API.itemAppearanceSearch(queries), namespace: namespace)
     }
     
     
@@ -834,6 +945,42 @@ extension WS_WorldOfWarcraft {
     
     
     
+    // MARK: Talent Tree API
+    
+    /**
+     Returns an index of talent trees.
+     
+     - parameter namespace: The namespace to use to locate this document.
+     */
+    public func getTalentTreeIndex(namespace: APINamespace? = .static) async throws -> Data {
+        return try await call(endpoint: API.talentTreeIndex, namespace: namespace)
+    }
+    
+    
+    /**
+     Returns a talent tree by ID.
+     
+     - parameter id: The ID of the talent tree.
+     - parameter namespace: The namespace to use to locate this document.
+     */
+    public func getTalentTree(id: Int, namespace: APINamespace? = .static) async throws -> Data {
+        return try await call(endpoint: API.talentTree(id), namespace: namespace)
+    }
+    
+    
+    /**
+     Returns talent tree nodes for a given specialization within a talent tree.
+     
+     - parameter treeID: The ID of the talent tree.
+     - parameter specID: The ID of the playable specialization.
+     - parameter namespace: The namespace to use to locate this document.
+     */
+    public func getTalentTreeNodesForSpecialization(treeID: Int, specID: Int, namespace: APINamespace? = .static) async throws -> Data {
+        return try await call(endpoint: API.talentTreeNodesForSpecialization(treeID: treeID, specID: specID), namespace: namespace)
+    }
+    
+    
+    
     // MARK: Tech Talent API
     
     public func getTechTalentTreeIndex(namespace: APINamespace? = .static) async throws -> Data {
@@ -874,5 +1021,193 @@ extension WS_WorldOfWarcraft {
     
     public func getTokenIndex(namespace: APINamespace? = .dynamic) async throws -> Data {
         return try await call(endpoint: API.tokenIndex, namespace: namespace)
+    }
+    
+    
+    
+    // MARK: Toy API
+    
+    /**
+     Returns an index of toys.
+     
+     - parameter namespace: The namespace to use to locate this document.
+     */
+    public func getToyIndex(namespace: APINamespace? = .static) async throws -> Data {
+        return try await call(endpoint: API.toyIndex, namespace: namespace)
+    }
+    
+    
+    /**
+     Returns a toy by ID.
+     
+     - parameter id: The ID of the toy.
+     - parameter namespace: The namespace to use to locate this document.
+     */
+    public func getToy(id: Int, namespace: APINamespace? = .static) async throws -> Data {
+        return try await call(endpoint: API.toy(id), namespace: namespace)
+    }
+    
+    
+    
+    // MARK: Player Housing API
+    
+    /**
+     Returns an index of decor items.
+     
+     - parameter namespace: The namespace to use to locate this document.
+     */
+    public func getDecorIndex(namespace: APINamespace? = .static) async throws -> Data {
+        return try await call(endpoint: API.decorIndex, namespace: namespace)
+    }
+    
+    
+    /**
+     Returns a decor item by ID.
+     
+     - parameter id: The ID of the decor item.
+     - parameter namespace: The namespace to use to locate this document.
+     */
+    public func getDecor(id: Int, namespace: APINamespace? = .static) async throws -> Data {
+        return try await call(endpoint: API.decor(id), namespace: namespace)
+    }
+    
+    
+    /**
+     Performs a search of decor items.
+     
+     - parameter queries: The fields and values to search.
+     - parameter namespace: The namespace to use to locate this document.
+     */
+    public func searchDecor(queries: [String: String], namespace: APINamespace? = .static) async throws -> Data {
+        return try await call(endpoint: API.decorSearch(queries), namespace: namespace)
+    }
+    
+    
+    /**
+     Returns an index of fixtures.
+     
+     - parameter namespace: The namespace to use to locate this document.
+     */
+    public func getFixtureIndex(namespace: APINamespace? = .static) async throws -> Data {
+        return try await call(endpoint: API.fixtureIndex, namespace: namespace)
+    }
+    
+    
+    /**
+     Returns a fixture by ID.
+     
+     - parameter id: The ID of the fixture.
+     - parameter namespace: The namespace to use to locate this document.
+     */
+    public func getFixture(id: Int, namespace: APINamespace? = .static) async throws -> Data {
+        return try await call(endpoint: API.fixture(id), namespace: namespace)
+    }
+    
+    
+    /**
+     Performs a search of fixtures.
+     
+     - parameter queries: The fields and values to search.
+     - parameter namespace: The namespace to use to locate this document.
+     */
+    public func searchFixture(queries: [String: String], namespace: APINamespace? = .static) async throws -> Data {
+        return try await call(endpoint: API.fixtureSearch(queries), namespace: namespace)
+    }
+    
+    
+    /**
+     Returns an index of fixture hooks.
+     
+     - parameter namespace: The namespace to use to locate this document.
+     */
+    public func getFixtureHookIndex(namespace: APINamespace? = .static) async throws -> Data {
+        return try await call(endpoint: API.fixtureHookIndex, namespace: namespace)
+    }
+    
+    
+    /**
+     Returns a fixture hook by ID.
+     
+     - parameter id: The ID of the fixture hook.
+     - parameter namespace: The namespace to use to locate this document.
+     */
+    public func getFixtureHook(id: Int, namespace: APINamespace? = .static) async throws -> Data {
+        return try await call(endpoint: API.fixtureHook(id), namespace: namespace)
+    }
+    
+    
+    /**
+     Performs a search of fixture hooks.
+     
+     - parameter queries: The fields and values to search.
+     - parameter namespace: The namespace to use to locate this document.
+     */
+    public func searchFixtureHook(queries: [String: String], namespace: APINamespace? = .static) async throws -> Data {
+        return try await call(endpoint: API.fixtureHookSearch(queries), namespace: namespace)
+    }
+    
+    
+    /**
+     Returns an index of neighborhood maps.
+     
+     - parameter namespace: The namespace to use to locate this document.
+     */
+    public func getNeighborhoodMapIndex(namespace: APINamespace? = .static) async throws -> Data {
+        return try await call(endpoint: API.neighborhoodMapIndex, namespace: namespace)
+    }
+    
+    
+    /**
+     Returns a neighborhood map by ID.
+     
+     - parameter id: The ID of the neighborhood map.
+     - parameter namespace: The namespace to use to locate this document.
+     */
+    public func getNeighborhoodMap(id: Int, namespace: APINamespace? = .static) async throws -> Data {
+        return try await call(endpoint: API.neighborhoodMap(id), namespace: namespace)
+    }
+    
+    
+    /**
+     Returns a neighborhood within a neighborhood map.
+     
+     - parameter mapID: The ID of the neighborhood map.
+     - parameter id: The ID of the neighborhood.
+     - parameter namespace: The namespace to use to locate this document.
+     */
+    public func getNeighborhood(mapID: Int, id: Int, namespace: APINamespace? = .static) async throws -> Data {
+        return try await call(endpoint: API.neighborhood(mapID: mapID, id: id), namespace: namespace)
+    }
+    
+    
+    /**
+     Returns an index of rooms.
+     
+     - parameter namespace: The namespace to use to locate this document.
+     */
+    public func getRoomIndex(namespace: APINamespace? = .static) async throws -> Data {
+        return try await call(endpoint: API.roomIndex, namespace: namespace)
+    }
+    
+    
+    /**
+     Returns a room by ID.
+     
+     - parameter id: The ID of the room.
+     - parameter namespace: The namespace to use to locate this document.
+     */
+    public func getRoom(id: Int, namespace: APINamespace? = .static) async throws -> Data {
+        return try await call(endpoint: API.room(id), namespace: namespace)
+    }
+    
+    
+    /**
+     Performs a search of rooms.
+     
+     - parameter queries: The fields and values to search.
+     - parameter namespace: The namespace to use to locate this document.
+     */
+    public func searchRoom(queries: [String: String], namespace: APINamespace? = .static) async throws -> Data {
+        return try await call(endpoint: API.roomSearch(queries), namespace: namespace)
     }
 }

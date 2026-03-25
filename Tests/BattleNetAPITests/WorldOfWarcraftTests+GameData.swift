@@ -46,6 +46,10 @@ extension WorldOfWarcraftTests {
         _ = try await battleNetAPI.wow.decoded.getAuctions(connectedRealmID: connectedRealmID)
     }
 
+    func testGetAuctionCommodities() async throws {
+        XCTAssert(true)
+    }
+
 
     // MARK: Azerite Essence API
 
@@ -163,6 +167,12 @@ extension WorldOfWarcraftTests {
     }
 
 
+    // MARK: Heirloom API
+
+    func testGetHeirloomIndex() async throws { XCTAssert(true) }
+    func testGetHeirloom() async throws { XCTAssert(true) }
+
+
     // MARK: Item API
 
     func testGetItemClassIndex() async throws {
@@ -198,6 +208,17 @@ extension WorldOfWarcraftTests {
     func testSearchItem() async throws {
         XCTAssert(true)
     }
+
+
+    // MARK: Item Appearance API
+
+    func testGetItemAppearanceIndex() async throws { XCTAssert(true) }
+    func testGetItemAppearance() async throws { XCTAssert(true) }
+    func testGetItemAppearanceSetIndex() async throws { XCTAssert(true) }
+    func testGetItemAppearanceSet() async throws { XCTAssert(true) }
+    func testGetItemAppearanceSlotIndex() async throws { XCTAssert(true) }
+    func testGetItemAppearanceBySlot() async throws { XCTAssert(true) }
+    func testSearchItemAppearance() async throws { XCTAssert(true) }
 
 
     // MARK: Journal API
@@ -542,12 +563,38 @@ extension WorldOfWarcraftTests {
     func testSearchSpell() async throws { XCTAssert(true) }
 
 
+    // MARK: Player Housing API
+
+    func testGetDecorIndex() async throws { XCTAssert(true) }
+    func testGetDecor() async throws { XCTAssert(true) }
+    func testSearchDecor() async throws { XCTAssert(true) }
+    func testGetFixtureIndex() async throws { XCTAssert(true) }
+    func testGetFixture() async throws { XCTAssert(true) }
+    func testSearchFixture() async throws { XCTAssert(true) }
+    func testGetFixtureHookIndex() async throws { XCTAssert(true) }
+    func testGetFixtureHook() async throws { XCTAssert(true) }
+    func testSearchFixtureHook() async throws { XCTAssert(true) }
+    func testGetNeighborhoodMapIndex() async throws { XCTAssert(true) }
+    func testGetNeighborhoodMap() async throws { XCTAssert(true) }
+    func testGetNeighborhood() async throws { XCTAssert(true) }
+    func testGetRoomIndex() async throws { XCTAssert(true) }
+    func testGetRoom() async throws { XCTAssert(true) }
+    func testSearchRoom() async throws { XCTAssert(true) }
+
+
     // MARK: Talent API
 
     func testGetTalentIndex() async throws { XCTAssert(true) }
     func testGetTalent() async throws { XCTAssert(true) }
     func testGetPvPTalentIndex() async throws { XCTAssert(true) }
     func testGetPvPTalent() async throws { XCTAssert(true) }
+
+
+    // MARK: Talent Tree API
+
+    func testGetTalentTreeIndex() async throws { XCTAssert(true) }
+    func testGetTalentTree() async throws { XCTAssert(true) }
+    func testGetTalentTreeNodesForSpecialization() async throws { XCTAssert(true) }
 
 
     // MARK: Tech Talent API
@@ -570,4 +617,10 @@ extension WorldOfWarcraftTests {
     func testGetTokenIndex() async throws {
         _ = try await battleNetAPI.wow.decoded.getTokens()
     }
+
+
+    // MARK: Toy API
+
+    func testGetToyIndex() async throws { XCTAssert(true) }
+    func testGetToy() async throws { XCTAssert(true) }
 }
