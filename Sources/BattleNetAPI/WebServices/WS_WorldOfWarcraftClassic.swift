@@ -33,8 +33,6 @@ public struct WS_WorldOfWarcraftClassic: WebService {
         
         case itemClassIndex
         case itemClass(Int)
-        case itemSetIndex
-        case itemSet(Int)
         case itemSubclass(itemClassID: Int, itemSubclassID: Int)
         case item(Int)
         case itemMedia(Int)
@@ -60,7 +58,10 @@ public struct WS_WorldOfWarcraftClassic: WebService {
         case region(Int)
         
         case tokenIndex
-        
+
+        case pvpSeasonIndex
+        case pvpSeason(Int)
+
         case pvpRegionIndex
         case pvpRegionSeasonIndex(pvpRegionID: Int)
         case pvpRegionSeason(pvpRegionID: Int, pvpSeasonID: Int)
@@ -112,10 +113,6 @@ public struct WS_WorldOfWarcraftClassic: WebService {
                 return "/item-class/index"
             case .itemClass(let id):
                 return "/item-class/\(id)"
-            case .itemSetIndex:
-                return "/item-set/index"
-            case .itemSet(let id):
-                return "/item-set/\(id)"
             case .itemSubclass(itemClassID: let itemClassID, itemSubclassID: let itemSubclassID):
                 return "/item-class/\(itemClassID)/item-subclass/\(itemSubclassID)"
             case .item(let id):
@@ -159,6 +156,11 @@ public struct WS_WorldOfWarcraftClassic: WebService {
                 
             case .tokenIndex:
                 return "/token/index"
+
+            case .pvpSeasonIndex:
+                return "/pvp-season/index"
+            case .pvpSeason(let id):
+                return "/pvp-season/\(id)"
                 
             case .pvpRegionIndex:
                 return "/pvp-region/index"
@@ -182,7 +184,7 @@ public struct WS_WorldOfWarcraftClassic: WebService {
                     .connectedRealmIndex, .connectedRealm, .connectedRealmSearch,
                     .creatureFamilyIndex, .creatureFamily, .creatureTypeIndex, .creatureType, .creature, .creatureSearch, .creatureDisplayMedia, .creatureFamilyMedia,
                     .guildCrestIndex, .guildCrestBorderMedia, .guildCrestEmblemMedia,
-                    .itemClassIndex, .itemClass, .itemSetIndex, .itemSet, .itemSubclass, .item, .itemMedia, .itemSearch,
+                    .itemClassIndex, .itemClass, .itemSubclass, .item, .itemMedia, .itemSearch,
                     .mediaSearch,
                     .playableClassIndex, .playableClass, .playableClassMedia,
                     .playableRaceIndex, .playableRace,
@@ -190,6 +192,7 @@ public struct WS_WorldOfWarcraftClassic: WebService {
                     .realmIndex, .realm, .realmSearch,
                     .regionIndex, .region,
                     .tokenIndex,
+                    .pvpSeasonIndex, .pvpSeason,
                     .pvpRegionIndex, .pvpRegionSeasonIndex, .pvpRegionSeason,
                     .pvpRegionSeasonLeaderboardIndex, .pvpRegionSeasonLeaderboard, .pvpRegionSeasonRewardIndex:
                 return .gameData
@@ -236,6 +239,7 @@ public struct WS_WorldOfWarcraftClassic: WebService {
      
      - parameter connectedRealmID: The ID of the connected realm.
      - parameter namespace: The namespace to use to locate this document.
+     - important: Throwing 404 since March 2026
      */
     public func getAuctionHouseIndex(connectedRealmID: Int, namespace: APINamespace? = .dynamicClassic) async throws -> Data {
         return try await call(endpoint: API.auctionHouseIndex(connectedRealmID: connectedRealmID), namespace: namespace)
@@ -248,6 +252,7 @@ public struct WS_WorldOfWarcraftClassic: WebService {
      - parameter connectedRealmID: The ID of the connected realm.
      - parameter auctionHouseID: The ID of the auction house.
      - parameter namespace: The namespace to use to locate this document.
+     - important: Throwing 404 since March 2026
      */
     public func getAuctionHouse(connectedRealmID: Int, auctionHouseID: Int, namespace: APINamespace? = .dynamicClassic) async throws -> Data {
         return try await call(endpoint: API.auctionHouse(connectedRealmID: connectedRealmID, auctionHouseID: auctionHouseID), namespace: namespace)
@@ -434,29 +439,8 @@ public struct WS_WorldOfWarcraftClassic: WebService {
     public func getItemClass(id: Int, namespace: APINamespace? = .staticClassic) async throws -> Data {
         return try await call(endpoint: API.itemClass(id), namespace: namespace)
     }
-    
-    
-    /**
-     Returns an index of item sets.
-     
-     - parameter namespace: The namespace to use to locate this document.
-     */
-    public func getItemSetIndex(namespace: APINamespace? = .staticClassic) async throws -> Data {
-        return try await call(endpoint: API.itemSetIndex, namespace: namespace)
-    }
-    
-    
-    /**
-     Returns an item set by ID.
-     
-     - parameter id: The ID of the item set.
-     - parameter namespace: The namespace to use to locate this document.
-     */
-    public func getItemSet(id: Int, namespace: APINamespace? = .staticClassic) async throws -> Data {
-        return try await call(endpoint: API.itemSet(id), namespace: namespace)
-    }
-    
-    
+
+
     /**
      Returns an item subclass by ID.
      
@@ -673,11 +657,33 @@ public struct WS_WorldOfWarcraftClassic: WebService {
     
     
     // MARK: PvP Season API
-    
+
+    /**
+     Returns an index of PvP seasons.
+
+     - parameter namespace: The namespace to use to locate this document.
+     */
+    public func getPvPSeasonIndex(namespace: APINamespace? = .dynamicClassic) async throws -> Data {
+        return try await call(endpoint: API.pvpSeasonIndex, namespace: namespace)
+    }
+
+
+    /**
+     Returns a PvP season by ID.
+
+     - parameter id: The ID of the PvP season.
+     - parameter namespace: The namespace to use to locate this document.
+     */
+    public func getPvPSeason(id: Int, namespace: APINamespace? = .dynamicClassic) async throws -> Data {
+        return try await call(endpoint: API.pvpSeason(id), namespace: namespace)
+    }
+
+
     /**
      Returns an index of PvP regions.
      
      - parameter namespace: The namespace to use to locate this document.
+     - important: Throwing 404 since March 2026
      */
     public func getPvPRegionIndex(namespace: APINamespace? = .dynamicClassic) async throws -> Data {
         return try await call(endpoint: API.pvpRegionIndex, namespace: namespace)
@@ -701,6 +707,7 @@ public struct WS_WorldOfWarcraftClassic: WebService {
      - parameter pvpRegionID: The ID of the PvP region.
      - parameter pvpSeasonID: The ID of the PvP season.
      - parameter namespace: The namespace to use to locate this document.
+     - important: Throwing 404 since March 2026
      */
     public func getPvPRegionSeason(pvpRegionID: Int, pvpSeasonID: Int, namespace: APINamespace? = .dynamicClassic) async throws -> Data {
         return try await call(endpoint: API.pvpRegionSeason(pvpRegionID: pvpRegionID, pvpSeasonID: pvpSeasonID), namespace: namespace)
@@ -713,6 +720,7 @@ public struct WS_WorldOfWarcraftClassic: WebService {
      - parameter pvpRegionID: The ID of the PvP region.
      - parameter pvpSeasonID: The ID of the PvP season.
      - parameter namespace: The namespace to use to locate this document.
+     - important: Throwing 404 since March 2026
      */
     public func getPvPRegionSeasonLeaderboardIndex(pvpRegionID: Int, pvpSeasonID: Int, namespace: APINamespace? = .dynamicClassic) async throws -> Data {
         return try await call(endpoint: API.pvpRegionSeasonLeaderboardIndex(pvpRegionID: pvpRegionID, pvpSeasonID: pvpSeasonID), namespace: namespace)
@@ -726,6 +734,7 @@ public struct WS_WorldOfWarcraftClassic: WebService {
      - parameter pvpSeasonID: The ID of the PvP season.
      - parameter pvpBracket: The PvP bracket.
      - parameter namespace: The namespace to use to locate this document.
+     - important: Throwing 404 since March 2026
      */
     public func getPvPRegionSeasonLeaderboard(pvpRegionID: Int, pvpSeasonID: Int, pvpBracket: WOWLeaderboardBracket, namespace: APINamespace? = .dynamicClassic) async throws -> Data {
         return try await call(endpoint: API.pvpRegionSeasonLeaderboard(pvpRegionID: pvpRegionID, pvpSeasonID: pvpSeasonID, pvpBracket: pvpBracket), namespace: namespace)
@@ -738,6 +747,7 @@ public struct WS_WorldOfWarcraftClassic: WebService {
      - parameter pvpRegionID: The ID of the PvP region.
      - parameter pvpSeasonID: The ID of the PvP season.
      - parameter namespace: The namespace to use to locate this document.
+     - important: Throwing 404 since March 2026
      */
     public func getPvPRegionSeasonRewardIndex(pvpRegionID: Int, pvpSeasonID: Int, namespace: APINamespace? = .dynamicClassic) async throws -> Data {
         return try await call(endpoint: API.pvpRegionSeasonRewardIndex(pvpRegionID: pvpRegionID, pvpSeasonID: pvpSeasonID), namespace: namespace)

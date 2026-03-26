@@ -63,7 +63,6 @@ public struct WS_WorldOfWarcraft: WebService {
         case itemMedia(Int)
         case itemSearch([String: String]?)
 
-        case itemAppearanceIndex
         case itemAppearance(Int)
         case itemAppearanceSetIndex
         case itemAppearanceSet(Int)
@@ -128,6 +127,7 @@ public struct WS_WorldOfWarcraft: WebService {
         case playableSpecialization(Int)
         case playableSpecializationMedia(Int)
 
+        // Housing Decor API
         case decorIndex
         case decor(Int)
         case decorSearch([String: String]?)
@@ -137,12 +137,14 @@ public struct WS_WorldOfWarcraft: WebService {
         case fixtureHookIndex
         case fixtureHook(Int)
         case fixtureHookSearch([String: String]?)
-        case neighborhoodMapIndex
-        case neighborhoodMap(Int)
-        case neighborhood(mapID: Int, id: Int)
         case roomIndex
         case room(Int)
         case roomSearch([String: String]?)
+
+        // Neighborhood API
+        case neighborhoodMapIndex
+        case neighborhoodMap(Int)
+        case neighborhood(mapID: Int, id: Int)
 
         case powerTypeIndex
         case powerType(Int)
@@ -371,8 +373,6 @@ public struct WS_WorldOfWarcraft: WebService {
             case .itemSearch:
                 return "/search/item"
 
-            case .itemAppearanceIndex:
-                return "/item-appearance/index"
             case .itemAppearance(let id):
                 return "/item-appearance/\(id)"
             case .itemAppearanceSetIndex:
@@ -755,7 +755,7 @@ public struct WS_WorldOfWarcraft: WebService {
                  .guildCrestIndex, .guildCrestBorderMedia, .guildCrestEmblemMedia,
                  .heirloomIndex, .heirloom,
                  .itemClassIndex, .itemClass, .itemSetIndex, .itemSet, .itemSubclass, .item, .itemMedia, .itemSearch,
-                 .itemAppearanceIndex, .itemAppearance, .itemAppearanceSetIndex, .itemAppearanceSet, .itemAppearanceSlotIndex, .itemAppearanceBySlot, .itemAppearanceSearch,
+                 .itemAppearance, .itemAppearanceSetIndex, .itemAppearanceSet, .itemAppearanceSlotIndex, .itemAppearanceBySlot, .itemAppearanceSearch,
                  .journalExpansionIndex, .journalExpansion, .journalEncounterIndex, .journalEncounter, .journalEncounterSearch, .journalInstanceIndex, .journalInstance, .journalInstanceMedia,
                  .mediaSearch,
                  .decorIndex, .decor, .decorSearch, .fixtureIndex, .fixture, .fixtureSearch, .fixtureHookIndex, .fixtureHook, .fixtureHookSearch,

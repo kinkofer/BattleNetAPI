@@ -22,6 +22,7 @@
 		59781F4A2A62F36400080511 /* Starcraft2View.swift in Sources */ = {isa = PBXBuildFile; fileRef = 59781F432A62F36400080511 /* Starcraft2View.swift */; };
 		59781F4B2A62F36400080511 /* MainView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 59781F442A62F36400080511 /* MainView.swift */; };
 		59781F4C2A62F36400080511 /* Diablo3View.swift in Sources */ = {isa = PBXBuildFile; fileRef = 59781F452A62F36400080511 /* Diablo3View.swift */; };
+		59BB37DD2F748C1200900B9C /* HearthstoneView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 59BB37DC2F748C1200900B9C /* HearthstoneView.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -53,6 +54,7 @@
 		59781F452A62F36400080511 /* Diablo3View.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Diablo3View.swift; sourceTree = "<group>"; };
 		59BB37B42F60D89700900B9C /* Battle​Net​API​-​Viewer​UITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "Battle​Net​API​-​Viewer​UITests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
 		59BB37C52F62516D00900B9C /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = Info.plist; sourceTree = "<group>"; };
+		59BB37DC2F748C1200900B9C /* HearthstoneView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HearthstoneView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFileSystemSynchronizedRootGroup section */
@@ -134,6 +136,7 @@
 				59781F442A62F36400080511 /* MainView.swift */,
 				59781F3F2A62F36400080511 /* BattleNetView.swift */,
 				59781F452A62F36400080511 /* Diablo3View.swift */,
+				59BB37DC2F748C1200900B9C /* HearthstoneView.swift */,
 				59781F432A62F36400080511 /* Starcraft2View.swift */,
 				59781F412A62F36400080511 /* WebServiceView.swift */,
 				59781F402A62F36400080511 /* WorldOfWarcraftClassicView.swift */,
@@ -278,6 +281,7 @@
 				59781F492A62F36400080511 /* WorldOfWarcraftView.swift in Sources */,
 				59781F3C2A62F35200080511 /* Alert+Error.swift in Sources */,
 				59781F382A62F34000080511 /* World.swift in Sources */,
+				59BB37DD2F748C1200900B9C /* HearthstoneView.swift in Sources */,
 				592D29922A62EEC9005DFB37 /* BattleNetAPI_ViewerApp.swift in Sources */,
 				59781F472A62F36400080511 /* WorldOfWarcraftClassicView.swift in Sources */,
 				59781F4A2A62F36400080511 /* Starcraft2View.swift in Sources */,

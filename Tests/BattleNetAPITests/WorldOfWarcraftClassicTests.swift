@@ -68,8 +68,6 @@ class WorldOfWarcraftClassicTests: XCTestCase {
 
     func testGetItemClassIndex() async throws { XCTAssert(true) }
     func testGetItemClass() async throws { XCTAssert(true) }
-    func testGetItemSetIndex() async throws { XCTAssert(true) }
-    func testGetItemSet() async throws { XCTAssert(true) }
     func testGetItemSubclass() async throws { XCTAssert(true) }
     func testGetItem() async throws { XCTAssert(true) }
     func testGetItemMedia() async throws { XCTAssert(true) }
@@ -101,6 +99,9 @@ class WorldOfWarcraftClassicTests: XCTestCase {
 
 
     // MARK: PvP Season API
+
+    func testGetPvPSeasonIndex() async throws { XCTAssert(true) }
+    func testGetPvPSeason() async throws { XCTAssert(true) }
 
     func testGetPvPRegionIndex() async throws { XCTAssert(true) }
     func testGetPvPRegionSeasonIndex() async throws { XCTAssert(true) }

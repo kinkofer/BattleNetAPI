@@ -54,6 +54,19 @@ struct WorldOfWarcraftClassicView: View {
     var gameDataSection: some View {
         Group {
             Group {
+                Section {
+                    webServiceRow(api: .auctionHouseIndex, isOperable: false) {
+                        try await battleNetAPI.wowClassic.getAuctionHouseIndex(connectedRealmID: 4372)
+                    }
+                    webServiceRow(api: .auctionHouse, isOperable: false) {
+                        try await battleNetAPI.wowClassic.getAuctionHouse(connectedRealmID: 4372, auctionHouseID: 2)
+                    }
+                } header: {
+                    Text(WorldOfWarcraftClassicView.APISection.auctionHouse.rawValue)
+                } footer: {
+                    Text("The WOW Classic Auction House API is currently inoperable according to Blizzard.")
+                }
+                
                 Section(header: Text(WorldOfWarcraftClassicView.APISection.connectedRealm.rawValue)) {
                     webServiceRow(api: .connectedRealmIndex) {
                         try await battleNetAPI.wowClassic.getConnectedRealmIndex()
@@ -123,12 +136,6 @@ struct WorldOfWarcraftClassicView: View {
                     webServiceRow(api: .itemClass) {
                         try await battleNetAPI.wowClassic.getItemClass(id: 0)
                     }
-                    webServiceRow(api: .itemSetIndex) {
-                        try await battleNetAPI.wowClassic.getItemSetIndex()
-                    }
-                    webServiceRow(api: .itemSet) {
-                        try await battleNetAPI.wowClassic.getItemSet(id: 1)
-                    }
                     webServiceRow(api: .itemSubclass) {
                         try await battleNetAPI.wowClassic.getItemSubclass(itemClassID: 0, itemSubclassID: 0)
                     }
@@ -189,6 +196,39 @@ struct WorldOfWarcraftClassicView: View {
                     }
                 }
                 
+                Section {
+                    webServiceRow(api: .pvpSeasonIndex) {
+                        try await battleNetAPI.wowClassic.getPvPSeasonIndex()
+                    }
+                    webServiceRow(api: .pvpSeason) {
+                        try await battleNetAPI.wowClassic.getPvPSeason(id: 13)
+                    }
+                    webServiceRow(api: .pvpRegionIndex, isOperable: false) {
+                        try await battleNetAPI.wowClassic.getPvPRegionIndex()
+                    }
+                    webServiceRow(api: .pvpRegionSeasonIndex, isOperable: false) {
+                        try await battleNetAPI.wowClassic.getPvPRegionSeasonIndex(pvpRegionID: 41)
+                    }
+                    webServiceRow(api: .pvpRegionSeason, isOperable: false) {
+                        try await battleNetAPI.wowClassic.getPvPRegionSeason(pvpRegionID: 41, pvpSeasonID: 1)
+                    }
+                    webServiceRow(api: .pvpRegionSeasonLeaderboardIndex, isOperable: false) {
+                        try await battleNetAPI.wowClassic.getPvPRegionSeasonLeaderboardIndex(pvpRegionID: 41, pvpSeasonID: 1)
+                    }
+                    webServiceRow(api: .pvpRegionSeasonLeaderboard, isOperable: false) {
+                        try await battleNetAPI.wowClassic.getPvPRegionSeasonLeaderboard(pvpRegionID: 41, pvpSeasonID: 1, pvpBracket: ._3v3)
+                    }
+                    webServiceRow(api: .pvpRegionSeasonRewardIndex, isOperable: false) {
+                        try await battleNetAPI.wowClassic.getPvPRegionSeasonRewardIndex(pvpRegionID: 41, pvpSeasonID: 1)
+                    }
+                } header: {
+                    Text(WorldOfWarcraftClassicView.APISection.pvpSeason.rawValue)
+                } footer: {
+                    Text("Some of the WOW Classic PvP Season API is inoperable according to Blizzard.")
+                }
+            }
+            
+            Group {
                 Section(header: Text(WorldOfWarcraftClassicView.APISection.realm.rawValue)) {
                     webServiceRow(api: .realmIndex) {
                         try await battleNetAPI.wowClassic.getRealmIndex()
@@ -214,8 +254,7 @@ struct WorldOfWarcraftClassicView: View {
                         try await battleNetAPI.wowClassic.getRegion(id: 41)
                     }
                 }
-            }
-            Group {
+                
                 Section(header: Text(WorldOfWarcraftClassicView.APISection.wowToken.rawValue)) {
                     webServiceRow(api: .tokenIndex) {
                         try await battleNetAPI.wowClassic.getTokenIndex()
@@ -226,7 +265,7 @@ struct WorldOfWarcraftClassicView: View {
     }
     
     
-    func webServiceRow(api: API, webService: @escaping () async throws -> Data) -> some View {
+    func webServiceRow(api: API, isOperable: Bool = true, webService: @escaping () async throws -> Data) -> some View {
         Button {
             loadingAPI = api
             Task {
@@ -241,6 +280,9 @@ struct WorldOfWarcraftClassicView: View {
             }
         } label: {
             HStack {
+                if !isOperable {
+                    Image(systemName: "exclamationmark.triangle")
+                }
                 Text(api.rawValue)
                 if loadingAPI == api {
                     Spacer()
@@ -297,6 +339,9 @@ extension WorldOfWarcraftClassicView {
 extension WorldOfWarcraftClassicView {
     enum API: String, CaseIterable, Hashable, Identifiable {
         // Game Data APIs
+        // Auction House API
+        case auctionHouseIndex
+        case auctionHouse
         // Connected Realm API
         case connectedRealmIndex
         case connectedRealm
@@ -317,8 +362,6 @@ extension WorldOfWarcraftClassicView {
         // Item API
         case itemClassIndex
         case itemClass
-        case itemSetIndex
-        case itemSet
         case itemSubclass
         case item
         case itemMedia
@@ -344,46 +387,35 @@ extension WorldOfWarcraftClassicView {
         case region
         // Token API
         case tokenIndex
-        
-        
+        // PvP Season API
+        case pvpSeasonIndex
+        case pvpSeason
+        case pvpRegionIndex
+        case pvpRegionSeasonIndex
+        case pvpRegionSeason
+        case pvpRegionSeasonLeaderboardIndex
+        case pvpRegionSeasonLeaderboard
+        case pvpRegionSeasonRewardIndex
+
+
         var id: String { return rawValue }
     }
     
     
     enum APISection: String {
         // Game Data
-        case achievement = "Achievement API"
         case auctionHouse = "Auction House API"
-        case azeriteEssence = "Azerite Essence API"
         case connectedRealm = "Connected Realm API"
-        case covenant = "Covenant API"
         case creature = "Creature API"
         case guildCrest = "Guild Crest API"
         case item = "Item API"
-        case journal = "Journal API"
         case mediaSearch = "Media Search API"
-        case modifiedCrafting = "Modified Crafting API"
-        case mount = "Mount API"
-        case mythicKeystoneAffix = "Mythic Keystone Affix API"
-        case mythicKeystoneDungeon = "Mythic Keystone Dungeon API"
-        case mythicKeystoneLeaderboard = "Mythic Keystone Leaderboard API"
-        case mythicRaidLeaderboard = "Mythic Raid Leaderboard API"
-        case pet = "Pet API"
         case playableClass = "Playable Class API"
         case playableRace = "Playable Race API"
-        case playableSpecialization = "Playable Specialization API"
         case powerType = "Power Type API"
-        case profession = "Profession API"
         case pvpSeason = "PvP Season API"
-        case pvpTier = "PvP Tier API"
-        case quest = "Quest API"
         case realm = "Realm API"
         case region = "Region API"
-        case reputation = "Reputations API"
-        case spell = "Spell API"
-        case talent = "Talent API"
-        case techTalent = "Tech Talent API"
-        case title = "Title API"
         case wowToken = "WoW Token API"
     }
 }

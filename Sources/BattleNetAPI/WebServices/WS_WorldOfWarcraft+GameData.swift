@@ -443,16 +443,6 @@ extension WS_WorldOfWarcraft {
     // MARK: Item Appearance API
     
     /**
-     Returns an index of item appearances.
-     
-     - parameter namespace: The namespace to use to locate this document.
-     */
-    public func getItemAppearanceIndex(namespace: APINamespace? = .static) async throws -> Data {
-        return try await call(endpoint: API.itemAppearanceIndex, namespace: namespace)
-    }
-    
-    
-    /**
      Returns an item appearance by ID.
      
      - parameter id: The ID of the item appearance.
@@ -1049,8 +1039,8 @@ extension WS_WorldOfWarcraft {
     
     
     
-    // MARK: Player Housing API
-    
+    // MARK: Housing Decor API
+
     /**
      Returns an index of decor items.
      
@@ -1098,6 +1088,7 @@ extension WS_WorldOfWarcraft {
      
      - parameter id: The ID of the fixture.
      - parameter namespace: The namespace to use to locate this document.
+     - important: Throwing 404 since March 2026
      */
     public func getFixture(id: Int, namespace: APINamespace? = .static) async throws -> Data {
         return try await call(endpoint: API.fixture(id), namespace: namespace)
@@ -1148,39 +1139,6 @@ extension WS_WorldOfWarcraft {
     
     
     /**
-     Returns an index of neighborhood maps.
-     
-     - parameter namespace: The namespace to use to locate this document.
-     */
-    public func getNeighborhoodMapIndex(namespace: APINamespace? = .static) async throws -> Data {
-        return try await call(endpoint: API.neighborhoodMapIndex, namespace: namespace)
-    }
-    
-    
-    /**
-     Returns a neighborhood map by ID.
-     
-     - parameter id: The ID of the neighborhood map.
-     - parameter namespace: The namespace to use to locate this document.
-     */
-    public func getNeighborhoodMap(id: Int, namespace: APINamespace? = .static) async throws -> Data {
-        return try await call(endpoint: API.neighborhoodMap(id), namespace: namespace)
-    }
-    
-    
-    /**
-     Returns a neighborhood within a neighborhood map.
-     
-     - parameter mapID: The ID of the neighborhood map.
-     - parameter id: The ID of the neighborhood.
-     - parameter namespace: The namespace to use to locate this document.
-     */
-    public func getNeighborhood(mapID: Int, id: Int, namespace: APINamespace? = .static) async throws -> Data {
-        return try await call(endpoint: API.neighborhood(mapID: mapID, id: id), namespace: namespace)
-    }
-    
-    
-    /**
      Returns an index of rooms.
      
      - parameter namespace: The namespace to use to locate this document.
@@ -1209,5 +1167,40 @@ extension WS_WorldOfWarcraft {
      */
     public func searchRoom(queries: [String: String], namespace: APINamespace? = .static) async throws -> Data {
         return try await call(endpoint: API.roomSearch(queries), namespace: namespace)
+    }
+    
+    
+    // MARK: Neighborhood API
+
+    /**
+     Returns an index of neighborhood maps.
+     
+     - parameter namespace: The namespace to use to locate this document.
+     */
+    public func getNeighborhoodMapIndex(namespace: APINamespace? = .static) async throws -> Data {
+        return try await call(endpoint: API.neighborhoodMapIndex, namespace: namespace)
+    }
+    
+    
+    /**
+     Returns a neighborhood map by ID.
+     
+     - parameter id: The ID of the neighborhood map.
+     - parameter namespace: The namespace to use to locate this document.
+     */
+    public func getNeighborhoodMap(id: Int, namespace: APINamespace? = .static) async throws -> Data {
+        return try await call(endpoint: API.neighborhoodMap(id), namespace: namespace)
+    }
+    
+    
+    /**
+     Returns a neighborhood within a neighborhood map.
+     
+     - parameter mapID: The ID of the neighborhood map.
+     - parameter neighborhoodID: The ID of the neighborhood.
+     - parameter namespace: The namespace to use to locate this document.
+     */
+    public func getNeighborhood(mapID: Int, neighborhoodID: Int, namespace: APINamespace? = .static) async throws -> Data {
+        return try await call(endpoint: API.neighborhood(mapID: mapID, id: neighborhoodID), namespace: namespace)
     }
 }

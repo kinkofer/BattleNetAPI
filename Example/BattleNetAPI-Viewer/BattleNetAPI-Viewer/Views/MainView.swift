@@ -13,6 +13,7 @@ import SwiftUI
 struct MainView: View {
     enum Game: String, CaseIterable {
         case diablo3 = "Diablo 3"
+        case hearthstone = "Hearthstone"
         case starCraft2 = "StarCraft 2"
         case worldOfWarcraft = "World of Warcraft"
         case worldOfWarcraftClassic = "World of Warcraft Classic"
@@ -90,6 +91,8 @@ struct MainView: View {
                     WorldOfWarcraftView(apiType: .gameData)
                 case GameAPI(.worldOfWarcraft, .profile):
                     WorldOfWarcraftView(apiType: .profile)
+                case GameAPI(.hearthstone, .gameData):
+                    HearthstoneView(apiType: .gameData)
                 case GameAPI(.worldOfWarcraftClassic, .gameData):
                     WorldOfWarcraftClassicView(apiType: .gameData)
                 case GameAPI(.battleNet, .profile):
@@ -120,7 +123,11 @@ struct MainView: View {
             NavigationLink(APIType.community.displayName, value: GameAPI(.diablo3, .community))
             NavigationLink(APIType.profile.displayName, value: GameAPI(.diablo3, .profile))
         }
-        
+
+        Section(header: Text(Game.hearthstone.rawValue)) {
+            NavigationLink(APIType.gameData.displayName, value: GameAPI(.hearthstone, .gameData))
+        }
+
         Section(header: Text(Game.starCraft2.rawValue)) {
             NavigationLink(APIType.gameData.displayName, value: GameAPI(.starCraft2, .gameData))
             NavigationLink(APIType.community.displayName, value: GameAPI(.starCraft2, .community))
