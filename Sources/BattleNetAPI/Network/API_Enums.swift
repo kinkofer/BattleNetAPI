@@ -32,8 +32,9 @@ public enum APINamespace {
     case dynamic
     case dynamicClassic
     case profile
+    case profileClassic
     case custom(String)
-    
+
     func getHeader(for region: APIRegion) -> HTTPHeader {
         switch self {
         case .static:
@@ -46,6 +47,8 @@ public enum APINamespace {
             return .namespace("dynamic-classic" + region.namespaceExtension)
         case .profile:
             return .namespace("profile" + region.namespaceExtension)
+        case .profileClassic:
+            return .namespace("profile-classic1x" + region.namespaceExtension)
         case .custom(let namespace):
             return .namespace(namespace)
         }

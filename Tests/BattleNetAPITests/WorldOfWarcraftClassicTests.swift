@@ -127,4 +127,68 @@ class WorldOfWarcraftClassicTests: XCTestCase {
     // MARK: Token API
 
     func testGetTokenIndex() async throws { XCTAssert(true) }
+
+
+    // MARK: - Profile API
+
+    // MARK: Account Profile API
+
+    func testGetAccountProfile() async throws { XCTAssert(true) }
+    func testGetProtectedCharacterProfile() async throws { XCTAssert(true) }
+
+
+    // MARK: Character Achievements API
+
+    func testGetCharacterAchievementsSummary() async throws { XCTAssert(true) }
+    func testGetCharacterAchievementStatistics() async throws { XCTAssert(true) }
+
+
+    // MARK: Character Appearance API
+
+    func testGetCharacterAppearanceSummary() async throws { XCTAssert(true) }
+
+
+    // MARK: Character Equipment API
+
+    func testGetCharacterEquipmentSummary() async throws { XCTAssert(true) }
+
+
+    // MARK: Character Hunter Pets API
+
+    func testGetCharacterHunterPetsSummary() async throws { XCTAssert(true) }
+
+
+    // MARK: Character Media API
+
+    func testGetCharacterMediaSummary() async throws { XCTAssert(true) }
+
+
+    // MARK: Character Profile API
+
+    func testGetCharacterProfileSummary() async throws { XCTAssert(true) }
+    func testGetCharacterProfileStatus() async throws { XCTAssert(true) }
+
+
+    // MARK: Character PvP API
+
+    func testGetCharacterPvPBracketStatistics() async throws { XCTAssert(true) }
+    func testGetCharacterPvPSummary() async throws { XCTAssert(true) }
+
+
+    // MARK: Character Specializations API
+
+    func testGetCharacterSpecializationsSummary() async throws { XCTAssert(true) }
+
+
+    // MARK: Character Statistics API
+
+    func testGetCharacterStatisticsSummary() async throws { XCTAssert(true) }
+
+
+    // MARK: Guild Profile API
+
+    func testGetGuild() async throws { XCTAssert(true) }
+    func testGetGuildActivity() async throws { XCTAssert(true) }
+    func testGetGuildAchievements() async throws { XCTAssert(true) }
+    func testGetGuildRoster() async throws { XCTAssert(true) }
 }

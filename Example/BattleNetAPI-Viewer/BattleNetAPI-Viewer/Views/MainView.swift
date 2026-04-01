@@ -64,16 +64,16 @@ struct MainView: View {
             }
                 .listStyle(.sidebar)
                 .navigationTitle(title)
+                #if !os(macOS)
                 .toolbar {
                     ToolbarItem(placement: .primaryAction) {
                         HStack {
                             RegionMenu()
-
                             profileButton
-                            
                         }
                     }
                 }
+                #endif
         } content: {
             if let game = gameAPISelection {
                 switch game {
@@ -95,6 +95,8 @@ struct MainView: View {
                     HearthstoneView(apiType: .gameData)
                 case GameAPI(.worldOfWarcraftClassic, .gameData):
                     WorldOfWarcraftClassicView(apiType: .gameData)
+                case GameAPI(.worldOfWarcraftClassic, .profile):
+                    WorldOfWarcraftClassicView(apiType: .profile)
                 case GameAPI(.battleNet, .profile):
                     BattleNetView(apiType: .profile)
                 default: EmptyView()
@@ -106,6 +108,16 @@ struct MainView: View {
         } detail: {
             Text("Select a method")
         }
+        #if os(macOS)
+        .toolbar {
+            ToolbarItem(placement: .primaryAction) {
+                HStack {
+                    RegionMenu()
+                    profileButton
+                }
+            }
+        }
+        #endif
         .alert(alertTitle, isPresented: showingAlert, presenting: alertType) { alertType in
             alertActions(for: alertType)
         } message: { alertType in
@@ -140,6 +152,7 @@ struct MainView: View {
         
         Section(header: Text(Game.worldOfWarcraftClassic.rawValue)) {
             NavigationLink(APIType.gameData.displayName, value: GameAPI(.worldOfWarcraftClassic, .gameData))
+            NavigationLink(APIType.profile.displayName, value: GameAPI(.worldOfWarcraftClassic, .profile))
         }
         
         Section(header: Text(Game.battleNet.rawValue)) {

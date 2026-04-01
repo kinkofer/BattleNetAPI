@@ -68,8 +68,38 @@ public struct WS_WorldOfWarcraftClassic: WebService {
         case pvpRegionSeasonLeaderboardIndex(pvpRegionID: Int, pvpSeasonID: Int)
         case pvpRegionSeasonLeaderboard(pvpRegionID: Int, pvpSeasonID: Int, pvpBracket: WOWLeaderboardBracket)
         case pvpRegionSeasonRewardIndex(pvpRegionID: Int, pvpSeasonID: Int)
-        
-        
+
+        // Profile APIs
+        case accountProfileSummary
+        case protectedCharacterProfileSummary(realmID: Int, characterID: Int)
+
+        case characterAchievementsSummary(realmSlug: String, characterName: String)
+        case characterAchievementStatistics(realmSlug: String, characterName: String)
+
+        case characterAppearanceSummary(realmSlug: String, characterName: String)
+
+        case characterEquipmentSummary(realmSlug: String, characterName: String)
+
+        case characterHunterPetsSummary(realmSlug: String, characterName: String)
+
+        case characterMediaSummary(realmSlug: String, characterName: String)
+
+        case characterProfileSummary(realmSlug: String, characterName: String)
+        case characterProfileStatus(realmSlug: String, characterName: String)
+
+        case characterPvPBracketStatistics(realmSlug: String, characterName: String, pvpBracket: WOWLeaderboardBracket)
+        case characterPvPSummary(realmSlug: String, characterName: String)
+
+        case characterSpecializationsSummary(realmSlug: String, characterName: String)
+
+        case characterStatisticsSummary(realmSlug: String, characterName: String)
+
+        case guild(realmSlug: String, guildSlug: String)
+        case guildActivity(realmSlug: String, guildSlug: String)
+        case guildAchievements(realmSlug: String, guildSlug: String)
+        case guildRoster(realmSlug: String, guildSlug: String)
+
+
         var path: String {
             switch self {
             // Game Data APIs
@@ -174,6 +204,54 @@ public struct WS_WorldOfWarcraftClassic: WebService {
                 return "/pvp-region/\(pvpRegionID)/pvp-season/\(pvpSeasonID)/pvp-leaderboard/\(pvpBracket.rawValue)"
             case .pvpRegionSeasonRewardIndex(pvpRegionID: let pvpRegionID, pvpSeasonID: let pvpSeasonID):
                 return "/pvp-region/\(pvpRegionID)/pvp-season/\(pvpSeasonID)/pvp-reward/index"
+
+            // Profile APIs
+            case .accountProfileSummary:
+                return ""
+            case .protectedCharacterProfileSummary(realmID: let realmID, characterID: let characterID):
+                return "/protected-character/\(realmID)-\(characterID)"
+
+            case .characterAchievementsSummary(realmSlug: let realmSlug, characterName: let characterName):
+                return "/character/\(realmSlug)/\(characterName)/achievements"
+            case .characterAchievementStatistics(realmSlug: let realmSlug, characterName: let characterName):
+                return "/character/\(realmSlug)/\(characterName)/achievements/statistics"
+
+            case .characterAppearanceSummary(realmSlug: let realmSlug, characterName: let characterName):
+                return "/character/\(realmSlug)/\(characterName)/appearance"
+
+            case .characterEquipmentSummary(realmSlug: let realmSlug, characterName: let characterName):
+                return "/character/\(realmSlug)/\(characterName)/equipment"
+
+            case .characterHunterPetsSummary(realmSlug: let realmSlug, characterName: let characterName):
+                return "/character/\(realmSlug)/\(characterName)/hunter-pets"
+
+            case .characterMediaSummary(realmSlug: let realmSlug, characterName: let characterName):
+                return "/character/\(realmSlug)/\(characterName)/character-media"
+
+            case .characterProfileSummary(realmSlug: let realmSlug, characterName: let characterName):
+                return "/character/\(realmSlug)/\(characterName)"
+            case .characterProfileStatus(realmSlug: let realmSlug, characterName: let characterName):
+                return "/character/\(realmSlug)/\(characterName)/status"
+
+            case .characterPvPBracketStatistics(realmSlug: let realmSlug, characterName: let characterName, pvpBracket: let pvpBracket):
+                return "/character/\(realmSlug)/\(characterName)/pvp-bracket/\(pvpBracket.rawValue)"
+            case .characterPvPSummary(realmSlug: let realmSlug, characterName: let characterName):
+                return "/character/\(realmSlug)/\(characterName)/pvp-summary"
+
+            case .characterSpecializationsSummary(realmSlug: let realmSlug, characterName: let characterName):
+                return "/character/\(realmSlug)/\(characterName)/specializations"
+
+            case .characterStatisticsSummary(realmSlug: let realmSlug, characterName: let characterName):
+                return "/character/\(realmSlug)/\(characterName)/statistics"
+
+            case .guild(realmSlug: let realmSlug, guildSlug: let guildSlug):
+                return "/guild/\(realmSlug)/\(guildSlug)"
+            case .guildActivity(realmSlug: let realmSlug, guildSlug: let guildSlug):
+                return "/guild/\(realmSlug)/\(guildSlug)/activity"
+            case .guildAchievements(realmSlug: let realmSlug, guildSlug: let guildSlug):
+                return "/guild/\(realmSlug)/\(guildSlug)/achievements"
+            case .guildRoster(realmSlug: let realmSlug, guildSlug: let guildSlug):
+                return "/guild/\(realmSlug)/\(guildSlug)/roster"
             }
         }
         
@@ -196,6 +274,18 @@ public struct WS_WorldOfWarcraftClassic: WebService {
                     .pvpRegionIndex, .pvpRegionSeasonIndex, .pvpRegionSeason,
                     .pvpRegionSeasonLeaderboardIndex, .pvpRegionSeasonLeaderboard, .pvpRegionSeasonRewardIndex:
                 return .gameData
+            case .accountProfileSummary, .protectedCharacterProfileSummary,
+                    .characterAchievementsSummary, .characterAchievementStatistics,
+                    .characterAppearanceSummary,
+                    .characterEquipmentSummary,
+                    .characterHunterPetsSummary,
+                    .characterMediaSummary,
+                    .characterProfileSummary, .characterProfileStatus,
+                    .characterPvPBracketStatistics, .characterPvPSummary,
+                    .characterSpecializationsSummary,
+                    .characterStatisticsSummary,
+                    .guild, .guildActivity, .guildAchievements, .guildRoster:
+                return .profile
             }
         }
         
@@ -203,6 +293,15 @@ public struct WS_WorldOfWarcraftClassic: WebService {
         var basePath: String? {
             switch apiType {
             case .gameData: return "/data/wow"
+            case .profile:
+                switch self {
+                case .accountProfileSummary, .protectedCharacterProfileSummary:
+                    return "/profile/user/wow"
+                case .guild, .guildActivity, .guildAchievements, .guildRoster:
+                    return "/data/wow"
+                default:
+                    return "/profile/wow"
+                }
             default: return nil
             }
         }

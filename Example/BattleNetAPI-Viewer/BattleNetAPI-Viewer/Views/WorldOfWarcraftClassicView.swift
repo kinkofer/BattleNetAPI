@@ -45,9 +45,11 @@ struct WorldOfWarcraftClassicView: View {
         List {
             if apiType == .gameData {
                 gameDataSection
+            } else if apiType == .profile {
+                profileSection
             }
         }
-        .listStyle(SidebarListStyle())
+        .apiListStyle()
     }
     
     
@@ -265,32 +267,126 @@ struct WorldOfWarcraftClassicView: View {
     }
     
     
-    func webServiceRow(api: API, isOperable: Bool = true, webService: @escaping () async throws -> Data) -> some View {
-        Button {
-            loadingAPI = api
-            Task {
-                do {
-                    let data = try await webService()
-                    webServiceData = data
-                    apiSelection = api
-                } catch {
-                    alertType = .error(error)
+    var profileSection: some View {
+        Group {
+            Group {
+                Section(header: Text(WorldOfWarcraftClassicView.APISection.accountProfile.rawValue)) {
+                    webServiceRow(api: .accountProfileSummary) {
+                        try await battleNetAPI.wowClassic.getAccountProfile()
+                    }
+                    webServiceRow(api: .protectedCharacterProfileSummary) {
+                        // TODO: Replace 0 with a valid realmID and characterID
+                        try await battleNetAPI.wowClassic.getProtectedCharacterProfile(id: 0, realmID: 0)
+                    }
                 }
-                loadingAPI = nil
+
+                Section(header: Text(WorldOfWarcraftClassicView.APISection.characterAchievements.rawValue)) {
+                    webServiceRow(api: .characterAchievementsSummary) {
+                        // TODO: Replace with a valid character name and realm slug
+                        try await battleNetAPI.wowClassic.getCharacterAchievementsSummary(characterName: "charactername", realmSlug: "realm-slug")
+                    }
+                    webServiceRow(api: .characterAchievementStatistics) {
+                        // TODO: Replace with a valid character name and realm slug
+                        try await battleNetAPI.wowClassic.getCharacterAchievementStatistics(characterName: "charactername", realmSlug: "realm-slug")
+                    }
+                }
+
+                Section(header: Text(WorldOfWarcraftClassicView.APISection.characterAppearance.rawValue)) {
+                    webServiceRow(api: .characterAppearanceSummary) {
+                        // TODO: Replace with a valid character name and realm slug
+                        try await battleNetAPI.wowClassic.getCharacterAppearanceSummary(characterName: "charactername", realmSlug: "realm-slug")
+                    }
+                }
+
+                Section(header: Text(WorldOfWarcraftClassicView.APISection.characterEquipment.rawValue)) {
+                    webServiceRow(api: .characterEquipmentSummary) {
+                        // TODO: Replace with a valid character name and realm slug
+                        try await battleNetAPI.wowClassic.getCharacterEquipmentSummary(characterName: "charactername", realmSlug: "realm-slug")
+                    }
+                }
+
+                Section(header: Text(WorldOfWarcraftClassicView.APISection.characterHunterPets.rawValue)) {
+                    webServiceRow(api: .characterHunterPetsSummary) {
+                        // TODO: Replace with a valid character name and realm slug
+                        try await battleNetAPI.wowClassic.getCharacterHunterPetsSummary(characterName: "charactername", realmSlug: "realm-slug")
+                    }
+                }
+
+                Section(header: Text(WorldOfWarcraftClassicView.APISection.characterMedia.rawValue)) {
+                    webServiceRow(api: .characterMediaSummary) {
+                        // TODO: Replace with a valid character name and realm slug
+                        try await battleNetAPI.wowClassic.getCharacterMediaSummary(characterName: "charactername", realmSlug: "realm-slug")
+                    }
+                }
+
+                Section(header: Text(WorldOfWarcraftClassicView.APISection.characterProfile.rawValue)) {
+                    webServiceRow(api: .characterProfileSummary) {
+                        // TODO: Replace with a valid character name and realm slug
+                        try await battleNetAPI.wowClassic.getCharacterProfileSummary(characterName: "charactername", realmSlug: "realm-slug")
+                    }
+                    webServiceRow(api: .characterProfileStatus) {
+                        // TODO: Replace with a valid character name and realm slug
+                        try await battleNetAPI.wowClassic.getCharacterProfileStatus(characterName: "charactername", realmSlug: "realm-slug")
+                    }
+                }
+
+                Section(header: Text(WorldOfWarcraftClassicView.APISection.characterPvP.rawValue)) {
+                    webServiceRow(api: .characterPvPBracketStatistics) {
+                        // TODO: Replace with a valid character name and realm slug
+                        try await battleNetAPI.wowClassic.getCharacterPvPBracketStatistics(characterName: "charactername", realmSlug: "realm-slug", pvpBracket: ._2v2)
+                    }
+                    webServiceRow(api: .characterPvPSummary) {
+                        // TODO: Replace with a valid character name and realm slug
+                        try await battleNetAPI.wowClassic.getCharacterPvPSummary(characterName: "charactername", realmSlug: "realm-slug")
+                    }
+                }
+
+                Section(header: Text(WorldOfWarcraftClassicView.APISection.characterSpecializations.rawValue)) {
+                    webServiceRow(api: .characterSpecializationsSummary) {
+                        // TODO: Replace with a valid character name and realm slug
+                        try await battleNetAPI.wowClassic.getCharacterSpecializationsSummary(characterName: "charactername", realmSlug: "realm-slug")
+                    }
+                }
+
+                Section(header: Text(WorldOfWarcraftClassicView.APISection.characterStatistics.rawValue)) {
+                    webServiceRow(api: .characterStatisticsSummary) {
+                        // TODO: Replace with a valid character name and realm slug
+                        try await battleNetAPI.wowClassic.getCharacterStatisticsSummary(characterName: "charactername", realmSlug: "realm-slug")
+                    }
+                }
             }
-        } label: {
-            HStack {
-                if !isOperable {
-                    Image(systemName: "exclamationmark.triangle")
-                }
-                Text(api.rawValue)
-                if loadingAPI == api {
-                    Spacer()
-                    ProgressView()
+
+            Group {
+                Section(header: Text(WorldOfWarcraftClassicView.APISection.guildProfile.rawValue)) {
+                    webServiceRow(api: .guild) {
+                        // TODO: Replace with a valid guild slug and realm slug
+                        try await battleNetAPI.wowClassic.getGuild(slug: "guild-slug", realmSlug: "realm-slug")
+                    }
+                    webServiceRow(api: .guildActivity) {
+                        // TODO: Replace with a valid guild slug and realm slug
+                        try await battleNetAPI.wowClassic.getGuildActivity(slug: "guild-slug", realmSlug: "realm-slug")
+                    }
+                    webServiceRow(api: .guildAchievements) {
+                        // TODO: Replace with a valid guild slug and realm slug
+                        try await battleNetAPI.wowClassic.getGuildAchievements(slug: "guild-slug", realmSlug: "realm-slug")
+                    }
+                    webServiceRow(api: .guildRoster) {
+                        // TODO: Replace with a valid guild slug and realm slug
+                        try await battleNetAPI.wowClassic.getGuildRoster(slug: "guild-slug", realmSlug: "realm-slug")
+                    }
                 }
             }
         }
-        .disabled(loadingAPI != nil)
+    }
+
+
+    func webServiceRow(api: API, isOperable: Bool = true, webService: @escaping () async throws -> Data) -> some View {
+        WebServiceRow(api: api, isOperable: isOperable, loadingAPI: $loadingAPI, webService: webService) { data in
+            webServiceData = data
+            apiSelection = api
+        } onError: { error in
+            alertType = .error(error)
+        }
     }
     
     
@@ -396,6 +492,36 @@ extension WorldOfWarcraftClassicView {
         case pvpRegionSeasonLeaderboardIndex
         case pvpRegionSeasonLeaderboard
         case pvpRegionSeasonRewardIndex
+        // Profile APIs
+        // Account Profile API
+        case accountProfileSummary
+        case protectedCharacterProfileSummary
+        // Character Achievements API
+        case characterAchievementsSummary
+        case characterAchievementStatistics
+        // Character Appearance API
+        case characterAppearanceSummary
+        // Character Equipment API
+        case characterEquipmentSummary
+        // Character Hunter Pets API
+        case characterHunterPetsSummary
+        // Character Media API
+        case characterMediaSummary
+        // Character Profile API
+        case characterProfileSummary
+        case characterProfileStatus
+        // Character PvP API
+        case characterPvPBracketStatistics
+        case characterPvPSummary
+        // Character Specializations API
+        case characterSpecializationsSummary
+        // Character Statistics API
+        case characterStatisticsSummary
+        // Guild Profile API
+        case guild
+        case guildActivity
+        case guildAchievements
+        case guildRoster
 
 
         var id: String { return rawValue }
@@ -417,6 +543,18 @@ extension WorldOfWarcraftClassicView {
         case realm = "Realm API"
         case region = "Region API"
         case wowToken = "WoW Token API"
+        // Profile
+        case accountProfile = "Account Profile API"
+        case characterAchievements = "Character Achievements API"
+        case characterAppearance = "Character Appearance API"
+        case characterEquipment = "Character Equipment API"
+        case characterHunterPets = "Character Hunter Pets API"
+        case characterMedia = "Character Media API"
+        case characterProfile = "Character Profile API"
+        case characterPvP = "Character PvP API"
+        case characterSpecializations = "Character Specializations API"
+        case characterStatistics = "Character Statistics API"
+        case guildProfile = "Guild Profile API"
     }
 }
 

@@ -456,36 +456,34 @@ This table shows the current implementation status for each Blizzard API endpoin
 
 ### Profile APIs
 
-> ⚠️ Not yet implemented. The Classic Profile APIs share the same endpoint paths as WoW Retail but under the `profile-classic1x` namespace. A new `WS_WorldOfWarcraftClassic` extension would be needed.
-
 | Endpoint | Data | Model | Tests | ⚠️ |
 |---|:---:|:---:|:---:|:---:|
 | **Account Profile API** | | | | |
-| Get Account Profile Summary | ⬜ | ⬜ | ⬜ | |
-| Get Protected Character Profile Summary | ⬜ | ⬜ | ⬜ | |
+| Get Account Profile Summary | ✅ | ⬜ | ⬜ | |
+| Get Protected Character Profile Summary | ✅ | ⬜ | ⬜ | |
 | **Character Achievements API** | | | | |
-| Get Character Achievements Summary | ⬜ | ⬜ | ⬜ | |
-| Get Character Achievement Statistics | ⬜ | ⬜ | ⬜ | |
+| Get Character Achievements Summary | ✅ | ⬜ | ⬜ | |
+| Get Character Achievement Statistics | ✅ | ⬜ | ⬜ | |
 | **Character Appearance API** | | | | |
-| Get Character Appearance Summary | ⬜ | ⬜ | ⬜ | |
+| Get Character Appearance Summary | ✅ | ⬜ | ⬜ | |
 | **Character Equipment API** | | | | |
-| Get Character Equipment Summary | ⬜ | ⬜ | ⬜ | |
+| Get Character Equipment Summary | ✅ | ⬜ | ⬜ | |
 | **Character Hunter Pets API** | | | | |
-| Get Character Hunter Pets Summary | ⬜ | ⬜ | ⬜ | |
+| Get Character Hunter Pets Summary | ✅ | ⬜ | ⬜ | |
 | **Character Media API** | | | | |
-| Get Character Media Summary | ⬜ | ⬜ | ⬜ | |
+| Get Character Media Summary | ✅ | ⬜ | ⬜ | |
 | **Character Profile API** | | | | |
-| Get Character Profile Summary | ⬜ | ⬜ | ⬜ | |
-| Get Character Profile Status | ⬜ | ⬜ | ⬜ | |
+| Get Character Profile Summary | ✅ | ⬜ | ⬜ | |
+| Get Character Profile Status | ✅ | ⬜ | ⬜ | |
 | **Character PvP API** | | | | |
-| Get Character PvP Bracket Statistics | ⬜ | ⬜ | ⬜ | |
-| Get Character PvP Summary | ⬜ | ⬜ | ⬜ | |
+| Get Character PvP Bracket Statistics | ✅ | ⬜ | ⬜ | |
+| Get Character PvP Summary | ✅ | ⬜ | ⬜ | |
 | **Character Specializations API** | | | | |
-| Get Character Specializations Summary | ⬜ | ⬜ | ⬜ | |
+| Get Character Specializations Summary | ✅ | ⬜ | ⬜ | |
 | **Character Statistics API** | | | | |
-| Get Character Statistics Summary | ⬜ | ⬜ | ⬜ | |
+| Get Character Statistics Summary | ✅ | ⬜ | ⬜ | |
 | **Guild Profile API** | | | | |
-| Get Guild | ⬜ | ⬜ | ⬜ | |
-| Get Guild Activity | ⬜ | ⬜ | ⬜ | |
-| Get Guild Achievements | ⬜ | ⬜ | ⬜ | |
-| Get Guild Roster | ⬜ | ⬜ | ⬜ | |
+| Get Guild | ✅ | ⬜ | ⬜ | |
+| Get Guild Activity | ✅ | ⬜ | ⬜ | |
+| Get Guild Achievements | ✅ | ⬜ | ⬜ | |
+| Get Guild Roster | ✅ | ⬜ | ⬜ | |

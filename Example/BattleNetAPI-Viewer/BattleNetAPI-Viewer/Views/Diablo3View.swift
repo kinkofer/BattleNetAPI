@@ -53,7 +53,7 @@ struct Diablo3View: View {
                 profileSection
             }
         }
-        .listStyle(SidebarListStyle())
+        .apiListStyle()
     }
     
     
@@ -153,28 +153,12 @@ struct Diablo3View: View {
     
     
     func webServiceRow(api: API, webService: @escaping () async throws -> Data) -> some View {
-        Button {
-            loadingAPI = api
-            Task {
-                do {
-                    let data = try await webService()
-                    webServiceData = data
-                    apiSelection = api
-                } catch {
-                    alertType = .error(error)
-                }
-                loadingAPI = nil
-            }
-        } label: {
-            HStack {
-                Text(api.rawValue)
-                if loadingAPI == api {
-                    Spacer()
-                    ProgressView()
-                }
-            }
+        WebServiceRow(api: api, loadingAPI: $loadingAPI, webService: webService) { data in
+            webServiceData = data
+            apiSelection = api
+        } onError: { error in
+            alertType = .error(error)
         }
-        .disabled(loadingAPI != nil)
     }
     
     
