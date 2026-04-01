@@ -13,9 +13,8 @@ struct Diablo3View: View {
     @Environment(BattleNetAPI.self) private var battleNetAPI
     @State private var alertType: AlertType?
     
-    @State private var apiSelection: API?
+    @State private var selection: WebServiceSelection<API>?
     @State private var loadingAPI: API?
-    @State private var webServiceData: Data = Data()
     
     let apiType: APIType
     
@@ -28,8 +27,8 @@ struct Diablo3View: View {
     var body: some View {
         apiList
             .navigationTitle(Text(title))
-            .navigationDestination(item: $apiSelection) { api in
-                WebServiceView(title: api.rawValue, data: webServiceData)
+            .navigationDestination(item: $selection) { selection in
+                WebServiceView(title: selection.api.rawValue, data: selection.data)
             }
             .alert(alertType?.title ?? "", isPresented: showingAlert, presenting: alertType) { _ in
                 Button("OK", role: .cancel) { }
@@ -154,8 +153,7 @@ struct Diablo3View: View {
     
     func webServiceRow(api: API, webService: @escaping () async throws -> Data) -> some View {
         WebServiceRow(api: api, loadingAPI: $loadingAPI, webService: webService) { data in
-            webServiceData = data
-            apiSelection = api
+            selection = WebServiceSelection(api: api, data: data)
         } onError: { error in
             alertType = .error(error)
         }
