@@ -40,7 +40,7 @@ extension WS_WorldOfWarcraft {
      Returns an index of collection types for an account.
      
      - parameter namespace: The namespace to use to locate this document.
-    */
+     */
     public func getAccountCollectionsIndex(namespace: APINamespace? = .profile) async throws -> Data {
         return try await call(endpoint: API.accountCollectionsIndex, namespace: namespace)
     }
@@ -50,7 +50,7 @@ extension WS_WorldOfWarcraft {
      Returns a summary of the mounts an account has obtained.
      
      - parameter namespace: The namespace to use to locate this document.
-    */
+     */
     public func getMountsCollectionSummary(namespace: APINamespace? = .profile) async throws -> Data {
         return try await call(endpoint: API.accountMountsCollectionSummary, namespace: namespace)
     }
@@ -60,7 +60,7 @@ extension WS_WorldOfWarcraft {
      Returns a summary of the battle pets an account has obtained.
      
      - parameter namespace: The namespace to use to locate this document.
-    */
+     */
     public func getPetsCollectionSummary(namespace: APINamespace? = .profile) async throws -> Data {
         return try await call(endpoint: API.accountPetsCollectionSummary, namespace: namespace)
     }
@@ -75,7 +75,7 @@ extension WS_WorldOfWarcraft {
      - parameter characterName: The lowercase name of the character.
      - parameter realmSlug: The slug of the realm.
      - parameter namespace: The namespace to use to locate this document.
-    */
+     */
     public func getCharacterAchievementsSummary(characterName: String, realmSlug: String, namespace: APINamespace? = .profile) async throws -> Data {
         return try await call(endpoint: API.characterAchievementsSummary(realmSlug: realmSlug, characterName: characterName), namespace: namespace)
     }
@@ -87,7 +87,7 @@ extension WS_WorldOfWarcraft {
      - parameter characterName: The lowercase name of the character.
      - parameter realmSlug: The slug of the realm.
      - parameter namespace: The namespace to use to locate this document.
-    */
+     */
     public func getCharacterAchievementStatistics(characterName: String, realmSlug: String, namespace: APINamespace? = .profile) async throws -> Data {
         return try await call(endpoint: API.characterAchievementStatistics(realmSlug: realmSlug, characterName: characterName), namespace: namespace)
     }
@@ -102,7 +102,7 @@ extension WS_WorldOfWarcraft {
      - parameter characterName: The lowercase name of the character.
      - parameter realmSlug: The slug of the realm.
      - parameter namespace: The namespace to use to locate this document.
-    */
+     */
     public func getCharacterAppearanceSummary(characterName: String, realmSlug: String, namespace: APINamespace? = .profile) async throws -> Data {
         return try await call(endpoint: API.characterAppearanceSummary(realmSlug: realmSlug, characterName: characterName), namespace: namespace)
     }
@@ -117,7 +117,7 @@ extension WS_WorldOfWarcraft {
      - parameter characterName: The lowercase name of the character.
      - parameter realmSlug: The slug of the realm.
      - parameter namespace: The namespace to use to locate this document.
-    */
+     */
     public func getCharacterCollectionsIndex(characterName: String, realmSlug: String, namespace: APINamespace? = .profile) async throws -> Data {
         return try await call(endpoint: API.characterCollectionsIndex(realmSlug: realmSlug, characterName: characterName), namespace: namespace)
     }
@@ -129,7 +129,7 @@ extension WS_WorldOfWarcraft {
      - parameter characterName: The lowercase name of the character.
      - parameter realmSlug: The slug of the realm.
      - parameter namespace: The namespace to use to locate this document.
-    */
+     */
     public func getCharacterMountsCollectionSummary(characterName: String, realmSlug: String, namespace: APINamespace? = .profile) async throws -> Data {
         return try await call(endpoint: API.characterMountsCollectionSummary(realmSlug: realmSlug, characterName: characterName), namespace: namespace)
     }
@@ -141,9 +141,57 @@ extension WS_WorldOfWarcraft {
      - parameter characterName: The lowercase name of the character.
      - parameter realmSlug: The slug of the realm.
      - parameter namespace: The namespace to use to locate this document.
-    */
+     */
     public func getCharacterPetsCollectionSummary(characterName: String, realmSlug: String, namespace: APINamespace? = .profile) async throws -> Data {
         return try await call(endpoint: API.characterPetsCollectionSummary(realmSlug: realmSlug, characterName: characterName), namespace: namespace)
+    }
+    
+    
+    /**
+     Returns a summary of the heirlooms a character has obtained.
+     
+     - parameter characterName: The lowercase name of the character.
+     - parameter realmSlug: The slug of the realm.
+     - parameter namespace: The namespace to use to locate this document.
+     */
+    public func getCharacterHeirloomsCollection(characterName: String, realmSlug: String, namespace: APINamespace? = .profile) async throws -> Data {
+        return try await call(endpoint: API.characterHeirloomsCollection(realmSlug: realmSlug, characterName: characterName), namespace: namespace)
+    }
+    
+    
+    /**
+     Returns a summary of the toys a character has obtained.
+     
+     - parameter characterName: The lowercase name of the character.
+     - parameter realmSlug: The slug of the realm.
+     - parameter namespace: The namespace to use to locate this document.
+     */
+    public func getCharacterToysCollection(characterName: String, realmSlug: String, namespace: APINamespace? = .profile) async throws -> Data {
+        return try await call(endpoint: API.characterToysCollection(realmSlug: realmSlug, characterName: characterName), namespace: namespace)
+    }
+    
+    
+    /**
+     Returns a summary of the transmogs a character has obtained.
+     
+     - parameter characterName: The lowercase name of the character.
+     - parameter realmSlug: The slug of the realm.
+     - parameter namespace: The namespace to use to locate this document.
+     */
+    public func getCharacterTransmogsCollection(characterName: String, realmSlug: String, namespace: APINamespace? = .profile) async throws -> Data {
+        return try await call(endpoint: API.characterTransmogsCollection(realmSlug: realmSlug, characterName: characterName), namespace: namespace)
+    }
+    
+    
+    /**
+     Returns a summary of the decor items a character has obtained.
+     
+     - parameter characterName: The lowercase name of the character.
+     - parameter realmSlug: The slug of the realm.
+     - parameter namespace: The namespace to use to locate this document.
+     */
+    public func getCharacterDecorCollection(characterName: String, realmSlug: String, namespace: APINamespace? = .profile) async throws -> Data {
+        return try await call(endpoint: API.characterDecorCollection(realmSlug: realmSlug, characterName: characterName), namespace: namespace)
     }
     
     
@@ -156,7 +204,7 @@ extension WS_WorldOfWarcraft {
      - parameter characterName: The lowercase name of the character.
      - parameter realmSlug: The slug of the realm.
      - parameter namespace: The namespace to use to locate this document.
-    */
+     */
     public func getCharacterEncountersSummary(characterName: String, realmSlug: String, namespace: APINamespace? = .profile) async throws -> Data {
         return try await call(endpoint: API.characterEncountersSummary(realmSlug: realmSlug, characterName: characterName), namespace: namespace)
     }
@@ -168,7 +216,7 @@ extension WS_WorldOfWarcraft {
      - parameter characterName: The lowercase name of the character.
      - parameter realmSlug: The slug of the realm.
      - parameter namespace: The namespace to use to locate this document.
-    */
+     */
     public func getCharacterDungeons(characterName: String, realmSlug: String, namespace: APINamespace? = .profile) async throws -> Data {
         return try await call(endpoint: API.characterDungeons(realmSlug: realmSlug, characterName: characterName), namespace: namespace)
     }
@@ -180,7 +228,7 @@ extension WS_WorldOfWarcraft {
      - parameter characterName: The lowercase name of the character.
      - parameter realmSlug: The slug of the realm.
      - parameter namespace: The namespace to use to locate this document.
-    */
+     */
     public func getCharacterRaids(characterName: String, realmSlug: String, namespace: APINamespace? = .profile) async throws -> Data {
         return try await call(endpoint: API.characterRaids(realmSlug: realmSlug, characterName: characterName), namespace: namespace)
     }
@@ -192,6 +240,22 @@ extension WS_WorldOfWarcraft {
     public func getCharacterEquipmentSummary(characterName: String, realmSlug: String, namespace: APINamespace? = .profile) async throws -> Data {
         return try await call(endpoint: API.characterEquipmentSummary(realmSlug: realmSlug, characterName: characterName), namespace: namespace)
     }
+    
+    
+    
+    // MARK: Character House API
+    
+    /**
+     Returns a character's player house.
+     
+     - parameter characterName: The lowercase name of the character.
+     - parameter realmSlug: The slug of the realm.
+     - parameter namespace: The namespace to use to locate this document.
+     */
+    public func getCharacterHouse(characterName: String, realmSlug: String, namespace: APINamespace? = .profile) async throws -> Data {
+        return try await call(endpoint: API.characterHouse(realmSlug: realmSlug, characterName: characterName), namespace: namespace)
+    }
+    
     
     
     // MARK: Character Hunter Pets API

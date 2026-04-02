@@ -13,9 +13,8 @@ struct WorldOfWarcraftView: View {
     @Environment(BattleNetAPI.self) private var battleNetAPI
     @State private var alertType: AlertType?
     
-    @State private var apiSelection: API?
+    @State private var selection: WebServiceSelection<API>?
     @State private var loadingAPI: API?
-    @State private var webServiceData: Data = Data()
     
     let apiType: APIType
     
@@ -28,8 +27,8 @@ struct WorldOfWarcraftView: View {
     var body: some View {
         apiList
             .navigationTitle(Text(title))
-            .navigationDestination(item: $apiSelection) { api in
-                WebServiceView(title: api.rawValue, data: webServiceData)
+            .navigationDestination(item: $selection) { selection in
+                WebServiceView(title: selection.api.rawValue, data: selection.data)
             }
             .alert(alertType?.title ?? "", isPresented: showingAlert, presenting: alertType) { _ in
                 Button("OK", role: .cancel) { }
@@ -50,561 +49,706 @@ struct WorldOfWarcraftView: View {
                 profileSection
             }
         }
-        .listStyle(SidebarListStyle())
+        .apiListStyle()
     }
     
     
     var gameDataSection: some View {
         Group {
-            Group {
-                Section(header: Text(WorldOfWarcraftView.APISection.achievement.rawValue)) {
-                    webServiceRow(api: .achievementCategoryIndex) {
-                        try await battleNetAPI.wow.getAchievementCategoryIndex()
-                    }
-                    webServiceRow(api: .achievementCategory) {
-                        try await battleNetAPI.wow.getAchievementCategory(id: 81)
-                    }
-                    webServiceRow(api: .achievementIndex) {
-                        try await battleNetAPI.wow.getAchievementIndex()
-                    }
-                    webServiceRow(api: .achievement) {
-                        try await battleNetAPI.wow.getAchievement(id: 6)
-                    }
-                    webServiceRow(api: .achievementMedia) {
-                        try await battleNetAPI.wow.getAchievementMedia(id: 6)
-                    }
+            gameDataAchievementToMediaSearchSection
+            gameDataCraftingToSpecializationSection
+            gameDataPowerToTalentSection
+            gameDataTechTalentToHeirloomSection
+            gameDataAppearanceToToySection
+            gameDataHousingSection
+        }
+    }
+    
+    
+    // MARK: - Game Data Sub-Sections
+    
+    /// Achievement, Auction House, Azerite Essence, Connected Realm, Covenant, Creature, Guild Crest, Item, Journal, Media Search
+    var gameDataAchievementToMediaSearchSection: some View {
+        Group {
+            Section(header: Text(WorldOfWarcraftView.APISection.achievement.rawValue)) {
+                webServiceRow(api: .achievementCategoryIndex) {
+                    try await battleNetAPI.wow.getAchievementCategoryIndex()
                 }
-                
-                Section(header: Text(WorldOfWarcraftView.APISection.auctionHouse.rawValue)) {
-                    webServiceRow(api: .auctions) {
-                        try await battleNetAPI.wow.getAuctions(connectedRealmID: 121)
-                    }
+                webServiceRow(api: .achievementCategory) {
+                    try await battleNetAPI.wow.getAchievementCategory(id: 81)
                 }
-                
-                Section(header: Text(WorldOfWarcraftView.APISection.azeriteEssence.rawValue)) {
-                    webServiceRow(api: .azeriteEssenceIndex) {
-                        try await battleNetAPI.wow.getAzeriteEssenceIndex()
-                    }
-                    webServiceRow(api: .azeriteEssence) {
-                        try await battleNetAPI.wow.getAzeriteEssence(id: 2)
-                    }
-                    webServiceRow(api: .azeriteEssenceSearch) {
-                        let queries = [
-                            "allowed_specializations.id": "65",
-                            "orderby": "name",
-                            "_page": "1"
-                        ]
-                        return try await battleNetAPI.wow.searchAzeriteEssence(queries: queries)
-                    }
-                    webServiceRow(api: .azeriteEssenceMedia) {
-                        try await battleNetAPI.wow.getAzeriteEssence(id: 2)
-                    }
+                webServiceRow(api: .achievementIndex) {
+                    try await battleNetAPI.wow.getAchievementIndex()
                 }
-                
-                Section(header: Text(WorldOfWarcraftView.APISection.connectedRealm.rawValue)) {
-                    webServiceRow(api: .connectedRealmIndex) {
-                        try await battleNetAPI.wow.getConnectedRealmIndex()
-                    }
-                    webServiceRow(api: .connectedRealm) {
-                        try await battleNetAPI.wow.getConnectedRealm(id: 11)
-                    }
-                    webServiceRow(api: .connectedRealmSearch) {
-                        let queries = [
-                            "status.type": "UP",
-                            "realms.timezone": "America/New_York",
-                            "orderby": "id",
-                            "_page": "1"
-                        ]
-                        return try await battleNetAPI.wow.searchConnectedRealms(queries: queries)
-                    }
+                webServiceRow(api: .achievement) {
+                    try await battleNetAPI.wow.getAchievement(id: 6)
                 }
-                
-                Section(header: Text(WorldOfWarcraftView.APISection.covenant.rawValue)) {
-                    webServiceRow(api: .covenantIndex) {
-                        try await battleNetAPI.wow.getCovenantIndex()
-                    }
-                    webServiceRow(api: .covenant) {
-                        try await battleNetAPI.wow.getCovenant(id: 1)
-                    }
-                    webServiceRow(api: .covenantMedia) {
-                        try await battleNetAPI.wow.getCovenantMedia(id: 1)
-                    }
-                    webServiceRow(api: .soulbindIndex) {
-                        try await battleNetAPI.wow.getSoulbindIndex()
-                    }
-                    webServiceRow(api: .soulbind) {
-                        try await battleNetAPI.wow.getSoulbind(id: 1)
-                    }
-                    webServiceRow(api: .conduitIndex) {
-                        try await battleNetAPI.wow.getConduitIndex()
-                    }
-                    webServiceRow(api: .conduit) {
-                        try await battleNetAPI.wow.getConduit(id: 1)
-                    }
-                }
-                
-                Section(header: Text(WorldOfWarcraftView.APISection.creature.rawValue)) {
-                    webServiceRow(api: .creatureFamilyIndex) {
-                        try await battleNetAPI.wow.getCreatureFamilyIndex()
-                    }
-                    webServiceRow(api: .creatureFamily) {
-                        try await battleNetAPI.wow.getCreatureFamily(id: 1)
-                    }
-                    webServiceRow(api: .creatureTypeIndex) {
-                        try await battleNetAPI.wow.getCreatureTypeIndex()
-                    }
-                    webServiceRow(api: .creatureType) {
-                        try await battleNetAPI.wow.getCreatureType(id: 1)
-                    }
-                    webServiceRow(api: .creature) {
-                        try await battleNetAPI.wow.getCreature(id: 42722)
-                    }
-                    webServiceRow(api: .creatureSearch) {
-                        let queries = [
-                            "name.en_US": "Dragon",
-                            "orderby": "id",
-                            "_page": "1"
-                        ]
-                        return try await battleNetAPI.wow.searchCreature(queries: queries)
-                    }
-                    webServiceRow(api: .creatureDisplayMedia) {
-                        try await battleNetAPI.wow.getCreatureDisplayMedia(id: 30221)
-                    }
-                    webServiceRow(api: .creatureFamilyMedia) {
-                        try await battleNetAPI.wow.getCreatureFamilyMedia(id: 1)
-                    }
-                }
-                
-                Section(header: Text(WorldOfWarcraftView.APISection.guildCrest.rawValue)) {
-                    webServiceRow(api: .guildCrestIndex) {
-                        try await battleNetAPI.wow.getGuildCrestIndex()
-                    }
-                    webServiceRow(api: .guildCrestBorderMedia) {
-                        try await battleNetAPI.wow.getGuildCrestBorderMedia(id: 0)
-                    }
-                    webServiceRow(api: .guildCrestEmblemMedia) {
-                        try await battleNetAPI.wow.getGuildCrestEmblemMedia(id: 0)
-                    }
-                }
-                
-                Section(header: Text(WorldOfWarcraftView.APISection.item.rawValue)) {
-                    webServiceRow(api: .itemClassIndex) {
-                        try await battleNetAPI.wow.getItemClassIndex()
-                    }
-                    webServiceRow(api: .itemClass) {
-                        try await battleNetAPI.wow.getItemClass(id: 0)
-                    }
-                    webServiceRow(api: .itemSetIndex) {
-                        try await battleNetAPI.wow.getItemSetIndex()
-                    }
-                    webServiceRow(api: .itemSet) {
-                        try await battleNetAPI.wow.getItemSet(id: 1)
-                    }
-                    webServiceRow(api: .itemSubclass) {
-                        try await battleNetAPI.wow.getItemSubclass(itemClassID: 0, itemSubclassID: 0)
-                    }
-                    webServiceRow(api: .item) {
-                        try await battleNetAPI.wow.getItem(id: 19019)
-                    }
-                    webServiceRow(api: .itemMedia) {
-                        try await battleNetAPI.wow.getItemMedia(id: 19019)
-                    }
-                    webServiceRow(api: .itemSearch) {
-                        let queries = [
-                            "name.en_US": "Garrosh",
-                            "orderby": "id",
-                            "_page": "1"
-                        ]
-                        return try await battleNetAPI.wow.searchItem(queries: queries)
-                    }
-                }
-                
-                Section(header: Text(WorldOfWarcraftView.APISection.journal.rawValue)) {
-                    webServiceRow(api: .journalExpansionIndex) {
-                        try await battleNetAPI.wow.getJournalExpansionIndex()
-                    }
-                    webServiceRow(api: .journalExpansion) {
-                        try await battleNetAPI.wow.getJournalExpansion(id: 68)
-                    }
-                    webServiceRow(api: .journalEncounterIndex) {
-                        try await battleNetAPI.wow.getJournalEncounterIndex()
-                    }
-                    webServiceRow(api: .journalEncounter) {
-                        try await battleNetAPI.wow.getJournalEncounter(id: 89)
-                    }
-                    webServiceRow(api: .journalEncounterSearch) {
-                        let queries = [
-                            "instance.name.en_US": "Deadmines",
-                            "orderby": "id",
-                            "_page": "1"
-                        ]
-                        return try await battleNetAPI.wow.searchJournalEncounter(queries: queries)
-                    }
-                    webServiceRow(api: .journalInstanceIndex) {
-                        try await battleNetAPI.wow.getJournalInstanceIndex()
-                    }
-                    webServiceRow(api: .journalInstance) {
-                        try await battleNetAPI.wow.getJournalInstance(id: 63)
-                    }
-                    webServiceRow(api: .journalInstanceMedia) {
-                        try await battleNetAPI.wow.getJournalInstanceMedia(id: 63)
-                    }
-                }
-                
-                Section(header: Text(WorldOfWarcraftView.APISection.mediaSearch.rawValue)) {
-                    webServiceRow(api: .mediaSearch) {
-                        let queries = [
-                            "tags": "item",
-                            "orderby": "id",
-                            "_page": "1"
-                        ]
-                        return try await battleNetAPI.wow.searchMedia(queries: queries)
-                    }
+                webServiceRow(api: .achievementMedia) {
+                    try await battleNetAPI.wow.getAchievementMedia(id: 6)
                 }
             }
-            Group {
-                Section(header: Text(WorldOfWarcraftView.APISection.modifiedCrafting.rawValue)) {
-                    webServiceRow(api: .modifiedCraftingIndex) {
-                        try await battleNetAPI.wow.getModifiedCraftingIndex()
-                    }
-                    webServiceRow(api: .modifiedCraftingCategoryIndex) {
-                        try await battleNetAPI.wow.getModifiedCraftingCategoryIndex()
-                    }
-                    webServiceRow(api: .modifiedCraftingCategory) {
-                        try await battleNetAPI.wow.getModifiedCraftingCategory(id: 1)
-                    }
-                    webServiceRow(api: .modifiedCraftingReagentSlotTypeIndex) {
-                        try await battleNetAPI.wow.getModifiedCraftingReagentSlotTypeIndex()
-                    }
-                    webServiceRow(api: .modifiedCraftingReagentSlotType) {
-                        try await battleNetAPI.wow.getModifiedCraftingReagentSlotType(id: 16)
-                    }
+            
+            Section(header: Text(WorldOfWarcraftView.APISection.auctionHouse.rawValue)) {
+                webServiceRow(api: .auctions) {
+                    try await battleNetAPI.wow.getAuctions(connectedRealmID: 121)
                 }
-                
-                Section(header: Text(WorldOfWarcraftView.APISection.mount.rawValue)) {
-                    webServiceRow(api: .mountIndex) {
-                        try await battleNetAPI.wow.getMountIndex()
-                    }
-                    webServiceRow(api: .mount) {
-                        try await battleNetAPI.wow.getMount(id: 6)
-                    }
-                    webServiceRow(api: .mountSearch) {
-                        let queries = [
-                            "name.en_US": "Turtle",
-                            "orderby": "id",
-                            "_page": "1"
-                        ]
-                        return try await battleNetAPI.wow.searchMount(queries: queries)
-                    }
-                }
-                
-                Section(header: Text(WorldOfWarcraftView.APISection.mythicKeystoneAffix.rawValue)) {
-                    webServiceRow(api: .mythicKeystoneAffixIndex) {
-                        try await battleNetAPI.wow.getMythicKeystoneAffixIndex()
-                    }
-                    webServiceRow(api: .mythicKeystoneAffix) {
-                        try await battleNetAPI.wow.getMythicKeystoneAffix(id: 1)
-                    }
-                    webServiceRow(api: .mythicKeystoneAffixMedia) {
-                        try await battleNetAPI.wow.getMythicKeystoneAffixMedia(id: 1)
-                    }
-                }
-                
-                Section(header: Text(WorldOfWarcraftView.APISection.mythicKeystoneDungeon.rawValue)) {
-                    webServiceRow(api: .mythicKeystoneDungeonIndex) {
-                        try await battleNetAPI.wow.getMythicKeystoneDungeonIndex()
-                    }
-                    webServiceRow(api: .mythicKeystoneDungeon) {
-                        try await battleNetAPI.wow.getMythicKeystoneDungeon(id: 375)
-                    }
-                    webServiceRow(api: .mythicKeystoneIndex) {
-                        try await battleNetAPI.wow.getMythicKeystoneIndex()
-                    }
-                    webServiceRow(api: .mythicKeystonePeriodIndex) {
-                        try await battleNetAPI.wow.getMythicKeystonePeriodIndex()
-                    }
-                    webServiceRow(api: .mythicKeystonePeriod) {
-                        try await battleNetAPI.wow.getMythicKeystonePeriod(id: 641)
-                    }
-                    webServiceRow(api: .mythicKeystoneSeasonIndex) {
-                        try await battleNetAPI.wow.getMythicKeystoneSeasonIndex()
-                    }
-                    webServiceRow(api: .mythicKeystoneSeason) {
-                        try await battleNetAPI.wow.getMythicKeystoneSeason(id: 1)
-                    }
-                }
-                
-                Section(header: Text(WorldOfWarcraftView.APISection.mythicKeystoneLeaderboard.rawValue)) {
-                    webServiceRow(api: .mythicKeystoneLeaderboardIndex) {
-                        try await battleNetAPI.wow.getMythicLeaderboardIndex(connectedRealmID: 11)
-                    }
-                    webServiceRow(api: .mythicKeystoneLeaderboard) {
-                        try await battleNetAPI.wow.getMythicLeaderboard(connectedRealmID: 11, dungeonID: 197, period: 641)
-                    }
-                }
-                
-                Section(header: Text(WorldOfWarcraftView.APISection.mythicRaidLeaderboard.rawValue)) {
-                    webServiceRow(api: .mythicRaidLeaderboard) {
-                        try await battleNetAPI.wow.getMythicRaidLeaderboard(raid: "uldir", faction: .alliance)
-                    }
-                }
-                
-                Section(header: Text(WorldOfWarcraftView.APISection.pet.rawValue)) {
-                    webServiceRow(api: .petIndex) {
-                        try await battleNetAPI.wow.getPetIndex()
-                    }
-                    webServiceRow(api: .pet) {
-                        try await battleNetAPI.wow.getPet(id: 39)
-                    }
-                    webServiceRow(api: .petMedia) {
-                        try await battleNetAPI.wow.getPetMedia(id: 39)
-                    }
-                    webServiceRow(api: .petAbilityIndex) {
-                        try await battleNetAPI.wow.getPetAbilityIndex()
-                    }
-                    webServiceRow(api: .petAbility) {
-                        try await battleNetAPI.wow.getPetAbility(id: 110)
-                    }
-                    webServiceRow(api: .petAbilityMedia) {
-                        try await battleNetAPI.wow.getPetAbilityMedia(id: 110)
-                    }
-                }
-                
-                Section(header: Text(WorldOfWarcraftView.APISection.playableClass.rawValue)) {
-                    webServiceRow(api: .playableClassIndex) {
-                        try await battleNetAPI.wow.getPlayableClassIndex()
-                    }
-                    webServiceRow(api: .playableClass) {
-                        try await battleNetAPI.wow.getPlayableClass(id: 7)
-                    }
-                    webServiceRow(api: .playableClassMedia) {
-                        try await battleNetAPI.wow.getPlayableClassMedia(id: 7)
-                    }
-                    webServiceRow(api: .pvpTalentSlots) {
-                        try await battleNetAPI.wow.getPlayableClassPvPTalentSlots(classID: 7)
-                    }
-                }
-                
-                Section(header: Text(WorldOfWarcraftView.APISection.playableRace.rawValue)) {
-                    webServiceRow(api: .playableRaceIndex) {
-                        try await battleNetAPI.wow.getPlayableRaceIndex()
-                    }
-                    webServiceRow(api: .playableRace) {
-                        try await battleNetAPI.wow.getPlayableRace(id: 2)
-                    }
-                }
-                
-                Section(header: Text(WorldOfWarcraftView.APISection.playableSpecialization.rawValue)) {
-                    webServiceRow(api: .playableSpecializationIndex) {
-                        try await battleNetAPI.wow.getPlayableSpecializationIndex()
-                    }
-                    webServiceRow(api: .playableSpecialization) {
-                        try await battleNetAPI.wow.getPlayableSpecialization(id: 262)
-                    }
-                    webServiceRow(api: .playableSpecializationMedia) {
-                        try await battleNetAPI.wow.getPlayableSpecializationMedia(id: 262)
-                    }
+                webServiceRow(api: .auctionCommodities) {
+                    try await battleNetAPI.wow.getAuctionCommodities()
                 }
             }
-            Group {
-                Section(header: Text(WorldOfWarcraftView.APISection.powerType.rawValue)) {
-                    webServiceRow(api: .powerTypeIndex) {
-                        try await battleNetAPI.wow.getPowerTypeIndex()
-                    }
-                    webServiceRow(api: .powerType) {
-                        try await battleNetAPI.wow.getPowerType(id: 0)
-                    }
+            
+            Section(header: Text(WorldOfWarcraftView.APISection.azeriteEssence.rawValue)) {
+                webServiceRow(api: .azeriteEssenceIndex) {
+                    try await battleNetAPI.wow.getAzeriteEssenceIndex()
                 }
-                
-                Section(header: Text(WorldOfWarcraftView.APISection.profession.rawValue)) {
-                    webServiceRow(api: .professionIndex) {
-                        try await battleNetAPI.wow.getProfessionIndex()
-                    }
-                    webServiceRow(api: .profession) {
-                        try await battleNetAPI.wow.getProfession(id: 164)
-                    }
-                    webServiceRow(api: .professionMedia) {
-                        try await battleNetAPI.wow.getProfessionMedia(id: 164)
-                    }
-                    webServiceRow(api: .professionSkillTier) {
-                        try await battleNetAPI.wow.getProfessionSkillTier(professionID: 164, skillTierID: 2477)
-                    }
-                    webServiceRow(api: .recipe) {
-                        try await battleNetAPI.wow.getRecipe(id: 1631)
-                    }
-                    webServiceRow(api: .recipeMedia) {
-                        try await battleNetAPI.wow.getRecipeMedia(id: 1631)
-                    }
+                webServiceRow(api: .azeriteEssence) {
+                    try await battleNetAPI.wow.getAzeriteEssence(id: 2)
                 }
-                
-                Section(header: Text(WorldOfWarcraftView.APISection.pvpSeason.rawValue)) {
-                    webServiceRow(api: .pvpSeasonIndex) {
-                        try await battleNetAPI.wow.getPvPSeasonIndex()
-                    }
-                    webServiceRow(api: .pvpSeason) {
-                        try await battleNetAPI.wow.getPvPSeason(id: 27)
-                    }
-                    webServiceRow(api: .pvpLeaderboardIndex) {
-                        try await battleNetAPI.wow.getPvPLeaderboardIndex(pvpSeasonID: 27)
-                    }
-                    webServiceRow(api: .pvpLeaderboard) {
-                        try await battleNetAPI.wow.getPvPLeaderboard(pvpSeasonID: 27, pvpBracket: ._3v3)
-                    }
-                    webServiceRow(api: .pvpRewardIndex) {
-                        try await battleNetAPI.wow.getPvPRewardIndex(pvpSeasonID: 27)
-                    }
+                webServiceRow(api: .azeriteEssenceSearch) {
+                    let queries = [
+                        "allowed_specializations.id": "65",
+                        "orderby": "name",
+                        "_page": "1"
+                    ]
+                    return try await battleNetAPI.wow.searchAzeriteEssence(queries: queries)
                 }
-                
-                Section(header: Text(WorldOfWarcraftView.APISection.pvpTier.rawValue)) {
-                    webServiceRow(api: .pvpTierMedia) {
-                        try await battleNetAPI.wow.getPvPTierMedia(id: 1)
-                    }
-                    webServiceRow(api: .pvpTierIndex) {
-                        try await battleNetAPI.wow.getPvPTierIndex()
-                    }
-                    webServiceRow(api: .pvpTier) {
-                        try await battleNetAPI.wow.getPvPTier(id: 1)
-                    }
-                }
-                
-                Section(header: Text(WorldOfWarcraftView.APISection.quest.rawValue)) {
-                    webServiceRow(api: .questIndex) {
-                        try await battleNetAPI.wow.getQuestIndex()
-                    }
-                    webServiceRow(api: .quest) {
-                        try await battleNetAPI.wow.getQuest(id: 2)
-                    }
-                    webServiceRow(api: .questCategoryIndex) {
-                        try await battleNetAPI.wow.getQuestCategoryIndex()
-                    }
-                    webServiceRow(api: .questCategory) {
-                        try await battleNetAPI.wow.getQuestCategory(id: 1)
-                    }
-                    webServiceRow(api: .questAreaIndex) {
-                        try await battleNetAPI.wow.getQuestAreaIndex()
-                    }
-                    webServiceRow(api: .questArea) {
-                        try await battleNetAPI.wow.getQuestArea(id: 1)
-                    }
-                    webServiceRow(api: .questTypeIndex) {
-                        try await battleNetAPI.wow.getQuestTypeIndex()
-                    }
-                    webServiceRow(api: .questType) {
-                        try await battleNetAPI.wow.getQuestType(id: 1)
-                    }
-                }
-                
-                Section(header: Text(WorldOfWarcraftView.APISection.realm.rawValue)) {
-                    webServiceRow(api: .realmIndex) {
-                        try await battleNetAPI.wow.getRealmIndex()
-                    }
-                    webServiceRow(api: .realm) {
-                        try await battleNetAPI.wow.getRealm("tichondrius")
-                    }
-                    webServiceRow(api: .realmSearch) {
-                        let queries = [
-                            "timezone": "America/New_York",
-                            "orderby": "id",
-                            "_page": "1"
-                        ]
-                        return try await battleNetAPI.wow.searchRealm(queries: queries)
-                    }
-                }
-                
-                Section(header: Text(WorldOfWarcraftView.APISection.region.rawValue)) {
-                    webServiceRow(api: .regionIndex) {
-                        try await battleNetAPI.wow.getRegionIndex()
-                    }
-                    webServiceRow(api: .region) {
-                        try await battleNetAPI.wow.getRegion(id: 1)
-                    }
-                }
-                
-                Section(header: Text(WorldOfWarcraftView.APISection.reputation.rawValue)) {
-                    webServiceRow(api: .reputationFactionIndex) {
-                        try await battleNetAPI.wow.getReputationFactionIndex()
-                    }
-                    webServiceRow(api: .reputationFaction) {
-                        try await battleNetAPI.wow.getReputationFaction(id: 21)
-                    }
-                    webServiceRow(api: .reputationTierIndex) {
-                        try await battleNetAPI.wow.getReputationTierIndex()
-                    }
-                    webServiceRow(api: .reputationTier) {
-                        try await battleNetAPI.wow.getReputationTier(id: 2)
-                    }
-                }
-                
-                Section(header: Text(WorldOfWarcraftView.APISection.spell.rawValue)) {
-                    webServiceRow(api: .spell) {
-                        try await battleNetAPI.wow.getSpell(id: 196607)
-                    }
-                    webServiceRow(api: .spellMedia) {
-                        try await battleNetAPI.wow.getSpellMedia(id: 196607)
-                    }
-                    webServiceRow(api: .spellSearch) {
-                        let queries = [
-                            "name.en_US": "Holy Shield",
-                            "orderby": "id",
-                            "_page": "1"
-                        ]
-                        return try await battleNetAPI.wow.searchSpell(queries: queries)
-                    }
-                }
-                
-                Section(header: Text(WorldOfWarcraftView.APISection.talent.rawValue)) {
-                    webServiceRow(api: .talentIndex) {
-                        try await battleNetAPI.wow.getTalentIndex()
-                    }
-                    webServiceRow(api: .talent) {
-                        try await battleNetAPI.wow.getTalent(id: 23106)
-                    }
-                    webServiceRow(api: .pvpTalentIndex) {
-                        try await battleNetAPI.wow.getPvPTalentIndex()
-                    }
-                    webServiceRow(api: .pvpTalent) {
-                        try await battleNetAPI.wow.getPvPTalent(id: 11)
-                    }
+                webServiceRow(api: .azeriteEssenceMedia) {
+                    try await battleNetAPI.wow.getAzeriteEssence(id: 2)
                 }
             }
-            Group {
-                Section(header: Text(WorldOfWarcraftView.APISection.techTalent.rawValue)) {
-                    webServiceRow(api: .techTalentTreeIndex) {
-                        try await battleNetAPI.wow.getTechTalentTreeIndex()
-                    }
-                    webServiceRow(api: .techTalentTree) {
-                        try await battleNetAPI.wow.getTechTalentTree(id: 272)
-                    }
-                    webServiceRow(api: .techTalentIndex) {
-                        try await battleNetAPI.wow.getTechTalentIndex()
-                    }
-                    webServiceRow(api: .techTalent) {
-                        try await battleNetAPI.wow.getTechTalent(id: 863)
-                    }
-                    webServiceRow(api: .techTalentMedia) {
-                        try await battleNetAPI.wow.getTechTalentMedia(id: 863)
-                    }
+            
+            Section(header: Text(WorldOfWarcraftView.APISection.connectedRealm.rawValue)) {
+                webServiceRow(api: .connectedRealmIndex) {
+                    try await battleNetAPI.wow.getConnectedRealmIndex()
                 }
-                
-                Section(header: Text(WorldOfWarcraftView.APISection.title.rawValue)) {
-                    webServiceRow(api: .titleIndex) {
-                        try await battleNetAPI.wow.getTitleIndex()
-                    }
-                    webServiceRow(api: .title) {
-                        try await battleNetAPI.wow.getTitle(id: 1)
-                    }
+                webServiceRow(api: .connectedRealm) {
+                    try await battleNetAPI.wow.getConnectedRealm(id: 11)
                 }
-                
-                Section(header: Text(WorldOfWarcraftView.APISection.wowToken.rawValue)) {
-                    webServiceRow(api: .tokenIndex) {
-                        try await battleNetAPI.wow.getTokenIndex()
-                    }
+                webServiceRow(api: .connectedRealmSearch) {
+                    let queries = [
+                        "status.type": "UP",
+                        "realms.timezone": "America/New_York",
+                        "orderby": "id",
+                        "_page": "1"
+                    ]
+                    return try await battleNetAPI.wow.searchConnectedRealms(queries: queries)
+                }
+            }
+            
+            Section(header: Text(WorldOfWarcraftView.APISection.covenant.rawValue)) {
+                webServiceRow(api: .covenantIndex) {
+                    try await battleNetAPI.wow.getCovenantIndex()
+                }
+                webServiceRow(api: .covenant) {
+                    try await battleNetAPI.wow.getCovenant(id: 1)
+                }
+                webServiceRow(api: .covenantMedia) {
+                    try await battleNetAPI.wow.getCovenantMedia(id: 1)
+                }
+                webServiceRow(api: .soulbindIndex) {
+                    try await battleNetAPI.wow.getSoulbindIndex()
+                }
+                webServiceRow(api: .soulbind) {
+                    try await battleNetAPI.wow.getSoulbind(id: 1)
+                }
+                webServiceRow(api: .conduitIndex) {
+                    try await battleNetAPI.wow.getConduitIndex()
+                }
+                webServiceRow(api: .conduit) {
+                    try await battleNetAPI.wow.getConduit(id: 1)
+                }
+            }
+            
+            Section(header: Text(WorldOfWarcraftView.APISection.creature.rawValue)) {
+                webServiceRow(api: .creatureFamilyIndex) {
+                    try await battleNetAPI.wow.getCreatureFamilyIndex()
+                }
+                webServiceRow(api: .creatureFamily) {
+                    try await battleNetAPI.wow.getCreatureFamily(id: 1)
+                }
+                webServiceRow(api: .creatureTypeIndex) {
+                    try await battleNetAPI.wow.getCreatureTypeIndex()
+                }
+                webServiceRow(api: .creatureType) {
+                    try await battleNetAPI.wow.getCreatureType(id: 1)
+                }
+                webServiceRow(api: .creature) {
+                    try await battleNetAPI.wow.getCreature(id: 42722)
+                }
+                webServiceRow(api: .creatureSearch) {
+                    let queries = [
+                        "name.en_US": "Dragon",
+                        "orderby": "id",
+                        "_page": "1"
+                    ]
+                    return try await battleNetAPI.wow.searchCreature(queries: queries)
+                }
+                webServiceRow(api: .creatureDisplayMedia) {
+                    try await battleNetAPI.wow.getCreatureDisplayMedia(id: 30221)
+                }
+                webServiceRow(api: .creatureFamilyMedia) {
+                    try await battleNetAPI.wow.getCreatureFamilyMedia(id: 1)
+                }
+            }
+            
+            Section(header: Text(WorldOfWarcraftView.APISection.guildCrest.rawValue)) {
+                webServiceRow(api: .guildCrestIndex) {
+                    try await battleNetAPI.wow.getGuildCrestIndex()
+                }
+                webServiceRow(api: .guildCrestBorderMedia) {
+                    try await battleNetAPI.wow.getGuildCrestBorderMedia(id: 0)
+                }
+                webServiceRow(api: .guildCrestEmblemMedia) {
+                    try await battleNetAPI.wow.getGuildCrestEmblemMedia(id: 0)
+                }
+            }
+            
+            Section(header: Text(WorldOfWarcraftView.APISection.item.rawValue)) {
+                webServiceRow(api: .itemClassIndex) {
+                    try await battleNetAPI.wow.getItemClassIndex()
+                }
+                webServiceRow(api: .itemClass) {
+                    try await battleNetAPI.wow.getItemClass(id: 0)
+                }
+                webServiceRow(api: .itemSetIndex) {
+                    try await battleNetAPI.wow.getItemSetIndex()
+                }
+                webServiceRow(api: .itemSet) {
+                    try await battleNetAPI.wow.getItemSet(id: 1)
+                }
+                webServiceRow(api: .itemSubclass) {
+                    try await battleNetAPI.wow.getItemSubclass(itemClassID: 0, itemSubclassID: 0)
+                }
+                webServiceRow(api: .item) {
+                    try await battleNetAPI.wow.getItem(id: 19019)
+                }
+                webServiceRow(api: .itemMedia) {
+                    try await battleNetAPI.wow.getItemMedia(id: 19019)
+                }
+                webServiceRow(api: .itemSearch) {
+                    let queries = [
+                        "name.en_US": "Garrosh",
+                        "orderby": "id",
+                        "_page": "1"
+                    ]
+                    return try await battleNetAPI.wow.searchItem(queries: queries)
+                }
+            }
+            
+            Section(header: Text(WorldOfWarcraftView.APISection.journal.rawValue)) {
+                webServiceRow(api: .journalExpansionIndex) {
+                    try await battleNetAPI.wow.getJournalExpansionIndex()
+                }
+                webServiceRow(api: .journalExpansion) {
+                    try await battleNetAPI.wow.getJournalExpansion(id: 68)
+                }
+                webServiceRow(api: .journalEncounterIndex) {
+                    try await battleNetAPI.wow.getJournalEncounterIndex()
+                }
+                webServiceRow(api: .journalEncounter) {
+                    try await battleNetAPI.wow.getJournalEncounter(id: 89)
+                }
+                webServiceRow(api: .journalEncounterSearch) {
+                    let queries = [
+                        "instance.name.en_US": "Deadmines",
+                        "orderby": "id",
+                        "_page": "1"
+                    ]
+                    return try await battleNetAPI.wow.searchJournalEncounter(queries: queries)
+                }
+                webServiceRow(api: .journalInstanceIndex) {
+                    try await battleNetAPI.wow.getJournalInstanceIndex()
+                }
+                webServiceRow(api: .journalInstance) {
+                    try await battleNetAPI.wow.getJournalInstance(id: 63)
+                }
+                webServiceRow(api: .journalInstanceMedia) {
+                    try await battleNetAPI.wow.getJournalInstanceMedia(id: 63)
+                }
+            }
+            
+            Section(header: Text(WorldOfWarcraftView.APISection.mediaSearch.rawValue)) {
+                webServiceRow(api: .mediaSearch) {
+                    let queries = [
+                        "tags": "item",
+                        "orderby": "id",
+                        "_page": "1"
+                    ]
+                    return try await battleNetAPI.wow.searchMedia(queries: queries)
                 }
             }
         }
     }
     
+    /// Modified Crafting, Mount, Mythic Keystone Affix, Mythic Keystone Dungeon, Mythic Keystone Leaderboard, Mythic Raid Leaderboard, Pet, Playable Class, Playable Race, Playable Specialization
+    var gameDataCraftingToSpecializationSection: some View {
+        Group {
+            Section(header: Text(WorldOfWarcraftView.APISection.modifiedCrafting.rawValue)) {
+                webServiceRow(api: .modifiedCraftingIndex) {
+                    try await battleNetAPI.wow.getModifiedCraftingIndex()
+                }
+                webServiceRow(api: .modifiedCraftingCategoryIndex) {
+                    try await battleNetAPI.wow.getModifiedCraftingCategoryIndex()
+                }
+                webServiceRow(api: .modifiedCraftingCategory) {
+                    try await battleNetAPI.wow.getModifiedCraftingCategory(id: 1)
+                }
+                webServiceRow(api: .modifiedCraftingReagentSlotTypeIndex) {
+                    try await battleNetAPI.wow.getModifiedCraftingReagentSlotTypeIndex()
+                }
+                webServiceRow(api: .modifiedCraftingReagentSlotType) {
+                    try await battleNetAPI.wow.getModifiedCraftingReagentSlotType(id: 16)
+                }
+            }
+            
+            Section(header: Text(WorldOfWarcraftView.APISection.mount.rawValue)) {
+                webServiceRow(api: .mountIndex) {
+                    try await battleNetAPI.wow.getMountIndex()
+                }
+                webServiceRow(api: .mount) {
+                    try await battleNetAPI.wow.getMount(id: 6)
+                }
+                webServiceRow(api: .mountSearch) {
+                    let queries = [
+                        "name.en_US": "Turtle",
+                        "orderby": "id",
+                        "_page": "1"
+                    ]
+                    return try await battleNetAPI.wow.searchMount(queries: queries)
+                }
+            }
+            
+            Section(header: Text(WorldOfWarcraftView.APISection.mythicKeystoneAffix.rawValue)) {
+                webServiceRow(api: .mythicKeystoneAffixIndex) {
+                    try await battleNetAPI.wow.getMythicKeystoneAffixIndex()
+                }
+                webServiceRow(api: .mythicKeystoneAffix) {
+                    try await battleNetAPI.wow.getMythicKeystoneAffix(id: 1)
+                }
+                webServiceRow(api: .mythicKeystoneAffixMedia) {
+                    try await battleNetAPI.wow.getMythicKeystoneAffixMedia(id: 1)
+                }
+            }
+            
+            Section(header: Text(WorldOfWarcraftView.APISection.mythicKeystoneDungeon.rawValue)) {
+                webServiceRow(api: .mythicKeystoneDungeonIndex) {
+                    try await battleNetAPI.wow.getMythicKeystoneDungeonIndex()
+                }
+                webServiceRow(api: .mythicKeystoneDungeon) {
+                    try await battleNetAPI.wow.getMythicKeystoneDungeon(id: 375)
+                }
+                webServiceRow(api: .mythicKeystoneIndex) {
+                    try await battleNetAPI.wow.getMythicKeystoneIndex()
+                }
+                webServiceRow(api: .mythicKeystonePeriodIndex) {
+                    try await battleNetAPI.wow.getMythicKeystonePeriodIndex()
+                }
+                webServiceRow(api: .mythicKeystonePeriod) {
+                    try await battleNetAPI.wow.getMythicKeystonePeriod(id: 641)
+                }
+                webServiceRow(api: .mythicKeystoneSeasonIndex) {
+                    try await battleNetAPI.wow.getMythicKeystoneSeasonIndex()
+                }
+                webServiceRow(api: .mythicKeystoneSeason) {
+                    try await battleNetAPI.wow.getMythicKeystoneSeason(id: 1)
+                }
+            }
+            
+            Section(header: Text(WorldOfWarcraftView.APISection.mythicKeystoneLeaderboard.rawValue)) {
+                webServiceRow(api: .mythicKeystoneLeaderboardIndex) {
+                    try await battleNetAPI.wow.getMythicLeaderboardIndex(connectedRealmID: 11)
+                }
+                webServiceRow(api: .mythicKeystoneLeaderboard) {
+                    try await battleNetAPI.wow.getMythicLeaderboard(connectedRealmID: 11, dungeonID: 197, period: 641)
+                }
+            }
+            
+            Section(header: Text(WorldOfWarcraftView.APISection.mythicRaidLeaderboard.rawValue)) {
+                webServiceRow(api: .mythicRaidLeaderboard) {
+                    try await battleNetAPI.wow.getMythicRaidLeaderboard(raid: "uldir", faction: .alliance)
+                }
+            }
+            
+            Section(header: Text(WorldOfWarcraftView.APISection.pet.rawValue)) {
+                webServiceRow(api: .petIndex) {
+                    try await battleNetAPI.wow.getPetIndex()
+                }
+                webServiceRow(api: .pet) {
+                    try await battleNetAPI.wow.getPet(id: 39)
+                }
+                webServiceRow(api: .petMedia) {
+                    try await battleNetAPI.wow.getPetMedia(id: 39)
+                }
+                webServiceRow(api: .petAbilityIndex) {
+                    try await battleNetAPI.wow.getPetAbilityIndex()
+                }
+                webServiceRow(api: .petAbility) {
+                    try await battleNetAPI.wow.getPetAbility(id: 110)
+                }
+                webServiceRow(api: .petAbilityMedia) {
+                    try await battleNetAPI.wow.getPetAbilityMedia(id: 110)
+                }
+            }
+            
+            Section(header: Text(WorldOfWarcraftView.APISection.playableClass.rawValue)) {
+                webServiceRow(api: .playableClassIndex) {
+                    try await battleNetAPI.wow.getPlayableClassIndex()
+                }
+                webServiceRow(api: .playableClass) {
+                    try await battleNetAPI.wow.getPlayableClass(id: 7)
+                }
+                webServiceRow(api: .playableClassMedia) {
+                    try await battleNetAPI.wow.getPlayableClassMedia(id: 7)
+                }
+                webServiceRow(api: .pvpTalentSlots) {
+                    try await battleNetAPI.wow.getPlayableClassPvPTalentSlots(classID: 7)
+                }
+            }
+            
+            Section(header: Text(WorldOfWarcraftView.APISection.playableRace.rawValue)) {
+                webServiceRow(api: .playableRaceIndex) {
+                    try await battleNetAPI.wow.getPlayableRaceIndex()
+                }
+                webServiceRow(api: .playableRace) {
+                    try await battleNetAPI.wow.getPlayableRace(id: 2)
+                }
+            }
+            
+            Section(header: Text(WorldOfWarcraftView.APISection.playableSpecialization.rawValue)) {
+                webServiceRow(api: .playableSpecializationIndex) {
+                    try await battleNetAPI.wow.getPlayableSpecializationIndex()
+                }
+                webServiceRow(api: .playableSpecialization) {
+                    try await battleNetAPI.wow.getPlayableSpecialization(id: 262)
+                }
+                webServiceRow(api: .playableSpecializationMedia) {
+                    try await battleNetAPI.wow.getPlayableSpecializationMedia(id: 262)
+                }
+            }
+        }
+    }
     
+    /// Power Type, Profession, PvP Season, PvP Tier, Quest, Realm, Region, Reputation, Spell, Talent
+    var gameDataPowerToTalentSection: some View {
+        Group {
+            Section(header: Text(WorldOfWarcraftView.APISection.powerType.rawValue)) {
+                webServiceRow(api: .powerTypeIndex) {
+                    try await battleNetAPI.wow.getPowerTypeIndex()
+                }
+                webServiceRow(api: .powerType) {
+                    try await battleNetAPI.wow.getPowerType(id: 0)
+                }
+            }
+            
+            Section(header: Text(WorldOfWarcraftView.APISection.profession.rawValue)) {
+                webServiceRow(api: .professionIndex) {
+                    try await battleNetAPI.wow.getProfessionIndex()
+                }
+                webServiceRow(api: .profession) {
+                    try await battleNetAPI.wow.getProfession(id: 164)
+                }
+                webServiceRow(api: .professionMedia) {
+                    try await battleNetAPI.wow.getProfessionMedia(id: 164)
+                }
+                webServiceRow(api: .professionSkillTier) {
+                    try await battleNetAPI.wow.getProfessionSkillTier(professionID: 164, skillTierID: 2477)
+                }
+                webServiceRow(api: .recipe) {
+                    try await battleNetAPI.wow.getRecipe(id: 1631)
+                }
+                webServiceRow(api: .recipeMedia) {
+                    try await battleNetAPI.wow.getRecipeMedia(id: 1631)
+                }
+            }
+            
+            Section(header: Text(WorldOfWarcraftView.APISection.pvpSeason.rawValue)) {
+                webServiceRow(api: .pvpSeasonIndex) {
+                    try await battleNetAPI.wow.getPvPSeasonIndex()
+                }
+                webServiceRow(api: .pvpSeason) {
+                    try await battleNetAPI.wow.getPvPSeason(id: 27)
+                }
+                webServiceRow(api: .pvpLeaderboardIndex) {
+                    try await battleNetAPI.wow.getPvPLeaderboardIndex(pvpSeasonID: 27)
+                }
+                webServiceRow(api: .pvpLeaderboard) {
+                    try await battleNetAPI.wow.getPvPLeaderboard(pvpSeasonID: 27, pvpBracket: ._3v3)
+                }
+                webServiceRow(api: .pvpRewardIndex) {
+                    try await battleNetAPI.wow.getPvPRewardIndex(pvpSeasonID: 27)
+                }
+            }
+            
+            Section(header: Text(WorldOfWarcraftView.APISection.pvpTier.rawValue)) {
+                webServiceRow(api: .pvpTierMedia) {
+                    try await battleNetAPI.wow.getPvPTierMedia(id: 1)
+                }
+                webServiceRow(api: .pvpTierIndex) {
+                    try await battleNetAPI.wow.getPvPTierIndex()
+                }
+                webServiceRow(api: .pvpTier) {
+                    try await battleNetAPI.wow.getPvPTier(id: 1)
+                }
+            }
+            
+            Section(header: Text(WorldOfWarcraftView.APISection.quest.rawValue)) {
+                webServiceRow(api: .questIndex) {
+                    try await battleNetAPI.wow.getQuestIndex()
+                }
+                webServiceRow(api: .quest) {
+                    try await battleNetAPI.wow.getQuest(id: 2)
+                }
+                webServiceRow(api: .questCategoryIndex) {
+                    try await battleNetAPI.wow.getQuestCategoryIndex()
+                }
+                webServiceRow(api: .questCategory) {
+                    try await battleNetAPI.wow.getQuestCategory(id: 1)
+                }
+                webServiceRow(api: .questAreaIndex) {
+                    try await battleNetAPI.wow.getQuestAreaIndex()
+                }
+                webServiceRow(api: .questArea) {
+                    try await battleNetAPI.wow.getQuestArea(id: 1)
+                }
+                webServiceRow(api: .questTypeIndex) {
+                    try await battleNetAPI.wow.getQuestTypeIndex()
+                }
+                webServiceRow(api: .questType) {
+                    try await battleNetAPI.wow.getQuestType(id: 1)
+                }
+            }
+            
+            Section(header: Text(WorldOfWarcraftView.APISection.realm.rawValue)) {
+                webServiceRow(api: .realmIndex) {
+                    try await battleNetAPI.wow.getRealmIndex()
+                }
+                webServiceRow(api: .realm) {
+                    try await battleNetAPI.wow.getRealm("tichondrius")
+                }
+                webServiceRow(api: .realmSearch) {
+                    let queries = [
+                        "timezone": "America/New_York",
+                        "orderby": "id",
+                        "_page": "1"
+                    ]
+                    return try await battleNetAPI.wow.searchRealm(queries: queries)
+                }
+            }
+            
+            Section(header: Text(WorldOfWarcraftView.APISection.region.rawValue)) {
+                webServiceRow(api: .regionIndex) {
+                    try await battleNetAPI.wow.getRegionIndex()
+                }
+                webServiceRow(api: .region) {
+                    try await battleNetAPI.wow.getRegion(id: 1)
+                }
+            }
+            
+            Section(header: Text(WorldOfWarcraftView.APISection.reputation.rawValue)) {
+                webServiceRow(api: .reputationFactionIndex) {
+                    try await battleNetAPI.wow.getReputationFactionIndex()
+                }
+                webServiceRow(api: .reputationFaction) {
+                    try await battleNetAPI.wow.getReputationFaction(id: 21)
+                }
+                webServiceRow(api: .reputationTierIndex) {
+                    try await battleNetAPI.wow.getReputationTierIndex()
+                }
+                webServiceRow(api: .reputationTier) {
+                    try await battleNetAPI.wow.getReputationTier(id: 2)
+                }
+            }
+            
+            Section(header: Text(WorldOfWarcraftView.APISection.spell.rawValue)) {
+                webServiceRow(api: .spell) {
+                    try await battleNetAPI.wow.getSpell(id: 196607)
+                }
+                webServiceRow(api: .spellMedia) {
+                    try await battleNetAPI.wow.getSpellMedia(id: 196607)
+                }
+                webServiceRow(api: .spellSearch) {
+                    let queries = [
+                        "name.en_US": "Holy Shield",
+                        "orderby": "id",
+                        "_page": "1"
+                    ]
+                    return try await battleNetAPI.wow.searchSpell(queries: queries)
+                }
+            }
+            
+            Section(header: Text(WorldOfWarcraftView.APISection.talent.rawValue)) {
+                webServiceRow(api: .talentIndex) {
+                    try await battleNetAPI.wow.getTalentIndex()
+                }
+                webServiceRow(api: .talent) {
+                    try await battleNetAPI.wow.getTalent(id: 23106)
+                }
+                webServiceRow(api: .pvpTalentIndex) {
+                    try await battleNetAPI.wow.getPvPTalentIndex()
+                }
+                webServiceRow(api: .pvpTalent) {
+                    try await battleNetAPI.wow.getPvPTalent(id: 11)
+                }
+            }
+        }
+    }
+    
+    /// Tech Talent, Title, WoW Token, Heirloom
+    var gameDataTechTalentToHeirloomSection: some View {
+        Group {
+            Section(header: Text(WorldOfWarcraftView.APISection.techTalent.rawValue)) {
+                webServiceRow(api: .techTalentTreeIndex) {
+                    try await battleNetAPI.wow.getTechTalentTreeIndex()
+                }
+                webServiceRow(api: .techTalentTree) {
+                    try await battleNetAPI.wow.getTechTalentTree(id: 272)
+                }
+                webServiceRow(api: .techTalentIndex) {
+                    try await battleNetAPI.wow.getTechTalentIndex()
+                }
+                webServiceRow(api: .techTalent) {
+                    try await battleNetAPI.wow.getTechTalent(id: 863)
+                }
+                webServiceRow(api: .techTalentMedia) {
+                    try await battleNetAPI.wow.getTechTalentMedia(id: 863)
+                }
+            }
+            
+            Section(header: Text(WorldOfWarcraftView.APISection.title.rawValue)) {
+                webServiceRow(api: .titleIndex) {
+                    try await battleNetAPI.wow.getTitleIndex()
+                }
+                webServiceRow(api: .title) {
+                    try await battleNetAPI.wow.getTitle(id: 1)
+                }
+            }
+            
+            Section(header: Text(WorldOfWarcraftView.APISection.wowToken.rawValue)) {
+                webServiceRow(api: .tokenIndex) {
+                    try await battleNetAPI.wow.getTokenIndex()
+                }
+            }
+
+            Section(header: Text(WorldOfWarcraftView.APISection.heirloom.rawValue)) {
+                webServiceRow(api: .heirloomIndex) {
+                    try await battleNetAPI.wow.getHeirloomIndex()
+                }
+                webServiceRow(api: .heirloom) {
+                    try await battleNetAPI.wow.getHeirloom(id: 1)
+                }
+            }
+        }
+    }
+    
+    /// Item Appearance, Talent Tree, Toy
+    var gameDataAppearanceToToySection: some View {
+        Group {
+            Section(header: Text(WorldOfWarcraftView.APISection.itemAppearance.rawValue)) {
+                webServiceRow(api: .itemAppearance) {
+                    try await battleNetAPI.wow.getItemAppearance(id: 321)
+                }
+                webServiceRow(api: .itemAppearanceSetIndex) {
+                    try await battleNetAPI.wow.getItemAppearanceSetIndex()
+                }
+                webServiceRow(api: .itemAppearanceSet) {
+                    try await battleNetAPI.wow.getItemAppearanceSet(id: 13)
+                }
+                webServiceRow(api: .itemAppearanceSlotIndex) {
+                    try await battleNetAPI.wow.getItemAppearanceSlotIndex()
+                }
+                webServiceRow(api: .itemAppearanceBySlot) {
+                    try await battleNetAPI.wow.getItemAppearanceBySlot(slotType: "HEAD")
+                }
+                webServiceRow(api: .itemAppearanceSearch) {
+                    let queries = ["orderby": "id", "_page": "1"]
+                    return try await battleNetAPI.wow.searchItemAppearance(queries: queries)
+                }
+            }
+
+            Section(header: Text(WorldOfWarcraftView.APISection.talentTree.rawValue)) {
+                webServiceRow(api: .talentTreeIndex) {
+                    try await battleNetAPI.wow.getTalentTreeIndex()
+                }
+                webServiceRow(api: .talentTree) {
+                    try await battleNetAPI.wow.getTalentTree(id: 786)
+                }
+                webServiceRow(api: .talentTreeNodesForSpecialization) {
+                    try await battleNetAPI.wow.getTalentTreeNodesForSpecialization(treeID: 786, specID: 262)
+                }
+            }
+
+            Section(header: Text(WorldOfWarcraftView.APISection.toy.rawValue)) {
+                webServiceRow(api: .toyIndex) {
+                    try await battleNetAPI.wow.getToyIndex()
+                }
+                webServiceRow(api: .toy) {
+                    try await battleNetAPI.wow.getToy(id: 30)
+                }
+            }
+        }
+    }
+    
+    /// Housing Decor (Decor, Fixture, Fixture Hook, Room) and Neighborhood
+    var gameDataHousingSection: some View {
+        Group {
+            Section(header: Text(WorldOfWarcraftView.APISection.housingDecor.rawValue)) {
+                webServiceRow(api: .decorIndex) {
+                    try await battleNetAPI.wow.getDecorIndex()
+                }
+                webServiceRow(api: .decor) {
+                    try await battleNetAPI.wow.getDecor(id: 80)
+                }
+                webServiceRow(api: .decorSearch) {
+                    let queries = ["orderby": "id", "_page": "1"]
+                    return try await battleNetAPI.wow.searchDecor(queries: queries)
+                }
+                webServiceRow(api: .fixtureIndex) {
+                    try await battleNetAPI.wow.getFixtureIndex()
+                }
+                webServiceRow(api: .fixture, isOperational: false) {
+                    try await battleNetAPI.wow.getFixture(id: 614)
+                }
+                webServiceRow(api: .fixtureSearch) {
+                    let queries = ["orderby": "id", "_page": "1"]
+                    return try await battleNetAPI.wow.searchFixture(queries: queries)
+                }
+                webServiceRow(api: .fixtureHookIndex) {
+                    try await battleNetAPI.wow.getFixtureHookIndex()
+                }
+                webServiceRow(api: .fixtureHook) {
+                    try await battleNetAPI.wow.getFixtureHook(id: 2503)
+                }
+                webServiceRow(api: .fixtureHookSearch) {
+                    let queries = ["orderby": "id", "_page": "1"]
+                    return try await battleNetAPI.wow.searchFixtureHook(queries: queries)
+                }
+                webServiceRow(api: .roomIndex) {
+                    try await battleNetAPI.wow.getRoomIndex()
+                }
+                webServiceRow(api: .room) {
+                    try await battleNetAPI.wow.getRoom(id: 1)
+                }
+                webServiceRow(api: .roomSearch) {
+                    let queries = ["orderby": "id", "_page": "1"]
+                    return try await battleNetAPI.wow.searchRoom(queries: queries)
+                }
+            }
+
+            Section(header: Text(WorldOfWarcraftView.APISection.neighborhood.rawValue)) {
+                webServiceRow(api: .neighborhoodMapIndex) {
+                    try await battleNetAPI.wow.getNeighborhoodMapIndex()
+                }
+                webServiceRow(api: .neighborhoodMap) {
+                    try await battleNetAPI.wow.getNeighborhoodMap(id: 1)
+                }
+                webServiceRow(api: .neighborhood) {
+                    try await battleNetAPI.wow.getNeighborhood(mapID: 2, neighborhoodID: 17902)
+                }
+            }
+        }
+    }
+
+
     var profileSection: some View {
         Group {
             Group {
@@ -650,6 +794,18 @@ struct WorldOfWarcraftView: View {
                     }
                     webServiceRow(api: .characterPetsCollectionSummary) {
                         try await battleNetAPI.wow.getCharacterPetsCollectionSummary(characterName: "doof", realmSlug: "frostmourne")
+                    }
+                    webServiceRow(api: .characterHeirloomsCollection) {
+                        try await battleNetAPI.wow.getCharacterHeirloomsCollection(characterName: "doof", realmSlug: "frostmourne")
+                    }
+                    webServiceRow(api: .characterToysCollection) {
+                        try await battleNetAPI.wow.getCharacterToysCollection(characterName: "doof", realmSlug: "frostmourne")
+                    }
+                    webServiceRow(api: .characterTransmogsCollection) {
+                        try await battleNetAPI.wow.getCharacterTransmogsCollection(characterName: "doof", realmSlug: "frostmourne")
+                    }
+                    webServiceRow(api: .characterDecorCollection) {
+                        try await battleNetAPI.wow.getCharacterDecorCollection(characterName: "doof", realmSlug: "frostmourne")
                     }
                 }
                 
@@ -699,6 +855,12 @@ struct WorldOfWarcraftView: View {
                 }
             }
             Group {
+                Section(header: Text(WorldOfWarcraftView.APISection.characterHouse.rawValue)) {
+                    webServiceRow(api: .characterHouse) {
+                        try await battleNetAPI.wow.getCharacterHouse(characterName: "doof", realmSlug: "frostmourne")
+                    }
+                }
+
                 Section(header: Text(WorldOfWarcraftView.APISection.characterProfile.rawValue)) {
                     webServiceRow(api: .characterProfileSummary) {
                         try await battleNetAPI.wow.getCharacterProfileSummary(characterName: "doof", realmSlug: "frostmourne")
@@ -775,29 +937,12 @@ struct WorldOfWarcraftView: View {
     }
     
     
-    func webServiceRow(api: API, webService: @escaping () async throws -> Data) -> some View {
-        Button {
-            loadingAPI = api
-            Task {
-                do {
-                    let data = try await webService()
-                    webServiceData = data
-                    apiSelection = api
-                } catch {
-                    alertType = .error(error)
-                }
-                loadingAPI = nil
-            }
-        } label: {
-            HStack {
-                Text(api.rawValue)
-                if loadingAPI == api {
-                    Spacer()
-                    ProgressView()
-                }
-            }
+    func webServiceRow(api: API, isOperational: Bool = true, webService: @escaping () async throws -> Data) -> some View {
+        WebServiceRow(api: api, isOperational: isOperational, loadingAPI: $loadingAPI, webService: webService) { data in
+            selection = WebServiceSelection(api: api, data: data)
+        } onError: { error in
+            alertType = .error(error)
         }
-        .disabled(loadingAPI != nil)
     }
     
     
@@ -854,6 +999,7 @@ extension WorldOfWarcraftView {
         case achievementMedia
         // Auction House API
         case auctions
+        case auctionCommodities
         // Azerite Essence API
         case azeriteEssenceIndex
         case azeriteEssence
@@ -884,6 +1030,9 @@ extension WorldOfWarcraftView {
         case guildCrestIndex
         case guildCrestBorderMedia
         case guildCrestEmblemMedia
+        // Heirloom API
+        case heirloomIndex
+        case heirloom
         // Item API
         case itemClassIndex
         case itemClass
@@ -893,6 +1042,13 @@ extension WorldOfWarcraftView {
         case item
         case itemMedia
         case itemSearch
+        // Item Appearance API
+        case itemAppearance
+        case itemAppearanceSetIndex
+        case itemAppearanceSet
+        case itemAppearanceSlotIndex
+        case itemAppearanceBySlot
+        case itemAppearanceSearch
         // Journal API
         case journalExpansionIndex
         case journalExpansion
@@ -938,6 +1094,23 @@ extension WorldOfWarcraftView {
         case petAbilityIndex
         case petAbility
         case petAbilityMedia
+        // Housing Decor API
+        case decorIndex
+        case decor
+        case decorSearch
+        case fixtureIndex
+        case fixture
+        case fixtureSearch
+        case fixtureHookIndex
+        case fixtureHook
+        case fixtureHookSearch
+        case roomIndex
+        case room
+        case roomSearch
+        // Neighborhood API
+        case neighborhoodMapIndex
+        case neighborhoodMap
+        case neighborhood
         // Playable Class API
         case playableClassIndex
         case playableClass
@@ -1000,6 +1173,10 @@ extension WorldOfWarcraftView {
         case talent
         case pvpTalentIndex
         case pvpTalent
+        // Talent Tree API
+        case talentTreeIndex
+        case talentTree
+        case talentTreeNodesForSpecialization
         // Tech Talent API
         case techTalentTreeIndex
         case techTalentTree
@@ -1011,8 +1188,11 @@ extension WorldOfWarcraftView {
         case title
         // Token API
         case tokenIndex
-        
-        
+        // Toy API
+        case toyIndex
+        case toy
+
+
         // Profile APIs
         // Account Profile API
         case accountProfileSummary
@@ -1029,12 +1209,18 @@ extension WorldOfWarcraftView {
         case characterCollectionsIndex
         case characterMountsCollectionSummary
         case characterPetsCollectionSummary
+        case characterHeirloomsCollection
+        case characterToysCollection
+        case characterTransmogsCollection
+        case characterDecorCollection
         // Character Encounters API
         case characterEncountersSummary
         case characterDungeons
         case characterRaids
         // Character Equipment API
         case characterEquipmentSummary
+        // Character House API
+        case characterHouse
         // Character Hunter Pets API
         case characterHunterPetsSummary
         // Character Media API
@@ -1083,7 +1269,9 @@ extension WorldOfWarcraftView {
         case covenant = "Covenant API"
         case creature = "Creature API"
         case guildCrest = "Guild Crest API"
+        case heirloom = "Heirloom API"
         case item = "Item API"
+        case itemAppearance = "Item Appearance API"
         case journal = "Journal API"
         case mediaSearch = "Media Search API"
         case modifiedCrafting = "Modified Crafting API"
@@ -1092,6 +1280,8 @@ extension WorldOfWarcraftView {
         case mythicKeystoneDungeon = "Mythic Keystone Dungeon API"
         case mythicKeystoneLeaderboard = "Mythic Keystone Leaderboard API"
         case mythicRaidLeaderboard = "Mythic Raid Leaderboard API"
+        case housingDecor = "Housing Decor API"
+        case neighborhood = "Neighborhood API"
         case pet = "Pet API"
         case playableClass = "Playable Class API"
         case playableRace = "Playable Race API"
@@ -1106,10 +1296,12 @@ extension WorldOfWarcraftView {
         case reputation = "Reputations API"
         case spell = "Spell API"
         case talent = "Talent API"
+        case talentTree = "Talent Tree API"
         case techTalent = "Tech Talent API"
         case title = "Title API"
         case wowToken = "WoW Token API"
-        
+        case toy = "Toy API"
+
         // Profile
         case accountProfile = "Account Profile API"
         case characterAchievement = "Character Achievements API"
@@ -1117,6 +1309,7 @@ extension WorldOfWarcraftView {
         case characterCollection = "Character Collections API"
         case characterEncounter = "Character Encounters API"
         case characterEquipment = "Character Equipment API"
+        case characterHouse = "Character House API"
         case characterHunterPet = "Character Hunter Pets API"
         case characterMedia = "Character Media API"
         case characterMythicKeystoneProfile = "Character Mythic Keystone Profile API"

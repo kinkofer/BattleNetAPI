@@ -13,6 +13,7 @@ import SwiftUI
 struct MainView: View {
     enum Game: String, CaseIterable {
         case diablo3 = "Diablo 3"
+        case hearthstone = "Hearthstone"
         case starCraft2 = "StarCraft 2"
         case worldOfWarcraft = "World of Warcraft"
         case worldOfWarcraftClassic = "World of Warcraft Classic"
@@ -63,16 +64,16 @@ struct MainView: View {
             }
                 .listStyle(.sidebar)
                 .navigationTitle(title)
+                #if !os(macOS)
                 .toolbar {
                     ToolbarItem(placement: .primaryAction) {
                         HStack {
                             RegionMenu()
-
                             profileButton
-                            
                         }
                     }
                 }
+                #endif
         } content: {
             if let game = gameAPISelection {
                 switch game {
@@ -90,8 +91,12 @@ struct MainView: View {
                     WorldOfWarcraftView(apiType: .gameData)
                 case GameAPI(.worldOfWarcraft, .profile):
                     WorldOfWarcraftView(apiType: .profile)
+                case GameAPI(.hearthstone, .gameData):
+                    HearthstoneView(apiType: .gameData)
                 case GameAPI(.worldOfWarcraftClassic, .gameData):
                     WorldOfWarcraftClassicView(apiType: .gameData)
+                case GameAPI(.worldOfWarcraftClassic, .profile):
+                    WorldOfWarcraftClassicView(apiType: .profile)
                 case GameAPI(.battleNet, .profile):
                     BattleNetView(apiType: .profile)
                 default: EmptyView()
@@ -103,6 +108,16 @@ struct MainView: View {
         } detail: {
             Text("Select a method")
         }
+        #if os(macOS)
+        .toolbar {
+            ToolbarItem(placement: .primaryAction) {
+                HStack {
+                    RegionMenu()
+                    profileButton
+                }
+            }
+        }
+        #endif
         .alert(alertTitle, isPresented: showingAlert, presenting: alertType) { alertType in
             alertActions(for: alertType)
         } message: { alertType in
@@ -120,7 +135,11 @@ struct MainView: View {
             NavigationLink(APIType.community.displayName, value: GameAPI(.diablo3, .community))
             NavigationLink(APIType.profile.displayName, value: GameAPI(.diablo3, .profile))
         }
-        
+
+        Section(header: Text(Game.hearthstone.rawValue)) {
+            NavigationLink(APIType.gameData.displayName, value: GameAPI(.hearthstone, .gameData))
+        }
+
         Section(header: Text(Game.starCraft2.rawValue)) {
             NavigationLink(APIType.gameData.displayName, value: GameAPI(.starCraft2, .gameData))
             NavigationLink(APIType.community.displayName, value: GameAPI(.starCraft2, .community))
@@ -133,6 +152,7 @@ struct MainView: View {
         
         Section(header: Text(Game.worldOfWarcraftClassic.rawValue)) {
             NavigationLink(APIType.gameData.displayName, value: GameAPI(.worldOfWarcraftClassic, .gameData))
+            NavigationLink(APIType.profile.displayName, value: GameAPI(.worldOfWarcraftClassic, .profile))
         }
         
         Section(header: Text(Game.battleNet.rawValue)) {

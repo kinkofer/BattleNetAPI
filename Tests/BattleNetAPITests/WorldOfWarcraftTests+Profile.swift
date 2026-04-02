@@ -38,6 +38,10 @@ extension WorldOfWarcraftTests {
     func testGetCharacterCollectionsIndex() async throws { XCTAssert(true) }
     func testGetCharacterMountsCollectionSummary() async throws { XCTAssert(true) }
     func testGetCharacterPetsCollectionSummary() async throws { XCTAssert(true) }
+    func testGetCharacterHeirloomsCollection() async throws { XCTAssert(true) }
+    func testGetCharacterToysCollection() async throws { XCTAssert(true) }
+    func testGetCharacterTransmogsCollection() async throws { XCTAssert(true) }
+    func testGetCharacterDecorCollection() async throws { XCTAssert(true) }
 
 
     // MARK: Character Encounters API
@@ -50,6 +54,11 @@ extension WorldOfWarcraftTests {
     // MARK: Character Equipment API
 
     func testGetCharacterEquipmentSummary() async throws { XCTAssert(true) }
+
+
+    // MARK: Character House API
+
+    func testGetCharacterHouse() async throws { XCTAssert(true) }
 
 
     // MARK: Character Hunter Pets API

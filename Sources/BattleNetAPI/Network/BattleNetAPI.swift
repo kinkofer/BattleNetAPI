@@ -33,6 +33,8 @@ import Observation
     @ObservationIgnored public lazy private(set) var sc2 = WS_StarCraft2(region: region, locale: locale, session: session, authenticationService: authentication)
     /// Diablo 3 web services
     @ObservationIgnored public lazy private(set) var d3 = WS_Diablo3(region: region, locale: locale, session: session, authenticationService: authentication)
+    /// Hearthstone web services
+    @ObservationIgnored public lazy private(set) var hearthstone = WS_Hearthstone(region: region, locale: locale, session: session, authenticationService: authentication)
     /// Web services for linked resource urls
     @ObservationIgnored public lazy private(set) var resource = WS_Resource(region: region, locale: locale, session: session, authenticationService: authentication)
 

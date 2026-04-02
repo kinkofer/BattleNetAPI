@@ -19,6 +19,7 @@ public struct WS_WorldOfWarcraft: WebService {
         case achievementCategory(Int)
 
         case auctions(connectedRealmID: Int)
+        case auctionCommodities
 
         case azeriteEssenceIndex
         case azeriteEssence(Int)
@@ -50,6 +51,9 @@ public struct WS_WorldOfWarcraft: WebService {
         case guildCrestBorderMedia(Int)
         case guildCrestEmblemMedia(Int)
 
+        case heirloomIndex
+        case heirloom(Int)
+
         case itemClassIndex
         case itemClass(Int)
         case itemSetIndex
@@ -58,6 +62,13 @@ public struct WS_WorldOfWarcraft: WebService {
         case item(Int)
         case itemMedia(Int)
         case itemSearch([String: String]?)
+
+        case itemAppearance(Int)
+        case itemAppearanceSetIndex
+        case itemAppearanceSet(Int)
+        case itemAppearanceSlotIndex
+        case itemAppearanceBySlot(String)
+        case itemAppearanceSearch([String: String]?)
 
         case journalExpansionIndex
         case journalExpansion(Int)
@@ -116,6 +127,25 @@ public struct WS_WorldOfWarcraft: WebService {
         case playableSpecialization(Int)
         case playableSpecializationMedia(Int)
 
+        // Housing Decor API
+        case decorIndex
+        case decor(Int)
+        case decorSearch([String: String]?)
+        case fixtureIndex
+        case fixture(Int)
+        case fixtureSearch([String: String]?)
+        case fixtureHookIndex
+        case fixtureHook(Int)
+        case fixtureHookSearch([String: String]?)
+        case roomIndex
+        case room(Int)
+        case roomSearch([String: String]?)
+
+        // Neighborhood API
+        case neighborhoodMapIndex
+        case neighborhoodMap(Int)
+        case neighborhood(mapID: Int, id: Int)
+
         case powerTypeIndex
         case powerType(Int)
 
@@ -166,6 +196,10 @@ public struct WS_WorldOfWarcraft: WebService {
         case pvpTalentIndex
         case pvpTalent(Int)
 
+        case talentTreeIndex
+        case talentTree(Int)
+        case talentTreeNodesForSpecialization(treeID: Int, specID: Int)
+
         case techTalentTreeIndex
         case techTalentTree(Int)
         case techTalentIndex
@@ -176,6 +210,9 @@ public struct WS_WorldOfWarcraft: WebService {
         case title(Int)
 
         case tokenIndex
+
+        case toyIndex
+        case toy(Int)
 
 
         // Profile APIs
@@ -193,12 +230,18 @@ public struct WS_WorldOfWarcraft: WebService {
         case characterCollectionsIndex(realmSlug: String, characterName: String)
         case characterMountsCollectionSummary(realmSlug: String, characterName: String)
         case characterPetsCollectionSummary(realmSlug: String, characterName: String)
+        case characterHeirloomsCollection(realmSlug: String, characterName: String)
+        case characterToysCollection(realmSlug: String, characterName: String)
+        case characterTransmogsCollection(realmSlug: String, characterName: String)
+        case characterDecorCollection(realmSlug: String, characterName: String)
 
         case characterEncountersSummary(realmSlug: String, characterName: String)
         case characterDungeons(realmSlug: String, characterName: String)
         case characterRaids(realmSlug: String, characterName: String)
 
         case characterEquipmentSummary(realmSlug: String, characterName: String)
+
+        case characterHouse(realmSlug: String, characterName: String)
 
         case characterHunterPetsSummary(realmSlug: String, characterName: String)
 
@@ -250,6 +293,8 @@ public struct WS_WorldOfWarcraft: WebService {
 
             case .auctions(connectedRealmID: let connectedRealmID):
                 return "/connected-realm/\(connectedRealmID)/auctions"
+            case .auctionCommodities:
+                return "/auctions/commodities"
 
             case .azeriteEssenceIndex:
                 return "/azerite-essence/index"
@@ -306,6 +351,11 @@ public struct WS_WorldOfWarcraft: WebService {
             case .guildCrestEmblemMedia(let id):
                 return "/media/guild-crest/emblem/\(id)"
 
+            case .heirloomIndex:
+                return "/heirloom/index"
+            case .heirloom(let id):
+                return "/heirloom/\(id)"
+
             case .itemClassIndex:
                 return "/item-class/index"
             case .itemClass(let id):
@@ -322,6 +372,19 @@ public struct WS_WorldOfWarcraft: WebService {
                 return "/media/item/\(id)"
             case .itemSearch:
                 return "/search/item"
+
+            case .itemAppearance(let id):
+                return "/item-appearance/\(id)"
+            case .itemAppearanceSetIndex:
+                return "/item-appearance/set/index"
+            case .itemAppearanceSet(let id):
+                return "/item-appearance/set/\(id)"
+            case .itemAppearanceSlotIndex:
+                return "/item-appearance/slot/index"
+            case .itemAppearanceBySlot(let slotType):
+                return "/item-appearance/slot/\(slotType)"
+            case .itemAppearanceSearch:
+                return "/search/item-appearance"
 
             case .journalExpansionIndex:
                 return "/journal-expansion/index"
@@ -342,6 +405,37 @@ public struct WS_WorldOfWarcraft: WebService {
 
             case .mediaSearch:
                 return "/search/media"
+
+            case .decorIndex:
+                return "/decor/index"
+            case .decor(let id):
+                return "/decor/\(id)"
+            case .decorSearch:
+                return "/search/decor"
+            case .fixtureIndex:
+                return "/fixture/index"
+            case .fixture(let id):
+                return "/fixture/\(id)"
+            case .fixtureSearch:
+                return "/search/fixture"
+            case .fixtureHookIndex:
+                return "/fixture-hook/index"
+            case .fixtureHook(let id):
+                return "/fixture-hook/\(id)"
+            case .fixtureHookSearch:
+                return "/search/fixture-hook"
+            case .neighborhoodMapIndex:
+                return "/neighborhood-map/index"
+            case .neighborhoodMap(let id):
+                return "/neighborhood-map/\(id)"
+            case .neighborhood(mapID: let mapID, id: let id):
+                return "/neighborhood-map/\(mapID)/neighborhood/\(id)"
+            case .roomIndex:
+                return "/room/index"
+            case .room(let id):
+                return "/room/\(id)"
+            case .roomSearch:
+                return "/search/room"
 
             case .modifiedCraftingIndex:
                 return "/modified-crafting/index"
@@ -515,6 +609,13 @@ public struct WS_WorldOfWarcraft: WebService {
             case .pvpTalent(let id):
                 return "/pvp-talent/\(id)"
 
+            case .talentTreeIndex:
+                return "/talent-tree/index"
+            case .talentTree(let id):
+                return "/talent-tree/\(id)"
+            case .talentTreeNodesForSpecialization(treeID: let treeID, specID: let specID):
+                return "/talent-tree/\(treeID)/playable-specialization/\(specID)"
+
             case .techTalentTreeIndex:
                 return "/tech-talent-tree/index"
             case .techTalentTree(let id):
@@ -533,6 +634,11 @@ public struct WS_WorldOfWarcraft: WebService {
 
             case .tokenIndex:
                 return "/token/index"
+
+            case .toyIndex:
+                return "/toy/index"
+            case .toy(let id):
+                return "/toy/\(id)"
 
             // Profile APIs
             case .accountProfileSummary:
@@ -560,6 +666,14 @@ public struct WS_WorldOfWarcraft: WebService {
                 return "/character/\(realmSlug)/\(characterName)/collections/mounts"
             case .characterPetsCollectionSummary(realmSlug: let realmSlug, characterName: let characterName):
                 return "/character/\(realmSlug)/\(characterName)/collections/pets"
+            case .characterHeirloomsCollection(realmSlug: let realmSlug, characterName: let characterName):
+                return "/character/\(realmSlug)/\(characterName)/collections/heirlooms"
+            case .characterToysCollection(realmSlug: let realmSlug, characterName: let characterName):
+                return "/character/\(realmSlug)/\(characterName)/collections/toys"
+            case .characterTransmogsCollection(realmSlug: let realmSlug, characterName: let characterName):
+                return "/character/\(realmSlug)/\(characterName)/collections/transmogs"
+            case .characterDecorCollection(realmSlug: let realmSlug, characterName: let characterName):
+                return "/character/\(realmSlug)/\(characterName)/collections/decor"
 
             case .characterEncountersSummary(realmSlug: let realmSlug, characterName: let characterName):
                 return "/character/\(realmSlug)/\(characterName)/encounters"
@@ -570,6 +684,9 @@ public struct WS_WorldOfWarcraft: WebService {
 
             case .characterEquipmentSummary(realmSlug: let realmSlug, characterName: let characterName):
                 return "/character/\(realmSlug)/\(characterName)/equipment"
+
+            case .characterHouse(realmSlug: let realmSlug, characterName: let characterName):
+                return "/character/\(realmSlug)/\(characterName)/house"
 
             case .characterHunterPetsSummary(realmSlug: let realmSlug, characterName: let characterName):
                 return "/character/\(realmSlug)/\(characterName)/hunter-pets"
@@ -630,15 +747,19 @@ public struct WS_WorldOfWarcraft: WebService {
         var apiType: APIType? {
             switch self {
             case .achievementCategoryIndex, .achievementCategory, .achievementIndex, .achievement, .achievementMedia,
-                 .auctions,
+                 .auctions, .auctionCommodities,
                  .azeriteEssenceIndex, .azeriteEssence, .azeriteEssenceSearch, .azeriteEssenceMedia,
                  .connectedRealmIndex, .connectedRealm, .connectedRealmSearch,
                  .covenantIndex, .covenant, .covenantMedia, .soulbindIndex, .soulbind, .conduitIndex, .conduit,
                  .creatureFamilyIndex, .creatureFamily, .creatureTypeIndex, .creatureType, .creature, .creatureSearch, .creatureDisplayMedia, .creatureFamilyMedia,
                  .guildCrestIndex, .guildCrestBorderMedia, .guildCrestEmblemMedia,
+                 .heirloomIndex, .heirloom,
                  .itemClassIndex, .itemClass, .itemSetIndex, .itemSet, .itemSubclass, .item, .itemMedia, .itemSearch,
+                 .itemAppearance, .itemAppearanceSetIndex, .itemAppearanceSet, .itemAppearanceSlotIndex, .itemAppearanceBySlot, .itemAppearanceSearch,
                  .journalExpansionIndex, .journalExpansion, .journalEncounterIndex, .journalEncounter, .journalEncounterSearch, .journalInstanceIndex, .journalInstance, .journalInstanceMedia,
                  .mediaSearch,
+                 .decorIndex, .decor, .decorSearch, .fixtureIndex, .fixture, .fixtureSearch, .fixtureHookIndex, .fixtureHook, .fixtureHookSearch,
+                 .neighborhoodMapIndex, .neighborhoodMap, .neighborhood, .roomIndex, .room, .roomSearch,
                  .modifiedCraftingIndex, .modifiedCraftingCategoryIndex, .modifiedCraftingCategory, .modifiedCraftingReagentSlotTypeIndex, .modifiedCraftingReagentSlotType,
                  .mountIndex, .mount, .mountSearch,
                  .mythicKeystoneAffixIndex, .mythicKeystoneAffix, .mythicKeystoneAffixMedia,
@@ -659,16 +780,20 @@ public struct WS_WorldOfWarcraft: WebService {
                  .reputationFactionIndex, .reputationFaction, .reputationTierIndex, .reputationTier,
                  .spell, .spellMedia, .spellSearch,
                  .talentIndex, .talent, .pvpTalentIndex, .pvpTalent,
+                 .talentTreeIndex, .talentTree, .talentTreeNodesForSpecialization,
                  .techTalentTreeIndex, .techTalentTree, .techTalentIndex, .techTalent, .techTalentMedia,
                  .titleIndex, .title,
-                 .tokenIndex:
+                 .tokenIndex,
+                 .toyIndex, .toy:
                 return .gameData
             case .accountProfileSummary, .protectedCharacterProfileSummary, .accountCollectionsIndex, .accountMountsCollectionSummary, .accountPetsCollectionSummary,
                  .characterAchievementsSummary, .characterAchievementStatistics,
                  .characterAppearanceSummary,
                  .characterCollectionsIndex, .characterMountsCollectionSummary, .characterPetsCollectionSummary,
+                 .characterHeirloomsCollection, .characterToysCollection, .characterTransmogsCollection, .characterDecorCollection,
                  .characterEncountersSummary, .characterDungeons, .characterRaids,
                  .characterEquipmentSummary,
+                 .characterHouse,
                  .characterHunterPetsSummary,
                  .characterMediaSummary,
                  .characterMythicKeystoneProfileIndex, .characterMythicKeystoneSeasonDetails,
@@ -707,7 +832,9 @@ public struct WS_WorldOfWarcraft: WebService {
         var queries: [String: String]? {
             switch self {
             case .azeriteEssenceSearch(let queries), .connectedRealmSearch(let queries), .creatureSearch(let queries),
-                 .itemSearch(let queries), .journalEncounterSearch(let queries), .mediaSearch(let queries),
+                 .itemSearch(let queries), .itemAppearanceSearch(let queries),
+                 .journalEncounterSearch(let queries), .mediaSearch(let queries),
+                 .decorSearch(let queries), .fixtureSearch(let queries), .fixtureHookSearch(let queries), .roomSearch(let queries),
                  .mountSearch(let queries), .realmSearch(let queries), .spellSearch(let queries):
                 return queries
             default: return nil
