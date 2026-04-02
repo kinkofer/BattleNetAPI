@@ -705,7 +705,7 @@ struct WorldOfWarcraftView: View {
                 webServiceRow(api: .fixtureIndex) {
                     try await battleNetAPI.wow.getFixtureIndex()
                 }
-                webServiceRow(api: .fixture, isOperable: false) {
+                webServiceRow(api: .fixture, isOperational: false) {
                     try await battleNetAPI.wow.getFixture(id: 614)
                 }
                 webServiceRow(api: .fixtureSearch) {
@@ -937,8 +937,8 @@ struct WorldOfWarcraftView: View {
     }
     
     
-    func webServiceRow(api: API, isOperable: Bool = true, webService: @escaping () async throws -> Data) -> some View {
-        WebServiceRow(api: api, isOperational: isOperable, loadingAPI: $loadingAPI, webService: webService) { data in
+    func webServiceRow(api: API, isOperational: Bool = true, webService: @escaping () async throws -> Data) -> some View {
+        WebServiceRow(api: api, isOperational: isOperational, loadingAPI: $loadingAPI, webService: webService) { data in
             selection = WebServiceSelection(api: api, data: data)
         } onError: { error in
             alertType = .error(error)

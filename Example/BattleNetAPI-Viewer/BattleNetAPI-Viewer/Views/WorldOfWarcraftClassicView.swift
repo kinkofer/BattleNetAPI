@@ -56,10 +56,10 @@ struct WorldOfWarcraftClassicView: View {
         Group {
             Group {
                 Section {
-                    webServiceRow(api: .auctionHouseIndex, isOperable: false) {
+                    webServiceRow(api: .auctionHouseIndex, isOperational: false) {
                         try await battleNetAPI.wowClassic.getAuctionHouseIndex(connectedRealmID: 4372)
                     }
-                    webServiceRow(api: .auctionHouse, isOperable: false) {
+                    webServiceRow(api: .auctionHouse, isOperational: false) {
                         try await battleNetAPI.wowClassic.getAuctionHouse(connectedRealmID: 4372, auctionHouseID: 2)
                     }
                 } header: {
@@ -204,22 +204,22 @@ struct WorldOfWarcraftClassicView: View {
                     webServiceRow(api: .pvpSeason) {
                         try await battleNetAPI.wowClassic.getPvPSeason(id: 13)
                     }
-                    webServiceRow(api: .pvpRegionIndex, isOperable: false) {
+                    webServiceRow(api: .pvpRegionIndex, isOperational: false) {
                         try await battleNetAPI.wowClassic.getPvPRegionIndex()
                     }
-                    webServiceRow(api: .pvpRegionSeasonIndex, isOperable: false) {
+                    webServiceRow(api: .pvpRegionSeasonIndex, isOperational: false) {
                         try await battleNetAPI.wowClassic.getPvPRegionSeasonIndex(pvpRegionID: 41)
                     }
-                    webServiceRow(api: .pvpRegionSeason, isOperable: false) {
+                    webServiceRow(api: .pvpRegionSeason, isOperational: false) {
                         try await battleNetAPI.wowClassic.getPvPRegionSeason(pvpRegionID: 41, pvpSeasonID: 1)
                     }
-                    webServiceRow(api: .pvpRegionSeasonLeaderboardIndex, isOperable: false) {
+                    webServiceRow(api: .pvpRegionSeasonLeaderboardIndex, isOperational: false) {
                         try await battleNetAPI.wowClassic.getPvPRegionSeasonLeaderboardIndex(pvpRegionID: 41, pvpSeasonID: 1)
                     }
-                    webServiceRow(api: .pvpRegionSeasonLeaderboard, isOperable: false) {
+                    webServiceRow(api: .pvpRegionSeasonLeaderboard, isOperational: false) {
                         try await battleNetAPI.wowClassic.getPvPRegionSeasonLeaderboard(pvpRegionID: 41, pvpSeasonID: 1, pvpBracket: ._3v3)
                     }
-                    webServiceRow(api: .pvpRegionSeasonRewardIndex, isOperable: false) {
+                    webServiceRow(api: .pvpRegionSeasonRewardIndex, isOperational: false) {
                         try await battleNetAPI.wowClassic.getPvPRegionSeasonRewardIndex(pvpRegionID: 41, pvpSeasonID: 1)
                     }
                 } header: {
@@ -270,86 +270,73 @@ struct WorldOfWarcraftClassicView: View {
         Group {
             Group {
                 Section(header: Text(WorldOfWarcraftClassicView.APISection.accountProfile.rawValue)) {
-                    webServiceRow(api: .accountProfileSummary) {
+                    webServiceRow(api: .accountProfileSummary, isOperational: false) {
                         try await battleNetAPI.wowClassic.getAccountProfile()
                     }
-                    webServiceRow(api: .protectedCharacterProfileSummary) {
-                        // TODO: Replace 0 with a valid realmID and characterID
+                    webServiceRow(api: .protectedCharacterProfileSummary, isOperational: false) {
                         try await battleNetAPI.wowClassic.getProtectedCharacterProfile(id: 0, realmID: 0)
                     }
                 }
 
                 Section(header: Text(WorldOfWarcraftClassicView.APISection.characterAchievements.rawValue)) {
-                    webServiceRow(api: .characterAchievementsSummary) {
-                        // TODO: Replace with a valid character name and realm slug
+                    webServiceRow(api: .characterAchievementsSummary, isOperational: false) {
                         try await battleNetAPI.wowClassic.getCharacterAchievementsSummary(characterName: "charactername", realmSlug: "realm-slug")
                     }
-                    webServiceRow(api: .characterAchievementStatistics) {
-                        // TODO: Replace with a valid character name and realm slug
+                    webServiceRow(api: .characterAchievementStatistics, isOperational: false) {
                         try await battleNetAPI.wowClassic.getCharacterAchievementStatistics(characterName: "charactername", realmSlug: "realm-slug")
                     }
                 }
 
                 Section(header: Text(WorldOfWarcraftClassicView.APISection.characterAppearance.rawValue)) {
-                    webServiceRow(api: .characterAppearanceSummary) {
-                        // TODO: Replace with a valid character name and realm slug
+                    webServiceRow(api: .characterAppearanceSummary, isOperational: false) {
                         try await battleNetAPI.wowClassic.getCharacterAppearanceSummary(characterName: "charactername", realmSlug: "realm-slug")
                     }
                 }
 
                 Section(header: Text(WorldOfWarcraftClassicView.APISection.characterEquipment.rawValue)) {
-                    webServiceRow(api: .characterEquipmentSummary) {
-                        // TODO: Replace with a valid character name and realm slug
+                    webServiceRow(api: .characterEquipmentSummary, isOperational: false) {
                         try await battleNetAPI.wowClassic.getCharacterEquipmentSummary(characterName: "charactername", realmSlug: "realm-slug")
                     }
                 }
 
                 Section(header: Text(WorldOfWarcraftClassicView.APISection.characterHunterPets.rawValue)) {
-                    webServiceRow(api: .characterHunterPetsSummary) {
-                        // TODO: Replace with a valid character name and realm slug
+                    webServiceRow(api: .characterHunterPetsSummary, isOperational: false) {
                         try await battleNetAPI.wowClassic.getCharacterHunterPetsSummary(characterName: "charactername", realmSlug: "realm-slug")
                     }
                 }
 
                 Section(header: Text(WorldOfWarcraftClassicView.APISection.characterMedia.rawValue)) {
-                    webServiceRow(api: .characterMediaSummary) {
-                        // TODO: Replace with a valid character name and realm slug
+                    webServiceRow(api: .characterMediaSummary, isOperational: false) {
                         try await battleNetAPI.wowClassic.getCharacterMediaSummary(characterName: "charactername", realmSlug: "realm-slug")
                     }
                 }
 
                 Section(header: Text(WorldOfWarcraftClassicView.APISection.characterProfile.rawValue)) {
-                    webServiceRow(api: .characterProfileSummary) {
-                        // TODO: Replace with a valid character name and realm slug
+                    webServiceRow(api: .characterProfileSummary, isOperational: false) {
                         try await battleNetAPI.wowClassic.getCharacterProfileSummary(characterName: "charactername", realmSlug: "realm-slug")
                     }
-                    webServiceRow(api: .characterProfileStatus) {
-                        // TODO: Replace with a valid character name and realm slug
+                    webServiceRow(api: .characterProfileStatus, isOperational: false) {
                         try await battleNetAPI.wowClassic.getCharacterProfileStatus(characterName: "charactername", realmSlug: "realm-slug")
                     }
                 }
 
                 Section(header: Text(WorldOfWarcraftClassicView.APISection.characterPvP.rawValue)) {
-                    webServiceRow(api: .characterPvPBracketStatistics) {
-                        // TODO: Replace with a valid character name and realm slug
+                    webServiceRow(api: .characterPvPBracketStatistics, isOperational: false) {
                         try await battleNetAPI.wowClassic.getCharacterPvPBracketStatistics(characterName: "charactername", realmSlug: "realm-slug", pvpBracket: ._2v2)
                     }
-                    webServiceRow(api: .characterPvPSummary) {
-                        // TODO: Replace with a valid character name and realm slug
+                    webServiceRow(api: .characterPvPSummary, isOperational: false) {
                         try await battleNetAPI.wowClassic.getCharacterPvPSummary(characterName: "charactername", realmSlug: "realm-slug")
                     }
                 }
 
                 Section(header: Text(WorldOfWarcraftClassicView.APISection.characterSpecializations.rawValue)) {
-                    webServiceRow(api: .characterSpecializationsSummary) {
-                        // TODO: Replace with a valid character name and realm slug
+                    webServiceRow(api: .characterSpecializationsSummary, isOperational: false) {
                         try await battleNetAPI.wowClassic.getCharacterSpecializationsSummary(characterName: "charactername", realmSlug: "realm-slug")
                     }
                 }
 
                 Section(header: Text(WorldOfWarcraftClassicView.APISection.characterStatistics.rawValue)) {
-                    webServiceRow(api: .characterStatisticsSummary) {
-                        // TODO: Replace with a valid character name and realm slug
+                    webServiceRow(api: .characterStatisticsSummary, isOperational: false) {
                         try await battleNetAPI.wowClassic.getCharacterStatisticsSummary(characterName: "charactername", realmSlug: "realm-slug")
                     }
                 }
@@ -357,20 +344,16 @@ struct WorldOfWarcraftClassicView: View {
 
             Group {
                 Section(header: Text(WorldOfWarcraftClassicView.APISection.guildProfile.rawValue)) {
-                    webServiceRow(api: .guild) {
-                        // TODO: Replace with a valid guild slug and realm slug
+                    webServiceRow(api: .guild, isOperational: false) {
                         try await battleNetAPI.wowClassic.getGuild(slug: "guild-slug", realmSlug: "realm-slug")
                     }
-                    webServiceRow(api: .guildActivity) {
-                        // TODO: Replace with a valid guild slug and realm slug
+                    webServiceRow(api: .guildActivity, isOperational: false) {
                         try await battleNetAPI.wowClassic.getGuildActivity(slug: "guild-slug", realmSlug: "realm-slug")
                     }
-                    webServiceRow(api: .guildAchievements) {
-                        // TODO: Replace with a valid guild slug and realm slug
+                    webServiceRow(api: .guildAchievements, isOperational: false) {
                         try await battleNetAPI.wowClassic.getGuildAchievements(slug: "guild-slug", realmSlug: "realm-slug")
                     }
-                    webServiceRow(api: .guildRoster) {
-                        // TODO: Replace with a valid guild slug and realm slug
+                    webServiceRow(api: .guildRoster, isOperational: false) {
                         try await battleNetAPI.wowClassic.getGuildRoster(slug: "guild-slug", realmSlug: "realm-slug")
                     }
                 }
@@ -379,8 +362,8 @@ struct WorldOfWarcraftClassicView: View {
     }
 
 
-    func webServiceRow(api: API, isOperable: Bool = true, webService: @escaping () async throws -> Data) -> some View {
-        WebServiceRow(api: api, isOperational: isOperable, loadingAPI: $loadingAPI, webService: webService) { data in
+    func webServiceRow(api: API, isOperational: Bool = true, webService: @escaping () async throws -> Data) -> some View {
+        WebServiceRow(api: api, isOperational: isOperational, loadingAPI: $loadingAPI, webService: webService) { data in
             selection = WebServiceSelection(api: api, data: data)
         } onError: { error in
             alertType = .error(error)
